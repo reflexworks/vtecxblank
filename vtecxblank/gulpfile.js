@@ -9,6 +9,8 @@ var imagemin  = require('gulp-imagemin');
 var symlink = require('gulp-symlink'); 
 var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
+var clean = require('gulp-clean');
+var autoprefixer = require('gulp-autoprefixer');
 var argv = require('minimist')(process.argv.slice(2));
 
 gulp.task('usemin', function() {
@@ -33,7 +35,7 @@ gulp.task( 'copyserver', function() {
 
 gulp.task( 'copyimages', function() {
     return gulp.src(
-        [ 'app/images/**' ],
+        [ 'app/img/**' ],
         { base: 'app' }
     ).pipe( imagemin() ) 
     .pipe( gulp.dest( 'dist' ) );
@@ -71,6 +73,26 @@ gulp.task('serve', function() {
     }));
 });
 
+// distフォルダ内を一度全て削除する
+gulp.task('clean-dist', function () {
+    return gulp.src([
+        'dist/{,**/}*.html', // 対象ファイル
+        'dist/css',
+        'dist/js',
+        'dist/img'
+    ], {read: false} )
+    .pipe(clean());
+});
+
+// ベンダープレフィックス付与設定
+gulp.task('autoprefixer', function () {
+    return gulp.src( 'app/{,**/}*.css' ) // 読み込みファイル
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions'] // 対象ブラウザの設定
+    }))
+    .pipe( gulp.dest( 'dist' ) ); // 書き出しファイル
+});
+
 gulp.task('upload1', function (cb) {
   exec('./rxcp.sh dist '+argv.h+' content', function (err, stdout, stderr) {
     console.log(stdout);
@@ -88,7 +110,7 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('default', function ( callback ) {
-  runSequence('symlink',['usemin','copyserver','copyimages'],callback);
+  runSequence('clean-dist','symlink',['autoprefixer','usemin','copyserver','copyimages'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {
