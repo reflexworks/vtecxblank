@@ -110,7 +110,7 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('default', function ( callback ) {
-  runSequence('clean-dist','symlink',['autoprefixer','usemin','copyserver','copyimages'],callback);
+  runSequence('clean-dist','symlink','autoprefixer',['usemin','copyserver','copyimages'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {
