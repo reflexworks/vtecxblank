@@ -1,0 +1,78 @@
+<feed>
+  <entry>
+    <link href="/_settings/template" rel="self"/>
+    <contributor>
+      <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+    </contributor>
+    <contributor>
+      <uri>urn:vte.cx:acl:+,R</uri>
+    </contributor>
+<content type="text/html">registration_no
+dr_code
+dr_name
+cls_code
+cls_name
+status
+customer
+ customer_email
+ customer_tel
+ customer_name
+ customer_name1
+ customer_name2
+ customer_name_kana1
+ customer_name_kana2
+ customer_sex
+ customer_postcode
+ customer_addr1
+ customer_addr2
+ customer_birth_year
+ customer_birth_month
+ customer_birth_date
+pet
+ dogorcat
+ breedpet
+ breedpetname
+ breedtype(int)
+ pet_birth_year
+ pet_birth_month
+ pet_birth_date
+ pet_age(int)
+ pet_name
+ pet_sex
+ purpose
+ q2
+ q3
+ q31
+ q32{}
+  kindofsick
+ q4
+ q5
+startdate
+createddate
+course
+premium_month
+premium_year
+payment
+storetype
+creditcard
+ paymenttype
+ cardno1
+ cardno2
+ card_expiration_year
+ card_expiration_month
+mailmagazine(int)
+ts_code
+</content>
+<rights>
+dr_code:/.+/registration
+dr_name:/.+/registration
+cls_code:/.+/registration
+cls_name:/.+/registration
+status:/.+/registration
+customer.customer_name:/.+/registration
+customer.customer_tel:/.+/registration
+ts_code:/.+/registration
+pet.pet_age:/.+/registration
+</rights>
+</entry>
+</feed>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+	<meta charset="utf-8" />
+    <!-- build:css css/vendor.css -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="styles/simple-sidebar.css">
+    <!-- endbuild -->
+
+    <!-- build:css1 css/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:inlinejs js/vendor.js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbuild -->
+
+</head>
+
+<body>
+	<div id="wrapper">
+	
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav" id="sidebar-nav">
+				<li class="sidebar-brand mt20">
+					<a href="#"><img src="images/logo.png" alt="vtecxサンプル" /></a>
+				</li>
+				<li>
+					<a href="#inputnew">入力</a>
+				</li>
+				<li>
+					<a href="#list">一覧</a>
+				</li>
+				<li>
+					<a href="#logout">ログアウト</a>
+				</li>
+			</ul>
+
+
+		</div>
+		<!-- /#sidebar-wrapper -->	
+		<a href="#menu-toggle" class="btn btn-default" id="menu-toggle" style="margin: 5px;"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id="page">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+	
+	</div>
+	<!-- /#wrapper -->
+	
+	<script>
+		$(function(){
+			
+			var thisHref;
+			var doInclude = function(href){
+				
+				if (href && href !== '#') {
+
+					href = href.replace('#', '')
+
+						// 現在のページの場合、インクルードしない
+					if  (thisHref === href) return false;
+
+					if (href === 'logout') {
+						// ログアウトの場合はログイン画面へ遷移する
+
+						$.ajax({
+							url: '/d/?_logout',
+							method: 'get',
+							dataType: 'html'
+						}).done(function( res ) {
+							location.href = 'login.html';
+						}).fail(function( jqXHR, textStatus, errorThrown ) {
+				//          console.log( 'ERROR', jqXHR, textStatus, errorThrown );
+							location.href = 'login.html';
+						});
+
+					} else if (href === 'inputnew') {
+						$('#page').load('input.html');
+						thisHref = 'input';
+						location.href = 'index.html#input';						
+					} else if (href === 'list') {
+						$('#page').load('list.html');
+						thisHref = href;
+						location.href = 'index.html#list';						
+					} 
+					else {
+						$('#page').load(href+'.html');
+						thisHref = href;
+					}
+				}
+			}
+			
+			// インクルード処理
+			$('#sidebar-nav').find('li').find('a').click(function(){
+				doInclude($(this).attr('href'));
+			});
+			
+			// 初期読み込み
+			if (!location.hash || location.hash === '#') {
+				// デフォルトページ設定
+				location.hash = '#input';
+			}
+			doInclude(location.hash);
+
+			// サイドバーを開閉する
+			$("#menu-toggle").click(function(e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+
+		});
+
+	</script>
+
+<!-- Modal -->
+<div id="errormodal" class="modal fade">  <!-- Modal本体 -->
+    <div class="modal-dialog"> <!-- Modalダイアログ部分 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  <!-- closeボタン -->
+                <h4 class="modal-title">メッセージ</h4>
+            </div>
+            <div class="modal-body">
+                <p id="errormsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- Modal -->
+<div id="dialogmodal" class="modal fade">  <!-- Modal本体 -->
+    <div class="modal-dialog"> <!-- Modalダイアログ部分 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  <!-- closeボタン -->
+                <h4 class="modal-title">メッセージ</h4>
+            </div>
+            <div class="modal-body">
+                <p id="dialogmsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-btn-primary" data-dismiss="modal" id="exec">実行</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+</html>

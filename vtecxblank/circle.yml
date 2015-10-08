@@ -1,0 +1,17 @@
+machine:
+  ruby:
+    version: 2.0.0-p247
+  node:
+    version: 0.10.31
+  timezone: Asia/Tokyo
+
+dependencies:
+  override:
+    - npm install
+
+deployment:
+  production:
+    branch: develop
+    commands:
+          - ./rxcp.sh  dist http://au.vte.cx content
+          - ./rxcp.sh  setup http://au.vte.cx/d
