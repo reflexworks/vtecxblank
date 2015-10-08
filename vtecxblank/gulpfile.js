@@ -16,7 +16,7 @@ var argv = require('minimist')(process.argv.slice(2));
 gulp.task('usemin', function() {
   return gulp.src(['./app/login.html'])
     .pipe(usemin({
-      css: [ rev() ],
+      css: [ autoprefixer({ browsers: ['last 2 versions']}),rev() ],
       html: [ minifyHtml({ empty: true }) ],
       js: [ uglify(), rev() ],
       inlinejs: [ uglify() ],
@@ -84,15 +84,6 @@ gulp.task('clean-dist', function () {
     .pipe(clean());
 });
 
-// ベンダープレフィックス付与設定
-gulp.task('autoprefixer', function () {
-    return gulp.src( 'app/{,**/}*.css' ) // 読み込みファイル
-    .pipe(autoprefixer({
-        browsers: ['last 2 versions'] // 対象ブラウザの設定
-    }))
-    .pipe( gulp.dest( 'dist' ) ); // 書き出しファイル
-});
-
 gulp.task('upload1', function (cb) {
   exec('./rxcp.sh dist '+argv.h+' content', function (err, stdout, stderr) {
     console.log(stdout);
@@ -110,7 +101,7 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('default', function ( callback ) {
-  runSequence('clean-dist','symlink','autoprefixer',['usemin','copyserver','copyimages'],callback);
+  runSequence('clean-dist','symlink',['usemin','copyserver','copyimages'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {
