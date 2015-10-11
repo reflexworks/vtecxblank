@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Page Not Found :(${STATUS})</title>
+    <title>Error Page</title>
     <style>
       ::-moz-selection {
         background: #b3d4fc;
@@ -141,21 +141,30 @@
   </head>
   <body>
     <div class="container">
-      <h1>${STATUS}</h1>
-      <p>${MESSAGE}</p>
+      <h1><p id="status"></p></h1>
+      <p id="message"></p>
       <p>To the <a href="login.html">login page</a></p>
-      <p id="loginf" style="visibility: hidden;">Re try <a href="javascript:void(0)" onClick="loginf()">login</a></p>
     </div>
     <script>
-    <!--
-    	var status = '${STATUS}';
-    	if (status === '423') {
-    		document.getElementById('loginf').style.visibility = 'visible';
-    	}
-    	function loginf() {
-
-	    };
-    -->
+    function getCookie( name ){
+      var result = null;
+      var cookieName = name + '=';
+      var allcookies = document.cookie;
+      var position = allcookies.indexOf( cookieName );
+      if( position != -1 ){
+          var startIndex = position + cookieName.length;
+          var endIndex = allcookies.indexOf( ';', startIndex );
+          if( endIndex == -1 ){
+              endIndex = allcookies.length;
+          }
+          result = decodeURIComponent(allcookies.substring( startIndex, endIndex ) );
+      }
+      return result;
+    }
+    var status_code = document.getElementById('status');
+    status_code.innerHTML = getCookie('ERROR_STATUS');
+    var message = document.getElementById('message');
+    message.innerHTML = getCookie('ERROR_MESSAGE');
     </script>
   </body>
 </html>
