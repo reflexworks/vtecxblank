@@ -50,7 +50,7 @@ gulp.task( 'copyimages', function() {
 
 gulp.task( 'copyxlspdf', function() {
     return gulp.src(
-        [ 'app/xls/**' ],
+        [ 'app/xls/**','app/pdf/**' ],
         { base: 'app' }
     ).pipe( gulp.dest( 'dist' ) );
 } );

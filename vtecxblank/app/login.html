@@ -90,7 +90,6 @@ $(function(){
     var wsseToken = $.createToken(account, password);
     
     var captcha = grecaptcha.getResponse(reCaptchaWidget);
-    alert(captcha);
     $.ajax({
       url: '/d/?_login&g-recaptcha-response=' + captcha,
       method: 'get',
