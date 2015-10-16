@@ -26,12 +26,15 @@
 	});
 	function setTable(res){
 		var temp = function(i, a, b, c, d){
+			var setVal = function(v){
+				return (v ? v : '<span style="color:#ccc;">(入力なし)</span>')
+			}
 			return '<tr>'+
 				'<td>'+ ( i + 1 ) +'</td>'+
-				'<td>'+ (a ? a : '(入力なし)') +'</td>'+
-				'<td>'+ (b ? b : '(入力なし)') +'</td>'+
-				'<td>'+ (c ? c : '(入力なし)') +'</td>'+
-				'<td>'+ (d ? d : '(入力なし)') +'</td>'+
+				'<td>'+ setVal(a) +'</td>'+
+				'<td>'+ setVal(b) +'</td>'+
+				'<td>'+ setVal(c) +'</td>'+
+				'<td>'+ setVal(d) +'</td>'+
 			'</tr>';
 		}
 		var array = [];
