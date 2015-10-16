@@ -8,6 +8,7 @@ $(function(){
 			setTable(res);
 		}
 	}).fail(function( jqXHR ) {
+	    location.href = 'login.html';
 	});
 });
 function setTable(res){
