@@ -15,7 +15,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var foreach = require('gulp-foreach');
 
 gulp.task('usemin', function() {
-  return gulp.src(['./app/login.html','./app/index.html','./app/error.html'])
+  return gulp.src(['./app/*.html'])
  .pipe(foreach(function (stream, file) {
       return stream
         .pipe(usemin({
