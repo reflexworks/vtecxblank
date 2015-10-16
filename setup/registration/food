@@ -1,0 +1,14 @@
+<feed>
+ <entry>
+ <favorite>
+ 	<food>りんご</food>
+ </favorite>
+<link rel="self" href="/registration/1" />
+</entry>
+ <entry>
+ <favorite>
+ 	<food>みかん</food>
+ </favorite>
+<link rel="self" href="/registration/2" />
+</entry>
+</feed>

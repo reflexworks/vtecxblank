@@ -1,0 +1,25 @@
+<feed>
+  <entry>
+    <link href="/_settings/template" rel="self"/>
+    <contributor>
+      <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+    </contributor>
+    <contributor>
+      <uri>urn:vte.cx:acl:+,R</uri>
+    </contributor>
+<content type="text/html">userinfo
+ id(int)
+ email
+favorite
+ food!=^.{3}$
+ music=^.{5}$
+hobby{}
+ type
+ name
+ updated(date)
+</content>
+<rights>
+userinfo.id:/.+/registration
+</rights>
+</entry>
+</feed>
