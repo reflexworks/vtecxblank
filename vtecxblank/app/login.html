@@ -65,9 +65,15 @@
   </div>
   <script>
 $(function(){
+  var captchaon = false;
+  $('#captcha').hide();
   var param = window.location.href.slice(window.location.href.indexOf('?') + 1);
   if (param=='error') {
     $('#error_mgs').show();
+  }else if (param=='errorcaptca'){
+    $('#error_mgs').show();
+    captchaon = true;
+    $('#captcha').show();
   }
   var getPass = function(def_pass){
     var shaObj = new jsSHA(def_pass, "ASCII");
@@ -84,14 +90,14 @@ $(function(){
   } );
 
   var doSubmit = function () {
-          $('#error_mgs').hide();
+    $('#error_mgs').hide();
     var account = $('#account').val();
     var password = getPass($('#password').val());
     var wsseToken = $.createToken(account, password);
     
-    var captcha = grecaptcha.getResponse(reCaptchaWidget);
+    var captcha = captchaon ? '&g-recaptcha-response='+grecaptcha.getResponse(reCaptchaWidget) : '';
     $.ajax({
-      url: '/d/?_login&g-recaptcha-response=' + captcha,
+      url: '/d/?_login' + captcha,
       method: 'get',
       dataType: 'html',
       headers: {
@@ -99,10 +105,13 @@ $(function(){
       },
     }).done(function( res ) {
       location.href = 'index.html#inputnew';
-    }).fail(function( jqXHR, textStatus, errorThrown ) {
-      console.log( 'ERROR', jqXHR, textStatus, errorThrown );
-      alert('error');
-      location.href = 'login.html?error';
+    }).fail(function( jqXHR ) {
+      var json = JSON.parse(jqXHR.responseText);
+      if (json.feed.title=='Captcha required at next login.') {
+        location.href = 'login.html?errorcaptca'; 
+      }else {
+        location.href = 'login.html?error'; 
+      }
     });
   }
 });

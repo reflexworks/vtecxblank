@@ -108,14 +108,14 @@ gulp.task('clean-dist', function () {
 });
 
 gulp.task('upload1', function (cb) {
-  exec('./rxcp.sh dist '+argv.h+' content', function (err, stdout, stderr) {
+  exec('./rxcp.sh '+argv.k+' dist '+argv.h+' content', function (err, stdout, stderr) {
     console.log(stdout);
     cb(err);
   });
 })
 
 gulp.task('upload2', function (cb) {
-  exec('./rxcp.sh setup '+argv.h+'/d', function (err, stdout, stderr) {
+  exec('./rxcp.sh '+argv.k+' setup '+argv.h+'/d', function (err, stdout, stderr) {
     console.log(stdout);
     cb(err);
   });
