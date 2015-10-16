@@ -11,7 +11,7 @@ dependencies:
 
 deployment:
   production:
-    branch: develop
+    branch: master
     commands:
           - ./rxcp.sh ${accesstoken} dist http://demo.vte.cx content 
           - ./rxcp.sh ${accesstoken} setup http://demo.vte.cx/d           
