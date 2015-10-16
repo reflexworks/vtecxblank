@@ -128,3 +128,7 @@ gulp.task('default', function ( callback ) {
 gulp.task('deploy', function ( callback ) {
   runSequence('default','upload1','upload2',callback);
 }); 
+
+gulp.task('upload', function ( callback ) {
+  runSequence('upload1','upload2',callback);
+}); 
