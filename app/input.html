@@ -1,0 +1,41 @@
+<div id="messeage_s" style="color: green; display: none;"></div>
+<div id="messeage_e" style="color: red;" display: none;></div>
+<h3>趣味の登録</h3>
+<form>
+	<div class="form-group">
+		<label for="food">好きな食べ物</label>
+		<input type="text" class="form-control" id="food" placeholder="food">
+		<label for="music">好きな音楽</label>
+		<input type="text" class="form-control" id="music" placeholder="food">
+	</div>
+	<button type="button" id="add" class="btn btn-default">登録</button>
+</form>
+<script>
+	$(function(){
+		$('#add').click(function(){
+			
+			$('#messeage_s, #messeage_e').hide();
+			
+			var food = $('#food').val();
+			var music = $('#music').val();
+			var data = {'feed': {'entry': []}};
+			var inputdata = {'favorite':{
+				'food': food,
+				'music': music
+			}};
+			data.feed.entry.push(inputdata);
+			$.ajax({
+				url: '/d/registration',
+				method: 'post',
+				dataType: 'json',
+				data: JSON.stringify(data)
+			}).done(function( res ) {
+				$('#messeage_s').show().html('登録に成功しました。一覧で確認してください。');
+			}).fail(function( jqXHR, textStatus, errorThrown ) {
+				$('#messeage_e').show().html('登録に失敗しました。\nエラーメッセージ：' + jqXHR.responseText);
+			});
+			
+			return false;
+		});
+	});
+</script>
