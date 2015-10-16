@@ -13,5 +13,4 @@ deployment:
   production:
     branch: develop
     commands:
-          - ./rxcp.sh  dist http://au.vte.cx content
-          - ./rxcp.sh  setup http://au.vte.cx/d
+          - gulp deploy -h http://demo.vte.cx -k 11,3BaJ+fK0BYiNk+OY7HsIrPeYgba5341le4KKnouCN1I=
