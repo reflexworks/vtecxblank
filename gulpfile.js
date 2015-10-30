@@ -94,7 +94,6 @@ gulp.task('serve', function() {
       ]      
     }));
 });
-
 // distフォルダ内を一度全て削除する
 gulp.task('clean-dist', function () {
     return gulp.src([
