@@ -101,6 +101,8 @@ gulp.task('clean-dist', function () {
         'dist/css',
         'dist/js',
         'dist/xls',
+        'dist/pdf',
+        'dist/server',
         'dist/img'
     ], {read: false} )
     .pipe(clean());
