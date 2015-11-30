@@ -13,5 +13,5 @@ deployment:
   production:
     branch: master
     commands:
-          - ./rxcp.sh ${accesstoken} dist http://demo.vte.cx content 
-          - ./rxcp.sh ${accesstoken} setup http://demo.vte.cx/d           
+          - ./rxcp.sh ${accesstoken} dist http://{service name}.vte.cx content
+          - ./rxcp.sh ${accesstoken} setup http://{service name}.vte.cx/d
