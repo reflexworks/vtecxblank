@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/* module
+------------------------*/
+body {
+	min-width: 450px;
+}
+.caution {
+	color: #777;
+}
+
+/* header
+------------------------*/
+.header {
+	background: #69A0C8;
+}
+.header .title {
+	color: #fff;
+	letter-spacing: 1px;
+	font-family: 'Century Gothic';
+	font-size: 20px;
+
+	float: left;
+	padding: 5px 20px;
+}
+
+/* login_container
+------------------------*/
+.login_container {
+	background: #edf4fc;
+	padding-bottom: 200px;
+}
+.login_container .container {
+	width: 400px;
+	margin: 0px auto;
+	padding-top: 50px;
+}
+.login_container .container h2 {
+	color: #666;
+	cursor: default;
+}
+
+/* regist_container
+------------------------*/
+.regist_container {
+	background: #E8F9E0;
+	padding-bottom: 200px;
+}
+.regist_container .container {
+	width: 400px;
+	margin: 0px auto;
+	padding-top: 50px;
+}
+.regist_container .container h2 {
+	color: #666;
+	cursor: default;
+}
+
+/* head_container
+------------------------*/
+.head_container {
+	background: #edf4fc;
+}
+.head_container .container {
+	text-align: center;
+	padding: 100px 0px;
+}
+.head_container .container h2 {
+	font-size: 50px;
+	font-weight: normal;
+	color: #69A0C8;
+	line-height: 1.7em;
+
+	cursor: default;
+}
+
+/*	footer
+------------------------*/
+.copyright {
+	margin-top: 10px;
+	text-align: center;
+	font-size: 10px;
+}

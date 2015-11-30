@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>新規登録 | vte.cx engine</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" href="img/logo.png" type="image/png">
+
+    <!-- build:inlinecss css/vendor.css -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbuild -->
+
+    <!-- build:css css/main.css -->
+    <link rel="stylesheet" href="styles/index.css">
+    <!-- endbuild -->
+
+    <!-- build:inlinejs js/vendor.js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/main.js -->
+    <script src="scripts/vte$encoder.js"></script>
+    <script src="scripts/registration.js"></script>
+    <!-- endbuild -->
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+
+</head>
+<body>
+<div class="header">
+	<div class="title" id="header_title">vte.cx engine</div>
+	<div style="clear: both;"></div>
+</div>
+<div class="jumbotron regist_container" id="regist_form">
+	<div class="container">
+		<h2>新規登録</h2>
+		<hr />
+		<form>
+			<div class="form-group">
+				<input type="text" class="form-control" id="email" placeholder="メールアドレス">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="password" placeholder="パスワード">
+				<span style="color: #a0a0a0;">（8文字以上、かつ数字・英字・記号を最低1文字含む）</span>
+			</div>
+			<div class="form-group caution" style="margin-top: 30px;">
+				<a href="user_terms.html">利用規約</a>に同意のうえ、「利用規約に同意して新規登録」ボタンを押してください。
+			</div>
+			<div class="form-group" id="captcha"></div>
+			<div class="form-group">
+				<button type="button" id="regist_btn" class="btn btn-success" style="width: 100%;margin-top: 10px;">利用規約に同意して新規登録</button>
+			</div>
+			<div class="form-group alert alert-danger" id="error_check_mgs" style="display: none;">
+				パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります
+			</div>
+			<div class="form-group alert alert-danger" id="error_already_mgs" style="display: none;">
+				そのアカウントは既に登録済みです
+			</div>
+			<div class="form-group alert alert-danger" id="error_mgs" style="display: none;">
+				新規登録に失敗しました。アカウントまたはパスワードが使用できない可能性があります
+			</div>
+			<div class="form-group caution">
+				すでにアカウントをお持ちの方は<a href="login.html">ログイン</a>から。
+			</div>
+		</form>
+	</div>
+</div>
+<div class="jumbotron regist_container" id="regist_send_form" style="display: none;">
+	<div class="container" style="width: 500px;">
+		<h2>仮登録が完了しました。</h2>
+		<hr />
+		<form>
+			<div class="form-group caution" style="margin-top: 80px;">
+				入力したメールアドレスに本登録用のメールを送信しました。<br />
+				メールのリンクをクリックし、本登録を完了してください。
+			</div>
+		</form>
+	</div>
+</div>
+<p class="copyright">&copy;Virtual Technology</p>
+</body>
+</html> 
