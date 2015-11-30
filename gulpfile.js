@@ -76,10 +76,6 @@ gulp.task('serve', function() {
           target: argv.h+'/s'
         },
         {
-          source: '/login.html',
-          target: argv.h+'/login.html'
-        },
-        {
           source: '/xls',
           target: argv.h+'/xls'
         },
