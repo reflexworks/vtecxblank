@@ -7,7 +7,7 @@ Install gulp
 ```
 npm install -g gulp 
 ```
-checkout vtecxblank develop branch
+checkout vtecxblank master branch
 
 npm install
 ```
@@ -23,10 +23,10 @@ gulp
 
 gulp serve is to use a local dev environment.
 ```
-gulp serve -h http://{service name}.vte.cx
+gulp serve -h http://{service name}.1.vte.cx
 ```
 
 deploy (The accesstoken be able to obtain by admin console.)
 ```
-gulp deploy -h http://{service name}.vte.cx -k {accesstoken}
+gulp deploy -h http://{service name}.1.vte.cx -k {accesstoken}
 ```
