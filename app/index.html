@@ -1,13 +1,55 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>ようこそ | vte.cx engine</title>
 	<meta charset="utf-8" />
-	<title>ようこそ vte.cx engineへ</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" href="img/logo.png" type="image/png">
+
+    <!-- build:inlinecss css/vendor.css -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbuild -->
+
+    <!-- build:css css/main.css -->
+    <link rel="stylesheet" href="styles/index.css">
+    <!-- endbuild -->
+
+    <!-- build:inlinejs js/vendor.js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js js/main.js -->
+    <script src="scripts/index.js"></script>
+    <!-- endbuild -->
 </head>
 
 <body>
-
-	<h4>ようこそ vte.cx engineへ!</h4>
-
+<div class="header">
+	<div class="title" id="header_title">vte.cx engine</div>
+	<div style="clear: both;"></div>
+</div>
+<div class="jumbotron head_container">
+	<div class="container">
+		<h2>ようこそ！vte.cx engineへ</h2>
+		<p>vte.cx engineでは様々なアプリケーションを作成できます。</p>
+		<br />
+		<br />
+		<span>このアプリケーションのデモは<a href="demo.html">こちら</a>でご覧いただけます。</span>
+		<br />
+		<br />
+		<br />
+		<br />
+		<div class="alert alert-success" role="alert" style="text-align: left; width: 600px; margin: 0px auto;">
+			<span>以下のリンクは会員登録を実装する上で欠かせない画面です。</span><br />
+			<span>新規登録機能やログイン機能を実装する場合はご活用ください。</span><br /><br />
+			<ul style="background: #fff; padding: 30px;">
+				<li>このサービスに会員登録をしたい場合はこちら: <a href="registration.html">新規登録ページ</a></li>
+				<li>このサービスにログインしたい場合はこちら: <a href="login.html">ログインページ</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
 </body>
 </html>
