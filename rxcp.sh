@@ -10,12 +10,6 @@ function send() {
     echo -e '\n'
 }
 
-if [ -n "$4" ]; then
-        curl -H "Authorization: Token "$1 -X DELETE $3?_rf
-        echo -n $3' deleted. '
-        echo -e '\n'
-fi
-
 for file in `find $2`
 do
 echo -n $file' --> '
@@ -45,3 +39,4 @@ fi
 send $1 $3 $file $type $tgt $opt
 done
 
+fi
