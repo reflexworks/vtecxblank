@@ -39,4 +39,3 @@ fi
 send $1 $3 $file $type $tgt $opt
 done
 
-fi
