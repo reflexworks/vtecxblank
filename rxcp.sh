@@ -3,9 +3,9 @@
 function send() {
     if [ -d $3 ]; then
         echo "$3 is a directory."
-        curl -H "Authorization: Token "$1 -H "Content-Type:"$4 -H "X-Requested-With: XMLHttpRequest" -H "Content-Length: 0" -X PUT $2$5?_content
+        curl -H "Authorization: Token "$1 -H "Content-Type:"$4 -H "Content-Length: 0" -X PUT $2$5?_content
     else
-        curl -H "Authorization: Token "$1 -H "Content-Type:"$4 -H "X-Requested-With: XMLHttpRequest" -T $3 $2$5$6
+        curl -H "Authorization: Token "$1 -H "Content-Type:"$4 -T $3 $2$5$6
         fi
     echo -e '\n'
 }
