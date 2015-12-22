@@ -30,3 +30,6 @@ deploy (The accesstoken be able to obtain by admin console.)
 ```
 gulp deploy -h https://{service name}.1.vte.cx -k {accesstoken}
 ```
+
+## License
+MIT
