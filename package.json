@@ -2,8 +2,7 @@
   "name": "vtecxblank",
   "version": "0.0.1",
   "dependencies": {
-    "msgpack-lite": "^0.1.20",
-    "zlib-asm": "^1.0.7"
+    "msgpack-lite": "^0.1.20"
   },
   "devDependencies": {
     "bootstrap": "^3.3.5",
