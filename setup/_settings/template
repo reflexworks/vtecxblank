@@ -8,15 +8,15 @@
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
 <content type="text/html">userinfo
- id(int)
+ id
  email
 favorite
- food!=^.{3}$
- music=^.{5}$
+ food
+ music
 hobby{}
  type
  name
- updated(date)
+ updated
 </content>
 <rights>
 userinfo.id:/.+/registration

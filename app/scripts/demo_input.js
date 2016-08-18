@@ -22,6 +22,33 @@ $(function(){
 		inputData.hobby = hobbyData;
 		data.feed.entry.push(inputData);
 
+
+var template = [
+        "userinfo",
+        " id",
+        " email",
+        "favorite",
+        " food",
+        " music",
+        "hobby{}",
+        " type",
+        " name",
+        " updated"
+        ];
+
+        var entry = {"feed" : {"entry" : [{ "userinfo": { "id" : "1","email":"abc@def.net"},"favorite" : { "food" : "りんご","music" : "pops"},"hobby" : [{"type":"屋内","name":"卓球","updated":"2016/8/8"},{"type":"野外","name":"野球2","updated":"2016/8/9"}],"link" : [{"___href" : "/registration/101","___rel" : "self"}] }]}};
+
+        var arr = f2a(template,entry);
+        
+        uploader = new MPUploader({
+        	  success:function(data) { console.log(data); },
+        	  error:function(data) { console.log(data); }
+        	});
+        uploader.upload('/d/registration', arr, { method : 'PUT' });
+//        uploader.upload('/d/registration', arr);	// POST
+        	
+
+/*
 		$.ajax({
 			url: '/d/registration',
 			method: 'post',
@@ -32,7 +59,7 @@ $(function(){
 		}).fail(function( jqXHR, textStatus, errorThrown ) {
 			$('#messeage_e').show().html('登録に失敗しました。\nエラーメッセージ：' + jqXHR.responseText);
 		});
-		
+*/		
 		return false;
 	});
 });
