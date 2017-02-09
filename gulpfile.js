@@ -13,6 +13,67 @@ var clean = require('gulp-clean');
 var autoprefixer = require('gulp-autoprefixer');
 var argv = require('minimist')(process.argv.slice(2));
 var foreach = require('gulp-foreach');
+var flow = require('gulp-flowtype');
+var flowRemoveTypes = require('flow-remove-types');
+var through = require('through2');
+var buble = require('gulp-buble');
+var webpack = require('webpack');;
+var webpackStream = require('webpack-stream');;
+var webpackConfig = require('./webpack.config.js');
+var serverwebpackConfig = require('./server.webpack.config.js');
+
+gulp.task('build', function() {
+  return gulp.src('./app/scripts/*.js')
+    .pipe(flow({
+      all: false,
+      weak: false,
+      declarations: './declarations',
+      killFlow: false,
+      beep: true
+    }))
+    .pipe(through.obj((file, enc, cb) => {
+      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+      cb(null, file);
+    }))
+    .pipe(buble())
+    .pipe(webpackStream(webpackConfig,webpack))
+    .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('build_server', function() {
+  return gulp.src('./app/server/*.js')
+    .pipe(flow({
+      all: false,
+      weak: false,
+      declarations: './declarations',
+      killFlow: false,
+      beep: true
+    }))
+    .pipe(through.obj((file, enc, cb) => {
+      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+      cb(null, file);
+    }))
+    .pipe(buble())
+    .pipe(gulp.dest('./dist/server'));
+});
+
+gulp.task('build_server_webpack', function() {
+  return gulp.src('./app/server/*.js')
+    .pipe(flow({
+      all: false,
+      weak: false,
+      declarations: './declarations',
+      killFlow: false,
+      beep: true
+    }))
+    .pipe(through.obj((file, enc, cb) => {
+      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+      cb(null, file);
+    }))
+    .pipe(buble())
+    .pipe(webpackStream(webpackConfig,webpack))
+    .pipe(gulp.dest('./dist/js'));
+});
 
 gulp.task('usemin', function() {
   return gulp.src(['./app/*.html'])
@@ -21,8 +82,8 @@ gulp.task('usemin', function() {
         .pipe(usemin({
           css: [ autoprefixer({ browsers: ['last 2 versions']}),rev() ],
           html: [ minifyHtml({ empty: true }) ],
-          js: [ uglify(), rev() ],
-          inlinejs: [ uglify() ],
+//          js: [ uglify(), rev() ],
+//          inlinejs: [ uglify() ],
           inlinecss: [ minifyCss(), 'concat' ]
         }))
         // BE CAREFUL!!!
