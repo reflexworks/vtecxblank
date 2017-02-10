@@ -1,8 +1,5 @@
 var gulp = require('gulp');
-var usemin = require('gulp-usemin');
-var uglify = require('gulp-uglify');
 var minifyHtml = require('gulp-minify-html');
-var minifyCss = require('gulp-minify-css');
 var rev = require('gulp-rev');
 var webserver  = require('gulp-webserver');
 var imagemin  = require('gulp-imagemin');
@@ -10,7 +7,6 @@ var symlink = require('gulp-symlink');
 var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var clean = require('gulp-clean');
-var autoprefixer = require('gulp-autoprefixer');
 var argv = require('minimist')(process.argv.slice(2));
 var foreach = require('gulp-foreach');
 var flow = require('gulp-flowtype');
@@ -21,6 +17,7 @@ var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
 var webpackConfig = require('./webpack.config.js');
 var serverwebpackConfig = require('./server.webpack.config.js');
+var htmlreplace = require('gulp-html-replace');;
 
 gulp.task('build', function() {
   return gulp.src('./app/scripts/*.js')
@@ -37,7 +34,7 @@ gulp.task('build', function() {
     }))
     .pipe(buble())
     .pipe(webpackStream(webpackConfig,webpack))
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('build_server', function() {
@@ -75,31 +72,14 @@ gulp.task('build_server_webpack', function() {
     .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('usemin', function() {
-  return gulp.src(['./app/*.html'])
- .pipe(foreach(function (stream, file) {
-      return stream
-        .pipe(usemin({
-          css: [ autoprefixer({ browsers: ['last 2 versions']}),rev() ],
-          html: [ minifyHtml({ empty: true }) ],
-//          js: [ uglify(), rev() ],
-//          inlinejs: [ uglify() ],
-          inlinecss: [ minifyCss(), 'concat' ]
-        }))
-        // BE CAREFUL!!!
-        // This now has the CSS/JS files added to the stream
-        // Not just the HTML files you sourced
-        .pipe(gulp.dest('dist/'));
-    }))
+gulp.task('html', function() {
+  gulp.src('./app/*.html')
+      .pipe(htmlreplace({
+          'bundle': { src :null, tpl: '<script src="%f.bundle.js"></script>' }
+      }))
+      .pipe(minifyHtml({ empty: true }))
+      .pipe(gulp.dest('dist/'));
 });
-
-gulp.task( 'copyserver', function() {
-    return gulp.src(
-        [ 'app/server/*.js' ],
-        { base: 'app' }
-    ).pipe( uglify() )
-    .pipe( gulp.dest( 'dist' ) );
-} );
 
 gulp.task( 'copyimages', function() {
     return gulp.src(
@@ -180,7 +160,7 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('default', function ( callback ) {
-  runSequence('clean-dist','symlink',['usemin','copyserver','copyimages','copyxlspdf'],callback);
+  runSequence('clean-dist','symlink',['html','build','build_server','copyimages','copyxlspdf'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {

@@ -4,11 +4,11 @@ var webpack = require('webpack');
 module.exports = {
 	context: path.resolve(__dirname, './app'),
   	entry: {
-    	index: './scripts/index.js',
+    		index: './scripts/index.js'
   	},
   	output: {
-    	path: path.resolve(__dirname, './dist'),
-    	filename: '[name].bundle.js',
+    		path: path.resolve(__dirname, './dist'),
+    		filename: '[name].bundle.js'
   	},
 	module: {
 	    rules: [
@@ -21,12 +21,12 @@ module.exports = {
 		          use: { loader: 'url-loader', options: { limit: 100000 } },
 	          },
 	          {
-		          test: /\.jpg$/,
-		          use: [ 'file-loader' ]
+		          test: /\.(jpg)$/,
+		          use: { loader: 'file-loader', options: { name : '[name].[ext]'}} 
 	          }
 	    ]
      	},
     	plugins: [
-          new webpack.optimize.UglifyJsPlugin()  // minify
-    ]
+        //  new webpack.optimize.UglifyJsPlugin()  // minify
+        ]
 }
