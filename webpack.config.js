@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
 	context: path.resolve(__dirname, './app'),
   	entry: {
-    		index: './scripts/index.js'
+    		index: './src/index.js'
   	},
   	output: {
     		path: path.resolve(__dirname, './dist'),
@@ -27,6 +27,6 @@ module.exports = {
 	    ]
      	},
     	plugins: [
-        //  new webpack.optimize.UglifyJsPlugin()  // minify
+          new webpack.optimize.UglifyJsPlugin()  // minify
         ]
 }

@@ -20,7 +20,7 @@ var serverwebpackConfig = require('./server.webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
 
 gulp.task('build', function() {
-  return gulp.src('./app/scripts/*.js')
+  return gulp.src('./app/src/*.js')
     .pipe(flow({
       all: false,
       weak: false,
