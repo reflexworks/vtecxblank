@@ -18,6 +18,7 @@ var webpackStream = require('webpack-stream');;
 var webpackConfig = require('./webpack.config.js');
 var serverWebpackConfig = require('./server.webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
+var uglify = require('gulp-uglify');
 
 gulp.task('compile', function() {
   return gulp.src('./app/src/*.js')
@@ -57,6 +58,7 @@ gulp.task('build_server', function() {
       cb(null, file);
     }))
     .pipe(buble())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist/server'));
 });
 
