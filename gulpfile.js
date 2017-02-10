@@ -16,10 +16,10 @@ var buble = require('gulp-buble');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
 var webpackConfig = require('./webpack.config.js');
-var serverwebpackConfig = require('./server.webpack.config.js');
+var serverWebpackConfig = require('./server.webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
 
-gulp.task('build', function() {
+gulp.task('compile', function() {
   return gulp.src('./app/src/*.js')
     .pipe(flow({
       all: false,
@@ -33,9 +33,15 @@ gulp.task('build', function() {
       cb(null, file);
     }))
     .pipe(buble())
+    .pipe(gulp.dest('./app/js'));
+});
+
+gulp.task('webpack', function() {
+  return gulp.src('./app/js/*.js')
     .pipe(webpackStream(webpackConfig,webpack))
     .pipe(gulp.dest('./dist'));
 });
+
 
 gulp.task('build_server', function() {
   return gulp.src('./app/server/*.js')
@@ -54,21 +60,9 @@ gulp.task('build_server', function() {
     .pipe(gulp.dest('./dist/server'));
 });
 
-gulp.task('build_server_webpack', function() {
-  return gulp.src('./app/server/*.js')
-    .pipe(flow({
-      all: false,
-      weak: false,
-      declarations: './declarations',
-      killFlow: false,
-      beep: true
-    }))
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(buble())
-    .pipe(webpackStream(webpackConfig,webpack))
+gulp.task('webpack_server', function() {
+  return gulp.src('./dist/server/*.js')
+    .pipe(webpackStream(serverWebpackConfig,webpack))
     .pipe(gulp.dest('./dist/js'));
 });
 
@@ -159,8 +153,8 @@ gulp.task('upload2', function (cb) {
   });
 })
 
-gulp.task('default', function ( callback ) {
-  runSequence('clean-dist','symlink',['html','build','build_server','copyimages','copyxlspdf'],callback);
+gulp.task('build', function ( callback ) {
+  runSequence('clean-dist','symlink','compile',['html','webpack','build_server','copyimages','copyxlspdf'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {
@@ -170,3 +164,5 @@ gulp.task('deploy', function ( callback ) {
 gulp.task('upload', function ( callback ) {
   runSequence('upload1','upload2',callback);
 }); 
+
+gulp.task('default', ['compile']);
