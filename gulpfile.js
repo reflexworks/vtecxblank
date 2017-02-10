@@ -33,11 +33,11 @@ gulp.task('compile', function() {
       cb(null, file);
     }))
     .pipe(buble())
-    .pipe(gulp.dest('./app/js'));
+    .pipe(gulp.dest('./app/scripts'));
 });
 
 gulp.task('webpack', function() {
-  return gulp.src('./app/js/*.js')
+  return gulp.src('./app/scripts/*.js')
     .pipe(webpackStream(webpackConfig,webpack))
     .pipe(gulp.dest('./dist'));
 });
