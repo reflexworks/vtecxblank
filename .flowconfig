@@ -1,0 +1,9 @@
+[ignore]
+
+[include]
+./node_modules/reflexcontext
+
+[libs]
+./app/decls
+
+[options]

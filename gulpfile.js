@@ -65,13 +65,14 @@ gulp.task('build_server', function() {
 gulp.task('webpack_server', function() {
   return gulp.src('./dist/server/*.js')
     .pipe(webpackStream(serverWebpackConfig,webpack))
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./app/scripts'));
 });
 
 gulp.task('html', function() {
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
-          'bundle': { src :null, tpl: '<script src="%f.bundle.js"></script>' }
+          'separate': { src :null, tpl: '<script src="%f.bundle.js"></script>' },
+          'common': { src :null, tpl: '<script src="common.bundle.js"></script>' }
       }))
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('dist/'));

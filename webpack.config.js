@@ -4,7 +4,8 @@ var webpack = require('webpack');
 module.exports = {
 	context: path.resolve(__dirname, './app'),
   	entry: {
-    		index: './src/index.js'
+    		common: './scripts/_common.js',
+    		index: './scripts/_index.js'
   	},
   	output: {
     		path: path.resolve(__dirname, './dist'),
