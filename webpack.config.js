@@ -2,10 +2,10 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-	context: path.resolve(__dirname, './app'),
+	context: path.resolve(__dirname, './webpack'),
   	entry: {
-    		common: './webpack/common.js',
-    		index: './webpack/index.js'
+    		common: './common.import.js',
+    		index: './index.import.js'
   	},
   	output: {
     		path: path.resolve(__dirname, './dist'),

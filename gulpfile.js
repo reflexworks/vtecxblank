@@ -20,8 +20,8 @@ var serverWebpackConfig = require('./server.webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
 var uglify = require('gulp-uglify');
 
-gulp.task('compile', function() {
-  return gulp.src('./app/src/*.js')
+gulp.task('transpile', function() {
+  return gulp.src('./src/*.js')
     .pipe(flow({
       all: false,
       weak: false,
@@ -168,4 +168,4 @@ gulp.task('upload', function ( callback ) {
   runSequence('upload1','upload2',callback);
 }); 
 
-gulp.task('default', ['compile']);
+gulp.task('default', ['transpile']);
