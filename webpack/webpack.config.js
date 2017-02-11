@@ -2,13 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-	context: path.resolve(__dirname, './webpack'),
+	context: path.resolve(__dirname, '.'),
   	entry: {
     		common: './common.import.js',
     		index: './index.import.js'
   	},
   	output: {
-    		path: path.resolve(__dirname, './dist'),
+    		path: path.resolve(__dirname, '../dist'),
     		filename: '[name].bundle.js'
   	},
 	module: {

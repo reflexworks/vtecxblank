@@ -2,12 +2,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-	context: path.resolve(__dirname, './app'),
+	context: path.resolve(__dirname, '../app'),
   	entry: {
     	app: './server/reflexcontexttest.js',
   	},
   	output: {
-    	path: path.resolve(__dirname, './dist'),
+    	path: path.resolve(__dirname, '../test'),
     	filename: '[name].bundle.js',
   	},
     plugins: [

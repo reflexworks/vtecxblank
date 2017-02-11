@@ -15,8 +15,8 @@ var through = require('through2');
 var buble = require('gulp-buble');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
-var webpackConfig = require('./webpack.config.js');
-var serverWebpackConfig = require('./server.webpack.config.js');
+var webpackConfig = require('./webpack/webpack.config.js');
+var serverWebpackConfig = require('./webpack/server.webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
 var uglify = require('gulp-uglify');
 
@@ -65,7 +65,7 @@ gulp.task('build_server', function() {
 gulp.task('webpack_server', function() {
   return gulp.src('./dist/server/*.js')
     .pipe(webpackStream(serverWebpackConfig,webpack))
-    .pipe(gulp.dest('./app/scripts'));
+    .pipe(gulp.dest('./test'));
 });
 
 gulp.task('html', function() {
@@ -100,7 +100,9 @@ gulp.task('symlink', function () {
 });
 
 gulp.task('serve', function() {
-  gulp.src('app')
+  var tgt = 'app';
+  if (argv.t) tgt = argv.t;
+  return gulp.src(tgt)
     .pipe(webserver({
       livereload: true,
       open: true,
