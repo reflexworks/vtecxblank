@@ -93,16 +93,17 @@ module.exports = reflexContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 var reflexContext = __webpack_require__(0);
-/*       */ 
+
 reflexContext.get({
         url: '/d/registration'
     }).then(function(data){
+        // ¬Œ÷Žž
         console.log(data);
     }, function(err){
+        // Ž¸”sŽž
         console.log('err', err);
     });
-     
-  
+ 
 
 /***/ })
 /******/ ]);

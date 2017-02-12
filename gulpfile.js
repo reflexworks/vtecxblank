@@ -53,7 +53,14 @@ gulp.task('watch', function(){
       cb(null, file);
     }))
     .pipe(buble())
-    .pipe(gulp.dest('./app/scripts'));    
+    .pipe(gulp.dest('./app/scripts'))
+    .pipe(webpackStream({
+      output: {
+          filename: changedFile.path.replace(/^.*[\\\/]/, '')
+        }
+      }
+      ,webpack))
+    .pipe(gulp.dest('./app/scripts'));
   });
 });
 
