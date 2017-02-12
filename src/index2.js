@@ -1,11 +1,22 @@
-var reflexContext = require('reflexContext');
 /* @flow */ 
-reflexContext.get({
-        url: '/d/registration'
-    }).then(function(data){
-        console.log(data);
-    }, function(err){
-        console.log('err', err);
-    });
-     
+class Point {
+  x: number;
+  y: number; 
+
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  move(x: number, y: number) {
+    this.x += x;
+    this.y += y;
+  }
+
+  copy(): Point {
+    return new Point(this.x, this.y);
+  }
+}
+module.exports = Point;
+
   

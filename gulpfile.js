@@ -56,7 +56,7 @@ gulp.task('watch', function(){
     .pipe(gulp.dest('./app/scripts'))
     .pipe(webpackStream({
       output: {
-          filename: changedFile.path.replace(/^.*[\\\/]/, '')
+          filename: 'bundle.'+changedFile.path.replace(/^.*[\\\/]/, '')
         }
       }
       ,webpack))
