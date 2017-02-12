@@ -37,6 +37,26 @@ gulp.task('transpile', function() {
     .pipe(gulp.dest('./app/scripts'));
 });
 
+gulp.task('watch', function(){
+  gulp.watch('./src/*.js')
+  .on('change', function(changedFile) {
+    gulp.src(changedFile.path)
+    .pipe(flow({
+      all: false,
+      weak: false,
+      declarations: './declarations',
+      killFlow: false,
+      beep: true
+    }))
+    .pipe(through.obj((file, enc, cb) => {
+      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+      cb(null, file);
+    }))
+    .pipe(buble())
+    .pipe(gulp.dest('./app/scripts'));    
+  });
+});
+
 gulp.task('webpack', function() {
   return gulp.src('./app/scripts/*.js')
     .pipe(webpackStream(webpackConfig,webpack))
@@ -170,4 +190,4 @@ gulp.task('upload', function ( callback ) {
   runSequence('upload1','upload2',callback);
 }); 
 
-gulp.task('default', ['transpile']);
+gulp.task('default', ['transpile','watch']);
