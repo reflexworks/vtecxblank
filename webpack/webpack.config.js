@@ -15,7 +15,7 @@ module.exports = {
     		registration: './registration.import.js'
   	},
   	output: {
-    		path: path.resolve(__dirname, '../dist'),
+    		path: path.resolve(__dirname, '../dist/js'),
     		filename: '[name].bundle.js'
   	},
 	module: {

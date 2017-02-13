@@ -59,7 +59,7 @@ gulp.task('watch', function(){
 gulp.task('webpack', function() {
   return gulp.src('./app/scripts/*.js')
     .pipe(webpackStream(webpackConfig,webpack))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('watch:server', function(){
@@ -103,8 +103,8 @@ gulp.task('build:server', function() {
 gulp.task('copyhtml', function() {
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
-          'separate': { src :null, tpl: '<script src="%f.bundle.js"></script>' },
-          'common': { src :null, tpl: '<script src="common.bundle.js"></script>' }
+          'separate': { src :null, tpl: '<script src="js/%f.bundle.js"></script>' },
+          'common': { src :null, tpl: '<script src="js/common.bundle.js"></script>' }
       }))
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('dist/'));
