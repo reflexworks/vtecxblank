@@ -3,10 +3,10 @@ var reflexContext = require('reflexContext');
 reflexContext.get({
         url: '/d/registration'
     }).then(function(data){
-        // ¬Œ÷
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         console.log(data);
     }, function(err){
-        // ¸”s
+        // ï¿½ï¿½ï¿½sï¿½ï¿½
         console.log('err', err);
     });
    

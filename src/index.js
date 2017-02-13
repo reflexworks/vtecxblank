@@ -1,4 +1,4 @@
-var Point = require('./index2');
+var Point = require('./point');
 
 /* @flow */
 function foo(str:string) {
