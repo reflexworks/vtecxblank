@@ -525,7 +525,7 @@ h3.title {
   width: auto;
   margin: 0 10px 0 0;
   padding: 10px 30px 10px 60px;
-  background: url(../images/select_off.png) no-repeat left 45% #eee;
+  background: url(../img/select_off.png) no-repeat left 45% #eee;
   box-shadow: 0 3px 0 #e6e6e6;
   border-radius: 3px;
   color: #222;
@@ -535,7 +535,7 @@ h3.title {
   transition: .2s;
 }
 .select-radio input[type="radio"]:checked + .switch-on{
-  background: url(../images/select_on.png) no-repeat left 45% #5c99c0;
+  background: url(../img/select_on.png) no-repeat left 45% #5c99c0;
   box-shadow: none;
   color: #fff;
 }
@@ -555,7 +555,7 @@ h3.title {
   width: auto;
   margin: 0 10px 0 0;
   padding: 10px 30px 10px 60px;
-  background: url(../images/select_off.png) no-repeat left 45% #eee;
+  background: url(../img/select_off.png) no-repeat left 45% #eee;
   box-shadow: 0 3px 0 #e6e6e6;
   border-radius: 3px;
   color: #222;
@@ -565,7 +565,7 @@ h3.title {
   transition: .2s;
 }
 .select-check input[type="checkbox"]:checked + .switch-on{
-  background: url(../images/select_on.png) no-repeat left 45% #5c99c0;
+  background: url(../img/select_on.png) no-repeat left 45% #5c99c0;
   box-shadow: none;
   color: #fff;
 }
@@ -605,7 +605,7 @@ h3.title {
  -moz-opacity: 0.55;
  -khtml-opacity: 0.55;
  opacity: 0.55;
- background-image: url(../images/loading.gif);
+ background-image: url(../img/loading.gif);
  background-position: center center;
  background-repeat: no-repeat;
  background-attachment: fixed;
