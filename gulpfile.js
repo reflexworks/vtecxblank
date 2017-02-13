@@ -33,13 +33,13 @@ gulp.task('watch', function(){
   gulp.watch('./src/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
-    .pipe(flow({
+/*    .pipe(flow({
       all: false,
       weak: false,
       declarations: './declarations',
       killFlow: false,
       beep: true
-    }))
+    })) */
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);

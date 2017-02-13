@@ -1,20 +1,7 @@
 var Point = require('./point');
 
 /*       */
-function foo(str       ) {
-  return str + ' World!';
-}
-foo("abc");
-
-function world()         {
-  return '123';
-}  
-world(); 
- 
 var add = function ( a, b ) { return a + b; };
+var point = new Point(5,6);
 
-console.log(Point);
-
-var xx = new Point(5,6);
-
-alert('Hello!'+add(xx.x,xx.y));
+alert('Result='+add(point.x,point.y));

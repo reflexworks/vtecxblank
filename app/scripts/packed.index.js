@@ -11,16 +11,16 @@
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -33,59 +33,72 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-	var Point = __webpack_require__(1);
+/*       */ 
+var Point = function Point(x      , y      ) {
+  this.x = x;
+  this.y = y;
+};
 
-	/*       */
-	function foo(str       ) {
-	  return str + ' World!';
-	}
-	foo("abc");
+Point.prototype.move = function move (x      , y      ) {
+  this.x += x;
+  this.y += y;
+};
 
-	function world()         {
-	  return '123';
-	}  
-	world(); 
-	 
-	var add = function ( a, b ) { return a + b; };
-
-	console.log(Point);
-
-	var xx = new Point(5,6);
-
-	alert('Hello!'+add(xx.x,xx.y));
+Point.prototype.copy = function copy ()      {
+  return new Point(this.x, this.y);
+};
+module.exports = Point;
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	/*       */ 
-	var Point = function Point(x      , y      ) {
-	  this.x = x;
-	  this.y = y;
-	};
+var Point = __webpack_require__(0);
 
-	Point.prototype.move = function move (x      , y      ) {
-	  this.x += x;
-	  this.y += y;
-	};
+/*       */
+var add = function ( a, b ) { return a + b; };
+var point = new Point(5,6);
 
-	Point.prototype.copy = function copy ()      {
-	  return new Point(this.x, this.y);
-	};
-	module.exports = Point;
+alert('Result='+add(point.x,point.y));
 
 
-/***/ }
+/***/ })
 /******/ ]);
