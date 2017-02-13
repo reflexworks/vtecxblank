@@ -13,5 +13,3 @@ Point.prototype.copy = function copy ()      {
   return new Point(this.x, this.y);
 };
 module.exports = Point;
-
-  

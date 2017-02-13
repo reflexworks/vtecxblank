@@ -1,4 +1,4 @@
-var Point = require('./index2');
+var Point = require('./point');
 
 /*       */
 function foo(str       ) {
