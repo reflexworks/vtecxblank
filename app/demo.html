@@ -2,19 +2,13 @@
 <html lang="ja-JP">
 <head>
 	<meta charset="utf-8" />
-    <!-- build:css1 css/vendor.css -->
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="styles/simple-sidebar.css">
-    <!-- endbuild -->
 
-    <!-- build:css2 css/main.css -->
-    <link rel="stylesheet" href="styles/demo.css">
-    <!-- endbuild -->
-
-    <!-- build:inlinejs js/vendor.js -->
+    <!-- build:common -->
+	<link rel="stylesheet" href="styles/index.css">
     <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- endbuild -->
+	<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+	<!-- endbuild -->
 
 </head>
 
@@ -57,9 +51,11 @@
 	</div>
 	<!-- /#wrapper -->
 	
-<!-- build:js({.tmp,app}) scr/list.js -->
-<script src="scripts/demo.js"></script>
-<!-- endbuild -->
+    <!-- build:separate -->
+	<script src="scripts/demo.js"></script>
+    <link rel="stylesheet" href="styles/simple-sidebar.css">
+    <link rel="stylesheet" href="styles/demo.css">
+	<!-- endbuild -->
 
 <!-- Modal -->
 <div id="errormodal" class="modal fade">  <!-- Modal本体 -->
