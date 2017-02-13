@@ -63,16 +63,16 @@ gulp.task('webpack', function() {
 });
 
 gulp.task('watch:server', function(){
-  gulp.watch('./app/server/*.js')
+  gulp.watch('./src/server/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
-/*    .pipe(flow({
+    .pipe(flow({
       all: false,
       weak: false,
       declarations: './declarations',
       killFlow: false,
       beep: true
-    })) */
+    })) 
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
@@ -90,7 +90,7 @@ gulp.task('watch:server', function(){
 });
 
 gulp.task('build:server', function() {
-  return gulp.src('./app/server/*.js')
+  return gulp.src('./src/server/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
