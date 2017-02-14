@@ -1,1 +1,1 @@
-import '../app/scripts/forgot_password.js';
+import '../dev/js/forgot_password.js';

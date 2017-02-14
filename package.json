@@ -18,6 +18,7 @@
     "gulp-minify-html": "^1.0.4",
     "gulp-rev": "^6.0.1",
     "gulp-uglify": "^2.0.1",
+    "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
     "jquery": "^2.1.4",
     "jssha": "^2.0.1",

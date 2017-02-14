@@ -1,1 +1,1 @@
-import '../app/scripts/demo_list.js';
+import '../dev/js/demo_list.js';

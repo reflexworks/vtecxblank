@@ -1,3 +1,3 @@
-import '../app/styles/simple-sidebar.css';
-import '../app/styles/demo.css';
-import '../app/scripts/demo.js';
+import '../dev/styles/simple-sidebar.css';
+import '../dev/styles/demo.css';
+import '../dev/js/demo.js';

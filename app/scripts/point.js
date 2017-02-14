@@ -1,15 +1,20 @@
-/*       */ 
-var Point = function Point(x      , y      ) {
-  this.x = x;
-  this.y = y;
-};
+/* @flow */ 
+class Point {
+  x: number;
+  y: number; 
 
-Point.prototype.move = function move (x      , y      ) {
-  this.x += x;
-  this.y += y;
-};
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 
-Point.prototype.copy = function copy ()      {
-  return new Point(this.x, this.y);
-};
+  move(x: number, y: number) {
+    this.x += x;
+    this.y += y;
+  }
+
+  copy(): Point {
+    return new Point(this.x, this.y);
+  }
+}
 module.exports = Point;

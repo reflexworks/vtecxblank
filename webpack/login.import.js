@@ -1,3 +1,3 @@
-import '../app/scripts/login.js';
-import '../app/scripts/vte$encoder.js';
-import '../app/scripts/vte$createToken.js';
+import '../dev/js/login.js';
+import '../dev/js/vte$encoder.js';
+import '../dev/js/vte$createToken.js';

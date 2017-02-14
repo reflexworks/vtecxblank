@@ -17,19 +17,20 @@ var webpackStream = require('webpack-stream');;
 var webpackConfig = require('./webpack/webpack.config.js');
 var htmlreplace = require('gulp-html-replace');;
 var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
 
 gulp.task('transpile', function() {
-  return gulp.src('./src/*.js')
+  return gulp.src('./app/scripts/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
     .pipe(buble())
-    .pipe(gulp.dest('./app/scripts'));
+    .pipe(gulp.dest('./dev/js'));
 });
 
-gulp.task('watch', function(){
-  gulp.watch('./src/*.js')
+gulp.task('watch:scripts', function(){
+  gulp.watch('./app/scripts/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
     .pipe(flow({
@@ -44,25 +45,34 @@ gulp.task('watch', function(){
       cb(null, file);
     }))
     .pipe(buble())
-    .pipe(gulp.dest('./app/scripts'))
+    .pipe(gulp.dest('./dev/js'))
     .pipe(webpackStream({
       output: {
-          filename: 'packed.'+changedFile.path.replace(/^.*[\\\/]/, '')
+          filename: changedFile.path.replace(/^.*[\\\/]/, '')
         }
       }
       ,webpack))
-    .pipe(gulp.dest('./app/scripts'));
+    .pipe(gulp.dest('./dev/scripts'));
+  });
+});
+
+gulp.task('watch:html', function(){
+  gulp.watch('./app/*.html')
+  .on('change', function(changedFile) {
+	gutil.log('copied:'+changedFile.path.replace(/^.*[\\\/]/, ''));
+    gulp.src(changedFile.path)
+    .pipe(gulp.dest('./dev'));
   });
 });
 
 gulp.task('webpack', function() {
-  return gulp.src('./app/scripts/*.js')
+  return gulp.src('./dev/js/*.js')
     .pipe(webpackStream(webpackConfig,webpack))
     .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('watch:server', function(){
-  gulp.watch('./src/server/*.js')
+  gulp.watch('./app/server/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
     .pipe(flow({
@@ -89,7 +99,7 @@ gulp.task('watch:server', function(){
 });
 
 gulp.task('build:server', function() {
-  return gulp.src('./src/server/*.js')
+  return gulp.src('./app/server/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
@@ -99,7 +109,7 @@ gulp.task('build:server', function() {
     .pipe(gulp.dest('./dist/server'));
 });
 
-gulp.task('copyhtml', function() {
+gulp.task('build:html', function() {
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
           'separate': { src :null, tpl: '<script src="js/%f.bundle.js"></script>' },
@@ -109,7 +119,7 @@ gulp.task('copyhtml', function() {
       .pipe(gulp.dest('dist/'));
 });
 
-gulp.task( 'copyimages', function() {
+gulp.task( 'copy:images', function() {
     return gulp.src(
         [ 'app/img/**' ],
         { base: 'app' }
@@ -117,17 +127,23 @@ gulp.task( 'copyimages', function() {
     .pipe( gulp.dest( 'dist' ) );
 } );
 
-gulp.task( 'copyxlspdf', function() {
-    return gulp.src(
-        [ 'app/xls/**','app/pdf/**' ],
-        { base: 'app' }
-    ).pipe( gulp.dest( 'dist' ) );
-} );
-
 gulp.task('symlink', function () {
-  return vfs.src('node_modules',{followSymlinks: false})
-    .pipe(vfs.symlink('app')
-    ); 
+    vfs.src('node_modules',{followSymlinks: false})
+    	.pipe(vfs.symlink('app'));
+    vfs.src('node_modules',{followSymlinks: false})
+    	.pipe(vfs.symlink('dev'));
+    vfs.src('app/img',{followSymlinks: false})
+    	.pipe(vfs.symlink('dev'));
+    vfs.src('app/styles',{followSymlinks: false})
+    	.pipe(vfs.symlink('dev'));
+    vfs.src('app/pdf',{followSymlinks: false})
+    	.pipe(vfs.symlink('dev'));
+    vfs.src('app/xls',{followSymlinks: false})
+    	.pipe(vfs.symlink('dev'));
+    vfs.src('app/pdf',{followSymlinks: false})
+    	.pipe(vfs.symlink('dist'));
+    vfs.src('app/xls',{followSymlinks: false})
+    	.pipe(vfs.symlink('dist'));
 });
 
 gulp.task('serve', function() {
@@ -161,14 +177,13 @@ gulp.task('serve', function() {
       ]      
     }));
 });
+
 // distフォルダ内を一度全て削除する
 gulp.task('clean-dist', function () {
     return gulp.src([
         'dist/{,**/}*.html', // 対象ファイル
         'dist/css',
         'dist/js',
-        'dist/xls',
-        'dist/pdf',
         'dist/server',
         'dist/img'
     ], {read: false} )
@@ -190,7 +205,7 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('build', function ( callback ) {
-  runSequence('clean-dist','symlink','transpile',['copyhtml','webpack','build:server','copyimages','copyxlspdf'],callback);
+  runSequence('clean-dist','symlink','transpile',['build:html','webpack','build:server','copy:images'],callback);
 }); 
 
 gulp.task('deploy', function ( callback ) {
@@ -201,4 +216,7 @@ gulp.task('upload', function ( callback ) {
   runSequence('upload1','upload2',callback);
 }); 
 
+gulp.task('watch', ['watch:scripts','watch:html']);
+
 gulp.task('default', ['transpile','watch']);
+
