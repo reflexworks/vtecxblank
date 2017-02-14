@@ -3,12 +3,11 @@ var minifyHtml = require('gulp-minify-html');
 var rev = require('gulp-rev');
 var webserver  = require('gulp-webserver');
 var imagemin  = require('gulp-imagemin');
-var symlink = require('gulp-symlink'); 
+var vfs = require('vinyl-fs'); 
 var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var argv = require('minimist')(process.argv.slice(2));
-var foreach = require('gulp-foreach');
 var flow = require('gulp-flowtype');
 var flowRemoveTypes = require('flow-remove-types');
 var through = require('through2');
@@ -126,8 +125,8 @@ gulp.task( 'copyxlspdf', function() {
 } );
 
 gulp.task('symlink', function () {
-  return gulp.src('node_modules')
-    .pipe(symlink('app/node_modules',{force: true})
+  return vfs.src('node_modules',{followSymlinks: false})
+    .pipe(vfs.symlink('app')
     ); 
 });
 
