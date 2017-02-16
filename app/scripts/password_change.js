@@ -1,3 +1,5 @@
+require('./vte$encoder.js');
+
 $(function(){
 
 	// 新規アカウント登録

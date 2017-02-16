@@ -1,3 +1,6 @@
+require('./vte$encoder.js');
+require('./vte$createToken.js');
+
 //キャプチャ設定
 var reCaptchaWidget;
 var onloadCallback = function() {

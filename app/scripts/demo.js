@@ -1,3 +1,6 @@
+require('../styles/simple-sidebar.css');
+require('../styles/demo.css');
+
 $(function(){
 	
 	var thisHref;
