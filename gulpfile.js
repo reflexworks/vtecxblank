@@ -170,10 +170,15 @@ gulp.task('build:server_scripts', function() {
     .pipe(gulp.dest('./dist/server'));
 });
 
-gulp.task('build:server',['build:server_scripts'], function(){
+gulp.task('build:server_test', function(){
   gulp.src('./test/*.html')
       .pipe(webpack_files('./dist/server','./test'));      
 });
+
+gulp.task('build:server', function ( callback ) {
+  runSequence('clean-dist','build:server_scripts','build:server_test',callback);
+}); 
+
 
 gulp.task( 'copy:images', function() {
     return gulp.src(
@@ -233,7 +238,8 @@ gulp.task('clean-dist', function () {
         'dist/css',
         'dist/js',
         'dist/server',
-        'dist/img'
+        'dist/img',
+        'app/build/*.js'
     ], {read: false} )
     .pipe(clean());
 });
