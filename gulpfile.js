@@ -70,16 +70,18 @@ gulp.task('watch:html', function(){
   });
 });
 
-function webpack_scripts() {
- webpack_file('common.bundle.js');
+
+function webpack_scripts() { webpack_file('common.bundle.js','./dist/scripts'); return webpack_files('./dist/scripts') };
+
+function webpack_files(dest) {
  return eventStream.map(function (file, done) {
     var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-	webpack_file(filename);
+	webpack_file(filename,dest);
     done();
   });
 }
 
-function webpack_file(filename) {
+function webpack_file(filename,dest) {
 
     var srcfile = './app/build/'+filename;
     fs.stat(srcfile, function(err, stat) {
@@ -114,7 +116,7 @@ function webpack_file(filename) {
 		        ]		        
 		      }
 	      ,webpack))
-	      .pipe(gulp.dest('./dist/scripts'));
+	      .pipe(gulp.dest(dest));
 	    }
 	});
 }
@@ -127,6 +129,12 @@ gulp.task('build:htmlscripts',['symlink','transpile'], function(){
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
       .pipe(webpack_scripts());
+      
+});
+
+gulp.task('build:test', function(){
+  gulp.src('./test/*.html')
+      .pipe(webpack_files('./test'));
       
 });
 
@@ -185,13 +193,11 @@ gulp.task('symlink', function () {
     	.pipe(vfs.symlink('dist'));
 });
 
-gulp.task('serve', ['watch','serve:dist']);
-
-gulp.task('serve:dist', function() {
+gulp.task('serve', ['watch'],function() {
 	return serve('dist');
 });
 
-gulp.task('serve:test', function() {
+gulp.task('serve:server', ['watch:server'],function() {
 	return serve('test');
 });
 
