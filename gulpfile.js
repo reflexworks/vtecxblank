@@ -71,19 +71,19 @@ gulp.task('watch:html', function(){
 });
 
 
-function webpack_scripts() { webpack_file('common.bundle.js','./dist/scripts'); return webpack_files('./dist/scripts') };
+function webpack_scripts() { webpack_file('common.bundle.js','./app/build','./dist/scripts'); return webpack_files('./app/build','./dist/scripts') };
 
-function webpack_files(dest) {
+function webpack_files(src,dest) {
  return eventStream.map(function (file, done) {
     var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-	webpack_file(filename,dest);
+	webpack_file(filename,src,dest);
     done();
   });
 }
 
-function webpack_file(filename,dest) {
+function webpack_file(filename,src,dest) {
 
-    var srcfile = './app/build/'+filename;
+    var srcfile = src+'/'+filename;
     fs.stat(srcfile, function(err, stat) {
 	    if(err == null||filename==='common.bundle.js') {
 	      gulp.src(srcfile)
@@ -132,12 +132,6 @@ gulp.task('build:htmlscripts',['symlink','transpile'], function(){
       
 });
 
-gulp.task('build:test', function(){
-  gulp.src('./test/*.html')
-      .pipe(webpack_files('./test'));
-      
-});
-
 gulp.task('watch:server', function(){
   gulp.watch('./app/server/*.js')
   .on('change', function(changedFile) {
@@ -165,7 +159,7 @@ gulp.task('watch:server', function(){
   });
 });
 
-gulp.task('build:server', function() {
+gulp.task('build:server_scripts', function() {
   return gulp.src('./app/server/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
@@ -174,6 +168,11 @@ gulp.task('build:server', function() {
     .pipe(buble())
     .pipe(uglify())
     .pipe(gulp.dest('./dist/server'));
+});
+
+gulp.task('build:server',['build:server_scripts'], function(){
+  gulp.src('./test/*.html')
+      .pipe(webpack_files('./dist/server','./test'));      
 });
 
 gulp.task( 'copy:images', function() {
