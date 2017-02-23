@@ -1,5 +1,5 @@
 /* @flow */ 
-class Point {
+export default class Point {
   x: number;
   y: number; 
 
@@ -17,4 +17,4 @@ class Point {
     return new Point(this.x, this.y);
   }
 }
-module.exports = Point;
+//module.exports = Point;

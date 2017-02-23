@@ -20,13 +20,12 @@ var gutil = require('gulp-util');
 var eventStream = require('event-stream');
 var fs = require('fs');
 
-gulp.task('transpile', function() {
+gulp.task('removetypes', function() {
   return gulp.src('./app/scripts/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
-    .pipe(buble())
     .pipe(gulp.dest('./app/build'));
 });
 
@@ -45,11 +44,18 @@ gulp.task('watch:scripts', function(){
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
-    .pipe(buble())
     .pipe(gulp.dest('./app/build'))
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
+        },
+        module: {
+            rules: [
+                  {
+                          test: /\.(js)$/,
+                          use: { loader: 'buble-loader'}
+                  }
+            ]
         }
       }
       ,webpack))
@@ -104,6 +110,10 @@ function webpack_file(filename,src,dest) {
 		                  {
 		                          test: /\.(jpg)$/,
 		                          use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
+		                  },
+		                  {
+		                          test: /\.(js)$/,
+		                          use: { loader: 'buble-loader'}
 		                  }
 		            ]
 		        },
@@ -121,7 +131,7 @@ function webpack_file(filename,src,dest) {
 	});
 }
 
-gulp.task('build:htmlscripts',['symlink','transpile'], function(){
+gulp.task('build:htmlscripts',['symlink','removetypes'], function(){
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
           'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
