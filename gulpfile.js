@@ -33,13 +33,13 @@ gulp.task('watch:scripts', function(){
   gulp.watch('./app/scripts/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
-      .pipe(flow({
+/*      .pipe(flow({
       all: false,
       weak: false,
       declarations: './declarations',
       killFlow: false,
       beep: true
-    })) 
+    })) */
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
@@ -159,12 +159,20 @@ gulp.task('watch:server', function(){
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
-    .pipe(buble())
-    .pipe(gulp.dest('./dist/server'))
+    .pipe(gulp.dest('./app/build/server'))
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
+        },
+        module: {
+            rules: [
+                  {
+                          test: /\.(js)$/,
+                          use: { loader: 'buble-loader'}
+                  }
+            ]
         }
+        ,devtool: 'source-map'        
       }
       ,webpack))
     .pipe(gulp.dest('./test'));
@@ -177,14 +185,13 @@ gulp.task('build:server_scripts', function() {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
-    .pipe(buble())
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/server'));
+    .pipe(gulp.dest('./app/build/server'))
+    .pipe(webpack_files('./app/build/server','./dist/server'));      
 });
 
 gulp.task('build:server_test', function(){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./dist/server','./test'));      
+      .pipe(webpack_files('./app/build/server','./test'));      
 });
 
 gulp.task('build:server', function ( callback ) {
@@ -251,7 +258,8 @@ gulp.task('clean-dist', function () {
         'dist/scripts',
         'dist/server',
         'dist/img',
-        'app/build/*.js'
+        'app/build/*.js',
+        'app/build/server/*.js'
     ], {read: false} )
     .pipe(clean());
 });

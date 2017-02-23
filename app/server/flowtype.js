@@ -11,7 +11,6 @@ world();
 
 const add = ( a, b ) => a + b;
 
-var x = require('./xxxx');
 var reflexcontext = require('reflexcontext');
 
 reflexcontext.log('xxx');
