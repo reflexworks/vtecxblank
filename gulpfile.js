@@ -57,6 +57,7 @@ gulp.task('watch:scripts', function(){
                   }
             ]
         }
+        ,devtool: 'source-map'        
       }
       ,webpack))
     .pipe(gulp.dest('./dist/scripts'));
@@ -118,12 +119,13 @@ function webpack_file(filename,src,dest) {
 		            ]
 		        },
 		        plugins: [
-		          new webpack.optimize.UglifyJsPlugin(),  // minify
+		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
  				  new webpack.ProvidePlugin({
 	               		 $: "jquery",
 	          		jQuery: "jquery"
             	  })		          
-		        ]		        
+		        ]
+//		        ,devtool: 'source-map'
 		      }
 	      ,webpack))
 	      .pipe(gulp.dest(dest));
@@ -246,7 +248,7 @@ gulp.task('clean-dist', function () {
     return gulp.src([
         'dist/{,**/}*.html', // 対象ファイル
         'dist/css',
-        'dist/js',
+        'dist/scripts',
         'dist/server',
         'dist/img',
         'app/build/*.js'
