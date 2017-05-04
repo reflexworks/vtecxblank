@@ -11,7 +11,6 @@ var argv = require('minimist')(process.argv.slice(2));
 var flow = require('gulp-flowtype');
 var flowRemoveTypes = require('flow-remove-types');
 var through = require('through2');
-var buble = require('gulp-buble');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
 var htmlreplace = require('gulp-html-replace');;
@@ -19,6 +18,7 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var eventStream = require('event-stream');
 var fs = require('fs');
+var tap = require('gulp-tap');
 
 gulp.task('removetypes', function() {
   return gulp.src('./app/scripts/*.js')
@@ -77,15 +77,15 @@ gulp.task('watch:html', function(){
   });
 });
 
+function webpack_scripts(done) { webpack_file('common.bundle.js','./app/build','./dist/scripts'); return webpack_files('./app/build','./dist/scripts',done) };
 
-function webpack_scripts() { webpack_file('common.bundle.js','./app/build','./dist/scripts'); return webpack_files('./app/build','./dist/scripts') };
-
-function webpack_files(src,dest) {
- return eventStream.map(function (file, done) {
+function webpack_files(src,dest,done) {
+  var tasks = tap(function(file){
     var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-	webpack_file(filename,src,dest);
-    done();
+  	return webpack_file(filename,src,dest);   
   });
+  eventStream.merge(tasks).on('end', done);
+  return tasks;
 }
 
 function webpack_file(filename,src,dest) {
@@ -93,7 +93,7 @@ function webpack_file(filename,src,dest) {
     var srcfile = src+'/'+filename;
     fs.stat(srcfile, function(err, stat) {
 	    if(err == null||filename==='common.bundle.js') {
-	      gulp.src(srcfile)
+	      return gulp.src(srcfile)
 	      .pipe(webpackStream({
 		      output: {
 		          filename: filename
@@ -119,7 +119,7 @@ function webpack_file(filename,src,dest) {
 		            ]
 		        },
 		        plugins: [
-		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
+//		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
  				  new webpack.ProvidePlugin({
 	               		 $: "jquery",
 	          		jQuery: "jquery"
@@ -128,20 +128,19 @@ function webpack_file(filename,src,dest) {
 //		        ,devtool: 'source-map'
 		      }
 	      ,webpack))
-	      .pipe(gulp.dest(dest));
+	      .pipe(gulp.dest(dest))
 	    }
 	});
 }
 
-gulp.task('build:htmlscripts',['symlink','removetypes'], function(){
+gulp.task('build:htmlscripts',['symlink','removetypes'], function(done){
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
           'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
       }))
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
-      .pipe(webpack_scripts());
-      
+      .pipe(webpack_scripts(done));
 });
 
 gulp.task('watch:server', function(){
@@ -179,23 +178,23 @@ gulp.task('watch:server', function(){
   });
 });
 
-gulp.task('build:server_scripts', function() {
+gulp.task('build:server_scripts', function(done) {
   return gulp.src('./app/server/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
     .pipe(gulp.dest('./app/build/server'))
-    .pipe(webpack_files('./app/build/server','./dist/server'));      
+    .pipe(webpack_files('./app/build/server','./dist/server',done));      
 });
 
-gulp.task('build:server_test', function(){
+gulp.task('build:server_test', function(done){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/build/server','./test'));      
+      .pipe(webpack_files('./app/build/server','./test',done));      
 });
 
 gulp.task('build:server', function ( callback ) {
-  runSequence('clean-dist','build:server_scripts','build:server_test',callback);
+  runSequence('clean-dist',['build:server_scripts','build:server_test']);
 }); 
 
 
@@ -278,12 +277,14 @@ gulp.task('upload2', function (cb) {
   });
 })
 
-gulp.task('build', function ( callback ) {
-  runSequence('clean-dist',['build:htmlscripts','copy:images'],callback);
+gulp.task('build:client', function ( callback ) {
+  runSequence('clean-dist',['build:htmlscripts','copy:images']);
 }); 
-
+gulp.task('build', function ( callback ) {
+  runSequence('clean-dist',['build:htmlscripts','copy:images','build:server_scripts','build:server_test']);
+}); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('default','upload1','upload2',callback);
+  runSequence('build','upload',callback);
 }); 
 
 gulp.task('upload', function ( callback ) {
