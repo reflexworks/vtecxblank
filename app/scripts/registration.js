@@ -1,4 +1,4 @@
-require('./vte$encoder.js');
+var jsSHA = require('./jsSHA.js');
 
 //キャプチャ設定
 var reCaptchaWidget;

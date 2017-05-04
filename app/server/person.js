@@ -1,17 +1,18 @@
-var reflexContext = require('reflexContext');
+//var reflexContext = require('reflexContext');
 
 /* @flow */
-class Person {
+export default class Person {
     constructor(
             name:string = 'dummy'
     ) {
     	this.name = name;
     }
 
-    say():void {
+    say():String {
+    	return 'Hello, I\'m ' + this.name + '!!';
 //           reflexContext.log('Hello, I\'m ' + this.name + '!!');
-           alert('Hello, I\'m ' + this.name + '!!');
+//           alert('Hello, I\'m ' + this.name + '!!');
 
     }
 }
-module.exports = Person;
+//module.exports = Person;

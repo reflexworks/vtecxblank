@@ -1,5 +1,5 @@
-require('./vte$encoder.js');
 require('./vte$createToken.js');
+var jsSHA = require('./jsSHA.js');
 
 //キャプチャ設定
 var reCaptchaWidget;
@@ -12,7 +12,7 @@ var onloadCallback = function() {
 function getCaptchaOpt(){
 	return 'g-recaptcha-response='+grecaptcha.getResponse(reCaptchaWidget);
 }
-
+ 
 $(function(){
 
   var captchaon = false;
