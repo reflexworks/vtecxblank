@@ -17,7 +17,7 @@ var htmlreplace = require('gulp-html-replace');;
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var eventStream = require('event-stream');
-var fs = require('fs');
+var fs = require('fs-sync');
 var tap = require('gulp-tap');
 
 gulp.task('removetypes', function() {
@@ -80,20 +80,27 @@ gulp.task('watch:html', function(){
 function webpack_scripts(done) { webpack_file('common.bundle.js','./app/build','./dist/scripts'); return webpack_files('./app/build','./dist/scripts',done) };
 
 function webpack_files(src,dest,done) {
-  var tasks = tap(function(file){
+  var filenames = [];
+  var streams = tap(function(file){
     var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-  	return webpack_file(filename,src,dest);   
+      if (fs.exists(src+'/'+filename)||filename==='common.bundle.js') {
+          filenames.push(filename);
+      }
   });
-  eventStream.merge(tasks).on('end', done);
-  return tasks;
+
+  eventStream.merge(streams).on('end', function() { 
+    var tasks = filenames.map(function(filename) {
+        return webpack_file(filename,src,dest);   
+      }
+    );
+    eventStream.merge(tasks).on('end', done); 
+  });
+
+return streams;
 }
 
 function webpack_file(filename,src,dest) {
-
-    var srcfile = src+'/'+filename;
-    fs.stat(srcfile, function(err, stat) {
-	    if(err == null||filename==='common.bundle.js') {
-	      return gulp.src(srcfile)
+	      return gulp.src(src+'/'+filename)
 	      .pipe(webpackStream({
 		      output: {
 		          filename: filename
@@ -129,11 +136,9 @@ function webpack_file(filename,src,dest) {
 		      }
 	      ,webpack))
 	      .pipe(gulp.dest(dest))
-	    }
-	});
 }
 
-gulp.task('build:htmlscripts',['symlink','removetypes'], function(done){
+gulp.task('build:html_scripts',['symlink','removetypes'], function(done){
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
           'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
@@ -179,12 +184,12 @@ gulp.task('watch:server', function(){
 });
 
 gulp.task('build:server_scripts', function(done) {
-  return gulp.src('./app/server/*.js')
+  gulp.src('./app/server/*.js')
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
-    .pipe(gulp.dest('./app/build/server'))
+    .pipe(gulp.dest('./app/build/server'))          
     .pipe(webpack_files('./app/build/server','./dist/server',done));      
 });
 
@@ -278,10 +283,10 @@ gulp.task('upload2', function (cb) {
 })
 
 gulp.task('build:client', function ( callback ) {
-  runSequence('clean-dist',['build:htmlscripts','copy:images']);
+  runSequence('clean-dist',['build:html_scripts','copy:images']);
 }); 
 gulp.task('build', function ( callback ) {
-  runSequence('clean-dist',['build:htmlscripts','copy:images','build:server_scripts','build:server_test']);
+  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test');
 }); 
 gulp.task('deploy', function ( callback ) {
   runSequence('build','upload',callback);
@@ -294,5 +299,5 @@ gulp.task('upload', function ( callback ) {
 gulp.task('watch', ['watch:scripts','watch:html']);
 
 gulp.task('default', function ( callback ) {
-  runSequence('build:htmlscripts','watch',callback);
+  runSequence('build:html_scripts','watch',callback);
 }); 
