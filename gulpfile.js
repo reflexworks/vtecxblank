@@ -126,8 +126,8 @@ function webpack_file(filename,src,dest) {
 		            ]
 		        },
 		        plugins: [
-//		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
- 				  new webpack.ProvidePlugin({
+		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
+     				  new webpack.ProvidePlugin({
 	               		 $: "jquery",
 	          		jQuery: "jquery"
             	  })		          
@@ -184,13 +184,17 @@ gulp.task('watch:server', function(){
 });
 
 gulp.task('build:server_scripts', function(done) {
-  gulp.src('./app/server/*.js')
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(gulp.dest('./app/build/server'))          
-    .pipe(webpack_files('./app/build/server','./dist/server',done));      
+  eventStream.merge(
+    gulp.src('./app/server/*.js')
+      .pipe(through.obj((file, enc, cb) => {
+        file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+        cb(null, file);
+      }))
+      .pipe(gulp.dest('./app/build/server')),
+
+    gulp.src('./test/*.html')
+      .pipe(webpack_files('./app/build/server','./dist/server',done))
+  );
 });
 
 gulp.task('build:server_test', function(done){
@@ -289,7 +293,7 @@ gulp.task('build', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test');
 }); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test','upload');
+  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'upload');
 }); 
 
 gulp.task('upload', function ( callback ) {
