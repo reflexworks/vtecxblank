@@ -289,7 +289,7 @@ gulp.task('build', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test');
 }); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('build','upload',callback);
+  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test','upload');
 }); 
 
 gulp.task('upload', function ( callback ) {
