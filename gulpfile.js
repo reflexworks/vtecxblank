@@ -9,16 +9,15 @@ var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var argv = require('minimist')(process.argv.slice(2));
 var flow = require('gulp-flowtype');
-var flowRemoveTypes = require('flow-remove-types');
 var through = require('through2');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
 var htmlreplace = require('gulp-html-replace');;
-var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var eventStream = require('event-stream');
 var fs = require('fs-sync');
 var tap = require('gulp-tap');
+var BabiliPlugin = require('babili-webpack-plugin');
 
 gulp.task('removetypes', function() {
   return gulp.src('./app/scripts/*.js')
@@ -40,11 +39,6 @@ gulp.task('watch:scripts', function(){
       killFlow: false,
       beep: true
     })) */
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(gulp.dest('./app/build'))
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
@@ -53,7 +47,8 @@ gulp.task('watch:scripts', function(){
             rules: [
                   {
                           test: /\.(js)$/,
-                          use: { loader: 'buble-loader'}
+                          use: { loader: 'babel-loader'},
+                          exclude: /node_modules/
                   }
             ]
         }
@@ -77,7 +72,7 @@ gulp.task('watch:html', function(){
   });
 });
 
-function webpack_scripts(done) { webpack_file('common.bundle.js','./app/build','./dist/scripts'); return webpack_files('./app/build','./dist/scripts',done) };
+function webpack_scripts(done) { webpack_file('common.bundle.js','./app/scripts','./dist/scripts'); return webpack_files('./app/scripts','./dist/scripts',done) };
 
 function webpack_files(src,dest,done) {
   var filenames = [];
@@ -121,16 +116,17 @@ function webpack_file(filename,src,dest) {
 		                  },
 		                  {
 		                          test: /\.(js)$/,
-		                          use: { loader: 'buble-loader'}
+		                          use: { loader: 'babel-loader'},
+                              exclude: /node_modules/
 		                  }
 		            ]
 		        },
 		        plugins: [
-		          new webpack.optimize.UglifyJsPlugin({sourceMap: true}),  // minify
      				  new webpack.ProvidePlugin({
 	               		 $: "jquery",
 	          		jQuery: "jquery"
-            	  })		          
+            	  })
+//                new BabiliPlugin()		          
 		        ]
 //		        ,devtool: 'source-map'
 		      }
@@ -138,7 +134,7 @@ function webpack_file(filename,src,dest) {
 	      .pipe(gulp.dest(dest))
 }
 
-gulp.task('build:html_scripts',['symlink','removetypes'], function(done){
+gulp.task('build:html_scripts',['symlink'], function(done){
   gulp.src('./app/*.html')
       .pipe(htmlreplace({
           'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
@@ -159,11 +155,13 @@ gulp.task('watch:server', function(){
       killFlow: false,
       beep: true
     })) 
+    /*
     .pipe(through.obj((file, enc, cb) => {
       file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
       cb(null, file);
     }))
     .pipe(gulp.dest('./app/build/server'))
+    */
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
@@ -183,29 +181,30 @@ gulp.task('watch:server', function(){
   });
 });
 
+/*
 gulp.task('build:server_scripts', function(done) {
-  eventStream.merge(
-    gulp.src('./app/server/*.js')
-      .pipe(through.obj((file, enc, cb) => {
-        file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-        cb(null, file);
-      }))
-      .pipe(gulp.dest('./app/build/server')),
+  return gulp.src('./app/server/*.js')
+    .pipe(through.obj((file, enc, cb) => {
+      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
+      cb(null, file);
+    }))
+    .pipe(gulp.dest('./app/build/server'));          
+});
+*/
 
-    gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/build/server','./dist/server',done))
-  );
+gulp.task('build:server_dist', function(done){
+  gulp.src('./test/*.html')
+      .pipe(webpack_files('./app/server','./dist/server',done));      
 });
 
 gulp.task('build:server_test', function(done){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/build/server','./test',done));      
+      .pipe(webpack_files('./app/server','./test',done));      
 });
 
 gulp.task('build:server', function ( callback ) {
-  runSequence('clean-dist',['build:server_scripts','build:server_test']);
+  runSequence('clean-dist',['build:server_dist','build:server_test']);
 }); 
-
 
 gulp.task( 'copy:images', function() {
     return gulp.src(
@@ -290,10 +289,10 @@ gulp.task('build:client', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images']);
 }); 
 gulp.task('build', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'build:server_test');
+  runSequence('clean-dist',['build:html_scripts','copy:images'],['build:server_dist','build:server_test']);
 }); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images','build:server_scripts'],'upload');
+  runSequence('clean-dist',['build:html_scripts','copy:images'],'build:server_dist','upload');
 }); 
 
 gulp.task('upload', function ( callback ) {
