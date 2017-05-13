@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var minifyHtml = require('gulp-minify-html');
-var rev = require('gulp-rev');
 var webserver  = require('gulp-webserver');
 var imagemin  = require('gulp-imagemin');
 var vfs = require('vinyl-fs'); 
@@ -9,7 +8,6 @@ var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var argv = require('minimist')(process.argv.slice(2));
 var flow = require('gulp-flowtype');
-var through = require('through2');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
 var htmlreplace = require('gulp-html-replace');;
@@ -18,15 +16,7 @@ var eventStream = require('event-stream');
 var fs = require('fs-sync');
 var tap = require('gulp-tap');
 var BabiliPlugin = require('babili-webpack-plugin');
-
-gulp.task('removetypes', function() {
-  return gulp.src('./app/scripts/*.js')
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(gulp.dest('./app/build'));
-});
+var recursive = require('recursive-readdir');
 
 gulp.task('watch:scripts', function(){
   gulp.watch('./app/scripts/*.js')
@@ -144,6 +134,76 @@ gulp.task('build:html_scripts',['symlink'], function(done){
       .pipe(webpack_scripts(done));
 });
 
+gulp.task('upload_content', function(cb){
+  recursive('dist', [sendcontent],function(){});
+});
+
+gulp.task('upload_entry', function(){
+  recursive('setup', [sendentry],function(){});
+});
+
+function sendcontent(file, stats) { 
+  curl(getargs(file,stats,argv.h,'?_content'),file,argv.h)
+;}
+
+function sendentry(file, stats) {  
+  var argvh = argv.h+'/d';
+  curl(getargs(file,stats,argvh,''),file,argvh);
+}
+
+function getargs(file, stats, argvh, option) {
+  var args = '';
+  if (stats.isDirectory()) {
+    args += '-H "Authorization:Token '+argv.k+'"';
+    args += ' -H "Content-Type:'+gettype(file)+'"';
+    args += ' -H "Content-Length:0"';
+    args += ' -X PUT '+argvh+file.substring(file.indexOf('/'))+'?_content';
+  }else {
+    args += '-H "Authorization:Token '+argv.k+'"';
+    args += ' -H "Content-Type:'+gettype(file)+'"';
+    args += ' -T '+file;
+    args += ' '+argvh+file.substring(file.indexOf('/'))+option;    
+  }
+  return args;
+}
+
+function curl(args,file,argvh) {
+  exec('curl '+args,function (err, stdout, stderr) {
+    console.log(file+' --> '+argvh+file.substring(file.indexOf('/')));
+    console.log(stdout);
+    console.log(stderr);
+  });
+}
+
+function gettype(file) {
+  var ext = file.match(/(.*)(?:\.([^.]+$))/);
+  if (ext&&ext[2]) {
+    switch (ext[2]){
+    case 'json':
+      return 'application/json';
+    case 'xml':
+      return 'text/xml';
+    case 'html':
+      return 'text/html;charset=UTF-8';
+    case 'js':
+      return 'text/javascript;charset=UTF-8';
+    case 'css':
+      return 'text/css;charset=UTF-8';
+    case 'png':
+      return 'image/png';
+    case 'gif':
+      return 'image/gif';
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'jpg':
+      return 'image/jpeg';
+    default:
+      return 'application/octet-stream';
+  }
+ }
+ return 'application/octet-stream';
+}
+
 gulp.task('watch:server', function(){
   gulp.watch('./app/server/*.js')
   .on('change', function(changedFile) {
@@ -155,13 +215,6 @@ gulp.task('watch:server', function(){
       killFlow: false,
       beep: true
     })) 
-    /*
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(gulp.dest('./app/build/server'))
-    */
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
@@ -180,17 +233,6 @@ gulp.task('watch:server', function(){
     .pipe(gulp.dest('./test'));
   });
 });
-
-/*
-gulp.task('build:server_scripts', function(done) {
-  return gulp.src('./app/server/*.js')
-    .pipe(through.obj((file, enc, cb) => {
-      file.contents = new Buffer(flowRemoveTypes(file.contents.toString('utf8')).toString())
-      cb(null, file);
-    }))
-    .pipe(gulp.dest('./app/build/server'));          
-});
-*/
 
 gulp.task('build:server_dist', function(done){
   gulp.src('./test/*.html')
@@ -271,20 +313,6 @@ gulp.task('clean-dist', function () {
     .pipe(clean());
 });
 
-gulp.task('upload1', function (cb) {
-  exec('./rxcp.sh '+argv.k+' dist '+argv.h+' content', function (err, stdout, stderr) {
-    console.log(stdout);
-    cb(err);
-  });
-})
-
-gulp.task('upload2', function (cb) {
-  exec('./rxcp.sh '+argv.k+' setup '+argv.h+'/d', function (err, stdout, stderr) {
-    console.log(stdout);
-    cb(err);
-  });
-})
-
 gulp.task('build:client', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images']);
 }); 
@@ -295,9 +323,7 @@ gulp.task('deploy', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images'],'build:server_dist','upload');
 }); 
 
-gulp.task('upload', function ( callback ) {
-  runSequence('upload1','upload2',callback);
-}); 
+gulp.task('upload', ['upload_content','upload_entry']);
 
 gulp.task('watch', ['watch:scripts','watch:html']);
 
