@@ -99,54 +99,73 @@ var reflexContext = function() {
 };
 
 reflexContext.fetch = function(url,init) {
+/*
+ var Exception = function(status,message) {
+    this.status = status;
+    this.message = message;
+  }
 
+  var handleErrors = function(response) {
+    // 4xx系, 5xx系エラーでresponse.ok = false
+    if (!response.ok) {
+      throw new Exception(response.status,response.statusText);		// TODO detect server response
+    }
+    return response;
+  }
+*/
   var context = {};
   context.url = url;
   context.init = init;
-  context.then = function(func1,func2) {
+  context.then = function(func,func_err) {
 
-  if (typeof this.init === "undefined"||this.init.method==='GET') {
 	  try {
-	      return ReflexContext.get(this.url.trim().slice(2));
-	  } catch (e) {
-	      return this.fetch(this.url,this.init);
-	  }
-  }else if (this.init.method==='POST') {
-	  try {
-	      return ReflexContext.post(this.url.trim().slice(2),this.init.body);
-	  } catch (e) {
-	      return this.fetch(this.url,this.init);
-	  }
-  }else if (this.init.method==='PUT') {
-	  try {
-	      return ReflexContext.put(this.url.trim().slice(2),this.init.body);
-	  } catch (e) {
-	      return this.fetch(this.url,this.init);
-	  }
-  }else if (this.init.method==='DELETE') {
-	  try {
-	      return ReflexContext.delete(this.url.trim().slice(2));
-	  } catch (e) {
-	      return this.fetch(this.url,this.init);
-	  }
-  } 
-  };
-  
-  context.fetch = async function fetch(url,init) {
-  try {
-    const response = await fetch(url,init);
-    if (response.ok) {
-      return await response.json();
-    }else {
-      throw {'status':response.status,'message':response.statusText};
-    }
-  }
-  catch (err) {
-    throw {'status':400,'message':err.message};
-  }
-  }
-  
-  return context;
+      var response;
+      if (typeof this.init === "undefined"||this.init.method==='GET') {        
+            if (this.url.match(/[\?&]e(&.*)?$/)) {
+              response = ReflexContext.getEntry(this.url.trim().slice(2));              
+            }else {
+              response = ReflexContext.getFeed(this.url.trim().slice(2));
+            }
+            if (!response.feed.title) {
+              func(response);
+            }else {
+              func_err(response);              
+            }
+      }else if (this.init.method==='POST') {
+            var response = ReflexContext.post(this.url.trim().slice(2),this.init.body);
+            if (!response.feed.title) {
+              func(response);
+            }else {
+              func_err(response);              
+            }
+      }else if (this.init.method==='PUT') {
+            var response = ReflexContext.put(this.url.trim().slice(2),this.init.body);
+            if (!response.feed.title) {
+              func(response);
+            }else {
+              func_err(response);              
+            }
+      }else if (this.init.method==='DELETE') {
+            var response = ReflexContext.delete(this.url.trim().slice(2));
+            if (!response.feed.title) {
+              func(response);
+            }else {
+              func_err(response);              
+            }
+      } 
+
+   } catch (e) {
+      fetch(this.url,this.init)
+              .then(handleErrors)
+              .then(function(response) {
+                return response.json()
+              })
+              .then(func)
+              .catch(func_err);
+   }
+}
+   return context;
+
 }
 
 reflexContext.log = function(msg) {
@@ -169,7 +188,6 @@ reflexContext.sendError = function(sc,msg) {
 
 module.exports = reflexContext; 
 
-
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -188,10 +206,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var reflexcontext = __webpack_require__(1);
 
 reflexcontext.log('result=' + (0, _main2.default)());
-reflexcontext.sendError(400, 'アプリケーションエラー error!');
 
-var result = reflexcontext.fetch('test.html?xxxx');
-reflexcontext.log('result=' + result.message);
+var ok = function ok(response) {
+    reflexcontext.log('resultJSON=' + JSON.stringify(response));
+};
+
+var err = function err(response) {
+    ReflexContext.log('check3');
+    reflexcontext.log('resultJSONErr=' + JSON.stringify(response));
+    ReflexContext.log('check4');
+};
+
+reflexcontext.fetch('/d/registration', { method: 'GET' }).then(ok, err);
+
+//reflexcontext.sendError(200,'error!!!');
 
 /***/ }),
 /* 3 */
