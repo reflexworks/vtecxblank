@@ -108,7 +108,16 @@ function webpack_file(filename,src,dest) {
 		                          test: /\.(js)$/,
 		                          use: { loader: 'babel-loader'},
                               exclude: /node_modules/
-		                  }
+		                  },
+                      {
+                              test: /\.js$/,
+                              exclude: /(node_modules)/,
+                              loader: 'eslint-loader',
+                              options: {
+                                fix: true,
+                                failOnError: true,
+                              }
+                      }                      
 		            ]
 		        },
 		        plugins: [
@@ -221,10 +230,20 @@ gulp.task('watch:server', function(){
         },
         module: {
             rules: [
-                  {
-                          test: /\.(js)$/,
-                          use: { loader: 'buble-loader'}
-                  }
+		                  {
+		                          test: /\.(js)$/,
+		                          use: { loader: 'babel-loader'},
+                              exclude: /node_modules/
+		                  },
+                      {
+                              test: /\.js$/,
+                              exclude: /(node_modules)/,
+                              loader: 'eslint-loader',
+                              options: {
+                                fix: true,
+                                failOnError: true,
+                              }
+                      }                      
             ]
         }
         ,devtool: 'source-map'        
