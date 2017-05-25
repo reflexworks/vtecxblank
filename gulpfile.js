@@ -35,11 +35,32 @@ gulp.task('watch:scripts', function(){
         },
         module: {
             rules: [
-                  {
-                          test: /\.(js)$/,
-                          use: { loader: 'babel-loader'},
-                          exclude: /node_modules/
-                  }
+		                  {
+		                          test: /\.css$/,
+		                          use: [ 'style-loader', 'css-loader' ]
+		                  },
+		                  {
+		                          test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
+		                          use: { loader: 'url-loader', options: { limit: 100000 } },
+		                  },
+		                  {
+		                          test: /\.(jpg)$/,
+		                          use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
+		                  },
+		                  {
+		                          test: /\.(js)$/,
+		                          use: { loader: 'babel-loader'},
+                              exclude: /node_modules/
+		                  },
+                      {
+                              test: /\.js$/,
+                              exclude: /(node_modules)/,
+                              loader: 'eslint-loader',
+                              options: {
+                                fix: true,
+                                failOnError: true,
+                              }
+                      }                      
             ]
         }
         ,devtool: 'source-map'        

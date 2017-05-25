@@ -1,7 +1,9 @@
 {
   "name": "vtecxblank",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "react-bootstrap": "^0.31.0"
+  },
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
