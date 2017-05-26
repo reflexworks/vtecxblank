@@ -75,21 +75,16 @@ gulp.task('watch:html', function(){
   .on('change', function(changedFile) {
 	gutil.log('copied:'+changedFile.path.replace(/^.*[\\\/]/, ''));
     gulp.src(changedFile.path)
-	  .pipe(htmlreplace({
-          'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
-      }))
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
   });
 });
 
-function webpack_scripts(done) { webpack_file('common.bundle.js','./app/scripts','./dist/scripts'); return webpack_files('./app/scripts','./dist/scripts',done) };
-
 function webpack_files(src,dest,done) {
   var filenames = [];
   var streams = tap(function(file){
     var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-      if (fs.exists(src+'/'+filename)||filename==='common.bundle.js') {
+      if (fs.exists(src+'/'+filename)) {
           filenames.push(filename);
       }
   });
@@ -156,12 +151,9 @@ function webpack_file(filename,src,dest) {
 
 gulp.task('build:html_scripts',['symlink'], function(done){
   gulp.src('./app/*.html')
-      .pipe(htmlreplace({
-          'common': { src :null, tpl: '<script src="scripts/common.bundle.js"></script>' }
-      }))
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
-      .pipe(webpack_scripts(done));
+      .pipe(webpack_files('./app/scripts','./dist/scripts',done));
 });
 
 gulp.task('upload_content', function(cb){
