@@ -49,7 +49,6 @@ class LoginForm extends React.Component {
 		this.setState({isLoginFailed: true})
 	} 
 
-
 	render() {
 		const isLoginFailed = this.state.isLoginFailed
 		const isCreateServiceFailed = this.state.isCreateServiceFailed
