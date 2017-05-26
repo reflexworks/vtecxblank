@@ -10,7 +10,7 @@ const change = event => {
 	user[target.name] = value // 外部の状態を変更して、
 	render() // 新しいデータでざっくり再描画
 }
-
+ 
 const submit = () => {
   /* userは最新版のフォームの状態を常に反映している！*/
 	alert(`${user.name}さん、登録ありがとう!`)
@@ -26,7 +26,7 @@ const UserForm = () => <div>
     <button onClick={submit} disabled={!isValidUser()}>20歳以上なので登録</button>
     <pre>{JSON.stringify(user)}</pre>
 </div>
-
+ 
 const render = () => {
 	ReactDOM.render(<UserForm user={user} />, document.getElementById('container'))
 }
