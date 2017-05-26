@@ -1,4 +1,3 @@
-//import 'bootstrap/dist/css/bootstrap.css'  
 import '../styles/index.css'
 import jsSHA from 'jssha'
 import createToken from './createToken.js'

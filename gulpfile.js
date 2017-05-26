@@ -7,10 +7,8 @@ var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var argv = require('minimist')(process.argv.slice(2));
-var flow = require('gulp-flowtype');
 var webpack = require('webpack');;
 var webpackStream = require('webpack-stream');;
-var htmlreplace = require('gulp-html-replace');;
 var gutil = require('gulp-util');
 var eventStream = require('event-stream');
 var fs = require('fs-sync');
@@ -22,13 +20,6 @@ gulp.task('watch:scripts', function(){
   gulp.watch('./app/scripts/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
-/*      .pipe(flow({
-      all: false,
-      weak: false,
-      declarations: './declarations',
-      killFlow: false,
-      beep: true
-    })) */
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
@@ -62,8 +53,13 @@ gulp.task('watch:scripts', function(){
                               }
                       }                      
             ]
-        }
-        ,devtool: 'source-map'        
+        },
+        externals: {
+            "react": "React",
+            "react-dom": "ReactDOM",
+            "react-bootstrap": "ReactBootstrap"
+        }                
+        ,devtool: 'source-map'
       }
       ,webpack))
     .pipe(gulp.dest('./dist/scripts'));
@@ -137,10 +133,6 @@ function webpack_file(filename,src,dest) {
 		            ]
 		        },
 		        plugins: [
-     				  new webpack.ProvidePlugin({
-	               		 $: "jquery",
-	          		jQuery: "jquery"
-            	  })
 //                new BabiliPlugin()		          
 		        ]
 //		        ,devtool: 'source-map'
@@ -230,13 +222,6 @@ gulp.task('watch:server', function(){
   gulp.watch('./app/server/*.js')
   .on('change', function(changedFile) {
     gulp.src(changedFile.path)
-    .pipe(flow({
-      all: false,
-      weak: false,
-      declarations: './declarations',
-      killFlow: false,
-      beep: true
-    })) 
     .pipe(webpackStream({
       output: {
           filename: changedFile.path.replace(/^.*[\\\/]/, '')
