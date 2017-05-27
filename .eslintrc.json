@@ -33,6 +33,7 @@
             "error",
             "never"
         ],
+	"no-mixed-spaces-and-tabs": 0,
         "no-console":0
     }
 }

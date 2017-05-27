@@ -57,8 +57,12 @@ gulp.task('watch:scripts', function(){
         externals: {
             "react": "React",
             "react-dom": "ReactDOM",
-            "react-bootstrap": "ReactBootstrap"
-        }                
+            "react-bootstrap": "ReactBootstrap",
+            "axios": "axios"
+        },
+        plugins: [
+            new BabiliPlugin()		          
+        ]
         ,devtool: 'source-map'
       }
       ,webpack))
@@ -132,10 +136,16 @@ function webpack_file(filename,src,dest) {
                       }                      
 		            ]
 		        },
+            externals: {
+                "react": "React",
+                "react-dom": "ReactDOM",
+                "react-bootstrap": "ReactBootstrap",
+                "axios": "axios"
+            },
 		        plugins: [
-//                new BabiliPlugin()		          
+                new BabiliPlugin()		          
 		        ]
-//		        ,devtool: 'source-map'
+		        ,devtool: 'source-map'
 		      }
 	      ,webpack))
 	      .pipe(gulp.dest(dest))
@@ -291,6 +301,12 @@ gulp.task('serve:server', ['watch:server'],function() {
 });
 
 function serve(tgt) {
+  var target = argv.h; 
+  if (target.match(/https/)) {
+    target = target.replace(/https/,'http');
+    gutil.log('using HTTP instead of HTTPS.:'+target);
+  }
+  target = target.substr( target.length-1 ) === '/' ? target.substr(0,target.length-1) : target;
   return gulp.src(tgt)
     .pipe(webserver({
       livereload: true,
@@ -298,22 +314,23 @@ function serve(tgt) {
       proxies: [
         {
           source: '/d',
-          target: argv.h+'/d'
+          target: target+'/d'
         },
         {
           source: '/s',
-          target: argv.h+'/s'
+          target: target+'/s'
         },
         {
           source: '/xls',
-          target: argv.h+'/xls'
+          target: target+'/xls'
         },
         {
           source: '/css',
-          target: argv.h+'/css'
+          target: target+'/css'
         }
       ]      
     }));
+
 }
 
 // distフォルダ内を一度全て削除する
