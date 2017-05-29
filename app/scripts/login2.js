@@ -1,7 +1,6 @@
 import '../styles/index.css'
-import jsSHA from 'jssha'
 import axios from 'axios'
-import createToken from './createToken.js'
+import getAuthToken from './getAuthToken.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
@@ -19,23 +18,15 @@ class LoginForm extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
  
-  //ハッシュ化したパスワードを取得する
-	getHashPass(pass){
-		const shaObj = new jsSHA('SHA-256', 'TEXT')
-		shaObj.update(pass)
-		return shaObj.getHash('B64')  
-	}
-
 	handleSubmit(e){
 		e.preventDefault()
-		const hashPass = this.getHashPass(e.target.password.value)
-		const wsseToken = createToken(e.target.account.value,hashPass)
+		const authToken = getAuthToken(e.target.account.value,e.target.password.value)
 
 		axios({
 			url: '/d/?_login',
 			method: 'get',
 			headers: {
-				'X-WSSE': wsseToken,
+				'X-WSSE': authToken,
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then( () => {
@@ -55,7 +46,6 @@ class LoginForm extends React.Component {
 	} 
 
 	render() {
-		const isLoginFailed = this.state.isLoginFailed
 		return (
       <Form horizontal onSubmit={this.handleSubmit}>
         <FormGroup controlId="account">
@@ -90,7 +80,7 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
         
-        { isLoginFailed &&
+        { this.state.isLoginFailed &&
         <FormGroup>
           <Col sm={12}>
             <div className="alert alert-danger">

@@ -1,8 +1,6 @@
-//import 'bootstrap/dist/css/bootstrap.css'  
 import '../styles/index.css'
-import jsSHA from 'jssha'
 import PropTypes from 'prop-types'
-import createToken from './createToken.js'
+import getAuthToken from './getAuthToken.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
@@ -35,17 +33,9 @@ class Registration extends React.Component {
 		}
 	}
  
-  //ハッシュ化したパスワードを取得する
-	getHashPass(pass){
-		const shaObj = new jsSHA('SHA-256', 'TEXT')
-		shaObj.update(pass)
-		return shaObj.getHash('B64')  
-	}
-
 	handleSubmit(e){
 		e.preventDefault()
-		console.log('eventx='+	e.target.account.value)
-		console.log('token='+createToken(e.target.account.value,e.target.password.value))
+		console.log('token='+getAuthToken(e.target.account.value,e.target.password.value))
 		this.setState({isCompleted: true})
 	} 
   
@@ -106,6 +96,8 @@ function RegistrationForm(props) {
             </Button>
           </Col>
         </FormGroup>
+
+        
       </Form>
 	)
 }
