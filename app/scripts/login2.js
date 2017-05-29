@@ -14,7 +14,7 @@ import {
 class LoginForm extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isLoginFailed : false, isCaptcha: false }    
+		this.state = { isLoginFailed : false, requiredCaptcha: false }    
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
  
@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
 			if (error.response) {
 				if (error.response.data.feed.title==='Captcha required at next login.') {
 					console.log('error captcha')
-  					this.setState({isCaptcha: true,isLoginFailed: true})
+  					this.setState({requiredCaptcha: true,isLoginFailed: true})
 				}else {
   					this.setState({isLoginFailed: true})
 				}

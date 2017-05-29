@@ -302,11 +302,13 @@ gulp.task('serve:server', ['watch:server'],function() {
 
 function serve(tgt) {
   var target = argv.h; 
-  if (target.match(/https/)) {
-    target = target.replace(/https/,'http');
-    gutil.log('using HTTP instead of HTTPS.:'+target);
+  if (target) {
+    if (target.match(/https/)) {
+      target = target.replace(/https/,'http');
+      gutil.log('using HTTP instead of HTTPS.:'+target);
+    }
+    target = target.substr( target.length-1 ) === '/' ? target.substr(0,target.length-1) : target;
   }
-  target = target.substr( target.length-1 ) === '/' ? target.substr(0,target.length-1) : target;
   return gulp.src(tgt)
     .pipe(webserver({
       livereload: true,

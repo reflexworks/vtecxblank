@@ -1,6 +1,7 @@
 import '../styles/index.css'
+import axios from 'axios'
 import PropTypes from 'prop-types'
-import getAuthToken from './getAuthToken.js'
+import jsSHA from 'jssha'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
@@ -14,29 +15,53 @@ import {
 class Registration extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isError : false, isAlreadyRegistered: false, isStatus500: false }    
+		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false }    
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
-  
-	componentDidMount() {
-		const param = window.location.href.slice(window.location.href.indexOf('?') + 1)
-		switch (param) {
-		case 'error':
-			this.setState({isError: true})
-			break
-		case 'error_already_registered':
-			this.setState({isAlreadyRegistered: true})
-			break
-		case 'status500':
-			this.setState({isStatus500: true})
-			break
-		}
+   
+  //ハッシュ化したパスワードを取得する
+	getHashPass(password){
+		var shaObj = new jsSHA('SHA-256', 'TEXT')
+		shaObj.update(password)
+		return shaObj.getHash('B64')
 	}
- 
+
+
 	handleSubmit(e){
 		e.preventDefault()
-		console.log('token='+getAuthToken(e.target.account.value,e.target.password.value))
-		this.setState({isCompleted: true})
+		const password = e.target.password.value
+
+    //パスワードのバリデーションチェックを行う
+		if (password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
+			this.setState({isIllegalPassword: true})
+
+		}else {
+
+			const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value +','+ this.getHashPass(password) +''}]}]}}
+
+			axios({
+				url: '/d/?_adduser',
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data : JSON.stringify(reqData)
+
+			}).then( () => {
+				this.setState({isCompleted: true})
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
+						this.setState({isAlreadyRegistered: true})
+					}else {
+						this.setState({isError: true})
+					}
+				} else {
+					this.setState({isError: true})
+				}
+			})
+
+		}
 	} 
   
 	render() {
@@ -46,7 +71,11 @@ class Registration extends React.Component {
         {isCompleted ? (
           <CompletedForm />
         ) : (
-          <RegistrationForm onSubmit={this.handleSubmit} />
+          <RegistrationForm onSubmit={this.handleSubmit}  
+                            isIllegalPassword={this.state.isIllegalPassword} 
+                            isAlreadyRegistered={this.state.isAlreadyRegistered}  
+                            isError = {this.state.isError}
+          />
         )}
       </div>      
 		)
@@ -54,7 +83,10 @@ class Registration extends React.Component {
 }
 
 RegistrationForm.propTypes = {
-	onSubmit: PropTypes.func
+	onSubmit: PropTypes.func,
+	isIllegalPassword: PropTypes.boolean,
+	isAlreadyRegistered: PropTypes.boolean,
+	isError: PropTypes.boolean
 }
 
 function RegistrationForm(props) {
@@ -97,6 +129,35 @@ function RegistrationForm(props) {
           </Col>
         </FormGroup>
 
+        { props.isIllegalPassword &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        { props.isAlreadyRegistered &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              そのアカウントは既に登録済みです。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        { props.isError &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              新規登録に失敗しました。アカウントまたはパスワードが使用できない可能性があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
         
       </Form>
 	)
