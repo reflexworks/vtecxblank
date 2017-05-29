@@ -26,7 +26,6 @@ class Registration extends React.Component {
 		return shaObj.getHash('B64')
 	}
 
-
 	handleSubmit(e){
 		e.preventDefault()
 		const password = e.target.password.value
