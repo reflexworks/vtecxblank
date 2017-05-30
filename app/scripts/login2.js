@@ -4,6 +4,7 @@ import axios from 'axios'
 import createToken from './createToken.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {
   Form,
   Col,
@@ -17,6 +18,7 @@ class LoginForm extends React.Component {
 		super(props)
 		this.state = { isLoginFailed : false, isCaptcha: false }    
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.capchaOnChange = this.capchaOnChange.bind(this)
 	}
  
   //ハッシュ化したパスワードを取得する
@@ -24,6 +26,10 @@ class LoginForm extends React.Component {
 		const shaObj = new jsSHA('SHA-256', 'TEXT')
 		shaObj.update(pass)
 		return shaObj.getHash('B64')  
+	}
+
+	capchaOnChange(value) {
+		console.log('Captcha value:', value)
 	}
 
 	handleSubmit(e){
@@ -55,7 +61,6 @@ class LoginForm extends React.Component {
 	} 
 
 	render() {
-		const isLoginFailed = this.state.isLoginFailed
 		return (
       <Form horizontal onSubmit={this.handleSubmit}>
         <FormGroup controlId="account">
@@ -76,11 +81,17 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
 
+        { this.state.isCaptcha &&
         <FormGroup>
           <Col sm={12}>
-            <div id="captcha"></div>
+            <ReCAPTCHA
+              ref="recaptcha"
+              sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+              onChange={this.capchaOnChange}
+            />
           </Col>
         </FormGroup>
+        }
 
         <FormGroup>
           <Col smOffset={4} sm={10}>
@@ -90,7 +101,7 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
         
-        { isLoginFailed &&
+        { this.state.isLoginFailed &&
         <FormGroup>
           <Col sm={12}>
             <div className="alert alert-danger">
