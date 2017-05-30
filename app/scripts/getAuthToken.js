@@ -3,7 +3,7 @@
  */
 import jsSHA from 'jssha'
 
-export default function createToken(username, password) {
+export default function getAuthToken(username, password) {
 
 // aardwulf systems
 // This work is licensed under a Creative Commons License.
@@ -65,7 +65,9 @@ export default function createToken(username, password) {
 
     // WSSEオブジェクト作成：固定値のAPIキーなし
 	var getWsse = function(username, password){
-		var w = getWsseObj(password, null)
+		var shaObj = new jsSHA('SHA-256', 'TEXT')
+		shaObj.update(password)
+		var w = getWsseObj(shaObj.getHash('B64'), null)
 		return 'UsernameToken Username="' + username + '", PasswordDigest="' + w[2] + '", Created="' + w[1] + '", Nonce="' + w[0] + '"'
 	}
 	return getWsse(username, password)
