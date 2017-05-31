@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "react-async-script": "^0.9.1",
-    "react-bootstrap": "^0.31.0",
     "react-google-recaptcha": "^0.9.3"
   },
   "devDependencies": {

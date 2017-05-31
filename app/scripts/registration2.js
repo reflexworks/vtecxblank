@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import jsSHA from 'jssha'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {
   Form,
   Col,
@@ -15,8 +16,12 @@ import {
 class Registration extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false }    
+		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false, captchaValue:'' }    
 		this.handleSubmit = this.handleSubmit.bind(this)
+	}
+
+	capchaOnChange(value) {
+		this.setState({captchaValue: value})
 	}
    
   //ハッシュ化したパスワードを取得する
@@ -37,9 +42,10 @@ class Registration extends React.Component {
 		}else {
 
 			const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value +','+ this.getHashPass(password) +''}]}]}}
+  		const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
 			axios({
-				url: '/d/?_adduser',
+				url: '/d/?_adduser' + captchaOpt,
 				method: 'post',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -116,7 +122,11 @@ function RegistrationForm(props) {
  
         <FormGroup>
           <Col sm={12}>
-            <div id="captcha"></div>
+            <ReCAPTCHA
+              ref={(el) => { this.captcha = el }}
+              sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+              onChange={this.capchaOnChange}
+            />
           </Col>
         </FormGroup>
 
@@ -157,7 +167,6 @@ function RegistrationForm(props) {
           </Col>
         </FormGroup>
         }
-        
       </Form>
 	)
 }
@@ -180,3 +189,4 @@ function CompletedForm() {
 }
 
 ReactDOM.render(<Registration />, document.getElementById('registration_form'))
+
