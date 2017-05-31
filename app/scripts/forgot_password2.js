@@ -104,7 +104,7 @@ function ForgotPasswordForm(props) {
 
         <FormGroup>
           <Col smOffset={2} sm={12}>
-			      	<a href="login.html">ログイン</a>に戻る。
+			      	<a href="login.html">ログイン</a>に戻る
           </Col>
         </FormGroup>
 
