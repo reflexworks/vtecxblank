@@ -16,53 +16,55 @@ import {
 class ChangePassword extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'' }    
+		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'' }    
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.capchaOnChange = this.capchaOnChange.bind(this)
 	}
 
 	capchaOnChange(value) {
 		this.setState({captchaValue: value})
 	}
    
-  //ハッシュ化したパスワードを取得する
-	getHashPass(password){
-		var shaObj = new jsSHA('SHA-256', 'TEXT')
-		shaObj.update(password)
-		return shaObj.getHash('B64')
-	}
-
 	handleSubmit(e){
 		e.preventDefault()
 		const password = e.target.password.value
 
     //パスワードのバリデーションチェックを行う
-		if (password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
+		if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
 			this.setState({isIllegalPassword: true})
 
 		}else {
 
-    	if (password && e.target.re_password.value && password === e.target.re_password.value) {
+			if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-		const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value +','+ this.getHashPass(password) +''}]}]}}
-  		const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+				const shaObj = new jsSHA('SHA-256', 'TEXT')
+				shaObj.update(password)
+				const hashpass = shaObj.getHash('B64')
+				const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:,'+ hashpass +''}]}]}}
 
-		axios({
-			url: '/d/?_changephash' + captchaOpt,
-			method: 'post',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			data : JSON.stringify(reqData)
+  	    const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
-		}).then( () => {
-			this.setState({isCompleted: true})
-		}).catch(() => {
-			this.setState({isError: true})
-		})
+				axios({
+					url: '/d/?_changephash' + captchaOpt,
+					method: 'put',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					data : reqData
 
-	}else{
-		this.setState({isUnmatchReinput: true})
-	}
+				}).then( () => {
+					this.setState({isCompleted: true})
+    		}).catch((error) => {
+		    	if (error.response&&error.response.status===403) {
+  					this.setState({isForbidden: true})
+    			}else {
+  					this.setState({isError: true})
+		    	} 
+  		})
+
+			}else{
+				this.setState({isUnmatchReinput: true})
+			}
 
 		}
 	} 
@@ -74,8 +76,10 @@ class ChangePassword extends React.Component {
           <CompletedForm />
         ) : (
           <ChangePasswordForm onSubmit={this.handleSubmit}  
+                            capchaOnChange={this.capchaOnChange} 
                             isIllegalPassword={this.state.isIllegalPassword} 
                             isUnmatchReinput = {this.state.isUnmatchReinput}
+                            isForbidden = {this.state.isForbidden}
                             isError = {this.state.isError}
           />
         )}
@@ -86,8 +90,10 @@ class ChangePassword extends React.Component {
 
 ChangePasswordForm.propTypes = {
 	onSubmit: PropTypes.func,
+	capchaOnChange: PropTypes.func,  
 	isIllegalPassword: PropTypes.boolean,
 	isUnmatchReinput: PropTypes.boolean,
+	isForbidden: PropTypes.boolean,
 	isError: PropTypes.boolean
 }
 
@@ -112,15 +118,14 @@ function ChangePasswordForm(props) {
         <FormGroup>
           <Col sm={12}>
             <ReCAPTCHA
-              ref={(el) => { this.captcha = el }}
               sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-              onChange={this.capchaOnChange}
+              onChange={props.capchaOnChange}
             />
           </Col>
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={12}>
+          <Col smOffset={3} sm={12}>
             <Button type="submit" className="btn btn-primary">
               パスワード変更実行
             </Button>
@@ -142,6 +147,16 @@ function ChangePasswordForm(props) {
           <Col sm={12}>
             <div className="alert alert-danger">
       				入力されたパスワードが不正です。確認用パスワードと一致していない可能性があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        { props.isForbidden &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              <a href="login.html">ログイン</a>を行ってから実行してください。
             </div>
           </Col>
         </FormGroup>

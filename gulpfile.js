@@ -7,8 +7,8 @@ var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var clean = require('gulp-clean');
 var argv = require('minimist')(process.argv.slice(2));
-var webpack = require('webpack');;
-var webpackStream = require('webpack-stream');;
+var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
 var gutil = require('gulp-util');
 var eventStream = require('event-stream');
 var fs = require('fs-sync');
@@ -325,10 +325,6 @@ function serve(tgt) {
         {
           source: '/xls',
           target: target+'/xls'
-        },
-        {
-          source: '/css',
-          target: target+'/css'
         }
       ]      
     }));
@@ -339,7 +335,6 @@ function serve(tgt) {
 gulp.task('clean-dist', function () {
     return gulp.src([
         'dist/{,**/}*.html', // 対象ファイル
-        'dist/css',
         'dist/scripts',
         'dist/server',
         'dist/img',
