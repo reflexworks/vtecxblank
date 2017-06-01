@@ -76,7 +76,6 @@ class LoginForm extends React.Component {
         <FormGroup>
           <Col sm={12}>
             <ReCAPTCHA
-              ref={(el) => { this.captcha = el }}
               sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
               onChange={this.capchaOnChange}
             />

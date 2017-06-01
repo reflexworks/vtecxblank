@@ -18,6 +18,7 @@ class Registration extends React.Component {
 		super(props)
 		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false, captchaValue:'' }    
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.capchaOnChange = this.capchaOnChange.bind(this)
 	}
 
 	capchaOnChange(value) {
@@ -34,9 +35,8 @@ class Registration extends React.Component {
 	handleSubmit(e){
 		e.preventDefault()
 		const password = e.target.password.value
-
     //パスワードのバリデーションチェックを行う
-		if (password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
+		if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
 			this.setState({isIllegalPassword: true})
 
 		}else {
@@ -76,6 +76,7 @@ class Registration extends React.Component {
           <CompletedForm />
         ) : (
           <RegistrationForm onSubmit={this.handleSubmit}  
+                            capchaOnChange={this.capchaOnChange} 
                             isIllegalPassword={this.state.isIllegalPassword} 
                             isAlreadyRegistered={this.state.isAlreadyRegistered}  
                             isError = {this.state.isError}
@@ -88,6 +89,7 @@ class Registration extends React.Component {
 
 RegistrationForm.propTypes = {
 	onSubmit: PropTypes.func,
+	capchaOnChange: PropTypes.func,
 	isIllegalPassword: PropTypes.boolean,
 	isAlreadyRegistered: PropTypes.boolean,
 	isError: PropTypes.boolean
@@ -122,9 +124,8 @@ function RegistrationForm(props) {
         <FormGroup>
           <Col sm={12}>
             <ReCAPTCHA
-              ref={(el) => { this.captcha = el }}
               sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-              onChange={this.capchaOnChange}
+              onChange={props.capchaOnChange}
             />
           </Col>
         </FormGroup>
@@ -188,4 +189,3 @@ function CompletedForm() {
 }
 
 ReactDOM.render(<Registration />, document.getElementById('registration_form'))
-
