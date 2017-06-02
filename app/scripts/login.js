@@ -49,7 +49,7 @@ class LoginForm extends React.Component {
 				this.setState({isLoginFailed: true})
 			}
 		})
-	} 
+	}
 
 	render() {
 		return (

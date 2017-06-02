@@ -116,7 +116,7 @@ function ChangePasswordForm(props) {
         </FormGroup>
  
         <FormGroup>
-          <Col sm={12}>
+          <Col smOffset={1} sm={12}>
             <ReCAPTCHA
               sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
               onChange={props.capchaOnChange}

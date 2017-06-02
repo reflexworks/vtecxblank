@@ -8,7 +8,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 以下のURLをクリックしてパスワード変更を行ってください。
 
-${RXID=/password_change.html}
+${RXID=/change_password.html}
 
 設定が完了いたしますと、新しいパスワードでサービスがご利用できるようになります。
 
@@ -18,7 +18,7 @@ ${RXID=/password_change.html}
 ログインページ
 ${URL}/login
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vte.cx β
+vte.cx 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 </summary>
     <link href="/_settings/passreset" rel="self"/>
