@@ -58,5 +58,10 @@
   "main": "gulpfile.js",
   "scripts": {
     "start": "webpack-dev-server"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reflexworks/vtecxblank.git"
   }
 }

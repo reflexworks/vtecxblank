@@ -1,0 +1,50 @@
+.Sidebar-items {
+  padding: 15px;
+}
+
+.Sidebar.modal.fade .modal-dialog {
+  transition: none;
+}
+.Sidebar.modal.fade {
+  transition: transform 0.3s ease-out, opacity 0.15s linear;
+}
+.Sidebar.modal.fade:not(.in).left {
+  transform: translate3d(-100%, 0, 0);
+}
+.Sidebar.modal.fade:not(.in).right {
+  transform: translate3d(100%, 0, 0);
+}
+.Sidebar.modal {
+  /* overflow: auto; */
+  max-width: 100%;
+  box-shadow: 5px 0 10px;
+  background-color: #f5f5f5;
+}
+.Sidebar.modal.left {
+  right: auto;
+}
+.Sidebar.modal.right {
+  left: auto;
+}
+.Sidebar.modal .modal-dialog {
+  margin: 0;
+  width: auto;
+}
+.Sidebar.modal .modal-dialog .modal-content {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.Sidebar.modal .modal-dialog .modal-content .modal-body {
+  padding: 0;
+}
+.Sidebar.modal.fade:not(.in).left .modal-dialog {
+  transform: translate3d(-100%, 0, 0);
+}
+.Sidebar.modal.fade:not(.in).right .modal-dialog {
+  transform: translate3d(100%, 0, 0);
+}
+
+.Sidebar .nav {
+  width: 320px;
+}
