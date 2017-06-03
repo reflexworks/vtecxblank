@@ -66,6 +66,7 @@ gulp.task('watch:scripts', function(){
         ,devtool: 'source-map'
       }
       ,webpack))
+      .on('error', gutil.log)
     .pipe(gulp.dest('./dist/scripts'));
   });
 });
@@ -257,7 +258,8 @@ gulp.task('watch:server', function(){
         ,devtool: 'source-map'        
       }
       ,webpack))
-    .pipe(gulp.dest('./test'));
+      .on('error', gutil.log)      
+      .pipe(gulp.dest('./test'));
   });
 });
 
