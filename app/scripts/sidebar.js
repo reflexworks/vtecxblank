@@ -63,13 +63,11 @@ class SidebarItems extends React.Component {
 	render() {
   	return (
     	<div className='Sidebar-items'>
-      	<Button onClick={ () => this.updateModal(true) }>Display Modal Dialog</Button>
+      	<Button onClick={ () => this.updateModal(true) } className='glyphicon glyphicon-menu-hamburger'></Button>
         <Sidebar side='left' isVisible={ this.state.isVisible } onHide={ () => this.updateModal(false) }>
         	<Nav>
-          	<NavItem href='#'>Item 1</NavItem>
-            <NavItem href='#'>Item 2</NavItem>
-            <NavItem href='#'>Item 3</NavItem>
-            <NavItem href='#'>Item 4</NavItem>
+          	<NavItem href='#'>入力</NavItem>
+            <NavItem href='#'>一覧</NavItem>
             <NavItem onClick={ () => this.logout() }>logout</NavItem>
           </Nav>
         </Sidebar>
