@@ -1,5 +1,6 @@
 import '../styles/index.css'
 import '../styles/sidebar.css'
+import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -36,15 +37,27 @@ Sidebar.propTypes = {
 class SidebarItems extends React.Component {
 	constructor(props, context) {
   	super(props, context)
-    
   	this.state = {
-		isVisible: false,
-	}
+  		isVisible: false,
+	  }
 	}
   
 	updateModal(isVisible) {
   	this.setState({isVisible : isVisible})
-		this.forceUpdate()
+	}
+
+	logout() {
+		axios({
+			url: '/d/?_logout',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then( () => {
+			location.href = 'login.html'
+		}).catch(() => {
+			location.href = 'login.html'
+		})
 	}
   
 	render() {
@@ -57,7 +70,7 @@ class SidebarItems extends React.Component {
             <NavItem href='#'>Item 2</NavItem>
             <NavItem href='#'>Item 3</NavItem>
             <NavItem href='#'>Item 4</NavItem>
-            <NavItem href='#'>Item 5</NavItem>
+            <NavItem onClick={ () => this.logout() }>logout</NavItem>
           </Nav>
         </Sidebar>
       </div>
