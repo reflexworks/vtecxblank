@@ -10,6 +10,7 @@ import {
   Col,
   FormGroup,
   Button,
+  HelpBlock,
   FormControl
 } from 'react-bootstrap'
  
@@ -105,7 +106,7 @@ function ChangePasswordForm(props) {
         <FormGroup controlId="password">
           <Col sm={12}>
             <FormControl type="password" placeholder="パスワード" />
-            <span>（8文字以上、かつ数字・英字・記号を最低1文字含む）</span>            
+            <HelpBlock>（8文字以上、かつ数字・英字・記号を最低1文字含む）</HelpBlock>
           </Col>
         </FormGroup>
 
