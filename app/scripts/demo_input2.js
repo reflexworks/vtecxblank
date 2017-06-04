@@ -62,10 +62,9 @@ class Input extends React.Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId="music">
           <Col sm={12}>
             <ControlLabel>趣味</ControlLabel>
-            <table className="table" id="hobby">
+            <table className="table">
             <thead>
               <tr>
                 <th>タイプ</th>
@@ -73,10 +72,27 @@ class Input extends React.Component {
               </tr>
             </thead>
             <tbody>
+              <td>
+            <FormGroup controlId="hobby_type">
+            <Col sm={11}>              
+            <FormControl componentClass="select" placeholder="select">
+              <option value="野内">屋内</option>
+              <option value="野外">屋外</option>
+              <option value="その他">その他</option>
+            </FormControl>
+            </Col>
+            </FormGroup>
+            </td>              
+            <td>
+           <FormGroup controlId="hobby_name">
+            <Col sm={12}>              
+              <FormControl type="text" placeholder="hobby" />
+            </Col>
+           </FormGroup>
+            </td>
             </tbody>
       			</table>
           </Col>
-        </FormGroup>
 
         <FormGroup>
           <Col sm={12}>
