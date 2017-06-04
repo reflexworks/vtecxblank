@@ -84,6 +84,12 @@ gulp.task('watch:html', function(){
     gulp.src(changedFile.path)
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
+      .on('end',function(){
+      if (argv.k) {
+        const filename = 'dist/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        sendcontent(filename);
+      }
+      })
   });
 });
 
@@ -266,7 +272,13 @@ gulp.task('watch:server', function(){
       }
       ,webpack))
       .on('error', gutil.log)      
-      .pipe(gulp.dest('./test'));
+      .pipe(gulp.dest('./test'))
+      .on('end',function(){
+      if (argv.k) {
+        const filename = 'dist/server/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        sendcontent(filename);
+      }
+    });
   });
 });
 
@@ -293,8 +305,6 @@ gulp.task( 'copy:images', function() {
 } );
 
 gulp.task('symlink', function () {
-    vfs.src('node_modules',{followSymlinks: false})
-    	.pipe(vfs.symlink('app'));
     vfs.src('app/pdf',{followSymlinks: false})
     	.pipe(vfs.symlink('dist'));
     vfs.src('app/xls',{followSymlinks: false})
@@ -337,7 +347,6 @@ function serve(tgt) {
         }
       ]      
     }));
-
 }
 
 // distフォルダ内を一度全て削除する
