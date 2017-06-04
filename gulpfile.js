@@ -1,20 +1,20 @@
-var gulp = require('gulp');
-var minifyHtml = require('gulp-minify-html');
-var webserver  = require('gulp-webserver');
-var imagemin  = require('gulp-imagemin');
-var vfs = require('vinyl-fs'); 
-var runSequence = require('run-sequence');
-var exec = require('child_process').exec;
-var clean = require('gulp-clean');
-var argv = require('minimist')(process.argv.slice(2));
-var webpack = require('webpack');
-var webpackStream = require('webpack-stream');
-var gutil = require('gulp-util');
-var eventStream = require('event-stream');
-var fs = require('fs-sync');
-var tap = require('gulp-tap');
-var BabiliPlugin = require('babili-webpack-plugin');
-var recursive = require('recursive-readdir');
+const gulp = require('gulp');
+const minifyHtml = require('gulp-minify-html');
+const webserver  = require('gulp-webserver');
+const imagemin  = require('gulp-imagemin');
+const vfs = require('vinyl-fs'); 
+const runSequence = require('run-sequence');
+const exec = require('child_process').exec;
+const clean = require('gulp-clean');
+const argv = require('minimist')(process.argv.slice(2));
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+const gutil = require('gulp-util');
+const eventStream = require('event-stream');
+const fs = require('fs-sync');
+const tap = require('gulp-tap');
+const BabiliPlugin = require('babili-webpack-plugin');
+const recursive = require('recursive-readdir');
 
 gulp.task('watch:scripts', function(){
   gulp.watch('./app/scripts/*.js')
@@ -67,7 +67,13 @@ gulp.task('watch:scripts', function(){
       }
       ,webpack))
       .on('error', gutil.log)
-    .pipe(gulp.dest('./dist/scripts'));
+    .pipe(gulp.dest('./dist/scripts'))
+    .on('end',function(){
+      if (argv.k) {
+        const filename = 'dist/scripts/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        sendcontent(filename);
+      }
+    })
   });
 });
 
@@ -82,16 +88,16 @@ gulp.task('watch:html', function(){
 });
 
 function webpack_files(src,dest,done) {
-  var filenames = [];
-  var streams = tap(function(file){
-    var filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+  let filenames = [];
+  let streams = tap(function(file){
+    const filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
       if (fs.exists(src+'/'+filename)) {
           filenames.push(filename);
       }
   });
 
   eventStream.merge(streams).on('end', function() { 
-    var tasks = filenames.map(function(filename) {
+    let tasks = filenames.map(function(filename) {
         return webpack_file(filename,src,dest);   
       }
     );
@@ -159,7 +165,7 @@ gulp.task('build:html_scripts',['symlink'], function(done){
       .pipe(webpack_files('./app/scripts','./dist/scripts',done));
 });
 
-gulp.task('upload_content', function(cb){
+gulp.task('upload_content', function(){
   recursive('dist', [sendcontent],function(){});
 });
 
@@ -168,17 +174,18 @@ gulp.task('upload_entry', function(){
 });
 
 function sendcontent(file, stats) { 
-  curl(getargs(file,stats,argv.h,'?_content'),file,argv.h)
+  const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1) : argv.h;
+  curl(getargs(file,stats,argvh,'?_content'),file,argvh)
 ;}
 
 function sendentry(file, stats) {  
-  var argvh = argv.h+'/d';
+  const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1)+'/d' : argv.h+'/d';
   curl(getargs(file,stats,argvh,''),file,argvh);
 }
 
 function getargs(file, stats, argvh, option) {
-  var args = '';
-  if (stats.isDirectory()) {
+  let args = '';
+  if (stats&&stats.isDirectory()) {
     args += '-H "Authorization:Token '+argv.k+'"';
     args += ' -H "Content-Type:'+gettype(file)+'"';
     args += ' -H "Content-Length:0"';
@@ -201,7 +208,7 @@ function curl(args,file,argvh) {
 }
 
 function gettype(file) {
-  var ext = file.match(/(.*)(?:\.([^.]+$))/);
+  const ext = file.match(/(.*)(?:\.([^.]+$))/);
   if (ext&&ext[2]) {
     switch (ext[2]){
     case 'json':
@@ -303,7 +310,7 @@ gulp.task('serve:server', ['watch:server'],function() {
 });
 
 function serve(tgt) {
-  var target = argv.h; 
+  let target = argv.h; 
   if (target) {
     if (target.match(/https/)) {
       target = target.replace(/https/,'http');
