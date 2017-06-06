@@ -49,7 +49,6 @@ class Input extends React.Component {
 			if (error.response&&error.response.status===401) {
 				this.setState({isForbidden: true})
 			} else {
-				console.log('error='+JSON.stringify(error.response.data.feed.title))
 				this.setState({isError: true,errmsg:error.response.data.feed.title})
 			} 
 		})
@@ -80,9 +79,7 @@ class Input extends React.Component {
             <FormControl type="email" placeholder="email" />
           </Col>
         </FormGroup>
-
         <br />
-
         <FormGroup controlId="food">
           <FormControl.Static>お気に入り</FormControl.Static>        
           <Col sm={12}>
