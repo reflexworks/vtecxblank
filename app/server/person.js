@@ -2,17 +2,17 @@
 
 /* @flow */
 export default class Person {
-    constructor(
+	constructor(
             name:string = 'dummy'
     ) {
-    	this.name = name;
-    }
+    	this.name = name
+	}
 
-    say():String {
-    	return 'Hello, I\'m ' + this.name + '!!';
+	say():String {
+    	return 'Hello, I\'m ' + this.name + '!!'
 //           reflexContext.log('Hello, I\'m ' + this.name + '!!');
 //           alert('Hello, I\'m ' + this.name + '!!');
 
-    }
+	}
 }
 //module.exports = Person;

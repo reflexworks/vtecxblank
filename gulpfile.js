@@ -268,14 +268,17 @@ gulp.task('watch:server', function(){
                       }                      
             ]
         }
+        ,plugins: [
+            new BabiliPlugin()              
+        ]
         ,devtool: 'source-map'        
       }
       ,webpack))
       .on('error', gutil.log)      
-      .pipe(gulp.dest('./test'))
+      .pipe(gulp.dest('./test/server'))
       .on('end',function(){
       if (argv.k) {
-        const filename = 'dist/server/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        const filename = 'test/server/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
         sendcontent(filename);
       }
     });
@@ -289,7 +292,7 @@ gulp.task('build:server_dist', function(done){
 
 gulp.task('build:server_test', function(done){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/server','./test',done));      
+      .pipe(webpack_files('./app/server','./test/server',done));      
 });
 
 gulp.task('build:server', function ( callback ) {
