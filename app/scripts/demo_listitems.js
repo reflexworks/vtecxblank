@@ -10,34 +10,91 @@ import {
 class ListItems extends React.Component {
 	constructor(props) {
 		super(props)
-
-//		this.state = { feed: {entry: [{userinfo:{id:123,email:'aaa@bbb'},favorite:{food:'りんご',music:'ジャズ'}},{userinfo:{id:123,email:'aaa@bbb'},favorite:{food:'りんご',music:'ジャズ'}}]}}     
 		this.state = {feed:{entry:[]},isCompleted: false,isError: false,errmsg:'',isForbidden: false}
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.pageIndex = 0         // ページネーションを貼る最大index
+		this.maxDisplayNum = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
+		this.maxPageIndex = 9      // pageIndexにおける最大表示件数-1
 	}
  
-	componentDidMount() {
+/****
+ * ページネーションのIndex設定処理
+ * url ページネーションを設定するURL
+ * page 取得したいページ
+ *****/
+	buildIndex(url, page) {
+		return new Promise((resolve, reject) => {
+
+      // ページング取得に必要な設定を行う
+			let param
+			let pageIndex = page + this.maxPageIndex > this.pageIndex ? page + this.maxPageIndex : this.pageIndex
+			if (pageIndex > this.pageIndex) {
+				if (this.pageIndex > 1) {
+					param = this.pageIndex + ',' + pageIndex
+				} else {
+					param = pageIndex
+				}
+
+        // サーバにページネーション設定リクエストを送信
+				axios({
+					url: url + '?f&l=' + this.maxDisplayNum + '&_pagination=' + param,
+					method: 'get',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then((response) => {
+					this.pageIndex = pageIndex
+					resolve(response)
+				}).catch((error) => {
+					reject(error)
+				})
+        
+			} else {
+				resolve()
+			}
+		})
+	}
+  
+	getFeed(url, pageNo) {
 		axios({
-			url: '/d/registration?f',
+			url: url + '?f&l='+ this.maxDisplayNum + '&n=' + pageNo,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then( (response) => {
-			this.setState({feed : response.data.feed})
+      // 「response.data.feed」にurlの1件目から50件目が格納されている
+      // pageNoが「2」だったら51件目から100件目が格納されている
+			this.setState({ feed: response.data.feed })
+			console.log('feed='+JSON.stringify(this.state.feed))
 		}).catch((error) => {
 			if (error.response&&error.response.status===401) {
 				this.setState({isForbidden: true})
-			} else {
-				this.setState({isError: true,errmsg:error.message})
+			}else if (error.data.feed.title === 'Please make a pagination index in advance.') {
+      		setTimeout(()=>this.getFeed(url,pageNo), 1000)    
+			}else {
+	        this.setState({isError: true,errmsg:error.message})
 			} 
-		})
+		})    
+	}
+  
+	componentDidMount() {
+    
+     // ページネーション設定を行う
+		const url = '/d/registration'
 
+    // 1ページ目（1〜50件）を取得する（これを2にすれば51から100までを取得する）
+		const pageNo = 1
+
+    // pageIndex作成処理呼び出し
+		this.buildIndex(url, pageNo).then(()=>{
+      // 一覧取得
+			this.getFeed(url, pageNo)
+		})
 	}
 
 	handleSubmit(e){
 		e.preventDefault()
-
 	}
   
 	render() {
@@ -53,7 +110,9 @@ class ListItems extends React.Component {
           </tr>
         </thead>
         <tbody>
-          { this.state.feed.entry.map((entry,idx) => <Entry idx={idx+1} entry={entry} key={idx}/>)}        
+          {this.state.feed.entry.map((entry, idx) => 
+          	entry.userinfo && entry.favorite && <Entry idx={idx + 1} entry={entry} key={idx} />)
+          }
           { this.state.isForbidden &&
               <div className="alert alert-danger">
                 <a href="login.html">ログイン</a>を行ってから実行してください。
