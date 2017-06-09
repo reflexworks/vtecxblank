@@ -1,13 +1,11 @@
-import '../styles/index.css'
 import axios from 'axios'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import {
   Pagination
 } from 'react-bootstrap'
  
-class ReflexPagination extends React.Component {
+export default class ReflexPagination extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { activePage : 1 , items : 0 }
@@ -18,13 +16,13 @@ class ReflexPagination extends React.Component {
 	static propTypes = {
 		url: PropTypes.string,
 		maxDisplayRows: PropTypes.number,    // 1ページにおける最大表示件数（例：50件/1ページ）
-		maxButtons : PropTypes.number      // pageIndexにおける最大表示件数-1
+		maxButtons : PropTypes.number     	 // pageIndexにおける最大表示件数-1
 	}
 
 /****
  * ページネーションのIndex設定処理
- * url ページネーションを設定するURL
- * page 取得したいページ
+ * @url ページネーションを設定するURL
+ * @page 取得したいページ
  *****/
 	buildIndex(url,activePage) {
 
@@ -76,7 +74,7 @@ class ReflexPagination extends React.Component {
 			const items =  Math.ceil(Number(response.data.feed.title) / this.props.maxDisplayRows)
 			this.setState({ items: items })
 		}).catch(() => {
-			this.setState({ items: 1 })
+			this.setState({ items: 0 })
 		})
 		
 	}
@@ -97,6 +95,4 @@ class ReflexPagination extends React.Component {
 		)
 	}
 }
-
-ReactDOM.render(<ReflexPagination url='/d/registration' maxDisplayRows={50} maxButtons={5} />, document.getElementById('container'))
 
