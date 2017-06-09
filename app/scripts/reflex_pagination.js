@@ -8,9 +8,10 @@ import {
 export default class ReflexPagination extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { activePage : 1 , items : 0 }
+		this.state = { activePage : 1 , items : 0  }
 		this.handleSelect = this.handleSelect.bind(this)
 		this.pageIndex = 0         // ページネーションを貼る最大index
+		this.resultcount = 0	   // 検索結果件数
 	}
  
 	static propTypes = {
@@ -60,7 +61,7 @@ export default class ReflexPagination extends React.Component {
 	}
 
 	componentDidMount() {
-    // pageIndex作成処理呼び出し
+	    // pageIndex作成処理呼び出し
 		this.buildIndex(this.props.url, 1)
 
 		// 件数取得
@@ -71,12 +72,12 @@ export default class ReflexPagination extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-			const items =  Math.ceil(Number(response.data.feed.title) / this.props.maxDisplayRows)
+			this.resultcount = Number(response.data.feed.title)
+			const items =  Math.ceil(this.resultcount / this.props.maxDisplayRows)
 			this.setState({ items: items })
 		}).catch(() => {
 			this.setState({ items: 0 })
 		})
-		
 	}
 
 	render() {
