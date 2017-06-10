@@ -34,7 +34,15 @@ class Input extends React.Component {
     )
 		reqdata.feed.entry.push(entry)
 
-		axios.defaults.withCredentials = true // cookies
+/*  for pagination test
+		for (let i = 1; i < 100; i++) {
+			let entry2 = {}
+			entry2.userinfo = { id : i, email : e.target.email.value }
+			entry2.favorite = { food : e.target.food.value, music : e.target.music.value }
+			reqdata.feed.entry.push(entry2)
+		}
+*/
+    
 		axios({
 			url: '/d/registration',
 			method: 'post',
