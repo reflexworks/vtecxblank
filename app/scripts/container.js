@@ -5,6 +5,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+import {
   Grid,
   Col,
   Row
@@ -13,7 +18,7 @@ import {
 class Container extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {condition : ''}    
+		this.state = {condition : 'toggled'}    
 		this.handleClick = this.handleClick.bind(this)
 	}
 
@@ -21,51 +26,49 @@ class Container extends React.Component {
 		e.preventDefault()
 		this.setState( { condition : !this.state.condition } )
 	} 
-  
+
+	input = () => {
+		return (
+            <PageContent 
+            onClick={this.handleClick}
+            />
+		)
+	}
+    
 	render() {
 		return (
-      <div id="wrapper" className={this.state.condition ? 'toggled' :''}>
-          <Sidebar />
-          <PageContent onClick={this.handleClick}/>
-      </div>      
+            <Router>
+            <div id="wrapper" className={this.state.condition ? 'toggled' :''}>
+
+                <div id="sidebar-wrapper">
+                    <ul className="sidebar-nav">
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/input">入力</Link></li>
+                    <li><Link to="/list">一覧</Link></li>
+                    </ul>
+                </div>
+                        
+                <Route exact path="/" component={Index}/>
+                <Route path="/input" component={this.input} />
+                <Route path="/list" component={List}/>
+            </div>      
+            </Router>            
 		)
 	}
 }
 
-function Sidebar() {
+function List() {
 	return (
-        <div id="sidebar-wrapper">
-            <ul className="sidebar-nav">
-                <li className="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Shortcuts</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
+        <p>List</p>
 	)
 }
+
+function Index() {
+	return (
+        <p>Index</p>
+	)
+}
+
 
 function PageContent(props) {
 	return (

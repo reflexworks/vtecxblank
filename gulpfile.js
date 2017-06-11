@@ -58,6 +58,7 @@ gulp.task('watch:scripts', function(){
             "react": "React",
             "react-dom": "ReactDOM",
             "react-bootstrap": "ReactBootstrap",
+            "react-router-dom": "ReactRouterDOM",            
             "axios": "axios"
         },
         plugins: [
@@ -153,6 +154,7 @@ function webpack_file(filename,src,dest) {
                 "react": "React",
                 "react-dom": "ReactDOM",
                 "react-bootstrap": "ReactBootstrap",
+                "react-router-dom": "ReactRouterDOM",            
                 "axios": "axios"
             },
 		        plugins: [
@@ -171,11 +173,15 @@ gulp.task('build:html_scripts',['symlink'], function(done){
       .pipe(webpack_files('./app/scripts','./dist/scripts',done));
 });
 
-gulp.task('upload_content', function(){
+gulp.task('upload:content', function(){
   recursive('dist', [sendcontent],function(){});
 });
 
-gulp.task('upload_entry', function(){
+gulp.task('upload:server', function(){
+  recursive('dist/server', [sendcontent],function(){});
+});
+
+gulp.task('upload:entry', function(){
   recursive('setup', [sendentry],function(){});
 });
 
@@ -375,7 +381,11 @@ gulp.task('deploy', function ( callback ) {
   runSequence('clean-dist',['build:html_scripts','copy:images'],'build:server_dist','upload');
 }); 
 
-gulp.task('upload', ['upload_content','upload_entry']);
+gulp.task('deploy:server', function ( callback ) {
+  runSequence('clean-dist','build:server_dist','upload:server');
+}); 
+
+gulp.task('upload', ['upload:content','upload:entry']);
 
 gulp.task('watch', ['watch:scripts','watch:html']);
 
