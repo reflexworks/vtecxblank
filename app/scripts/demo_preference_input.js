@@ -1,7 +1,6 @@
 import '../styles/index.css'
 import axios from 'axios'
 import React from 'react'
-import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import {
   Form,
@@ -68,6 +67,33 @@ class PreferenceInput extends React.Component {
 			rows: prevState.rows.concat([prevState.rows.length+1])
 		}))
 	}
+
+	HobbyForm(row) {
+		const hobby_type = 'hobby_type'+row
+		const hobby_name = 'hobby_name'+row
+		return(
+            <tbody key={row.toString()}>
+              <td>
+              <Col sm={8}>              
+              <FormGroup controlId={hobby_type}>
+              <FormControl componentClass="select" placeholder="select">
+                <option value="屋内">屋内</option>
+                <option value="屋外">屋外</option>
+                <option value="その他">その他</option>
+              </FormControl>
+              </FormGroup>
+              </Col>
+              </td>              
+              <td>
+              <Col sm={8}>              
+              <FormGroup controlId={hobby_name}>
+                 <FormControl type="text" placeholder="hobby" />
+              </FormGroup>
+              </Col>
+              </td>
+              </tbody>
+		)
+	}
   
 	render() {
 		return (
@@ -103,7 +129,7 @@ class PreferenceInput extends React.Component {
                 <th>名前</th>
               </tr>
             </thead>
-               {this.state.rows.map(row => <HobbyForm row={row} key={row.toString()}/>)}
+               {this.state.rows.map(row => this.HobbyForm(row))}
       			</table>
 
         <FormGroup>
@@ -149,37 +175,6 @@ class PreferenceInput extends React.Component {
       </Form>
 		)
 	}
-}
-
-HobbyForm.propTypes = {
-	row: PropTypes.number
-}
-
-function HobbyForm(props) {
-	const hobby_type = 'hobby_type'+props.row
-	const hobby_name = 'hobby_name'+props.row
-	return(
-            <tbody>
-            <td>
-            <Col sm={8}>              
-            <FormGroup controlId={hobby_type}>
-            <FormControl componentClass="select" placeholder="select">
-              <option value="屋内">屋内</option>
-              <option value="屋外">屋外</option>
-              <option value="その他">その他</option>
-            </FormControl>
-            </FormGroup>
-            </Col>
-            </td>              
-            <td>
-            <Col sm={8}>              
-           <FormGroup controlId={hobby_name}>
-              <FormControl type="text" placeholder="hobby" />
-           </FormGroup>
-            </Col>
-            </td>
-            </tbody>
-	)
 }
 
 ReactDOM.render(<PreferenceInput />, document.getElementById('container'))

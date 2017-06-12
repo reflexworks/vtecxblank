@@ -2,7 +2,6 @@ import '../styles/index.css'
 import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
 import ConditionInputForm from './demo_condition_input'
 import {
@@ -16,7 +15,7 @@ class ListItems extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/registration'
 		this.activePage = 1
-    this.condition = ''
+		this.condition = ''
 	}
 
 	search(condition) {
@@ -57,6 +56,18 @@ class ListItems extends React.Component {
 		this.getFeed(1)
 	}
 
+	viewentry(idx,entry,key) {
+		return(
+            <tr key={key}>
+              <td>{idx}</td>
+              <td>{entry.userinfo.id}</td>
+              <td>{entry.userinfo.email}</td>
+              <td>{entry.favorite.food}</td>
+              <td>{entry.favorite.music}</td>
+            </tr>
+		)
+	}
+
 	render() {
 		return (
 		<div>
@@ -80,7 +91,9 @@ class ListItems extends React.Component {
         </thead>
         <tbody>
           {this.state.feed.entry.map((entry, idx) => 
-          	entry.userinfo && entry.favorite && <Entry idx={((this.activePage-1)*this.maxDisplayRows)+idx + 1} entry={entry} key={idx} />)
+          	entry.userinfo && entry.favorite && 
+              this.viewentry(((this.activePage-1)*this.maxDisplayRows)+idx + 1,entry,idx)
+            )
           }
           { this.state.isForbidden &&
               <div className="alert alert-danger">
@@ -102,21 +115,5 @@ class ListItems extends React.Component {
 	}
 }
 
-Entry.propTypes = {
-	idx: PropTypes.number,
-	entry: PropTypes.object
-}
-
-function Entry(props) {
-	return(
-          <tr>
-            <td>{props.idx}</td>
-            <td>{props.entry.userinfo.id}</td>
-            <td>{props.entry.userinfo.email}</td>
-            <td>{props.entry.favorite.food}</td>
-            <td>{props.entry.favorite.music}</td>
-          </tr>
-	)
-}
-
 ReactDOM.render(<ListItems />, document.getElementById('container'))
+
