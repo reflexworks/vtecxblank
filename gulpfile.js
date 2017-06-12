@@ -390,5 +390,5 @@ gulp.task('upload', ['upload:content','upload:entry']);
 gulp.task('watch', ['watch:scripts','watch:html']);
 
 gulp.task('default', function ( callback ) {
-  runSequence('build:html_scripts','watch',callback);
+  runSequence('build',callback);
 }); 
