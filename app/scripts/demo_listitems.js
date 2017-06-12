@@ -3,7 +3,7 @@ import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import ReflexPagination from './reflex_pagination'
+import VtecxPagination from './vtecx_pagination'
 import {
   Table
 } from 'react-bootstrap'
@@ -14,12 +14,13 @@ class ListItems extends React.Component {
 		this.state = {feed:{entry:[]},isCompleted: false,isError: false,errmsg:'',isForbidden: false}
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/registration'
-		this.pagination
+		this.activePage = 1
 	}
    
-	getFeed() {
+	getFeed(activePage) {
+		this.activePage = activePage
 		axios({
-			url: this.url + '?f&l='+ this.maxDisplayRows + '&n=' + this.pagination.state.activePage,
+			url: this.url + '?f&l='+ this.maxDisplayRows + '&n=' + activePage,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -30,26 +31,33 @@ class ListItems extends React.Component {
 			this.setState({ feed: response.data.feed })
 			console.log('feed='+JSON.stringify(this.state.feed))
 		}).catch((error) => {
-			if (error.response&&error.response.status===401) {
-				this.setState({isForbidden: true})
-			}else if (error.data.feed.title === 'Please make a pagination index in advance.') {
-				// pagination indexがまだ作成されていなければ１秒待って再検索
-      		setTimeout(()=>this.getFeed(), 1000)    
+			if (error.response) {
+				if (error.response.status === 401) {
+					this.setState({ isForbidden: true })
+				} else if (error.response.status === 204||error.response.data.feed.title === 'Please make a pagination index in advance.') {
+            // pagination indexがまだ作成されていなければ１秒待って再検索
+					setTimeout(() => this.getFeed(activePage), 1000)
+				} 
 			}else {
-	        this.setState({isError: true,errmsg:error.message})
-			} 
+				this.setState({ isError: true, errmsg: error.message })
+			}
 		})    
 	}
   
 	componentDidMount() {
       // 一覧取得
-		this.getFeed()
+		this.getFeed(1)
 	}
 
 	render() {
 		return (
 		<div>
-		<ReflexPagination ref={(c) => { this.pagination = c }} url={this.url} maxDisplayRows={this.maxDisplayRows} maxButtons={5} />
+        <VtecxPagination
+          url={this.url}
+          onChange={(activePage)=>this.getFeed(activePage)}
+          maxDisplayRows={this.maxDisplayRows}
+          maxButtons={4}
+        />
     <Table striped bordered condensed hover>
         <thead>
           <tr>
@@ -62,7 +70,7 @@ class ListItems extends React.Component {
         </thead>
         <tbody>
           {this.state.feed.entry.map((entry, idx) => 
-          	entry.userinfo && entry.favorite && <Entry idx={idx + 1} entry={entry} key={idx} />)
+          	entry.userinfo && entry.favorite && <Entry idx={((this.activePage-1)*this.maxDisplayRows)+idx + 1} entry={entry} key={idx} />)
           }
           { this.state.isForbidden &&
               <div className="alert alert-danger">

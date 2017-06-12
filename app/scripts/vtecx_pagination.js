@@ -2,10 +2,13 @@ import axios from 'axios'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Pagination
+	Grid,
+	Row,
+	Col,
+	Pagination
 } from 'react-bootstrap'
  
-export default class ReflexPagination extends React.Component {
+export default class VtecxPagination extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { activePage : 1 , items : 0  }
@@ -16,6 +19,7 @@ export default class ReflexPagination extends React.Component {
  
 	static propTypes = {
 		url: PropTypes.string,
+		onChange: PropTypes.func,
 		maxDisplayRows: PropTypes.number,    // 1ページにおける最大表示件数（例：50件/1ページ）
 		maxButtons : PropTypes.number     	 // pageIndexにおける最大表示件数-1
 	}
@@ -37,7 +41,7 @@ export default class ReflexPagination extends React.Component {
 				param = pageIndex
 			}
 
-      // サーバにページネーションIndex作成リクエストを送信
+		    // サーバにページネーションIndex作成リクエストを送信
 			axios({
 				url: url + '?f&l=' + this.props.maxDisplayRows + '&_pagination=' + param,
 				method: 'get',
@@ -57,7 +61,9 @@ export default class ReflexPagination extends React.Component {
 		this.buildIndex(this.props.url, eventKey)
 		this.setState({
 			activePage: eventKey
-		})		
+		})
+		this.props.onChange(eventKey)	// 最検索
+		console.log('activePage='+eventKey) 
 	}
 
 	componentDidMount() {
@@ -82,18 +88,24 @@ export default class ReflexPagination extends React.Component {
 
 	render() {
 		return (
-			<Pagination
-						prev
-						next
-						first
-						last
-						ellipsis
-						boundaryLinks
-						items={this.state.items}
-						maxButtons={this.props.maxButtons}
-						activePage={this.state.activePage}
-						onSelect={this.handleSelect} />
+			  <Grid>
+				<Row>
+					<Col xs={4} md={4}><p>{(this.state.activePage-1)*this.props.maxDisplayRows}-{(this.state.activePage)*this.props.maxDisplayRows}/{this.resultcount}件</p></Col>
+					<Col xs={8} md={8}>
+							<Pagination
+										prev
+										next
+										first
+										last
+										ellipsis
+										boundaryLinks
+										items={this.state.items}
+										maxButtons={this.props.maxButtons}
+										activePage={this.state.activePage}
+										onSelect={this.handleSelect} />
+					</Col>
+				</Row>
+			  </Grid>
 		)
 	}
 }
-
