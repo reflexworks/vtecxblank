@@ -21,21 +21,18 @@ export default class ConditionInputForm extends React.Component {
 	handleSubmit(e){
 		e.preventDefault()
 		e.target.email.value
-		let condition = '?'
+		let condition = ''
 		if (e.target.account.value) {
-			condition += 'userinfo.id='+e.target.account.value 
+			condition += '&userinfo.id='+e.target.account.value 
 		}
 		if (e.target.email.value) {
-			if (condition!=='?') condition += '&'
-			condition += 'userinfo.email='+e.target.email.value 
+			condition += '&userinfo.email='+e.target.email.value 
 		}
 		if (e.target.food.value) {
-			if (condition!=='?') condition += '&'
-			condition += 'favorite.food='+e.target.food.value 
+			condition += '&favorite.food='+e.target.food.value 
 		}
 		if (e.target.music.value) {
-			if (condition!=='?') condition += '&'
-			condition += 'favorite.food='+e.target.music.value 
+			condition += '&favorite.food='+e.target.music.value 
 		}
 		this.props.search(condition)
 	}

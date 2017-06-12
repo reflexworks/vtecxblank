@@ -16,18 +16,19 @@ class ListItems extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/registration'
 		this.activePage = 1
+    this.condition = ''
 	}
 
 	search(condition) {
-		this.url += condition
-		console.log('url='+this.url)
+		this.condition = condition
+		console.log('url='+this.condition)
 		this.getFeed(1)
 	}
    
 	getFeed(activePage) {
 		this.activePage = activePage
 		axios({
-			url: this.url + '?f&l='+ this.maxDisplayRows + '&n=' + activePage,
+			url: this.url + '?f&l='+ this.maxDisplayRows + '&n=' + activePage + this.condition,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
