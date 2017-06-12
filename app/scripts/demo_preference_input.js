@@ -14,7 +14,7 @@ import {
   FormControl
 } from 'react-bootstrap'
  
-class Input extends React.Component {
+class PreferenceInput extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
@@ -75,37 +75,27 @@ class Input extends React.Component {
         <PageHeader>新規登録</PageHeader>
         <FormGroup controlId="id">
           <FormControl.Static>ユーザ情報</FormControl.Static>        
-          <Col sm={12}>
             <ControlLabel>ID</ControlLabel>
             <FormControl type="text" placeholder="数字" />
-          </Col>
         </FormGroup>
 
         <FormGroup controlId="email">
-          <Col sm={12}>
             <ControlLabel>email</ControlLabel>
             <FormControl type="email" placeholder="email" />
-          </Col>
         </FormGroup>
         <br />
         <FormGroup controlId="food">
           <FormControl.Static>お気に入り</FormControl.Static>        
-          <Col sm={12}>
             <ControlLabel>好きな食べ物</ControlLabel>
             <FormControl type="text" placeholder="３文字" />
-          </Col>
         </FormGroup>
 
         <FormGroup controlId="music">
-          <Col sm={12}>
             <ControlLabel>好きな音楽</ControlLabel>
             <FormControl type="text" placeholder="５文字" />
-          </Col>
         </FormGroup>
 
-          <Col sm={12}>
             <ControlLabel>趣味</ControlLabel>
-          </Col>
             <table className="table">
             <thead>
               <tr>
@@ -117,47 +107,39 @@ class Input extends React.Component {
       			</table>
 
         <FormGroup>
-          <Col sm={12}>
             <Button className="btn btn-default" onClick={() => this.addRow() }>
               <Glyphicon glyph="plus" />
             </Button>
-          </Col>
         </FormGroup>
 
         <br/>
         { this.state.isForbidden &&
         <FormGroup>
-          <Col sm={12}>
             <div className="alert alert-danger">
               <a href="login.html">ログイン</a>を行ってから実行してください。
             </div>
-          </Col>
         </FormGroup>
         }
 
         { this.state.isError &&
         <FormGroup>
-          <Col sm={12}>
             <div className="alert alert-danger">
               データ登録に失敗しました。<br/>
               {this.state.errmsg}
             </div>
-          </Col>
         </FormGroup>
         }
 
         { this.state.isCompleted &&
         <FormGroup>
-          <Col sm={12}>
             <div>
       				データを登録しました。
             </div>
-          </Col>
         </FormGroup>
         }
 
         <FormGroup>
-          <Col smOffset={4} sm={10}>
+          <Col smOffset={4} sm={12}>
             <Button type="submit" className="btn btn-primary">
               登録
             </Button>
@@ -200,4 +182,4 @@ function HobbyForm(props) {
 	)
 }
 
-ReactDOM.render(<Input />, document.getElementById('container'))
+ReactDOM.render(<PreferenceInput />, document.getElementById('container'))

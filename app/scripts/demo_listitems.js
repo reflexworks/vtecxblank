@@ -4,6 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
+import ConditionInputForm from './demo_condition_input'
 import {
   Table
 } from 'react-bootstrap'
@@ -15,6 +16,12 @@ class ListItems extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/registration'
 		this.activePage = 1
+	}
+
+	search(condition) {
+		this.url += condition
+		console.log('url='+this.url)
+		this.getFeed(1)
 	}
    
 	getFeed(activePage) {
@@ -52,6 +59,8 @@ class ListItems extends React.Component {
 	render() {
 		return (
 		<div>
+    <ConditionInputForm search={(url)=>this.search(url)} />
+    <hr/>
         <VtecxPagination
           url={this.url}
           onChange={(activePage)=>this.getFeed(activePage)}
@@ -110,4 +119,3 @@ function Entry(props) {
 }
 
 ReactDOM.render(<ListItems />, document.getElementById('container'))
-
