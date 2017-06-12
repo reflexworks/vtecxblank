@@ -9,11 +9,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import {
-  Grid,
-  Col,
-  Row
-} from 'react-bootstrap'
  
 class Container extends React.Component {
 	constructor(props) {
@@ -72,18 +67,7 @@ function Index() {
 
 function PageContent(props) {
 	return (
-        <div id="page-content-wrapper">
-            <Grid fluid="true">
-                <Row>
-                    <Col sm={12}>
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={props.onClick}>Toggle Menu</a>
-                    </Col>
-                </Row>
-            </Grid>
-        </div>    
+        <a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={props.onClick}><i className="glyphicon glyphicon-menu-hamburger"></i></a>
 	)
 }
 
@@ -92,3 +76,4 @@ PageContent.propTypes = {
 }
 
 ReactDOM.render(<Container />, document.getElementById('container'))
+
