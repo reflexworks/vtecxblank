@@ -1,77 +1,150 @@
-//キャプチャ設定
-var reCaptchaWidget;
-var onloadCallback = function() {
-	reCaptchaWidget = grecaptcha.render('captcha', {
-		'sitekey' : '6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19' 
-	});
-};
-//キャプチャオプションを取得する
-function getCaptchaOpt(){
-	return 'g-recaptcha-response='+grecaptcha.getResponse(reCaptchaWidget);
-}
+import '../styles/index.css'
+import axios from 'axios'
+import PropTypes from 'prop-types'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
+import {
+  Form,
+  Col,
+  FormGroup,
+  Button,
+  FormControl
+} from 'react-bootstrap'
 
-$(function(){
-
- 	var param = window.location.href.slice(window.location.href.indexOf('?') + 1);
- 	if (param === 'error') {
-		$('#error_mgs').show();
-	} else if (param === '500') {
-		alert('通信エラーが発生しました。\nステータスコード：500');
+class ForgotPassword extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = { isError : false,  captchaValue:'' }    
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.capchaOnChange = this.capchaOnChange.bind(this)    
 	}
 
- 	// パスワード変更メール送信
-	$('#forgot_btn').click(function(){
-
-		var email = $('#email').val();
-		
-		if (isSuccess(email)) {
-			var data_array = [];
-			var data = {'contributor': [{'uri': 'urn:vte.cx:auth:'+ email}]};
-			data_array.push(data);
-			var reqData = getFeed(data_array);
-			$.ajax({
-				type: 'post',
-				url: '/d/?_passreset&' + getCaptchaOpt(),
-				dataType: 'json',
-				data: JSON.stringify(reqData),
-				success: function(data, status, xhr){
-					showSendMesseage();
-				},
-				error: function(jqXHR, textStatus, errorThrow){
-					var status = jqXHR.status;
-					if (status === 500) {
-						location.href = 'registration.html?500';
-					} else {
-						var resText = jqXHR.responseJSON.feed.title;
-						location.href = 'forgot_password.html?error';
-					}
-				}
-			});
-		} else {
-			$('#error_mgs').show();
-		}
-		return false;
-	});
-
-});
-
-
-//feed形式のdataを返す
-//dataの型は配列にすること
-function getFeed(array){
-	return {'feed': {'entry': array}};
-}
-
-// 入力した値が正常かどうか判定する
-function isSuccess(e){
-	if (e) {
-		return true;
+	capchaOnChange(value) {
+		this.setState({captchaValue: value})
 	}
-	return false;
+   
+	handleSubmit(e){
+		e.preventDefault()
+		const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value}]}]}}
+  	const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+
+		axios({
+			url: '/d/?_passreset' + captchaOpt,
+			method: 'post',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			data : reqData
+
+		}).then( () => {
+			this.setState({isCompleted: true})
+		}).catch((error) => {
+			if (error.response&&error.response.status===401) {
+				this.setState({isForbidden: true})
+			}else {
+				this.setState({isError: true})
+			} 
+		})
+	}
+  
+	render() {
+		return (
+      <div>
+        {this.state.isCompleted ? (
+          <CompletedForm />
+        ) : (
+          <ForgotPasswordForm onSubmit={this.handleSubmit}  
+                            isForbidden = {this.state.isForbidden}
+                            isError = {this.state.isError}
+          />
+        )}
+      </div>      
+		)
+	}
 }
 
-// 送信完了フォームを表示する
-function showSendMesseage(){
-	$('#forgot_form').hide();
-	$('#forgot_send_form').show();
+
+ForgotPasswordForm.propTypes = {
+	onSubmit: PropTypes.func,
+	capchaOnChange: PropTypes.func,    
+	isForbidden: PropTypes.boolean,
+	isError: PropTypes.boolean
 }
+
+function ForgotPasswordForm(props) {
+	return (
+      <Form horizontal onSubmit={props.onSubmit}>
+        <h2>パスワード変更</h2>
+        <hr />
+        <FormGroup controlId="account">
+          <Col sm={12}>
+            <FormControl type="email" placeholder="アカウント(メールアドレス)" />
+          </Col>
+        </FormGroup>
+ 
+        <FormGroup>
+          <Col smOffset={1} sm={12}>
+            <ReCAPTCHA
+              sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+              onChange={props.capchaOnChange}
+            />
+          </Col>
+        </FormGroup>
+
+        <FormGroup>
+          <Col smOffset={4} sm={12}>
+            <Button type="submit" className="btn btn-primary">
+              メール送信
+            </Button>
+          </Col>
+        </FormGroup>
+
+        { props.isForbidden &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              <a href="login.html">ログイン</a>を行ってから実行してください。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        { props.isError &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+      				パスワード変更メール送信に失敗しました。アカウントが使用できない可能性があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        <FormGroup>
+          <Col smOffset={4} sm={12}>
+			      	<a href="login.html">ログイン</a>に戻る
+          </Col>
+        </FormGroup>
+
+      </Form>
+	)
+}
+
+function CompletedForm() {
+	return (
+      <Form>
+          <h2>パスワード変更メールを送信しました</h2>
+          <hr />
+          <FormGroup>
+            <Col sm={12}>            
+              <div className="caution">
+                入力したメールアドレスにパスワード変更メールを送信しました。<br />
+                メールのリンクをクリックし、パスワード変更をしてください。
+              </div>
+            </Col>
+          </FormGroup>
+      </Form>
+	)
+}
+
+ReactDOM.render(<ForgotPassword />, document.getElementById('forgotPassword_form'))

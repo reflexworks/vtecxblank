@@ -1,1 +1,1 @@
-/** index.htmlのスクリプトを記述します **/
+import '../styles/index.css'

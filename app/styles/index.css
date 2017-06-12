@@ -40,18 +40,18 @@ body {
 	cursor: default;
 }
 
-/* regist_container
+/* registration_container
 ------------------------*/
-.regist_container {
+.registration_container {
 	background: #E8F9E0;
 	padding-bottom: 200px;
 }
-.regist_container .container {
+.registration_container .container {
 	width: 400px;
 	margin: 0px auto;
 	padding-top: 50px;
 }
-.regist_container .container h2 {
+.registration_container .container h2 {
 	color: #666;
 	cursor: default;
 }

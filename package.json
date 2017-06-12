@@ -1,31 +1,67 @@
 {
   "name": "vtecxblank",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "react-async-script": "^0.9.1",
+    "react-google-recaptcha": "^0.9.3"
+  },
   "devDependencies": {
-    "bootstrap": "^3.3.5",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babili-webpack-plugin": "0.0.11",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-react": "^7.0.1",
+    "event-stream": "^3.3.4",
+    "file-loader": "^0.10.0",
+    "flow-bin": "^0.39.0",
+    "fs-sync": "^1.0.4",
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.0.2",
     "gulp-clean": "^0.3.1",
-    "gulp-foreach": "^0.1.0",
-    "gulp-imagemin": "^2.3.0",
-    "gulp-minify-css": "^1.2.1",
+    "gulp-imagemin": "^3.1.1",
     "gulp-minify-html": "^1.0.4",
-    "gulp-rev": "^6.0.1",
-    "gulp-symlink": "^2.1.3",
-    "gulp-uglify": "^1.4.1",
-    "gulp-usemin": "^0.3.14",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify": "^2.0.1",
+    "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
-    "jquery": "^2.1.4",
-    "jssha": "^2.0.1",
+    "jssha": "^2.3.0",
     "minimist": "^1.2.0",
-    "run-sequence": "^1.1.4"
+    "prop-types": "^15.5.10",
+    "recursive-readdir": "^2.1.1",
+    "reflexcontext": "0.0.1",
+    "run-sequence": "^1.1.4",
+    "style-loader": "^0.13.1",
+    "through2": "^2.0.3",
+    "url-loader": "^0.5.7",
+    "vinyl-fs": "^2.4.4",
+    "webpack": "^2.5.1",
+    "webpack-async-await": "^1.1.0",
+    "webpack-stream": "^3.2.0"
   },
   "engines": {
     "node": ">=0.12.5"
   },
   "main": "gulpfile.js",
   "scripts": {
-    "test": "gulp"
+    "start": "webpack-dev-server"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reflexworks/vtecxblank.git"
   }
 }

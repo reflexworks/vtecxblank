@@ -1,70 +1,115 @@
-//キャプチャ設定
-var reCaptchaWidget;
-var onloadCallback = function() {
-	reCaptchaWidget = grecaptcha.render('captcha', {
-		'sitekey' : '6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19' 
-	});
-};
-//キャプチャオプションを取得する
-function getCaptchaOpt(){
-	return 'g-recaptcha-response='+grecaptcha.getResponse(reCaptchaWidget);
+import '../styles/index.css'
+import axios from 'axios'
+import getAuthToken from './getAuthToken.js'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
+import {
+  Form,
+  Col,
+  FormGroup,
+  Button,
+  FormControl
+} from 'react-bootstrap'
+ 
+class LoginForm extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = { isLoginFailed : false, requiredCaptcha: false, captchaValue:'' }    
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.capchaOnChange = this.capchaOnChange.bind(this)
+	}
+
+	capchaOnChange(value) {
+		this.setState({captchaValue: value})
+	}
+ 
+	handleSubmit(e){
+		e.preventDefault()
+		const authToken = getAuthToken(e.target.account.value,e.target.password.value)
+		const captchaOpt = this.state.requiredCaptcha ? '&g-recaptcha-response=' + this.state.captchaValue : ''
+
+		axios({
+			url: '/d/?_login' + captchaOpt,
+			method: 'get',
+			headers: {
+				'X-WSSE': authToken,
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+      
+		}).then( () => {
+      	location.href = 'index.html'  
+		}).catch((error) => {
+			if (error.response) {
+				if (error.response.data.feed.title==='Captcha required at next login.') {
+  					this.setState({requiredCaptcha: true,isLoginFailed: true})
+				}else {
+  					this.setState({isLoginFailed: true})
+				}
+			} else {
+				this.setState({isLoginFailed: true})
+			}
+		})
+	}
+
+	render() {
+		return (
+      <Form horizontal onSubmit={this.handleSubmit}>
+        <FormGroup controlId="account">
+          <Col sm={12}>
+            <FormControl type="email" placeholder="アカウント" />
+          </Col>
+        </FormGroup>
+
+        <FormGroup controlId="password">
+          <Col sm={12}>
+            <FormControl type="password" placeholder="パスワード" />
+          </Col>
+        </FormGroup>
+
+        <FormGroup>
+          <Col sm={12}>
+            <a href="forgot_password.html">パスワードを忘れた場合</a>
+          </Col>
+        </FormGroup>
+
+        { this.state.requiredCaptcha &&
+        <FormGroup>
+          <Col sm={12}>
+            <ReCAPTCHA
+              sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+              onChange={this.capchaOnChange}
+            />
+          </Col>
+        </FormGroup>
+        }
+  
+        <FormGroup>
+          <Col smOffset={4} sm={10}>
+            <Button type="submit" className="btn btn-primary">
+              ログイン
+            </Button>
+          </Col>
+        </FormGroup>
+        
+        { this.state.isLoginFailed &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              ログインに失敗しました。アカウントまたはパスワードが間違っている可能性があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+        
+        <FormGroup>
+          <Col sm={12}>
+            <div>初めて利用される方は<a href="registration.html">新規登録</a>から</div>
+          </Col>
+        </FormGroup>
+      </Form>
+		)
+	}
 }
 
-$(function(){
-
-  var captchaon = false;
-  $('#captcha').hide();
-  var param = window.location.href.slice(window.location.href.indexOf('?') + 1);
-  if (param=='error') {
-    $('#error_mgs').show();
-  } else if (param=='error_create_service') {
-    $('#error_create_service_mgs').show();
-  } else if (param=='errorcaptca'){
-    $('#error_mgs').show();
-    captchaon = true;
-    $('#captcha').show();
-  }
-  $('#login_btn').click(function(){
-    doSubmit();
-  });
-
-  $('#password').keypress( function ( e ) {
-    if ( e.which == 13 ) {
-      doSubmit();
-    }
-  });
-
-  var doSubmit = function () {
-    $('#error_mgs').hide();
-    var account = $('#account').val();
-    var password = getHashPass($('#password').val());
-    var wsseToken = $.createToken(account, password);
-    
-    var captchaOpt = captchaon ? '&' + getCaptchaOpt() : '';
-
-    $.ajax({
-      url: '/d/?_login' + captchaOpt,
-      method: 'get',
-      dataType: 'html',
-      headers: {
-        'X-WSSE': wsseToken,
-      },
-    }).done(function( res ) {
-	      location.href = 'index.html';
-    }).fail(function( jqXHR ) {
-      var json = JSON.parse(jqXHR.responseText);
-      if (json.feed.title=='Captcha required at next login.') {
-        location.href = 'login.html?errorcaptca'; 
-      }else {
-        location.href = 'login.html?error'; 
-      }
-    });
-  }
-});
-
-//ハッシュ化したパスワードを取得する
-function getHashPass(pass){
-	var shaObj = new jsSHA(pass, "ASCII");
-	return shaObj.getHash("SHA-256", "B64");
-}
-
+ReactDOM.render(<LoginForm />, document.getElementById('container'))

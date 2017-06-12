@@ -14,10 +14,10 @@ import {
   FormControl
 } from 'react-bootstrap'
  
-class Registration extends React.Component {
+class ChangePassword extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false, captchaValue:'' }    
+		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'' }    
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.capchaOnChange = this.capchaOnChange.bind(this)
 	}
@@ -26,46 +26,46 @@ class Registration extends React.Component {
 		this.setState({captchaValue: value})
 	}
    
-  //ハッシュ化したパスワードを取得する
-	getHashPass(password){
-		var shaObj = new jsSHA('SHA-256', 'TEXT')
-		shaObj.update(password)
-		return shaObj.getHash('B64')
-	}
-
 	handleSubmit(e){
 		e.preventDefault()
 		const password = e.target.password.value
+
     //パスワードのバリデーションチェックを行う
 		if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
 			this.setState({isIllegalPassword: true})
 
 		}else {
 
-			const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value +','+ this.getHashPass(password) +''}]}]}}
-  		const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+			if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-			axios({
-				url: '/d/?_adduser' + captchaOpt,
-				method: 'post',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				},
-				data : JSON.stringify(reqData)
+				const shaObj = new jsSHA('SHA-256', 'TEXT')
+				shaObj.update(password)
+				const hashpass = shaObj.getHash('B64')
+				const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:,'+ hashpass +''}]}]}}
 
-			}).then( () => {
-				this.setState({isCompleted: true})
-			}).catch((error) => {
-				if (error.response) {
-					if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
-						this.setState({isAlreadyRegistered: true})
-					}else {
-						this.setState({isError: true})
-					}
-				} else {
-					this.setState({isError: true})
-				}
-			})
+  	    const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+
+				axios({
+					url: '/d/?_changephash' + captchaOpt,
+					method: 'put',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					data : reqData
+
+				}).then( () => {
+					this.setState({isCompleted: true})
+    		}).catch((error) => {
+		    	if (error.response&&error.response.status===403) {
+  					this.setState({isForbidden: true})
+    			}else {
+  					this.setState({isError: true})
+		    	} 
+  		})
+
+			}else{
+				this.setState({isUnmatchReinput: true})
+			}
 
 		}
 	} 
@@ -76,10 +76,11 @@ class Registration extends React.Component {
         {this.state.isCompleted ? (
           <CompletedForm />
         ) : (
-          <RegistrationForm onSubmit={this.handleSubmit}  
+          <ChangePasswordForm onSubmit={this.handleSubmit}  
                             capchaOnChange={this.capchaOnChange} 
                             isIllegalPassword={this.state.isIllegalPassword} 
-                            isAlreadyRegistered={this.state.isAlreadyRegistered}  
+                            isUnmatchReinput = {this.state.isUnmatchReinput}
+                            isForbidden = {this.state.isForbidden}
                             isError = {this.state.isError}
           />
         )}
@@ -88,25 +89,20 @@ class Registration extends React.Component {
 	}
 }
 
-RegistrationForm.propTypes = {
+ChangePasswordForm.propTypes = {
 	onSubmit: PropTypes.func,
-	capchaOnChange: PropTypes.func,
+	capchaOnChange: PropTypes.func,  
 	isIllegalPassword: PropTypes.boolean,
-	isAlreadyRegistered: PropTypes.boolean,
+	isUnmatchReinput: PropTypes.boolean,
+	isForbidden: PropTypes.boolean,
 	isError: PropTypes.boolean
 }
 
-function RegistrationForm(props) {
+function ChangePasswordForm(props) {
 	return (
       <Form horizontal onSubmit={props.onSubmit}>
-        <h2>新規登録</h2>
+        <h2>パスワード変更</h2>
         <hr />
-        <FormGroup controlId="account">
-          <Col sm={12}>
-            <FormControl type="email" placeholder="アカウント(メールアドレス)" />
-          </Col>
-        </FormGroup>
-
         <FormGroup controlId="password">
           <Col sm={12}>
             <FormControl type="password" placeholder="パスワード" />
@@ -114,16 +110,14 @@ function RegistrationForm(props) {
           </Col>
         </FormGroup>
 
-       <FormGroup>
+        <FormGroup controlId="re_password">
           <Col sm={12}>
-            <div className="caution">
-            <a href="user_terms.html">利用規約</a>に同意のうえ、「利用規約に同意して新規登録」ボタンを押してください。
-            </div>
+            <FormControl type="password" placeholder="パスワード確認" />
           </Col>
         </FormGroup>
  
         <FormGroup>
-          <Col sm={12}>
+          <Col smOffset={1} sm={12}>
             <ReCAPTCHA
               sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
               onChange={props.capchaOnChange}
@@ -132,9 +126,9 @@ function RegistrationForm(props) {
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={12}>
+          <Col smOffset={3} sm={12}>
             <Button type="submit" className="btn btn-primary">
-              利用規約に同意して新規登録
+              パスワード変更実行
             </Button>
           </Col>
         </FormGroup>
@@ -149,11 +143,21 @@ function RegistrationForm(props) {
         </FormGroup>
         }
 
-        { props.isAlreadyRegistered &&
+        { props.isUnmatchReinput &&
         <FormGroup>
           <Col sm={12}>
             <div className="alert alert-danger">
-              そのアカウントは既に登録済みです。
+      				入力されたパスワードが不正です。確認用パスワードと一致していない可能性があります。
+            </div>
+          </Col>
+        </FormGroup>
+        }
+
+        { props.isForbidden &&
+        <FormGroup>
+          <Col sm={12}>
+            <div className="alert alert-danger">
+              <a href="login.html">ログイン</a>を行ってから実行してください。
             </div>
           </Col>
         </FormGroup>
@@ -163,7 +167,7 @@ function RegistrationForm(props) {
         <FormGroup>
           <Col sm={12}>
             <div className="alert alert-danger">
-              新規登録に失敗しました。アカウントまたはパスワードが使用できない可能性があります。
+      				パスワード変更に失敗しました。
             </div>
           </Col>
         </FormGroup>
@@ -175,13 +179,13 @@ function RegistrationForm(props) {
 function CompletedForm() {
 	return (
       <Form>
-          <h2>仮登録が完了しました</h2>
+          <h2>パスワード変更を完了しました</h2>
           <hr />
           <FormGroup>
             <Col sm={12}>
               <div className="caution">
-                入力したメールアドレスに本登録用のメールを送信しました。<br />
-                メールのリンクをクリックし、本登録を完了してください。
+                入力したパスワードに変更完了しました。<br />
+                もう一度<a href="login.html">ログイン</a>を行ってください。
               </div>
             </Col>
           </FormGroup>
@@ -189,4 +193,4 @@ function CompletedForm() {
 	)
 }
 
-ReactDOM.render(<Registration />, document.getElementById('registration_form'))
+ReactDOM.render(<ChangePassword />, document.getElementById('changepassword_form'))
