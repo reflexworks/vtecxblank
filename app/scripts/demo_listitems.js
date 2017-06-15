@@ -1,14 +1,18 @@
-import '../styles/index.css'
+//import '../styles/index.css'
 import axios from 'axios'
 import React from 'react'
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
 import ConditionInputForm from './demo_condition_input'
 import {
-	Table
+	Table,
+	Grid,
+	Row,
+	Col
 } from 'react-bootstrap'
  
-class ListItems extends React.Component {
+export default class ListItems extends React.Component {
 	constructor(props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
@@ -16,6 +20,10 @@ class ListItems extends React.Component {
 		this.activePage = 1
 	}
 
+	static propTypes = {
+		onClick: PropTypes.func
+	}
+  
 	search(condition) {
 		this.setState({ url: '/d/registration?f&l=' + this.maxDisplayRows + condition })
 	}
@@ -68,50 +76,62 @@ class ListItems extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<ConditionInputForm search={(url)=>this.search(url)} />
-				<hr/>
-				<VtecxPagination
-					url={this.state.url}
-					onChange={(activePage)=>this.getFeed(activePage)}
-					maxDisplayRows={this.maxDisplayRows}
-					maxButtons={4}
-				/>
-				<Table striped bordered condensed hover>
-					<thead>
-						<tr>
-							<th>No</th>
-							<th>id</th>
-							<th>email</th>
-							<th>好きな食べ物</th>
-							<th>好きな音楽</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.state.feed&&this.state.feed.entry.map((entry, idx) => 
+			<Grid>
+				<Row>
+    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.onClick}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
+				</Row>
+				<Row>
+					<br/>
+				</Row>
+				<Row>
+					<Col sm={10} >
+						<ConditionInputForm search={(url)=>this.search(url)} />
+						<VtecxPagination
+							url={this.state.url}
+							onChange={(activePage)=>this.getFeed(activePage)}
+							maxDisplayRows={this.maxDisplayRows}
+							maxButtons={4}
+						/>
+						<Table striped bordered condensed hover className="table" >
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>id</th>
+									<th>email</th>
+									<th>好きな食べ物</th>
+									<th>好きな音楽</th>
+								</tr>
+							</thead>
+							<tbody>
+								{this.state.feed&&this.state.feed.entry.map((entry, idx) => 
           	entry.userinfo && entry.favorite && 
 														this.viewentry(((this.activePage-1)*this.maxDisplayRows)+idx + 1,entry,idx)
-						)
-						}
-						{ this.state.isForbidden &&
+								)
+								}
+								{ this.state.isForbidden &&
 														<div className="alert alert-danger">
 															<a href="login.html">ログイン</a>を行ってから実行してください。
 														</div>
-						}
+								}
 
-						{ this.state.isError &&
+								{ this.state.isError &&
 												<div>
 													<td className="alert alert-danger">通信エラー</td>
 													<td>{this.state.errmsg}</td>
 												</div>
-						}
+								}
 
-					</tbody>
-				</Table>
-		 </div>
+							</tbody>
+						</Table>
+					</Col>  
+					<Col sm={2} >
+					</Col>  
+				</Row>  
+		 </Grid>
 		)
 	}
 }
 
-ReactDOM.render(<ListItems />, document.getElementById('container'))
+//ReactDOM.render(<ListItems />, document.getElementById('container'))
+
 
