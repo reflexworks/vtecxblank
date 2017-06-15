@@ -91,7 +91,13 @@ export default class ListItems extends React.Component {
 				</Row>
 				<Row>
 					<Col sm={9} >
-						<ConditionInputForm search={(url)=>this.search(url)} />
+						<ConditionInputForm search={(url) => this.search(url)} />
+					</Col>  
+					<Col sm={3} >
+					</Col>  
+				</Row>  
+				<Row>
+					<Col sm={9} >
 						<VtecxPagination
 							url={this.state.url}
 							onChange={(activePage)=>this.getFeed(activePage)}

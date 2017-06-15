@@ -97,8 +97,8 @@ export default class VtecxPagination extends React.Component {
 		return (
 			  <Grid>
 				<Row>
-					<Col sm={2}><p>{(this.state.activePage-1)*this.props.maxDisplayRows}-{(this.state.activePage)*this.props.maxDisplayRows}/{this.resultcount}件</p></Col>
-					<Col sm={10}>
+					<Col sm={3}><p>{(this.state.activePage-1)*this.props.maxDisplayRows}-{(this.state.activePage)*this.props.maxDisplayRows}/{this.resultcount}件</p></Col>
+					<Col sm={9}>
 						<Pagination
 							prev
 							next
