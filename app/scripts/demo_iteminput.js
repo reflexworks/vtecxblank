@@ -1,8 +1,11 @@
 //import '../styles/index.css'
 import axios from 'axios'
 import React from 'react'
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import {
+	Grid,
+	Row,
 	Form,
 	Col,
 	FormGroup,
@@ -13,13 +16,17 @@ import {
 	FormControl
 } from 'react-bootstrap'
  
-class PreferenceInput extends React.Component {
+export default class ItemInput extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
  
+	static propTypes = {
+		hideSidemenu: PropTypes.func
+	}
+
 	handleSubmit(e){
 		e.preventDefault()
 		let reqdata = {'feed': {'entry': []}}
@@ -99,84 +106,98 @@ class PreferenceInput extends React.Component {
   
 	render() {
 		return (
-			<Form horizontal onSubmit={this.handleSubmit}>
-				<PageHeader>新規登録</PageHeader>
-				<FormGroup controlId="id">
-					<FormControl.Static>ユーザ情報</FormControl.Static>        
-					<ControlLabel>ID</ControlLabel>
-					<FormControl type="text" placeholder="数字" />
-				</FormGroup>
+			<Grid>
+				<Row>
+    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.hideSidemenu}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
+				</Row>
+				<Row>
+					<br/>
+				</Row>
+				<Row>
+					<Col sm={8} >					
+						<Form horizontal onSubmit={this.handleSubmit}>
+							<PageHeader>新規登録</PageHeader>
+							<FormGroup controlId="id">
+								<FormControl.Static>ユーザ情報</FormControl.Static>        
+								<ControlLabel>ID</ControlLabel>
+								<FormControl type="text" placeholder="数字" />
+							</FormGroup>
 
-				<FormGroup controlId="email">
-					<ControlLabel>email</ControlLabel>
-					<FormControl type="email" placeholder="email" />
-				</FormGroup>
-				<br />
-				<FormGroup controlId="food">
-					<FormControl.Static>お気に入り</FormControl.Static>        
-					<ControlLabel>好きな食べ物</ControlLabel>
-					<FormControl type="text" placeholder="３文字" />
-				</FormGroup>
+							<FormGroup controlId="email">
+								<ControlLabel>email</ControlLabel>
+								<FormControl type="email" placeholder="email" />
+							</FormGroup>
+							<br />
+							<FormGroup controlId="food">
+								<FormControl.Static>お気に入り</FormControl.Static>        
+								<ControlLabel>好きな食べ物</ControlLabel>
+								<FormControl type="text" placeholder="３文字" />
+							</FormGroup>
 
-				<FormGroup controlId="music">
-					<ControlLabel>好きな音楽</ControlLabel>
-					<FormControl type="text" placeholder="５文字" />
-				</FormGroup>
+							<FormGroup controlId="music">
+								<ControlLabel>好きな音楽</ControlLabel>
+								<FormControl type="text" placeholder="５文字" />
+							</FormGroup>
 
-				<ControlLabel>趣味</ControlLabel>
-				<table className="table">
-					<thead>
-						<tr>
-							<th>タイプ</th>
-							<th>名前</th>
-						</tr>
-					</thead>
-					{this.state.rows.map(row => this.HobbyForm(row))}
-      			</table>
+							<ControlLabel>趣味</ControlLabel>
+							<table className="table">
+								<thead>
+									<tr>
+										<th>タイプ</th>
+										<th>名前</th>
+									</tr>
+								</thead>
+								{this.state.rows.map(row => this.HobbyForm(row))}
+      						</table>
 
-				<FormGroup>
-					<Button className="btn btn-default" onClick={() => this.addRow() }>
-						<Glyphicon glyph="plus" />
-					</Button>
-				</FormGroup>
+							<FormGroup>
+								<Button className="btn btn-default" onClick={() => this.addRow() }>
+									<Glyphicon glyph="plus" />
+								</Button>
+							</FormGroup>
 
-				<br/>
-				{ this.state.isForbidden &&
+							<br/>
+							{ this.state.isForbidden &&
 								<FormGroup>
 									<div className="alert alert-danger">
 										<a href="login.html">ログイン</a>を行ってから実行してください。
 									</div>
 								</FormGroup>
-				}
+							}
 
-				{ this.state.isError &&
+							{this.state.isError &&
 								<FormGroup>
 									<div className="alert alert-danger">
-              データ登録に失敗しました。<br/>
+              						データ登録に失敗しました。<br/>
 										{this.state.errmsg}
 									</div>
 								</FormGroup>
-				}
+							}
 
-				{ this.state.isCompleted &&
+							{ this.state.isCompleted &&
 								<FormGroup>
 									<div>
-      				データを登録しました。
+      								データを登録しました。
 									</div>
 								</FormGroup>
-				}
+							}
 
-				<FormGroup>
-					<Col smOffset={4} sm={12}>
-						<Button type="submit" className="btn btn-primary">
-              登録
-						</Button>
-					</Col>
-				</FormGroup>
+							<FormGroup>
+								<Col smOffset={4} sm={12}>
+									<Button type="submit" className="btn btn-primary">
+              						登録
+									</Button>
+								</Col>
+							</FormGroup>
 
-			</Form>
+						</Form>
+					</Col>  
+					<Col sm={4} >
+					</Col>  
+				</Row>				
+			</Grid>
 		)
 	}
 }
 
-ReactDOM.render(<PreferenceInput />, document.getElementById('container'))
+//ReactDOM.render(<ItemInput />, document.getElementById('container'))

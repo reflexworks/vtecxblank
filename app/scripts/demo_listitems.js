@@ -4,14 +4,14 @@ import React from 'react'
 //import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
-import ConditionInputForm from './demo_condition_input'
+import ConditionInputForm from './demo_conditioninput'
 import {
 	Table,
 	Grid,
 	Row,
 	Col
 } from 'react-bootstrap'
- 
+
 export default class ListItems extends React.Component {
 	constructor(props) {
 		super(props)
@@ -21,7 +21,8 @@ export default class ListItems extends React.Component {
 	}
 
 	static propTypes = {
-		onClick: PropTypes.func
+		hideSidemenu: PropTypes.func,
+		history: PropTypes.any
 	}
   
 	search(condition) {
@@ -62,9 +63,14 @@ export default class ListItems extends React.Component {
 		this.getFeed(1)
 	}
 
+	onSelect(e) {
+		// 入力画面に遷移
+		this.props.history.push('/iteminput?itemid='+e.currentTarget.id)
+	}
+
 	viewentry(idx,entry,key) {
 		return(
-			<tr key={key}>
+			<tr id={entry.id} key={key} onClick={(e)=>this.onSelect(e)}>
 				<td>{idx}</td>
 				<td>{entry.userinfo.id}</td>
 				<td>{entry.userinfo.email}</td>
@@ -78,13 +84,13 @@ export default class ListItems extends React.Component {
 		return (
 			<Grid>
 				<Row>
-    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.onClick}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
+    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.hideSidemenu}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
 				</Row>
 				<Row>
 					<br/>
 				</Row>
 				<Row>
-					<Col sm={10} >
+					<Col sm={9} >
 						<ConditionInputForm search={(url)=>this.search(url)} />
 						<VtecxPagination
 							url={this.state.url}
@@ -104,7 +110,7 @@ export default class ListItems extends React.Component {
 							</thead>
 							<tbody>
 								{this.state.feed&&this.state.feed.entry.map((entry, idx) => 
-          	entry.userinfo && entry.favorite && 
+          	      entry.userinfo && entry.favorite && 
 														this.viewentry(((this.activePage-1)*this.maxDisplayRows)+idx + 1,entry,idx)
 								)
 								}
@@ -124,13 +130,14 @@ export default class ListItems extends React.Component {
 							</tbody>
 						</Table>
 					</Col>  
-					<Col sm={2} >
+					<Col sm={3} >
 					</Col>  
 				</Row>  
 		 </Grid>
 		)
 	}
 }
+
 
 //ReactDOM.render(<ListItems />, document.getElementById('container'))
 

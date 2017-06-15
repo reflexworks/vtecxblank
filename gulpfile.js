@@ -78,6 +78,7 @@ gulp.task('watch:scripts', function(){
   });
 });
 
+
 gulp.task('watch:html', function(){
   gulp.watch('./app/*.html')
   .on('change', function(changedFile) {
