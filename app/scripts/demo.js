@@ -84,5 +84,3 @@ class DemoContainer extends React.Component {
 
 ReactDOM.render(<DemoContainer />, document.getElementById('container'))
 
-
-
