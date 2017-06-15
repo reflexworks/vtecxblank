@@ -2,6 +2,7 @@
   "name": "vtecxblank",
   "version": "0.0.1",
   "dependencies": {
+    "eslint": "^4.0.0",
     "react-async-script": "^0.9.1",
     "react-google-recaptcha": "^0.9.3"
   },
@@ -22,7 +23,6 @@
     "babel-preset-stage-3": "^6.24.1",
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "^0.26.1",
-    "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-flowtype": "^2.33.0",
     "eslint-plugin-react": "^7.0.1",
