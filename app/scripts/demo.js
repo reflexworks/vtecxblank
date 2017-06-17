@@ -1,3 +1,4 @@
+/* @flow */
 import '../styles/demo.css'
 import '../styles/simple-sidebar.css'
 import axios from 'axios'
@@ -13,14 +14,18 @@ import {
 	Redirect
 } from 'react-router-dom'
  
+type InputEvent = {
+	target: any,
+	preventDefault: Function
+} 
+
 class DemoContainer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {condition : 'toggled',search:null}    
-		this.hideSidemenu = this.hideSidemenu.bind(this)
+		this.state = { condition: 'toggled', search: null }    
 	}
 
-	hideSidemenu(e){
+	hideSidemenu(e:InputEvent){
 		e.preventDefault()
 		this.setState( { condition : !this.state.condition } )
 	} 
@@ -28,7 +33,7 @@ class DemoContainer extends React.Component {
 	listitems = (props) => {
 		return (
 			<ListItems 
-				hideSidemenu={this.hideSidemenu} 
+				hideSidemenu={(e)=>this.hideSidemenu(e)} 
 				history={props.history}
 			/>
 		)
@@ -37,7 +42,7 @@ class DemoContainer extends React.Component {
 	iteminput = () => {
 		return (
 			<ItemInput 
-				hideSidemenu={this.hideSidemenu}
+				hideSidemenu={(e)=>this.hideSidemenu(e)} 
 			/>
 		)
 	}

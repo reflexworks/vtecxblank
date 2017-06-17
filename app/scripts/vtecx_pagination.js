@@ -1,3 +1,4 @@
+/* @flow */
 import axios from 'axios'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -7,12 +8,28 @@ import {
 	Col,
 	Pagination
 } from 'react-bootstrap'
- 
+
+type State = {
+	activePage: number,
+	items: number
+}
+
+type Props = {
+	url: string,
+	onChange: Function,
+	maxDisplayRows: number,    // 1ページにおける最大表示件数（例：50件/1ページ）
+	maxButtons : number     	 // pageIndexにおける最大表示件数-1
+}
+
 export default class VtecxPagination extends React.Component {
-	constructor(props) {
+	state: State
+	pageIndex: number
+	resultcount: number
+	url: string
+
+	constructor(props:Props) {
 		super(props)
 		this.state = { activePage : 1 , items : 0  }
-		this.handleSelect = this.handleSelect.bind(this)
 		this.pageIndex = 0         // ページネーションを貼る最大index
 		this.resultcount = 0	   // 検索結果件数
 		this.url =''
@@ -26,11 +43,11 @@ export default class VtecxPagination extends React.Component {
 	}
 
 	/****
- * ページネーションのIndex設定処理
- * @url ページネーションを設定するURL
- * @page 取得したいページ
- *****/
-	buildIndex(url,activePage) {
+	 * ページネーションのIndex設定処理
+	 * @url ページネーションを設定するURL
+	 * @page 取得したいページ
+	 *****/
+	buildIndex(url:string,activePage:number) {
 
 		// ページング取得に必要な設定を行う
 		let param
@@ -58,7 +75,7 @@ export default class VtecxPagination extends React.Component {
 		} 
 	}
 
-	 handleSelect(eventKey) {		 
+	 handleSelect(eventKey:number) {		 
 		this.buildIndex(this.props.url, eventKey)
 		this.setState({
 			activePage: eventKey
@@ -109,7 +126,7 @@ export default class VtecxPagination extends React.Component {
 							items={this.state.items}
 							maxButtons={this.props.maxButtons}
 							activePage={this.state.activePage}
-							onSelect={this.handleSelect} />
+							onSelect={(key)=>this.handleSelect(key)} />
 					</Col>
 				</Row>
 			  </Grid>

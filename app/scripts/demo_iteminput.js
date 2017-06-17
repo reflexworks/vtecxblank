@@ -1,7 +1,6 @@
-//import '../styles/index.css'
+/* @flow */
 import axios from 'axios'
 import React from 'react'
-//import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import {
 	Grid,
@@ -16,18 +15,36 @@ import {
 	FormControl
 } from 'react-bootstrap'
  
+type State = {
+	rows: Array<number>,
+	isCompleted: boolean,
+	isError: boolean,
+	errmsg: string,
+	isForbidden: boolean,
+}
+
+type Props = {
+	hideSidemenu: Function,
+}
+
+type InputEvent = {
+	target: any,
+	preventDefault: Function
+} 
+
 export default class ItemInput extends React.Component {
-	constructor(props) {
+	state: State
+	
+	constructor(props:Props) {
 		super(props)
 		this.state = { rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
-		this.handleSubmit = this.handleSubmit.bind(this)
 	}
  
 	static propTypes = {
 		hideSidemenu: PropTypes.func
 	}
 
-	handleSubmit(e){
+	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		let reqdata = {'feed': {'entry': []}}
 		let entry = {}
@@ -63,6 +80,7 @@ export default class ItemInput extends React.Component {
 			if (error.response&&error.response.status===401) {
 				this.setState({isForbidden: true})
 			} else if (error.response.status === 403) {
+				alert('実行権限がありません。ログインからやり直してください。')
 				location.href = 'login.html'
 			} else {
 				this.setState({isError: true,errmsg:error.response.data.feed.title})
@@ -77,7 +95,7 @@ export default class ItemInput extends React.Component {
 		}))
 	}
 
-	HobbyForm(row) {
+	HobbyForm(row:number) {
 		const hobby_type = 'hobby_type'+row
 		const hobby_name = 'hobby_name'+row
 		return(
@@ -108,14 +126,14 @@ export default class ItemInput extends React.Component {
 		return (
 			<Grid>
 				<Row>
-    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.hideSidemenu}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
+		    		<a href="#menu-toggle" className="btn btn-default" id="menu-toggle" onClick={this.props.hideSidemenu}><i className="glyphicon glyphicon-menu-hamburger"></i></a>        
 				</Row>
 				<Row>
 					<br/>
 				</Row>
 				<Row>
 					<Col sm={8} >					
-						<Form horizontal onSubmit={this.handleSubmit}>
+						<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
 							<PageHeader>新規登録</PageHeader>
 							<FormGroup controlId="id">
 								<FormControl.Static>ユーザ情報</FormControl.Static>        

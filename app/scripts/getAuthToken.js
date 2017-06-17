@@ -63,7 +63,7 @@ export default function getAuthToken(username, password) {
 		return r
 	}
 
-    // WSSEオブジェクト作成：固定値のAPIキーなし
+	// WSSEオブジェクト作成：固定値のAPIキーなし
 	var getWsse = function(username, password){
 		var shaObj = new jsSHA('SHA-256', 'TEXT')
 		shaObj.update(password)

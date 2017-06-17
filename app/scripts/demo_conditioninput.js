@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -7,18 +8,27 @@ import {
 	Button,
 	FormControl
 } from 'react-bootstrap'
+
+type Props = {
+	search: Function
+}
+
+type InputEvent = {
+	target: any,
+	preventDefault: Function
+} 
  
 export default class ConditionInputForm extends React.Component {
-	constructor(props) {
+	
+	constructor(props:Props) {
 		super(props)
-		this.handleSubmit = this.handleSubmit.bind(this)
 	}
  
 	static propTypes = {
 		search: PropTypes.func
 	}
 
-	handleSubmit(e){
+	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		e.target.email.value
 		let condition = ''
@@ -39,7 +49,7 @@ export default class ConditionInputForm extends React.Component {
 
 	render() {
 		return (
-			<Form horizontal onSubmit={this.handleSubmit}>
+			<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
 				<Col smOffset={0.5} sm={2}>
 					<FormGroup controlId="account">
 						<FormControl type="text" placeholder="ID" />
@@ -63,7 +73,7 @@ export default class ConditionInputForm extends React.Component {
 				<Col smOffset={10} sm={2}>
 					<FormGroup>
 						<Button type="submit" className="btn btn-primary">
-                  検索
+                  		検索
 						</Button>
 					</FormGroup>
 				</Col>                

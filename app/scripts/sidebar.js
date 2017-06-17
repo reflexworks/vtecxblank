@@ -5,10 +5,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import {
-  Button,
-  Modal,
-  Nav,
-  NavItem
+	Button,
+	Modal,
+	Nav,
+	NavItem
 } from 'react-bootstrap'
  
 class Sidebar extends React.Component {
@@ -16,15 +16,15 @@ class Sidebar extends React.Component {
   	return (
     	<Modal className='Sidebar left' show={ this.props.isVisible } onHide={this.props.onHide} 
       	 autoFocus keyboard
-      >
+			>
       	<Modal.Header closeButton>
         	<Modal.Title>Sidebar Menu</Modal.Title>
-        </Modal.Header>
+				</Modal.Header>
       	<Modal.Body>
       		{ this.props.children }
-        </Modal.Body>
-      </Modal>
-	)
+				</Modal.Body>
+			</Modal>
+		)
 	}
 }
 
@@ -64,19 +64,19 @@ class SidebarItems extends React.Component {
   	return (
     	<div className='Sidebar-items'>
       	<Button onClick={ () => this.updateModal(true) } className='glyphicon glyphicon-menu-hamburger'></Button>
-        <Sidebar side='left' isVisible={ this.state.isVisible } onHide={ () => this.updateModal(false) }>
+				<Sidebar side='left' isVisible={ this.state.isVisible } onHide={ () => this.updateModal(false) }>
         	<Nav>
           	<NavItem href='#'>入力</NavItem>
-            <NavItem href='#'>一覧</NavItem>
-            <NavItem onClick={ () => this.logout() }>logout</NavItem>
-          </Nav>
-        </Sidebar>
-      </div>
-	)
+						<NavItem href='#'>一覧</NavItem>
+						<NavItem onClick={ () => this.logout() }>logout</NavItem>
+					</Nav>
+				</Sidebar>
+			</div>
+		)
 	}
 }
 
 ReactDOM.render(
-  <SidebarItems />,
-  document.getElementById('sidebar')
+	<SidebarItems />,
+	document.getElementById('sidebar')
 )

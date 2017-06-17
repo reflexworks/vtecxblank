@@ -1,7 +1,6 @@
-//import '../styles/index.css'
+/* @flow */
 import axios from 'axios'
 import React from 'react'
-//import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
 import ConditionInputForm from './demo_conditioninput'
@@ -12,8 +11,30 @@ import {
 	Col
 } from 'react-bootstrap'
 
+type State = {
+	feed: any,
+	isCompleted: boolean,
+	isError: boolean,
+	errmsg: string,
+	isForbidden: boolean,
+	url: string
+}
+
+type Props = {
+	hideSidemenu: Function,
+	history: any	
+}
+
+type SelectEvent<E> = {
+	currentTarget: E
+} & Event
+
 export default class ListItems extends React.Component {
-	constructor(props) {
+	state : State
+	maxDisplayRows: number
+	activePage: number
+
+	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.state = {feed: { entry: [] }, isCompleted: false, isError: false, errmsg: '', isForbidden: false, url: '/d/registration?f&l='+ this.maxDisplayRows }
@@ -25,11 +46,11 @@ export default class ListItems extends React.Component {
 		history: PropTypes.any
 	}
   
-	search(condition) {
+	search(condition:string) {
 		this.setState({ url: '/d/registration?f&l=' + this.maxDisplayRows + condition })
 	}
    
-	getFeed(activePage) {
+	getFeed(activePage:number) {
 		this.activePage = activePage
 		axios({
 			url: this.state.url + '&n=' + activePage,
@@ -47,7 +68,8 @@ export default class ListItems extends React.Component {
 				if (error.response.status === 401) {
 					this.setState({ isForbidden: true })
 				} else if (error.response.status === 403 ) {
-					location.href = 'login.html'  
+					alert('実行権限がありません。。ログインからやり直してください。')
+					location.href = 'login.html'
 				} else if (error.response.status === 204||error.response.data.feed.title === 'Please make a pagination index in advance.') {
 					// pagination indexがまだ作成されていなければ１秒待って再検索
 					setTimeout(() => this.getFeed(activePage), 1000)
@@ -63,12 +85,12 @@ export default class ListItems extends React.Component {
 		this.getFeed(1)
 	}
 
-	onSelect(e) {
+	onSelect(e:SelectEvent<HTMLInputElement>) {
 		// 入力画面に遷移
 		this.props.history.push('/iteminput?itemid='+e.currentTarget.id)
 	}
 
-	viewentry(idx,entry,key) {
+	viewentry(idx:number,entry:any,key:string) {
 		return(
 			<tr id={entry.id} key={key} onClick={(e)=>this.onSelect(e)}>
 				<td>{idx}</td>
@@ -116,7 +138,7 @@ export default class ListItems extends React.Component {
 							</thead>
 							<tbody>
 								{this.state.feed&&this.state.feed.entry.map((entry, idx) => 
-          	      entry.userinfo && entry.favorite && 
+          	     					 entry.userinfo && entry.favorite && 
 														this.viewentry(((this.activePage-1)*this.maxDisplayRows)+idx + 1,entry,idx)
 								)
 								}
@@ -145,4 +167,3 @@ export default class ListItems extends React.Component {
 }
 
 //ReactDOM.render(<ListItems />, document.getElementById('container'))
-
