@@ -1,0 +1,72 @@
+<feed>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- htmlを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R</uri>
+        </contributor>
+        <link rel="self" href="/_html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- cssを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R./</uri>
+        </contributor>
+        <link rel="self" href="/_html/css" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- imgを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R./</uri>
+        </contributor>
+        <link rel="self" href="/_html/img" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- jsを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R./</uri>
+        </contributor>
+        <link rel="self" href="/_html/js" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- pdfを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R./</uri>
+        </contributor>
+        <link rel="self" href="/_html/pdf" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみ閲覧できるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/server" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- xlsを制限なく閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R./</uri>
+        </contributor>
+        <link rel="self" href="/_html/xls" />
+    </entry>
+</feed>

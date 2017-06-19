@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ListItems from './demo_listitems'
 import ItemInput from './demo_iteminput'
+import ItemUpdate from './demo_itemupdate'
 import {
 	BrowserRouter as Router,
 	Route,
@@ -47,6 +48,14 @@ class DemoContainer extends React.Component {
 		)
 	}
 
+	itemupdate = () => {
+		return (
+			<ItemUpdate 
+				hideSidemenu={(e)=>this.hideSidemenu(e)} 
+			/>
+		)
+	}
+	
 	logout() {
 		axios({
 			url: '/d/?_logout',
@@ -78,6 +87,7 @@ class DemoContainer extends React.Component {
 						<Switch>
 							<Route path="/iteminput" component={this.iteminput} />
 							<Route path="/listitems" component={this.listitems} />
+							<Route path="/itemupdate" component={this.itemupdate} />
 						</Switch>	
 					</div>    
 					<Redirect to='/iteminput' />

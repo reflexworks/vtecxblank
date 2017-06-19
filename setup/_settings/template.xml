@@ -7,7 +7,8 @@
     <contributor>
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
-<content type="text/html">userinfo
+<content type="text/html">
+userinfo
  id(int)
  email
 favorite

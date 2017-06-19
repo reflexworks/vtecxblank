@@ -54,7 +54,7 @@ class Registration extends React.Component {
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
 				},
-				data : JSON.stringify(reqData)
+				data : reqData
 
 			}).then( () => {
 				this.setState({isCompleted: true})

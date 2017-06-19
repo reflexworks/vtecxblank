@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap'
  
 type State = {
+	feed: any,
 	rows: Array<number>,
 	isCompleted: boolean,
 	isError: boolean,
@@ -32,18 +33,39 @@ type InputEvent = {
 	preventDefault: Function
 } 
 
-export default class ItemInput extends React.Component {
+export default class ItemUpdate extends React.Component {
 	state: State
 	
 	constructor(props:Props) {
 		super(props)
-		this.state = { rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
+		this.state = { feed: {},rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
 	}
  
 	static propTypes = {
 		hideSidemenu: PropTypes.func
 	}
 
+	componentDidMount() {
+		let id = '0-3-14-3-1-2-1'
+		axios({
+			url: '/d/registration/'+id+'?e',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then( (response) => {
+			// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
+			// activePageが「2」だったら51件目から100件目が格納されている
+			console.log('entry='+JSON.stringify(response.data.feed))
+			this.setState({ feed: response.data.feed })
+			//			console.log('feed='+JSON.stringify(this.state.feed))
+		}).catch((error) => {
+			if (error.response) {
+				this.setState({ isError: true, errmsg: error.message })
+			}
+		})   
+	}
+	
 	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		let reqdata = {'feed': {'entry': []}}
@@ -56,15 +78,6 @@ export default class ItemInput extends React.Component {
     	entry.hobby.push({'type': e.target['hobby_type'+row].value, 'name': e.target['hobby_name'+row].value})
 		)
 		reqdata.feed.entry.push(entry)
-
-		/*  for pagination test
-		for (let i = 1; i < 100; i++) {
-			let entry2 = {}
-			entry2.userinfo = { id : i, email : e.target.email.value }
-			entry2.favorite = { food : e.target.food.value, music : e.target.music.value }
-			reqdata.feed.entry.push(entry2)
-		}
-*/
     
 		axios({
 			url: '/d/registration',
@@ -122,6 +135,11 @@ export default class ItemInput extends React.Component {
 	}
   
 	render() {
+
+		const id = this.state.feed.entry ? this.state.feed.entry[0].userinfo.id : ''
+		const email = this.state.feed.entry ? this.state.feed.entry[0].userinfo.email : ''
+		const food = this.state.feed.entry ? this.state.feed.entry[0].favorite.food : ''
+		const music = this.state.feed.entry ? this.state.feed.entry[0].favorite.music : ''
 		return (
 			<Grid>
 				<Row>
@@ -133,27 +151,27 @@ export default class ItemInput extends React.Component {
 				<Row>
 					<Col sm={8} >					
 						<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
-							<PageHeader>新規登録</PageHeader>
+							<PageHeader>更新</PageHeader>
 							<FormGroup controlId="id">
 								<FormControl.Static>ユーザ情報</FormControl.Static>        
 								<ControlLabel>ID</ControlLabel>
-								<FormControl type="text" placeholder="数字" />
+								<FormControl type="text" placeholder="数字" value={id}/>
 							</FormGroup>
 
 							<FormGroup controlId="email">
 								<ControlLabel>email</ControlLabel>
-								<FormControl type="email" placeholder="email" />
+								<FormControl type="email" placeholder="email" value={email} />
 							</FormGroup>
 							<br />
 							<FormGroup controlId="food">
 								<FormControl.Static>お気に入り</FormControl.Static>        
 								<ControlLabel>好きな食べ物</ControlLabel>
-								<FormControl type="text" placeholder="３文字" />
+								<FormControl type="text" placeholder="３文字" value={food}/>
 							</FormGroup>
 
 							<FormGroup controlId="music">
 								<ControlLabel>好きな音楽</ControlLabel>
-								<FormControl type="text" placeholder="５文字" />
+								<FormControl type="text" placeholder="５文字" value={music}/>
 							</FormGroup>
 
 							<ControlLabel>趣味</ControlLabel>
@@ -185,7 +203,7 @@ export default class ItemInput extends React.Component {
 							{this.state.isError &&
 								<FormGroup>
 									<div className="alert alert-danger">
-              						データ登録に失敗しました。<br/>
+              						データ更新に失敗しました。<br/>
 										{this.state.errmsg}
 									</div>
 								</FormGroup>
@@ -194,7 +212,7 @@ export default class ItemInput extends React.Component {
 							{ this.state.isCompleted &&
 								<FormGroup>
 									<div>
-      								データを登録しました。
+      								データを更新しました。
 									</div>
 								</FormGroup>
 							}

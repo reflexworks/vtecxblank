@@ -87,7 +87,7 @@ export default class ListItems extends React.Component {
 
 	onSelect(e:SelectEvent<HTMLInputElement>) {
 		// 入力画面に遷移
-		this.props.history.push('/iteminput?itemid='+e.currentTarget.id)
+		this.props.history.push('/itemupdate?itemid='+e.currentTarget.id)
 	}
 
 	viewentry(idx:number,entry:any,key:string) {
