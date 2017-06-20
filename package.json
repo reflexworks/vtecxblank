@@ -2,10 +2,12 @@
   "name": "vtecxblank",
   "version": "0.0.1",
   "dependencies": {
+    "eslint": "^4.0.0",
     "react-async-script": "^0.9.1",
     "react-google-recaptcha": "^0.9.3"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
@@ -22,7 +24,6 @@
     "babel-preset-stage-3": "^6.24.1",
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "^0.26.1",
-    "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-flowtype": "^2.33.0",
     "eslint-plugin-react": "^7.0.1",
@@ -41,6 +42,8 @@
     "jssha": "^2.3.0",
     "minimist": "^1.2.0",
     "prop-types": "^15.5.10",
+    "react-bootstrap": "^0.31.0",
+    "react-router-dom": "^4.1.1",
     "recursive-readdir": "^2.1.1",
     "reflexcontext": "0.0.1",
     "run-sequence": "^1.1.4",

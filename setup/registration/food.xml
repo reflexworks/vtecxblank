@@ -1,4 +1,13 @@
 <feed>
+<entry>
+ <contributor>
+  <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+ </contributor>
+<contributor>
+  <uri>urn:vte.cx:acl:+,CRUD</uri>
+</contributor>
+<link rel="self" href="/registration" />
+</entry>
  <entry>
  <favorite>
  	<food>りんご</food>
