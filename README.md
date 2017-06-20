@@ -15,7 +15,7 @@ npm install
 npm install 
 ```
 
-gulp makes a symbolic link. It is executed only once.
+gulp to build and make a symbolic link. It is executed only once.
 ```
 gulp
 ```
@@ -27,12 +27,12 @@ gulp serve is to use a local dev environment.
 gulp serve -h https://{service name}.1.vte.cx
 ```
 
-with accesstoken, the updated file will be sent to the server at the same time.
+with accesstoken, the updated file will be sent to the server at the same time. (The accesstoken can be obtained by admin console.)
 ```
 gulp serve -h https://{service name}.1.vte.cx -k {accesstoken}
 ```
 
-deploy (The accesstoken can be obtained by admin console.)
+deploy 
 ```
 gulp deploy -h https://{service name}.1.vte.cx -k {accesstoken}
 ```
