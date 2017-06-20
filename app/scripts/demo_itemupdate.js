@@ -37,20 +37,13 @@ type InputEvent = {
 	preventDefault: Function
 } 
 
-type Hobby = {
-	type: string,
-	name: string
-}
-
 export default class ItemUpdate extends React.Component {
 	state: State
-	hobbies: Array<Hobby>
 	entrykey: string
 	
 	constructor(props:Props) {
 		super(props)
-		this.state = { feed: {}, id:0,email:'',food:'',music:'',isCompleted: false, isDeleted:false,isError: false, errmsg: '', isForbidden: false } 
-		this.hobbies = [{ type: '', name: '' }]
+		this.state = { feed: {},id:0,email:'',food:'',music:'',isCompleted: false, isDeleted:false,isError: false, errmsg: '', isForbidden: false } 
 		this.entrykey
 	}
  
@@ -59,19 +52,14 @@ export default class ItemUpdate extends React.Component {
 	}
 
 	initValue() {
-		this.setState((prevState) => ({
-			id: prevState.feed.entry ? prevState.feed.entry[0].userinfo.id : '',
-			email: prevState.feed.entry ? prevState.feed.entry[0].userinfo.email : '',
-			food: prevState.feed.entry ? prevState.feed.entry[0].favorite.food : '',
-			music: prevState.feed.entry ? prevState.feed.entry[0].favorite.music : ''
-		}))
+		this.setState({
+			id: this.state.feed.entry ? this.state.feed.entry[0].userinfo.id : 0,
+			email: this.state.feed.entry ? this.state.feed.entry[0].userinfo.email : '',
+			food: this.state.feed.entry ? this.state.feed.entry[0].favorite.food : '',
+			music: this.state.feed.entry ? this.state.feed.entry[0].favorite.music : ''
+		})
 
-		this.hobbies = this.state.feed.entry ? this.state.feed.entry[0].hobby : [{ type: '', name: '' }]
-		if (!(this.hobbies instanceof Array)) {
-			this.hobbies = [this.hobbies]
-		}
-
-		this.hobbies.map(
+		this.state.feed.entry[0].hobby.map(
 			(hobby,i) => {
 				const hobby_type = 'hobby_type' + i
 				const hobby_name = 'hobby_name' + i
@@ -92,8 +80,8 @@ export default class ItemUpdate extends React.Component {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then( (response) => {
-			this.setState({ feed: response.data.feed })
+		}).then((response) => {
+			this.setState({feed:response.data.feed})
 			this.initValue()
 		}).catch((error) => {
 			if (error.response) {
@@ -139,7 +127,7 @@ export default class ItemUpdate extends React.Component {
 
 		entry.hobby = []
 
-		this.hobbies.map((row,key) => 
+		this.state.feed.entry[0].hobby.map((row,key) => 
 	    	entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
 		)
 		reqdata.feed.entry.push(entry)
@@ -169,10 +157,13 @@ export default class ItemUpdate extends React.Component {
 	addRow() {
 		this.setState((prevState) => ({
 			feed: ((prevState) => { 
+				if (!prevState.feed.entry[0].hobby) {
+					prevState.feed.entry[0].hobby = []
+				}
 				prevState.feed.entry[0].hobby.push({ type: '', name: '' })
 				return prevState.feed				
 			})(prevState)
-		}))		
+		}))			
 	}
 
 	HobbyForm(key:number) {
@@ -249,7 +240,7 @@ export default class ItemUpdate extends React.Component {
 										<th>名前</th>
 									</tr>
 								</thead>
-								{this.hobbies.map((row, key) => this.HobbyForm(key))}
+								{this.state.feed.entry&&this.state.feed.entry[0].hobby&&this.state.feed.entry[0].hobby.map((row, key) => this.HobbyForm(key))}
       						</table>
 
 							<FormGroup>
