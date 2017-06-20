@@ -82,10 +82,6 @@ export default class ItemUpdate extends React.Component {
 	}
 
 	componentWillMount() {
-		this.initValue()
-	}
-
-	componentDidMount() {
 		this.entrykey = location.search.substring(1)
 		axios({
 			url: '/d/registration/'+this.entrykey+'?e',
