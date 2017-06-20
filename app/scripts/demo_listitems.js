@@ -25,9 +25,9 @@ type Props = {
 	history: any	
 }
 
-type SelectEvent<E> = {
-	currentTarget: E
-} & Event
+type InputEvent = {
+	currentTarget: any
+} 
 
 export default class ListItems extends React.Component {
 	state : State
@@ -85,7 +85,7 @@ export default class ListItems extends React.Component {
 		this.getFeed(1)
 	}
 
-	onSelect(e:SelectEvent<HTMLInputElement>) {
+	onSelect(e:InputEvent) {
 		// 入力画面に遷移
 		const itemid = e.currentTarget.id.match(/^\/registration\/(.+),.*$/)
 		this.props.history.push('/itemupdate?'+itemid[1])
