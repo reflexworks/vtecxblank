@@ -44,33 +44,41 @@ export default class ConditionInputForm extends React.Component {
 		if (e.target.music.value) {
 			condition += '&favorite.music='+e.target.music.value 
 		}
+		if (e.target.hobby.value) {
+			condition += '&hobby.name='+e.target.hobby.value 
+		}
 		this.props.search(condition)
 	}
 
 	render() {
 		return (
 			<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
-				<Col smOffset={0.5} sm={2}>
+				<Col smOffset={0.5} sm={3}>
 					<FormGroup controlId="account">
 						<FormControl type="text" placeholder="ID" />
 					</FormGroup>
 				</Col>
-				<Col smOffset={1} sm={2}>
+				<Col smOffset={1} sm={3}>
 					<FormGroup controlId="email">
 						<FormControl type="email" placeholder="email" />
 					</FormGroup>
 				</Col>
-				<Col smOffset={1} sm={2}>
+				<Col smOffset={1} sm={3}>
 					<FormGroup controlId="food">
 						<FormControl type="text" placeholder="好きな食べ物" />
 					</FormGroup>
 				</Col>  
-				<Col smOffset={1} sm={2}>
+				<Col smOffset={1} sm={3}>
 					<FormGroup controlId="music">
 						<FormControl type="text" placeholder="好きな音楽" />
 					</FormGroup>
 				</Col>
-				<Col smOffset={10} sm={2}>
+				<Col smOffset={1} sm={3}>
+					<FormGroup controlId="hobby">
+						<FormControl type="text" placeholder="趣味" />
+					</FormGroup>
+				</Col>
+				<Col smOffset={10} sm={1}>
 					<FormGroup>
 						<Button type="submit" className="btn btn-primary">
                   		検索

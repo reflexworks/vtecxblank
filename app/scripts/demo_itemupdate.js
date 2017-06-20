@@ -66,7 +66,10 @@ export default class ItemUpdate extends React.Component {
 			music: prevState.feed.entry ? prevState.feed.entry[0].favorite.music : ''
 		}))
 
-		this.hobbies = this.state.feed.entry ? this.state.feed.entry[0].hobby : [{ type: '', name: '' } ]
+		this.hobbies = this.state.feed.entry ? this.state.feed.entry[0].hobby : [{ type: '', name: '' }]
+		if (!(this.hobbies instanceof Array)) {
+			this.hobbies = [this.hobbies]
+		}
 
 		this.hobbies.map(
 			(hobby,i) => {
@@ -82,10 +85,6 @@ export default class ItemUpdate extends React.Component {
 	}
 
 	componentWillMount() {
-		this.initValue()
-	}
-
-	componentDidMount() {
 		this.entrykey = location.search.substring(1)
 		axios({
 			url: '/d/registration/'+this.entrykey+'?e',
@@ -140,7 +139,7 @@ export default class ItemUpdate extends React.Component {
 
 		entry.hobby = []
 
-		this.state.feed.entry[0].hobby.map((row,key) => 
+		this.hobbies.map((row,key) => 
 	    	entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
 		)
 		reqdata.feed.entry.push(entry)
