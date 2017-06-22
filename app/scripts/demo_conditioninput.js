@@ -12,7 +12,7 @@ import {
 import type {
 	Props,
 	InputEvent
-} from '../decls/demo.types'
+} from 'demo.types'
  
 export default class ConditionInputForm extends React.Component {
 	
