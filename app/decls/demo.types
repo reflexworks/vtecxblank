@@ -1,24 +1,24 @@
-export type Userinfo = {
+type Userinfo = {
 	id: number,
 	email: string
 }
 
-export type Favorite = {
+type Favorite = {
 	food: string,
 	music: string
 }
 
-export type Hobby = {
-	export type: string,
+type Hobby = {
+	type: string,
 	name: string
 }
 
-export type Link = {
+type Link = {
 	self: string,
 	href: string
 }
 
-export type Entry = {
+type Entry = {
 	userinfo: Userinfo,
 	favorite: Favorite,
 	hobby?: Array<Hobby>,
@@ -26,7 +26,7 @@ export type Entry = {
 	id?: string
 }
 
-export type Entries = {
+type Entries = {
 	entry? : Array<Entry>
 }
 
@@ -47,11 +47,11 @@ export type Props = {
 	hideSidemenu: Function
 }
 
-export type Value = {
+type Value = {
 	value: string
 }
 
-export type Target = {
+type Target = {
 	id: Value,
 	email: Value,
 	food: Value,

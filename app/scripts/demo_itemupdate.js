@@ -18,8 +18,7 @@ import type {
 	State,
 	Props,
 	InputEvent
-} from '../decls/demo.types'
-
+} from 'demo.types'
 
 export default class ItemUpdate extends React.Component {
 	state: State
