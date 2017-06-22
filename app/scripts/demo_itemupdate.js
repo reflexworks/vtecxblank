@@ -80,7 +80,7 @@ export default class ItemUpdate extends React.Component {
 		e.preventDefault()
 		axios({
 			// 削除の場合、エントリーキー?r=エントリーID
-			url: '/d/registration/' + this.entrykey +'?r='+ this.state.id,
+			url: '/d/registration/' + this.entrykey,
 			method: 'delete',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
