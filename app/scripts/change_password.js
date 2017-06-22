@@ -13,9 +13,11 @@ import {
 	HelpBlock,
 	FormControl
 } from 'react-bootstrap'
-import {
-	InputEvent
-} from 'demo.type'
+
+type InputEvent = {
+	target: any,
+	preventDefault: Function
+} 
 
 class ChangePassword extends React.Component {
 	constructor() {

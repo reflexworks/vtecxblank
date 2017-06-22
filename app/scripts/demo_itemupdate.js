@@ -14,11 +14,12 @@ import {
 	Glyphicon,
 	FormControl
 } from 'react-bootstrap'
-import {
+import type {
 	State,
 	Props,
 	InputEvent
-} from 'demo.type'
+} from '../decls/demo.types'
+
 
 export default class ItemUpdate extends React.Component {
 	state: State
