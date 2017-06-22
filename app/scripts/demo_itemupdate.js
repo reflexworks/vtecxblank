@@ -14,28 +14,11 @@ import {
 	Glyphicon,
 	FormControl
 } from 'react-bootstrap'
- 
-type State = {
-	feed: any,
-	id: number,
-	email: string,
-	food: string,
-	music: string,
-	isCompleted: boolean,
-	isDeleted: boolean,
-	isError: boolean,
-	errmsg: string,
-	isForbidden: boolean,
-}
-
-type Props = {
-	hideSidemenu: Function
-}
-
-type InputEvent = {
-	target: any,
-	preventDefault: Function
-} 
+import {
+	State,
+	Props,
+	InputEvent
+} from 'demo.type'
 
 export default class ItemUpdate extends React.Component {
 	state: State
@@ -59,16 +42,19 @@ export default class ItemUpdate extends React.Component {
 			music: this.state.feed.entry ? this.state.feed.entry[0].favorite.music : ''
 		})
 
-		this.state.feed.entry[0].hobby.map(
-			(hobby,i) => {
-				const hobby_type = 'hobby_type' + i
-				const hobby_name = 'hobby_name' + i
-				this.setState({
-					[hobby_type]: hobby.type,
-					[hobby_name]: hobby.name					
-				})
-			}
-		)
+		if (this.state.feed.entry && this.state.feed.entry[0]&&this.state.feed.entry[0].hobby) {
+			this.state.feed.entry[0].hobby.map(
+				(hobby,i) => {
+					const hobby_type = 'hobby_type' + i
+					const hobby_name = 'hobby_name' + i
+					this.setState({
+						[hobby_type]: hobby.type,
+						[hobby_name]: hobby.name					
+					})
+				}
+			)
+		}
+			
 
 	}
 
@@ -93,7 +79,8 @@ export default class ItemUpdate extends React.Component {
 	handleDelete(e: InputEvent) {
 		e.preventDefault()
 		axios({
-			url: '/d/registration/' + this.entrykey +'?r='+ this.state.feed.entry[0].id,
+			// 削除の場合、エントリーキー?r=エントリーID
+			url: '/d/registration/' + this.entrykey +'?r='+ this.state.id,
 			method: 'delete',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -119,7 +106,7 @@ export default class ItemUpdate extends React.Component {
 		let reqdata = {'feed': {'entry': []}}
 		let entry = {}
 		// 更新の際に必要となるキー
-		entry.link = this.state.feed.entry[0].link
+		entry.link = this.state.feed.entry ? this.state.feed.entry[0].link : ''
 		// idを指定すると楽観的排他チェックができる。,の右の数字がリビジョン(更新回数)
 		//		entry.id = this.state.feed.entry[0].id
 		entry.userinfo = { id : Number(e.target.id.value), email : e.target.email.value }
@@ -127,9 +114,11 @@ export default class ItemUpdate extends React.Component {
 
 		entry.hobby = []
 
-		this.state.feed.entry[0].hobby.map((row,key) => 
-	    	entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
-		)
+		if (this.state.feed.entry&&this.state.feed.entry[0].hobby) {
+			this.state.feed.entry[0].hobby.map((row,key) => 
+				entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
+			)
+		}
 		reqdata.feed.entry.push(entry)
     
 		axios({

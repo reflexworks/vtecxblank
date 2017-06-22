@@ -14,11 +14,9 @@ import {
 	Switch,
 	Redirect
 } from 'react-router-dom'
- 
-type InputEvent = {
-	target: any,
-	preventDefault: Function
-} 
+import {
+	InputEvent
+} from 'demo.type'
 
 class DemoContainer extends React.Component {
 	constructor(props) {
