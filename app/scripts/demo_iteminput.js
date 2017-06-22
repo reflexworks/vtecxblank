@@ -14,7 +14,11 @@ import {
 	Glyphicon,
 	FormControl
 } from 'react-bootstrap'
- 
+import {
+	InputEvent,
+	Props
+} from 'demo.type'
+
 type State = {
 	rows: Array<number>,
 	isCompleted: boolean,
@@ -22,15 +26,6 @@ type State = {
 	errmsg: string,
 	isForbidden: boolean,
 }
-
-type Props = {
-	hideSidemenu: Function
-}
-
-type InputEvent = {
-	target: any,
-	preventDefault: Function
-} 
 
 export default class ItemInput extends React.Component {
 	state: State

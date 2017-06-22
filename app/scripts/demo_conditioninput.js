@@ -9,14 +9,10 @@ import {
 	FormControl
 } from 'react-bootstrap'
 
-type Props = {
-	search: Function
-}
-
-type InputEvent = {
-	target: any,
-	preventDefault: Function
-} 
+import {
+	Props,
+	InputEvent
+} from 'demo.type'
  
 export default class ConditionInputForm extends React.Component {
 	

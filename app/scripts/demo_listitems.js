@@ -10,6 +10,10 @@ import {
 	Row,
 	Col
 } from 'react-bootstrap'
+import {
+	InputEvent,
+	Props
+} from 'demo.type'
 
 type State = {
 	feed: any,
@@ -19,15 +23,6 @@ type State = {
 	isForbidden: boolean,
 	url: string
 }
-
-type Props = {
-	hideSidemenu: Function,
-	history: any	
-}
-
-type InputEvent = {
-	currentTarget: any
-} 
 
 export default class ListItems extends React.Component {
 	state : State
