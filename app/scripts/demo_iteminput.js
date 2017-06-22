@@ -14,10 +14,10 @@ import {
 	Glyphicon,
 	FormControl
 } from 'react-bootstrap'
-import {
+import type {
 	InputEvent,
 	Props
-} from 'demo.type'
+} from 'demo.types'
 
 type State = {
 	rows: Array<number>,

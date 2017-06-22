@@ -10,10 +10,10 @@ import {
 	Row,
 	Col
 } from 'react-bootstrap'
-import {
+import type {
 	InputEvent,
 	Props
-} from 'demo.type'
+} from 'demo.types'
 
 type State = {
 	feed: any,

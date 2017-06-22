@@ -1,24 +1,24 @@
-type Userinfo = {
+export type Userinfo = {
 	id: number,
 	email: string
 }
 
-type Favorite = {
+export type Favorite = {
 	food: string,
 	music: string
 }
 
-type Hobby = {
-	type: string,
+export type Hobby = {
+	export type: string,
 	name: string
 }
 
-type Link = {
+export type Link = {
 	self: string,
 	href: string
 }
 
-type Entry = {
+export type Entry = {
 	userinfo: Userinfo,
 	favorite: Favorite,
 	hobby?: Array<Hobby>,
@@ -26,11 +26,11 @@ type Entry = {
 	id?: string
 }
 
-type Entries = {
+export type Entries = {
 	entry? : Array<Entry>
 }
 
-type State = {
+export type State = {
 	feed: Entries,
 	id: number,
 	email: string,
@@ -43,15 +43,15 @@ type State = {
 	isForbidden: boolean,
 }
 
-type Props = {
+export type Props = {
 	hideSidemenu: Function
 }
 
-type Value = {
+export type Value = {
 	value: string
 }
 
-type Target = {
+export type Target = {
 	id: Value,
 	email: Value,
 	food: Value,
@@ -60,7 +60,7 @@ type Target = {
 	value: string
 }
 
-type InputEvent = {
+export type InputEvent = {
 	target: Target,
 	preventDefault: Function
 } 
