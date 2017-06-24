@@ -1,8 +1,7 @@
-module.exports = function() {
+import reflexcontext from 'reflexcontext' 
 
-	  var data = {"feed" : {"entry" : [{"userinfo" : {"id" : 123,"email" : "foo@bar.com"}},{"favorite" : {"food" : "ラーメン","music" : ["ジャズ","ポップス","ロック"]}}]}};
+const data = {'feed' : {'entry' : [{'userinfo' : {'id' : 123,'email' : 'foo@bar.com'}},{'favorite' : {'food' : 'ラーメン','music' : ['ジャズ','ポップス','ロック']}}]}}
 
-	  // XLS出力
-	  ReflexContext.toXls(data, '/xls/person_template.xls', 'test.xls');
+// XLS出力
+reflexcontext.toXls(data, '/xls/person_template.xls', 'test.xls')
 
-}
