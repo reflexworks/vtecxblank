@@ -19,10 +19,14 @@ const recursive = require('recursive-readdir');
 gulp.task('watch:scripts', function(){
   gulp.watch('./app/scripts/*.js')
   .on('change', function(changedFile) {
-    gulp.src(changedFile.path)
+    let srcfile = changedFile.path
+    if (argv.f) {
+      srcfile = './app/scripts/'+ argv.f
+    }
+    gulp.src(srcfile)
     .pipe(webpackStream({
       output: {
-          filename: changedFile.path.replace(/^.*[\\\/]/, '')
+          filename: srcfile.replace(/^.*[\\\/]/, '')
         },
         module: {
             rules: [
@@ -71,7 +75,7 @@ gulp.task('watch:scripts', function(){
     .pipe(gulp.dest('./dist/scripts'))
     .on('end',function(){
       if (argv.k) {
-        const filename = 'dist/scripts/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        const filename = 'dist/scripts/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
         sendcontent(filename);
       }
     })
@@ -252,10 +256,14 @@ function gettype(file) {
 gulp.task('watch:server', function(){
   gulp.watch('./app/server/*.js')
   .on('change', function(changedFile) {
-    gulp.src(changedFile.path)
+    let srcfile = changedFile.path
+    if (argv.f) {
+      srcfile = './app/scripts/'+ argv.f
+    }
+    gulp.src(srcfile)
     .pipe(webpackStream({
       output: {
-          filename: changedFile.path.replace(/^.*[\\\/]/, '')
+          filename: srcfile.replace(/^.*[\\\/]/, '')
         },
         module: {
             rules: [
@@ -285,7 +293,7 @@ gulp.task('watch:server', function(){
       .pipe(gulp.dest('./test/server'))
       .on('end',function(){
       if (argv.k) {
-        const filename = 'test/server/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
         sendcontent(filename);
       }
     });
@@ -365,9 +373,7 @@ gulp.task('clean-dist', function () {
         'dist/{,**/}*.html', // 対象ファイル
         'dist/scripts',
         'dist/server',
-        'dist/img',
-        'app/build/*.js',
-        'app/build/server/*.js'
+        'dist/img'
     ], {read: false} )
     .pipe(clean());
 });

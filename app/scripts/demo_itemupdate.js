@@ -42,19 +42,16 @@ export default class ItemUpdate extends React.Component {
 			music: this.state.feed.entry ? this.state.feed.entry[0].favorite.music : ''
 		})
 
-		if (this.state.feed.entry && this.state.feed.entry[0]&&this.state.feed.entry[0].hobby) {
-			this.state.feed.entry[0].hobby.map(
-				(hobby,i) => {
-					const hobby_type = 'hobby_type' + i
-					const hobby_name = 'hobby_name' + i
-					this.setState({
-						[hobby_type]: hobby.type,
-						[hobby_name]: hobby.name					
-					})
-				}
-			)
-		}
-			
+		this.state.feed.entry[0].hobby.map(
+			(hobby,i) => {
+				const hobby_type = 'hobby_type' + i
+				const hobby_name = 'hobby_name' + i
+				this.setState({
+					[hobby_type]: hobby.type,
+					[hobby_name]: hobby.name					
+				})
+			}
+		)
 
 	}
 
@@ -103,7 +100,7 @@ export default class ItemUpdate extends React.Component {
 
 	handleSubmit(e:InputEvent){
 		e.preventDefault()
-		let reqdata = {'feed': {'entry': []}}
+		let reqdata = { 'feed': { 'entry': [] } }
 		let entry = {}
 		// 更新の際に必要となるキー
 		entry.link = this.state.feed.entry ? this.state.feed.entry[0].link : ''
@@ -114,11 +111,9 @@ export default class ItemUpdate extends React.Component {
 
 		entry.hobby = []
 
-		if (this.state.feed.entry&&this.state.feed.entry[0].hobby) {
-			this.state.feed.entry[0].hobby.map((row,key) => 
-				entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
-			)
-		}
+		this.state.feed.entry[0].hobby.map((row,key) => 
+			entry.hobby.push({'type': e.target['hobby_type'+key].value, 'name': e.target['hobby_name'+key].value})
+		)
 		reqdata.feed.entry.push(entry)
     
 		axios({
