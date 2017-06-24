@@ -258,7 +258,7 @@ gulp.task('watch:server', function(){
   .on('change', function(changedFile) {
     let srcfile = changedFile.path
     if (argv.f) {
-      srcfile = './app/scripts/'+ argv.f
+      srcfile = './app/server/'+ argv.f
     }
     gulp.src(srcfile)
     .pipe(webpackStream({
