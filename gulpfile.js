@@ -287,7 +287,7 @@ gulp.task('watch:server', function(){
             ]
         }
         ,plugins: [
-//            new BabiliPlugin()              
+            new BabiliPlugin()              
         ]
         ,devtool: 'source-map'        
       }
