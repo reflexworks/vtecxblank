@@ -75,8 +75,11 @@ gulp.task('watch:components', function(){
     .pipe(gulp.dest('./dist/components'))
     .on('end',function(){
       if (argv.k) {
-        const filename = 'dist/components/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-        sendcontent(filename);
+        const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/);
+        if (p&&p[2]!=='map') {
+          const filename = 'dist/components/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+          sendcontent(filename);
+        }        
       }
     })
   });
@@ -284,7 +287,7 @@ gulp.task('watch:server', function(){
             ]
         }
         ,plugins: [
-            new BabiliPlugin()              
+//            new BabiliPlugin()              
         ]
         ,devtool: 'source-map'        
       }
@@ -293,8 +296,11 @@ gulp.task('watch:server', function(){
       .pipe(gulp.dest('./test/server'))
       .on('end',function(){
       if (argv.k) {
-        const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
-        sendcontent(filename);
+        const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/);
+        if (p&&p[2]!=='map') {
+          const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+          sendcontent(filename);
+        }        
       }
     });
   });
@@ -336,11 +342,16 @@ gulp.task( 'copy:xls', function() {
     ).pipe( gulp.dest( 'dist' ) );
 } );
 
+gulp.task('symlink', function () {
+     vfs.src('dist/server',{followSymlinks: false})
+       .pipe(vfs.symlink('test'));
+ });
+
 gulp.task('serve', ['watch'],function() {
 	return serve('dist');
 });
 
-gulp.task('serve:server', ['watch:server'],function() {
+gulp.task('serve:server', ['symlink','watch:server'],function() {
 	return serve('test');
 });
 
