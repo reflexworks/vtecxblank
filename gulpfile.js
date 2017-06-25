@@ -16,12 +16,12 @@ const tap = require('gulp-tap');
 const BabiliPlugin = require('babili-webpack-plugin');
 const recursive = require('recursive-readdir');
 
-gulp.task('watch:scripts', function(){
-  gulp.watch('./app/scripts/*.js')
+gulp.task('watch:components', function(){
+  gulp.watch('./app/components/*.js')
   .on('change', function(changedFile) {
     let srcfile = changedFile.path
     if (argv.f) {
-      srcfile = './app/scripts/'+ argv.f
+      srcfile = './app/components/'+ argv.f
     }
     gulp.src(srcfile)
     .pipe(webpackStream({
@@ -72,10 +72,10 @@ gulp.task('watch:scripts', function(){
       }
       ,webpack))
       .on('error', gutil.log)
-    .pipe(gulp.dest('./dist/scripts'))
+    .pipe(gulp.dest('./dist/components'))
     .on('end',function(){
       if (argv.k) {
-        const filename = 'dist/scripts/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        const filename = 'dist/components/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
         sendcontent(filename);
       }
     })
@@ -165,17 +165,17 @@ function webpack_file(filename,src,dest) {
 		        plugins: [
                 new BabiliPlugin()		          
 		        ]
-		        ,devtool: 'source-map'
+//		        ,devtool: 'source-map'
 		      }
 	      ,webpack))
 	      .pipe(gulp.dest(dest))
 }
 
-gulp.task('build:html_scripts',['symlink'], function(done){
+gulp.task('build:html_components',['symlink'], function(done){
   gulp.src('./app/*.html')
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
-      .pipe(webpack_files('./app/scripts','./dist/scripts',done));
+      .pipe(webpack_files('./app/components','./dist/components',done));
 });
 
 gulp.task('upload:content', function(){
@@ -371,7 +371,7 @@ function serve(tgt) {
 gulp.task('clean-dist', function () {
     return gulp.src([
         'dist/{,**/}*.html', // 対象ファイル
-        'dist/scripts',
+        'dist/components',
         'dist/server',
         'dist/img'
     ], {read: false} )
@@ -379,13 +379,13 @@ gulp.task('clean-dist', function () {
 });
 
 gulp.task('build:client', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images']);
+  runSequence('clean-dist',['build:html_components','copy:images']);
 }); 
 gulp.task('build', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images'],['build:server_dist','build:server_test']);
+  runSequence('clean-dist',['build:html_components','copy:images'],['build:server_dist','build:server_test']);
 }); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('clean-dist',['build:html_scripts','copy:images'],'build:server_dist','upload');
+  runSequence('clean-dist',['build:html_components','copy:images'],'build:server_dist','upload');
 }); 
 
 gulp.task('deploy:server', function ( callback ) {
@@ -394,7 +394,7 @@ gulp.task('deploy:server', function ( callback ) {
 
 gulp.task('upload', ['upload:content','upload:entry']);
 
-gulp.task('watch', ['watch:scripts','watch:html']);
+gulp.task('watch', ['watch:components','watch:html']);
 
 gulp.task('default', function ( callback ) {
   runSequence('build',callback);
