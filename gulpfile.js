@@ -171,7 +171,7 @@ function webpack_file(filename,src,dest) {
 	      .pipe(gulp.dest(dest))
 }
 
-gulp.task('build:html_components',['symlink'], function(done){
+gulp.task('build:html_components',['copy:pdf','copy:xls'], function(done){
   gulp.src('./app/*.html')
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
@@ -322,12 +322,19 @@ gulp.task( 'copy:images', function() {
     .pipe( gulp.dest( 'dist' ) );
 } );
 
-gulp.task('symlink', function () {
-    vfs.src('app/pdf',{followSymlinks: false})
-    	.pipe(vfs.symlink('dist'));
-    vfs.src('app/xls',{followSymlinks: false})
-    	.pipe(vfs.symlink('dist'));
-});
+gulp.task( 'copy:pdf', function() {
+    return gulp.src(
+        [ 'app/pdf/**' ],
+        { base: 'app' }
+    ).pipe( gulp.dest( 'dist' ) );
+} );
+
+gulp.task( 'copy:xls', function() {
+    return gulp.src(
+        [ 'app/xls/**' ],
+        { base: 'app' }
+    ).pipe( gulp.dest( 'dist' ) );
+} );
 
 gulp.task('serve', ['watch'],function() {
 	return serve('dist');
@@ -373,6 +380,8 @@ gulp.task('clean-dist', function () {
         'dist/{,**/}*.html', // 対象ファイル
         'dist/components',
         'dist/server',
+        'dist/pdf',
+        'dist/xls',
         'dist/img'
     ], {read: false} )
     .pipe(clean());
