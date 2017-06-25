@@ -17,11 +17,11 @@ const BabiliPlugin = require('babili-webpack-plugin');
 const recursive = require('recursive-readdir');
 
 gulp.task('watch:components', function(){
-  gulp.watch('./app/components/*.js')
+  gulp.watch('./src/components/*.js')
   .on('change', function(changedFile) {
     let srcfile = changedFile.path
     if (argv.f) {
-      srcfile = './app/components/'+ argv.f
+      srcfile = './src/components/'+ argv.f
     }
     gulp.src(srcfile)
     .pipe(webpackStream({
@@ -84,7 +84,7 @@ gulp.task('watch:components', function(){
 
 
 gulp.task('watch:html', function(){
-  gulp.watch('./app/*.html')
+  gulp.watch('./src/*.html')
   .on('change', function(changedFile) {
 	gutil.log('copied:'+changedFile.path.replace(/^.*[\\\/]/, ''));
     gulp.src(changedFile.path)
@@ -172,10 +172,10 @@ function webpack_file(filename,src,dest) {
 }
 
 gulp.task('build:html_components',['copy:pdf','copy:xls'], function(done){
-  gulp.src('./app/*.html')
+  gulp.src('./src/*.html')
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
-      .pipe(webpack_files('./app/components','./dist/components',done));
+      .pipe(webpack_files('./src/components','./dist/components',done));
 });
 
 gulp.task('upload:content', function(){
@@ -254,11 +254,11 @@ function gettype(file) {
 }
 
 gulp.task('watch:server', function(){
-  gulp.watch('./app/server/*.js')
+  gulp.watch('./src/server/*.js')
   .on('change', function(changedFile) {
     let srcfile = changedFile.path
     if (argv.f) {
-      srcfile = './app/server/'+ argv.f
+      srcfile = './src/server/'+ argv.f
     }
     gulp.src(srcfile)
     .pipe(webpackStream({
@@ -302,12 +302,12 @@ gulp.task('watch:server', function(){
 
 gulp.task('build:server_dist', function(done){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/server','./dist/server',done));      
+      .pipe(webpack_files('./src/server','./dist/server',done));      
 });
 
 gulp.task('build:server_test', function(done){
   gulp.src('./test/*.html')
-      .pipe(webpack_files('./app/server','./test/server',done));      
+      .pipe(webpack_files('./src/server','./test/server',done));      
 });
 
 gulp.task('build:server', function ( callback ) {
@@ -316,23 +316,23 @@ gulp.task('build:server', function ( callback ) {
 
 gulp.task( 'copy:images', function() {
     return gulp.src(
-        [ 'app/img/**' ],
-        { base: 'app' }
+        [ 'src/img/**' ],
+        { base: 'src' }
     ).pipe( imagemin() ) 
     .pipe( gulp.dest( 'dist' ) );
 } );
 
 gulp.task( 'copy:pdf', function() {
     return gulp.src(
-        [ 'app/pdf/**' ],
-        { base: 'app' }
+        [ 'src/pdf/**' ],
+        { base: 'src' }
     ).pipe( gulp.dest( 'dist' ) );
 } );
 
 gulp.task( 'copy:xls', function() {
     return gulp.src(
-        [ 'app/xls/**' ],
-        { base: 'app' }
+        [ 'src/xls/**' ],
+        { base: 'src' }
     ).pipe( gulp.dest( 'dist' ) );
 } );
 
