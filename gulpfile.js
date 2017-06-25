@@ -165,7 +165,7 @@ function webpack_file(filename,src,dest) {
 		        plugins: [
                 new BabiliPlugin()		          
 		        ]
-		        ,devtool: 'source-map'
+//		        ,devtool: 'source-map'
 		      }
 	      ,webpack))
 	      .pipe(gulp.dest(dest))
