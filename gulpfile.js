@@ -102,6 +102,14 @@ gulp.task('watch:html', function(){
   });
 });
 
+gulp.task('watch:settings', function(){
+  gulp.watch('./setup/_settings/*')
+  .on('change', function(changedFile) {
+    const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
+    sendentry(file, null)
+  });
+});
+
 function webpack_files(src,dest,done) {
   let filenames = [];
   let streams = tap(function(file){
@@ -195,12 +203,12 @@ gulp.task('upload:entry', function(){
 
 function sendcontent(file, stats) { 
   const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1) : argv.h;
-  curl(getargs(file,stats,argvh,'?_content'),file,argvh)
+  curl(getargs(file,stats,argvh,'?_content'),file,argvh,false)
 ;}
 
 function sendentry(file, stats) {  
   const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1)+'/d' : argv.h+'/d';
-  curl(getargs(file,stats,argvh,''),file,argvh);
+  curl(getargs(file,stats,argvh,''),file,argvh,true);
 }
 
 function getargs(file, stats, argvh, option) {
@@ -219,9 +227,13 @@ function getargs(file, stats, argvh, option) {
   return args;
 }
 
-function curl(args,file,argvh) {
+function curl(args,file,argvh,isentry) {
   exec('curl '+args,function (err, stdout, stderr) {
-    console.log(file+' --> '+argvh+file.substring(file.indexOf('/')));
+    if (isentry) {
+      console.log(file);
+    }else {
+      console.log(file+' --> '+argvh+file.substring(file.indexOf('/')));
+    }
     console.log(stdout);
     console.log(stderr);
   });
@@ -256,7 +268,7 @@ function gettype(file) {
  return 'application/octet-stream';
 }
 
-gulp.task('watch:server', function(){
+gulp.task('watch:server',['watch:settings'], function(){
   gulp.watch('./src/server/*.js')
   .on('change', function(changedFile) {
     let srcfile = changedFile.path
@@ -414,7 +426,7 @@ gulp.task('deploy:server', function ( callback ) {
 
 gulp.task('upload', ['upload:content','upload:entry']);
 
-gulp.task('watch', ['watch:components','watch:html']);
+gulp.task('watch', ['watch:components','watch:html','watch:settings']);
 
 gulp.task('default', function ( callback ) {
   runSequence('build',callback);
