@@ -14,7 +14,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- cssを制限なく閲覧できるようにするACL設定(*)  -->
+            <!-- cssを制限なく閲覧できるようにするACL設定(*) -->
             <uri>urn:vte.cx:acl:*,R./</uri>
         </contributor>
         <link rel="self" href="/_html/css" />
@@ -55,7 +55,7 @@
         </contributor>
         <contributor>
             <!-- serverをログイン済みユーザのみ閲覧できるようにするACL設定(+)  -->
-            <uri>urn:vte.cx:acl:+,R.</uri>
+            <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
         <link rel="self" href="/_html/server" />
     </entry>
