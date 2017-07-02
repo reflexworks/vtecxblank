@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "eslint": "^4.0.0",
-    "jsdoc": "^3.4.3",
     "react-async-script": "^0.9.1",
     "react-google-recaptcha": "^0.9.3"
   },
