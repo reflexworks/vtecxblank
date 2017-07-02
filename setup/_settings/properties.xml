@@ -9,8 +9,8 @@
     </contributor>
 <rights>
 console.log=true
-console.log.WARN=true 
-console.log.ERROR=true 
+console.warn=true 
+console.error=true 
 </rights>
 </entry>
 </feed>
