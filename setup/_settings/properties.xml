@@ -1,0 +1,16 @@
+<feed>
+  <entry>
+    <link href="/_settings/properties" rel="self"/>
+    <contributor>
+      <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+    </contributor>
+    <contributor>
+      <uri>urn:vte.cx:acl:+,R</uri>
+    </contributor>
+<rights>
+console.log=true
+console.log.WARN=true 
+console.log.ERROR=true 
+</rights>
+</entry>
+</feed>
