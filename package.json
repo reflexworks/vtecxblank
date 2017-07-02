@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "eslint": "^4.0.0",
+    "jsdoc": "^3.4.3",
     "react-async-script": "^0.9.1",
     "react-google-recaptcha": "^0.9.3"
   },
@@ -47,7 +48,7 @@
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
     "recursive-readdir": "^2.1.1",
-    "reflexcontext": "0.9.1",
+    "reflexcontext": "0.9.5",
     "run-sequence": "^1.1.4",
     "style-loader": "^0.13.1",
     "through2": "^2.0.3",
