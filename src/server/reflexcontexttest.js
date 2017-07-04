@@ -93,13 +93,11 @@ reflexcontext.log('html', html)
 const content = reflexcontext.getContent('/_settings/template')
 reflexcontext.log('content', content)    
 
-const js = reflexcontext.getServerJs('index.js')
-reflexcontext.log('serverjs', js)    
-
 reflexcontext.setStatus(201)
 const rc = reflexcontext.getStatus()
 reflexcontext.setHeader('aaa','bbb')
 reflexcontext.sendMessage(rc, 'test')
+
 
 /* 
 reflexcontext.sendError(200, 'OK')

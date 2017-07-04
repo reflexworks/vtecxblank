@@ -10,7 +10,8 @@
 <rights>
 console.log=true
 console.warn=true 
-console.error=true 
+console.error=true
+use_webpack=true
 </rights>
 </entry>
 </feed>
