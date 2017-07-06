@@ -95,7 +95,7 @@ gulp.task('watch:html', function(){
       .pipe(gulp.dest('./dist'))
       .on('end',function(){
       if (argv.k) {
-        const filename = 'dist/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js';
+        const filename = 'dist/'+changedFile.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.html';
         sendcontent(filename);
       }
       })
