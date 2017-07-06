@@ -46,7 +46,7 @@ class Registration extends React.Component {
 		}else {
 
 			const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value +','+ this.getHashPass(password) +''}]}]}}
-  		const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+  			const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
 			axios({
 				url: '/d/?_adduser' + captchaOpt,
