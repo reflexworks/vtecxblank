@@ -355,6 +355,8 @@ gulp.task( 'copy:xls', function() {
 } );
 
 gulp.task('symlink', function () {
+     vfs.src('dist/components',{followSymlinks: false})
+       .pipe(vfs.symlink('test'));
      vfs.src('dist/server',{followSymlinks: false})
        .pipe(vfs.symlink('test'));
  });
