@@ -18,3 +18,4 @@ settings['password']='xxxxx'
 const result = reflexcontext.getMail(settings)
 reflexcontext.log(JSON.stringify(result))
 
+
