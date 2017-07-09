@@ -359,7 +359,7 @@ gulp.task('symlink', function () {
        .pipe(vfs.symlink('test'));
  });
 
-gulp.task('serve', ['watch'],function() {
+gulp.task('serve', ['watch','watch:server'],function() {
 	return serve('dist');
 });
 
