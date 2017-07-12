@@ -365,7 +365,7 @@ gulp.task('serve', ['watch','watch:server'],function() {
 	return serve('dist');
 });
 
-gulp.task('serve:server', ['symlink','watch:server'],function() {
+gulp.task('serve:test', ['symlink','watch:server'],function() {
 	return serve('test');
 });
 
