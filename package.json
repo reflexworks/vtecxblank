@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "eslint": "^4.0.0",
+    "mocha": "^3.4.2",
     "react-async-script": "^0.9.1",
     "react-google-recaptcha": "^0.9.3"
   },
@@ -27,6 +28,7 @@
     "eslint-loader": "^1.7.1",
     "eslint-plugin-flowtype": "^2.33.0",
     "eslint-plugin-react": "^7.0.1",
+    "espower-babel": "^4.0.3",
     "event-stream": "^3.3.4",
     "file-loader": "^0.10.0",
     "flow-bin": "^0.39.0",
@@ -49,6 +51,7 @@
     "recursive-readdir": "^2.1.1",
     "reflexcontext": "0.9.9",
     "run-sequence": "^1.1.4",
+    "should": "^11.2.1",
     "style-loader": "^0.13.1",
     "through2": "^2.0.3",
     "url-loader": "^0.5.7",
