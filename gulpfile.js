@@ -16,37 +16,30 @@ const tap = require('gulp-tap');
 const BabiliPlugin = require('babili-webpack-plugin');
 const recursive = require('recursive-readdir');
 
-gulp.task('watch:components', function(){
-  gulp.watch('./src/components/*.js')
-  .on('change', function(changedFile) {
-    let srcfile = changedFile.path
-    if (argv.f) {
-      srcfile = './src/components/'+ argv.f
-    }
-    gulp.src(srcfile)
-    .pipe(webpackStream({
+function webpackconfig(filename) { 
+  return {
       output: {
-          filename: srcfile.replace(/^.*[\\\/]/, '')
+          filename: filename
         },
         module: {
             rules: [
-		                  {
-		                          test: /\.css$/,
-		                          use: [ 'style-loader', 'css-loader' ]
-		                  },
-		                  {
-		                          test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
-		                          use: { loader: 'url-loader', options: { limit: 100000 } },
-		                  },
-		                  {
-		                          test: /\.(jpg)$/,
-		                          use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
-		                  },
-		                  {
-		                          test: /\.(js)$/,
-		                          use: { loader: 'babel-loader'},
+                      {
+                              test: /\.css$/,
+                              use: [ 'style-loader', 'css-loader' ]
+                      },
+                      {
+                              test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
+                              use: { loader: 'url-loader', options: { limit: 100000 } },
+                      },
+                      {
+                              test: /\.(jpg)$/,
+                              use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
+                      },
+                      {
+                              test: /\.(js)$/,
+                              use: { loader: 'babel-loader'},
                               exclude: /node_modules/
-		                  },
+                      },
                       {
                               test: /\.js$/,
                               exclude: /(node_modules)/,
@@ -66,12 +59,23 @@ gulp.task('watch:components', function(){
             "axios": "axios"
         },
         plugins: [
-            new BabiliPlugin()		          
+            new BabiliPlugin()              
         ]
         ,devtool: 'source-map'
       }
-      ,webpack))
-      .on('error', gutil.log)
+    };
+
+
+gulp.task('watch:components', function(){
+  gulp.watch('./src/components/*.js')
+  .on('change', function(changedFile) {
+    let srcfile = changedFile.path
+    if (argv.f) {
+      srcfile = './src/components/'+ argv.f
+    }
+    gulp.src(srcfile)
+    .pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, '')),webpack))
+    .on('error', gutil.log)
     .pipe(gulp.dest('./dist/components'))
     .on('end',function(){
       if (argv.k) {
@@ -132,53 +136,7 @@ return streams;
 
 function webpack_file(filename,src,dest) {
 	      return gulp.src(src+'/'+filename)
-	      .pipe(webpackStream({
-		      output: {
-		          filename: filename
-		        },
-		        module: {
-		            rules: [
-		                  {
-		                          test: /\.css$/,
-		                          use: [ 'style-loader', 'css-loader' ]
-		                  },
-		                  {
-		                          test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
-		                          use: { loader: 'url-loader', options: { limit: 100000 } },
-		                  },
-		                  {
-		                          test: /\.(jpg)$/,
-		                          use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
-		                  },
-		                  {
-		                          test: /\.(js)$/,
-		                          use: { loader: 'babel-loader'},
-                              exclude: /node_modules/
-		                  },
-                      {
-                              test: /\.js$/,
-                              exclude: /(node_modules)/,
-                              loader: 'eslint-loader',
-                              options: {
-                                fix: true,
-                                failOnError: true,
-                              }
-                      }                      
-		            ]
-		        },
-            externals: {
-                "react": "React",
-                "react-dom": "ReactDOM",
-                "react-bootstrap": "ReactBootstrap",
-                "react-router-dom": "ReactRouterDOM",            
-                "axios": "axios"
-            },
-		        plugins: [
-                new BabiliPlugin()		          
-		        ]
-//		        ,devtool: 'source-map'
-		      }
-	      ,webpack))
+	      .pipe(webpackStream(webpackconfig(filename),webpack))
 	      .pipe(gulp.dest(dest))
 }
 
@@ -276,33 +234,7 @@ gulp.task('watch:server',['watch:settings'], function(){
       srcfile = './src/server/'+ argv.f
     }
     gulp.src(srcfile)
-    .pipe(webpackStream({
-      output: {
-          filename: srcfile.replace(/^.*[\\\/]/, '')
-        },
-        module: {
-            rules: [
-		                  {
-		                          test: /\.(js)$/,
-		                          use: { loader: 'babel-loader'},
-                              exclude: /node_modules/
-		                  },
-                      {
-                              test: /\.js$/,
-                              exclude: /(node_modules)/,
-                              loader: 'eslint-loader',
-                              options: {
-                                fix: true,
-                                failOnError: true,
-                              }
-                      }                      
-            ]
-        }
-        ,plugins: [
-            new BabiliPlugin()              
-        ]
-        ,devtool: 'source-map'        
-      }
+    .pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''))
       ,webpack))
       .on('error', gutil.log)      
       .pipe(gulp.dest('./test/server'))
