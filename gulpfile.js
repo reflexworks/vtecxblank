@@ -140,7 +140,7 @@ function webpack_file(filename,src,dest) {
 	      .pipe(gulp.dest(dest))
 }
 
-gulp.task('build:html_components',['copy:pdf','copy:xls'], function(done){
+gulp.task('build:html_components',['copy:images','copy:pdf','copy:xls'], function(done){
   gulp.src('./src/*.html')
       .pipe(minifyHtml({ empty: true }))
       .pipe(gulp.dest('./dist'))
@@ -345,17 +345,21 @@ gulp.task('clean-dist', function () {
 });
 
 gulp.task('build:client', function ( callback ) {
-  runSequence('clean-dist',['build:html_components','copy:images']);
+  runSequence('clean-dist',['build:html_components']);
 }); 
 gulp.task('build', function ( callback ) {
-  runSequence('clean-dist',['build:html_components','copy:images'],['build:server_dist','build:server_test']);
+  runSequence('clean-dist',['build:html_components'],['build:server_dist','build:server_test']);
 }); 
 gulp.task('deploy', function ( callback ) {
-  runSequence('clean-dist',['build:html_components','copy:images'],'build:server_dist','upload');
+  runSequence('clean-dist',['build:html_components'],'build:server_dist','upload');
 }); 
 
 gulp.task('deploy:server', function ( callback ) {
   runSequence('clean-dist','build:server_dist','upload:server');
+}); 
+
+gulp.task('upload:images', function ( callback ) {
+  runSequence('copy:images','upload:content');
 }); 
 
 gulp.task('upload', ['upload:content','upload:entry']);
