@@ -11,6 +11,7 @@
 userinfo
  id(int)
  email
+ name
 favorite
  food!=^.{3}$
  music=^.{5}$
@@ -19,7 +20,7 @@ hobby{}
  name
  updated(date)
 </content>
-<rights>
+<rights> 
 userinfo.id:/.+/registration
 </rights>
 </entry>
