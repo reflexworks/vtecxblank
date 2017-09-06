@@ -11,6 +11,7 @@
 console.log=true
 console.warn=true 
 console.error=true 
+_errorpage.1.error.html=^/_html/.*$
 </rights>
 </entry>
 </feed>
