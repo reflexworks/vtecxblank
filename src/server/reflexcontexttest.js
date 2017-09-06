@@ -21,23 +21,24 @@ reflexcontext.log('entry', JSON.stringify(entry))
 
 
 try {
-	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たん', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/101', ___rel: 'self' }] }] } }
+	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たく', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/101', ___rel: 'self' }] }] } }
 	reflexcontext.post(request)
 } catch (e) {
 	reflexcontext.log('post', e.message)    
 }
 
 try {
-	const request = { feed: { entry: [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たこ', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }] }] } }
+	const request = { feed: { entry: [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たし', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }] }] } }
 	reflexcontext.post(request,'/registration')
+	reflexcontext.post(request,'/registration',true)
 } catch (e) {
 	reflexcontext.log('post2', e.message)    
 }
 
-
 try {
 	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たえ', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/101', ___rel: 'self' }] }] } }
 	reflexcontext.put(request)
+	reflexcontext.put(request,true)
 } catch (e) {
 	reflexcontext.log('put', e.message)    
 }
