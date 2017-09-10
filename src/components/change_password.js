@@ -1,34 +1,41 @@
 /* @flow */
-import '../styles/index.css'
+import '../styles/application.sass'
 import axios from 'axios'
 import jsSHA from 'jssha'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
+import ReactPasswordStrength from 'react-password-strength/dist/universal'
+import 'react-password-strength/dist/style.css'
 import {
 	Form,
 	Col,
 	FormGroup,
 	Button,
 	HelpBlock,
+	ControlLabel,
 	FormControl
 } from 'react-bootstrap'
 
 type InputEvent = {
 	target: any,
 	preventDefault: Function
-} 
+}
 
 class ChangePassword extends React.Component {
 	constructor() {
 		super()
-		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'' }    
+		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'',passLength: 0 }
 	}
 
 	capchaOnChange(value:string) {
 		this.setState({captchaValue: value})
 	}
-   
+
+	passwordOnChange(state) {
+		this.setState({ passLength: state.password.length })
+	}
+
 	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		const password = e.target.password.value
@@ -63,7 +70,7 @@ class ChangePassword extends React.Component {
   					this.setState({isForbidden: true})
     			}else {
   					this.setState({isError: true})
-		    	} 
+		    	}
   		})
 
 			}else{
@@ -71,59 +78,61 @@ class ChangePassword extends React.Component {
 			}
 
 		}
-	} 
-  
+	}
+
 	render() {
 		return (
-			<div>
-				{this.state.isCompleted ? (
-					<Form>
-						<h2>パスワード変更を完了しました</h2>
-						<hr />
-						<FormGroup>
-							<Col sm={12}>
-								<div className="caution">
-                    入力したパスワードに変更完了しました。<br />
+			<div className="col-md-6 col-md-offset-3 col-sm-12">
+				<h3 className="login_form__title">パスワード変更</h3>
+				<div className="login_form__block">				
+					{this.state.isCompleted ? (
+						<Form>
+							<h5 className="text-center">パスワード変更を完了しました</h5>
+							<FormGroup>
+								<Col sm={12}>
+									<div className="text-center">
                     もう一度<a href="login.html">ログイン</a>を行ってください。
-								</div>
-							</Col>
-						</FormGroup>
-					</Form>
-				) : (
-					<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
-						<h2>パスワード変更</h2>
-						<hr />
-						<FormGroup controlId="password">
-							<Col sm={12}>
-								<FormControl type="password" placeholder="パスワード" />
-								<HelpBlock>（8文字以上、かつ数字・英字・記号を最低1文字含む）</HelpBlock>
-							</Col>
-						</FormGroup>
+									</div>
+								</Col>
+							</FormGroup>
+						</Form>
+				 ) : (
+						<Form horizontal onSubmit={(e)=>this.handleSubmit(e)}>
+							<FormGroup controlId="password">
+								<Col sm={12}>
+									<ControlLabel>パスワード</ControlLabel>
+									<ReactPasswordStrength
+										className="customClass"
+										minLength={8}
+										minScore={3}
+										scoreWords={['弱', '弱', '中', '強', '最強']}
+										tooShortWord= '短い'	
+										changeCallback={(e)=>this.passwordOnChange(e)}
+										inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
+									/>	
+									<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
+								</Col>
+							</FormGroup>
 
-						<FormGroup controlId="re_password">
-							<Col sm={12}>
-								<FormControl type="password" placeholder="パスワード確認" />
-							</Col>
-						</FormGroup>
-    
-						<FormGroup>
-							<Col smOffset={1} sm={12}>
-								<ReCAPTCHA
-									sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-									onChange={(value)=>this.capchaOnChange(value)}
-								/>
-							</Col>
-						</FormGroup>
+							<FormGroup controlId="re_password">
+								<Col sm={12}>
+									<ControlLabel>パスワード確認</ControlLabel>
+									<FormControl type="password" placeholder="" />
+								</Col>
+							</FormGroup>
 
-						<FormGroup>
-							<Col smOffset={3} sm={12}>
-								<Button type="submit" className="btn btn-primary">
-                  パスワード変更実行
-								</Button>
-							</Col>
-						</FormGroup>
+							<br/>
+							<FormGroup>
+								<Col sm={12}>
+									<ReCAPTCHA
+										sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+										onChange={(value)=>this.capchaOnChange(value)}
+										className="login_form__recaptcha"
+									/>
+								</Col>
+							</FormGroup>
 
-						{ this.state.isIllegalPassword &&
+							{ this.state.isIllegalPassword &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
@@ -131,9 +140,9 @@ class ChangePassword extends React.Component {
 														</div>
 													</Col>
 												</FormGroup>
-						}
+							}
 
-						{ this.state.isUnmatchReinput &&
+							{ this.state.isUnmatchReinput &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
@@ -141,9 +150,9 @@ class ChangePassword extends React.Component {
 														</div>
 													</Col>
 												</FormGroup>
-						}
+							}
 
-						{ this.state.isForbidden &&
+							{ this.state.isForbidden &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
@@ -151,9 +160,9 @@ class ChangePassword extends React.Component {
 														</div>
 													</Col>
 												</FormGroup>
-						}
+							}
 
-						{ this.state.isError &&
+							{ this.state.isError &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
@@ -161,10 +170,18 @@ class ChangePassword extends React.Component {
 														</div>
 													</Col>
 												</FormGroup>
-						}
-					</Form>            
-				)}
-			</div>      
+							}
+							<FormGroup>
+								<Col sm={12}>
+									<Button type="submit" className="btn btn-lg login_form__btn--submit">
+                  パスワード変更実行
+									</Button>
+								</Col>
+							</FormGroup>
+						</Form>
+					)}
+				</div>
+			</div>
 		)
 	}
 }
