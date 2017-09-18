@@ -5,7 +5,8 @@
     "eslint": "^4.0.0",
     "mocha": "^3.4.2",
     "react-async-script": "^0.9.1",
-    "react-google-recaptcha": "^0.9.3"
+    "react-google-recaptcha": "^0.9.3",
+    "react-password-strength": "^2.0.0"
   },
   "devDependencies": {
     "axios": "^0.16.2",
@@ -43,6 +44,7 @@
     "gulp-webserver": "^0.9.1",
     "jssha": "^2.3.0",
     "minimist": "^1.2.0",
+    "node-sass": "^4.5.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
@@ -51,6 +53,7 @@
     "recursive-readdir": "^2.1.1",
     "reflexcontext": "0.9.11",
     "run-sequence": "^1.1.4",
+    "sass-loader": "^6.0.6",
     "should": "^11.2.1",
     "style-loader": "^0.13.1",
     "through2": "^2.0.3",

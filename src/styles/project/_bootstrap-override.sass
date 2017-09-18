@@ -1,0 +1,29 @@
+@import "./utility/variables"
+
+$link-color: $main-color
+
+.navbar
+  margin-bottom: 0
+  border-radius: 0
+
+.navbar-brand
+  color: white
+
+.nav.navbar-nav
+  a
+    color: black
+
+.nav>li>a:focus, .nav>li>a:hover
+  background: none
+  color: black
+  &::before
+    position: absolute
+    bottom: 0
+    left: 50%
+    content: ''
+    width: 0
+    height: 0
+    margin-left: -4px
+    border-style: solid
+    border-width: 0 5px 8px 5px
+    border-color: transparent transparent darken($main-color, 20%) transparent

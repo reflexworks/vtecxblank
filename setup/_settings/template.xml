@@ -19,6 +19,15 @@ hobby{}
  type
  name
  updated(date)
+account
+ firstname
+ lastname
+ tel
+ prefecture_code
+ address1
+ address2
+ email
+ postcode
 </content>
 <rights> 
 userinfo.id:/.+/registration
