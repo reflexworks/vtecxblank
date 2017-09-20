@@ -1,6 +1,6 @@
 /* @flow */
 import '../styles/demo.css'
-//import '../styles/simple-sidebar.css'
+import '../styles/simple-sidebar.css'
 import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -76,7 +76,7 @@ class DemoContainer extends React.Component {
 					<div id="sidebar-wrapper">
 						<ul className="sidebar-nav">
 							<li><Link to="/iteminput">入力</Link></li>
-							<li><Link to="/listitems">一覧</Link></li>
+							<li><Link to="/listitems">一覧表示</Link></li>
 							<li><a onClick={ () => this.logout() }>logout</a></li>
 						</ul>
 					</div>
