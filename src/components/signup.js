@@ -31,7 +31,6 @@ class Signup extends React.Component {
 
 	passwordOnChange(state) {
 		this.setState({ passLength: state.password.length })
-		console.log('change')
 	}
 
 	capchaOnChange(value:string) {
