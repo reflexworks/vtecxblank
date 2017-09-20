@@ -1,6 +1,6 @@
 /* @flow */
 import '../styles/demo.css'
-import '../styles/simple-sidebar.css'
+//import '../styles/simple-sidebar.css'
 import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
