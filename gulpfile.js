@@ -183,8 +183,12 @@ gulp.task('upload:server', function(){
 	recursive('dist/server', [sendcontent],function(){})
 })
 
-gulp.task('upload:entry', function(){
-	recursive('setup', [sendentry],function(){})
+gulp.task('upload:settings', function(){
+	recursive('setup/_settings', [sendentry],function(){})
+})
+
+gulp.task('upload:data', function(){
+	recursive('setup/data', [sendentry],function(){})
 })
 
 function sendcontent(file, stats) { 
@@ -390,7 +394,9 @@ gulp.task('upload:images', function ( callback ) {
 	runSequence('copy:images','upload:content')
 }) 
 
-gulp.task('upload', ['upload:content','upload:entry','upload:server'])
+gulp.task('upload', function ( callback ) {
+	runSequence(['upload:content','upload:settings','upload:server'],'upload:data')
+}) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
 
