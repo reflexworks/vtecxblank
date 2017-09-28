@@ -1,7 +1,6 @@
 /* @flow */
 import axios from 'axios'
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
 	Grid,
 	Row,
@@ -35,10 +34,6 @@ export default class ItemInput extends React.Component {
 		this.state = { rows:[1],isCompleted: false,isError: false,errmsg:'',isForbidden: false }    
 	}
  
-	static propTypes = {
-		hideSidemenu: PropTypes.func
-	}
-
 	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		let reqdata = {'feed': {'entry': []}}

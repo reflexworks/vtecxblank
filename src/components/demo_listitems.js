@@ -1,7 +1,6 @@
 /* @flow */
 import axios from 'axios'
 import React from 'react'
-import PropTypes from 'prop-types'
 import VtecxPagination from './vtecx_pagination'
 import ConditionInputForm from './demo_conditioninput'
 import {
@@ -34,11 +33,6 @@ export default class ListItems extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.state = {feed: { entry: [] }, isCompleted: false, isError: false, errmsg: '', isForbidden: false, url: '/d/registration?f&l='+ this.maxDisplayRows }
 		this.activePage = 1
-	}
-
-	static propTypes = {
-		hideSidemenu: PropTypes.func,
-		history: PropTypes.any
 	}
   
 	search(condition:string) {

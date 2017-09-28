@@ -7,11 +7,10 @@ function formatName(user) {
 	return user.firstName + ' ' + user.lastName
 }
 
-const user = {
+const user =  {
 	firstName: 'JavaScripters',
 	lastName: '!'
 }
-
 
 const element = (
 	<html>

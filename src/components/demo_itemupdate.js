@@ -1,7 +1,6 @@
 /* @flow */
 import axios from 'axios'
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
 	Grid,
 	Row,
@@ -30,10 +29,6 @@ export default class ItemUpdate extends React.Component {
 		this.entrykey
 	}
  
-	static propTypes = {
-		hideSidemenu: PropTypes.func
-	}
-
 	initValue() {
 		this.setState({
 			id: this.state.feed.entry ? this.state.feed.entry[0].userinfo.id : 0,

@@ -1,6 +1,5 @@
 /* @flow */
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
 	Form,
 	Col,
@@ -18,10 +17,6 @@ export default class ConditionInputForm extends React.Component {
 	
 	constructor(props:Props) {
 		super(props)
-	}
- 
-	static propTypes = {
-		search: PropTypes.func
 	}
 
 	handleSubmit(e:InputEvent){
