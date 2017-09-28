@@ -16,7 +16,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.titleLeft}>
 						</td> 
-						<td colSpan="5" style={pdfstyles.borderTop}>
+						<td colspan="5" style={pdfstyles.borderTop}>
 							<span style={pdfstyles.title}>御請求書21</span>
 						</td>
 						<td style={pdfstyles.titleRight}>
@@ -26,7 +26,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="5" style={pdfstyles.borderRight}>
+						<td colspan="5" style={pdfstyles.borderRight}>
 							<div>御請求No : {invoice.number}</div>
 							<div>発行日: {invoice.date}</div>
 							<br />
@@ -34,18 +34,17 @@ const element = (
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
-
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="2" style={pdfstyles.fontsize12}>
+						<td colspan="2" style={pdfstyles.fontsize12}>
 							<span>{invoice.customer_name}</span>
 							<span>　御中</span>
 							<br />
 						</td>
-						<td colSpan="2">
+						<td colspan="2">
 						</td>
-						<td colSpan="1" align="right" valign="middle">
+						<td colspan="1">
 							<img src="/img/vtec_logo.png" width="110.0" height="40.0"/> 
 						</td>
 						<td style={pdfstyles.spaceRight}>
@@ -55,10 +54,10 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="2" style={pdfstyles.fontsize12UL}>
+						<td colspan="2" style={pdfstyles.fontsize12UL}>
 							<div>件　名：{invoice.jobtitle}</div>
 						</td>
-						<td colSpan="3" style={pdfstyles.fontsize10R}>
+						<td colspan="3" style={pdfstyles.fontsize10R}>
 							<div>{invoice.src_name}</div>
                 
 							<div>
@@ -79,7 +78,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="4" align="left">
+						<td colspan="4">
 							<br />
 							<br />
 							<div>下記の通り御請求申し上げます。</div>
@@ -91,7 +90,7 @@ const element = (
 							<br />
 							<br />
 						</td>
-						<td colSpan="1" align="right" id="stamp">
+						<td colspan="1" id="stamp">
 						</td>
 						<td style={pdfstyles.spaceRight}>
 						</td>
@@ -147,7 +146,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="5" style={pdfstyles.td}>
+						<td colspan="5" style={pdfstyles.td}>
 						</td>
 						<td style={pdfstyles.spaceRight}>
 						</td>
@@ -156,10 +155,10 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="3" style={pdfstyles.tdRight}>
+						<td colspan="3" style={pdfstyles.tdRight}>
 							<span>小計</span>
 						</td>
-						<td colSpan="2" style={pdfstyles.tdRight}>
+						<td colspan="2" style={pdfstyles.tdRight}>
                 			￥{invoice.subtotal}-
 						</td>
 						<td style={pdfstyles.spaceRight}>
@@ -169,10 +168,10 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="3" style={pdfstyles.tdRight}>
+						<td colspan="3" style={pdfstyles.tdRight}>
 							<span>消費税</span>
 						</td>
-						<td colSpan="2" style={pdfstyles.tdRight}>
+						<td colspan="2" style={pdfstyles.tdRight}>
                 			￥{invoice.salestax}-
 						</td>
 						<td style={pdfstyles.spaceRight}>
@@ -182,10 +181,10 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colSpan="3" style={pdfstyles.tdRight}>
+						<td colspan="3" style={pdfstyles.tdRight}>
 							<span>御請求金額</span>
 						</td>
-						<td colSpan="2" style={pdfstyles.tdRight}>
+						<td colspan="2" style={pdfstyles.tdRight}>
 			                ￥{invoice.total}-
 						</td>
 						<td style={pdfstyles.spaceRight}>
@@ -195,7 +194,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td height="25" colSpan="5" >
+						<td height="25" colspan="5" >
 						</td>
 						<td style={pdfstyles.spaceRight}>
 						</td>
@@ -204,7 +203,7 @@ const element = (
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td  colSpan="5" style={pdfstyles.tdLeftb}>
+						<td  colspan="5" style={pdfstyles.tdLeftb}>
 							<span>備考</span>
 						</td>
 						<td style={pdfstyles.spaceRight}>
@@ -214,7 +213,7 @@ const element = (
 					<tr style={pdfstyles.fontsize10}>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td  colSpan="5" style={pdfstyles.tdLeft}>
+						<td  colspan="5" style={pdfstyles.tdLeft}>
 							{invoice.content}
 							<br />
 						</td>
@@ -223,7 +222,7 @@ const element = (
 					</tr>
 
 					<tr>
-						<td colSpan="7" style={pdfstyles.borderBottom}>
+						<td colspan="7" style={pdfstyles.borderBottom}>
 						</td>
 					</tr>
 					
@@ -236,14 +235,8 @@ const element = (
 
 let html = ReactDOMServer.renderToStaticMarkup(element)
 
-//html = html.replace('left:15px;right:15px;top:15px;bottom:15px;','left:15;right:15;top:15;bottom:15;')
-
 // HTML出力
 //reflexcontext.doResponseHtml(html)
 
 // PDF出力
 reflexcontext.toPdf({}, html, 'test.pdf')
-
-
-
-
