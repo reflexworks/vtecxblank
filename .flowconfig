@@ -1,0 +1,13 @@
+[ignore]
+./node_modules/stylelint/.*
+./node_modules/config-chain/test/.*
+
+[include]
+./node_modules/reflexcontext
+
+[libs]
+./app/decls
+
+[options]
+module.file_ext=.types
+module.file_ext=.css

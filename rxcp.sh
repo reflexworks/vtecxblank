@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 function send() {
     if [ -d $3 ]; then
@@ -38,4 +38,3 @@ fi
 
 send $1 $3 $file $type $tgt $opt
 done
-

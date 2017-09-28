@@ -1,0 +1,66 @@
+type Userinfo = {
+	id: number,
+	email: string
+}
+
+type Favorite = {
+	food: string,
+	music: string
+}
+
+type Hobby = {
+	type: string,
+	name: string
+}
+
+type Link = {
+	self: string,
+	href: string
+}
+
+type Entry = {
+	userinfo: Userinfo,
+	favorite: Favorite,
+	hobby?: Array<Hobby>,
+	link: Array<Link>,
+	id?: string
+}
+
+type Entries = {
+	entry? : Array<Entry>
+}
+
+export type State = {
+	feed: Entries,
+	id: number,
+	email: string,
+	food: string,
+	music: string,
+	isCompleted: boolean,
+	isDeleted: boolean,
+	isError: boolean,
+	errmsg: string,
+	isForbidden: boolean,
+}
+
+export type Props = {
+	hideSidemenu: Function
+}
+
+type Value = {
+	value: string
+}
+
+type Target = {
+	id: Value,
+	email: Value,
+	food: Value,
+	music: Value,
+	name: string,
+	value: string
+}
+
+export type InputEvent = {
+	target: Target,
+	preventDefault: Function
+} 

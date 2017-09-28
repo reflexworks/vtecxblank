@@ -1,0 +1,18 @@
+<feed>
+  <entry>
+    <link href="/_settings/properties" rel="self"/>
+    <contributor>
+      <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+    </contributor>
+    <contributor>
+      <uri>urn:vte.cx:acl:+,R</uri>
+    </contributor>
+<rights>
+console.log=true
+console.warn=true 
+console.error=true 
+_errorpage.1.error.html=^/_html/signup2.html$
+_errorpage.2.index.html=^/_html/.*$
+</rights>
+</entry>
+</feed>
