@@ -25,7 +25,7 @@ type InputEvent = {
 class ChangePassword extends React.Component {
 	constructor() {
 		super()
-		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'',passLength: 0 }
+		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isValidPassword: true,isUnmatchReinput: false, captchaValue:'',passLength: 0 }
 	}
 
 	capchaOnChange(value:string) {
@@ -33,38 +33,32 @@ class ChangePassword extends React.Component {
 	}
 
 	passwordOnChange(state) {
-		this.setState({ passLength: state.password.length })
+		this.setState({ passLength: state.password.length,isValidPassword : state.isValid })
 	}
 
 	handleSubmit(e:InputEvent){
 		e.preventDefault()
 		const password = e.target.password.value
 
-		//パスワードのバリデーションチェックを行う
-		if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
-			this.setState({isIllegalPassword: true})
+		if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-		}else {
-
-			if (password && e.target.re_password.value && password === e.target.re_password.value) {
-
-				const shaObj = new jsSHA('SHA-256', 'TEXT')
-				shaObj.update(password)
-				const hashpass = shaObj.getHash('B64')
-				const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:,'+ hashpass +''}]}]}}
+			const shaObj = new jsSHA('SHA-256', 'TEXT')
+			shaObj.update(password)
+			const hashpass = shaObj.getHash('B64')
+			const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:,'+ hashpass +''}]}]}}
 
   	    const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
-				axios({
-					url: '/d/?_changephash' + captchaOpt,
-					method: 'put',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest'
-					},
-					data : reqData
+			axios({
+				url: '/d/?_changephash' + captchaOpt,
+				method: 'put',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data : reqData
 
-				}).then( () => {
-					this.setState({isCompleted: true})
+			}).then( () => {
+				this.setState({isCompleted: true})
     		}).catch((error) => {
 		    	if (error.response&&error.response.status===403) {
   					this.setState({isForbidden: true})
@@ -73,11 +67,11 @@ class ChangePassword extends React.Component {
 		    	}
   		})
 
-			}else{
-				this.setState({isUnmatchReinput: true})
-			}
-
+		}else{
+			this.setState({isUnmatchReinput: true})
 		}
+
+		
 	}
 
 	render() {
@@ -105,12 +99,12 @@ class ChangePassword extends React.Component {
 										className="customClass"
 										minLength={8}
 										minScore={3}
-										scoreWords={['弱', '弱', '中', '強', '最強']}
-										tooShortWord= '短い'	
+										scoreWords={['弱', '弱', '中', '強', '強']}
+										tooShortWord= '短'	
 										changeCallback={(e)=>this.passwordOnChange(e)}
 										inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
 									/>	
-									<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
+									<HelpBlock>（パスワード強度は「強」以上）</HelpBlock>
 								</Col>
 							</FormGroup>
 
@@ -132,11 +126,11 @@ class ChangePassword extends React.Component {
 								</Col>
 							</FormGroup>
 
-							{ this.state.isIllegalPassword &&
+							{ !this.state.isValidPassword &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
-                  パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。
+                  パスワード強度は「強」以上である必要があります。
 														</div>
 													</Col>
 												</FormGroup>
