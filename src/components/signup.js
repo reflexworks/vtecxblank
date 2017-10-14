@@ -26,11 +26,11 @@ type InputEvent = {
 class Signup extends React.Component {
 	constructor() {
 		super()
-		this.state = { isError : false, isAlreadyRegistered: false, isIllegalPassword: false, captchaValue:'',isLoading : false,isUnmatchReinput: false,passLength: 0 }
+		this.state = { isError : false, isAlreadyRegistered: false, isValidPassword: true, captchaValue:'',isLoading : false,isUnmatchReinput: false,passLength: 0 }
 	}
 
 	passwordOnChange(state) {
-		this.setState({ passLength: state.password.length })
+		this.setState({ passLength: state.password.length,isValidPassword : state.isValid })
 	}
 
 	capchaOnChange(value:string) {
@@ -49,41 +49,35 @@ class Signup extends React.Component {
 		e.preventDefault()
 		const password = e.target.password.value
 
-		//パスワードのバリデーションチェックを行う
-		if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
-			this.setState({ isIllegalPassword: true, isLoading: false })
-		} else {
+		if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-			if (password && e.target.re_password.value && password === e.target.re_password.value) {
+			const reqData = { 'feed': { 'entry': [{ 'contributor': [{ 'uri': 'urn:vte.cx:auth:' + e.target.account.value + ',' + this.getHashPass(password) + '' }] }] } }
+			const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
-				const reqData = { 'feed': { 'entry': [{ 'contributor': [{ 'uri': 'urn:vte.cx:auth:' + e.target.account.value + ',' + this.getHashPass(password) + '' }] }] } }
-				const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+			axios({
+				url: '/d/?_adduser' + captchaOpt,
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data: reqData
 
-				axios({
-					url: '/d/?_adduser' + captchaOpt,
-					method: 'post',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest'
-					},
-					data: reqData
-
-				}).then(() => {
-					this.setState({ isCompleted: true, isLoading: false })
-				}).catch((error) => {
-					this.setState({ isLoading: false })
-					if (error.response) {
-						if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
-							this.setState({ isAlreadyRegistered: true })
-						} else {
-							this.setState({ isError: true })
-						}
+			}).then(() => {
+				this.setState({ isCompleted: true, isLoading: false })
+			}).catch((error) => {
+				this.setState({ isLoading: false })
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
+						this.setState({ isAlreadyRegistered: true })
 					} else {
 						this.setState({ isError: true })
 					}
-				})
-			} else {
-				this.setState({isUnmatchReinput: true, isLoading: false})					
-			}
+				} else {
+					this.setState({ isError: true })
+				}
+			})
+		} else {
+			this.setState({isUnmatchReinput: true, isLoading: false})					
 		}
 	}	
 	
@@ -120,12 +114,12 @@ class Signup extends React.Component {
 											className="customClass"
 											minLength={8}
 											minScore={3}
-											scoreWords={['弱', '弱', '中', '強', '最強']}
-											tooShortWord= '短い'	
+											scoreWords={['弱', '弱', '中', '強', '強']}
+											tooShortWord= '短'	
 											changeCallback={(e)=>this.passwordOnChange(e)}
 											inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
 										/>	
-										<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
+										<HelpBlock>（パスワード強度は「強」以上）</HelpBlock>
 									</Col>
 
 								</FormGroup>
@@ -146,11 +140,11 @@ class Signup extends React.Component {
 									/>
 								</FormGroup>
 
-								{ this.state.isIllegalPassword &&
+								{ !this.state.isValidPassword &&
 												<FormGroup>
 													<Col sm={12}>
 														<div className="alert alert-danger">
-                  パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。
+                  パスワード強度は「強」以上である必要があります。
 														</div>
 													</Col>
 												</FormGroup>
