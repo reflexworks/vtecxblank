@@ -8,11 +8,10 @@ import ListItems from './demo_listitems'
 import ItemInput from './demo_iteminput'
 import ItemUpdate from './demo_itemupdate'
 import {
-	BrowserRouter as Router,
 	Route,
 	Link,
 	Switch,
-	Redirect
+	HashRouter
 } from 'react-router-dom'
 import type {
 	InputEvent
@@ -70,13 +69,13 @@ class DemoContainer extends React.Component {
 
 	render() {
 		return (
-			<Router>
+			<HashRouter>
 				<div id="wrapper" className={this.state.condition ? 'toggled' :''}>
 
 					<div id="sidebar-wrapper">
 						<ul className="sidebar-nav">
-							<li><Link to="/iteminput">入力</Link></li>
-							<li><Link to="/listitems">一覧表示</Link></li>
+							<li><Link to="iteminput">入力</Link></li>
+							<li><Link to="listitems">一覧</Link></li>
 							<li><a onClick={ () => this.logout() }>logout</a></li>
 						</ul>
 					</div>
@@ -86,14 +85,16 @@ class DemoContainer extends React.Component {
 							<Route path="/iteminput" component={this.iteminput} />
 							<Route path="/listitems" component={this.listitems} />
 							<Route path="/itemupdate" component={this.itemupdate} />
+							<Route component={this.iteminput} />
 						</Switch>	
 					</div>    
-					<Redirect to='/iteminput' />
 				</div>      
-			</Router>            
+			</HashRouter>            
 		)
 	}
 }
 
 ReactDOM.render(<DemoContainer />, document.getElementById('container'))
+
+
 
