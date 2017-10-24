@@ -395,7 +395,7 @@ gulp.task('upload:images', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence(['upload:content','upload:settings','upload:server'],'upload:data')
+	runSequence('upload:settings',['upload:content','upload:server'],'upload:data')
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
