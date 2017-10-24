@@ -22,7 +22,7 @@ customer
  address2
 staff
  staff_name
- role(int)
+ role
  superior_email 
  staff_email
 warehouse
@@ -115,7 +115,7 @@ invoice
 delivery_charge
  delivery_company{}
   delivery_company_name 
-  kind_class(int)
+  kind_class
   delivery_charge_details{}
    size
    weight
