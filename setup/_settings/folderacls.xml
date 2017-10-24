@@ -107,7 +107,7 @@
             <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,CRUD</uri>
         </contributor>
-        <link rel="self" href="/order" />
+        <link rel="self" href="/staff" />
     </entry>
     <entry>
         <contributor>
@@ -117,6 +117,76 @@
             <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,CRUD</uri>
         </contributor>
-        <link rel="self" href="/items" />
+        <link rel="self" href="/warehouse" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/manifesto" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/internal_work" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/work" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/quotation" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/invoice" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/delivery_charge" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/quotation_items" />
     </entry>
 </feed>
