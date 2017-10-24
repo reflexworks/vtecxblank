@@ -58,14 +58,16 @@ export default class CustomerRegistration extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Navbar collapseOnSelect>
-						<Navbar.Collapse>
-							<Nav>
-								<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-								<CommonClearBtn NavItem />
-							</Nav>
-						</Navbar.Collapse>
-					</Navbar>
+					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						<Navbar collapseOnSelect>
+							<Navbar.Collapse>
+								<Nav>
+									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonClearBtn NavItem />
+								</Nav>
+							</Navbar.Collapse>
+						</Navbar>
+					</Col>
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
@@ -73,14 +75,16 @@ export default class CustomerRegistration extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Navbar collapseOnSelect>
-						<Navbar.Collapse>
-							<Nav>
-								<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-								<CommonClearBtn NavItem />
-							</Nav>
-						</Navbar.Collapse>
-					</Navbar>
+					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						<Navbar collapseOnSelect>
+							<Navbar.Collapse>
+								<Nav>
+									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonClearBtn NavItem />
+								</Nav>
+							</Navbar.Collapse>
+						</Navbar>
+					</Col>
 				</Row>
 			</Grid>
 		)

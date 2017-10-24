@@ -117,17 +117,27 @@ export default class CustomerList extends React.Component {
 							data={this.state.feed.entry}
 							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
-								field: 'customer.customer_number',title: '顧客コード', width: '100px'
+								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
-								field: 'customer.corporate_type', title: '顧客区分', width: '70px', convert: { 1:'個人', 2:'法人'}
+								field: 'customer.customer_name', title: '氏名', width: '200px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名（漢字）姓、名', width: '200px'
+								field: 'customer.customer_name_kana', title: '氏名カナ', width: '200px'
 							}, {
-								field: 'customer.customer_tel1', title: '電話1', width: '150px'
+								field: 'customer.customer_tel', title: '電話番号', width: '200px'
 							}, {
-								field: 'customer.customer_staff', title: '担当者', width: '150px'
+								field: 'customer.customer_staff', title: '担当者名', width: '150px'
 							}, {
-								field: 'customer.email_address1', title: 'メールアドレス１', width: '200px'
+								field: 'customer.customer_email', title: 'メールアドレス', width: '200px'
+							}, {
+								field: 'customer.customer_fax', title: 'FAX', width: '200px'
+							}, {
+								field: 'customer.zip_code', title: '郵便番号', width: '150px'
+							}, {
+								field: 'customer.prefecture', title: '都道府県', width: '200px'
+							}, {
+								field: 'customer.address1', title: '市区郡町村', width: '200px'
+							}, {
+								field: 'customer.address2', title: '番地', width: '200px'
 							}]}
 						/>
 					</Col>  
