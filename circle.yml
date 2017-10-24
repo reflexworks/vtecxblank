@@ -1,0 +1,17 @@
+machine:
+  ruby:
+    version: 2.0.0-p247
+  node:
+    version: 0.12.5
+  timezone: Asia/Tokyo
+
+dependencies:
+  override:
+    - npm install
+
+deployment:
+  production:
+    branch: master
+    commands:
+          - ./rxcp.sh ${accesstoken} dist https://blank2.1.vte.cx content
+          - ./rxcp.sh ${accesstoken} setup https://blank2.1.vte.cx/d
