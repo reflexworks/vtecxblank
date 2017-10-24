@@ -19,7 +19,7 @@ export default class SideMenu extends React.Component {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
 				customer: true,
-				order: true
+				staff: true,
 			}
 		}
 	}
@@ -54,6 +54,19 @@ export default class SideMenu extends React.Component {
 						<ul>
 							<li><Link to="CustomerRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />顧客登録</Link></li>
 							<li><Link to="CustomerList"><Glyphicon glyph="list" className="child-menu-icon" />顧客一覧</Link></li>
+						</ul>
+					</li>
+
+					<li className="parent-menu">
+						<a onClick={(e) => this.openClildMenu(e)} data-target-child="staff">
+							担当者管理
+							<Glyphicon className="icon-right" glyph={this.state.isVisible.staff ? 'chevron-down' : 'chevron-right'} />
+						</a>
+					</li>
+					<li className={this.state.isVisible.staff ? 'child-menu' : 'child-menu menu-hide'}>
+						<ul>
+							<li><Link to="StaffRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />担当者登録</Link></li>
+							<li><Link to="StaffList"><Glyphicon glyph="list" className="child-menu-icon" />担当者一覧</Link></li>
 						</ul>
 					</li>
 				</ul>
