@@ -110,15 +110,17 @@ export default class CustomerUpdate extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Navbar collapseOnSelect>
-						<Navbar.Collapse>
-							<Nav>
-								<CommonBackBtn NavItem href={this.backUrl} />
-								<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-								<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
-							</Nav>
-						</Navbar.Collapse>
-					</Navbar>
+					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						<Navbar collapseOnSelect>
+							<Navbar.Collapse>
+								<Nav>
+									<CommonBackBtn NavItem href={this.backUrl} />
+									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
+									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
+								</Nav>
+							</Navbar.Collapse>
+						</Navbar>
+					</Col>
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
@@ -126,15 +128,17 @@ export default class CustomerUpdate extends React.Component {
 					</Col>
 				</Row>
 				<Row>
-					<Navbar collapseOnSelect>
-						<Navbar.Collapse>
-							<Nav>
-								<CommonBackBtn NavItem href={this.backUrl} />
-								<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-								<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
-							</Nav>
-						</Navbar.Collapse>
-					</Navbar>
+					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						<Navbar collapseOnSelect>
+							<Navbar.Collapse>
+								<Nav>
+									<CommonBackBtn NavItem href={this.backUrl} />
+									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
+									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
+								</Nav>
+							</Navbar.Collapse>
+						</Navbar>
+					</Col>
 				</Row>
 			</Grid>
 		)
