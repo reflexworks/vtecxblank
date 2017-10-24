@@ -12,11 +12,9 @@ import type {
 } from 'demo3.types'
 
 import {
-	CommonRadioBtn,
-	CommonDatePicker,
 	CommonPrefecture,
 	CommonInputText,
-	CommonSelectBox
+//	CommonSelectBox
 } from './common'
 
 export default class CustomerForm extends React.Component {
@@ -29,7 +27,6 @@ export default class CustomerForm extends React.Component {
 		this.entry.customer = this.entry.customer || {}
 		this.entry.account_info = this.entry.account_info ||  {}
 
-		this.forceUpdate()
 	}
 
 	/**
@@ -51,169 +48,76 @@ export default class CustomerForm extends React.Component {
 					<Panel collapsible header="顧客情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
 						{/* 登録の場合 */}
-						{!this.entry.customer.customer_number &&
+						{!this.entry.customer.customer_code &&
 							<FormGroup className="hide">
-								<FormControl name="customer.customer_number" type="text" value="${_addids}" />
+								<FormControl name="customer.customer_code" type="text" value="${_addids}" />
 								<FormControl name="link" data-rel="self" type="text" value="/customer/${_addids}" />
 							</FormGroup>
 						}
 
 						{/* 更新の場合 */}
-						{this.entry.customer.customer_number &&
+						{this.entry.customer.customer_code &&
 							<CommonInputText
 								controlLabel="顧客コード"
-								name="customer.customer_number"
+								name="customer.customer_code"
 								type="text"
 								placeholder="顧客コード"
-								value={this.entry.customer.customer_number}
+								value={this.entry.customer.customer_code}
 								readonly="true"
 							/>
 						}
 
-						<CommonRadioBtn
-							controlLabel="顧客区分"
-							name="customer.corporate_type"
-							checked={this.entry.customer.corporate_type}
-							data={[{
-								label: '個人',
-								value: '1'
-							}, {
-								label: '法人',
-								value: '2'
-							}]}
-						/>
-
 						<CommonInputText
-							controlLabel="顧客名(漢字)姓、名"
+							controlLabel="氏名"
 							name="customer.customer_name"
 							type="text"
-							placeholder="顧客名（漢字）姓、名"
+							placeholder="田中 太郎"
 							value={this.entry.customer.customer_name}
 							validate="string"
 							required
 						/>
 
 						<CommonInputText
-							controlLabel="顧客名（カナ）"
+							controlLabel="氏名(カナ)"
 							name="customer.customer_name_kana"
 							type="text"
-							placeholder="顧客名（カナ）"
+							placeholder="タナカ タロウ"
 							value={this.entry.customer.customer_name_kana}
 							validate="number"
 							required
 						/>
 
 						<CommonInputText
-							controlLabel="電話１"
-							name="customer.customer_tel1"
+							controlLabel="電話番号"
+							name="customer.customer_tel"
 							type="text"
-							placeholder="電話１"
+							placeholder="090-1234-5678"
 							value={this.entry.customer.customer_tel1}
 							size="sm"
 						/>
 
 						<CommonInputText
-							controlLabel="電話２"
-							name="customer.customer_tel2"
-							type="text"
-							placeholder="電話２"
-							value={this.entry.customer.customer_tel2}
-							size="sm"
-						/>
-						
-						<CommonInputText
 							controlLabel="FAX"
 							name="customer.customer_fax"
 							type="text"
-							placeholder="FAX"
+							placeholder="090-1234-5678"
 							value={this.entry.customer.customer_fax}
 							size="sm"
 						/>
 						
 						<CommonInputText
-							controlLabel="部署名"
-							name="customer.department_name"
-							type="text"
-							placeholder="部署名"
-							value={this.entry.customer.department_name}
-							size="sm"
-						/>
-
-						<CommonInputText
-							controlLabel="担当者"
-							name="customer.customer_staff"
-							type="text"
-							placeholder="担当者"
-							value={this.entry.customer.customer_staff}
-						/>
-
-						<CommonInputText
-							controlLabel="担当社員"
-							name="customer.person_in_charge"
-							type="text"
-							placeholder="担当社員"
-							value={this.entry.customer.person_in_charge}
-						/>
-					
-						<CommonInputText
-							controlLabel="生年月日"
-							name="customer.birthday_year"
-							type="text"
-							placeholder="年"
-							value={this.entry.customer.birthday_year}
-							size="sm"
-						/>
-						<CommonInputText
-							controlLabel=""
-							name="customer.birthday_month"
-							type="text"
-							placeholder="月"
-							value={this.entry.customer.birthday_month}
-							size="sm"
-						/>
-						<CommonInputText
-							controlLabel=""
-							name="customer.birthday_day"
-							type="text"
-							placeholder="日"
-							value={this.entry.customer.birthday_day}
-							size="sm"
-						/>
-
-						<CommonRadioBtn
-							controlLabel="性別"
-							name="customer.sex"
-							checked={this.entry.customer.sex}
-							data={[{
-								label: '男',
-								value: 'sex_man'
-							}, {
-								label: '女',
-								value: 'sex_woman'
-							}]}
-						/>
-
-						<CommonInputText
-							controlLabel="メールアドレス１"
-							name="customer.email_address1"
+							controlLabel="メールアドレス"
+							name="customer.customer_email"
 							type="email"
-							placeholder="メールアドレス１"
-							value={this.entry.customer.email_address1}
-						/>
-
-						<CommonInputText
-							controlLabel="メールアドレス２"
-							name="customer.email_address2"
-							type="email"
-							placeholder="メールアドレス２"
-							value={this.entry.customer.email_address2}
+							placeholder="logioffice@gmail.com"
+							value={this.entry.customer.customer_email}
 						/>
 
 						<CommonInputText
 							controlLabel="郵便番号"
 							name="customer.zip_code"
 							type="text"
-							placeholder="郵便番号"
+							placeholder="123-4567"
 							value={this.entry.customer.zip_code}
 							size="sm"
 						/>
@@ -227,101 +131,36 @@ export default class CustomerForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel="住所（市区町村）"
+							controlLabel="市区郡長村"
 							name="customer.address1"
 							type="text"
-							placeholder="住所(市区町村)"
+							placeholder="◯◯市××町"
 							value={this.entry.customer.address1}
 						/>
 
 						<CommonInputText
-							controlLabel="建物名、部屋番号"
+							controlLabel="番地"
 							name="customer.address2"
 							type="text"
-							placeholder="建物名、部屋番号"
+							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.customer.address2}
 						/>
 					
-						<CommonInputText
-							controlLabel="親顧客コード"
-							name="customer.parent_customer_number"
-							type="text"
-							placeholder="親顧客コード"
-							value={this.entry.customer.parent_customer_number}
-						/>
-						
 					</Panel>
-					
-					<Panel collapsible header="請求情報" eventKey="2" bsStyle="info" defaultExpanded="true">
-					
-						<CommonDatePicker
-							controlLabel="請求締日"
-							selected={this.entry.account_info.billing_closing_date}
-							name="account_info.billing_closing_date"
-						/>
 
-						<CommonDatePicker
-							controlLabel="支払日"
-							selected={this.entry.account_info.date_of_payment}
-							name="account_info.date_of_payment"
-						/>
-
-
-						<CommonSelectBox
-							controlLabel="支払月区分"
-							size="sm"
-							name="account_info.payment_month"
-							value={this.entry.account_info.payment_month}
-							options={[{
-								label: '当月',
-								value: '0'
-							}, {
-								label: '翌月',
-								value: '1'
-							}, {
-								label: '翌々月',
-								value: '2'
-							}]}
-						/>
-
-						<CommonSelectBox
-							controlLabel="支払方法"
-							size="sm"
-							name="account_info.payment_method"
-							value={this.entry.account_info.payment_method}
-							options={[{
-								label: '集金',
-								value: '2'
-							}, {
-								label: '振込',
-								value: '3'
-							}, {
-								label: '分割払い',
-								value: '4'
-							}, {
-								label: 'その他',
-								value: '9'
-							}]}
-						/>
+					<Panel collapsible header="担当情報" eventKey="2" bsStyle="info" defaultExpanded="true">
 
 						<CommonInputText
-							controlLabel="口座区分"
-							name="account_info.account_class"
+							controlLabel="担当者"
+							name="customer.customer_staff"
 							type="text"
-							placeholder="口座区分(1:管理)"
-							value={this.entry.account_info.account_class}
+							placeholder="担当者"
+							value={this.entry.customer.customer_staff}
 						/>
 
-						<CommonInputText
-							controlLabel="店名＋口座番号"
-							name="account_info.account_number"
-							type="text"
-							placeholder="店名＋口座番号"
-							value={this.entry.account_info.account_number}
-						/>
-						
-					</Panel>	
-				</PanelGroup>		
+					</Panel>
+
+				</PanelGroup>
 
 			</Form>
 		)
