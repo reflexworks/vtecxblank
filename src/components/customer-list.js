@@ -82,8 +82,8 @@ export default class CustomerList extends React.Component {
 
 	onSelect(index) {
 		// 入力画面に遷移
-		const customer_number = this.state.feed.entry[index].customer.customer_number
-		this.props.history.push('/CustomerUpdate?' + customer_number)
+		const customer_code = this.state.feed.entry[index].customer.customer_code
+		this.props.history.push('/CustomerUpdate?' + customer_code)
 	}
 
 	render() {
@@ -119,9 +119,9 @@ export default class CustomerList extends React.Component {
 							header={[{
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
-								field: 'customer.customer_name', title: '氏名', width: '200px'
+								field: 'customer.customer_name', title: '顧客名', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '氏名カナ', width: '200px'
+								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '200px'
 							}, {
 								field: 'customer.customer_tel', title: '電話番号', width: '200px'
 							}, {
