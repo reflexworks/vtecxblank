@@ -10,6 +10,9 @@ import CustomerList from './customer-list'
 import CustomerRegistration from './customer-registration'
 import CustomerUpdate from './customer-update'
 
+import StaffList from './staff-list'
+import StaffRegistration from './staff-registration'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -100,6 +103,28 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：担当者一覧
+	 */
+	StaffList = (props) => {
+		return (
+			<StaffList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：担当者登録
+	 */
+	StaffRegistration = (props) => {
+		return (
+			<StaffRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -150,6 +175,8 @@ class MainContainer extends React.Component {
 							<Route path="/CustomerRegistration" component={this.CustomerRegistration} />
 							<Route path="/CustomerList" component={this.CustomerList} />
 							<Route path="/CustomerUpdate" component={this.CustomerUpdate} />
+							<Route path="/StaffRegistration" component={this.StaffRegistration} />
+							<Route path="/StaffList" component={this.StaffList} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
