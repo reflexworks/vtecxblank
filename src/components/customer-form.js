@@ -92,7 +92,7 @@ export default class CustomerForm extends React.Component {
 							name="customer.customer_tel"
 							type="text"
 							placeholder="090-1234-5678"
-							value={this.entry.customer.customer_tel1}
+							value={this.entry.customer.customer_tel}
 							size="sm"
 						/>
 

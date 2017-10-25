@@ -92,6 +92,7 @@ export default class CustomerList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						<PageHeader>顧客一覧</PageHeader>
+
 						<ConditionInputForm search={(url) => this.search(url)} />
 
 						{/* 通信中インジケータ */}
