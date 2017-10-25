@@ -18,7 +18,7 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonSelectBox,
+	CommonPrefecture,
 	CommonSearchConditionsFrom
 } from './common'
 
@@ -27,7 +27,7 @@ type State = {
 	url: string
 }
 
-export default class StaffList extends React.Component {
+export default class WarehouseList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -40,13 +40,13 @@ export default class StaffList extends React.Component {
 			isDisabled: false,
 			isError: {}
 		}
-		this.url = '/d/staff?f&l=' + this.maxDisplayRows
+		this.url = '/d/warehouse?f&l=' + this.maxDisplayRows
 		this.activePage = 1
 	}
 	/*
 	search(condition: string) {
 		
-		this.setState({ url: '/d/staff?f&l=' + this.maxDisplayRows + condition })
+		this.setState({ url: '/d/warehouse?f&l=' + this.maxDisplayRows + condition })
 		this.getFeed(this.activePage)
 	}
 */   
@@ -87,8 +87,8 @@ export default class StaffList extends React.Component {
 	/*
 	onSelect(index) {
 		// 入力画面に遷移
-		const staff_code = this.state.feed.entry[index].staff.staff_code
-		this.props.history.push('/StaffUpdate?' + staff_code)
+		const warehouse_code = this.state.feed.entry[index].warehouse.warehouse_code
+		this.props.history.push('/WarehouseUpdate?' + warehouse_code)
 	}
 	*/
 
@@ -111,41 +111,47 @@ export default class StaffList extends React.Component {
 
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>担当者一覧</PageHeader>
-
-						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
+						
+						<PageHeader>倉庫一覧</PageHeader>
+						
+						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
-								controlLabel="担当者名"
-								name="staff.staff_name"
+								controlLabel="倉庫コード"
+								name="warehouse.warehouse_code"
 								type="text"
-								placeholder="担当者名"
+								placeholder="倉庫コード"
 							/>
-							<CommonSelectBox
-								controlLabel="ロール"
+							<CommonInputText
+								controlLabel="倉庫名"
+								name="warehouse.warehouse_name"
+								type="text"
+								placeholder="倉庫名"
+							/>
+							<CommonInputText
+								controlLabel="郵便番号"
+								name="warehouse.zip_code"
+								type="text"
+								placeholder="123-4567"
 								size="sm"
-								name="staff.role"
-								options={[{
-									label: '管理者',
-									value: '1'
-								}, {
-									label: '上長',
-									value: '2'
-								}, {
-									label: '作業員',
-									value: '3'
-								}]}
+							/>
+							<CommonPrefecture
+								controlLabel="都道府県"
+								componentClass="select"
+								name="warehouse.prefecture"
+								size="sm"
 							/>
 							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
+								controlLabel="市区郡長村"
+								name="warehouse.address1"
 								type="text"
-								placeholder="logioffice@gmail.com"
+								placeholder="◯◯市××町"
 							/>
 							<CommonInputText
-								controlLabel="メールアドレス"
-								name="staff.staff_email"
+								controlLabel="番地"
+								name="warehouse.address2"
 								type="text"
-								placeholder="logioffice@gmail.com"
+								placeholder="1丁目2番地 ◯◯ビル1階"
+								size="lg"
 							/>
 						</CommonSearchConditionsFrom>
 					</Col>
@@ -165,13 +171,17 @@ export default class StaffList extends React.Component {
 							data={this.state.feed.entry}
 							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
-								field: 'staff.staff_name',title: '担当者名', width: '100px'
+								field: 'warehouse.warehouse_code',title: '倉庫コード', width: '100px'
 							}, {
-								field: 'staff.role', title: 'ロール', width: '70px', convert: { 1:'管理者', 2:'上長', 3:'作業員'}
+								field: 'warehouse.warehouse_name', title: '倉庫名', width: '70px'
 							}, {
-								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
+								field: 'warehouse.zip_code', title: '郵便番号', width: '200px'
 							}, {
-								field: 'staff.staff_email', title: 'メールアドレス', width: '150px'
+								field: 'warehouse.prefecture', title: '都道府県', width: '150px'
+							}, {
+								field: 'warehouse.address1', title: '市区郡町村', width: '150px'
+							}, {
+								field: 'warehouse.address2', title: '番地', width: '150px'
 							}]}
 						/>
 

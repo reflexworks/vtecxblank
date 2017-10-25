@@ -13,6 +13,9 @@ import CustomerUpdate from './customer-update'
 import StaffList from './staff-list'
 import StaffRegistration from './staff-registration'
 
+import WarehouseList from './warehouse-list'
+import WarehouseRegistration from './warehouse-registration'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -125,6 +128,28 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：倉庫一覧
+	 */
+	WarehouseList = (props) => {
+		return (
+			<WarehouseList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：倉庫登録
+	 */
+	WarehouseRegistration = (props) => {
+		return (
+			<WarehouseRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -177,10 +202,11 @@ class MainContainer extends React.Component {
 							<Route path="/CustomerUpdate" component={this.CustomerUpdate} />
 							<Route path="/StaffRegistration" component={this.StaffRegistration} />
 							<Route path="/StaffList" component={this.StaffList} />
+							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
+							<Route path="/WarehouseList" component={this.WarehouseList} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
-
 				</div>
 			</HashRouter>            
 		)
