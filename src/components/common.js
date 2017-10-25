@@ -1413,7 +1413,6 @@ export class CommonValidateForm extends React.Component {
 
 }
 
-
 /**
  * 検索条件
  */
@@ -1442,10 +1441,11 @@ export class CommonSearchConditionsFrom extends React.Component {
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
-				conditions = conditions + name + '=' + value + '*'
+				conditions = conditions + name + '=*' + value + '*'
 			}
 
 		}
+		this.setState({ open: !this.state.open })
 		this.props.doSearch(conditions)
 	}
 

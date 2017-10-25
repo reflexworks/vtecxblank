@@ -2,7 +2,6 @@
 import axios from 'axios'
 import React from 'react'
 import VtecxPagination from './vtecx_pagination'
-//import ConditionInputForm from './demo_conditioninput'
 import {
 	Grid,
 	Row,
@@ -43,16 +42,15 @@ export default class CustomerList extends React.Component {
 		this.url = '/d/customer?f&l=' + this.maxDisplayRows
 		this.activePage = 1
 	}
-	/*
-	search(condition: string) {
-		
-		this.setState({ url: '/d/customer?f&l=' + this.maxDisplayRows + condition })
-		this.getFeed(this.activePage)
-	}
-*/   
-	getFeed(activePage:number, conditions) {
 
-		this.setState({ isDisabled: true })
+	/**
+	 * 一覧取得実行
+	 * @param {*} activePage 
+	 * @param {*} conditions 
+	 */
+	getFeed(activePage: number, conditions) {
+
+		this.setState({ isDisabled: true, isError: {} })
 
 		this.activePage = activePage
 
@@ -64,26 +62,25 @@ export default class CustomerList extends React.Component {
 			}
 		}).then( (response) => {
 
-			this.setState({ isDisabled: false })
+			this.setState({ isDisabled: false, isError: {} })
 
 			if (response.status === 204) {
 				this.setState({ isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ feed: response.data.feed, isError: {}})
+				this.setState({ feed: response.data.feed})
 			}
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})    
 	}
-  
-	componentDidMount() {
-		// 一覧取得
-		this.getFeed(1)
-	}
 
+	/**
+	 * 更新画面に遷移する
+	 * @param {*} index 
+	 */
 	onSelect(index) {
 		// 入力画面に遷移
 		const customer_code = this.state.feed.entry[index].customer.customer_code
@@ -98,9 +95,17 @@ export default class CustomerList extends React.Component {
 		this.getFeed(1, conditions)
 	}
 
+	/**
+	 * 描画後の処理
+	 */
+	componentDidMount() {
+		this.getFeed(1)
+	}
+
 	render() {
 		return (
 			<Grid>
+
 				{/* 通信中インジケータ */}
 				<CommonIndicator visible={this.state.isDisabled} />
 
