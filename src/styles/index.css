@@ -518,12 +518,18 @@ h3.title {
 
 /* pagination
 ------------------------*/
+.pagination_area {
+  width: 100%;
+  padding: 15px 0px;
+}
+.count_area {
+  float: left;
+  padding: 10px;
+}
 .pagination {
   display: inline-block;
   float: right;
-  padding-left: 0;
-  padding-right: 300px;
-  margin: 0 0 20px;
+  margin: 0px;
 }
 .pagination > li {
   display: inline;
@@ -536,10 +542,7 @@ h3.title {
   /*margin-left: -1px;*/
   margin-left: 5px;
   line-height: 1.42857143;
-  color: #222;
   text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #e2928d;
   border-radius: 2px;
 }
 .pagination > li:first-child > a,
@@ -557,9 +560,6 @@ h3.title {
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  color: #fff;
-  background-color: #e2928d;
-  border-color: #e2928d;
 }
 .pagination > .active > a,
 .pagination > .active > span,
@@ -568,10 +568,7 @@ h3.title {
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: #fff;
   cursor: default;
-  background-color: #e2928d;
-  border-color: #e2928d;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,
@@ -579,10 +576,7 @@ h3.title {
 .pagination > .disabled > a,
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
-  color: #ddd;
   cursor: not-allowed;
-  background-color: #fff;
-  border-color: #ccc;
 }
 .pagination-lg > li > a,
 .pagination-lg > li > span {
