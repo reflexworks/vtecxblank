@@ -68,20 +68,20 @@ export default class CustomerForm extends React.Component {
 						}
 
 						<CommonInputText
-							controlLabel="氏名"
+							controlLabel="顧客名"
 							name="customer.customer_name"
 							type="text"
-							placeholder="田中 太郎"
+							placeholder="株式会社 ◯◯◯"
 							value={this.entry.customer.customer_name}
 							validate="string"
 							required
 						/>
 
 						<CommonInputText
-							controlLabel="氏名(カナ)"
+							controlLabel="顧客名(カナ)"
 							name="customer.customer_name_kana"
 							type="text"
-							placeholder="タナカ タロウ"
+							placeholder="カブシキガイシャ ◯◯◯"
 							value={this.entry.customer.customer_name_kana}
 							validate="number"
 							required
@@ -92,7 +92,7 @@ export default class CustomerForm extends React.Component {
 							name="customer.customer_tel"
 							type="text"
 							placeholder="090-1234-5678"
-							value={this.entry.customer.customer_tel1}
+							value={this.entry.customer.customer_tel}
 							size="sm"
 						/>
 
@@ -144,6 +144,7 @@ export default class CustomerForm extends React.Component {
 							type="text"
 							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.customer.address2}
+							size="lg"
 						/>
 					
 					</Panel>
