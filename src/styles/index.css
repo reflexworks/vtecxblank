@@ -85,6 +85,7 @@ h3.title {
   margin: 0px;
   margin-top: 65px;
   transition: all 0.2s ease-in-out;
+  padding-bottom: 15px;
 }
 #wrapper.toggled {
   padding-left: 200px;
