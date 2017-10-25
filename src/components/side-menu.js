@@ -20,6 +20,7 @@ export default class SideMenu extends React.Component {
 			isVisible: {
 				customer: true,
 				staff: true,
+				warehouse: true,
 			}
 		}
 	}
@@ -69,6 +70,20 @@ export default class SideMenu extends React.Component {
 							<li><Link to="StaffList"><Glyphicon glyph="list" className="child-menu-icon" />担当者一覧</Link></li>
 						</ul>
 					</li>
+
+					<li className="parent-menu">
+						<a onClick={(e) => this.openClildMenu(e)} data-target-child="warehouse">
+							倉庫管理
+							<Glyphicon className="icon-right" glyph={this.state.isVisible.staff ? 'chevron-down' : 'chevron-right'} />
+						</a>
+					</li>
+					<li className={this.state.isVisible.staff ? 'child-menu' : 'child-menu menu-hide'}>
+						<ul>
+							<li><Link to="WarehouseRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />倉庫登録</Link></li>
+							<li><Link to="WarehouseList"><Glyphicon glyph="list" className="child-menu-icon" />倉庫一覧</Link></li>
+						</ul>
+					</li>
+					
 				</ul>
 			</div>
 		)
