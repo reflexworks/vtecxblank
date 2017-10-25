@@ -144,6 +144,7 @@ export default class CustomerForm extends React.Component {
 							type="text"
 							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.customer.address2}
+							size="lg"
 						/>
 					
 					</Panel>

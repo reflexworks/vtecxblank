@@ -11,7 +11,9 @@ import {
 	Table,
 	ControlLabel,
 	Col,
-	Form
+	Form,
+	PanelGroup,
+	Panel,
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -737,14 +739,20 @@ export class CommonFormGroup extends React.Component {
 		super(props)
 		this.state = {
 			validationState: this.props.validationState,
-			size: this.setSize(this.props.size)
+			labelSize: this.labelSize(this.props.size),
+			inputSize: this.inputSize(this.props.size)
 		}
 	}
 
-	setSize(_option) {
-		let size = 5
+	labelSize() {
+		let size = 2
+		return size
+	}
+
+	inputSize(_option) {
+		let size = 4
 		if (_option === 'sm') size = 2
-		if (_option === 'lg') size = 10
+		if (_option === 'lg') size = 9
 		return size
 	}
 
@@ -755,17 +763,18 @@ export class CommonFormGroup extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.setState({
 			validationState: newProps.validationState,
-			size: this.setSize(newProps.size)
+			labelSize: this.labelSize(newProps.size),
+			inputSize: this.inputSize(newProps.size)
 		})
 	}
 
 	render() {
 		return (
 			<FormGroup bsSize="small" validationState={this.state.validationState}>
-				<Col componentClass={ControlLabel} sm={2}>
+				<Col componentClass={ControlLabel} sm={this.state.labelSize}>
 					{this.props.controlLabel}
 				</Col>
-				<Col sm={this.state.size}>
+				<Col sm={this.state.inputSize}>
 					{this.props.children}
 				</Col>
 			</FormGroup>
@@ -914,6 +923,7 @@ export class CommonPrefecture extends React.Component {
 					value={this.state.value}
 					onChange={(e) => this.changed(e)}
 				>
+					<option value="">--選択してください--</option>
 					<option value="北海道">北海道</option>
 					<option value="青森県">青森県</option>
 					<option value="岩手県">岩手県</option>
@@ -1398,6 +1408,65 @@ export class CommonValidateForm extends React.Component {
 			<Form name={this.props.name} horizontal data-submit-form onChange={(e) => this.onValidate(e)}>
 				{ childrenWithProps(this.props.children) }
 			</Form>
+		)
+	}
+
+}
+
+
+/**
+ * 検索条件
+ */
+export class CommonSearchConditionsFrom extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			open: false
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps() {
+	}
+
+	doSearch() {
+		let conditions = null
+		const form = document.CommonSearchConditionsFrom
+		for (var i = 0, ii = form.length; i < ii; ++i) {
+			const name = form[i].name
+			const value = form[i].value
+
+			if (value || value !== '') {
+				conditions = conditions ? conditions + '&' : ''
+				conditions = conditions + name + '=' + value + '*'
+			}
+
+		}
+		this.props.doSearch(conditions)
+	}
+
+	render() {
+
+		const icon = this.state.open === true ? 'menu-up' : 'menu-down'
+		const header = (
+			<div onClick={() => this.setState({ open: !this.state.open })}>検索条件 <Glyphicon glyph={icon} style={{ float: 'right' }} /></div>
+		)
+
+		return (
+			<PanelGroup defaultActiveKey="1">
+				<Panel collapsible header={header} eventKey="1" bsStyle="success" expanded={this.state.open}>
+					<Form horizontal name="CommonSearchConditionsFrom">
+						{this.props.children}
+						<CommonFormGroup controlLabel="">
+							<Button bsStyle="primary" onClick={() => { this.doSearch() }}>検索</Button>
+						</CommonFormGroup>
+					</Form>
+				</Panel>
+			</PanelGroup>
 		)
 	}
 

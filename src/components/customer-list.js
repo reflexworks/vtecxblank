@@ -2,12 +2,12 @@
 import axios from 'axios'
 import React from 'react'
 import VtecxPagination from './vtecx_pagination'
-import ConditionInputForm from './demo_conditioninput'
+//import ConditionInputForm from './demo_conditioninput'
 import {
 	Grid,
 	Row,
 	Col,
-	PageHeader
+	PageHeader,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -16,7 +16,10 @@ import type {
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
-	CommonTable
+	CommonTable,
+	CommonInputText,
+	CommonPrefecture,
+	CommonSearchConditionsFrom
 } from './common'
 
 type State = {
@@ -35,25 +38,26 @@ export default class CustomerList extends React.Component {
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
-			isError: {},
-			url: '/d/customer?f&l=' + this.maxDisplayRows
+			isError: {}
 		}
+		this.url = '/d/customer?f&l=' + this.maxDisplayRows
 		this.activePage = 1
 	}
-  
+	/*
 	search(condition: string) {
 		
 		this.setState({ url: '/d/customer?f&l=' + this.maxDisplayRows + condition })
 		this.getFeed(this.activePage)
 	}
-   
-	getFeed(activePage:number) {
+*/   
+	getFeed(activePage:number, conditions) {
 
 		this.setState({ isDisabled: true })
 
 		this.activePage = activePage
+
 		axios({
-			url: this.state.url + '&n=' + activePage,
+			url: this.url + '&n=' + activePage + (conditions ? '&' + conditions : ''),
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -67,9 +71,9 @@ export default class CustomerList extends React.Component {
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ feed: response.data.feed })
+				this.setState({ feed: response.data.feed, isError: {}})
 			}
-			
+
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})    
@@ -86,20 +90,94 @@ export default class CustomerList extends React.Component {
 		this.props.history.push('/CustomerUpdate?' + customer_code)
 	}
 
+	/**
+	 * 検索実行
+	 * @param {*} conditions 
+	 */
+	doSearch(conditions) {
+		this.getFeed(1, conditions)
+	}
+
 	render() {
 		return (
 			<Grid>
+				{/* 通信中インジケータ */}
+				<CommonIndicator visible={this.state.isDisabled} />
+
+				{/* 通信メッセージ */}
+				<CommonNetworkMessage isError={this.state.isError}/>
+
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+
 						<PageHeader>顧客一覧</PageHeader>
 
-						<ConditionInputForm search={(url) => this.search(url)} />
-
-						{/* 通信中インジケータ */}
-						<CommonIndicator visible={this.state.isDisabled} />
-
-						{/* 通信メッセージ */}
-						<CommonNetworkMessage isError={this.state.isError}/>
+						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+							<CommonInputText
+								controlLabel="顧客コード"
+								name="customer.customer_code"
+								type="text"
+								placeholder="顧客コード"
+							/>
+							<CommonInputText
+								controlLabel="顧客名"
+								name="customer.customer_name"
+								type="text"
+								placeholder="株式会社 ◯◯◯"
+							/>
+							<CommonInputText
+								controlLabel="顧客名(カナ)"
+								name="customer.customer_name_kana"
+								type="text"
+								placeholder="カブシキガイシャ ◯◯◯"
+							/>
+							<CommonInputText
+								controlLabel="電話番号"
+								name="customer.customer_tel"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+							<CommonInputText
+								controlLabel="FAX"
+								name="customer.customer_fax"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+							<CommonInputText
+								controlLabel="メールアドレス"
+								name="customer.customer_email"
+								type="email"
+								placeholder="logioffice@gmail.com"
+							/>
+							<CommonInputText
+								controlLabel="郵便番号"
+								name="customer.zip_code"
+								type="text"
+								placeholder="123-4567"
+								size="sm"
+							/>
+							<CommonPrefecture
+								controlLabel="都道府県"
+								componentClass="select"
+								name="customer.prefecture"
+								size="sm"
+							/>
+							<CommonInputText
+								controlLabel="市区郡長村"
+								name="customer.address1"
+								type="text"
+								placeholder="◯◯市××町"
+							/>
+							<CommonInputText
+								controlLabel="番地"
+								name="customer.address2"
+								type="text"
+								placeholder="1丁目2番地 ◯◯ビル1階"
+								size="lg"
+							/>
+						</CommonSearchConditionsFrom>
 
 					</Col>
 				</Row>
@@ -107,7 +185,7 @@ export default class CustomerList extends React.Component {
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
 						<VtecxPagination
-							url={this.state.url}
+							url={this.url}
 							onChange={(activePage)=>this.getFeed(activePage)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
