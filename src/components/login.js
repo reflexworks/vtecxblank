@@ -49,11 +49,14 @@ class LoginForm extends React.Component {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			}).then(() => {
-				location.href = 'index.html'
-			}).catch((error) => {
+				location.href = 'demo.html'
+			}).catch((error) => {				
 				if (error.response) {
 					if (error.response.data.feed.title === 'userinfo is not registered.') {
+						/* ユーザ基本情報を入力させたいとき 
 						location.href = 'signup2.html'
+						*/
+						location.href = 'demo.html'
 					}
 				}
 			})
