@@ -2,6 +2,8 @@
 import React from 'react'
 import {
 	Form,
+	FormGroup,
+	FormControl,
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -37,7 +39,6 @@ export default class WarehouseForm extends React.Component {
 
 	render() {
 
-
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
@@ -46,15 +47,25 @@ export default class WarehouseForm extends React.Component {
 
 					<Panel collapsible header="倉庫情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
-						<CommonInputText
-							controlLabel="倉庫コード"
-							name="warehouse.warehouse_code"
-							type="text"
-							placeholder="倉庫コード"
-							value={this.entry.warehouse.warehouse_code}
-							validate="string"
-							required
-						/>	
+						{/* 登録の場合 */}
+						{!this.entry.warehouse.warehouse_code &&
+							<FormGroup className="hide">
+								<FormControl name="warehouse.warehouse_code" type="text" value="${_addids}" />
+								<FormControl name="link" data-rel="self" type="text" value="/warehouse/${_addids}" />
+							</FormGroup>
+						}
+
+						{/* 更新の場合 */}
+						{this.entry.warehouse.warehouse_code &&
+							<CommonInputText
+								controlLabel="倉庫コード"
+								name="warehouse.warehouse_code"
+								type="text"
+								placeholder="倉庫コード"
+								value={this.entry.warehouse.warehouse_code}
+								readonly="true"
+							/>
+						}
 
 						<CommonInputText
 							controlLabel="倉庫名"
@@ -66,7 +77,6 @@ export default class WarehouseForm extends React.Component {
 							required
 						/>
 					
-
 						<CommonInputText
 							controlLabel="郵便番号"
 							name="warehouse.zip_code"
