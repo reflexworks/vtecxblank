@@ -1,8 +1,6 @@
 /* @flow */
 import axios from 'axios'
 import React from 'react'
-import VtecxPagination from './vtecx_pagination'
-//import ConditionInputForm from './demo_conditioninput'
 import {
 	Grid,
 	Row,
@@ -19,7 +17,8 @@ import {
 	CommonTable,
 	CommonInputText,
 	CommonSelectBox,
-	CommonSearchConditionsFrom
+	CommonSearchConditionsFrom,
+	CommonPagination,
 } from './common'
 
 type State = {
@@ -35,29 +34,34 @@ export default class StaffList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
+		this.url = '/d/staff?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
-			isError: {}
+			isError: {},
+			urlToPagenation: '',
 		}
-		this.url = '/d/staff?f&l=' + this.maxDisplayRows
 		this.activePage = 1
 	}
-	/*
-	search(condition: string) {
-		
-		this.setState({ url: '/d/staff?f&l=' + this.maxDisplayRows + condition })
-		this.getFeed(this.activePage)
-	}
-*/   
+
+	/**
+	 * 一覧取得実行
+	 * @param {*} activePage 
+	 * @param {*} conditions 
+	 */
 	getFeed(activePage:number, conditions) {
 
-		this.setState({ isDisabled: true })
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			isDisabled: true,
+			isError: {},
+			urlToPagenation: url
+		})
 
 		this.activePage = activePage
 
 		axios({
-			url: this.url + '&n=' + activePage + (conditions ? '&' + conditions : ''),
+			url: url + '&n=' + activePage,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -79,16 +83,14 @@ export default class StaffList extends React.Component {
 		})    
 	}
   
-	componentDidMount() {
-		// 一覧取得
-		this.getFeed(1)
-	}
-
-	/*
+	/**
+	 * 更新画面に遷移する
+	 */
+	/*更新画面未作成なのでコメントアウト
 	onSelect(index) {
 		// 入力画面に遷移
-		const staff_code = this.state.feed.entry[index].staff.staff_code
-		this.props.history.push('/StaffUpdate?' + staff_code)
+		const staff_name = this.state.feed.entry[index].staff.staff_name
+		this.props.history.push('/StaffUpdate?' + staff_name)
 	}
 	*/
 
@@ -100,6 +102,14 @@ export default class StaffList extends React.Component {
 		this.getFeed(1, conditions)
 	}
 
+	/**
+	 * 描画後の処理
+	 */
+	componentDidMount() {
+		// 一覧取得
+		this.getFeed(1)
+	}
+	
 	render() {
 		return (
 			<Grid>
@@ -111,6 +121,7 @@ export default class StaffList extends React.Component {
 
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						
 						<PageHeader>担当者一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
@@ -148,17 +159,19 @@ export default class StaffList extends React.Component {
 								placeholder="logioffice@gmail.com"
 							/>
 						</CommonSearchConditionsFrom>
+					
 					</Col>
 				</Row>
+
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<VtecxPagination
-							url={this.url}
-							onChange={(activePage)=>this.getFeed(activePage)}
+						<CommonPagination
+							url={this.state.urlToPagenation}
+							onChange={(activePage) => this.getFeed(activePage)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
-						/>
+						/>	
 
 						<CommonTable
 							name="entry"

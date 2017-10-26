@@ -2,8 +2,6 @@
 import React from 'react'
 import {
 	Form,
-
-
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -91,8 +89,8 @@ export default class StaffForm extends React.Component {
 							value={this.entry.staff.staff_email}
 						/>
 
-					</Panel>	
-				</PanelGroup>		
+					</Panel>
+				</PanelGroup>
 			</Form>
 		)
 	}
