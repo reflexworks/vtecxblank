@@ -22,6 +22,7 @@ export default class SideMenu extends React.Component {
 				staff: true,
 				warehouse: true,
 				manifesto: true,
+				internal_work: true,
 			}
 		}
 	}
@@ -95,6 +96,19 @@ export default class SideMenu extends React.Component {
 						<ul>
 							<li><Link to="ManifestoRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />資材登録</Link></li>
 							<li><Link to="ManifestoList"><Glyphicon glyph="list" className="child-menu-icon" />資材一覧</Link></li>
+						</ul>
+					</li>
+
+					<li className="parent-menu">
+						<a onClick={(e) => this.openClildMenu(e)} data-target-child="internal_work">
+							庫内作業管理
+							<Glyphicon className="icon-right" glyph={this.state.isVisible.internal_work ? 'chevron-down' : 'chevron-right'} />
+						</a>
+					</li>
+					<li className={this.state.isVisible.internal_work ? 'child-menu' : 'child-menu menu-hide'}>
+						<ul>
+							<li><Link to="Internal_workRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />庫内作業登録</Link></li>
+							<li><Link to="Internal_workList"><Glyphicon glyph="list" className="child-menu-icon" />庫内作業一覧</Link></li>
 						</ul>
 					</li>
 				</ul>
