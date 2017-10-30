@@ -1032,7 +1032,9 @@ export class CommonInputText extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+		const value = e.target.value
+		this.setState({ value: value})
+		this.props.onChange(value)
 	}
 
 	render() {
@@ -1439,6 +1441,9 @@ export class CommonSearchConditionsFrom extends React.Component {
 
 }
 
+/**
+ * ページング
+ */
 export class CommonPagination extends React.Component {
 
 	constructor(props:Props) {
@@ -1539,3 +1544,4 @@ export class CommonPagination extends React.Component {
 		)
 	}
 }
+
