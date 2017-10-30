@@ -16,6 +16,10 @@ import StaffRegistration from './staff-registration'
 import WarehouseList from './warehouse-list'
 import WarehouseRegistration from './warehouse-registration'
 
+import QuotationList from './quotation-list'
+import QuotationRegistration from './quotation-registration'
+import QuotationUpdate from './quotation-update'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -150,6 +154,39 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：見積書一覧
+	 */
+	QuotationList = (props) => {
+		return (
+			<QuotationList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：見積書作成
+	 */
+	QuotationRegistration = (props) => {
+		return (
+			<QuotationRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：見積書更新
+	 */
+	QuotationUpdate = (props) => {
+		return (
+			<QuotationUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -204,6 +241,9 @@ class MainContainer extends React.Component {
 							<Route path="/StaffList" component={this.StaffList} />
 							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
 							<Route path="/WarehouseList" component={this.WarehouseList} />
+							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
+							<Route path="/QuotationList" component={this.QuotationList} />
+							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

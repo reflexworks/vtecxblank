@@ -13,7 +13,8 @@
     "react-google-recaptcha": "^0.9.7",
     "react-modal": "^3.0.0",
     "react-password-strength": "^2.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "react-select": "^1.0.0-rc.10"
   },
   "devDependencies": {
     "axios": "^0.16.2",
