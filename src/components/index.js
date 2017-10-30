@@ -20,6 +20,9 @@ import QuotationList from './quotation-list'
 import QuotationRegistration from './quotation-registration'
 import QuotationUpdate from './quotation-update'
 
+import ManifestoList from './manifesto-list'
+import ManifestoRegistration from './manifesto-registration'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -154,6 +157,28 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：資材一覧
+	 */
+	ManifestoList = (props) => {
+		return (
+			<ManifestoList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材登録
+	 */
+	ManifestoRegistration = (props) => {
+		return (
+			<ManifestoRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * コンポーネント：見積書一覧
 	 */
 	QuotationList = (props) => {
@@ -241,6 +266,8 @@ class MainContainer extends React.Component {
 							<Route path="/StaffList" component={this.StaffList} />
 							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
 							<Route path="/WarehouseList" component={this.WarehouseList} />
+							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
+							<Route path="/ManifestoList" component={this.ManifestoList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
 							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
