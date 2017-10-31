@@ -14,7 +14,8 @@ import type {
 import {
 	CommonPrefecture,
 	CommonInputText,
-//	CommonSelectBox
+	//	CommonSelectBox,
+	CommonFilterBox
 } from './common'
 
 export default class CustomerForm extends React.Component {
@@ -151,12 +152,17 @@ export default class CustomerForm extends React.Component {
 
 					<Panel collapsible header="担当情報" eventKey="2" bsStyle="info" defaultExpanded="true">
 
-						<CommonInputText
+						<CommonFilterBox
 							controlLabel="担当者"
 							name="customer.customer_staff"
-							type="text"
-							placeholder="担当者"
 							value={this.entry.customer.customer_staff}
+							options={[{
+								label: '担当者A',
+								value: '00001'
+							}, {
+								label: '担当者B',
+								value: '00002'
+							}]}
 						/>
 
 					</Panel>

@@ -26,7 +26,7 @@ type State = {
     url: string
 }
 
-export default class Internal_workList extends React.Component {
+export default class InternalWorkList extends React.Component {
     state : State
     maxDisplayRows: number
     activePage: number

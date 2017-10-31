@@ -14,7 +14,7 @@ import {
 	CommonDatePicker,
 } from './common'
 
-export default class Internal_workForm extends React.Component {
+export default class InternalWorkForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
