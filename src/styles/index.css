@@ -123,6 +123,7 @@ h3.title {
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
   z-index: 1000;
+  padding-bottom: 50px;
 }
 .side-menu.side-menu-hide{
   left: -210px;
