@@ -23,8 +23,8 @@ import QuotationUpdate from './quotation-update'
 import ManifestoList from './manifesto-list'
 import ManifestoRegistration from './manifesto-registration'
 
-import Internal_workList from './internal_work-list'
-import Internal_workRegistration from './internal_work-registration'
+import InternalWorkList from './internalwork-list'
+import InternalWorkRegistration from './internalwork-registration'
 
 import WorkList from './work-list'
 import WorkRegistration from './work-registration'
@@ -187,9 +187,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：庫内作業一覧
 	 */
-	Internal_workList = (props) => {
+	InternalWorkList = (props) => {
 		return (
-			<Internal_workList 
+			<InternalWorkList 
 				history={props.history}
 			/>
 		)
@@ -198,9 +198,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：庫内作業登録
 	 */
-	Internal_workRegistration = (props) => {
+	InternalWorkRegistration = (props) => {
 		return (
-			<Internal_workRegistration 
+			<InternalWorkRegistration 
 				history={props.history}
 			/>
 		)
@@ -318,16 +318,13 @@ class MainContainer extends React.Component {
 							<Route path="/WarehouseList" component={this.WarehouseList} />
 							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
 							<Route path="/ManifestoList" component={this.ManifestoList} />
-<<<<<<< HEAD
+							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
+							<Route path="/InternalWorkList" component={this.InternalWorkList} />
+							<Route path="/WorkRegistration" component={this.WorkRegistration} />
+							<Route path="/WorkList" component={this.WorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
 							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
-=======
-							<Route path="/Internal_workRegistration" component={this.Internal_workRegistration} />
-							<Route path="/Internal_workList" component={this.Internal_workList} />
-							<Route path="/WorkRegistration" component={this.WorkRegistration} />
-							<Route path="/WorkList" component={this.WorkList} />
->>>>>>> 37f3c7c17377806701d7ea876634c157ee318692
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

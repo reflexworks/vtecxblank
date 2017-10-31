@@ -1097,6 +1097,10 @@ export class CommonTable extends React.Component {
 		// ヘッダー情報をキャッシュする
 		const cashInfo = {}
 		const header_obj = this.state.header
+		const disabledList = {
+			'link': true,
+			'author': true
+		}
 
 		let option = [{
 			field: 'no', title: 'No', width: '50px'
@@ -1160,10 +1164,12 @@ export class CommonTable extends React.Component {
 				const setCel = (__obj, _key) => {
 					Object.keys(__obj).forEach(function (__key) {
 
-						if (!Array.isArray(__obj[__key]) && typeof __obj[__key] === 'object') {
-							console.log(__obj[__key])
+						if (Object.prototype.toString.call(__obj[__key]) === '[object Object]') {
+
 							setCel(__obj[__key], _key + __key + '.')
-						} else {
+
+						} else if (!disabledList[__key]) {
+
 							const field = _key.replace(/\./g, '___') + __key
 							tdCount++
 							if (cashInfo[field]) {

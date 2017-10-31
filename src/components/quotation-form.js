@@ -31,6 +31,7 @@ export default class QuotationForm extends React.Component {
 		this.entry.customer = this.entry.customer || {}
 		this.entry.work = this.entry.work || []
 		this.entry.item_details = this.entry.item_details || []
+		this.entry.manifesto = this.entry.manifesto || []
 
 		this.sampleData()
 	}
@@ -104,6 +105,158 @@ export default class QuotationForm extends React.Component {
 			unit: '40F',
 			unit_price: '¥33,000',
 			remarks: 'ハイキューブ + ¥3,000'
+		}]
+
+		this.entry.manifesto = [{
+			manifesto_code: 'dbox-016',
+			manifesto_name: 'ダンボール箱 60サイズ 底面A5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '240',
+			inside_depth: '160',
+			inside_height: '170',
+			outer_width: '246',
+			outer_depth: '166',
+			outer_height: '182',
+			regular_price: '1,520',
+			regular_unit_price: '38.0',
+			special_price: '1,400',
+			special_unit_price: '35.0'
+		},{
+			manifesto_code: 'dbox-017',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-018',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-019',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-020',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-016',
+			manifesto_name: 'ダンボール箱 60サイズ 底面A5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '240',
+			inside_depth: '160',
+			inside_height: '170',
+			outer_width: '246',
+			outer_depth: '166',
+			outer_height: '182',
+			regular_price: '1,520',
+			regular_unit_price: '38.0',
+			special_price: '1,400',
+			special_unit_price: '35.0'
+		},{
+			manifesto_code: 'dbox-017',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-018',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-019',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
+		},{
+			manifesto_code: 'dbox-020',
+			manifesto_name: 'ダンボール箱 60サイズ 底面B5 20枚入り×2パック',
+			material: 'K5×S120g×K5',
+			thickness: '3,000',
+			inside_width: '270',
+			inside_depth: '190',
+			inside_height: '110',
+			outer_width: '276',
+			outer_depth: '196',
+			outer_height: '122',
+			regular_price: '1,560',
+			regular_unit_price: '39.0',
+			special_price: '1,440',
+			special_unit_price: '36.0'
 		}]
 	}
 
@@ -444,7 +597,42 @@ export default class QuotationForm extends React.Component {
 					</Table>
 
 				</Tab>
-				<Tab eventKey={3} title="梱包資材">Tab 3 content</Tab>
+				<Tab eventKey={3} title="梱包資材">
+					<CommonTable
+						name="manifesto"
+						data={this.entry.manifesto}
+						edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+						header={[{
+							field: 'manifesto_code',title: '品番', width: '100px'
+						}, {
+							field: 'manifesto_name', title: '商品名称', width: '200px'
+						}, {
+							field: 'material', title: '材質', width: '200px'
+						}, {
+							field: 'thickness', title: '厚み', width: '70px'
+						}, {
+							field: 'inside_width', title: '内寸幅', width: '70px'
+						}, {
+							field: 'inside_depth', title: '内寸奥行', width: '70px'
+						}, {
+							field: 'inside_height', title: '内寸高さ', width: '70px'
+						}, {
+							field: 'outer_width', title: '外寸幅', width: '70px'
+						}, {
+							field: 'outer_depth', title: '外寸奥行', width: '70px'
+						}, {
+							field: 'outer_height', title: '外寸高さ', width: '70px'
+						}, {	
+							field: 'regular_price', title: '通常販売価格', width: '150px'
+						}, {
+							field: 'regular_unit_price', title: '通常販売価格・単価', width: '150px'
+						}, {
+							field: 'special_price', title: '特別販売価格', width: '150px'
+						}, {
+							field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
+						}]}
+					/>
+				</Tab>
 				<Tab eventKey={4} title="庫内作業">Tab 4 content</Tab>
 
 			</Tabs>

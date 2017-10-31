@@ -12,14 +12,14 @@ import type {
 	Props
 } from 'demo3.types'
 
-import Internal_workForm from './internal_work-form'
+import InternalWorkForm from './internalwork-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn
 } from './common'
 
 
-export default class Internal_workRegistration extends React.Component {
+export default class InternalWorkRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -65,7 +65,7 @@ export default class Internal_workRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<Internal_workForm name="mainForm" entry={this.entry} />
+						<InternalWorkForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
