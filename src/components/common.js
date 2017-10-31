@@ -1033,8 +1033,10 @@ export class CommonInputText extends React.Component {
 	 */
 	changed(e: InputEvent) {
 		const value = e.target.value
-		this.setState({ value: value})
-		this.props.onChange(value)
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
@@ -1099,7 +1101,9 @@ export class CommonTable extends React.Component {
 		const header_obj = this.state.header
 		const disabledList = {
 			'link': true,
-			'author': true
+			'author': true,
+			'published': true,
+			'updated': true
 		}
 
 		let option = [{
@@ -1127,24 +1131,30 @@ export class CommonTable extends React.Component {
 			return thNode(obj, i)
 		})
 
-		const convertValue = (convertData, value) => {
+		const convertValue = (convertData, value, _style) => {
 			if (convertData) {
-				return convertData[value]
+				return <div style={_style}>{convertData[value]}</div>
 			} else {
 				if (Array.isArray(value)) {
 					return (
-						<div>
+						<div style={_style}>
 							{
 								value.map((_value, i) => {
-									return (
-										<div key={i}>{_value}</div>
-									)
+									if (Object.prototype.toString.call(_value) === '[object Object]') {
+										return (
+											<div key={i} style={_style}>{_value.content}</div>
+										)
+									} else {
+										return (
+											<div key={i} style={_style}>{_value}</div>
+										)
+									}
 								})
 							}
 						</div>
 					)
 				} else {
-					return value
+					return <div style={_style}>{value}</div>
 				}
 			}
 		}
@@ -1178,11 +1188,8 @@ export class CommonTable extends React.Component {
 										key={tdCount}
 										style={cashInfo[field].style ? cashInfo[field].style : ''}
 										name={_key + __key}
-										data-value={__obj[__key]}
 									>
-										<div style={cashInfo[field].style ? cashInfo[field].style : ''}>
-											{ convertValue(cashInfo[field].convert, __obj[__key]) }
-										</div>
+										{ convertValue(cashInfo[field].convert, __obj[__key], (cashInfo[field].style ? cashInfo[field].style : '')) }
 									</td>
 								)
 							} else {
@@ -1191,10 +1198,9 @@ export class CommonTable extends React.Component {
 										key={tdCount}
 										style={{ 'display': 'none' }}
 										name={_key + __key}
-										data-value={__obj[__key]}
 									>
 										<div>
-											{ __obj[__key] }
+											{ convertValue(false, __obj[__key]) }
 										</div>
 									</td>
 								)
