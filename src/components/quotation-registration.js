@@ -12,35 +12,34 @@ import type {
 	Props
 } from 'demo3.types'
 
-import Internal_workForm from './internal_work-form'
+import QuotationForm from './quotation-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn
 } from './common'
 
-
-export default class Internal_workRegistration extends React.Component {
+export default class QuotationRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		// 登録先のURL
-		this.url = '/d/internal_work'
+		this.url = '/d/quotation'
 
 		// 初期値の設定
 		this.entry = {
-			internal_work: {},
-			remarks: {},
+			customer: {}
 		}
+
 	}
-	
+ 
 	/**
-     * 登録完了後の処理
-     */
+	 * 登録完了後の処理
+	 */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/Internal_workList'
+		location.href = '#/QuotationList'
 	}
 
 	render() {
@@ -48,7 +47,7 @@ export default class Internal_workRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>庫内作業情報の登録</PageHeader>
+						<PageHeader>見積書の作成</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -65,7 +64,7 @@ export default class Internal_workRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<Internal_workForm name="mainForm" entry={this.entry} />
+						<QuotationForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

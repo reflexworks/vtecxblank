@@ -1097,6 +1097,10 @@ export class CommonTable extends React.Component {
 		// ヘッダー情報をキャッシュする
 		const cashInfo = {}
 		const header_obj = this.state.header
+		const disabledList = {
+			'link': true,
+			'author': true
+		}
 
 		let option = [{
 			field: 'no', title: 'No', width: '50px'
@@ -1124,7 +1128,25 @@ export class CommonTable extends React.Component {
 		})
 
 		const convertValue = (convertData, value) => {
-			return convertData ? convertData[value] : value
+			if (convertData) {
+				return convertData[value]
+			} else {
+				if (Array.isArray(value)) {
+					return (
+						<div>
+							{
+								value.map((_value, i) => {
+									return (
+										<div key={i}>{_value}</div>
+									)
+								})
+							}
+						</div>
+					)
+				} else {
+					return value
+				}
+			}
 		}
 		const body = this.state.data && this.state.data.map((obj, i) => {
 
@@ -1135,16 +1157,19 @@ export class CommonTable extends React.Component {
 
 				array[cashInfo.no.index] = <td key="0" style={cashInfo.no.style}>{(_index + 1)}</td>
 				if (this.props.edit) {
-					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button onClick={() => this.props.edit.onclick(_index)}>{this.props.edit.title}</Button></td>
+					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{this.props.edit.title}</Button></td>
 					tdCount++
 				}
 
 				const setCel = (__obj, _key) => {
 					Object.keys(__obj).forEach(function (__key) {
 
-						if (typeof __obj[__key] === 'object') {
+						if (Object.prototype.toString.call(__obj[__key]) === '[object Object]') {
+
 							setCel(__obj[__key], _key + __key + '.')
-						} else {
+
+						} else if (!disabledList[__key]) {
+
 							const field = _key.replace(/\./g, '___') + __key
 							tdCount++
 							if (cashInfo[field]) {
@@ -1545,3 +1570,50 @@ export class CommonPagination extends React.Component {
 	}
 }
 
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
+
+/**
+ * セレクトボックス(フィルター機能つき)
+ */
+export class CommonFilterBox extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			options: this.props.options,
+			size: this.props.size
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({value: newProps.value, options: newProps.options})
+	}
+
+	/**
+	 * 値の変更処理
+	 */
+	changed(obj) {
+		this.setState({value: (obj ? obj.value : '')})
+	}
+
+	render() {
+
+		return (
+			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+				<Select
+					name={this.props.name}
+					value={this.state.value}
+					options={this.props.options}
+					onChange={this.changed.bind(this)}
+				/>
+			</CommonFormGroup>
+		)
+	}
+
+}

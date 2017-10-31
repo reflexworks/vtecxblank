@@ -18,12 +18,13 @@ export default class SideMenu extends React.Component {
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				     customer: false,
-				        staff: false,
-				    warehouse: false,
-				    manifesto: false,
+				customer: false,
+				staff: false,
+				warehouse: false,
+				manifesto: false,
 				internal_work: false,
-			 	         work: false,
+				work: false,
+				quotation: true,
 			}
 		}
 	}
@@ -44,87 +45,119 @@ export default class SideMenu extends React.Component {
 		}
 	}
 
+	sideMenuListTitle(title, key) {
+		return (
+			<li className="parent-menu">
+				<a onClick={(e) => this.openClildMenu(e)} data-target-child={key}>
+					{title}
+					<Glyphicon className="icon-right" glyph={this.state.isVisible[key] ? 'chevron-down' : 'chevron-right'} />
+				</a>
+			</li>
+		)
+	}
+	sideMenuList(key, list) {
+		const itemlist = list.map((obj, i) => {
+			return (
+				<li key={i}><Link to={obj.to}><Glyphicon glyph={obj.glyph} className="child-menu-icon" />{obj.title}</Link></li>
+			)
+		})
+		return (
+			<li className={this.state.isVisible[key] ? 'child-menu' : 'child-menu menu-hide'}>
+				<ul>
+					{itemlist}
+				</ul>
+			</li>
+		)
+	}
+
 	render() {
 		return (
 			<div className={ this.props.visible ? 'side-menu' : 'side-menu side-menu-hide'}>
 				<ul>
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="customer">
-							顧客管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.customer ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.customer ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="CustomerRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />顧客登録</Link></li>
-							<li><Link to="CustomerList"><Glyphicon glyph="list" className="child-menu-icon" />顧客一覧</Link></li>
-						</ul>
-					</li>
-
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="staff">
-							担当者管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.staff ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.staff ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="StaffRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />担当者登録</Link></li>
-							<li><Link to="StaffList"><Glyphicon glyph="list" className="child-menu-icon" />担当者一覧</Link></li>
-						</ul>
-					</li>
-
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="warehouse">
-							倉庫管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.warehouse ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.warehouse ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="WarehouseRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />倉庫登録</Link></li>
-							<li><Link to="WarehouseList"><Glyphicon glyph="list" className="child-menu-icon" />倉庫一覧</Link></li>
-						</ul>
-					</li>
-
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="manifesto">
-							資材管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.manifesto ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.manifesto ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="ManifestoRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />資材登録</Link></li>
-							<li><Link to="ManifestoList"><Glyphicon glyph="list" className="child-menu-icon" />資材一覧</Link></li>
-						</ul>
-					</li>
-
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="internal_work">
-							庫内作業管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.internal_work ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.internal_work ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="Internal_workRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />庫内作業登録</Link></li>
-							<li><Link to="Internal_workList"><Glyphicon glyph="list" className="child-menu-icon" />庫内作業一覧</Link></li>
-						</ul>
-					</li>
-
-					<li className="parent-menu">
-						<a onClick={(e) => this.openClildMenu(e)} data-target-child="work">
-							業務管理
-							<Glyphicon className="icon-right" glyph={this.state.isVisible.work ? 'chevron-down' : 'chevron-right'} />
-						</a>
-					</li>
-					<li className={this.state.isVisible.work ? 'child-menu' : 'child-menu menu-hide'}>
-						<ul>
-							<li><Link to="WorkRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />業務登録</Link></li>
-							<li><Link to="WorkList"><Glyphicon glyph="list" className="child-menu-icon" />業務一覧</Link></li>
-						</ul>
-					</li>
+					{ this.sideMenuListTitle('顧客管理', 'customer') }
+					{ this.sideMenuList('customer',
+						[{
+							to: 'CustomerRegistration',
+							glyph: 'edit',
+							title: '顧客登録'
+						},{
+							to: 'CustomerList',
+							glyph: 'list',
+							title: '顧客一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('担当者管理', 'staff') }
+					{ this.sideMenuList('staff',
+						[{
+							to: 'StaffRegistration',
+							glyph: 'edit',
+							title: '担当者登録'
+						},{
+							to: 'StaffList',
+							glyph: 'list',
+							title: '担当者一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('倉庫管理', 'warehouse') }
+					{ this.sideMenuList('warehouse',
+						[{
+							to: 'WarehouseRegistration',
+							glyph: 'edit',
+							title: '倉庫登録'
+						},{
+							to: 'WarehouseList',
+							glyph: 'list',
+							title: '倉庫一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('資材管理', 'manifesto') }
+					{ this.sideMenuList('manifesto',
+						[{
+							to: 'ManifestoRegistration',
+							glyph: 'edit',
+							title: '資材登録'
+						},{
+							to: 'ManifestoList',
+							glyph: 'list',
+							title: '資材一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
+					{ this.sideMenuList('internal_work',
+						[{
+							to: 'InternalWorkRegistration',
+							glyph: 'edit',
+							title: '庫内作業登録'
+						},{
+							to: 'InternalWorkList',
+							glyph: 'list',
+							title: '庫内作業一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('業務管理', 'work') }
+					{ this.sideMenuList('work',
+						[{
+							to: 'WorkRegistration',
+							glyph: 'edit',
+							title: '業務登録'
+						},{
+							to: 'WorkList',
+							glyph: 'list',
+							title: '業務一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('見積書管理', 'quotation') }
+					{ this.sideMenuList('quotation',
+						[{
+							to: 'QuotationRegistration',
+							glyph: 'edit',
+							title: '見積書作成'
+						},{
+							to: 'QuotationList',
+							glyph: 'list',
+							title: '見積書一覧'
+						}]
+					)}
 				</ul>
 			</div>
 		)
