@@ -184,13 +184,19 @@ export default class WorkList extends React.Component {
 							header={[{
 								field: 'work.consignment_service',title: '委託される業務', width: '150px'
 							}, {
-								field: 'work.delivery', title: '配送', width: '100px',
+								field: 'work.storage', title: '保管内容', width: '100px'
+							}, {
+								field: 'work.package_handling', title: '荷役', width: '100px'
+							}, {
+								field: 'work.delivery', title: '配送', width: '100px'
 							}, {
 								field: 'work.insurance', title: '保険', width: '100px'
 							}, {
 								field: 'work.mutual_aid', title: '共済', width: '100px'
 							}, {
 								field: 'work.products', title: '取扱商品', width: '100px'
+							}, {
+								field: 'work.shipping_data', title: '出荷データ', width: '100px'
 							}]}
 						/>
 
