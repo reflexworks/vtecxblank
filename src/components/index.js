@@ -19,6 +19,12 @@ import WarehouseRegistration from './warehouse-registration'
 import ManifestoList from './manifesto-list'
 import ManifestoRegistration from './manifesto-registration'
 
+import Internal_workList from './internal_work-list'
+import Internal_workRegistration from './internal_work-registration'
+
+import WorkList from './work-list'
+import WorkRegistration from './work-registration'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -175,6 +181,50 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：庫内作業一覧
+	 */
+	Internal_workList = (props) => {
+		return (
+			<Internal_workList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：庫内作業登録
+	 */
+	Internal_workRegistration = (props) => {
+		return (
+			<Internal_workRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：業務情報一覧
+	 */
+	WorkList = (props) => {
+		return (
+			<WorkList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：業務情報登録
+	 */
+	WorkRegistration = (props) => {
+		return (
+			<WorkRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -231,6 +281,10 @@ class MainContainer extends React.Component {
 							<Route path="/WarehouseList" component={this.WarehouseList} />
 							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
 							<Route path="/ManifestoList" component={this.ManifestoList} />
+							<Route path="/Internal_workRegistration" component={this.Internal_workRegistration} />
+							<Route path="/Internal_workList" component={this.Internal_workList} />
+							<Route path="/WorkRegistration" component={this.WorkRegistration} />
+							<Route path="/WorkList" component={this.WorkList} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

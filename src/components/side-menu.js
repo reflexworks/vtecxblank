@@ -18,10 +18,12 @@ export default class SideMenu extends React.Component {
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				customer: true,
-				staff: true,
-				warehouse: true,
-				manifesto: true,
+				     customer: false,
+				        staff: false,
+				    warehouse: false,
+				    manifesto: false,
+				internal_work: false,
+			 	         work: false,
 			}
 		}
 	}
@@ -95,6 +97,32 @@ export default class SideMenu extends React.Component {
 						<ul>
 							<li><Link to="ManifestoRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />資材登録</Link></li>
 							<li><Link to="ManifestoList"><Glyphicon glyph="list" className="child-menu-icon" />資材一覧</Link></li>
+						</ul>
+					</li>
+
+					<li className="parent-menu">
+						<a onClick={(e) => this.openClildMenu(e)} data-target-child="internal_work">
+							庫内作業管理
+							<Glyphicon className="icon-right" glyph={this.state.isVisible.internal_work ? 'chevron-down' : 'chevron-right'} />
+						</a>
+					</li>
+					<li className={this.state.isVisible.internal_work ? 'child-menu' : 'child-menu menu-hide'}>
+						<ul>
+							<li><Link to="Internal_workRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />庫内作業登録</Link></li>
+							<li><Link to="Internal_workList"><Glyphicon glyph="list" className="child-menu-icon" />庫内作業一覧</Link></li>
+						</ul>
+					</li>
+
+					<li className="parent-menu">
+						<a onClick={(e) => this.openClildMenu(e)} data-target-child="work">
+							業務管理
+							<Glyphicon className="icon-right" glyph={this.state.isVisible.work ? 'chevron-down' : 'chevron-right'} />
+						</a>
+					</li>
+					<li className={this.state.isVisible.work ? 'child-menu' : 'child-menu menu-hide'}>
+						<ul>
+							<li><Link to="WorkRegistration"><Glyphicon glyph="edit" className="child-menu-icon" />業務登録</Link></li>
+							<li><Link to="WorkList"><Glyphicon glyph="list" className="child-menu-icon" />業務一覧</Link></li>
 						</ul>
 					</li>
 				</ul>
