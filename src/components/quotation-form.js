@@ -268,6 +268,7 @@ export default class QuotationForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.sampleData()
 	}
 
 	onSelect() {
