@@ -287,32 +287,55 @@ export default class QuotationForm extends React.Component {
 
 							<Panel collapsible header="顧客情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
-								<CommonInputText
-									controlLabel="顧客コード"
-									name="customer.customer_code"
-									type="text"
-									placeholder="顧客コード"
-									value={this.entry.customer.customer_code}
-								/>
+								{/* 登録の場合 */}
+								{!this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客コード"
+										name="customer.customer_code"
+										type="text"
+										placeholder="顧客コード"
+										value={this.entry.customer.customer_code}
+									/>
+								}
+								{!this.entry.customer.customer_code &&
+									<CommonFilterBox
+										controlLabel="顧客名"
+										name="customer.customer_name"
+										value={this.entry.customer.customer_name}
+										options={[{
+											label: '顧客A',
+											value: '00001'
+										}, {
+											label: '顧客B',
+											value: '00002'
+										}]}
+									/>
+								}
 
-								<CommonFilterBox
-									controlLabel="顧客名"
-									name="customer.customer_name"
-									value={this.entry.customer.customer_name}
-									options={[{
-										label: '顧客A',
-										value: '00001'
-									}, {
-										label: '顧客B',
-										value: '00002'
-									}]}
-								/>
+								{/* 更新の場合 */}
+								{this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客コード"
+										name="customer.customer_code"
+										type="text"
+										value={this.entry.customer.customer_code}
+										readonly
+									/>
+								}
+								{this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客名"
+										name="customer.customer_name"
+										type="text"
+										value={this.entry.customer.customer_name}
+										readonly
+									/>
+								}
 
 								<CommonInputText
 									controlLabel="担当者"
 									name="customer.customer_staff"
 									type="text"
-									placeholder="1丁目2番地 ◯◯ビル1階"
 									value={this.entry.customer.customer_staff}
 									readonly
 								/>

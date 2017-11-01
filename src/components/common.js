@@ -1059,18 +1059,16 @@ export class CommonInputText extends React.Component {
 
 		return (
 			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				{this.state.readonly === 'true' && 
-					<div>
-						<FormControl.Static name={this.state.name} id={this.state.name}>
-							{ this.state.value }
-						</FormControl.Static>
+				{this.state.readonly && 
+					<FormControl.Static name={this.state.name} id={this.state.name}>
+						{ this.state.value }
 						<FormControl
 							name={this.state.name}
 							type={this.state.type}
 							value={this.state.value}
 							className="hide"
 						/>
-					</div>
+					</FormControl.Static>
 				}
 				{ (!this.state.readonly || this.state.readonly === 'false') && 
 					<FormControl

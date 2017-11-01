@@ -654,6 +654,11 @@ h3.title {
   color: #999;
 }
 
+.form-group-sm .form-control-static {
+  padding: 6px 5px;
+  border-bottom: 1px solid #ccc;
+}
+
 /* radio */
 .select-radio {
   display: inline-block;
