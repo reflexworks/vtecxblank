@@ -654,6 +654,11 @@ h3.title {
   color: #999;
 }
 
+.form-group-sm .form-control-static {
+  padding: 6px 5px;
+  border-bottom: 1px solid #ccc;
+}
+
 /* radio */
 .select-radio {
   display: inline-block;
@@ -836,6 +841,16 @@ h3.title {
   border: 0px;
   margin-left: -1px;
   margin-right: -1px;
+  font-size: 12px;
+}
+.common-table>.table>tbody>tr>td, 
+.common-table>.table>tbody>tr>th, 
+.common-table>.table>tfoot>tr>td, 
+.common-table>.table>tfoot>tr>th, 
+.common-table>.table>thead>tr>td, 
+.common-table>.table>thead>tr>th {
+    padding: 5px;
+    vertical-align: middle;
 }
 .common-table .table th{
   color: #fff;

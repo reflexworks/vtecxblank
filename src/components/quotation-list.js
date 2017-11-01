@@ -16,9 +16,9 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonPrefecture,
 	CommonSearchConditionsFrom,
-	CommonPagination
+	CommonPagination,
+	CommonRadioBtn
 } from './common'
 
 type State = {
@@ -34,7 +34,7 @@ export default class QuotationList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/quotation?f&l=' + this.maxDisplayRows
+		this.url = '/d/customer?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -71,8 +71,13 @@ export default class QuotationList extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isDisabled: false, isError: response })
 			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
+				response.data.feed.entry = response.data.feed.entry.map((_obj, i) => {
+					_obj.quotatio = {
+						quotatio_code: _obj.customer.customer_code + '-00001',
+						status: (i===2 || i===3 ? '1' : '0')
+					}
+					return _obj
+				})
 				this.setState({ isDisabled: false, feed: response.data.feed})
 			}
 
@@ -123,6 +128,12 @@ export default class QuotationList extends React.Component {
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
+								controlLabel="見積書No"
+								name="quotatio.quotatio_code"
+								type="text"
+								placeholder="見積書No"
+							/>
+							<CommonInputText
 								controlLabel="顧客コード"
 								name="customer.customer_code"
 								type="text"
@@ -134,57 +145,19 @@ export default class QuotationList extends React.Component {
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
-							<CommonInputText
-								controlLabel="顧客名(カナ)"
-								name="customer.customer_name_kana"
-								type="text"
-								placeholder="カブシキガイシャ ◯◯◯"
-							/>
-							<CommonInputText
-								controlLabel="電話番号"
-								name="customer.customer_tel"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="FAX"
-								name="customer.customer_fax"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="メールアドレス"
-								name="customer.customer_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-							/>
-							<CommonInputText
-								controlLabel="郵便番号"
-								name="customer.zip_code"
-								type="text"
-								placeholder="123-4567"
-								size="sm"
-							/>
-							<CommonPrefecture
-								controlLabel="都道府県"
-								componentClass="select"
-								name="customer.prefecture"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="市区郡長村"
-								name="customer.address1"
-								type="text"
-								placeholder="◯◯市××町"
-							/>
-							<CommonInputText
-								controlLabel="番地"
-								name="customer.address2"
-								type="text"
-								placeholder="1丁目2番地 ◯◯ビル1階"
-								size="lg"
+							<CommonRadioBtn
+								controlLabel="発行ステータス"
+								name="quotatio.status"
+								data={[{
+									label: '全て',
+									value: ''
+								},{
+									label: '未発行',
+									value: '0'
+								},{
+									label: '発行済み',
+									value: '1'
+								}]}
 							/>
 						</CommonSearchConditionsFrom>
 
@@ -205,27 +178,13 @@ export default class QuotationList extends React.Component {
 							data={this.state.feed.entry}
 							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
+								field: 'quotatio.quotatio_code',title: '見積書No', width: '100px'
+							}, {
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
 								field: 'customer.customer_name', title: '顧客名', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '200px'
-							}, {
-								field: 'customer.customer_tel', title: '電話番号', width: '200px'
-							}, {
-								field: 'customer.customer_staff', title: '担当者名', width: '150px'
-							}, {
-								field: 'customer.customer_email', title: 'メールアドレス', width: '200px'
-							}, {
-								field: 'customer.customer_fax', title: 'FAX', width: '200px'
-							}, {
-								field: 'customer.zip_code', title: '郵便番号', width: '150px'
-							}, {
-								field: 'customer.prefecture', title: '都道府県', width: '200px'
-							}, {
-								field: 'customer.address1', title: '市区郡町村', width: '200px'
-							}, {
-								field: 'customer.address2', title: '番地', width: '200px'
+								field: 'quotatio.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
 							}]}
 						/>
 					</Col>  

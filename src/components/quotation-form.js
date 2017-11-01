@@ -7,7 +7,9 @@ import {
 	Panel,
 	Tabs,
 	Tab,
-	Table
+	Table,
+	Button,
+	Glyphicon
 } from 'react-bootstrap'
 import type {
 	Props
@@ -266,6 +268,7 @@ export default class QuotationForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.sampleData()
 	}
 
 	onSelect() {
@@ -285,32 +288,55 @@ export default class QuotationForm extends React.Component {
 
 							<Panel collapsible header="顧客情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
-								<CommonInputText
-									controlLabel="顧客コード"
-									name="customer.customer_code"
-									type="text"
-									placeholder="顧客コード"
-									value={this.entry.customer.customer_code}
-								/>
+								{/* 登録の場合 */}
+								{!this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客コード"
+										name="customer.customer_code"
+										type="text"
+										placeholder="顧客コード"
+										value={this.entry.customer.customer_code}
+									/>
+								}
+								{!this.entry.customer.customer_code &&
+									<CommonFilterBox
+										controlLabel="顧客名"
+										name="customer.customer_name"
+										value={this.entry.customer.customer_name}
+										options={[{
+											label: '顧客A',
+											value: '00001'
+										}, {
+											label: '顧客B',
+											value: '00002'
+										}]}
+									/>
+								}
 
-								<CommonFilterBox
-									controlLabel="顧客名"
-									name="customer.customer_name"
-									value={this.entry.customer.customer_name}
-									options={[{
-										label: '顧客A',
-										value: '00001'
-									}, {
-										label: '顧客B',
-										value: '00002'
-									}]}
-								/>
+								{/* 更新の場合 */}
+								{this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客コード"
+										name="customer.customer_code"
+										type="text"
+										value={this.entry.customer.customer_code}
+										readonly
+									/>
+								}
+								{this.entry.customer.customer_code &&
+									<CommonInputText
+										controlLabel="顧客名"
+										name="customer.customer_name"
+										type="text"
+										value={this.entry.customer.customer_name}
+										readonly
+									/>
+								}
 
 								<CommonInputText
 									controlLabel="担当者"
 									name="customer.customer_staff"
 									type="text"
-									placeholder="1丁目2番地 ◯◯ビル1階"
 									value={this.entry.customer.customer_staff}
 									readonly
 								/>
@@ -334,6 +360,9 @@ export default class QuotationForm extends React.Component {
 
 							<Panel collapsible header="見積明細情報" eventKey="2" bsStyle="info" defaultExpanded="true">
 
+								<Button onClick={() => this.setState({ showManifestoModal: true })}>
+									<Glyphicon glyph="plus"></Glyphicon>
+								</Button>
 								<CommonTable
 									name="item_details"
 									data={this.entry.item_details}
@@ -355,6 +384,9 @@ export default class QuotationForm extends React.Component {
 
 							<Panel collapsible header="備考情報" eventKey="2" defaultExpanded={false}>
 
+								<Button onClick={() => this.setState({ showRemarksModal: true })}>
+									<Glyphicon glyph="plus"></Glyphicon>
+								</Button>
 								<CommonTable
 									name="remarks"
 									data={this.entry.remarks}
@@ -598,6 +630,9 @@ export default class QuotationForm extends React.Component {
 
 				</Tab>
 				<Tab eventKey={3} title="梱包資材">
+					<Button onClick={() => this.setState({ showManifestoModal: true })}>
+						<Glyphicon glyph="plus"></Glyphicon>
+					</Button>
 					<CommonTable
 						name="manifesto"
 						data={this.entry.manifesto}
@@ -633,7 +668,69 @@ export default class QuotationForm extends React.Component {
 						}]}
 					/>
 				</Tab>
-				<Tab eventKey={4} title="庫内作業">Tab 4 content</Tab>
+				<Tab eventKey={4} title="庫内作業">
+    					<CommonTable
+    						name="internal_work"
+    						data={this.entry.internal_work}
+    						header={[{
+    							field: 'staff_name',title: '担当者', width: '100px'
+    						}, {
+    							field: 'working_date', title: '作業日', width: '200px'
+    						}, {
+    							field: 'approval_status', title: '承認ステータス', width: '200px'
+    						}, {
+    							field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
+    						}, {
+    							field: 'custody_fee', title: '保管費', width: '150px'
+    						}, {
+    							field: 'additional1_palette', title: '追加１パレット', width: '200px'
+    						}, {
+    							field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
+    						}, {
+    							field: 'deletion_palette', title: '削除パレット', width: '150px'
+    						}, {
+    							field: 'received', title: '入荷', width: '200px'
+    						}, {
+    							field: 'received_normal', title: '入荷（通常）', width: '200px'
+    						}, {
+    							field: 'returns', title: '返品処理', width: '200px'
+    						}, {
+    							field: 'received_others', title: '入荷（その他）', width: '200px'
+    						}, {
+    							field: 'packing_normal', title: '発送（通常）', width: '200px'
+    						}, {
+    							field: 'packing_others', title: '発送（その他）', width: '200px'
+    						}, {
+    							field: 'packing', title: '梱包数', width: '200px'	
+    						}, {
+    							field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
+    						}, {
+    							field: 'seino', title: '西濃運輸', width: '200px'
+    						}, {
+    							field: 'cash_on_arrival', title: '着払い発送', width: '200px'
+    						}, {
+    							field: 'work_others', title: '作業・その他', width: '200px'
+    						}, {
+    							field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
+    						}, {
+    							field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
+    						}, {
+    							field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
+    						}, {
+    							field: 'cardboard100', title: '段ボール（１００）', width: '200px'
+    						}, {
+    							field: 'cardboard80', title: '段ボール（８０）', width: '200px'
+    						}, {
+    							field: 'cardboard60', title: '段ボール（６０）', width: '200px'
+    						}, {
+    							field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
+    						}, {
+    							field: 'buffer_material', title: '緩衝材', width: '200px'
+    						}, {
+    							field: 'bubble_wrap', title: 'エアプチ', width: '200px'
+    						}]}
+    					/>
+				</Tab>
 
 			</Tabs>
 		)
