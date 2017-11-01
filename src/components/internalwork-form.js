@@ -2,6 +2,8 @@
 import React from 'react'
 import {
 	Form,
+	Button,
+	Glyphicon,
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -12,7 +14,14 @@ import type {
 import {
 	CommonInputText,
 	CommonDatePicker,
+	CommonTable,
 } from './common'
+
+
+import {
+	RemarksModal,
+} from './remarks-modal'
+
 
 export default class InternalWorkForm extends React.Component {
 
@@ -24,6 +33,20 @@ export default class InternalWorkForm extends React.Component {
 		this.entry.internal_work = this.entry.internal_work || {}
 	}
 
+
+	/**
+	 * remarksにRemarksModalのフォームで入力した物を追加する
+	 */
+	addRemarks(obj) {
+		if (!this.entry.remarks) {
+			this.entry.remarks = []
+		}
+		this.entry.remarks.push(obj)
+		this.setState({showRemarksModal:false})
+	}
+	closeRemarks() {
+		this.setState({showRemarksModal:false})
+	}
 	/**
      * 親コンポーネントがpropsの値を更新した時に呼び出される
      * @param {*} newProps
@@ -344,7 +367,27 @@ export default class InternalWorkForm extends React.Component {
 						/>
                         
 					</Panel>
-											
+
+					
+					<Panel collapsible header="備考" eventKey="8" bsStyle="info" defaultExpanded="true">
+							
+						<RemarksModal isShow={this.state.showRemarksModal}
+							callback={(obj) => this.addRemarks(obj)}
+							callbackClose={() => this.closeRemarks()} />
+							
+						<CommonTable
+							name="remarks"
+							data={this.entry.remarks}
+							header={[{
+								field: 'content', title: '内容',width: '200px'
+							}]}
+						>
+							<Button onClick={() => this.setState({ showRemarksModal: true })}>
+								<Glyphicon glyph="plus"></Glyphicon>
+							</Button>
+						</CommonTable>
+					</Panel>
+				        
 				</PanelGroup>
 				
 			</Form>

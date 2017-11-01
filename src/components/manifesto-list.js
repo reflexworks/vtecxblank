@@ -288,6 +288,8 @@ export default class ManifestoList extends React.Component {
 								field: 'manifesto.outer_depth', title: '外寸奥行', width: '70px'
 							}, {
 								field: 'manifesto.outer_height', title: '外寸高さ', width: '70px'
+							}, {
+								field: 'manifesto.outer_total', title: '三辺合計', width: '70px'
 							}, {	
 								field: 'manifesto.regular_price', title: '通常販売価格', width: '150px'
 							}, {

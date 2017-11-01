@@ -24,7 +24,9 @@ export default class SideMenu extends React.Component {
 				manifesto: false,
 				internal_work: false,
 				work: false,
-				quotation: true,
+				quotation: false,
+				invoice: false,
+				delivery_charge: false,
 			}
 		}
 	}
@@ -110,6 +112,18 @@ export default class SideMenu extends React.Component {
 							title: '倉庫一覧'
 						}]
 					)}
+					{ this.sideMenuListTitle('配送料管理', 'delivery_charge') }
+					{ this.sideMenuList('delivery_charge',
+						[{
+							to: 'DeliveryChargeRegistration',
+							glyph: 'edit',
+							title: '配送料登録'
+						},{
+							to: 'DeliveryChargeList',
+							glyph: 'list',
+							title: '配送料一覧'
+						}]
+					)}
 					{ this.sideMenuListTitle('資材管理', 'manifesto') }
 					{ this.sideMenuList('manifesto',
 						[{
@@ -158,6 +172,19 @@ export default class SideMenu extends React.Component {
 							title: '見積書一覧'
 						}]
 					)}
+					{ this.sideMenuListTitle('請求書管理', 'invoice') }
+					{ this.sideMenuList('invoice',
+						[{
+							to: 'InvoiceRegistration',
+							glyph: 'edit',
+							title: '請求書作成'
+						},{
+							to: 'InvoiceList',
+							glyph: 'list',
+							title: '請求書一覧'
+						}]
+					)}
+					
 				</ul>
 			</div>
 		)
