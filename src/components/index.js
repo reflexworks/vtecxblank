@@ -6,28 +6,46 @@ import ReactDOM from 'react-dom'
 
 import SideMenu from './side-menu'
 
+//顧客
 import CustomerList from './customer-list'
 import CustomerRegistration from './customer-registration'
 import CustomerUpdate from './customer-update'
 
+//担当者
 import StaffList from './staff-list'
 import StaffRegistration from './staff-registration'
 
+//倉庫
 import WarehouseList from './warehouse-list'
 import WarehouseRegistration from './warehouse-registration'
 
+//見積書
 import QuotationList from './quotation-list'
 import QuotationRegistration from './quotation-registration'
 import QuotationUpdate from './quotation-update'
 
+//資材
 import ManifestoList from './manifesto-list'
 import ManifestoRegistration from './manifesto-registration'
 
+//庫内作業
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
 
+//業務
 import WorkList from './work-list'
 import WorkRegistration from './work-registration'
+
+//請求書
+import InvoiceList from './invoice-list'
+import InvoiceRegistration from './invoice-registration'
+import InvoiceUpdate from './invoice-update'
+
+//配送料
+import DeliveryChargeList from './deliverycharge-list'
+import DeliveryChargeRegistration from './deliverycharge-registration'
+
+
 
 import {
 //	BrowserRouter as Router,
@@ -262,6 +280,60 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：請求書一覧
+	 */
+	InvoiceList = (props) => {
+		return (
+			<InvoiceList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求書作成
+	 */
+	InvoiceRegistration = (props) => {
+		return (
+			<InvoiceRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求書更新
+	 */
+	InvoiceUpdate = (props) => {
+		return (
+			<InvoiceUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料登録
+	 */
+	DeliveryChargeRegistration = (props) => {
+		return (
+			<DeliveryChargeRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料一覧
+	 */
+	DeliveryChargeList = (props) => {
+		return (
+			<DeliveryChargeList 
+				history={props.history}
+			/>
+		)
+	}
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -325,6 +397,11 @@ class MainContainer extends React.Component {
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
 							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
+							<Route path="/InvoiceRegistration" component={this.InvoiceRegistration} />
+							<Route path="/InvoiceList" component={this.InvoiceList} />
+							<Route path="/InvoiceUpdate" component={this.InvoiceUpdate} />
+							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
+							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

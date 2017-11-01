@@ -19,7 +19,12 @@ export default class ManifestoForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			outer_width: 0,
+			outer_height: 0,
+			outer_depth: 0,
+			outer_total: 0,
+		}
 		
 		this.entry = this.props.entry
 		this.entry.manifesto = this.entry.manifesto || {}
@@ -27,6 +32,27 @@ export default class ManifestoForm extends React.Component {
 		this.forceUpdate()		
 	}
 
+
+	changedOuterWidth(value) {
+		this.setState({
+			outer_total: parseInt(value) + parseInt(this.state.outer_depth) + parseInt(this.state.outer_height) ,
+			outer_width: value
+		})
+	}
+
+	changedOuterDepth(value) {
+		this.setState({
+			outer_total: parseInt(this.state.outer_width) + parseInt(value) + parseInt(this.state.outer_height),
+			outer_depth: value
+		})
+	}
+
+	changedOuterHeight(value) {
+		this.setState({
+			outer_total: parseInt(this.state.outer_width) + parseInt(this.state.outer_depth) + parseInt(value),
+			outer_height: value
+		})
+	}
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -137,8 +163,10 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸幅"
 							size='sm'
-							value={this.entry.outer_width}
+							value={this.state.outer_width}
+							validate="number"
 							required
+							onChange={(value) => this.changedOuterWidth(value)}
 						/>
 								
 						<CommonInputText
@@ -147,8 +175,10 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸奥行"
 							size='sm'
-							value={this.entry.outer_depth}
+							value={this.state.outer_depth}
+							validate="number"
 							required
+							onChange={(value) => this.changedOuterDepth(value)}
 						/>
 
 						<CommonInputText
@@ -157,8 +187,20 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸高さ"
 							size='sm'
-							value={this.entry.outer_height}
+							value={this.state.outer_height}
+							validate="number"
 							required
+							onChange={(value) => this.changedOuterHeight(value)}
+						/>
+
+						<CommonInputText
+							controlLabel="三辺合計"
+							name="manifesto.outer_total"
+							type="text"
+							size='sm'
+							value={this.state.outer_total}
+							required
+							readonly='true'
 						/>
 						
 					</Panel>
