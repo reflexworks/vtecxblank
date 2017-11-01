@@ -1123,10 +1123,10 @@ export class CommonTable extends React.Component {
 		}
 
 		let option = [{
-			field: 'no', title: 'No', width: '50px'
+			field: 'no', title: 'No', width: '20px'
 		}]
 		if (this.props.edit) option.push({
-			field: 'edit', title: this.props.edit.title, width: '50px', onclick: this.props.edit.onclick
+			field: 'edit', title: this.props.edit.title, width: '30px', onclick: this.props.edit.onclick
 		})
 		const thNode = (_obj, _index) => {
 			const bsStyle = {
@@ -1183,7 +1183,8 @@ export class CommonTable extends React.Component {
 
 				array[cashInfo.no.index] = <td key="0" style={cashInfo.no.style}>{(_index + 1)}</td>
 				if (this.props.edit) {
-					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{this.props.edit.title}</Button></td>
+					const editBtn = <Glyphicon glyph="pencil" />
+					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{editBtn}</Button></td>
 					tdCount++
 				}
 
