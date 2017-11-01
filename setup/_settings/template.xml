@@ -43,6 +43,7 @@ manifesto
  outer_width
  outer_depth
  outer_height
+ outer_total
  regular_price
  regular_unit_price
  special_price
