@@ -809,7 +809,11 @@ export class CommonRadioBtn extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({checked: e.target.value})
+		const value = e.target.value
+		this.setState({checked: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
@@ -866,6 +870,9 @@ export class CommonDatePicker extends React.Component {
 	 */
 	changed(date) {
 		this.setState({selected: date})
+		if (this.props.onChange) {
+			this.props.onChange(date)
+		}
 	}
 
 	render() {
@@ -910,7 +917,11 @@ export class CommonPrefecture extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+		const value = e.target.value
+		this.setState({value: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	datas = () => {
@@ -933,6 +944,7 @@ export class CommonPrefecture extends React.Component {
 				value={this.state.value}
 				validationState={this.props.validationState}
 				options={this.datas()}
+				onChange={(value)=>this.changed(value)}
 			/>
 
 		)
@@ -967,7 +979,11 @@ export class CommonSelectBox extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+		const value = e.target.value
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
