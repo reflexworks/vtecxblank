@@ -31,10 +31,10 @@ export default class StaffForm extends React.Component {
 	}
 
 	/**
-	 * ロール選択で上長が選ばれたら上長情報パネルフラグを立てる
+	 * ロール選択で作業員が選ばれたら上長情報パネルフラグを立てる
 	 */
 	changedRole(value) {
-		if (value === '2') {
+		if (value === '3') {
 			this.setState({ superiorSelect: true })
 		} else {
 			this.setState({ superiorSelect: false })
