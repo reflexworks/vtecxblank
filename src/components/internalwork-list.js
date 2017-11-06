@@ -393,7 +393,10 @@ export default class InternalWorkList extends React.Component {
     							field: 'internal_work.buffer_material', title: '緩衝材', width: '200px'
     						}, {
     							field: 'internal_work.bubble_wrap', title: 'エアプチ', width: '200px'
-								
+    						}, {
+    							field: 'internal_work.remarks1', title: '備考１', width: '200px'
+    						}, {
+    							field: 'internal_work.remarks2', title: '備考２', width: '200px'
     						}]}
     					/>
     				</Col>

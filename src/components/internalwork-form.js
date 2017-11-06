@@ -2,8 +2,6 @@
 import React from 'react'
 import {
 	Form,
-	Button,
-	Glyphicon,
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -14,14 +12,7 @@ import type {
 import {
 	CommonInputText,
 	CommonDatePicker,
-	CommonTable,
 } from './common'
-
-
-import {
-	RemarksModal,
-} from './remarks-modal'
-
 
 export default class InternalWorkForm extends React.Component {
 
@@ -368,24 +359,27 @@ export default class InternalWorkForm extends React.Component {
                         
 					</Panel>
 
-					
 					<Panel collapsible header="備考" eventKey="8" bsStyle="info" defaultExpanded="true">
 							
-						<RemarksModal isShow={this.state.showRemarksModal}
-							callback={(obj) => this.addRemarks(obj)}
-							callbackClose={() => this.closeRemarks()} />
-							
-						<CommonTable
-							name="remarks"
-							data={this.entry.remarks}
-							header={[{
-								field: 'content', title: '内容',width: '200px'
-							}]}
-						>
-							<Button onClick={() => this.setState({ showRemarksModal: true })}>
-								<Glyphicon glyph="plus"></Glyphicon>
-							</Button>
-						</CommonTable>
+						<CommonInputText
+							controlLabel="備考１"
+							name="internal_work.remarks1"
+							type="text"
+							placeholder="備考１"
+							value={this.entry.internal_work.remarks1}
+							validate="string"
+							required
+						/>
+
+						<CommonInputText
+							controlLabel="備考２"
+							name="internal_work.remarks2"
+							type="text"
+							placeholder="備考２"
+							value={this.entry.internal_work.remarks2}
+							validate="string"
+							required
+						/>
 					</Panel>
 				        
 				</PanelGroup>
