@@ -27,6 +27,7 @@ export default class SideMenu extends React.Component {
 				quotation: false,
 				invoice: false,
 				delivery_charge: false,
+				billto: false,
 			}
 		}
 	}
@@ -76,6 +77,20 @@ export default class SideMenu extends React.Component {
 		return (
 			<div className={ this.props.visible ? 'side-menu' : 'side-menu side-menu-hide'}>
 				<ul>
+					
+					{ this.sideMenuListTitle('請求先管理', 'billto') }
+					{ this.sideMenuList('billto',
+						[{
+							to: 'BilltoRegistration',
+							glyph: 'edit',
+							title: '請求先作成'
+						},{
+							to: 'BilltoList',
+							glyph: 'list',
+							title: '請求先一覧'
+						}]
+					)}
+
 					{ this.sideMenuListTitle('顧客管理', 'customer') }
 					{ this.sideMenuList('customer',
 						[{

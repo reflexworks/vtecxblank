@@ -45,6 +45,9 @@ import InvoiceUpdate from './invoice-update'
 import DeliveryChargeList from './deliverycharge-list'
 import DeliveryChargeRegistration from './deliverycharge-registration'
 
+//請求先
+import BilltoList from './billto-list'
+import BilltoRegistration from './billto-registration'
 
 
 import {
@@ -333,6 +336,29 @@ class MainContainer extends React.Component {
 			/>
 		)
 	}
+
+	/**
+	 * コンポーネント：請求先登録
+	 */
+	BilltoRegistration = (props) => {
+		return (
+			<BilltoRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求先一覧
+	 */
+	BilltoList = (props) => {
+		return (
+			<BilltoList 
+				history={props.history}
+			/>
+		)
+	}
+
 	/**
 	 * ログアウト処理
 	 */
@@ -402,6 +428,8 @@ class MainContainer extends React.Component {
 							<Route path="/InvoiceUpdate" component={this.InvoiceUpdate} />
 							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
 							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
+							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
+							<Route path="/BilltoList" component={this.BilltoList} />	
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
