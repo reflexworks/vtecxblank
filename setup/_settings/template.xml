@@ -8,19 +8,23 @@
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
 <content type="text/html">
+billto
+ billto_code
+ billto_name
 customer
  customer_code
+ classification_code
  customer_name
  customer_name_kana
- customer_tel
- customer_fax 
- customer_email 
- customer_staff
+contact_information
+ tel
+ fax 
+ email 
  zip_code
  prefecture
  address1
  address2
-staff
+staff{}
  staff_name
  role
  superior_email 
@@ -52,46 +56,24 @@ internal_work
  staff_name
  working_date
  approval_status
- mgmt_basic_fee
- custody_fee
- additional1_palette
- additional2_steel_shelf
- deletion_palette
- received
- received_normal
- returns
- received_others
- packing_normal
- packing_others
- packing
- yamato60size
- seino
- cash_on_arrival
- work_others
- cardboard160
- cardboard140
- cardboard120
- cardboard100
- cardboard80
- cardboard60
- corrugated_cardboard
- buffer_material
- bubble_wrap
- remarks1
- remarks2
+internal_work_details
+ work{}
+  item_name
+  unit_name
+  unit
+  quantity
+ shipmentbycarrier{}
+  service_code
+  size
+  quantity
+ manifesto{}
+  manifesto_code
+  quantity  
 remarks{}
  content
-work
- consignment_service
- storage{}
-  content
- package_handling{}
-  content
- delivery
- insurance
- mutual_aid
- products
- shipping_data{}
+basic_condition
+ title
+ condition{}
   content
 item_details{}
  item_name
@@ -118,7 +100,7 @@ invoice
  payment_cost
 delivery_charge
  delivery_company{}
-  delivery_company_name 
+  service_code
   kind_class
   delivery_charge_details{}
    size
@@ -126,6 +108,23 @@ delivery_charge
    charge_by_zone{}
     zone_code
     delivery_charge
+shipment_service
+ code
+ size
+ name
+delivery_charge_amount
+ shipping_date
+ size
+ quantity
+ delivery_charge
+work_record
+ item_name
+ unit_name
+ unit
+ quantity
+used_manifesto
+ manifesto_code
+ quantity
 </content>
 <rights>
 </rights>
