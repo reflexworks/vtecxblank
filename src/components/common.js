@@ -916,8 +916,7 @@ export class CommonPrefecture extends React.Component {
 	 * 値の変更処理
 	 * @param {*} e 
 	 */
-	changed(e: InputEvent) {
-		const value = e.target.value
+	changed(value) {
 		this.setState({value: value})
 		if (this.props.onChange) {
 			this.props.onChange(value)
@@ -1112,6 +1111,7 @@ export class CommonTable extends React.Component {
 
 		// ヘッダー情報をキャッシュする
 		const cashInfo = {}
+		let cashInfolength = 0
 		const header_obj = this.state.header
 		const disabledList = {
 			'link': true,
@@ -1134,6 +1134,7 @@ export class CommonTable extends React.Component {
 			cashInfo[field] = _obj
 			cashInfo[field].style = bsStyle
 			cashInfo[field].index = _index
+			cashInfolength++
 			return (
 				<th key={_index} style={bsStyle}>
 					<div style={bsStyle}>{_obj.title}</div>
@@ -1172,21 +1173,35 @@ export class CommonTable extends React.Component {
 				}
 			}
 		}
-		const body = this.state.data && this.state.data.map((obj, i) => {
+		const body = (this.state.data && this.state.data.length > 0) && this.state.data.map((obj, i) => {
 
 			const td = (_obj, _index) => {
 
 				let tdCount = 1
-				let array = new Array(cashInfo.length)
+				let array = new Array(cashInfolength)
 
 				array[cashInfo.no.index] = <td key="0" style={cashInfo.no.style}>{(_index + 1)}</td>
 				if (this.props.edit) {
 					const editBtn = <Glyphicon glyph="pencil" />
-					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{editBtn}</Button></td>
+					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{editBtn}</Button></td>
+					tdCount++
+				}
+
+				if (cashInfo.btn1) {
+					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn1.onClick(e, _index)}>{cashInfo.btn1.label}</Button></td>
+					tdCount++
+				}
+				if (cashInfo.btn2) {
+					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn2.onClick(e, _index)}>{cashInfo.btn2.label}</Button></td>
+					tdCount++
+				}
+				if (cashInfo.btn3) {
+					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn3.onClick(e, _index)}>{cashInfo.btn3.label}</Button></td>
 					tdCount++
 				}
 
 				const setCel = (__obj, _key) => {
+
 					Object.keys(__obj).forEach(function (__key) {
 
 						if (Object.prototype.toString.call(__obj[__key]) === '[object Object]') {
@@ -1223,6 +1238,11 @@ export class CommonTable extends React.Component {
 						}
 
 					})
+
+					for (var i = 0, ii = array.length; i < ii; ++i) {
+						array[i] = array[i] ? array[i] : <td key={i}></td>
+					}
+
 					return array
 				}
 				array = setCel(_obj, '')
@@ -1236,6 +1256,11 @@ export class CommonTable extends React.Component {
 		const tableNode = (
 			<div>
 				{ this.props.children }
+				{ this.props.add &&
+					<Button onClick={() => this.props.add()} bsSize="sm">
+						<Glyphicon glyph="plus"></Glyphicon>
+					</Button>
+				}
 				<div className="common-table">
 					<Table striped bordered hover name={this.props.name}>
 						<thead>
@@ -1632,7 +1657,13 @@ export class CommonFilterBox extends React.Component {
 					value={this.state.value}
 					options={this.props.options}
 					onChange={this.changed.bind(this)}
+					className={this.props.add && 'btn-type'}
 				/>
+				{this.props.add &&
+					<Button bsSize="sm" onClick={() => this.props.add()} style={{float: 'right'}}>
+						<Glyphicon glyph="plus"></Glyphicon>
+					</Button>
+				}
 			</CommonFormGroup>
 		)
 	}

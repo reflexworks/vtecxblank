@@ -882,6 +882,30 @@ h3.title {
   width: 0px;
   height: 0px;
 }
-.nav-tabs{
+.tab-content{
+  margin-top: 15px;
   margin-bottom: 15px;
+}
+.Select{
+  display: inline-block;
+  width: 100%;
+  height: 30px;
+  font-size: 12px;
+}
+.Select.btn-type{
+  width: 335px;
+}
+.Select>.Select-control{
+  height: 30px;
+}
+.Select>.Select-control>span>.Select-input{
+  height: 28px;
+}
+.Select-input > input {
+  line-height: 28px;
+  padding: 0px 0 12px;
+}
+.Select>.Select-control>.Select-multi-value-wrapper>.Select-placeholder,
+.Select>.Select-control>.Select-multi-value-wrapper>.Select-value {
+  line-height: 28px;
 }
