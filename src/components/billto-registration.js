@@ -30,6 +30,7 @@ export default class BilltoRegistration extends React.Component {
 		// 初期値の設定
 		this.entry = {
 			billto: {},
+			contact_information: {},
 		}
 
 

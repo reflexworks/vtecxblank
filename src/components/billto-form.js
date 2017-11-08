@@ -13,6 +13,7 @@ import type {
 
 import {
 	CommonInputText,
+	CommonPrefecture,
 } from './common'
 
 export default class BilltoForm extends React.Component {
@@ -23,7 +24,7 @@ export default class BilltoForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.billto = this.entry.billto || {}
-
+		this.entry.contact_information = this.entry.contact_information || {}
 
 		this.forceUpdate()
 	}
@@ -74,6 +75,65 @@ export default class BilltoForm extends React.Component {
 							value={this.entry.billto.billto_name}
 							validate="string"
 							required
+						/>
+
+						<CommonInputText
+							controlLabel="電話番号"
+							name="contact_information.tel"
+							type="text"
+							placeholder="090-1234-5678"
+							value={this.entry.contact_information.tel}
+							size="sm"
+						/>
+
+						<CommonInputText
+							controlLabel="FAX"
+							name="contact_information.fax"
+							type="text"
+							placeholder="090-1234-5678"
+							value={this.entry.contact_information.fax}
+							size="sm"
+						/>
+						
+						<CommonInputText
+							controlLabel="メールアドレス"
+							name="contact_information.email"
+							type="email"
+							placeholder="logioffice@gmail.com"
+							value={this.entry.contact_information.email}
+						/>
+
+						<CommonInputText
+							controlLabel="郵便番号"
+							name="contact_information.zip_code"
+							type="text"
+							placeholder="123-4567"
+							value={this.entry.contact_information.zip_code}
+							size="sm"
+						/>
+
+						<CommonPrefecture
+							controlLabel="都道府県"
+							componentClass="select"
+							name="contact_information.prefecture"
+							value={this.entry.contact_information.prefecture}
+						/>
+
+						<CommonInputText
+							controlLabel="市区郡長村"
+							name="contact_information.address1"
+							type="text"
+							placeholder="◯◯市××町"
+							value={this.entry.contact_information.address1}
+						/>
+
+						<CommonInputText
+							controlLabel="番地"
+							name="contact_information.address2"
+							type="text"
+							placeholder="1丁目2番地 ◯◯ビル1階"
+							value={this.entry.contact_information.address2}
+							size="lg"
 						/>
 					
 					</Panel>	

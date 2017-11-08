@@ -85,13 +85,12 @@ export default class ManifestoList extends React.Component {
 	 * @param {*} index 
 	 */
 
-	/*更新画面は未完成なのでコメントアウト
 	onSelect(index) {
 		// 入力画面に遷移
 		const manifesto_code = this.state.feed.entry[index].manifesto.manifesto_code
 		this.props.history.push('/ManifestoUpdate?' + manifesto_code)
 	}
-	*/
+	
 
 	/**
 	 * 検索実行
@@ -267,7 +266,7 @@ export default class ManifestoList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
 								field: 'manifesto.manifesto_code',title: '品番', width: '100px'
 							}, {

@@ -20,12 +20,12 @@ export default class ManifestoForm extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			outer_width: 0,
-			outer_height: 0,
-			outer_depth: 0,
-			outer_total: 0,
+			 outer_width:  '',
+			 outer_height: '',
+			 outer_depth:  '',
+		 	 outer_total:  '',
 		}
-		
+
 		this.entry = this.props.entry
 		this.entry.manifesto = this.entry.manifesto || {}
 
@@ -34,24 +34,50 @@ export default class ManifestoForm extends React.Component {
 
 
 	changedOuterWidth(value) {
-		this.setState({
-			outer_total: parseInt(value) + parseInt(this.state.outer_depth) + parseInt(this.state.outer_height) ,
-			outer_width: value
-		})
+		
+		/**
+		 * width,height,depthのどれかが0ならばtotalは0
+		 */
+		
+		if (value || this.state.outer_height || this.state.outer_depth ) {
+			this.setState({ outer_total: 0 })
+		} else {
+			this.setState({
+				outer_total: parseInt(value) + parseInt(this.state.outer_depth) + parseInt(this.state.outer_height),
+			})
+		}
+		this.setState({outer_width: value})
+		
 	}
 
 	changedOuterDepth(value) {
-		this.setState({
-			outer_total: parseInt(this.state.outer_width) + parseInt(value) + parseInt(this.state.outer_height),
-			outer_depth: value
-		})
+		/**
+		 * width,height,depthのどれかが0ならばtotalは0
+		 */
+		
+		if (this.state.outer_width || value || this.state.outer_height ) {
+			this.setState({ outer_total: 0 })
+		} else {
+			this.setState({
+				outer_total: parseInt(this.state.outer_width) + parseInt(value) + parseInt(this.state.outer_height),
+				outer_depth: value
+			})
+		}	
 	}
 
 	changedOuterHeight(value) {
-		this.setState({
-			outer_total: parseInt(this.state.outer_width) + parseInt(this.state.outer_depth) + parseInt(value),
-			outer_height: value
-		})
+		/**
+		 * width,height,depthのどれかが0ならばtotalは0
+		 */
+		
+		if (this.state.outer_width  || this.state.outer_depth || value) {
+			this.setState({ outer_total: 0 })
+		} else {
+			this.setState({
+				outer_total: parseInt(this.state.outer_width) + parseInt(this.state.outer_depth) + parseInt(value),
+				outer_height: value
+			})
+		}	
 	}
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -119,7 +145,7 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="厚み"
 							size='sm'
-							value={this.entry.manifesto.tickness}
+							value={this.entry.manifesto.thickness}
 							validate="string"
 							required
 						/>
