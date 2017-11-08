@@ -1095,7 +1095,8 @@ export class CommonTable extends React.Component {
 		super(props)
 		this.state = {
 			data: this.props.data,
-			header: this.props.header
+			header: this.props.header,
+			actionType: 'edit'
 		}
 	}
 
@@ -1105,6 +1106,27 @@ export class CommonTable extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.setState({data: newProps.data, header: newProps.header})
+	}
+
+	actionBtn(_index) {
+		const data = this.state.data[_index]
+		return (
+			<div>
+				{ this.state.actionType === 'edit' && 
+					<Button bsSize="small" onClick={() => this.props.edit(data)}><Glyphicon glyph="pencil" /></Button>
+				}
+				{ this.state.actionType === 'remove' && 
+					<Button bsSize="small" onClick={() => this.props.remove(data)} bsStyle="danger"><Glyphicon glyph="remove" /></Button>
+				}
+			</div>
+		)
+	}
+	showRemoveBtn() {
+		if (this.state.actionType === 'edit') {
+			this.setState({actionType: 'remove'})
+		} else {
+			this.setState({actionType: 'edit'})
+		}
 	}
 
 	render() {
@@ -1124,7 +1146,7 @@ export class CommonTable extends React.Component {
 			field: 'no', title: 'No', width: '20px'
 		}]
 		if (this.props.edit) option.push({
-			field: 'edit', title: this.props.edit.title, width: '30px', onclick: this.props.edit.onclick
+			field: 'edit', title: '編集', width: '30px'
 		})
 		const thNode = (_obj, _index) => {
 			const bsStyle = {
@@ -1183,21 +1205,20 @@ export class CommonTable extends React.Component {
 				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
 				tdCount++
 				if (this.props.edit) {
-					const editBtn = <Glyphicon glyph="pencil" />
-					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{editBtn}</Button></td>
+					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
 					tdCount++
 				}
 
 				if (cashInfo.btn1) {
-					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn1.onClick(e, _index)}>{cashInfo.btn1.label}</Button></td>
+					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><Button bsSize="small" onClick={()=>cashInfo.btn1.onClick(_obj)}>{cashInfo.btn1.label}</Button></td>
 					tdCount++
 				}
 				if (cashInfo.btn2) {
-					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn2.onClick(e, _index)}>{cashInfo.btn2.label}</Button></td>
+					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><Button bsSize="small" onClick={()=>cashInfo.btn2.onClick(_obj)}>{cashInfo.btn2.label}</Button></td>
 					tdCount++
 				}
 				if (cashInfo.btn3) {
-					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><Button bsSize="small" onClick={(e)=>cashInfo.btn3.onClick(e, _index)}>{cashInfo.btn3.label}</Button></td>
+					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><Button bsSize="small" onClick={()=>cashInfo.btn3.onClick(_obj)}>{cashInfo.btn3.label}</Button></td>
 					tdCount++
 				}
 
@@ -1241,7 +1262,7 @@ export class CommonTable extends React.Component {
 					})
 
 					for (var i = 0, ii = array.length; i < ii; ++i) {
-						array[i] = array[i] ? array[i] : <td key={i}>空白</td>
+						array[i] = array[i] ? array[i] : <td key={i}></td>
 					}
 
 					return array
@@ -1260,6 +1281,16 @@ export class CommonTable extends React.Component {
 				{ this.props.add &&
 					<Button onClick={() => this.props.add()} bsSize="sm">
 						<Glyphicon glyph="plus"></Glyphicon>
+					</Button>
+				}
+				{ this.props.remove &&
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger">
+						{ this.state.actionType === 'edit' &&
+							<Glyphicon glyph="minus"></Glyphicon>
+						}
+						{ this.state.actionType === 'remove' &&
+							<span>キャンセル</span>
+						}
 					</Button>
 				}
 				<div className="common-table">
@@ -1627,10 +1658,21 @@ export class CommonFilterBox extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
+		this.addBtn = (
+			<Button bsSize="sm" onClick={() => this.props.add()} style={{float: 'right'}}>
+				<Glyphicon glyph="plus"></Glyphicon>
+			</Button>
+		)
+		this.editBtn = (
+			<Button bsSize="sm" bsStyle="success" onClick={() => this.props.edit()} style={{float: 'right'}}>
+				<Glyphicon glyph="pencil"></Glyphicon>
+			</Button>
+		)
 		this.state = {
 			value: this.props.value,
 			options: this.props.options,
-			size: this.props.size
+			size: this.props.size,
+			actionBtn: this.props.add ? this.addBtn : <span></span>
 		}
 	}
 
@@ -1646,7 +1688,19 @@ export class CommonFilterBox extends React.Component {
 	 * 値の変更処理
 	 */
 	changed(obj) {
-		this.setState({value: (obj ? obj.value : '')})
+		const value = obj ? obj.value : ''
+		this.setState({ value: value })
+
+		// ボタンの切り替え処理
+		if (value && this.props.edit) {
+			this.setState({actionBtn: this.editBtn})
+		} else if (this.props.add) {
+			this.setState({actionBtn: this.addBtn})
+		}
+
+		if (this.props.onChange) {
+			this.props.onChange(obj)
+		}
 	}
 
 	render() {
@@ -1657,14 +1711,10 @@ export class CommonFilterBox extends React.Component {
 					name={this.props.name}
 					value={this.state.value}
 					options={this.props.options}
-					onChange={this.changed.bind(this)}
+					onChange={(obj)=>this.changed(obj)}
 					className={this.props.add && 'btn-type'}
 				/>
-				{this.props.add &&
-					<Button bsSize="sm" onClick={() => this.props.add()} style={{float: 'right'}}>
-						<Glyphicon glyph="plus"></Glyphicon>
-					</Button>
-				}
+				{ this.state.actionBtn }
 			</CommonFormGroup>
 		)
 	}
