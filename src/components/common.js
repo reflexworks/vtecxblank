@@ -1177,10 +1177,11 @@ export class CommonTable extends React.Component {
 
 			const td = (_obj, _index) => {
 
-				let tdCount = 1
+				let tdCount = 0
 				let array = new Array(cashInfolength)
 
-				array[cashInfo.no.index] = <td key="0" style={cashInfo.no.style}>{(_index + 1)}</td>
+				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
+				tdCount++
 				if (this.props.edit) {
 					const editBtn = <Glyphicon glyph="pencil" />
 					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.edit.style}><Button bsSize="small" onClick={() => this.props.edit.onclick(_index)}>{editBtn}</Button></td>
@@ -1211,7 +1212,6 @@ export class CommonTable extends React.Component {
 						} else if (!disabledList[__key]) {
 
 							const field = _key.replace(/\./g, '___') + __key
-							tdCount++
 							if (cashInfo[field]) {
 								array[cashInfo[field].index] = (
 									<td
@@ -1235,12 +1235,13 @@ export class CommonTable extends React.Component {
 									</td>
 								)
 							}
+							tdCount++
 						}
 
 					})
 
 					for (var i = 0, ii = array.length; i < ii; ++i) {
-						array[i] = array[i] ? array[i] : <td key={i}></td>
+						array[i] = array[i] ? array[i] : <td key={i}>空白</td>
 					}
 
 					return array

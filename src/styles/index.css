@@ -851,6 +851,7 @@ h3.title {
 .common-table>.table>thead>tr>th {
     padding: 5px;
     vertical-align: middle;
+    white-space: nowrap;
 }
 .common-table .table th{
   color: #fff;
