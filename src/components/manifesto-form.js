@@ -19,12 +19,7 @@ export default class ManifestoForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {
-			 outer_width:  '',
-			 outer_height: '',
-			 outer_depth:  '',
-		 	 outer_total:  '',
-		}
+		this.state = {}
 
 		this.entry = this.props.entry
 		this.entry.manifesto = this.entry.manifesto || {}
@@ -36,48 +31,52 @@ export default class ManifestoForm extends React.Component {
 	changedOuterWidth(value) {
 		
 		/**
-		 * width,height,depthのどれかが0ならばtotalは0
+		 * value,depth,heightのどれかが空ならtotalも空にする
 		 */
-		
-		if (value || this.state.outer_height || this.state.outer_depth ) {
-			this.setState({ outer_total: 0 })
+
+		if (this.entry.manifesto.outer_depth  &&
+			this.entry.manifesto.outer_height && value) {
+			this.entry.manifesto.outer_total = parseInt(value) + parseInt(this.entry.manifesto.outer_depth) + parseInt(this.entry.manifesto.outer_height)
 		} else {
-			this.setState({
-				outer_total: parseInt(value) + parseInt(this.state.outer_depth) + parseInt(this.state.outer_height),
-			})
+			this.entry.manifesto.outer_total = ''	
 		}
-		this.setState({outer_width: value})
-		
+
+		this.entry.manifesto.outer_width = value
+		this.forceUpdate()
 	}
 
 	changedOuterDepth(value) {
+
 		/**
-		 * width,height,depthのどれかが0ならばtotalは0
+		 * width,value,heightのどれかが空ならtotalも空にする
 		 */
-		
-		if (this.state.outer_width || value || this.state.outer_height ) {
-			this.setState({ outer_total: 0 })
+
+		if (this.entry.manifesto.outer_width  &&
+			this.entry.manifesto.outer_height && value) {
+			this.entry.manifesto.outer_total = parseInt(this.entry.manifesto.outer_width) + parseInt(value) + parseInt(this.entry.manifesto.outer_height)
 		} else {
-			this.setState({
-				outer_total: parseInt(this.state.outer_width) + parseInt(value) + parseInt(this.state.outer_height),
-				outer_depth: value
-			})
-		}	
+			this.entry.manifesto.outer_total = ''
+		}
+
+		this.entry.manifesto.outer_depth = value
+		this.forceUpdate()
 	}
 
 	changedOuterHeight(value) {
+
 		/**
-		 * width,height,depthのどれかが0ならばtotalは0
+		 * width,depth,valueのどれかが空ならtotalも空にする
 		 */
-		
-		if (this.state.outer_width  || this.state.outer_depth || value) {
-			this.setState({ outer_total: 0 })
+
+		if (this.entry.manifesto.outer_width &&
+			this.entry.manifesto.outer_depth && value) {
+			this.entry.manifesto.outer_total = parseInt(this.entry.manifesto.outer_width) + parseInt(this.entry.manifesto.outer_depth) + parseInt(value)
 		} else {
-			this.setState({
-				outer_total: parseInt(this.state.outer_width) + parseInt(this.state.outer_depth) + parseInt(value),
-				outer_height: value
-			})
-		}	
+			this.entry.manifesto.outer_total = ''
+		}
+
+		this.entry.manifesto.outer_height = value
+		this.forceUpdate()
 	}
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -189,7 +188,7 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸幅"
 							size='sm'
-							value={this.state.outer_width}
+							value={this.entry.manifesto.outer_width}
 							validate="number"
 							required
 							onChange={(value) => this.changedOuterWidth(value)}
@@ -201,7 +200,7 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸奥行"
 							size='sm'
-							value={this.state.outer_depth}
+							value={this.entry.manifesto.outer_depth}
 							validate="number"
 							required
 							onChange={(value) => this.changedOuterDepth(value)}
@@ -213,7 +212,7 @@ export default class ManifestoForm extends React.Component {
 							type="text"
 							placeholder="外寸高さ"
 							size='sm'
-							value={this.state.outer_height}
+							value={this.entry.manifesto.outer_height}
 							validate="number"
 							required
 							onChange={(value) => this.changedOuterHeight(value)}
@@ -224,7 +223,7 @@ export default class ManifestoForm extends React.Component {
 							name="manifesto.outer_total"
 							type="text"
 							size='sm'
-							value={this.state.outer_total}
+							value={this.entry.manifesto.outer_total}
 							required
 							readonly='true'
 						/>
