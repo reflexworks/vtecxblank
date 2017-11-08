@@ -64,10 +64,7 @@ export default class ManifestoUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.entry.manifesto.outer_width = this.entry ? this.entry.manifesto.outer_width : ''
-				this.entry.manifesto.outer_height = this.entry ? this.entry.manifesto.outer_height : ''
-				this.entry.manifesto.outer_depth = this.entry ? this.entry.manifesto.outer_depth : ''
-				this.entry.manifesto.outer_total = this.entry ? this.entry.manifesto.outer_total : ''
+				
 				this.forceUpdate()
 			}
 
