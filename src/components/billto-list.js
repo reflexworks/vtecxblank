@@ -16,6 +16,7 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
+	CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -84,13 +85,12 @@ export default class BilltoList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-	/*
+	
 	onSelect(index) {
 		// 入力画面に遷移
 		const billto_code = this.state.feed.entry[index].billto.billto_code
 		this.props.history.push('/BilltoUpdate?' + billto_code)
 	}
-	*/
 
 	/**
 	 * 検索実行
@@ -135,6 +135,59 @@ export default class BilltoList extends React.Component {
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
+
+							<CommonInputText
+								controlLabel="電話番号"
+								name="contact_information.tel"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+
+							<CommonInputText
+								controlLabel="FAX"
+								name="contact_information.fax"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+							
+							<CommonInputText
+								controlLabel="メールアドレス"
+								name="contact_information.email"
+								type="email"
+								placeholder="logioffice@gmail.com"
+							/>
+
+							<CommonInputText
+								controlLabel="郵便番号"
+								name="contact_information.zip_code"
+								type="text"
+								placeholder="123-4567"
+								size="sm"
+							/>
+
+							<CommonPrefecture
+								controlLabel="都道府県"
+								componentClass="select"
+								name="contact_information.prefecture"
+								size="sm"
+							/>
+
+							<CommonInputText
+								controlLabel="市区郡長村"
+								name="contact_information.address1"
+								type="text"
+								placeholder="◯◯市××町"
+							/>
+
+							<CommonInputText
+								controlLabel="番地"
+								name="contact_information.address2"
+								type="text"
+								placeholder="1丁目2番地 ◯◯ビル1階"
+								size="lg"
+							/>
 						
 						</CommonSearchConditionsFrom>
 
@@ -153,11 +206,25 @@ export default class BilltoList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
 								field: 'billto.billto_code',title: '請求先コード', width: '200px'
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
+							}, {
+								field: 'contact_information.tel', title: '電話番号', width: '200px'
+							}, {
+								field: 'contact_information.fax', title: 'FAX', width: '200px'
+							}, {
+								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
+							}, {
+								field: 'contact_information.zip_code', title: '郵便番号', width: '200px'
+							}, {
+								field: 'contact_information.prefecture', title: '都道府県', width: '200px'
+							}, {
+								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
+							}, {
+								field: 'contact_information.address2', title: '番地', width: '200px'
 							}]}
 						/>
 					</Col>  

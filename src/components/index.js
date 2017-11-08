@@ -27,6 +27,7 @@ import QuotationUpdate from './quotation-update'
 //資材
 import ManifestoList from './manifesto-list'
 import ManifestoRegistration from './manifesto-registration'
+import ManifestoUpdate from './manifesto-update'
 
 //庫内作業
 import InternalWorkList from './internalwork-list'
@@ -48,6 +49,7 @@ import DeliveryChargeRegistration from './deliverycharge-registration'
 //請求先
 import BilltoList from './billto-list'
 import BilltoRegistration from './billto-registration'
+import BilltoUpdate from './billto-update'
 
 
 import {
@@ -184,7 +186,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：資材一覧
+	 * コンポーネント：資材情報一覧
 	 */
 	ManifestoList = (props) => {
 		return (
@@ -195,11 +197,22 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：資材登録
+	 * コンポーネント：資材情報登録
 	 */
 	ManifestoRegistration = (props) => {
 		return (
 			<ManifestoRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材情報更新
+	 */
+	ManifestoUpdate = (props) => {
+		return (
+			<ManifestoUpdate 
 				history={props.history}
 			/>
 		)
@@ -338,7 +351,18 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：請求先登録
+	 * コンポーネント：請求先一覧
+	 */
+	BilltoList = (props) => {
+		return (
+			<BilltoList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求先情報登録
 	 */
 	BilltoRegistration = (props) => {
 		return (
@@ -349,11 +373,11 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：請求先一覧
+	 * コンポーネント：請求先情報更新
 	 */
-	BilltoList = (props) => {
+	BilltoUpdate = (props) => {
 		return (
-			<BilltoList 
+			<BilltoUpdate 
 				history={props.history}
 			/>
 		)
@@ -416,6 +440,7 @@ class MainContainer extends React.Component {
 							<Route path="/WarehouseList" component={this.WarehouseList} />
 							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
 							<Route path="/ManifestoList" component={this.ManifestoList} />
+							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/WorkRegistration" component={this.WorkRegistration} />
@@ -429,7 +454,8 @@ class MainContainer extends React.Component {
 							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
 							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
 							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
-							<Route path="/BilltoList" component={this.BilltoList} />	
+							<Route path="/BilltoList" component={this.BilltoList} />
+							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
