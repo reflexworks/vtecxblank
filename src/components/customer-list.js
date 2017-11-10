@@ -142,27 +142,27 @@ export default class CustomerList extends React.Component {
 							/>
 							<CommonInputText
 								controlLabel="電話番号"
-								name="customer.customer_tel"
+								name="contact_information.tel"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="FAX"
-								name="customer.customer_fax"
+								name="contact_information.fax"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="メールアドレス"
-								name="customer.customer_email"
+								name="contact_information.email"
 								type="email"
 								placeholder="logioffice@gmail.com"
 							/>
 							<CommonInputText
 								controlLabel="郵便番号"
-								name="customer.zip_code"
+								name="contact_information.zip_code"
 								type="text"
 								placeholder="123-4567"
 								size="sm"
@@ -170,18 +170,18 @@ export default class CustomerList extends React.Component {
 							<CommonPrefecture
 								controlLabel="都道府県"
 								componentClass="select"
-								name="customer.prefecture"
+								name="contact_information.prefecture"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="市区郡長村"
-								name="customer.address1"
+								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
 							/>
 							<CommonInputText
 								controlLabel="番地"
-								name="customer.address2"
+								name="contact_information.address2"
 								type="text"
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
@@ -211,21 +211,19 @@ export default class CustomerList extends React.Component {
 							}, {
 								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '200px'
 							}, {
-								field: 'customer.customer_tel', title: '電話番号', width: '200px'
+								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {
-								field: 'customer.customer_staff', title: '担当者名', width: '150px'
+								field: 'contact_information.fax', title: 'FAX', width: '200px'
 							}, {
-								field: 'customer.customer_email', title: 'メールアドレス', width: '200px'
+								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'customer.customer_fax', title: 'FAX', width: '200px'
+								field: 'contact_information.zip_code', title: '郵便番号', width: '150px'
 							}, {
-								field: 'customer.zip_code', title: '郵便番号', width: '150px'
+								field: 'contact_information.prefecture', title: '都道府県', width: '200px'
 							}, {
-								field: 'customer.prefecture', title: '都道府県', width: '200px'
+								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
 							}, {
-								field: 'customer.address1', title: '市区郡町村', width: '200px'
-							}, {
-								field: 'customer.address2', title: '番地', width: '200px'
+								field: 'contact_information.address2', title: '番地', width: '200px'
 							}]}
 						/>
 					</Col>  

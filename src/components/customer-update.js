@@ -22,8 +22,6 @@ import {
 	CommonBackBtn
 } from './common'
 
-import moment from 'moment'
-
 export default class CustomerUpdate extends React.Component {
 
 	constructor(props: Props) {
@@ -66,8 +64,6 @@ export default class CustomerUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.entry.account_info.billing_closing_date = this.entry ? moment(Date.parse(this.entry.account_info.billing_closing_date)) : moment()
-				this.entry.account_info.date_of_payment = this.entry ? moment(Date.parse(this.entry.account_info.date_of_payment)) : moment()
 
 				this.forceUpdate()
 			}
