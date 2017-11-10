@@ -199,6 +199,18 @@ export default class SideMenu extends React.Component {
 							title: '請求書一覧'
 						}]
 					)}
+					{ this.sideMenuListTitle('明細項目管理', 'item_details') }
+					{ this.sideMenuList('item_details',
+						[{
+							to: 'ItemDetailsRegistration',
+							glyph: 'edit',
+							title: '明細項目作成'
+						},{
+							to: 'ItemDetailsList',
+							glyph: 'list',
+							title: '明細項目一覧'
+						}]
+					)}
 					
 				</ul>
 			</div>
