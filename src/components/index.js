@@ -51,6 +51,10 @@ import BilltoList from './billto-list'
 import BilltoRegistration from './billto-registration'
 import BilltoUpdate from './billto-update'
 
+//明細項目
+import ItemDetailsList from './itemdetails-list'
+import ItemDetailsRegistration from './itemdetails-registration'
+import ItemDetailsUpdate from './itemdetails-update'
 
 import {
 //	BrowserRouter as Router,
@@ -384,6 +388,39 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：明細項目一覧
+	 */
+	ItemDetailsList = (props) => {
+		return (
+			<ItemDetailsList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：明細項目登録
+	 */
+	ItemDetailsRegistration = (props) => {
+		return (
+			<ItemDetailsRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：明細項目更新
+	 */
+	ItemDetailsUpdate = (props) => {
+		return (
+			<ItemDetailsUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -456,6 +493,9 @@ class MainContainer extends React.Component {
 							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
 							<Route path="/BilltoList" component={this.BilltoList} />
 							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />
+							<Route path="/ItemDetailsRegistration" component={this.ItemDetailsRegistration} />
+							<Route path="/ItemDetailsList" component={this.ItemDetailsList} />
+							<Route path="/ItemDetailsUpdate" component={this.ItemDetailsUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import ItemDetailsForm from './itemdetails-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,7 +22,7 @@ import {
 	CommonBackBtn
 } from './common'
 
-export default class CustomerUpdate extends React.Component {
+export default class ItemDetailsUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -32,10 +32,10 @@ export default class CustomerUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/ItemDetails'
 
 		// 戻る先のURL
-		this.backUrl = '#/CustomerList'
+		this.backUrl = '#/ItemDetailstoList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -100,7 +100,7 @@ export default class CustomerUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							顧客情報の更新
+							請求先情報の更新
 						</PageHeader>
 
 					</Col>
@@ -120,7 +120,7 @@ export default class CustomerUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<ItemDetailsForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
