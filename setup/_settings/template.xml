@@ -16,6 +16,10 @@ customer
  classification_code
  customer_name
  customer_name_kana
+ sales_staff{}
+  content
+ working_staff{}
+  content
 contact_information
  tel
  fax 
@@ -24,7 +28,7 @@ contact_information
  prefecture
  address1
  address2
-staff{}
+staff
  staff_name
  role
  superior_email 
@@ -52,23 +56,6 @@ manifesto
  regular_unit_price
  special_price
  special_unit_price
-internal_work
- staff_name
- working_date
- approval_status
-internal_work_details
- work{}
-  item_name
-  unit_name
-  unit
-  quantity
- shipmentbycarrier{}
-  service_code
-  size
-  quantity
- manifesto{}
-  manifesto_code
-  quantity  
 remarks{}
  content
 basic_condition
@@ -89,6 +76,7 @@ quotation
 invoice
  invoice_code
  quotation_code
+ internal_work_code 
  total_amount
  taxation_amount
  payee{}
@@ -108,6 +96,12 @@ delivery_charge
    charge_by_zone{}
     zone_code
     delivery_charge
+internal_work
+ internal_work_code 
+ staff_name
+ working_date
+ approval_status
+ work_kind_class
 shipment_service
  code
  size
@@ -124,7 +118,10 @@ work_record
  quantity
 used_manifesto
  manifesto_code
- quantity
+ quantity 
+type_ahead
+ type
+ value
 </content>
 <rights>
 </rights>

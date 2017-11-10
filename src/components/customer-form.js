@@ -14,8 +14,6 @@ import type {
 import {
 	CommonPrefecture,
 	CommonInputText,
-	//	CommonSelectBox,
-	CommonFilterBox
 } from './common'
 
 export default class CustomerForm extends React.Component {
@@ -26,7 +24,7 @@ export default class CustomerForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
-		this.entry.account_info = this.entry.account_info ||  {}
+		this.entry.contact_information = this.entry.contact_information ||  {}
 
 	}
 
@@ -90,80 +88,67 @@ export default class CustomerForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="電話番号"
-							name="customer.customer_tel"
+							name="contact_information.tel"
 							type="text"
 							placeholder="090-1234-5678"
-							value={this.entry.customer.customer_tel}
+							value={this.entry.contact_information.tel}
 							size="sm"
 						/>
 
 						<CommonInputText
 							controlLabel="FAX"
-							name="customer.customer_fax"
+							name="contact_information.fax"
 							type="text"
 							placeholder="090-1234-5678"
-							value={this.entry.customer.customer_fax}
+							value={this.entry.contact_information.fax}
 							size="sm"
 						/>
 						
 						<CommonInputText
 							controlLabel="メールアドレス"
-							name="customer.customer_email"
+							name="contact_information.email"
 							type="email"
 							placeholder="logioffice@gmail.com"
-							value={this.entry.customer.customer_email}
+							value={this.entry.contact_information.email}
 						/>
 
 						<CommonInputText
 							controlLabel="郵便番号"
-							name="customer.zip_code"
+							name="contact_information.zip_code"
 							type="text"
 							placeholder="123-4567"
-							value={this.entry.customer.zip_code}
+							value={this.entry.contact_information.zip_code}
 							size="sm"
 						/>
 
 						<CommonPrefecture
 							controlLabel="都道府県"
 							componentClass="select"
-							name="customer.prefecture"
-							value={this.entry.customer.prefecture}
+							name="contact_information.prefecture"
+							value={this.entry.contact_information.prefecture}
 							size="sm"
 						/>
 
 						<CommonInputText
 							controlLabel="市区郡長村"
-							name="customer.address1"
+							name="contact_information.address1"
 							type="text"
 							placeholder="◯◯市××町"
-							value={this.entry.customer.address1}
+							value={this.entry.contact_information.address1}
 						/>
 
 						<CommonInputText
 							controlLabel="番地"
-							name="customer.address2"
+							name="contact_information.address2"
 							type="text"
 							placeholder="1丁目2番地 ◯◯ビル1階"
-							value={this.entry.customer.address2}
+							value={this.entry.contact_information.address2}
 							size="lg"
 						/>
 					
 					</Panel>
 
 					<Panel collapsible header="担当情報" eventKey="2" bsStyle="info" defaultExpanded="true">
-
-						<CommonFilterBox
-							controlLabel="担当者"
-							name="customer.customer_staff"
-							value={this.entry.customer.customer_staff}
-							options={[{
-								label: '担当者A',
-								value: '00001'
-							}, {
-								label: '担当者B',
-								value: '00002'
-							}]}
-						/>
 
 					</Panel>
 
