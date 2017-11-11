@@ -12,25 +12,25 @@ import type {
 	Props
 } from 'demo3.types'
 
-import ItemDetailsForm from './itemdetails-form'
+import TypeAheadForm from './typeahead-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn
 } from './common'
 
 
-export default class ItemDetailsRegistration extends React.Component {
+export default class TypeAheadRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		// 登録先のURL
-		this.url = '/d/item_details'
+		this.url = '/d/type_ahead'
 
 		// 初期値の設定
 		this.entry = {
-			item_details: [],
+			type_ahead: [],
 		}
 	}
 	
@@ -39,7 +39,7 @@ export default class ItemDetailsRegistration extends React.Component {
      */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/ItemDetailsList'
+		location.href = '#/TypeAheadList'
 	}
 
 	render() {
@@ -47,7 +47,7 @@ export default class ItemDetailsRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>明細項目の登録</PageHeader>
+						<PageHeader>入力補完情報の登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -64,7 +64,7 @@ export default class ItemDetailsRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<ItemDetailsForm name="mainForm" entry={this.entry} />
+						<TypeAheadForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
