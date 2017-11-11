@@ -28,6 +28,7 @@ export default class SideMenu extends React.Component {
 				invoice: false,
 				delivery_charge: false,
 				billto: false,
+				TypeAhead: false,
 			}
 		}
 	}
@@ -199,16 +200,16 @@ export default class SideMenu extends React.Component {
 							title: '請求書一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('明細項目管理', 'item_details') }
-					{ this.sideMenuList('item_details',
+					{ this.sideMenuListTitle('入力保管管理', 'typeahead') }
+					{ this.sideMenuList('typeahead',
 						[{
-							to: 'ItemDetailsRegistration',
+							to: 'TypeAheadRegistration',
 							glyph: 'edit',
-							title: '明細項目作成'
+							title: '入力補完登録'
 						},{
-							to: 'ItemDetailsList',
+							to: 'TypeAheadList',
 							glyph: 'list',
-							title: '明細項目一覧'
+							title: '入力補完一覧'
 						}]
 					)}
 					

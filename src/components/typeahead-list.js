@@ -25,7 +25,7 @@ type State = {
     url: string
 }
 
-export default class ItemDetailsList extends React.Component {
+export default class TypeAheadList extends React.Component {
     state : State
     maxDisplayRows: number
     activePage: number
@@ -33,7 +33,7 @@ export default class ItemDetailsList extends React.Component {
     constructor(props:Props) {
     	super(props)
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
-    	this.url = '/d/item_details?f&l=' + this.maxDisplayRows
+    	this.url = '/d/type_ahead?f&l=' + this.maxDisplayRows
     	this.state = {
     		feed: { entry: [] },
     		isDisabled: false,
@@ -84,11 +84,11 @@ export default class ItemDetailsList extends React.Component {
      * 更新画面に遷移する
      * @param {*} index
      */
-
+	
     onSelect(index) {
     	// 入力画面に遷移
-    	const internal_work_code = this.state.feed.entry[index].internal_work.internal_work_code
-    	this.props.history.push('/Internal_workUpdate?' + internal_work_code)
+    	const id = this.state.feed.entry[index].link[0].___href.slice(12)
+    	this.props.history.push('/TypeAheadUpdate?' + id)
     }
 
 
@@ -120,7 +120,7 @@ export default class ItemDetailsList extends React.Component {
     			<Row>
     				<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-    					<PageHeader>明細項目一覧</PageHeader>
+    					<PageHeader>入力補完一覧</PageHeader>
 
     					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
     						
@@ -144,20 +144,9 @@ export default class ItemDetailsList extends React.Component {
     						data={this.state.feed.entry}
     						edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
     						header={[{
-    							field: 'item_details',title: '項目', width: '100px'
+    							field: 'type_ahead.type',title: '入力補完種別', width: '100px',convert: { 0:'項目名', 1:'単位名称', 2:'単位',3:'単価',4:'備考'}
     						}, {
-    							field: 'item_details.unit_name', title: '単位名称', width: '200px'
-    						}, {
-    							field: 'item_details.unit', title: '単位', width: '200px'
-    						}, {
-    							field: 'item_details.quantity', title: '数量', width: '200px'
-    						}, {
-    							field: 'item_details.unit_price', title: '単価', width: '150px'
-    						}, {
-    							field: 'item_details.remarks', title: '備考', width: '200px'
-    						}, {
-    							field: 'item_details.is_taxation', title: '課税対象', width: '200px'
-
+    							field: 'type_ahead.value', title: '入力補完内容', width: '100px'
     						}]}
     					/>
     				</Col>
