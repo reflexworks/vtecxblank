@@ -14,6 +14,7 @@ import CustomerUpdate from './customer-update'
 //担当者
 import StaffList from './staff-list'
 import StaffRegistration from './staff-registration'
+import StaffUpdate from './staff-update'
 
 //倉庫
 import WarehouseList from './warehouse-list'
@@ -51,10 +52,10 @@ import BilltoList from './billto-list'
 import BilltoRegistration from './billto-registration'
 import BilltoUpdate from './billto-update'
 
-//明細項目
-import ItemDetailsList from './itemdetails-list'
-import ItemDetailsRegistration from './itemdetails-registration'
-import ItemDetailsUpdate from './itemdetails-update'
+//入力保管管理
+import TypeAheadList from './typeahead-list'
+import TypeAheadRegistration from './typeahead-registration'
+import TypeAheadUpdate from './typeahead-update'
 
 import {
 //	BrowserRouter as Router,
@@ -162,6 +163,17 @@ class MainContainer extends React.Component {
 	StaffRegistration = (props) => {
 		return (
 			<StaffRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：担当者更新
+	 */
+	StaffUpdate = (props) => {
+		return (
+			<StaffUpdate 
 				history={props.history}
 			/>
 		)
@@ -337,7 +349,7 @@ class MainContainer extends React.Component {
 	 */
 	DeliveryChargeRegistration = (props) => {
 		return (
-			<DeliveryChargeRegistration 
+			<DeliveryChargeRegistration
 				history={props.history}
 			/>
 		)
@@ -390,9 +402,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：明細項目一覧
 	 */
-	ItemDetailsList = (props) => {
+	TypeAheadList = (props) => {
 		return (
-			<ItemDetailsList 
+			<TypeAheadList 
 				history={props.history}
 			/>
 		)
@@ -401,9 +413,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：明細項目登録
 	 */
-	ItemDetailsRegistration = (props) => {
+	TypeAheadRegistration = (props) => {
 		return (
-			<ItemDetailsRegistration 
+			<TypeAheadRegistration 
 				history={props.history}
 			/>
 		)
@@ -412,9 +424,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：明細項目更新
 	 */
-	ItemDetailsUpdate = (props) => {
+	TypeAheadUpdate = (props) => {
 		return (
-			<ItemDetailsUpdate 
+			<TypeAheadUpdate
 				history={props.history}
 			/>
 		)
@@ -473,6 +485,7 @@ class MainContainer extends React.Component {
 							<Route path="/CustomerUpdate" component={this.CustomerUpdate} />
 							<Route path="/StaffRegistration" component={this.StaffRegistration} />
 							<Route path="/StaffList" component={this.StaffList} />
+							<Route path="/StaffUpdate" component={this.StaffUpdate} />
 							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
 							<Route path="/WarehouseList" component={this.WarehouseList} />
 							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
@@ -493,9 +506,9 @@ class MainContainer extends React.Component {
 							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
 							<Route path="/BilltoList" component={this.BilltoList} />
 							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />
-							<Route path="/ItemDetailsRegistration" component={this.ItemDetailsRegistration} />
-							<Route path="/ItemDetailsList" component={this.ItemDetailsList} />
-							<Route path="/ItemDetailsUpdate" component={this.ItemDetailsUpdate} />
+							<Route path="/TypeAheadRegistration" component={this.TypeAheadRegistration} />
+							<Route path="/TypeAheadList" component={this.TypeAheadList} />
+							<Route path="/TypeAheadUpdate" component={this.TypeAheadUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
@@ -506,3 +519,5 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
+
+

@@ -11,7 +11,8 @@ import type {
 
 import {
 	CommonInputText,
-	CommonSelectBox
+	CommonSelectBox,
+	CommonFilterBox,
 } from './common'
 
 export default class StaffForm extends React.Component {
@@ -76,7 +77,7 @@ export default class StaffForm extends React.Component {
 							required
 						/>	
 						
-						<CommonSelectBox
+						<CommonFilterBox
 							controlLabel="ロール"
 							size="sm"
 							name="staff.role"
@@ -94,15 +95,6 @@ export default class StaffForm extends React.Component {
 							onChange={(value) => this.changedRole(value)}
 						/>
 
-						{ !this.state.superiorSelect &&
-							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-								value={this.entry.staff.superior_email}
-							/>
-						}	
 
 						<CommonInputText
 							controlLabel="メールアドレス"
