@@ -274,15 +274,28 @@ export class CommonRegistrationBtn extends React.Component {
 			return entry
 		}
 		const setFeedData = () => {
-			const forms = document.forms
+
 			let feed = {}
 			let array = []
-			for (var i = 0, ii = forms.length; i < ii; ++i) {
-				const target_form = forms[i]
-				const isTarget = target_form.getAttribute('data-submit-form')
-				if (isTarget) {
-					let entry = setEntryData(target_form)
-					array.push(entry)
+
+			const forms = document.forms
+			if (this.props.targetFrom) {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					if (forms[i].getAttribute('name') === this.props.targetFrom) {
+						let entry = setEntryData(target_form)
+						array.push(entry)
+						break
+					}
+				}
+			} else {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					const isTarget = target_form.getAttribute('data-submit-form')
+					if (isTarget) {
+						let entry = setEntryData(target_form)
+						array.push(entry)
+					}
 				}
 			}
 			feed.entry = array
@@ -360,7 +373,7 @@ export class CommonRegistrationBtn extends React.Component {
 
 						{/* 登録ボタン */}
 						<FormGroup>
-							<Button type="submit" className="btn btn-primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="plus" /> 新規登録</Button>
+							<Button type="submit" bsStyle="primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="plus" /> 新規登録</Button>
 						</FormGroup>
 
 						{/* 通信メッセージ */}
@@ -379,6 +392,49 @@ export class CommonRegistrationBtn extends React.Component {
 
 }
 
+export function CommonSetUpdateData(_target_form) {
+
+	const setValue = (element) => {
+		let value
+		if (element.type === 'radio') {
+			if (element.checked === true) {
+				value = element.value
+			}
+		} else {
+			value = element.value
+		}
+		return value
+	}
+	const setEntryData = (data) => {
+		let entry = {}
+		const form_name = data.getAttribute('name')
+		for (var i = 0, ii = data.elements.length; i < ii; ++i) {
+			let element = data.elements[i]
+
+			if (element.name) {
+
+				const value = setValue(element)
+
+				if (element.name.indexOf('.') !== -1) {
+					const parentKey = element.name.split('.')[0]
+					const childKey = element.name.split('.')[1]
+					entry[parentKey] = entry[parentKey] ? entry[parentKey] : {}
+
+					if (!entry[parentKey][childKey] || entry[parentKey][childKey] && value) {
+						entry[parentKey][childKey] = value
+					}
+
+				} else {
+					entry[element.name] = value
+				}
+			}
+		}
+		entry = new LogicCommonTable().setData(entry, form_name)
+		return entry
+	}
+	return setEntryData(_target_form)
+}
+
 /**
  * 更新ボタン
  */
@@ -392,7 +448,6 @@ export class CommonUpdateBtn extends React.Component {
 			isDisabled: false
 		}
 		this.entry = this.props.entry
-		this.LogicCommonTable = new LogicCommonTable()
 	}
 
 	/**
@@ -407,56 +462,31 @@ export class CommonUpdateBtn extends React.Component {
 
 		let data = {}
 
-		const setValue = (element) => {
-			let value
-			if (element.type === 'radio') {
-				if (element.checked === true) {
-					value = element.value
-				}
-			} else {
-				value = element.value
-			}
-			return value
-		}
-		const setEntryData = (data) => {
-			let entry = {}
-			const form_name = data.getAttribute('name')
-			for (var i = 0, ii = data.elements.length; i < ii; ++i) {
-				let element = data.elements[i]
-
-				if (element.name) {
-
-					const value = setValue(element)
-
-					if (element.name.indexOf('.') !== -1) {
-						const parentKey = element.name.split('.')[0]
-						const childKey = element.name.split('.')[1]
-						entry[parentKey] = entry[parentKey] ? entry[parentKey] : {}
-
-						if (!entry[parentKey][childKey] || entry[parentKey][childKey] && value) {
-							entry[parentKey][childKey] = value
-						}
-
-					} else {
-						entry[element.name] = value
-					}
-				}
-			}
-			entry = this.LogicCommonTable.setData(entry, form_name)
-			return entry
-		}
 		const setFeedData = () => {
 			const forms = document.forms
 			let feed = {}
 			let array = []
-			for (var i = 0, ii = forms.length; i < ii; ++i) {
-				const target_form = forms[i]
-				const isTarget = target_form.getAttribute('data-submit-form')
-				if (isTarget) {
-					let entry = setEntryData(target_form)
-					entry.id = this.entry.id
-					entry.link = this.entry.link
-					array.push(entry)
+			if (this.props.targetFrom) {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					if (forms[i].getAttribute('name') === this.props.targetFrom) {
+						let entry = CommonSetUpdateData(target_form)
+						entry.id = this.entry.id
+						entry.link = this.entry.link
+						array.push(entry)
+						break
+					}
+				}
+			} else {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					const isTarget = target_form.getAttribute('data-submit-form')
+					if (isTarget) {
+						let entry = CommonSetUpdateData(target_form)
+						entry.id = this.entry.id
+						entry.link = this.entry.link
+						array.push(entry)
+					}
 				}
 			}
 			feed.entry = array
@@ -521,7 +551,7 @@ export class CommonUpdateBtn extends React.Component {
 						<CommonIndicator visible={this.state.isDisabled} />
 						
 						<FormGroup>
-							<Button type="submit" className="btn btn-primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="ok" /> 更新</Button>
+							<Button type="submit" bsStyle="success" onClick={(e) => this.submit(e)}><Glyphicon glyph="ok" /> 更新</Button>
 						</FormGroup>
 
 						<CommonNetworkMessage
@@ -1278,19 +1308,19 @@ export class CommonTable extends React.Component {
 		const tableNode = (
 			<div>
 				{ this.props.children }
-				{ this.props.add &&
+				{ (this.props.add && this.state.actionType === 'edit') &&
 					<Button onClick={() => this.props.add()} bsSize="sm">
 						<Glyphicon glyph="plus"></Glyphicon>
 					</Button>
 				}
-				{ this.props.remove &&
+				{ (this.props.remove && this.state.actionType === 'edit') &&
 					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger">
-						{ this.state.actionType === 'edit' &&
-							<Glyphicon glyph="minus"></Glyphicon>
-						}
-						{ this.state.actionType === 'remove' &&
-							<span>キャンセル</span>
-						}
+						<Glyphicon glyph="minus"></Glyphicon>
+					</Button>
+				}
+				{ (this.props.remove && this.state.actionType === 'remove') &&
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm">
+						キャンセル
 					</Button>
 				}
 				<div className="common-table">
@@ -1347,16 +1377,19 @@ export class CommonModal extends React.Component {
 		this.props.closeBtn()
 	}
 
-	add() {
+	getFormData() {
 		const modal_body = document.getElementById('common_modal_body')
 		const form = modal_body.children[0]
-		const obj = {}
-		for (let i = 0, ii = form.elements.length; i < ii; ++i) {
-			const element = form.elements[i]
-			const name = element.getAttribute('name')
-			obj[name] = element.value
-		}
-		this.props.addBtn(obj)
+		let entry = CommonSetUpdateData(form)
+		return entry
+	}
+
+	add() {
+		this.props.addBtn()
+	}
+
+	edit() {
+		this.props.editBtn(this.getFormData())
 	}
 
 	render() {
@@ -1389,10 +1422,28 @@ export class CommonModal extends React.Component {
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
+								<Button onClick={() => this.close()}>閉じる</Button>
 								{ this.props.addBtn && 
-									<button type="button" class="btn btn-primary" onClick={() => this.add()}>追加</button>
+									<Button bsStyle="primary" onClick={() => this.add()}>追加</Button>
 								}
-								<button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => this.close()}>閉じる</button>
+								{ this.props.addAxiosBtn && 
+									<CommonRegistrationBtn
+										url={this.props.addAxiosBtn.url}
+										callback={(data) => this.props.addAxiosBtn.callback(data)}
+										targetFrom={this.props.fromName}
+									/>
+								}
+								{ this.props.editBtn && 
+									<Button bsStyle="success" onClick={() => this.edit()}>更新</Button>
+								}
+								{ this.props.editAxiosBtn && 
+									<CommonUpdateBtn
+										url={this.props.editAxiosBtn.url}
+										callback={(data) => this.props.editAxiosBtn.callback(data)}
+										entry={this.props.editAxiosBtn.entry}
+										targetFrom={this.props.fromName}
+									/>
+								}
 							</div>
 						</div>
 					</div>
@@ -1672,7 +1723,7 @@ export class CommonFilterBox extends React.Component {
 			value: this.props.value,
 			options: this.props.options,
 			size: this.props.size,
-			actionBtn: this.props.add ? this.addBtn : <span></span>
+			actionBtn: <span></span>
 		}
 	}
 
@@ -1681,22 +1732,35 @@ export class CommonFilterBox extends React.Component {
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
-		this.setState({value: newProps.value, options: newProps.options})
+
+		let actionBtn = <span></span>
+		// ボタンの切り替え処理
+		if (this.props.multi && newProps.value && newProps.value.length > 0) {
+			if (this.props.edit) actionBtn = this.editBtn
+		} else if (!this.props.multi && newProps.value) {
+			if (this.props.edit) actionBtn = this.editBtn
+		} else if (this.props.add) {
+			actionBtn = this.addBtn
+		}
+
+		this.setState({
+			value: newProps.value,
+			options: newProps.options,
+			actionBtn: actionBtn
+		})
 	}
 
 	/**
 	 * 値の変更処理
 	 */
 	changed(obj) {
-		const value = obj ? obj.value : ''
-		this.setState({ value: value })
-
-		// ボタンの切り替え処理
-		if (value && this.props.edit) {
-			this.setState({actionBtn: this.editBtn})
-		} else if (this.props.add) {
-			this.setState({actionBtn: this.addBtn})
+		let value = obj ? obj.value : ''
+		if (this.props.multi) {
+			value = obj ? obj : []
+		} else {
+			value = obj ? obj.value : ''
 		}
+		this.setState({ value: value })
 
 		if (this.props.onChange) {
 			this.props.onChange(obj)
@@ -1712,7 +1776,8 @@ export class CommonFilterBox extends React.Component {
 					value={this.state.value}
 					options={this.props.options}
 					onChange={(obj)=>this.changed(obj)}
-					className={this.props.add && 'btn-type'}
+					className={(this.props.add || this.props.edit) && 'btn-type'}
+					multi={this.props.multi}
 				/>
 				{ this.state.actionBtn }
 			</CommonFormGroup>
