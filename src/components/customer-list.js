@@ -83,11 +83,10 @@ export default class CustomerList extends React.Component {
 
 	/**
 	 * 更新画面に遷移する
-	 * @param {*} index 
 	 */
-	onSelect(index) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = this.state.feed.entry[index].customer.customer_code
+		const customer_code = _data.customer.customer_code
 		this.props.history.push('/CustomerUpdate?' + customer_code)
 	}
 
@@ -203,7 +202,7 @@ export default class CustomerList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data)=>this.onSelect(data)}
 							header={[{
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
