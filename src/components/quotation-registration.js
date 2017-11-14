@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Grid,
 	Row,
@@ -28,12 +29,43 @@ export default class QuotationRegistration extends React.Component {
 		this.url = '/d/quotation'
 
 		// 初期値の設定
-		this.entry = {
-			customer: {}
+		this.entry = {}
+
+		this.master = {
+			billtoList: []
 		}
 
 	}
  
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/billto?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			this.setState({ isDisabled: false })
+
+			if (response.status !== 204) {
+
+				this.master.billtoList = response.data.feed.entry
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+
 	/**
 	 * 登録完了後の処理
 	 */
@@ -64,7 +96,7 @@ export default class QuotationRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<QuotationForm name="mainForm" entry={this.entry} />
+						<QuotationForm name="mainForm" entry={this.entry} master={this.master} />
 					</Col>
 				</Row>
 				<Row>

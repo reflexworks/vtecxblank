@@ -849,8 +849,9 @@ h3.title {
 .common-table>.table>tfoot>tr>th, 
 .common-table>.table>thead>tr>td, 
 .common-table>.table>thead>tr>th {
-    padding: 5px;
-    vertical-align: middle;
+  padding: 5px;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 .common-table .table th{
   color: #fff;
@@ -872,8 +873,6 @@ h3.title {
   display: inline;
 }
 .modal-body {
-  padding-left: 40px;
-  padding-right: 40px;
   overflow: scroll;
   max-height: 550px;
 }
@@ -881,6 +880,15 @@ h3.title {
   display: block;
   width: 0px;
   height: 0px;
+}
+.modal-lg {
+  width: 90%;
+}
+.modal-footer>div,
+.modal-footer>button
+{
+  float: right;
+  margin-left: 10px;
 }
 .tab-content{
   margin-top: 15px;
@@ -908,4 +916,7 @@ h3.title {
 .Select>.Select-control>.Select-multi-value-wrapper>.Select-placeholder,
 .Select>.Select-control>.Select-multi-value-wrapper>.Select-value {
   line-height: 28px;
+}
+.Select--multi>.Select-control>.Select-multi-value-wrapper>.Select-value {
+  line-height: 12px;
 }
