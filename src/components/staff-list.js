@@ -86,13 +86,12 @@ export default class StaffList extends React.Component {
 	/**
 	 * 更新画面に遷移する
 	 */
-	/*更新画面未作成なのでコメントアウト
 	onSelect(index) {
 		// 入力画面に遷移
-		const staff_name = this.state.feed.entry[index].staff.staff_name
-		this.props.history.push('/StaffUpdate?' + staff_name)
+		const id = this.state.feed.entry[index].link[0].___href.slice(7)
+		this.props.history.push('/StaffUpdate?' + id)
 	}
-	*/
+	
 
 	/**
 	 * 検索実行
@@ -176,7 +175,7 @@ export default class StaffList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
 								field: 'staff.staff_name',title: '担当者名', width: '100px'
 							}, {
