@@ -7,8 +7,6 @@ import {
 	Panel,
 	Tabs,
 	Tab,
-	Table,
-	Button,
 	Glyphicon
 } from 'react-bootstrap'
 import type {
@@ -16,12 +14,17 @@ import type {
 } from 'demo3.types'
 
 import {
-//	CommonPrefecture,
 	CommonInputText,
 	//	CommonSelectBox,
 	CommonFilterBox,
 	CommonTable
 } from './common'
+
+import {
+	BilltoAddModal,
+	BilltoEditModal,
+	DeliveryChargeModal,
+} from './quotation-modal'
 
 export default class QuotationForm extends React.Component {
 
@@ -30,40 +33,23 @@ export default class QuotationForm extends React.Component {
 		this.state = {}
 
 		this.entry = this.props.entry
-		this.entry.customer = this.entry.customer || {}
+		this.entry.customer = this.entry.customer || []
+		this.entry.billto = this.entry.billto || {}
+		this.entry.staff = this.entry.staff || {}
 		this.entry.work = this.entry.work || []
 		this.entry.item_details = this.entry.item_details || []
 		this.entry.manifesto = this.entry.manifesto || []
 
+		this.master = this.props.master
+		this.billtoList = []
+
+		this.formType = 'create'
+
 		this.sampleData()
+
 	}
 
 	sampleData() {
-		this.entry.work = [{
-			consignment_service: '委託される業務',
-			workflow: 'ロジスティクス業務'
-		},{
-			consignment_service: '保管',
-			workflow: ['常温保管', '共益費、光熱費、バース使用料含む', '補償金不要']
-		},{
-			consignment_service: '荷役',
-			workflow: ['入庫作業　数量検品、外観検品', '出荷作業　ピッキング、外観検品、梱包、出荷事務']
-		},{
-			consignment_service: '配送',
-			workflow: ['宅急便、DM便等にて発送']
-		},{
-			consignment_service: '保険',
-			workflow: ['発送：火災保険、保管：盗難、火災保険']
-		},{
-			consignment_service: '決済',
-			workflow: ['毎月末締切、翌月20日　銀行振込み（日本郵便ご利用の場合）', '毎月末締切、翌月末日　銀行振込み']
-		},{
-			consignment_service: '取扱商品',
-			workflow: ['◯◯']
-		},{
-			consignment_service: '出荷データ',
-			workflow: ['伝票発行の際、お客様データの加工などは致しません。', '弊社指定のCSV、EXCELデータが必須となります。']
-		}]
 
 		this.entry.item_details = [{
 			item_name: '保管料',
@@ -267,11 +253,80 @@ export default class QuotationForm extends React.Component {
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
+
 		this.entry = newProps.entry
+		this.master = newProps.master
+
+		this.billtoList = this.master.billtoList.map((obj) => {
+			return {
+				label: obj.billto.billto_name,
+				value: obj.billto.billto_code,
+				data: obj
+			}
+		})
+
 		this.sampleData()
+
 	}
 
-	onSelect() {
+	changeBillto(_data) {
+		if (_data) {
+			this.entry.customer = [{
+				customer_code: '001',
+				customer_tel: '00001',
+				address2: 'aaa'
+			},{
+				customer_code: '002',
+				customer_name_kana: 'アア',
+				address1: 'bbb'
+			}]
+			this.entry.work = [{
+				consignment_service: '委託される業務',
+				workflow: 'ロジスティクス業務'
+			},{
+				consignment_service: '保管',
+				workflow: ['常温保管', '共益費、光熱費、バース使用料含む', '補償金不要']
+			},{
+				consignment_service: '荷役',
+				workflow: ['入庫作業　数量検品、外観検品', '出荷作業　ピッキング、外観検品、梱包、出荷事務']
+			},{
+				consignment_service: '配送',
+				workflow: ['宅急便、DM便等にて発送']
+			},{
+				consignment_service: '保険',
+				workflow: ['発送：火災保険、保管：盗難、火災保険']
+			},{
+				consignment_service: '決済',
+				workflow: ['毎月末締切、翌月20日　銀行振込み（日本郵便ご利用の場合）', '毎月末締切、翌月末日　銀行振込み']
+			},{
+				consignment_service: '取扱商品',
+				workflow: ['◯◯']
+			},{
+				consignment_service: '出荷データ',
+				workflow: ['伝票発行の際、お客様データの加工などは致しません。', '弊社指定のCSV、EXCELデータが必須となります。']
+			}]
+			this.entry.billto.billto_code = _data.value
+			this.entry.billto.billto_name = _data.value
+			this.billto = _data.data
+		} else {
+			this.entry.customer = []
+			this.entry.work = []
+			this.entry.billto.billto_name = ''
+			this.entry.billto.billto_code = ''
+			this.billto = null
+		}
+		this.forceUpdate()
+	}
+
+	addBillto(_data) {
+		console.log(_data)
+	}
+
+	selectWork(_data) {
+		console.log(_data)
+	}
+	removeWork(_data) {
+		console.log(_data)
 	}
 
 	render() {
@@ -279,68 +334,95 @@ export default class QuotationForm extends React.Component {
 		return (
 
 			<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+				
+				<BilltoAddModal isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.addBillto(data)} />
+				<BilltoEditModal isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} data={this.billto} />
+				<DeliveryChargeModal isShow={this.state.showDeliveryChargeModal} close={() => this.setState({ showDeliveryChargeModal: false })} />
 
-				<Tab eventKey={1} title="見積書">
+				<Tab eventKey={1} title="見積内容">
 
 					<Form name={this.props.name} horizontal data-submit-form>
 
 						<PanelGroup defaultActiveKey="1">
 
-							<Panel collapsible header="顧客情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="請求先情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
 								{/* 登録の場合 */}
-								{!this.entry.customer.customer_code &&
-									<CommonInputText
-										controlLabel="顧客コード"
-										name="customer.customer_code"
-										type="text"
-										placeholder="顧客コード"
-										value={this.entry.customer.customer_code}
+								{this.formType === 'create' &&
+									<CommonFilterBox
+										controlLabel="請求先"
+										name="billto.billto_name"
+										value={this.entry.billto.billto_name}
+										options={this.billtoList}
+										add={() => this.setState({ showBilltoAddModal: true })}
+										edit={() => this.setState({ showBilltoEditModal: true })}
+										onChange={(data) => this.changeBillto(data)}
 									/>
 								}
-								{!this.entry.customer.customer_code &&
-									<CommonFilterBox
-										controlLabel="顧客名"
-										name="customer.customer_name"
-										value={this.entry.customer.customer_name}
-										options={[{
-											label: '顧客A',
-											value: '00001'
-										}, {
-											label: '顧客B',
-											value: '00002'
-										}]}
-									/>
+								{this.billto &&
+									<div>
+										<CommonInputText
+											controlLabel="電話番号"
+											name="contact_information.tel"
+											type="text"
+											value={this.billto.contact_information.tel}
+											readonly
+										/>
+										<CommonInputText
+											controlLabel="都道府県"
+											name="contact_information.prefecture"
+											type="text"
+											value={this.billto.contact_information.prefecture}
+											readonly
+										/>
+										<CommonInputText
+											controlLabel="市区群町村"
+											name="contact_information.address1"
+											type="text"
+											value={this.billto.contact_information.address1}
+											readonly
+										/>
+									</div>
 								}
 
 								{/* 更新の場合 */}
-								{this.entry.customer.customer_code &&
+								{this.formType === 'edit' &&
 									<CommonInputText
-										controlLabel="顧客コード"
-										name="customer.customer_code"
+										controlLabel="請求先コード"
+										name="billto.billto_code"
 										type="text"
-										value={this.entry.customer.customer_code}
+										value={this.entry.billto.billto_code}
 										readonly
 									/>
 								}
-								{this.entry.customer.customer_code &&
+								{this.formType === 'edit' &&
 									<CommonInputText
-										controlLabel="顧客名"
-										name="customer.customer_name"
+										controlLabel="請求先名"
+										name="billto.billto_name"
 										type="text"
-										value={this.entry.customer.customer_name}
+										value={this.entry.billto.billto_code}
 										readonly
 									/>
 								}
-
-								<CommonInputText
-									controlLabel="担当者"
-									name="customer.customer_staff"
-									type="text"
-									value={this.entry.customer.customer_staff}
-									readonly
-								/>
-
+								{this.entry.customer.length > 0 &&
+									
+									<CommonTable
+										controlLabel="顧客一覧"
+										name="customer"
+										data={this.entry.customer}
+										header={[{
+											field: 'btn1', title: '詳細', label: <Glyphicon glyph="list-alt" />, width: '25px', onClick: () => this.setState({ showDeliveryChargeModal: true })
+										}, {
+											field: 'btn2', title: '配送料', label: <Glyphicon glyph="scale" />, width: '40px', onClick: () => this.setState({ showDeliveryChargeModal: true })
+										}, {
+											field: 'customer_code',title: '顧客コード', width: '100px'
+										}, {
+											field: 'customer_name', title: '顧客名', width: '300px'
+										}, {
+											field: 'customer_staff', title: '担当者名', width: '300px'
+										}]}
+									/>
+								}
 							</Panel>
 
 							<Panel collapsible header="基本条件" eventKey="2" defaultExpanded={false}>
@@ -348,25 +430,23 @@ export default class QuotationForm extends React.Component {
 								<CommonTable
 									name="work"
 									data={this.entry.work}
-									edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 									header={[{
 										field: 'consignment_service',title: '条件名', width: '300px'
 									}, {
 										field: 'workflow', title: '条件内容', width: '800px'
 									}]}
+									edit={(data) => this.selectWork(data)}
+									add={() => this.setState({ showWorkModal: true })}
+									remove={(data) => this.removeWork(data)}
 								/>
 
 							</Panel>
 
-							<Panel collapsible header="見積明細情報" eventKey="2" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="見積明細情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 
-								<Button onClick={() => this.setState({ showManifestoModal: true })}>
-									<Glyphicon glyph="plus"></Glyphicon>
-								</Button>
 								<CommonTable
 									name="item_details"
 									data={this.entry.item_details}
-									edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 									header={[{
 										field: 'item_name',title: '項目', width: '100px'
 									}, {
@@ -378,22 +458,24 @@ export default class QuotationForm extends React.Component {
 									}, {
 										field: 'remarks',title: '備考', width: '500px'
 									}]}
+									edit={(data) => this.selectWork(data)}
+									add={() => this.setState({ showItemDetailsModal: true })}
+									remove={(data) => this.removeWork(data)}
 								/>
 
 							</Panel>
 
-							<Panel collapsible header="備考情報" eventKey="2" defaultExpanded={false}>
+							<Panel collapsible header="備考情報" eventKey="2" defaultExpanded={true}>
 
-								<Button onClick={() => this.setState({ showRemarksModal: true })}>
-									<Glyphicon glyph="plus"></Glyphicon>
-								</Button>
 								<CommonTable
 									name="remarks"
 									data={this.entry.remarks}
-									edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 									header={[{
 										field: 'content',title: '備考'
 									}]}
+									edit={(data) => this.selectWork(data)}
+									add={() => this.setState({ showRemarksModal: true })}
+									remove={(data) => this.removeWork(data)}
 								/>
 
 							</Panel>
@@ -403,240 +485,10 @@ export default class QuotationForm extends React.Component {
 					</Form>
 				</Tab>
 
-				<Tab eventKey={2} title="配送料詳細">
-					<PageHeader>発払い</PageHeader>
-					<Table striped bordered>
-						<thead>
-							<tr>
-								<th>利用運送会社</th>
-								<th>サイズ(cm)</th>
-								<th>重量(kg)</th>
-								<th>南九州</th>
-								<th>北九州</th>
-								<th>四国</th>
-								<th>中国</th>
-								<th>関西</th>
-								<th>北陸</th>
-								<th>東海</th>
-								<th>信越</th>
-								<th>関東</th>
-								<th>南東北</th>
-								<th>北東北</th>
-								<th>北海道</th>
-								<th>沖縄</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>エコ配JP</td>
-								<td>〜80</td>
-								<td>15kg迄</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>390</td>
-								<td>600</td>
-								<td>1,000</td>
-							</tr>
-							<tr>
-								<td rowspan="3">ヤマト運輸</td>
-								<td>60</td>
-								<td>2kg迄</td>
-								<td>780</td>
-								<td>780</td>
-								<td>690</td>
-								<td>580</td>
-								<td>470</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>470</td>
-								<td>780</td>
-								<td>1,050</td>
-							</tr>
-							<tr>
-								<td>80</td>
-								<td>5kg迄</td>
-								<td>780</td>
-								<td>780</td>
-								<td>690</td>
-								<td>580</td>
-								<td>470</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>470</td>
-								<td>780</td>
-								<td>1,050</td>
-							</tr>
-							<tr>
-								<td>100</td>
-								<td>10kg迄</td>
-								<td>780</td>
-								<td>780</td>
-								<td>690</td>
-								<td>580</td>
-								<td>470</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>450</td>
-								<td>470</td>
-								<td>780</td>
-								<td>1,050</td>
-							</tr>
-							<tr>
-								<td>佐川急便</td>
-								<td>160以上</td>
-								<td>-</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-							</tr>
-							<tr>
-								<td>西濃運輸</td>
-								<td>160以上</td>
-								<td>-</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-								<td>※1</td>
-							</tr>
-						</tbody>
-					</Table>
-					<p>(※1 都度相談)</p>
-
-					<PageHeader>メール便・ゆうパケット</PageHeader>
-					<Table striped bordered>
-						<thead>
-							<tr>
-								<th>サービス名</th>
-								<th>サイズ(cm)</th>
-								<th>重量(kg)</th>
-								<th>価格</th>
-								<th>追跡 有/無</th>
-								<th>備考</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>ヤマトDM便</td>
-								<td>2cm以内</td>
-								<td>1kg未満</td>
-								<td>90</td>
-								<td>◯</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>ネコポス</td>
-								<td>2.5cm以内</td>
-								<td>1kg未満</td>
-								<td>190</td>
-								<td>◯</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>ゆうパケット</td>
-								<td>3cm以内</td>
-								<td>1kg未満</td>
-								<td>180</td>
-								<td>◯</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td rowspan="4">ゆうメール</td>
-								<td>3.5cm以内</td>
-								<td>250g以内</td>
-								<td>95</td>
-								<td>×</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>3.5cm以内</td>
-								<td>500g以内</td>
-								<td>100</td>
-								<td>×</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>3.5cm以内</td>
-								<td>700g以内</td>
-								<td>115</td>
-								<td>×</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>3.5cm以内</td>
-								<td>1kg以内</td>
-								<td>120</td>
-								<td>×</td>
-								<td>全国一律</td>
-							</tr>
-							<tr>
-								<td>EMS</td>
-								<td>-</td>
-								<td>-</td>
-								<td>定価</td>
-								<td>×</td>
-								<td>18％割引</td>
-							</tr>
-						</tbody>
-					</Table>
-
-					<PageHeader>記事</PageHeader>
-					<Table striped bordered>
-						<tbody>
-							<tr><td>エコ配JPは、土日祝日は対応不可となります。</td></tr>
-							<tr><td>離島の別途料金につきましては、ヤマト宅急便はかかりません。</td></tr>
-							<tr><td>荷物の運送につきましては、業務提携会社に準じます。</td></tr>
-							<tr><td>コレクト（代金引換）手数料は、1万円以下全国一律300円(税別)、3万円以下全国一律400円(税別)、10万円以下全国一律600円(税別)を請求させて頂きます。</td></tr>
-							<tr><td>...</td></tr>
-							<tr><td>...</td></tr>
-							<tr><td>...</td></tr>
-							<tr><td>...</td></tr>
-						</tbody>
-					</Table>
-
-				</Tab>
-				<Tab eventKey={3} title="梱包資材">
-					<Button onClick={() => this.setState({ showManifestoModal: true })}>
-						<Glyphicon glyph="plus"></Glyphicon>
-					</Button>
+				<Tab eventKey={2} title="梱包資材">
 					<CommonTable
 						name="manifesto"
 						data={this.entry.manifesto}
-						edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 						header={[{
 							field: 'manifesto_code',title: '品番', width: '100px'
 						}, {
@@ -666,70 +518,200 @@ export default class QuotationForm extends React.Component {
 						}, {
 							field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
 						}]}
+						edit={(data) => this.selectWork(data)}
+						add={() => this.setState({ showManifestoModal: true })}
+						remove={(data) => this.removeWork(data)}
 					/>
 				</Tab>
-				<Tab eventKey={4} title="庫内作業">
-    					<CommonTable
-    						name="internal_work"
-    						data={this.entry.internal_work}
-    						header={[{
-    							field: 'staff_name',title: '担当者', width: '100px'
-    						}, {
-    							field: 'working_date', title: '作業日', width: '200px'
-    						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '200px'
-    						}, {
-    							field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
-    						}, {
-    							field: 'custody_fee', title: '保管費', width: '150px'
-    						}, {
-    							field: 'additional1_palette', title: '追加１パレット', width: '200px'
-    						}, {
-    							field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
-    						}, {
-    							field: 'deletion_palette', title: '削除パレット', width: '150px'
-    						}, {
-    							field: 'received', title: '入荷', width: '200px'
-    						}, {
-    							field: 'received_normal', title: '入荷（通常）', width: '200px'
-    						}, {
-    							field: 'returns', title: '返品処理', width: '200px'
-    						}, {
-    							field: 'received_others', title: '入荷（その他）', width: '200px'
-    						}, {
-    							field: 'packing_normal', title: '発送（通常）', width: '200px'
-    						}, {
-    							field: 'packing_others', title: '発送（その他）', width: '200px'
-    						}, {
-    							field: 'packing', title: '梱包数', width: '200px'	
-    						}, {
-    							field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
-    						}, {
-    							field: 'seino', title: '西濃運輸', width: '200px'
-    						}, {
-    							field: 'cash_on_arrival', title: '着払い発送', width: '200px'
-    						}, {
-    							field: 'work_others', title: '作業・その他', width: '200px'
-    						}, {
-    							field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
-    						}, {
-    							field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
-    						}, {
-    							field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
-    						}, {
-    							field: 'cardboard100', title: '段ボール（１００）', width: '200px'
-    						}, {
-    							field: 'cardboard80', title: '段ボール（８０）', width: '200px'
-    						}, {
-    							field: 'cardboard60', title: '段ボール（６０）', width: '200px'
-    						}, {
-    							field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
-    						}, {
-    							field: 'buffer_material', title: '緩衝材', width: '200px'
-    						}, {
-    							field: 'bubble_wrap', title: 'エアプチ', width: '200px'
-    						}]}
-    					/>
+				<Tab eventKey={3} title="庫内作業状況">
+					<PageHeader>見積項目作業一覧</PageHeader>
+					<CommonTable
+						name="internal_work"
+						data={this.entry.internal_work}
+						header={[{
+							field: 'staff_name',title: '担当者', width: '100px'
+						}, {
+							field: 'working_date', title: '作業日', width: '200px'
+						}, {
+							field: 'approval_status', title: '承認ステータス', width: '200px'
+						}, {
+							field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
+						}, {
+							field: 'custody_fee', title: '保管費', width: '150px'
+						}, {
+							field: 'additional1_palette', title: '追加１パレット', width: '200px'
+						}, {
+							field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
+						}, {
+							field: 'deletion_palette', title: '削除パレット', width: '150px'
+						}, {
+							field: 'received', title: '入荷', width: '200px'
+						}, {
+							field: 'received_normal', title: '入荷（通常）', width: '200px'
+						}, {
+							field: 'returns', title: '返品処理', width: '200px'
+						}, {
+							field: 'received_others', title: '入荷（その他）', width: '200px'
+						}, {
+							field: 'packing_normal', title: '発送（通常）', width: '200px'
+						}, {
+							field: 'packing_others', title: '発送（その他）', width: '200px'
+						}, {
+							field: 'packing', title: '梱包数', width: '200px'	
+						}, {
+							field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
+						}, {
+							field: 'seino', title: '西濃運輸', width: '200px'
+						}, {
+							field: 'cash_on_arrival', title: '着払い発送', width: '200px'
+						}, {
+							field: 'work_others', title: '作業・その他', width: '200px'
+						}, {
+							field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
+						}, {
+							field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
+						}, {
+							field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
+						}, {
+							field: 'cardboard100', title: '段ボール（１００）', width: '200px'
+						}, {
+							field: 'cardboard80', title: '段ボール（８０）', width: '200px'
+						}, {
+							field: 'cardboard60', title: '段ボール（６０）', width: '200px'
+						}, {
+							field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
+						}, {
+							field: 'buffer_material', title: '緩衝材', width: '200px'
+						}, {
+							field: 'bubble_wrap', title: 'エアプチ', width: '200px'
+						}]}
+					/>
+
+					<PageHeader>発送作業一覧</PageHeader>
+					<CommonTable
+						name="internal_work"
+						data={this.entry.internal_work}
+						header={[{
+							field: 'staff_name',title: '担当者', width: '100px'
+						}, {
+							field: 'working_date', title: '作業日', width: '200px'
+						}, {
+							field: 'approval_status', title: '承認ステータス', width: '200px'
+						}, {
+							field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
+						}, {
+							field: 'custody_fee', title: '保管費', width: '150px'
+						}, {
+							field: 'additional1_palette', title: '追加１パレット', width: '200px'
+						}, {
+							field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
+						}, {
+							field: 'deletion_palette', title: '削除パレット', width: '150px'
+						}, {
+							field: 'received', title: '入荷', width: '200px'
+						}, {
+							field: 'received_normal', title: '入荷（通常）', width: '200px'
+						}, {
+							field: 'returns', title: '返品処理', width: '200px'
+						}, {
+							field: 'received_others', title: '入荷（その他）', width: '200px'
+						}, {
+							field: 'packing_normal', title: '発送（通常）', width: '200px'
+						}, {
+							field: 'packing_others', title: '発送（その他）', width: '200px'
+						}, {
+							field: 'packing', title: '梱包数', width: '200px'	
+						}, {
+							field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
+						}, {
+							field: 'seino', title: '西濃運輸', width: '200px'
+						}, {
+							field: 'cash_on_arrival', title: '着払い発送', width: '200px'
+						}, {
+							field: 'work_others', title: '作業・その他', width: '200px'
+						}, {
+							field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
+						}, {
+							field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
+						}, {
+							field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
+						}, {
+							field: 'cardboard100', title: '段ボール（１００）', width: '200px'
+						}, {
+							field: 'cardboard80', title: '段ボール（８０）', width: '200px'
+						}, {
+							field: 'cardboard60', title: '段ボール（６０）', width: '200px'
+						}, {
+							field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
+						}, {
+							field: 'buffer_material', title: '緩衝材', width: '200px'
+						}, {
+							field: 'bubble_wrap', title: 'エアプチ', width: '200px'
+						}]}
+					/>
+
+					<PageHeader>資材作業一覧</PageHeader>
+					<CommonTable
+						name="internal_work"
+						data={this.entry.internal_work}
+						header={[{
+							field: 'staff_name',title: '担当者', width: '100px'
+						}, {
+							field: 'working_date', title: '作業日', width: '200px'
+						}, {
+							field: 'approval_status', title: '承認ステータス', width: '200px'
+						}, {
+							field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
+						}, {
+							field: 'custody_fee', title: '保管費', width: '150px'
+						}, {
+							field: 'additional1_palette', title: '追加１パレット', width: '200px'
+						}, {
+							field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
+						}, {
+							field: 'deletion_palette', title: '削除パレット', width: '150px'
+						}, {
+							field: 'received', title: '入荷', width: '200px'
+						}, {
+							field: 'received_normal', title: '入荷（通常）', width: '200px'
+						}, {
+							field: 'returns', title: '返品処理', width: '200px'
+						}, {
+							field: 'received_others', title: '入荷（その他）', width: '200px'
+						}, {
+							field: 'packing_normal', title: '発送（通常）', width: '200px'
+						}, {
+							field: 'packing_others', title: '発送（その他）', width: '200px'
+						}, {
+							field: 'packing', title: '梱包数', width: '200px'	
+						}, {
+							field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
+						}, {
+							field: 'seino', title: '西濃運輸', width: '200px'
+						}, {
+							field: 'cash_on_arrival', title: '着払い発送', width: '200px'
+						}, {
+							field: 'work_others', title: '作業・その他', width: '200px'
+						}, {
+							field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
+						}, {
+							field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
+						}, {
+							field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
+						}, {
+							field: 'cardboard100', title: '段ボール（１００）', width: '200px'
+						}, {
+							field: 'cardboard80', title: '段ボール（８０）', width: '200px'
+						}, {
+							field: 'cardboard60', title: '段ボール（６０）', width: '200px'
+						}, {
+							field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
+						}, {
+							field: 'buffer_material', title: '緩衝材', width: '200px'
+						}, {
+							field: 'bubble_wrap', title: 'エアプチ', width: '200px'
+						}]}
+					/>
 				</Tab>
 
 			</Tabs>
