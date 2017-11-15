@@ -2,7 +2,6 @@
 
 import React from 'react'
 import {
-	FormGroup,
 	Form,
 	Row,
 } from 'react-bootstrap'
@@ -51,22 +50,20 @@ export class StorageModal extends React.Component {
 	render() {
 
 		return (
-			<FormGroup>
-				<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
+			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="保管内容登録" closeBtn={() => this.close()}>
-					<Form horizontal>
-						<Row>
-							<CommonInputText
-								controlLabel="保管内容"   
-								name="content"
-								type="text"
-								placeholder="保管内容"
-								size='lg'
-							/>
-						</Row>
-					</Form>
-				</CommonModal>
-			</FormGroup>
+				<Form horizontal>
+					<Row>
+						<CommonInputText
+							controlLabel="保管内容"   
+							name="content"
+							type="text"
+							placeholder="保管内容"
+							size='lg'
+						/>
+					</Row>
+				</Form>
+			</CommonModal>
 		)
 	}
 }
@@ -108,22 +105,22 @@ export class Package_handlingModal extends React.Component {
 	render() {
 
 		return (
-			<FormGroup>
-				<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
+			
+			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="荷役情報登録" closeBtn={() => this.close()}>
-					<Form horizontal>
-						<Row>
-							<CommonInputText
-								controlLabel="荷役"   
-								name="content"
-								type="text"
-								placeholder="荷役"
-								size='lg'
-							/>
-						</Row>
-					</Form>
-				</CommonModal>
-			</FormGroup>
+				<Form horizontal>
+					<Row>
+						<CommonInputText
+							controlLabel="荷役"   
+							name="content"
+							type="text"
+							placeholder="荷役"
+							size='lg'
+						/>
+					</Row>
+				</Form>
+			</CommonModal>
+			
 		)
 	}
 }
@@ -165,22 +162,22 @@ export class Shipping_dataModal extends React.Component {
 	render() {
 
 		return (
-			<FormGroup>
-				<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
+			
+			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="出荷データ登録" closeBtn={() => this.close()}>
-					<Form horizontal>
-						<Row>
-							<CommonInputText
-								controlLabel="出荷データ"   
-								name="content"
-								type="text"
-								placeholder="出荷データ"
-								size='lg'
-							/>
-						</Row>
-					</Form>
-				</CommonModal>
-			</FormGroup>
+				<Form horizontal>
+					<Row>
+						<CommonInputText
+							controlLabel="出荷データ"   
+							name="content"
+							type="text"
+							placeholder="出荷データ"
+							size='lg'
+						/>
+					</Row>
+				</Form>
+			</CommonModal>
+			
 		)
 	}
 }

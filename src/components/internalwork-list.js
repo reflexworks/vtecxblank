@@ -86,10 +86,10 @@ export default class InternalWorkList extends React.Component {
      * @param {*} index
      */
     /*更新処理は未作成なのでコメントアウト
-    onSelect(index) {
+    onSelect(data) {
         // 入力画面に遷移
-        const internal_work_code = this.state.feed.entry[index].internal_work.internal_work_code
-        this.props.history.push('/Internal_workUpdate?' + internal_work_code)
+        const internal_work_code = data.internal_work.internal_work_code
+        this.props.history.push('/InternalWorkUpdate?' + internal_work_code)
     }
     */
 
@@ -336,7 +336,7 @@ export default class InternalWorkList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.state.feed.entry}
-    						//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+    						//edit={(data) => this.onSelect(data) }
     						header={[{
     							field: 'internal_work.staff_name',title: '担当者', width: '100px'
     						}, {

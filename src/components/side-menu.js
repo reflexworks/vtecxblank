@@ -29,6 +29,7 @@ export default class SideMenu extends React.Component {
 				delivery_charge: false,
 				billto: false,
 				TypeAhead: false,
+				BasicCondition: false,
 			}
 		}
 	}
@@ -212,7 +213,18 @@ export default class SideMenu extends React.Component {
 							title: '入力補完一覧'
 						}]
 					)}
-					
+					{ this.sideMenuListTitle('基本条件管理', 'basiccondition') }
+					{ this.sideMenuList('basiccondition',
+						[{
+							to: 'BasicConditionRegistration',
+							glyph: 'edit',
+							title: '基本条件登録'
+						},{
+							to: 'BasicConditionList',
+							glyph: 'list',
+							title: '基本条件一覧'
+						}]
+					)}
 				</ul>
 			</div>
 		)

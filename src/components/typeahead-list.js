@@ -15,7 +15,8 @@ import {
 	CommonIndicator,
 	CommonNetworkMessage,
 	CommonTable,
-	//CommonInputText,
+	CommonInputText,
+	CommonFilterBox,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -85,9 +86,9 @@ export default class TypeAheadList extends React.Component {
      * @param {*} index
      */
 	
-    onSelect(index) {
+    onSelect(data) {
     	// 入力画面に遷移
-    	const id = this.state.feed.entry[index].link[0].___href.slice(12)
+    	const id = data.link[0].___href.slice(12)
     	this.props.history.push('/TypeAheadUpdate?' + id)
     }
 
@@ -100,6 +101,7 @@ export default class TypeAheadList extends React.Component {
     	this.getFeed(1, conditions)
     }
 
+	
     /**
      * 描画後の処理
      */
@@ -123,7 +125,35 @@ export default class TypeAheadList extends React.Component {
     					<PageHeader>入力補完一覧</PageHeader>
 
     					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
-    						
+    						<CommonFilterBox
+    							controlLabel="入力補完種別"
+    							size="sm"
+    							name="type_ahead.type"
+    							options={[{
+    								label: '項目名',
+    								value: '0'
+    							}, {
+    								label: '単位名称',
+    								value: '1'
+    							}, {
+    								label: '単位',
+    								value: '2'
+    							}, {
+    								label: '単価',
+    								value: '3'
+    							}, {
+    								label: '備考',
+    								value: '4'
+    							}]}
+    						/>
+								
+    						<CommonInputText
+    							controlLabel="入力補完内容"   
+    							name="type_ahead.value"
+    							type="text"
+    							placeholder="入力補完内容"
+    							size='lg'
+    						/>
 
     					</CommonSearchConditionsFrom>
 
@@ -142,7 +172,7 @@ export default class TypeAheadList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.state.feed.entry}
-    						edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+    						edit={(data)=>this.onSelect(data)}
     						header={[{
     							field: 'type_ahead.type',title: '入力補完種別', width: '100px',convert: { 0:'項目名', 1:'単位名称', 2:'単位',3:'単価',4:'備考'}
     						}, {
