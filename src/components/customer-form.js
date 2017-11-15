@@ -22,7 +22,9 @@ import {
 import {
 	BilltoAddModal,
 	BilltoEditModal,
-} from './quotation-modal'
+	StaffAddModal,
+	StaffEditModal,
+} from './master-modal'
 
 export default class CustomerForm extends React.Component {
 
@@ -36,9 +38,12 @@ export default class CustomerForm extends React.Component {
 		this.entry.customer.working_staff = this.entry.customer.working_staff || []
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.entry.billto = this.entry.billto || {}
-
 		this.master = {
 			billtoList: []
+		}
+		this.cash = {
+			sales_staff: [],
+			working_staff: [],
 		}
 	}
 
@@ -55,7 +60,6 @@ export default class CustomerForm extends React.Component {
 	 */
 	componentWillMount() {
 
-		this.setState({ isDisabled: true })
 		this.setBilltoMasterData()
 		this.setStaffMasterData()
 
@@ -65,6 +69,9 @@ export default class CustomerForm extends React.Component {
 	 * 請求先取得処理
 	 */
 	setBilltoMasterData(_billto) {
+
+		this.setState({ isDisabled: true })
+
 		axios({
 			url: '/d/billto?f',
 			method: 'get',
@@ -101,22 +108,37 @@ export default class CustomerForm extends React.Component {
 		})   
 	}
 
-	addBillto(_data) {
-		const obj = _data.feed.entry[0].billto
-		this.billtoList.push({
-			label: obj.billto_name,
-			value: obj.billto_code,
-			data: obj
-		})
-		this.entry.billto = obj
+	setBilltoData(_data, _modal) {
+		this.setBilltoMasterData(_data.feed.entry[0].billto)
+		if (_modal === 'add') {
+			this.setState({ showBilltoAddModal: false })
+		} else {
+			this.setState({ showBilltoEditModal: false })
+		}
+	}
+
+	/**
+	 * 請求先変更処理
+	 * @param {*} _data 
+	 */
+	changeBillto(_data) {
+		if (_data) {
+			this.entry.billto = _data.data.billto
+			this.billto = _data.data
+		} else {
+			this.entry.billto = {}
+			this.billto = {}
+		}
 		this.forceUpdate()
-		this.setState({ showBilltoAddModal: false })
 	}
 
 	/**
 	 * 担当者取得処理
 	 */
-	setStaffMasterData() {
+	setStaffMasterData(_entry, _modal) {
+
+		this.setState({ isDisabled: true })
+
 		axios({
 			url: '/d/staff?f',
 			method: 'get',
@@ -130,18 +152,28 @@ export default class CustomerForm extends React.Component {
 			if (response.status !== 204) {
 
 				this.master.staffList = response.data.feed.entry
+				let staffListFromKey = {}
 				this.staffList = this.master.staffList.map((obj) => {
-					return {
-						label: obj.staff.staff_name,
-						value: obj.staff.staff_name,
+					const name = obj.staff.staff_name
+					const res = {
+						label: name,
+						value: name,
 						data: obj
 					}
+					staffListFromKey[obj.staff.staff_name] = res
+					return res
 				})
-				if (this.entry.staff.staff_name) {
-					for (let i = 0, ii = this.staffList.length; i < ii; ++i) {
-						if (this.entry.staff.staff_name === this.staffList[i].value) {
-							this.staff = this.staffList[i].data
-						}
+
+				const targetKey = this.typeStaffModal
+				if (_entry && _modal === 'add') {
+					this.entry.customer[targetKey].push({ content: _entry.staff.staff_name })
+				} else if (_entry && _modal === 'edit') {
+					this.entry.customer[targetKey][this.typeStaffModalFromIndex] = { content: _entry.staff.staff_name }
+				}
+				if (this.entry.customer[targetKey]) {
+					this.cash[targetKey] = []
+					for (let i = 0, ii = this.entry.customer[targetKey].length; i < ii; ++i) {
+						this.cash[targetKey].push(staffListFromKey[this.entry.customer[targetKey][i].content])
 					}
 				}
 
@@ -154,43 +186,80 @@ export default class CustomerForm extends React.Component {
 	}
 
 	/**
-	 * 請求先変更処理
-	 * @param {*} _data 
-	 */
-	changeBillto(_data) {
-		if (_data) {
-			this.entry.billto = _data.data.billto
-			this.entry.billto.billto_name = _data.value
-			this.billto = _data.data
-		} else {
-			this.entry.billto = {}
-			this.billto = {}
-		}
-		this.forceUpdate()
-	}
-
-	/**
 	 * スタッフ変更処理
-	 * @param {*} _data 
 	 */
-	changeStaff(_data, key) {
+	changeStaff(_data, _key) {
 		this.sales_staff = null
 		
 		let isDuplicate = false
-		for (let i = 0, ii = this.entry.customer[key].length; i < ii; ++i) {
-			if (_data.value === this.entry.customer[key][i].content) {
+		if (!this.entry.customer[_key]) this.entry.customer[_key] = []
+		for (let i = 0, ii = this.entry.customer[_key].length; i < ii; ++i) {
+			if (_data.value === this.entry.customer[_key][i].content) {
 				isDuplicate = true
 				break
 			}
 		}
 		if (!isDuplicate) {
-			this.entry.customer[key].push({ content: _data.value })
+			this.entry.customer[_key].push({ content: _data.value })
+			this.cash[_key].push(_data)
 		}
 
 		this.forceUpdate()
 	}
-	onSelect() {
-		
+
+	setStaffData(_data, _modal) {
+		const entry = _data.feed.entry[0]
+		this.setStaffMasterData(entry, _modal)
+		if (_modal === 'add') {
+			this.setState({ showStaffAddModal: false })
+		} else {
+			this.setState({ showStaffEditModal: false })
+		}
+	}
+
+	addStaff(_key) {
+		this.typeStaffModal = _key
+		this.setState({ showStaffAddModal: true })
+	}
+
+	editStaff(_index, _key) {
+		let targetCash = this.cash[_key]
+		if (targetCash[_index]) {
+			this.staff = targetCash[_index].data
+			this.typeStaffModal = _key
+			this.typeStaffModalFromIndex = _index
+			this.setState({ showStaffEditModal: true })
+		} else {
+			this.setStaffMasterData()
+			alert('担当者情報の取得中です。もう一度クリックを実行してください。')
+		}
+	}
+
+	removeStaff(_data, _index, _key) {
+		let array = []
+		let cash = []
+		let targetCash = this.cash[_key]
+
+		let setNewArray = () => {
+			for (let i = 0, ii = this.entry.customer[_key].length; i < ii; ++i) {
+				if (i !== _index) {
+					array.push(this.entry.customer[_key][i])
+				}
+			}
+		}
+		let setNewCashArray = () => {
+			for (let i = 0, ii = targetCash.length; i < ii; ++i) {
+				if (targetCash[i].value !== _data.content) {
+					cash.push(targetCash[i])
+				}
+			}
+		}
+		setNewArray()
+		setNewCashArray()
+
+		this.entry.customer[_key] = array
+		this.cash[_key] = cash
+		this.forceUpdate()
 	}
 
 	render() {
@@ -305,19 +374,17 @@ export default class CustomerForm extends React.Component {
 					
 					</Panel>
 
-					<BilltoAddModal isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.addBillto(data)} />
-					<BilltoEditModal isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} data={this.billto} />
 					<Panel collapsible header="請求先情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 						<CommonFilterBox
 							controlLabel="請求先"
-							name="billto.billto_name"
-							value={this.entry.billto.billto_name}
+							name=""
+							value={this.entry.billto.billto_code}
 							options={this.billtoList}
 							add={() => this.setState({ showBilltoAddModal: true })}
 							edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
 						/>
-						{ this.entry.billto.billto_name && 
+						{ this.entry.billto.billto_code && 
 							<CommonInputText
 								controlLabel="請求先コード"
 								name="billto.billto_code"
@@ -326,31 +393,49 @@ export default class CustomerForm extends React.Component {
 								readonly
 							/>
 						}
+						{ this.entry.billto.billto_code && 
+							<FormGroup className="hide">
+								<CommonInputText
+									name="billto.billto_name"
+									type="text"
+									value={this.entry.billto.billto_name}
+								/>
+							</FormGroup>
+						}
+						{ !this.entry.billto.billto_code && 
+							<FormGroup className="hide">
+								<CommonInputText
+									name="billto.billto_name"
+									type="text"
+									value=""
+								/>
+							</FormGroup>
+						}
 					</Panel>
 
 					<Panel collapsible header="担当情報" eventKey="3" bsStyle="info" defaultExpanded={true}>
 						<CommonFilterBox
-							controlLabel="営業担当選択"
+							controlLabel="営業担当"
 							name=""
 							value={this.sales_staff}
 							options={this.staffList}
-							add={() => this.setState({ showStaffAddModal: true })}
+							add={() => this.addStaff('sales_staff')}
 							onChange={(data) => this.changeStaff(data, 'sales_staff')}
 						/>
 						{ (this.entry.customer.sales_staff && this.entry.customer.sales_staff.length > 0) && 
 							<CommonTable
-								controlLabel="営業担当一覧"
+								controlLabel=""
 								name="customer.sales_staff"
 								data={this.entry.customer.sales_staff}
-								edit={()=>this.onSelect() }
-								remove={()=>this.onSelect() }
+								edit={(data, index) => this.editStaff(index, 'sales_staff')}
+								remove={(data, index)=>this.removeStaff(data, index, 'sales_staff') }
 								header={[{
 									field: 'content',title: '担当者名', width: '700px'
 								}]}
 							/>
 						}
 						<CommonFilterBox
-							controlLabel="作業担当選択"
+							controlLabel="作業担当"
 							name=""
 							value={this.working_staff}
 							options={this.staffList}
@@ -359,11 +444,11 @@ export default class CustomerForm extends React.Component {
 						/>
 						{ (this.entry.customer.working_staff && this.entry.customer.working_staff.length > 0) && 
 							<CommonTable
-								controlLabel="作業担当一覧"
+								controlLabel=""
 								name="customer.working_staff"
 								data={this.entry.customer.working_staff}
-								edit={()=>this.onSelect() }
-								remove={()=>this.onSelect() }
+								edit={(data, index) => this.editStaff(index, 'working_staff')}
+								remove={(data, index)=>this.removeStaff(data, index, 'working_staff') }
 								header={[{
 									field: 'content',title: '担当者名', width: '700px'
 								}]}
@@ -372,6 +457,11 @@ export default class CustomerForm extends React.Component {
 					</Panel>
 
 				</PanelGroup>
+
+				<BilltoAddModal isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.setBilltoData(data, 'add')} />
+				<BilltoEditModal isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
+				<StaffAddModal isShow={this.state.showStaffAddModal} close={() => this.setState({ showStaffAddModal: false })} add={(data) => this.setStaffData(data, 'add')} />
+				<StaffEditModal isShow={this.state.showStaffEditModal} close={() => this.setState({ showStaffEditModal: false })} edit={(data) => this.setStaffData(data, 'edit')} data={this.staff} />
 
 			</Form>
 		)

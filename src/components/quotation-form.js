@@ -23,6 +23,9 @@ import {
 import {
 	BilltoAddModal,
 	BilltoEditModal,
+} from './master-modal'
+
+import {
 	DeliveryChargeModal,
 } from './quotation-modal'
 
