@@ -84,13 +84,12 @@ export default class BasicConditionList extends React.Component {
 	/**
 	 * 更新画面に遷移する
 	 */
-	/*更新画面未作成なのでコメントアウト
+	更新画面未作成なのでコメントアウト
 	onSelect(data) {
 		// 入力画面に遷移
-		const id = data.link[0].___href.slice(10)
+		const id = data.link[0].___href.slice(17)
 		this.props.history.push('/BasicConditionUpdate?' + id)
 	}
-	*/
 
 	/**
 	 * 検索実行
@@ -145,11 +144,11 @@ export default class BasicConditionList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={(data) => this.onSelect(data) }
+							edit={(data) => this.onSelect(data) }
 							header={[{
-								field: 'billto_code',title: '請求先コード', width: '150px'
+								field: 'billto.billto_code',title: '請求先コード', width: '150px'
 							}, {
-								field: 'billto_name', title: '請求先名', width: '100px'
+								field: 'billto.billto_name', title: '請求先名', width: '100px'
 							}]}
 						/>
 					</Col>  

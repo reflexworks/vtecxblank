@@ -52,7 +52,7 @@ export class StorageModal extends React.Component {
 		return (
 			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="保管内容登録" closeBtn={() => this.close()}>
-				<Form horizontal>
+				<Form horizontal name="StorageModal">
 					<Row>
 						<CommonInputText
 							controlLabel="保管内容"   
@@ -108,7 +108,7 @@ export class Package_handlingModal extends React.Component {
 			
 			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="荷役情報登録" closeBtn={() => this.close()}>
-				<Form horizontal>
+				<Form horizontal name="Package_handlingModal">
 					<Row>
 						<CommonInputText
 							controlLabel="荷役"   
@@ -164,8 +164,8 @@ export class Shipping_dataModal extends React.Component {
 		return (
 			
 			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
-							 title="出荷データ登録" closeBtn={() => this.close()}>
-				<Form horizontal>
+						 title="出荷データ登録" closeBtn={() => this.close()}>
+				<Form horizontal name="Shipping_dataModal">
 					<Row>
 						<CommonInputText
 							controlLabel="出荷データ"   

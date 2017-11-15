@@ -43,23 +43,11 @@ export class BasicModal extends React.Component {
 	*/
 	add(obj) {
 		this.props.callback(obj)
-		this.setState({
-			isShow: false,
-			row:[1],
-		})
+		this.setState({isShow: false})
 	}
 
 	close() {
 		this.props.callbackClose()
-		this.setState({row:[1]})
-	}
-
-	addForm() {
-		this.setState(
-			(prevState) => ({
-				row: prevState.row.concat([prevState.row.length + 1])
-			})
-		)
 	}
 
 	render() {
@@ -68,24 +56,15 @@ export class BasicModal extends React.Component {
 				
 			<CommonModal isShow={this.state.isShow} addBtn={(obj) => this.add(obj)}
 							 title="基本条件登録" closeBtn={() => this.close()}>
-				<Form horizontal>
+				<Form horizontal name="BasicModal">
 					<Row>
-
 						<CommonInputText
 							controlLabel="条件"
-							name="condition.content"
+							name="content"
 							type="text"
 							placeholder="内容"
 							size='lg'
 						/>
-
-						{/*
-							{this.state.row.map(row => this.conditionForm(row))}
-								
-							<Button onClick={() => this.addForm()}>
-								<Glyphicon glyph="plus"></Glyphicon>
-							</Button>
-							*/}
 
 					</Row>
 				</Form>
