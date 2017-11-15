@@ -87,9 +87,9 @@ export default class WarehouseList extends React.Component {
 	 */
 
 	/*更新画面は未完成なのでコメントアウト
-	onSelect(index) {
+	onSelect(data) {
 		// 入力画面に遷移
-		const warehouse_code = this.state.feed.entry[index].warehouse.warehouse_code
+		const warehouse_code = data.warehouse.warehouse_code
 		this.props.history.push('/WarehouseUpdate?' + warehouse_code)
 	}
 	*/
@@ -180,7 +180,7 @@ export default class WarehouseList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							//edit={(data) => this.onSelect(data) }
 							header={[{
 								field: 'warehouse.warehouse_code',title: '倉庫コード', width: '100px'
 							}, {

@@ -86,9 +86,9 @@ export default class BilltoList extends React.Component {
 	 * @param {*} index 
 	 */
 	
-	onSelect(index) {
+	onSelect(data) {
 		// 入力画面に遷移
-		const billto_code = this.state.feed.entry[index].billto.billto_code
+		const billto_code = data.billto.billto_code
 		this.props.history.push('/BilltoUpdate?' + billto_code)
 	}
 
@@ -206,7 +206,7 @@ export default class BilltoList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data)=>this.onSelect(data)}
 							header={[{
 								field: 'billto.billto_code',title: '請求先コード', width: '200px'
 							}, {
