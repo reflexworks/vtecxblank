@@ -877,9 +877,6 @@ h3.title {
   max-height: 550px;
 }
 .Modal {
-  display: block;
-  width: 0px;
-  height: 0px;
 }
 .modal-lg {
   width: 90%;

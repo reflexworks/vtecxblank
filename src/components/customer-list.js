@@ -185,6 +185,12 @@ export default class CustomerList extends React.Component {
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
 							/>
+							<CommonInputText
+								controlLabel="請求先"
+								name="billto.billto_name"
+								type="text"
+								placeholder="株式会社◯◯"
+							/>
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -206,19 +212,25 @@ export default class CustomerList extends React.Component {
 							header={[{
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'customer.customer_name', title: '顧客名', width: '150px'
 							}, {
-								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '200px'
+								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '150px'
 							}, {
-								field: 'contact_information.tel', title: '電話番号', width: '200px'
+								field: 'contact_information.tel', title: '電話番号', width: '100px'
 							}, {
-								field: 'contact_information.fax', title: 'FAX', width: '200px'
+								field: 'billto.billto_name', title: '請求先', width: '200px'
+							}, {
+								field: 'customer.sales_staff', title: '営業担当者', width: '200px'
+							}, {
+								field: 'customer.working_staff', title: '作業担当者', width: '200px'
+							}, {
+								field: 'contact_information.fax', title: 'FAX', width: '100px'
 							}, {
 								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'contact_information.zip_code', title: '郵便番号', width: '150px'
+								field: 'contact_information.zip_code', title: '郵便番号', width: '50px'
 							}, {
-								field: 'contact_information.prefecture', title: '都道府県', width: '200px'
+								field: 'contact_information.prefecture', title: '都道府県', width: '50px'
 							}, {
 								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
 							}, {
