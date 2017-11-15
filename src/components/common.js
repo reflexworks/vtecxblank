@@ -1381,7 +1381,6 @@ export class CommonModal extends React.Component {
 	getFormData() {
 		const modal_body = document.getElementById('common_modal_body')
 		const form = modal_body.children[0]
-		console.log(form)
 		let entry = CommonSetUpdateData(form)
 		return entry
 	}
