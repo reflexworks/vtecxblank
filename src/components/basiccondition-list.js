@@ -15,8 +15,6 @@ import {
 	CommonIndicator,
 	CommonNetworkMessage,
 	CommonTable,
-	CommonInputText,
-	CommonSelectBox,
 	CommonSearchConditionsFrom,
 	CommonPagination,
 } from './common'
@@ -26,7 +24,7 @@ type State = {
 	url: string
 }
 
-export default class StaffList extends React.Component {
+export default class BasicConditionList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -34,7 +32,7 @@ export default class StaffList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/staff?f&l=' + this.maxDisplayRows
+		this.url = '/d/basic_condition?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -86,12 +84,13 @@ export default class StaffList extends React.Component {
 	/**
 	 * 更新画面に遷移する
 	 */
+	/*更新画面未作成なのでコメントアウト
 	onSelect(data) {
 		// 入力画面に遷移
-		const id = data.link[0].___href.slice(7)
-		this.props.history.push('/StaffUpdate?' + id)
+		const id = data.link[0].___href.slice(10)
+		this.props.history.push('/BasicConditionUpdate?' + id)
 	}
-	
+	*/
 
 	/**
 	 * 検索実行
@@ -109,6 +108,7 @@ export default class StaffList extends React.Component {
 		this.getFeed(1)
 	}
 	
+
 	render() {
 		return (
 			<Grid>
@@ -121,42 +121,12 @@ export default class StaffList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						
-						<PageHeader>担当者一覧</PageHeader>
+						<PageHeader>基本条件一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
-							<CommonInputText
-								controlLabel="担当者名"
-								name="staff.staff_name"
-								type="text"
-								placeholder="担当者名"
-							/>
-							<CommonSelectBox
-								controlLabel="ロール"
-								size="sm"
-								name="staff.role"
-								options={[{
-									label: '管理者',
-									value: '1'
-								}, {
-									label: '上長',
-									value: '2'
-								}, {
-									label: '作業員',
-									value: '3'
-								}]}
-							/>
-							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
-								type="text"
-								placeholder="logioffice@gmail.com"
-							/>
-							<CommonInputText
-								controlLabel="メールアドレス"
-								name="staff.staff_email"
-								type="text"
-								placeholder="logioffice@gmail.com"
-							/>
+							
+						
+							
 						</CommonSearchConditionsFrom>
 					
 					</Col>
@@ -177,16 +147,11 @@ export default class StaffList extends React.Component {
 							data={this.state.feed.entry}
 							//edit={(data) => this.onSelect(data) }
 							header={[{
-								field: 'staff.staff_name',title: '担当者名', width: '100px'
+								field: 'billto_code',title: '請求先コード', width: '150px'
 							}, {
-								field: 'staff.role', title: 'ロール', width: '70px', convert: { 1:'管理者', 2:'上長', 3:'作業員', 4:'営業', 5:'経理'}
-							}, {
-								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
-							}, {
-								field: 'staff.staff_email', title: 'メールアドレス', width: '150px'
+								field: 'billto_name', title: '請求先名', width: '100px'
 							}]}
 						/>
-
 					</Col>  
 				</Row>  
 		 </Grid>

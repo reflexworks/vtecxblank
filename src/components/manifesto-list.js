@@ -85,9 +85,9 @@ export default class ManifestoList extends React.Component {
 	 * @param {*} index 
 	 */
 
-	onSelect(index) {
+	onSelect(data) {
 		// 入力画面に遷移
-		const manifesto_code = this.state.feed.entry[index].manifesto.manifesto_code
+		const manifesto_code = data.manifesto.manifesto_code
 		this.props.history.push('/ManifestoUpdate?' + manifesto_code)
 	}
 	
@@ -266,7 +266,7 @@ export default class ManifestoList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data) => this.onSelect(data) }
 							header={[{
 								field: 'manifesto.manifesto_code',title: '品番', width: '100px'
 							}, {

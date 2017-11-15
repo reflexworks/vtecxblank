@@ -57,6 +57,11 @@ import TypeAheadList from './typeahead-list'
 import TypeAheadRegistration from './typeahead-registration'
 import TypeAheadUpdate from './typeahead-update'
 
+//入力保管管理
+import BasicConditionList from './basiccondition-list'
+import BasicConditionRegistration from './basiccondition-registration'
+//import BasicConditionUpdate from './basiccondition-update'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -433,6 +438,41 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：基本条件一覧
+	 */
+	BasicConditionList = (props) => {
+		return (
+			<BasicConditionList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：基本条件登録
+	 */
+	BasicConditionRegistration = (props) => {
+		return (
+			<BasicConditionRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：基本条件更新
+	 */
+	/*
+	BasicConditionUpdate = (props) => {
+		return (
+			<BasicConditionUpdate
+				history={props.history}
+			/>
+		)
+	}
+	*/
+	
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -509,6 +549,10 @@ class MainContainer extends React.Component {
 							<Route path="/TypeAheadRegistration" component={this.TypeAheadRegistration} />
 							<Route path="/TypeAheadList" component={this.TypeAheadList} />
 							<Route path="/TypeAheadUpdate" component={this.TypeAheadUpdate} />
+							<Route path="/BasicConditionRegistration" component={this.BasicConditionRegistration} />
+							<Route path="/BasicConditionList" component={this.BasicConditionList} />
+							{//<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
+							}	
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>

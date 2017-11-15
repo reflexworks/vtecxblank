@@ -86,9 +86,9 @@ export default class WorkList extends React.Component {
 	 * 更新画面に遷移する
 	 */
 	/*更新画面未作成なのでコメントアウト
-	onSelect(index) {
+	onSelect(data) {
 		// 入力画面に遷移
-		const work_name = this.state.feed.entry[index].work.work_name
+		const work_name = data.work.work_name
 		this.props.history.push('/WorkUpdate?' + work_name)
 	}
 	*/
@@ -180,7 +180,7 @@ export default class WorkList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							//edit={(data) => this.onSelect(data) }
 							header={[{
 								field: 'work.consignment_service',title: '委託される業務', width: '150px'
 							}, {
