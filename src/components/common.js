@@ -1128,6 +1128,7 @@ export class CommonTable extends React.Component {
 			header: this.props.header,
 			actionType: 'edit'
 		}
+		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
 	}
 
 	/**
@@ -1143,10 +1144,10 @@ export class CommonTable extends React.Component {
 		return (
 			<div>
 				{ this.state.actionType === 'edit' && 
-					<Button bsSize="small" onClick={() => this.props.edit(data)}><Glyphicon glyph="pencil" /></Button>
+					<Button bsSize="small" onClick={() => this.props.edit(data, _index)}><Glyphicon glyph="pencil" /></Button>
 				}
 				{ this.state.actionType === 'remove' && 
-					<Button bsSize="small" onClick={() => this.props.remove(data)} bsStyle="danger"><Glyphicon glyph="remove" /></Button>
+					<Button bsSize="small" onClick={() => this.props.remove(data, _index)} bsStyle="danger"><Glyphicon glyph="remove" /></Button>
 				}
 			</div>
 		)
@@ -1336,12 +1337,12 @@ export class CommonTable extends React.Component {
 
 		return (
 			<div>
-				{ this.props.controlLabel &&
+				{ this.isControlLabel &&
 				<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size="lg">
 					{ tableNode }
 				</CommonFormGroup>
 				}
-				{!this.props.controlLabel &&
+				{ !this.isControlLabel &&
 					tableNode
 				}
 			</div>
@@ -1380,12 +1381,13 @@ export class CommonModal extends React.Component {
 	getFormData() {
 		const modal_body = document.getElementById('common_modal_body')
 		const form = modal_body.children[0]
+		console.log(form)
 		let entry = CommonSetUpdateData(form)
 		return entry
 	}
 
 	add() {
-		this.props.addBtn()
+		this.props.addBtn(this.getFormData())
 	}
 
 	edit() {
