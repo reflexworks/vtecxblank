@@ -175,7 +175,7 @@ export default class StaffList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={(data) => this.onSelect(data) }
+							edit={(data) => this.onSelect(data) }
 							header={[{
 								field: 'staff.staff_name',title: '担当者名', width: '100px'
 							}, {
