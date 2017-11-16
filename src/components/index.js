@@ -33,6 +33,7 @@ import ManifestoUpdate from './manifesto-update'
 //庫内作業
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
+import InternalWorkExUpload from './internalwork-ex-upload'
 
 //請求書
 import InvoiceList from './invoice-list'
@@ -252,6 +253,16 @@ class MainContainer extends React.Component {
 	InternalWorkRegistration = (props) => {
 		return (
 			<InternalWorkRegistration 
+				history={props.history}
+			/>
+		)
+	}
+	/**
+	 * コンポーネント：庫内作業請求CSVアップロード
+	 */
+	InternalWorkExUpload = (props) => {
+		return (
+			<InternalWorkExUpload 
 				history={props.history}
 			/>
 		)
@@ -506,6 +517,7 @@ class MainContainer extends React.Component {
 							<Route path="/ManifestoList" component={this.ManifestoList} />
 							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
+							<Route path="/InternalWorkExUpload" component={this.InternalWorkExUpload} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />

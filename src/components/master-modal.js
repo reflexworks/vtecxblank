@@ -135,6 +135,7 @@ export class StaffAddModal extends React.Component {
 					callback: (data) => this.props.add(data)
 				}}
 				fromName={this.formName}
+				height="410px"
 			>
 				<StaffForm name={this.formName} entry={this.entry} />
 			</CommonModal>
@@ -180,6 +181,7 @@ export class StaffEditModal extends React.Component {
 					entry: this.entry
 				}}
 				fromName={this.formName}
+				height="410px"
 				size="lg">
 				<StaffForm name={this.formName} entry={this.entry} />
 			</CommonModal>
