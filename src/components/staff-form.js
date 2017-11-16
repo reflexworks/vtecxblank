@@ -53,7 +53,6 @@ export default class StaffForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			//url: '/d/staff?f',
 			url: '/d/staff?f&staff.role=2',
 			method: 'get',
 			headers: {
@@ -67,7 +66,7 @@ export default class StaffForm extends React.Component {
 				this.staffList = this.master.staffList.map((obj) => {
 					return {
 						label: obj.staff.staff_name,
-						value: obj.staff.staff_email,
+						value: obj.staff.staff_name,
 						data: obj
 					}
 				})
@@ -89,18 +88,19 @@ export default class StaffForm extends React.Component {
 		})   
 	}
 
+
 	/**
 	 * 請求先変更処理
 	 * @param {*} _data 
 	 */
 	changeSuperior(_data) {
-		console.log(_data)
 		if (_data) {
 			this.entry.staff.superior_name  = _data.label
-			this.entry.staff.superior_email = _data.value
+			this.entry.staff.superior_email = _data.data.staff.staff_email
 			this.staff = _data.data
 		} else {
-			this.entry.staff = {}
+			this.entry.staff.superior_name = ''
+			this.entry.staff.superior_email = ''
 			this.staff = {}
 		}
 		this.forceUpdate()
