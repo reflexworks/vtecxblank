@@ -1,7 +1,9 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Form,
+	//FormGroup,
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -11,7 +13,6 @@ import type {
 
 import {
 	CommonInputText,
-	CommonSelectBox,
 	CommonFilterBox,
 } from './common'
 
@@ -19,35 +20,14 @@ export default class StaffForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {
-			superiorSelect: false,
-			superior_email: '',
-		}
+		this.state = {}
 
 		this.entry = this.props.entry
 		this.entry.staff = this.entry.staff || {}
-
-
-		this.forceUpdate()
-	}
-
-	/**
-	 * ロール選択で作業員が選ばれたら上長情報パネルフラグを立てる
-	 */
-	changedRole(value) {
-		this.entry.staff.role = value.value
-		if (value.value === '3') {
-			this.setState({ superiorSelect: true })
-		} else {
-			this.setState({ superiorSelect: false })
+		this.master = {
+			staffList:[]
 		}
-	}
 
-	/**
-	 *  選ばれた上長のメールアドレス(valueにセットされてる)を上長メールアドレスにセットする 
-	 */
-	changedSuperior(value) {
-		this.setState({superior_email:value})
 	}
 
 	/**
@@ -56,6 +36,82 @@ export default class StaffForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+	}
+
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+		this.setStaffMasterData()
+	}
+
+	/**
+	 * 請求先取得処理
+	 */
+	setStaffMasterData(_staff,) {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			//url: '/d/staff?f',
+			url: '/d/staff?f&staff.role=2',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+		
+			if (response.status !== 204) {
+
+				this.master.staffList = response.data.feed.entry
+				this.staffList = this.master.staffList.map((obj) => {
+					return {
+						label: obj.staff.staff_name,
+						value: obj.staff.staff_email,
+						data: obj
+					}
+				})
+				if (_staff) this.entry.staff = _staff
+				if (this.entry.staff.staff_name) {
+					for (let i = 0, ii = this.staffList.length; i < ii; ++i) {
+						if (this.entry.staff.staff_name === this.staffList[i].value) {
+							this.staff = this.staffList[i].data
+							break
+						}
+					}
+				}
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+
+	/**
+	 * 請求先変更処理
+	 * @param {*} _data 
+	 */
+	changeSuperior(_data) {
+		console.log(_data)
+		if (_data) {
+			this.entry.staff.superior_name  = _data.label
+			this.entry.staff.superior_email = _data.value
+			this.staff = _data.data
+		} else {
+			this.entry.staff = {}
+			this.staff = {}
+		}
+		this.forceUpdate()
+	}
+
+	/**
+	 * ロール選択で作業員が選ばれたら上長情報パネルフラグを立てる
+	 */
+	changedRole(value) {
+		this.entry.staff.role = value.value
+		this.forceUpdate()
 	}
 
 	render() {
@@ -112,37 +168,29 @@ export default class StaffForm extends React.Component {
 						/>
 
 					</Panel>
-					{ this.state.superiorSelect && 
+
+					{ this.entry.staff.role === '3' && 
 						
 						<Panel collapsible header="上長情報" eventKey="2" bsStyle="info" defaultExpanded="true">
-
-							<CommonSelectBox
-								controlLabel="上長選択"
-								size="sm"
-								value={this.entry.staff.role}
-								options={[{
-									label: '上長A',
-									value: 'test01@gmail.com'
-								}, {
-									label: '上長B',
-									value: 'test02@gmail.com'
-								}, {
-									label: '上長C',
-									value: 'test03@gmail.com'
-								}]}
-								onChange={(value) => this.changedSuperior(value)}
+							<CommonFilterBox
+								controlLabel="上長名"
+								name=""
+								value={this.entry.staff.superior_name}
+								options={this.staffList}
+								onChange={(data) => this.changeSuperior(data)}
 							/>
-							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-								value={this.state.superior_email}
-								readonly='true'
-							/>
-
+							{ this.entry.staff.superior_email && 
+								<CommonInputText
+									controlLabel="上長メールアドレス"
+									name="staff.superior_email"
+									type="text"
+									value={this.entry.staff.superior_email}
+									readonly
+								/>
+							}
 						</Panel>
 					}	
+
 				</PanelGroup>
 			</Form>
 		)
