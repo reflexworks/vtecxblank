@@ -90,9 +90,9 @@ export default class QuotationList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-	onSelect(index) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = this.state.feed.entry[index].customer.customer_code
+		const customer_code = _data.customer.customer_code
 		this.props.history.push('/QuotationUpdate?' + customer_code)
 	}
 
@@ -176,7 +176,7 @@ export default class QuotationList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data) => this.onSelect(data) }
 							header={[{
 								field: 'quotatio.quotatio_code',title: '見積書No', width: '100px'
 							}, {
