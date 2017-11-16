@@ -30,6 +30,7 @@ export default class StaffUpdate extends React.Component {
 			isDisabled: false,
 			isError: {}
 		}
+		this.superiorSelect = false
 
 		// URL設定
 		this.url = '/d/staff'
@@ -64,7 +65,7 @@ export default class StaffUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				console.log('d')
+	
 				this.forceUpdate()
 			}
 
