@@ -4,6 +4,7 @@ import {
 	Form,
 	PanelGroup,
 	Panel,
+	PageHeader
 } from 'react-bootstrap'
 import type {
 	Props
@@ -80,12 +81,11 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="承認ステータス"
 							value={this.entry.internal_work.approval_status}
-							validate="string"
-							required
+							readonly
 						/>
 					</Panel>
 
-					<Panel collapsible header="保管・商品管理情報" eventKey="2" bsStyle="info" defaultExpanded="true">
+					<Panel collapsible header="見積項目作業" eventKey="2" bsStyle="info" defaultExpanded="true">
 						
 						<CommonInputText
 							controlLabel="管理基本料"
@@ -138,133 +138,525 @@ export default class InternalWorkForm extends React.Component {
 						/>
 					</Panel>
 					
-					<Panel collapsible header="入荷情報" eventKey="3" bsStyle="info" defaultExpanded="true">
-
-						<CommonInputText
-							controlLabel="入荷"
-							name="internal_work.received"
-							type="text"
-							placeholder="入荷"
-							value={this.entry.internal_work.received}
-							validate="string"
-							required
-						/>
-
-						<CommonInputText
-							controlLabel="入荷(通常)"
-							name="internal_work.received_normal"
-							type="text"
-							placeholder="入荷(通常)"
-							value={this.entry.internal_work.received_normal}
-							validate="string"
-							required
-						/>
-
-						<CommonInputText
-							controlLabel="返品処理"
-							name="internal_work.returns"
-							type="text"
-							placeholder="返品処理"
-							value={this.entry.internal_work.returns}
-							validate="string"
-							required
-						/>
-
-						<CommonInputText
-							controlLabel="入荷その他"
-							name="internal_work.received_others"
-							type="text"
-							placeholder="入荷その他"
-							value={this.entry.internal_work.received_others}
-							validate="string"
-							required
-						/>  
+					<Panel collapsible header="発送作業" eventKey="5" bsStyle="info" defaultExpanded="true">
 						
-					</Panel>
-
-					<Panel collapsible header="出庫(ピッキング)情報" eventKey="4" bsStyle="info" defaultExpanded="true">
-						
-						<CommonInputText
-							controlLabel="発送(通常)"
-							name="internal_work.packing_normal"
-							type="text"
-							placeholder="発送(通常)"
-							value={this.entry.internal_work.packing_normal}
-							validate="string"
-							required
-						/>
+						<PageHeader>ヤマト運輸(発払い)</PageHeader>
 
 						<CommonInputText
-							controlLabel="発送(その他)"
-							name="internal_work.packing_others"
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
 							type="text"
-							placeholder="発送(その他)"
-							value={this.entry.internal_work.packing_others}
-							validate="string"
-							required
+							value="60"
+							readonly
 						/>
 
-					</Panel>
-					
-					<Panel collapsible header="発送情報" eventKey="5" bsStyle="info" defaultExpanded="true">
-						
 						<CommonInputText
 							controlLabel="梱包数"
 							name="internal_work.packing"
 							type="text"
-							placeholder="梱包数"
+							placeholder="9"
 							value={this.entry.internal_work.packing}
-							validate="string"
-							required
+							comparison="2"
 						/>
 
 						<CommonInputText
-							controlLabel="ヤマト運輸６０サイズ迄"
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="420"
+						/>
+
+						<CommonInputText
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							placeholder="ヤマト運輸６０サイズ迄"
-							value={this.entry.internal_work.yamato60size}
-							validate="string"
-							required
+							value="80"
+							readonly
 						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="4"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="500"
+						/>
+					
+						<CommonInputText
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
+							type="text"
+							value="100"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+					
+						<CommonInputText
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
+							type="text"
+							value="120"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<CommonInputText
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
+							type="text"
+							value="140"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<CommonInputText
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
+							type="text"
+							value="160"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
+
+						<PageHeader>ヤマト運輸(着払い)</PageHeader>
+						
+						<CommonInputText
+							controlLabel="サイズ"
+							name="internal_work.yamato60size"
+							type="text"
+							value="60"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="2"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="420"
+						/>
+
+						<CommonInputText
+							controlLabel=""
+							name="internal_work.yamato60size"
+							type="text"
+							value="サイズ：80"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="4"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="500"
+						/>
+					
+						<CommonInputText
+							controlLabel=""
+							name="internal_work.yamato60size"
+							type="text"
+							value="サイズ：100"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+					
+						<CommonInputText
+							controlLabel=""
+							name="internal_work.yamato60size"
+							type="text"
+							value="サイズ：120"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<CommonInputText
+							controlLabel=""
+							name="internal_work.yamato60size"
+							type="text"
+							value="サイズ：140"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<CommonInputText
+							controlLabel=""
+							name="internal_work.yamato60size"
+							type="text"
+							value="サイズ：160"
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
+
+						<CommonInputText
+							controlLabel="ヤマト運輸(ネコポス)"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
+
+						<CommonInputText
+							controlLabel="佐川急便"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
 
 						<CommonInputText
 							controlLabel="西濃運輸"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
 							name="internal_work.seino"
 							type="text"
-							placeholder="西濃運輸"
+							placeholder="999"
 							value={this.entry.internal_work.seino}
-							validate="string"
-							required
+							comparison="700"
+						/>
+
+						<hr />
+
+						<CommonInputText
+							controlLabel="EMS"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
 						/>
 
 						<CommonInputText
-							controlLabel="着払い発送"
-							name="internal_work.cash_on_arrival"
+							controlLabel="梱包数"
+							name="internal_work.packing"
 							type="text"
-							placeholder="着払い発送"
-							value={this.entry.internal_work.cash_on_arrival}
-							validate="string"
-							required
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
 						/>
 
-					</Panel>
-					
-					<Panel collapsible header="作業情報" eventKey="6" bsStyle="info" defaultExpanded="true">
-						
 						<CommonInputText
-							controlLabel="作業・その他"
-							name="internal_work.work_others"
+							controlLabel="配送料金"
+							name="internal_work.seino"
 							type="text"
-							placeholder="作業・その他"
-							value={this.entry.internal_work.work_others}
-							validate="string"
-							required
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
 						/>
 
+						<hr />
+
+						<CommonInputText
+							controlLabel="ゆうパケット"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
+
+						<CommonInputText
+							controlLabel="ゆうメール"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+					
+						<hr />
+
+						<CommonInputText
+							controlLabel="自社配送"
+							name="internal_work.yamato60size"
+							type="text"
+							value=""
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="梱包数"
+							name="internal_work.packing"
+							type="text"
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
+						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+					
 					</Panel>
 					
-					<Panel collapsible header="資材内訳情報" eventKey="7" bsStyle="info" defaultExpanded="true">
+					<Panel collapsible header="資材梱包作業" eventKey="7" bsStyle="info" defaultExpanded="true">
 						
 						<CommonInputText
 							controlLabel="ダンボール(160)"
