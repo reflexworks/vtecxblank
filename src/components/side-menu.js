@@ -23,7 +23,6 @@ export default class SideMenu extends React.Component {
 				warehouse: false,
 				manifesto: false,
 				internal_work: false,
-				work: false,
 				quotation: false,
 				invoice: false,
 				delivery_charge: false,
@@ -163,18 +162,6 @@ export default class SideMenu extends React.Component {
 							to: 'InternalWorkList',
 							glyph: 'list',
 							title: '庫内作業一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('業務管理', 'work') }
-					{ this.sideMenuList('work',
-						[{
-							to: 'WorkRegistration',
-							glyph: 'edit',
-							title: '業務登録'
-						},{
-							to: 'WorkList',
-							glyph: 'list',
-							title: '業務一覧'
 						}]
 					)}
 					{ this.sideMenuListTitle('見積書管理', 'quotation') }
