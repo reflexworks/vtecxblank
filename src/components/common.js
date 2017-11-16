@@ -1056,7 +1056,7 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.size
+			size: this.props.comparison ? 'lg' : this.props.size
 		}
 	}
 
@@ -1086,6 +1086,34 @@ export class CommonInputText extends React.Component {
 
 	render() {
 
+		const TextNode = (
+			<FormControl
+				name={this.state.name}
+				type={this.state.type}
+				placeholder={this.state.placeholder}
+				value={this.state.value}
+				onChange={(e) => this.changed(e)}
+				data-validate={this.props.validate}
+				data-required={this.props.required}
+			/>
+		)
+		const InputTextNode = () => {
+			if (this.props.comparison) {
+				return (
+					<div className="comparison">
+						<div className="comparison-input">
+							{TextNode}
+						</div>
+						<div className="comparison-value">
+							{this.props.comparison}
+						</div>
+					</div>
+				)
+			} else {
+				return TextNode
+			}
+		}
+
 		return (
 			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
 				{this.state.readonly && 
@@ -1099,16 +1127,8 @@ export class CommonInputText extends React.Component {
 						/>
 					</FormControl.Static>
 				}
-				{ (!this.state.readonly || this.state.readonly === 'false') && 
-					<FormControl
-						name={this.state.name}
-						type={this.state.type}
-						placeholder={this.state.placeholder}
-						value={this.state.value}
-						onChange={(e) => this.changed(e)}
-						data-validate={this.props.validate}
-						data-required={this.props.required}
-					/>
+				{(!this.state.readonly || this.state.readonly === 'false') && 
+					InputTextNode()
 				}
 			</CommonFormGroup>
 		)
@@ -1419,7 +1439,7 @@ export class CommonModal extends React.Component {
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body" id="common_modal_body">
+							<div class="modal-body" id="common_modal_body" style={ this.props.height && {height: this.props.height}}>
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
@@ -1770,19 +1790,34 @@ export class CommonFilterBox extends React.Component {
 
 	render() {
 
-		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				<Select
-					name={this.props.name}
-					value={this.state.value}
-					options={this.props.options}
-					onChange={(obj)=>this.changed(obj)}
-					className={(this.props.add || this.props.edit) && 'btn-type'}
-					multi={this.props.multi}
-				/>
-				{ this.state.actionBtn }
-			</CommonFormGroup>
+		const SelectNode = (
+			<Select
+				name={this.props.name}
+				value={this.state.value}
+				options={this.props.options}
+				onChange={(obj) => this.changed(obj)}
+				className={(this.props.add || this.props.edit) && 'btn-type'}
+				multi={this.props.multi}
+			/>
 		)
+		const FilterBoxNode = () => {
+			if (this.props.table) {
+				return (
+					<div style={{width: '100%'}}>
+						{ SelectNode }
+						{ this.state.actionBtn }
+					</div>
+				)
+			} else {
+				return (
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{ SelectNode }
+						{ this.state.actionBtn }
+					</CommonFormGroup>
+				)
+			}
+		}
+		return FilterBoxNode()
 	}
 
 }

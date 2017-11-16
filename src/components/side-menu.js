@@ -65,9 +65,10 @@ export default class SideMenu extends React.Component {
 				<li key={i}><Link to={obj.to}><Glyphicon glyph={obj.glyph} className="child-menu-icon" />{obj.title}</Link></li>
 			)
 		})
+		const listSizeClass = 's' + list.length + '00'
 		return (
 			<li className={this.state.isVisible[key] ? 'child-menu' : 'child-menu menu-hide'}>
-				<ul>
+				<ul className={listSizeClass}>
 					{itemlist}
 				</ul>
 			</li>
@@ -162,6 +163,10 @@ export default class SideMenu extends React.Component {
 							to: 'InternalWorkList',
 							glyph: 'list',
 							title: '庫内作業一覧'
+						},{
+							to: 'InternalWorkExUpload',
+							glyph: 'upload',
+							title: '請求CSVアップロード'
 						}]
 					)}
 					{ this.sideMenuListTitle('見積書管理', 'quotation') }
