@@ -34,10 +34,6 @@ import ManifestoUpdate from './manifesto-update'
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
 
-//業務
-import WorkList from './work-list'
-import WorkRegistration from './work-registration'
-
 //請求書
 import InvoiceList from './invoice-list'
 import InvoiceRegistration from './invoice-registration'
@@ -256,28 +252,6 @@ class MainContainer extends React.Component {
 	InternalWorkRegistration = (props) => {
 		return (
 			<InternalWorkRegistration 
-				history={props.history}
-			/>
-		)
-	}
-
-	/**
-	 * コンポーネント：業務情報一覧
-	 */
-	WorkList = (props) => {
-		return (
-			<WorkList 
-				history={props.history}
-			/>
-		)
-	}
-
-	/**
-	 * コンポーネント：業務情報登録
-	 */
-	WorkRegistration = (props) => {
-		return (
-			<WorkRegistration 
 				history={props.history}
 			/>
 		)
@@ -533,8 +507,6 @@ class MainContainer extends React.Component {
 							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
-							<Route path="/WorkRegistration" component={this.WorkRegistration} />
-							<Route path="/WorkList" component={this.WorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
 							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
