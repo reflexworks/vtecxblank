@@ -1056,7 +1056,9 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.comparison ? 'lg' : this.props.size
+			size: this.props.comparison ? 'lg' : this.props.size,
+			isComparison: this.props.comparison || this.props.comparison === '' ? true : false,
+			comparisonValue : this.props.comparison
 		}
 	}
 
@@ -1068,7 +1070,8 @@ export class CommonInputText extends React.Component {
 		this.setState({
 			value: newProps.value,
 			readonly: newProps.readonly,
-			size: newProps.size
+			size: newProps.size,
+			comparisonValue: newProps.comparison
 		})
 	}
 
@@ -1098,14 +1101,14 @@ export class CommonInputText extends React.Component {
 			/>
 		)
 		const InputTextNode = () => {
-			if (this.props.comparison) {
+			if (this.state.isComparison) {
 				return (
 					<div className="comparison">
 						<div className="comparison-input">
 							{TextNode}
 						</div>
 						<div className="comparison-value">
-							{this.props.comparison}
+							{this.state.comparisonValue === '' ? <span style={{ color: '#ccc', 'font-size': '11px' }}>比較データなし</span> : this.state.comparisonValue}
 						</div>
 					</div>
 				)

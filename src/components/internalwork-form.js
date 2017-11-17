@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Form,
 	PanelGroup,
@@ -13,6 +14,7 @@ import type {
 import {
 	CommonInputText,
 	CommonDatePicker,
+	CommonFilterBox
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
@@ -22,9 +24,60 @@ export default class InternalWorkForm extends React.Component {
 		this.state = {}
 
 		this.entry = this.props.entry
+		this.entry.customer = this.entry.customer || {}
 		this.entry.internal_work = this.entry.internal_work || {}
+
+		this.master = {
+			customerList: []
+		}
+		this.customerList = []
+
 	}
 
+
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+
+		this.setCustomerMasterData()
+
+	}
+
+	setCustomerMasterData() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/customer?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.master.customerList = response.data.feed.entry
+				this.customerList = this.master.customerList.map((obj) => {
+					return {
+						label: obj.customer.customer_name,
+						value: obj.customer.customer_name,
+						data: obj
+					}
+				})
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	changed() {
+		
+	}
 
 	/**
 	 * remarksにRemarksModalのフォームで入力した物を追加する
@@ -57,14 +110,12 @@ export default class InternalWorkForm extends React.Component {
 
 					<Panel collapsible header="庫内作業情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
-						<CommonInputText
-							controlLabel="担当者"
-							name="internal_work.staff_name"
-							type="text"
-							placeholder="担当者名"
-							value={this.entry.internal_work.staff_name}
-							validate="string"
-							required
+						<CommonFilterBox
+							controlLabel="顧客"
+							name="customer.customer_name"
+							value={this.entry.customer_name}
+							options={this.customerList}
+							onChange={(data) => this.changed(data)}
 						/>
 
 						<CommonDatePicker
@@ -182,7 +233,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="9"
 							value={this.entry.internal_work.packing}
-							comparison="4"
+							comparison=""
 						/>
 
 						<CommonInputText
@@ -191,7 +242,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="999"
 							value={this.entry.internal_work.seino}
-							comparison="500"
+							comparison=""
 						/>
 					
 						<CommonInputText
@@ -208,7 +259,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="9"
 							value={this.entry.internal_work.packing}
-							comparison="3"
+							comparison=""
 						/>
 
 						<CommonInputText
@@ -217,7 +268,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="999"
 							value={this.entry.internal_work.seino}
-							comparison="700"
+							comparison=""
 						/>
 					
 						<CommonInputText
@@ -329,10 +380,10 @@ export default class InternalWorkForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel=""
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							value="サイズ：80"
+							value="80"
 							readonly
 						/>
 
@@ -355,10 +406,10 @@ export default class InternalWorkForm extends React.Component {
 						/>
 					
 						<CommonInputText
-							controlLabel=""
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							value="サイズ：100"
+							value="100"
 							readonly
 						/>
 
@@ -368,7 +419,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="9"
 							value={this.entry.internal_work.packing}
-							comparison="3"
+							comparison=""
 						/>
 
 						<CommonInputText
@@ -377,14 +428,14 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="999"
 							value={this.entry.internal_work.seino}
-							comparison="700"
+							comparison=""
 						/>
 					
 						<CommonInputText
-							controlLabel=""
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							value="サイズ：120"
+							value="120"
 							readonly
 						/>
 
@@ -394,7 +445,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="9"
 							value={this.entry.internal_work.packing}
-							comparison="3"
+							comparison=""
 						/>
 
 						<CommonInputText
@@ -403,14 +454,14 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="999"
 							value={this.entry.internal_work.seino}
-							comparison="700"
+							comparison=""
 						/>
 
 						<CommonInputText
-							controlLabel=""
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							value="サイズ：140"
+							value="140"
 							readonly
 						/>
 
@@ -420,7 +471,7 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="9"
 							value={this.entry.internal_work.packing}
-							comparison="3"
+							comparison=""
 						/>
 
 						<CommonInputText
@@ -429,42 +480,14 @@ export default class InternalWorkForm extends React.Component {
 							type="text"
 							placeholder="999"
 							value={this.entry.internal_work.seino}
-							comparison="700"
+							comparison=""
 						/>
 
 						<CommonInputText
-							controlLabel=""
+							controlLabel="サイズ"
 							name="internal_work.yamato60size"
 							type="text"
-							value="サイズ：160"
-							readonly
-						/>
-
-						<CommonInputText
-							controlLabel="梱包数"
-							name="internal_work.packing"
-							type="text"
-							placeholder="9"
-							value={this.entry.internal_work.packing}
-							comparison="3"
-						/>
-
-						<CommonInputText
-							controlLabel="配送料金"
-							name="internal_work.seino"
-							type="text"
-							placeholder="999"
-							value={this.entry.internal_work.seino}
-							comparison="700"
-						/>
-
-						<hr />
-
-						<CommonInputText
-							controlLabel="ヤマト運輸(ネコポス)"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
+							value="160"
 							readonly
 						/>
 
@@ -488,13 +511,7 @@ export default class InternalWorkForm extends React.Component {
 
 						<hr />
 
-						<CommonInputText
-							controlLabel="佐川急便"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
-							readonly
-						/>
+						<PageHeader>ヤマト運輸(ネコポス)</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
@@ -516,13 +533,7 @@ export default class InternalWorkForm extends React.Component {
 
 						<hr />
 
-						<CommonInputText
-							controlLabel="西濃運輸"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
-							readonly
-						/>
+						<PageHeader>佐川急便</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
@@ -544,13 +555,7 @@ export default class InternalWorkForm extends React.Component {
 
 						<hr />
 
-						<CommonInputText
-							controlLabel="EMS"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
-							readonly
-						/>
+						<PageHeader>西濃運輸</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
@@ -572,13 +577,7 @@ export default class InternalWorkForm extends React.Component {
 
 						<hr />
 
-						<CommonInputText
-							controlLabel="ゆうパケット"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
-							readonly
-						/>
+						<PageHeader>EMS</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
@@ -600,13 +599,29 @@ export default class InternalWorkForm extends React.Component {
 
 						<hr />
 
+						<PageHeader>ゆうパケット</PageHeader>
+
 						<CommonInputText
-							controlLabel="ゆうメール"
-							name="internal_work.yamato60size"
+							controlLabel="梱包数"
+							name="internal_work.packing"
 							type="text"
-							value=""
-							readonly
+							placeholder="9"
+							value={this.entry.internal_work.packing}
+							comparison="3"
 						/>
+
+						<CommonInputText
+							controlLabel="配送料金"
+							name="internal_work.seino"
+							type="text"
+							placeholder="999"
+							value={this.entry.internal_work.seino}
+							comparison="700"
+						/>
+
+						<hr />
+
+						<PageHeader>ゆうメール</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
@@ -628,13 +643,7 @@ export default class InternalWorkForm extends React.Component {
 					
 						<hr />
 
-						<CommonInputText
-							controlLabel="自社配送"
-							name="internal_work.yamato60size"
-							type="text"
-							value=""
-							readonly
-						/>
+						<PageHeader>自社配送</PageHeader>
 
 						<CommonInputText
 							controlLabel="梱包数"
