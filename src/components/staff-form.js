@@ -74,13 +74,9 @@ export default class StaffForm extends React.Component {
 				if (this.entry.staff.staff_name) {
 		
 					for (let i = 0, ii = this.staffList.length; i < ii; ++i) {
-						console.log(this.staffList[i])
 						if (this.entry.staff.superior_email === this.staffList[i].data.staff.staff_email) {
-							console.log(this.staffList[i].data.staff.staff_email)
 							this.entry.staff.superior_name = this.staffList[i].data.staff.staff_name
-						} else {
-							console.log(this.staffList[i].data.staff.staff_email)
-						}
+						} 
 
 						if (this.entry.staff.staff_name === this.staffList[i].value) {
 							this.staff = this.staffList[i].data
@@ -90,9 +86,7 @@ export default class StaffForm extends React.Component {
 					
 					}
 
-				} else {
-					console.log('name is not found')
-				}
+				} 
 				this.forceUpdate()
 			}
 
