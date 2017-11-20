@@ -72,14 +72,21 @@ export default class StaffForm extends React.Component {
 				})
 				if (_staff) this.entry.staff = _staff
 				if (this.entry.staff.staff_name) {
+		
 					for (let i = 0, ii = this.staffList.length; i < ii; ++i) {
+						if (this.entry.staff.superior_email === this.staffList[i].data.staff.staff_email) {
+							this.entry.staff.superior_name = this.staffList[i].data.staff.staff_name
+						} 
+
 						if (this.entry.staff.staff_name === this.staffList[i].value) {
 							this.staff = this.staffList[i].data
+							this.entry.staff.superior_name = this.staffList[i].staff_name
 							break
 						}
+					
 					}
-				}
 
+				} 
 				this.forceUpdate()
 			}
 
