@@ -7,12 +7,15 @@ import ReactDOM from 'react-dom'
 import ListItems from './demo_listitems'
 import ItemInput from './demo_iteminput'
 import ItemUpdate from './demo_itemupdate'
+
 import {
+//  BrowserRouter as Router,
 	Route,
 	Link,
 	Switch,
-	HashRouter
+	HashRouter as Router
 } from 'react-router-dom'
+
 import type {
 	InputEvent
 } from 'demo.types'
@@ -69,7 +72,7 @@ class DemoContainer extends React.Component {
 
 	render() {
 		return (
-			<HashRouter>
+			<Router>
 				<div id="wrapper" className={this.state.condition ? 'toggled' :''}>
 
 					<div id="sidebar-wrapper">
@@ -89,7 +92,7 @@ class DemoContainer extends React.Component {
 						</Switch>	
 					</div>    
 				</div>      
-			</HashRouter>            
+			</Router>            
 		)
 	}
 }

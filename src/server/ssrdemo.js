@@ -8,7 +8,7 @@ function formatName(user) {
 }
 
 const user =  {
-	firstName: 'JavaScripters',
+	firstName: 'React',
 	lastName: '!'
 }
 
@@ -19,7 +19,7 @@ const element = (
 				<table>
 					<tr>
 						<td>
-							<p> We are {formatName(user)} </p> 
+							<p> We love {formatName(user)} </p> 
 						</td>
 					</tr>
 				</table>
