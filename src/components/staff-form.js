@@ -53,7 +53,6 @@ export default class StaffForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			//url: '/d/staff?f',
 			url: '/d/staff?f&staff.role=2',
 			method: 'get',
 			headers: {
@@ -67,20 +66,27 @@ export default class StaffForm extends React.Component {
 				this.staffList = this.master.staffList.map((obj) => {
 					return {
 						label: obj.staff.staff_name,
-						value: obj.staff.staff_email,
+						value: obj.staff.staff_name,
 						data: obj
 					}
 				})
 				if (_staff) this.entry.staff = _staff
 				if (this.entry.staff.staff_name) {
+		
 					for (let i = 0, ii = this.staffList.length; i < ii; ++i) {
+						if (this.entry.staff.superior_email === this.staffList[i].data.staff.staff_email) {
+							this.entry.staff.superior_name = this.staffList[i].data.staff.staff_name
+						} 
+
 						if (this.entry.staff.staff_name === this.staffList[i].value) {
 							this.staff = this.staffList[i].data
+							this.entry.staff.superior_name = this.staffList[i].staff_name
 							break
 						}
+					
 					}
-				}
 
+				} 
 				this.forceUpdate()
 			}
 
@@ -89,18 +95,19 @@ export default class StaffForm extends React.Component {
 		})   
 	}
 
+
 	/**
 	 * 請求先変更処理
 	 * @param {*} _data 
 	 */
 	changeSuperior(_data) {
-		console.log(_data)
 		if (_data) {
 			this.entry.staff.superior_name  = _data.label
-			this.entry.staff.superior_email = _data.value
+			this.entry.staff.superior_email = _data.data.staff.staff_email
 			this.staff = _data.data
 		} else {
-			this.entry.staff = {}
+			this.entry.staff.superior_name = ''
+			this.entry.staff.superior_email = ''
 			this.staff = {}
 		}
 		this.forceUpdate()
