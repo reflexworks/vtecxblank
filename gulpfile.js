@@ -16,7 +16,7 @@ const tap = require('gulp-tap')
 const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
 
-function webpackconfig(filename,externals) { 
+function webpackconfig(filename,externals,devtool) { 
 	return {
 		output: {
 			filename: filename
@@ -66,7 +66,7 @@ function webpackconfig(filename,externals) {
 		plugins: [
 			new BabiliPlugin()
 		]
-		,devtool: 'source-map'
+		,devtool: devtool ? 'source-map' : ''
 	}
 }
 
@@ -79,7 +79,7 @@ gulp.task('watch:components', function(){
 				srcfile = './src/components/'+ argv.f
 			}
 			gulp.src(srcfile)
-				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true),webpack))
+				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true,true),webpack))
 				.on('error', gutil.log)
 				.pipe(gulp.dest('./dist/components'))
 				.on('end',function(){
@@ -101,7 +101,7 @@ gulp.task('watch:sass', function(){
 			if (argv.f) {
 				srcfile = './src/components/'+ argv.f
 				gulp.src(srcfile)
-					.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true),webpack))
+					.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true,true),webpack))
 					.on('error', gutil.log)
 					.pipe(gulp.dest('./dist/components'))
 					.on('end',function(){
@@ -164,7 +164,7 @@ function webpack_files(src,dest,done) {
 
 function webpack_file(filename,src,dest) {
 	      return gulp.src(src+'/'+filename)
-	      .pipe(webpackStream(webpackconfig(filename,false),webpack))
+	      .pipe(webpackStream(webpackconfig(filename,false,false),webpack))
 	      .pipe(gulp.dest(dest))
 }
 
@@ -262,7 +262,7 @@ gulp.task('watch:server',['watch:settings'], function(){
 				srcfile = './src/server/'+ argv.f
 			}
 			gulp.src(srcfile)
-				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false)
+				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
 					,webpack))
 				.on('error', gutil.log)      
 				.pipe(gulp.dest('./test/server'))
