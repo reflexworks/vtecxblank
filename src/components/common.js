@@ -236,8 +236,19 @@ export class CommonRegistrationBtn extends React.Component {
 		}
 		const setLink = (entry, element) => {
 			let link = entry.link ? entry.link : []
+			const selfMark = element.value.split('${')
+			let selfValue = element.value
+			if (selfMark.length > 1) {
+				const selfKey = selfMark[1].split('}')[0]
+				if (selfKey === '_addids') {
+					selfValue = selfValue.replace('${_addids}', addids)
+				} else {
+					const childNode = document.getElementsByName(selfKey)[0]
+					selfValue = selfValue.replace('${'+ selfKey +'}', childNode.value)
+				}
+			}
 			let data = {
-				'___href': element.value.replace('${_addids}', addids),
+				'___href': selfValue,
 				'___rel': element.dataset.rel
 			}
 			link.push(data)
@@ -250,7 +261,7 @@ export class CommonRegistrationBtn extends React.Component {
 				let element = data.elements[i]
 				if (element.name === 'link') {
 
-					entry.link = setLink(entry, element)
+					entry.link = setLink(entry, element, data)
 
 				} else if (element.name) {
 
@@ -1056,7 +1067,9 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.comparison ? 'lg' : this.props.size
+			size: this.props.comparison ? 'lg' : this.props.size,
+			isComparison: this.props.comparison || this.props.comparison === '' ? true : false,
+			comparisonValue : this.props.comparison
 		}
 	}
 
@@ -1068,7 +1081,8 @@ export class CommonInputText extends React.Component {
 		this.setState({
 			value: newProps.value,
 			readonly: newProps.readonly,
-			size: newProps.size
+			size: newProps.size,
+			comparisonValue: newProps.comparison
 		})
 	}
 
@@ -1098,14 +1112,14 @@ export class CommonInputText extends React.Component {
 			/>
 		)
 		const InputTextNode = () => {
-			if (this.props.comparison) {
+			if (this.state.isComparison) {
 				return (
 					<div className="comparison">
 						<div className="comparison-input">
 							{TextNode}
 						</div>
 						<div className="comparison-value">
-							{this.props.comparison}
+							{this.state.comparisonValue === '' ? <span style={{ color: '#ccc', 'font-size': '11px' }}>比較データなし</span> : this.state.comparisonValue}
 						</div>
 					</div>
 				)
@@ -1443,28 +1457,30 @@ export class CommonModal extends React.Component {
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
-								<Button onClick={() => this.close()}>閉じる</Button>
-								{ this.props.addBtn && 
-									<Button bsStyle="primary" onClick={() => this.add()}>追加</Button>
-								}
-								{ this.props.addAxiosBtn && 
-									<CommonRegistrationBtn
-										url={this.props.addAxiosBtn.url}
-										callback={(data) => this.props.addAxiosBtn.callback(data)}
-										targetFrom={this.props.fromName}
-									/>
-								}
-								{ this.props.editBtn && 
-									<Button bsStyle="success" onClick={() => this.edit()}>更新</Button>
-								}
-								{ this.props.editAxiosBtn && 
-									<CommonUpdateBtn
-										url={this.props.editAxiosBtn.url}
-										callback={(data) => this.props.editAxiosBtn.callback(data)}
-										entry={this.props.editAxiosBtn.entry}
-										targetFrom={this.props.fromName}
-									/>
-								}
+								<div>
+									{ this.props.addBtn && 
+										<Button bsStyle="primary" onClick={() => this.add()}>追加</Button>
+									}
+									{ this.props.addAxiosBtn && 
+										<CommonRegistrationBtn
+											url={this.props.addAxiosBtn.url}
+											callback={(data) => this.props.addAxiosBtn.callback(data)}
+											targetFrom={this.props.fromName}
+										/>
+									}
+									{ this.props.editBtn && 
+										<Button bsStyle="success" onClick={() => this.edit()}>更新</Button>
+									}
+									{ this.props.editAxiosBtn && 
+										<CommonUpdateBtn
+											url={this.props.editAxiosBtn.url}
+											callback={(data) => this.props.editAxiosBtn.callback(data)}
+											entry={this.props.editAxiosBtn.entry}
+											targetFrom={this.props.fromName}
+										/>
+									}
+									<Button onClick={() => this.close()}>閉じる</Button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1790,28 +1806,43 @@ export class CommonFilterBox extends React.Component {
 
 	render() {
 
-		const SelectNode = (
-			<Select
-				name={this.props.name}
-				value={this.state.value}
-				options={this.props.options}
-				onChange={(obj) => this.changed(obj)}
-				className={(this.props.add || this.props.edit) && 'btn-type'}
-				multi={this.props.multi}
-			/>
-		)
+		const SelectNode = () => {
+			if (this.props.Creatable) {
+				return (
+					<Select.Creatable
+						name={this.props.name}
+						value={this.state.value}
+						options={this.props.options}
+						onChange={(obj) => this.changed(obj)}
+						className={(this.props.add || this.props.edit) && 'btn-type'}
+						multi={this.props.multi}
+					/>
+				)
+			} else {
+				return (
+					<Select
+						name={this.props.name}
+						value={this.state.value}
+						options={this.props.options}
+						onChange={(obj) => this.changed(obj)}
+						className={(this.props.add || this.props.edit) && 'btn-type'}
+						multi={this.props.multi}
+					/>
+				)
+			}
+		}
 		const FilterBoxNode = () => {
 			if (this.props.table) {
 				return (
 					<div style={{width: '100%'}}>
-						{ SelectNode }
+						{ SelectNode() }
 						{ this.state.actionBtn }
 					</div>
 				)
 			} else {
 				return (
 					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-						{ SelectNode }
+						{ SelectNode() }
 						{ this.state.actionBtn }
 					</CommonFormGroup>
 				)
