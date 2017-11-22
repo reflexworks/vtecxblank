@@ -64,8 +64,9 @@ function webpackconfig(filename,externals,devtool) {
 			'axios': 'axios'
 		} : {},
 		plugins: devtool ? [] : [
-  			new BabiliPlugin()
-  		]
+			new BabiliPlugin()
+		]
+
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
