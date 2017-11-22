@@ -4,8 +4,8 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- /_html(/)を制限なく閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R</uri>
+            <!-- /_html(/)をログイン済みユーザのみ閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:+,R</uri>
         </contributor>
         <link rel="self" href="/_html" />
     </entry>
@@ -14,8 +14,28 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- cssを制限なく閲覧できるようにするACL設定(*) -->
-            <uri>urn:vte.cx:acl:*,R./</uri>
+            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/login.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/login.js" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- cssをログイン済みユーザのみ閲覧できるようにするACL設定(*) -->
+            <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
         <link rel="self" href="/_html/css" />
     </entry>
@@ -24,8 +44,8 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- imgを制限なく閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R./</uri>
+            <!-- imgをログイン済みユーザのみ閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
         <link rel="self" href="/_html/img" />
     </entry>
@@ -34,18 +54,8 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- jsを制限なく閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R./</uri>
-        </contributor>
-        <link rel="self" href="/_html/js" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
-            <!-- pdfを制限なく閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R./</uri>
+            <!-- pdfをログイン済みユーザのみ閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
         <link rel="self" href="/_html/pdf" />
     </entry>
