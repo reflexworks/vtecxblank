@@ -63,7 +63,7 @@ function webpackconfig(filename,externals,devtool) {
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
 		} : {},
-		plugins: [
+		plugins: devtool ? [] : [
 			new BabiliPlugin()
 		]
 		,devtool: devtool ? 'source-map' : ''
