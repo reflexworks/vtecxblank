@@ -914,7 +914,12 @@ h3.title {
   font-size: 12px;
 }
 .Select.btn-type{
+  float: left;
   width: 320px;
+}
+.CommonFilterBox-button{
+  float: left;
+  margin-left: 5px;
 }
 .Select>.Select-control{
   height: 30px;

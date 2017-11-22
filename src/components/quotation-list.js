@@ -18,7 +18,8 @@ import {
 	CommonInputText,
 	CommonSearchConditionsFrom,
 	CommonPagination,
-	CommonRadioBtn
+	CommonRadioBtn,
+	CommonMonthlySelect
 } from './common'
 
 type State = {
@@ -34,7 +35,7 @@ export default class QuotationList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/customer?f&l=' + this.maxDisplayRows
+		this.url = '/d/quotation?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -71,13 +72,6 @@ export default class QuotationList extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isDisabled: false, isError: response })
 			} else {
-				response.data.feed.entry = response.data.feed.entry.map((_obj, i) => {
-					_obj.quotatio = {
-						quotatio_code: _obj.customer.customer_code + '-00001',
-						status: (i===2 || i===3 ? '1' : '0')
-					}
-					return _obj
-				})
 				this.setState({ isDisabled: false, feed: response.data.feed})
 			}
 
@@ -92,8 +86,7 @@ export default class QuotationList extends React.Component {
 	 */
 	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = _data.customer.customer_code
-		this.props.history.push('/QuotationUpdate?' + customer_code)
+		this.props.history.push('/QuotationUpdate?' + _data.link[0].___href.replace('/quotation/', ''))
 	}
 
 	/**
@@ -129,25 +122,23 @@ export default class QuotationList extends React.Component {
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
 								controlLabel="見積書No"
-								name="quotatio.quotatio_code"
+								name="quotation.quotation_code"
 								type="text"
-								placeholder="見積書No"
+								placeholder="000000000"
+							/>
+							<CommonMonthlySelect
+								controlLabel="見積月"  
+								name="quotation.quotation_date"
 							/>
 							<CommonInputText
-								controlLabel="顧客コード"
-								name="customer.customer_code"
-								type="text"
-								placeholder="顧客コード"
-							/>
-							<CommonInputText
-								controlLabel="顧客名"
-								name="customer.customer_name"
+								controlLabel="請求先名"
+								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
 							<CommonRadioBtn
 								controlLabel="発行ステータス"
-								name="quotatio.status"
+								name="quotation.status"
 								data={[{
 									label: '全て',
 									value: ''
@@ -178,13 +169,13 @@ export default class QuotationList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data) => this.onSelect(data) }
 							header={[{
-								field: 'quotatio.quotatio_code',title: '見積書No', width: '100px'
+								field: 'quotation.quotation_code',title: '見積書No', width: '100px'
 							}, {
-								field: 'customer.customer_code',title: '顧客コード', width: '100px'
+								field: 'quotation.quotation_date',title: '見積年月', width: '100px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'quotatio.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
+								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
 							}]}
 						/>
 					</Col>  
