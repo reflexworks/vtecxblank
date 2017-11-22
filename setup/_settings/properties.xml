@@ -12,7 +12,7 @@ console.log=true
 console.warn=true 
 console.error=true 
 _errorpage.1.error.html=^/_html/signup2.html$
-_errorpage.2.index.html=^/_html/.*$
+_errorpage.2.login.html=^/_html/.*$
 </rights>
 </entry>
 </feed>
