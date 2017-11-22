@@ -34,16 +34,6 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- jsを制限なく閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R./</uri>
-        </contributor>
-        <link rel="self" href="/_html/js" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
             <!-- pdfをログインユーザに閲覧できるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
@@ -64,7 +54,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- login.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/login.html" />
@@ -74,10 +64,10 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- index.htmlをすべてのユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:+,R.</uri>
+            <!-- login.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
-        <link rel="self" href="/_html/index.html" />
+        <link rel="self" href="/_html/components/login.js" />
     </entry>
     <entry>
         <contributor>

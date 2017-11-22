@@ -16,6 +16,7 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
+	CommonRadioBtn,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -249,6 +250,18 @@ export default class ManifestoList extends React.Component {
 								validate="string"
 								required
 							/>
+
+							<CommonRadioBtn
+								controlLabel="ロット"
+								name="manifesto.islot"
+								data={[{
+									label: '１品単位',
+									value: '0'
+								}, {
+									label: 'ロット単位',
+									value: '1'
+								}]}
+							/>
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -297,6 +310,8 @@ export default class ManifestoList extends React.Component {
 								field: 'manifesto.special_price', title: '特別販売価格', width: '150px'
 							}, {
 								field: 'manifesto.special_unit_price', title: '特別販売価格・特別', width: '150px'
+							}, {
+								field: 'manifesto.islot', title: 'ロット', width: '150px',convert:{1:'１品単位',2:'ロット単位'}
 							}]}
 						/>			
 						

@@ -110,7 +110,7 @@ export default class InternalWorkExUpload extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>請求CSVアップロード</PageHeader>
+						<PageHeader>請求データアップロード</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -118,7 +118,7 @@ export default class InternalWorkExUpload extends React.Component {
 						<Table>
 							<thead>
 								<tr>
-									<th width="100px">発送サービス</th>
+									<th width="100px">配送業者</th>
 									<th width="70px">種類</th>
 									<th width="200px">顧客選択</th>
 									<th width="500px">ファイル選択</th>
@@ -126,8 +126,28 @@ export default class InternalWorkExUpload extends React.Component {
 							</thead>
 							<tbody>
 								<tr>
+									<td>エコ配JP</td>
+									<td>-</td>
+									<td>
+										<CommonFilterBox
+											name="customer_code"
+											value={this.exList[6]}
+											options={this.customerList}
+											onChange={(data) => this.changed(data)}
+											table
+										/>
+									</td>
+									<td>
+										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+											<FormGroup>
+												<FormControl type="file" name="csv" />
+											</FormGroup>
+										</Form>
+									</td>
+								</tr>
+								<tr>
 									<td rowspan="4">ヤマト運輸</td>
-									<td>発払い</td>
+									<td>発払</td>
 									<td>
 										<CommonFilterBox
 											name="customer_code"
@@ -146,7 +166,7 @@ export default class InternalWorkExUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td>代引き</td>
+									<td>代引</td>
 									<td>
 										<CommonFilterBox
 											name="customer_code"
@@ -204,7 +224,7 @@ export default class InternalWorkExUpload extends React.Component {
 								</tr>
 								<tr>
 									<td rowspan="2">佐川急便</td>
-									<td>発払い</td>
+									<td>発払</td>
 									<td>
 										<CommonFilterBox
 											name="customer_code"
@@ -223,7 +243,7 @@ export default class InternalWorkExUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td>代引き</td>
+									<td>代引</td>
 									<td>
 										<CommonFilterBox
 											name="customer_code"
@@ -262,8 +282,8 @@ export default class InternalWorkExUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
+									<td rowspan="3">日本郵政</td>
 									<td>EMS</td>
-									<td>-</td>
 									<td>
 										<CommonFilterBox
 											name="customer_code"
@@ -282,7 +302,6 @@ export default class InternalWorkExUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td rowspan="2">日本郵政</td>
 									<td>ゆうパケット</td>
 									<td>
 										<CommonFilterBox

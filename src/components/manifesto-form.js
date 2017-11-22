@@ -13,6 +13,7 @@ import type {
 
 import {
 	CommonInputText,
+	CommonRadioBtn,
 } from './common'
 
 export default class ManifestoForm extends React.Component {
@@ -280,6 +281,18 @@ export default class ManifestoForm extends React.Component {
 							required
 						/>
 
+						<CommonRadioBtn
+							controlLabel="ロット"
+							name="manifesto.islot"
+							checked={this.entry.manifesto.islot}
+							data={[{
+								label: '１品単位',
+								value: '0'
+							}, {
+								label: 'ロット単位',
+								value: '1'
+							}]}
+						/>						
 					</Panel>	
 
 				</PanelGroup>		
