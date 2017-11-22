@@ -99,9 +99,17 @@ export default class ManifestoForm extends React.Component {
 						{/* 登録の場合 */}
 						{!this.entry.manifesto.manifesto_code &&
 							<FormGroup className="hide">
-								<FormControl name="manifesto.manifesto_code" type="text" value="${_addids}" />
-								<FormControl name="link" data-rel="self" type="text" value="/manifesto/${_addids}" />
+								<FormControl name="link" data-rel="self" type="text" value="/manifesto/${manifesto.manifesto_code}" />
 							</FormGroup>
+						}
+						{!this.entry.manifesto.manifesto_code &&
+							<CommonInputText
+								controlLabel="品番"
+								name="manifesto.manifesto_code"
+								type="text"
+								placeholder="品番"
+								value={this.entry.manifesto.manifesto_code}
+							/>
 						}
 
 						{/* 更新の場合 */}

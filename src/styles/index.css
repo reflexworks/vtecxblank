@@ -893,10 +893,14 @@ h3.title {
 .modal-lg {
   width: 90%;
 }
-.modal-footer>div,
-.modal-footer>button
+.modal-footer>div
 {
   float: right;
+}
+.modal-footer>div>div,
+.modal-footer>div>button
+{
+  float: left;
   margin-left: 10px;
 }
 .tab-content{
