@@ -32,7 +32,7 @@ export default class QuotationUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/quotation'
 
 		// 戻る先のURL
 		this.backUrl = '#/QuotationList'
@@ -64,6 +64,11 @@ export default class QuotationUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				this.entry.customer = this.entry.customer || []
+				this.entry.basic_condition = this.entry.basic_condition || []
+				this.entry.item_details = this.entry.item_details || []
+				this.entry.remarks = this.entry.remarks || []
+				this.entry.manifesto = this.entry.manifesto || []
 
 				this.forceUpdate()
 			}
