@@ -6,6 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Button,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -200,6 +201,7 @@ export default class InvoiceList extends React.Component {
 							maxButtons={4}
 						/>
 
+						<Button>顧客ごとに表示</Button>
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
