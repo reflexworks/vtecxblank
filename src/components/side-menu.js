@@ -166,7 +166,7 @@ export default class SideMenu extends React.Component {
 						},{
 							to: 'InternalWorkExUpload',
 							glyph: 'upload',
-							title: '請求CSVアップロード'
+							title: '請求データアップロード'
 						}]
 					)}
 					{ this.sideMenuListTitle('見積書管理', 'quotation') }
