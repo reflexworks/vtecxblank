@@ -54,10 +54,20 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- login.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/login.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- login.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/login.js" />
     </entry>
     <entry>
         <contributor>
