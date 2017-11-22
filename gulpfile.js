@@ -66,6 +66,7 @@ function webpackconfig(filename,externals,devtool) {
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
 		]
+
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
