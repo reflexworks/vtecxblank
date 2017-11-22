@@ -11,15 +11,23 @@
 billto
  billto_code
  billto_name
+ billing_closing_date
+ payment_date
 customer
  customer_code
- classification_code
+ yamato_classcode
+ seino_classcode
+ ecohaijp_classcode
  customer_name
  customer_name_kana
  sales_staff{}
   content
  working_staff{}
   content
+ url
+ person_in_charge
+ products
+ shipment_class
 contact_information
  tel
  fax 
@@ -56,6 +64,7 @@ manifesto
  regular_unit_price
  special_price
  special_unit_price
+ islot
 remarks{}
  content
 basic_condition
@@ -73,6 +82,7 @@ item_details{}
 quotation
  quotation_code
  quotation_date
+ status
 invoice
  invoice_code
  quotation_code
@@ -86,6 +96,7 @@ invoice
  ems
  advance_payment
  payment_cost
+ status
 delivery_charge
  delivery_company{}
   service_code
@@ -106,8 +117,14 @@ shipment_service
  code
  size
  name
+ zone{}
+  zone_code
+  pref_codes{}
+   pref_code
 delivery_charge_amount
  shipping_date
+ prefecture
+ city
  size
  quantity
  delivery_charge
