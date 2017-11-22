@@ -212,10 +212,20 @@ export class CommonRegistrationBtn extends React.Component {
 		this.state = {
 			isCompleted: false,
 			isError: {},
-			isDisabled: false
+			isDisabled: false,
+			disabled: this.props.disabled
 		}
 		this.LogicCommonTable = new LogicCommonTable()
+		this.label = this.props.label || <span><Glyphicon glyph="plus" /> 新規登録</span>
 
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState(newProps)
 	}
 
 	setReqestdata(_addids) {
@@ -383,9 +393,9 @@ export class CommonRegistrationBtn extends React.Component {
 						<CommonIndicator visible={this.state.isDisabled} />
 
 						{/* 登録ボタン */}
-						<FormGroup>
-							<Button type="submit" bsStyle="primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="plus" /> 新規登録</Button>
-						</FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
+							<Button type="submit" bsStyle="primary" onClick={(e) => this.submit(e)} disabled={this.state.disabled}>{ this.label }</Button>
+						</CommonFormGroup>
 
 						{/* 通信メッセージ */}
 						<CommonNetworkMessage
@@ -456,9 +466,11 @@ export class CommonUpdateBtn extends React.Component {
 		this.state = {
 			isCompleted: '',
 			isError: {},
-			isDisabled: false
+			isDisabled: false,
+			disabled: this.props.disabled
 		}
 		this.entry = this.props.entry
+		this.label = this.props.label || <span><Glyphicon glyph="ok" /> 更新</span>
 	}
 
 	/**
@@ -467,6 +479,7 @@ export class CommonUpdateBtn extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.setState(newProps)
 	}
 
 	setReqestdata() {
@@ -561,9 +574,9 @@ export class CommonUpdateBtn extends React.Component {
 
 						<CommonIndicator visible={this.state.isDisabled} />
 						
-						<FormGroup>
-							<Button type="submit" bsStyle="success" onClick={(e) => this.submit(e)}><Glyphicon glyph="ok" /> 更新</Button>
-						</FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
+							<Button type="submit" bsStyle="success" onClick={(e) => this.submit(e)} disabled={this.state.disabled}>{this.label}</Button>
+						</CommonFormGroup>
 
 						<CommonNetworkMessage
 							isError={this.state.isError}
@@ -655,9 +668,9 @@ export class CommonDeleteBtn extends React.Component {
 
 						<CommonIndicator visible={this.state.isDisabled} />
 						
-						<FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
 							<Button type="submit" className="btn btn-danger" onClick={(e) => this.submit(e)}><Glyphicon glyph="trash" /> 削除</Button>
-						</FormGroup>
+						</CommonFormGroup>
 
 						<CommonNetworkMessage
 							isError={this.state.isError}
@@ -711,9 +724,9 @@ export class CommonBackBtn extends React.Component {
 				)
 			} else {
 				return (
-					<FormGroup>
+					<CommonFormGroup controlLabel={this.props.controlLabel}>
 						<Button type="submit" className="btn btn-default" onClick={(e) => this.submit(e)}><Glyphicon glyph="step-backward" /> 戻る</Button>
-					</FormGroup>
+					</CommonFormGroup>
 				)
 			}
 		}
@@ -760,9 +773,9 @@ export class CommonClearBtn extends React.Component {
 				)
 			} else {
 				return (
-					<FormGroup>
+					<CommonFormGroup controlLabel={this.props.controlLabel}>
 						<Button type="submit" className="btn btn-default" onClick={(e) => this.action(e)}><Glyphicon glyph="refresh" /> クリア</Button>
-					</FormGroup>
+					</CommonFormGroup>
 				)
 			}
 		}
@@ -892,7 +905,8 @@ export class CommonDatePicker extends React.Component {
 		this.state = {
 			name: this.props.name,
 			selected: this.props.selected,
-			size: this.props.size
+			size: this.props.size,
+			dateFormat: this.props.dateFormat || 'YYYY/MM/DD'
 		}
 		moment.locale('ja')
 	}
@@ -901,8 +915,7 @@ export class CommonDatePicker extends React.Component {
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
 	 */
-	componentWillReceiveProps(newProps) {
-		this.setState({selected: newProps.selected})
+	componentWillReceiveProps() {
 	}
 
 	/**
@@ -925,6 +938,8 @@ export class CommonDatePicker extends React.Component {
 					name={this.state.name}
 					onChange={(e) => this.changed(e)}
 					className="form-control"
+					placeholderText={this.props.dateFormat}
+					dateFormat={this.props.dateFormat}
 				/>
 			</CommonFormGroup>
 		)
@@ -1124,7 +1139,16 @@ export class CommonInputText extends React.Component {
 					</div>
 				)
 			} else {
-				return TextNode
+				return (
+					<div>
+						{TextNode}
+						{this.props.customIcon && 
+							<FormControl.Feedback>
+								<Glyphicon glyph={this.props.customIcon} />
+							</FormControl.Feedback>
+						}
+					</div>	
+				)
 			}
 		}
 
@@ -1747,13 +1771,18 @@ export class CommonFilterBox extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.addBtn = (
-			<Button bsSize="sm" onClick={() => this.props.add()} style={{float: 'right'}}>
+			<Button bsSize="sm" onClick={() => this.props.add()} className="CommonFilterBox-button">
 				<Glyphicon glyph="plus"></Glyphicon>
 			</Button>
 		)
 		this.editBtn = (
-			<Button bsSize="sm" bsStyle="success" onClick={() => this.props.edit()} style={{float: 'right'}}>
+			<Button bsSize="sm" bsStyle="success" onClick={() => this.props.edit()} className="CommonFilterBox-button">
 				<Glyphicon glyph="pencil"></Glyphicon>
+			</Button>
+		)
+		this.detailBtn = (
+			<Button bsSize="sm" onClick={() => this.props.detail()} className="CommonFilterBox-button">
+				<Glyphicon glyph="list-alt"></Glyphicon>
 			</Button>
 		)
 		this.state = {
@@ -1762,6 +1791,7 @@ export class CommonFilterBox extends React.Component {
 			size: this.props.size,
 			actionBtn: <span></span>
 		}
+		this.classFilterName = (this.props.add || this.props.edit || this.props.detail) && 'btn-type'
 	}
 
 	/**
@@ -1773,9 +1803,17 @@ export class CommonFilterBox extends React.Component {
 		let actionBtn = <span></span>
 		// ボタンの切り替え処理
 		if (this.props.multi && newProps.value && newProps.value.length > 0) {
-			if (this.props.edit) actionBtn = this.editBtn
+			if (this.props.edit) {
+				actionBtn = this.editBtn
+			} else if (this.props.detail) {
+				actionBtn = this.detailBtn
+			}
 		} else if (!this.props.multi && newProps.value) {
-			if (this.props.edit) actionBtn = this.editBtn
+			if (this.props.edit) {
+				actionBtn = this.editBtn
+			} else if (this.props.detail) {
+				actionBtn = this.detailBtn
+			}
 		} else if (this.props.add) {
 			actionBtn = this.addBtn
 		}
@@ -1791,11 +1829,9 @@ export class CommonFilterBox extends React.Component {
 	 * 値の変更処理
 	 */
 	changed(obj) {
-		let value = obj ? obj.value : ''
+		let value = obj ? obj.value : null
 		if (this.props.multi) {
 			value = obj ? obj : []
-		} else {
-			value = obj ? obj.value : ''
 		}
 		this.setState({ value: value })
 
@@ -1814,7 +1850,7 @@ export class CommonFilterBox extends React.Component {
 						value={this.state.value}
 						options={this.props.options}
 						onChange={(obj) => this.changed(obj)}
-						className={(this.props.add || this.props.edit) && 'btn-type'}
+						className={this.classFilterName}
 						multi={this.props.multi}
 					/>
 				)
@@ -1825,7 +1861,7 @@ export class CommonFilterBox extends React.Component {
 						value={this.state.value}
 						options={this.props.options}
 						onChange={(obj) => this.changed(obj)}
-						className={(this.props.add || this.props.edit) && 'btn-type'}
+						className={this.classFilterName}
 						multi={this.props.multi}
 					/>
 				)
@@ -1849,6 +1885,79 @@ export class CommonFilterBox extends React.Component {
 			}
 		}
 		return FilterBoxNode()
+	}
+
+}
+
+/**
+ * 月次選択(フィルター機能つき)
+ */
+export class CommonMonthlySelect extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			size: 'sm'
+		}
+		this.option = this.setOptions()
+	}
+
+	setOptions = () => {
+		const startYear = 2017
+		const setMonth = (_array, _yyyy) => {
+			for (let i = 1, ii = 13; i < ii; ++i) {
+				const mm = i < 10 ? '0' + i : i
+				const value = _yyyy + '/' + mm
+				_array.push({
+					label: value,
+					value: value
+				})
+			}
+			return _array
+		}
+		let array = []
+		for (let i = 0, ii = 5; i < ii; ++i) {
+			array = setMonth(array, (startYear + i))
+		}
+		return array
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		if (newProps.value) {
+			this.setState({
+				value: newProps.value
+			})
+		}
+	}
+
+	/**
+	 * 値の変更処理
+	 */
+	changed(obj) {
+		let value = obj ? obj.value : null
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(obj)
+		}
+	}
+
+	render() {
+
+		return (
+			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+				<Select
+					name={this.props.name}
+					value={this.state.value}
+					options={this.option}
+					onChange={(obj) => this.changed(obj)}
+				/>
+			</CommonFormGroup>
+		)
 	}
 
 }
