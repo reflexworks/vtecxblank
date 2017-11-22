@@ -4,7 +4,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- /_html(/)をログイン済みユーザのみ閲覧できるようにするACL設定(*)  -->
+            <!-- /_html(/)をログイン済みユーザのみ閲覧できるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,R</uri>
         </contributor>
         <link rel="self" href="/_html" />
@@ -14,7 +14,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- login.htmlをすべてのユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/login.html" />
@@ -24,7 +24,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- login.htmlをログインユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- login.htmlをすべてのユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/components/login.js" />
