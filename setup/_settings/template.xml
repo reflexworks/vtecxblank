@@ -15,9 +15,9 @@ billto
  payment_date
 customer
  customer_code
- yamato_classcode
- seino_classcode
- ecohaijp_classcode
+ customer_class{}
+  delivery_company
+  classcode
  customer_name
  customer_name_kana
  sales_staff{}

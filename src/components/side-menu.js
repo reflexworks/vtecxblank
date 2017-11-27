@@ -23,6 +23,7 @@ export default class SideMenu extends React.Component {
 				warehouse: false,
 				manifesto: false,
 				internal_work: false,
+				billing_data: false,
 				quotation: false,
 				invoice: false,
 				delivery_charge: false,
@@ -163,12 +164,21 @@ export default class SideMenu extends React.Component {
 							to: 'InternalWorkList',
 							glyph: 'list',
 							title: '庫内作業一覧'
-						},{
-							to: 'InternalWorkExUpload',
-							glyph: 'upload',
-							title: '請求データアップロード'
 						}]
 					)}
+					{ this.sideMenuListTitle('請求データ管理', 'billing_data') }
+					{ this.sideMenuList('billing_data',
+						[{
+							to: 'BillingDataUpload',
+							glyph: 'upload',
+							title: '請求データアップロード'
+						},{
+							to: 'BillingDataList',
+							glyph: 'list',
+							title: '請求データ一覧'
+						}]
+					)}
+
 					{ this.sideMenuListTitle('見積書管理', 'quotation') }
 					{ this.sideMenuList('quotation',
 						[{

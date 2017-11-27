@@ -212,6 +212,10 @@ export default class BilltoList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
+								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
+							}, {
+								field: 'billto.payment_date', title: '支払日', width: '200px'
+							}, {
 								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {
 								field: 'contact_information.fax', title: 'FAX', width: '200px'

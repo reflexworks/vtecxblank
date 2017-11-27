@@ -311,7 +311,7 @@ export default class ManifestoList extends React.Component {
 							}, {
 								field: 'manifesto.special_unit_price', title: '特別販売価格・特別', width: '150px'
 							}, {
-								field: 'manifesto.islot', title: 'ロット', width: '150px',convert:{1:'１品単位',2:'ロット単位'}
+								field: 'manifesto.islot', title: 'ロット', width: '150px',convert:{0:'１品単位',1:'ロット単位'}
 							}]}
 						/>			
 						

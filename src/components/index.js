@@ -33,7 +33,7 @@ import ManifestoUpdate from './manifesto-update'
 //庫内作業
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
-import InternalWorkExUpload from './internalwork-ex-upload'
+//import InternalWorkExUpload from './internalwork-ex-upload'
 
 //請求書
 import InvoiceList from './invoice-list'
@@ -58,6 +58,10 @@ import TypeAheadUpdate from './typeahead-update'
 import BasicConditionList from './basiccondition-list'
 import BasicConditionRegistration from './basiccondition-registration'
 import BasicConditionUpdate from './basiccondition-update'
+
+//請求先
+import BillingDataList from './billingdata-list'
+import BillingDataUpload from './billingdata-upload'
 
 import {
 //	BrowserRouter as Router,
@@ -257,16 +261,6 @@ class MainContainer extends React.Component {
 			/>
 		)
 	}
-	/**
-	 * コンポーネント：庫内作業請求CSVアップロード
-	 */
-	InternalWorkExUpload = (props) => {
-		return (
-			<InternalWorkExUpload 
-				history={props.history}
-			/>
-		)
-	}
 
 	/**
 	 * コンポーネント：見積書一覧
@@ -447,7 +441,6 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：基本条件更新
 	 */
-	
 	BasicConditionUpdate = (props) => {
 		return (
 			<BasicConditionUpdate
@@ -456,6 +449,28 @@ class MainContainer extends React.Component {
 		)
 	}
 	
+	/**
+	 * コンポーネント：請求データアップロード
+	 */
+	BillingDataUpload = (props) => {
+		return (
+			<BillingDataUpload
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求データ一覧
+	 */
+	BillingDataList = (props) => {
+		return (
+			<BillingDataList
+				history={props.history}
+			/>
+		)
+	}
+
 	
 	/**
 	 * ログアウト処理
@@ -517,7 +532,6 @@ class MainContainer extends React.Component {
 							<Route path="/ManifestoList" component={this.ManifestoList} />
 							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
-							<Route path="/InternalWorkExUpload" component={this.InternalWorkExUpload} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
@@ -535,7 +549,9 @@ class MainContainer extends React.Component {
 							<Route path="/TypeAheadUpdate" component={this.TypeAheadUpdate} />
 							<Route path="/BasicConditionRegistration" component={this.BasicConditionRegistration} />
 							<Route path="/BasicConditionList" component={this.BasicConditionList} />
-							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />	
+							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
+							<Route path="/BillingDataList" component={this.BillingDataList} />	
+							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
@@ -546,5 +562,4 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
-
 
