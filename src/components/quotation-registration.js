@@ -112,11 +112,16 @@ export default class QuotationRegistration extends React.Component {
 				})
 				if (_billto) this.entry.billto = _billto
 				if (this.entry.billto.billto_code) {
+					let target_index
 					for (let i = 0, ii = this.billtoList.length; i < ii; ++i) {
 						if (this.entry.billto.billto_code === this.billtoList[i].value) {
 							this.billto = this.billtoList[i].data
+							target_index = i
 							break
 						}
+					}
+					if (this.billto) {
+						this.changeBillto(this.billtoList[target_index])
 					}
 				}
 
