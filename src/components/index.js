@@ -6,9 +6,62 @@ import ReactDOM from 'react-dom'
 
 import SideMenu from './side-menu'
 
+//顧客
 import CustomerList from './customer-list'
 import CustomerRegistration from './customer-registration'
 import CustomerUpdate from './customer-update'
+
+//担当者
+import StaffList from './staff-list'
+import StaffRegistration from './staff-registration'
+import StaffUpdate from './staff-update'
+
+//倉庫
+import WarehouseList from './warehouse-list'
+import WarehouseRegistration from './warehouse-registration'
+
+//見積書
+import QuotationList from './quotation-list'
+import QuotationRegistration from './quotation-registration'
+import QuotationUpdate from './quotation-update'
+
+//資材
+import ManifestoList from './manifesto-list'
+import ManifestoRegistration from './manifesto-registration'
+import ManifestoUpdate from './manifesto-update'
+
+//庫内作業
+import InternalWorkList from './internalwork-list'
+import InternalWorkRegistration from './internalwork-registration'
+//import InternalWorkExUpload from './internalwork-ex-upload'
+
+//請求書
+import InvoiceList from './invoice-list'
+import InvoiceRegistration from './invoice-registration'
+import InvoiceUpdate from './invoice-update'
+
+//配送料
+import DeliveryChargeList from './deliverycharge-list'
+import DeliveryChargeRegistration from './deliverycharge-registration'
+
+//請求先
+import BilltoList from './billto-list'
+import BilltoRegistration from './billto-registration'
+import BilltoUpdate from './billto-update'
+
+//入力保管管理
+import TypeAheadList from './typeahead-list'
+import TypeAheadRegistration from './typeahead-registration'
+import TypeAheadUpdate from './typeahead-update'
+
+//入力保管管理
+import BasicConditionList from './basiccondition-list'
+import BasicConditionRegistration from './basiccondition-registration'
+import BasicConditionUpdate from './basiccondition-update'
+
+//請求先
+import BillingDataList from './billingdata-list'
+import BillingDataUpload from './billingdata-upload'
 
 import {
 //	BrowserRouter as Router,
@@ -100,6 +153,326 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：担当者一覧
+	 */
+	StaffList = (props) => {
+		return (
+			<StaffList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：担当者登録
+	 */
+	StaffRegistration = (props) => {
+		return (
+			<StaffRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：担当者更新
+	 */
+	StaffUpdate = (props) => {
+		return (
+			<StaffUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：倉庫一覧
+	 */
+	WarehouseList = (props) => {
+		return (
+			<WarehouseList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：倉庫登録
+	 */
+	WarehouseRegistration = (props) => {
+		return (
+			<WarehouseRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材情報一覧
+	 */
+	ManifestoList = (props) => {
+		return (
+			<ManifestoList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材情報登録
+	 */
+	ManifestoRegistration = (props) => {
+		return (
+			<ManifestoRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材情報更新
+	 */
+	ManifestoUpdate = (props) => {
+		return (
+			<ManifestoUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：庫内作業一覧
+	 */
+	InternalWorkList = (props) => {
+		return (
+			<InternalWorkList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：庫内作業登録
+	 */
+	InternalWorkRegistration = (props) => {
+		return (
+			<InternalWorkRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：見積書一覧
+	 */
+	QuotationList = (props) => {
+		return (
+			<QuotationList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：見積書作成
+	 */
+	QuotationRegistration = (props) => {
+		return (
+			<QuotationRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：見積書更新
+	 */
+	QuotationUpdate = (props) => {
+		return (
+			<QuotationUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求書一覧
+	 */
+	InvoiceList = (props) => {
+		return (
+			<InvoiceList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求書作成
+	 */
+	InvoiceRegistration = (props) => {
+		return (
+			<InvoiceRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求書更新
+	 */
+	InvoiceUpdate = (props) => {
+		return (
+			<InvoiceUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料登録
+	 */
+	DeliveryChargeRegistration = (props) => {
+		return (
+			<DeliveryChargeRegistration
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料一覧
+	 */
+	DeliveryChargeList = (props) => {
+		return (
+			<DeliveryChargeList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求先一覧
+	 */
+	BilltoList = (props) => {
+		return (
+			<BilltoList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求先情報登録
+	 */
+	BilltoRegistration = (props) => {
+		return (
+			<BilltoRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求先情報更新
+	 */
+	BilltoUpdate = (props) => {
+		return (
+			<BilltoUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：明細項目一覧
+	 */
+	TypeAheadList = (props) => {
+		return (
+			<TypeAheadList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：明細項目登録
+	 */
+	TypeAheadRegistration = (props) => {
+		return (
+			<TypeAheadRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：明細項目更新
+	 */
+	TypeAheadUpdate = (props) => {
+		return (
+			<TypeAheadUpdate
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：基本条件一覧
+	 */
+	BasicConditionList = (props) => {
+		return (
+			<BasicConditionList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：基本条件登録
+	 */
+	BasicConditionRegistration = (props) => {
+		return (
+			<BasicConditionRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：基本条件更新
+	 */
+	BasicConditionUpdate = (props) => {
+		return (
+			<BasicConditionUpdate
+				history={props.history}
+			/>
+		)
+	}
+	
+	/**
+	 * コンポーネント：請求データアップロード
+	 */
+	BillingDataUpload = (props) => {
+		return (
+			<BillingDataUpload
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求データ一覧
+	 */
+	BillingDataList = (props) => {
+		return (
+			<BillingDataList
+				history={props.history}
+			/>
+		)
+	}
+
+	
+	/**
 	 * ログアウト処理
 	 */
 	logout() {
@@ -150,10 +523,38 @@ class MainContainer extends React.Component {
 							<Route path="/CustomerRegistration" component={this.CustomerRegistration} />
 							<Route path="/CustomerList" component={this.CustomerList} />
 							<Route path="/CustomerUpdate" component={this.CustomerUpdate} />
+							<Route path="/StaffRegistration" component={this.StaffRegistration} />
+							<Route path="/StaffList" component={this.StaffList} />
+							<Route path="/StaffUpdate" component={this.StaffUpdate} />
+							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
+							<Route path="/WarehouseList" component={this.WarehouseList} />
+							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
+							<Route path="/ManifestoList" component={this.ManifestoList} />
+							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
+							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
+							<Route path="/InternalWorkList" component={this.InternalWorkList} />
+							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
+							<Route path="/QuotationList" component={this.QuotationList} />
+							<Route path="/QuotationUpdate" component={this.QuotationUpdate} />
+							<Route path="/InvoiceRegistration" component={this.InvoiceRegistration} />
+							<Route path="/InvoiceList" component={this.InvoiceList} />
+							<Route path="/InvoiceUpdate" component={this.InvoiceUpdate} />
+							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
+							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
+							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
+							<Route path="/BilltoList" component={this.BilltoList} />
+							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />
+							<Route path="/TypeAheadRegistration" component={this.TypeAheadRegistration} />
+							<Route path="/TypeAheadList" component={this.TypeAheadList} />
+							<Route path="/TypeAheadUpdate" component={this.TypeAheadUpdate} />
+							<Route path="/BasicConditionRegistration" component={this.BasicConditionRegistration} />
+							<Route path="/BasicConditionList" component={this.BasicConditionList} />
+							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
+							<Route path="/BillingDataList" component={this.BillingDataList} />	
+							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
-
 				</div>
 			</HashRouter>            
 		)
@@ -161,3 +562,4 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
+

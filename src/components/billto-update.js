@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import BilltoForm from './billto-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,7 +22,9 @@ import {
 	CommonBackBtn
 } from './common'
 
-export default class CustomerUpdate extends React.Component {
+import moment from 'moment'
+
+export default class BilltoUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -32,10 +34,10 @@ export default class CustomerUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/billto'
 
 		// 戻る先のURL
-		this.backUrl = '#/CustomerList'
+		this.backUrl = '#/BilltoList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -63,7 +65,12 @@ export default class CustomerUpdate extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isError: response })
 			} else {
+				
 				this.entry = response.data.feed.entry[0]
+				
+				this.entry.billto.billing_closing_date = moment(Date.parse(this.entry.billto.billing_closing_date))
+				this.entry.billto.payment_date = moment(Date.parse(this.entry.billto.payment_date))
+
 
 				this.forceUpdate()
 			}
@@ -100,7 +107,7 @@ export default class CustomerUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							顧客情報の更新
+							請求先情報の更新
 						</PageHeader>
 
 					</Col>
@@ -120,7 +127,7 @@ export default class CustomerUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<BilltoForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

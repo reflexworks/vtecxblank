@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import QuotationForm from './quotation-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,7 +22,7 @@ import {
 	CommonBackBtn
 } from './common'
 
-export default class CustomerUpdate extends React.Component {
+export default class QuotationUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -32,10 +32,10 @@ export default class CustomerUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/quotation'
 
 		// 戻る先のURL
-		this.backUrl = '#/CustomerList'
+		this.backUrl = '#/QuotationList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -64,6 +64,11 @@ export default class CustomerUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				this.entry.quotation = this.entry.quotation || {}
+				this.entry.quotation.basic_condition = this.entry.quotation.basic_condition || []
+				this.entry.item_details = this.entry.item_details || []
+				this.entry.remarks = this.entry.remarks || []
+				this.entry.quotation.manifesto = this.entry.quotation.manifesto || []
 
 				this.forceUpdate()
 			}
@@ -77,6 +82,7 @@ export default class CustomerUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
+		location.reload()
 	}
 
 	/**
@@ -100,7 +106,7 @@ export default class CustomerUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							顧客情報の更新
+							見積書の編集
 						</PageHeader>
 
 					</Col>
@@ -120,7 +126,7 @@ export default class CustomerUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<QuotationForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

@@ -8,21 +8,37 @@
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
 <content type="text/html">
+billto
+ billto_code
+ billto_name
+ billing_closing_date
+ payment_date
 customer
  customer_code
+ customer_class{}
+  delivery_company
+  classcode
  customer_name
  customer_name_kana
- customer_tel
- customer_fax 
- customer_email 
- customer_staff
+ sales_staff{}
+  content
+ working_staff{}
+  content
+ url
+ person_in_charge
+ products
+ shipment_class
+contact_information
+ tel
+ fax 
+ email 
  zip_code
  prefecture
  address1
  address2
 staff
  staff_name
- role(int)
+ role
  superior_email 
  staff_email
 warehouse
@@ -43,51 +59,17 @@ manifesto
  outer_width
  outer_depth
  outer_height
+ outer_total
  regular_price
  regular_unit_price
  special_price
  special_unit_price
-internal_work
- staff_name
- working_date
- approval_status
- mgmt_basic_fee
- custody_fee
- additional1_palette
- additional2_steel_shelf
- deletion_palette
- received
- received_normal
- returns
- received_others
- packing_normal
- packing_others
- yamato60size
- seino
- cash_on_arrival
- work_others
- cardboard160
- cardboard140
- cardboard120
- cardboard100
- cardboard80
- cardboard60
- corrugated_cardboard
- buffer_material
- bubble_wrap
+ islot
 remarks{}
  content
-work
- consignment_service
- storage{}
-  content
- package_handling{}
-  content
- delivery
- insurance
- mutual_aid
- products
- shipping_data{}
+basic_condition
+ title
+ condition{}
   content
 item_details{}
  item_name
@@ -100,9 +82,32 @@ item_details{}
 quotation
  quotation_code
  quotation_date
+ status
+ basic_condition{}
+  title
+  condition{}
+   content
+ manifesto{}
+  manifesto_code
+  manifesto_name
+  material
+  thickness
+  inside_width
+  inside_depth
+  inside_height
+  outer_width
+  outer_depth
+  outer_height
+  outer_total
+  regular_price
+  regular_unit_price
+  special_price
+  special_unit_price
+  islot
 invoice
  invoice_code
  quotation_code
+ internal_work_code 
  total_amount
  taxation_amount
  payee{}
@@ -112,16 +117,49 @@ invoice
  ems
  advance_payment
  payment_cost
+ status
 delivery_charge
  delivery_company{}
-  delivery_company_name 
-  kind_class(int)
+  service_code
+  kind_class
   delivery_charge_details{}
    size
    weight
    charge_by_zone{}
     zone_code
     delivery_charge
+internal_work
+ internal_work_code 
+ staff_name
+ working_date
+ approval_status
+ work_kind_class
+shipment_service
+ code
+ size
+ name
+ zone{}
+  zone_code
+  pref_codes{}
+   pref_code
+delivery_charge_amount
+ shipping_date
+ prefecture
+ city
+ size
+ quantity
+ delivery_charge
+work_record
+ item_name
+ unit_name
+ unit
+ quantity
+used_manifesto
+ manifesto_code
+ quantity 
+type_ahead
+ type
+ value
 </content>
 <rights>
 </rights>

@@ -16,7 +16,6 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonFilterBox,
 	CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
@@ -27,8 +26,7 @@ type State = {
 	url: string
 }
 
-
-export default class CustomerList extends React.Component {
+export default class BilltoList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -36,7 +34,7 @@ export default class CustomerList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/customer?f&l=' + this.maxDisplayRows
+		this.url = '/d/billto?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -85,11 +83,13 @@ export default class CustomerList extends React.Component {
 
 	/**
 	 * 更新画面に遷移する
+	 * @param {*} index 
 	 */
-	onSelect(_data) {
+	
+	onSelect(data) {
 		// 入力画面に遷移
-		const customer_code = _data.customer.customer_code
-		this.props.history.push('/CustomerUpdate?' + customer_code)
+		const billto_code = data.billto.billto_code
+		this.props.history.push('/BilltoUpdate?' + billto_code)
 	}
 
 	/**
@@ -120,27 +120,22 @@ export default class CustomerList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>顧客一覧</PageHeader>
+						<PageHeader>請求先一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
-								controlLabel="顧客コード"
-								name="customer.customer_code"
+								controlLabel="請求先コード"
+								name="billto.billto_code"
 								type="text"
-								placeholder="顧客コード"
+								placeholder="請求先コード"
 							/>
 							<CommonInputText
-								controlLabel="顧客名"
-								name="customer.customer_name"
+								controlLabel="請求先名"
+								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
-							<CommonInputText
-								controlLabel="顧客名(カナ)"
-								name="customer.customer_name_kana"
-								type="text"
-								placeholder="カブシキガイシャ ◯◯◯"
-							/>
+
 							<CommonInputText
 								controlLabel="電話番号"
 								name="contact_information.tel"
@@ -148,6 +143,7 @@ export default class CustomerList extends React.Component {
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
+
 							<CommonInputText
 								controlLabel="FAX"
 								name="contact_information.fax"
@@ -155,12 +151,14 @@ export default class CustomerList extends React.Component {
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
+							
 							<CommonInputText
 								controlLabel="メールアドレス"
 								name="contact_information.email"
 								type="email"
 								placeholder="logioffice@gmail.com"
 							/>
+
 							<CommonInputText
 								controlLabel="郵便番号"
 								name="contact_information.zip_code"
@@ -168,18 +166,21 @@ export default class CustomerList extends React.Component {
 								placeholder="123-4567"
 								size="sm"
 							/>
+
 							<CommonPrefecture
 								controlLabel="都道府県"
 								componentClass="select"
 								name="contact_information.prefecture"
 								size="sm"
 							/>
+
 							<CommonInputText
 								controlLabel="市区郡長村"
 								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
 							/>
+
 							<CommonInputText
 								controlLabel="番地"
 								name="contact_information.address2"
@@ -187,46 +188,7 @@ export default class CustomerList extends React.Component {
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
 							/>
-
-							<CommonInputText
-								controlLabel="URL"
-								name="customer.url"
-								type="text"
-								placeholder="url"
-								size="lg"
-							/>
-
-							<CommonInputText
-								controlLabel="顧客側の担当者"
-								name="customer.person_in_charge"
-								type="text"
-								placeholder="顧客側の担当者"
-								size="lg"
-							/>
-							<CommonInputText
-								controlLabel="取扱品"
-								name="customer.products"
-								type="text"
-								placeholder="取扱品"
-								size="lg"
-							/>
-
-							<CommonFilterBox
-								controlLabel="集荷出荷区分"
-								size="sm"
-								name="customer.shipment_class"
-								options={[{
-									label: '出荷',
-									value: '0'
-								}, {
-									label: '集荷',
-									value: '1'
-								}, {
-									label: '両方',
-									value: '2'
-								}]}
-							/>
-
+						
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -246,43 +208,27 @@ export default class CustomerList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'customer.customer_class.delivery_company', title: '配送業者', width: '150px'
+								field: 'billto.billto_code',title: '請求先コード', width: '200px'
 							}, {
-								field: 'customer.customer_class.classcode', title: '分類コード', width: '150px'
-							},{	
-								field: 'customer.customer_code',title: '顧客コード', width: '100px'
+								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '150px'
+								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '150px'
+								field: 'billto.payment_date', title: '支払日', width: '200px'
 							}, {
-								field: 'contact_information.tel', title: '電話番号', width: '100px'
+								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {
-								field: 'billto.billto_name', title: '請求先', width: '200px'
-							}, {
-								field: 'customer.sales_staff', title: '営業担当者', width: '200px'
-							}, {
-								field: 'customer.working_staff', title: '作業担当者', width: '200px'
-							}, {
-								field: 'contact_information.fax', title: 'FAX', width: '100px'
+								field: 'contact_information.fax', title: 'FAX', width: '200px'
 							}, {
 								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'contact_information.zip_code', title: '郵便番号', width: '50px'
+								field: 'contact_information.zip_code', title: '郵便番号', width: '200px'
 							}, {
-								field: 'contact_information.prefecture', title: '都道府県', width: '50px'
+								field: 'contact_information.prefecture', title: '都道府県', width: '200px'
 							}, {
 								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
 							}, {
 								field: 'contact_information.address2', title: '番地', width: '200px'
-							}, {
-								field: 'customer.url', title: '顧客URL', width: '200px'
-							}, {
-								field: 'customer.person_in_charge', title: '顧客の担当者', width: '200px'
-							}, {
-								field: 'customer.products', title: '取扱品', width: '200px'
-							}, {
-								field: 'customer.shipment_class', title: '集荷出荷区分', width: '200px',convert: { 0:'出荷', 1:'集荷', 2:'両方'}
 							}]}
 						/>
 					</Col>  

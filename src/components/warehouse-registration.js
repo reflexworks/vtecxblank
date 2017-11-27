@@ -12,33 +12,35 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import WarehouseForm from './warehouse-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn
 } from './common'
 
-export default class CustomerRegistration extends React.Component {
+export default class WarehouseRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		// 登録先のURL
-		this.url = '/d/customer'
+		this.url = '/d/warehouse'
 
 		// 初期値の設定
 		this.entry = {
-			customer: {},
-			contact_information: {}
+			warehouse: {},
 		}
+
+
 	}
+ 
 	/**
 	 * 登録完了後の処理
 	 */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/CustomerList'
+		location.href = '#/WarehouseList'
 	}
 
 	render() {
@@ -46,7 +48,7 @@ export default class CustomerRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>顧客情報の登録</PageHeader>
+						<PageHeader>倉庫情報の登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -63,7 +65,7 @@ export default class CustomerRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<WarehouseForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

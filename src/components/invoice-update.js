@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import QuotationForm from './quotation-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,7 +22,9 @@ import {
 	CommonBackBtn
 } from './common'
 
-export default class CustomerUpdate extends React.Component {
+import moment from 'moment'
+
+export default class QuotationUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -64,6 +66,8 @@ export default class CustomerUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				this.entry.account_info.billing_closing_date = this.entry ? moment(Date.parse(this.entry.account_info.billing_closing_date)) : moment()
+				this.entry.account_info.date_of_payment = this.entry ? moment(Date.parse(this.entry.account_info.date_of_payment)) : moment()
 
 				this.forceUpdate()
 			}
@@ -120,7 +124,7 @@ export default class CustomerUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<QuotationForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

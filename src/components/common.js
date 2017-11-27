@@ -11,7 +11,10 @@ import {
 	Table,
 	ControlLabel,
 	Col,
-	Form
+	Form,
+	PanelGroup,
+	Panel,
+	Pagination
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -151,15 +154,47 @@ class LogicCommonTable {
 
 		const tables = document.getElementsByName(_form_name)[0].getElementsByTagName('table')
 
+		const getValue = (_element) => {
+
+			const isArray = _element.className.indexOf('array') !== -1 ? true : false
+			let value
+			if (isArray) {
+				const arrayEle = _element.getElementsByTagName('div')
+				value = []
+				for (let i = 0, ii = arrayEle.length; i < ii; ++i) {
+					value.push({ content: arrayEle[i].innerHTML ? arrayEle[i].innerHTML : '' })
+				}
+			} else {
+
+				const childNodes = _element.childNodes ? _element.childNodes[0] : false
+				const isFilter = (childNodes && childNodes.className && childNodes.className.indexOf('Select') !== -1)
+				const isInput = (!isFilter && childNodes.children)
+				if (isFilter) {
+					value = childNodes.childNodes[0].value ? childNodes.childNodes[0].value : ''
+				} else if (isInput) {
+					value = childNodes.childNodes[0].value
+				} else {
+					value = _element.innerHTML ? _element.innerHTML : ''
+				}
+
+			}
+
+			return value
+		}
+
 		const setCellData = (_row) => {
 			let cellData = null
-			const td = _row.getElementsByTagName('td')
-			for (var i = 0, ii = td.length; i < ii; ++i) {
-				const name = td[i].getAttribute('name')
-				if (name) {
-					cellData = cellData ? cellData : {}
-					const value = td[i].getElementsByTagName('div')[0].innerHTML
-					cellData[name] = value
+			if (_row) {
+				const td = _row.getElementsByTagName('td')
+				for (let i = 0, ii = td.length; i < ii; ++i) {
+					if (td[i] && td[i].getAttribute('name')) {
+						const name = td[i].getAttribute('name')
+						if (name && name !== '__tableFilter' && name !== '__tableInput') {
+							cellData = cellData ? cellData : {}
+							const value = getValue(td[i].getElementsByTagName('div')[0])
+							cellData[name] = value
+						}
+					}
 				}
 			}
 			return cellData
@@ -170,7 +205,7 @@ class LogicCommonTable {
 			const tableData = []
 
 			const row = _table.getElementsByTagName('tr')
-			for (var i = 0, ii = row.length; i < ii; ++i) {
+			for (let i = 0, ii = row.length; i < ii; ++i) {
 				const rowData = setCellData(row[i])
 				if (rowData) {
 					tableData.push(rowData)
@@ -179,19 +214,21 @@ class LogicCommonTable {
 
 			return tableData
 		}
-		for (var i = 0, ii = tables.length; i < ii; ++i) {
+		for (let i = 0, ii = tables.length; i < ii; ++i) {
 
 			const table = tables[i]
 			const table_name = table.getAttribute('name')
-			const table_names = table_name.split('.')
-			if (table_names.length > 1) {
-				const parent_name = table_name.split('.')[0]
-				const child_name = table_name.split('.')[1]
-				_entry[parent_name] = _entry[parent_name] ? _entry[parent_name] : {}
-				_entry[parent_name][child_name] = setRowData(table)
-			} else {
-				_entry[table_name] = _entry[table_name] || {}
-				_entry[table_name] = setRowData(table)
+			if (table_name && table_name !== '') {
+				const table_names = table_name.split('.')
+				if (table_names.length > 1) {
+					const parent_name = table_name.split('.')[0]
+					const child_name = table_name.split('.')[1]
+					_entry[parent_name] = _entry[parent_name] ? _entry[parent_name] : {}
+					_entry[parent_name][child_name] = setRowData(table)
+				} else {
+					_entry[table_name] = _entry[table_name] || {}
+					_entry[table_name] = setRowData(table)
+				}
 			}
 
 		}
@@ -209,10 +246,20 @@ export class CommonRegistrationBtn extends React.Component {
 		this.state = {
 			isCompleted: false,
 			isError: {},
-			isDisabled: false
+			isDisabled: false,
+			disabled: this.props.disabled
 		}
 		this.LogicCommonTable = new LogicCommonTable()
+		this.label = this.props.label || <span><Glyphicon glyph="plus" /> 新規登録</span>
 
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState(newProps)
 	}
 
 	setReqestdata(_addids) {
@@ -233,8 +280,19 @@ export class CommonRegistrationBtn extends React.Component {
 		}
 		const setLink = (entry, element) => {
 			let link = entry.link ? entry.link : []
+			const selfMark = element.value.split('${')
+			let selfValue = element.value
+			if (selfMark.length > 1) {
+				const selfKey = selfMark[1].split('}')[0]
+				if (selfKey === '_addids') {
+					selfValue = selfValue.replace('${_addids}', addids)
+				} else {
+					const childNode = document.getElementsByName(selfKey)[0]
+					selfValue = selfValue.replace('${'+ selfKey +'}', childNode.value)
+				}
+			}
 			let data = {
-				'___href': element.value.replace('${_addids}', addids),
+				'___href': selfValue,
 				'___rel': element.dataset.rel
 			}
 			link.push(data)
@@ -247,9 +305,9 @@ export class CommonRegistrationBtn extends React.Component {
 				let element = data.elements[i]
 				if (element.name === 'link') {
 
-					entry.link = setLink(entry, element)
+					entry.link = setLink(entry, element, data)
 
-				} else if (element.name) {
+				} else if (element.name && element.name !== '__tableFilter' && element.name !== '__tableInput') {
 
 					const value = setValue(element)
 
@@ -271,15 +329,28 @@ export class CommonRegistrationBtn extends React.Component {
 			return entry
 		}
 		const setFeedData = () => {
-			const forms = document.forms
+
 			let feed = {}
 			let array = []
-			for (var i = 0, ii = forms.length; i < ii; ++i) {
-				const target_form = forms[i]
-				const isTarget = target_form.getAttribute('data-submit-form')
-				if (isTarget) {
-					let entry = setEntryData(target_form)
-					array.push(entry)
+
+			const forms = document.forms
+			if (this.props.targetFrom) {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					if (forms[i].getAttribute('name') === this.props.targetFrom) {
+						let entry = setEntryData(target_form)
+						array.push(entry)
+						break
+					}
+				}
+			} else {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					const isTarget = target_form.getAttribute('data-submit-form')
+					if (isTarget) {
+						let entry = setEntryData(target_form)
+						array.push(entry)
+					}
 				}
 			}
 			feed.entry = array
@@ -356,9 +427,9 @@ export class CommonRegistrationBtn extends React.Component {
 						<CommonIndicator visible={this.state.isDisabled} />
 
 						{/* 登録ボタン */}
-						<FormGroup>
-							<Button type="submit" className="btn btn-primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="plus" /> 新規登録</Button>
-						</FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
+							<Button type="submit" bsStyle="primary" onClick={(e) => this.submit(e)} disabled={this.state.disabled}>{ this.label }</Button>
+						</CommonFormGroup>
 
 						{/* 通信メッセージ */}
 						<CommonNetworkMessage
@@ -376,6 +447,49 @@ export class CommonRegistrationBtn extends React.Component {
 
 }
 
+export function CommonSetUpdateData(_target_form) {
+
+	const setValue = (element) => {
+		let value
+		if (element.type === 'radio') {
+			if (element.checked === true) {
+				value = element.value
+			}
+		} else {
+			value = element.value
+		}
+		return value
+	}
+	const setEntryData = (data) => {
+		let entry = {}
+		const form_name = data.getAttribute('name')
+		for (var i = 0, ii = data.elements.length; i < ii; ++i) {
+			let element = data.elements[i]
+
+			if (element.name && element.name !== '__tableFilter' && element.name !== '__tableInput') {
+
+				const value = setValue(element)
+
+				if (element.name.indexOf('.') !== -1) {
+					const parentKey = element.name.split('.')[0]
+					const childKey = element.name.split('.')[1]
+					entry[parentKey] = entry[parentKey] ? entry[parentKey] : {}
+
+					if (!entry[parentKey][childKey] || entry[parentKey][childKey] && value) {
+						entry[parentKey][childKey] = value
+					}
+
+				} else {
+					entry[element.name] = value
+				}
+			}
+		}
+		entry = new LogicCommonTable().setData(entry, form_name)
+		return entry
+	}
+	return setEntryData(_target_form)
+}
+
 /**
  * 更新ボタン
  */
@@ -386,10 +500,11 @@ export class CommonUpdateBtn extends React.Component {
 		this.state = {
 			isCompleted: '',
 			isError: {},
-			isDisabled: false
+			isDisabled: false,
+			disabled: this.props.disabled
 		}
 		this.entry = this.props.entry
-		this.LogicCommonTable = new LogicCommonTable()
+		this.label = this.props.label || <span><Glyphicon glyph="ok" /> 更新</span>
 	}
 
 	/**
@@ -398,62 +513,38 @@ export class CommonUpdateBtn extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.setState(newProps)
 	}
 
 	setReqestdata() {
 
 		let data = {}
 
-		const setValue = (element) => {
-			let value
-			if (element.type === 'radio') {
-				if (element.checked === true) {
-					value = element.value
-				}
-			} else {
-				value = element.value
-			}
-			return value
-		}
-		const setEntryData = (data) => {
-			let entry = {}
-			const form_name = data.getAttribute('name')
-			for (var i = 0, ii = data.elements.length; i < ii; ++i) {
-				let element = data.elements[i]
-
-				if (element.name) {
-
-					const value = setValue(element)
-
-					if (element.name.indexOf('.') !== -1) {
-						const parentKey = element.name.split('.')[0]
-						const childKey = element.name.split('.')[1]
-						entry[parentKey] = entry[parentKey] ? entry[parentKey] : {}
-
-						if (!entry[parentKey][childKey] || entry[parentKey][childKey] && value) {
-							entry[parentKey][childKey] = value
-						}
-
-					} else {
-						entry[element.name] = value
-					}
-				}
-			}
-			entry = this.LogicCommonTable.setData(entry, form_name)
-			return entry
-		}
 		const setFeedData = () => {
 			const forms = document.forms
 			let feed = {}
 			let array = []
-			for (var i = 0, ii = forms.length; i < ii; ++i) {
-				const target_form = forms[i]
-				const isTarget = target_form.getAttribute('data-submit-form')
-				if (isTarget) {
-					let entry = setEntryData(target_form)
-					entry.id = this.entry.id
-					entry.link = this.entry.link
-					array.push(entry)
+			if (this.props.targetFrom) {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					if (forms[i].getAttribute('name') === this.props.targetFrom) {
+						let entry = CommonSetUpdateData(target_form)
+						entry.id = this.entry.id
+						entry.link = this.entry.link
+						array.push(entry)
+						break
+					}
+				}
+			} else {
+				for (let i = 0, ii = forms.length; i < ii; ++i) {
+					const target_form = forms[i]
+					const isTarget = target_form.getAttribute('data-submit-form')
+					if (isTarget) {
+						let entry = CommonSetUpdateData(target_form)
+						entry.id = this.entry.id
+						entry.link = this.entry.link
+						array.push(entry)
+					}
 				}
 			}
 			feed.entry = array
@@ -517,9 +608,9 @@ export class CommonUpdateBtn extends React.Component {
 
 						<CommonIndicator visible={this.state.isDisabled} />
 						
-						<FormGroup>
-							<Button type="submit" className="btn btn-primary" onClick={(e) => this.submit(e)}><Glyphicon glyph="ok" /> 更新</Button>
-						</FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
+							<Button type="submit" bsStyle="success" onClick={(e) => this.submit(e)} disabled={this.state.disabled}>{this.label}</Button>
+						</CommonFormGroup>
 
 						<CommonNetworkMessage
 							isError={this.state.isError}
@@ -611,9 +702,9 @@ export class CommonDeleteBtn extends React.Component {
 
 						<CommonIndicator visible={this.state.isDisabled} />
 						
-						<FormGroup>
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
 							<Button type="submit" className="btn btn-danger" onClick={(e) => this.submit(e)}><Glyphicon glyph="trash" /> 削除</Button>
-						</FormGroup>
+						</CommonFormGroup>
 
 						<CommonNetworkMessage
 							isError={this.state.isError}
@@ -667,9 +758,9 @@ export class CommonBackBtn extends React.Component {
 				)
 			} else {
 				return (
-					<FormGroup>
+					<CommonFormGroup controlLabel={this.props.controlLabel}>
 						<Button type="submit" className="btn btn-default" onClick={(e) => this.submit(e)}><Glyphicon glyph="step-backward" /> 戻る</Button>
-					</FormGroup>
+					</CommonFormGroup>
 				)
 			}
 		}
@@ -716,9 +807,9 @@ export class CommonClearBtn extends React.Component {
 				)
 			} else {
 				return (
-					<FormGroup>
+					<CommonFormGroup controlLabel={this.props.controlLabel}>
 						<Button type="submit" className="btn btn-default" onClick={(e) => this.action(e)}><Glyphicon glyph="refresh" /> クリア</Button>
-					</FormGroup>
+					</CommonFormGroup>
 				)
 			}
 		}
@@ -737,14 +828,20 @@ export class CommonFormGroup extends React.Component {
 		super(props)
 		this.state = {
 			validationState: this.props.validationState,
-			size: this.setSize(this.props.size)
+			labelSize: this.labelSize(this.props.size),
+			inputSize: this.inputSize(this.props.size)
 		}
 	}
 
-	setSize(_option) {
-		let size = 5
+	labelSize() {
+		let size = 2
+		return size
+	}
+
+	inputSize(_option) {
+		let size = 4
 		if (_option === 'sm') size = 2
-		if (_option === 'lg') size = 10
+		if (_option === 'lg') size = 9
 		return size
 	}
 
@@ -755,17 +852,18 @@ export class CommonFormGroup extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.setState({
 			validationState: newProps.validationState,
-			size: this.setSize(newProps.size)
+			labelSize: this.labelSize(newProps.size),
+			inputSize: this.inputSize(newProps.size)
 		})
 	}
 
 	render() {
 		return (
 			<FormGroup bsSize="small" validationState={this.state.validationState}>
-				<Col componentClass={ControlLabel} sm={2}>
+				<Col componentClass={ControlLabel} sm={this.state.labelSize}>
 					{this.props.controlLabel}
 				</Col>
-				<Col sm={this.state.size}>
+				<Col sm={this.state.inputSize}>
 					{this.props.children}
 				</Col>
 			</FormGroup>
@@ -799,7 +897,11 @@ export class CommonRadioBtn extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({checked: e.target.value})
+		const value = e.target.value
+		this.setState({checked: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
@@ -837,7 +939,8 @@ export class CommonDatePicker extends React.Component {
 		this.state = {
 			name: this.props.name,
 			selected: this.props.selected,
-			size: this.props.size
+			size: this.props.size,
+			dateFormat: this.props.dateFormat || 'YYYY/MM/DD'
 		}
 		moment.locale('ja')
 	}
@@ -846,8 +949,7 @@ export class CommonDatePicker extends React.Component {
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
 	 */
-	componentWillReceiveProps(newProps) {
-		this.setState({selected: newProps.selected})
+	componentWillReceiveProps() {
 	}
 
 	/**
@@ -856,6 +958,9 @@ export class CommonDatePicker extends React.Component {
 	 */
 	changed(date) {
 		this.setState({selected: date})
+		if (this.props.onChange) {
+			this.props.onChange(date)
+		}
 	}
 
 	render() {
@@ -867,6 +972,8 @@ export class CommonDatePicker extends React.Component {
 					name={this.state.name}
 					onChange={(e) => this.changed(e)}
 					className="form-control"
+					placeholderText={this.props.dateFormat}
+					dateFormat={this.props.dateFormat}
 				/>
 			</CommonFormGroup>
 		)
@@ -899,70 +1006,36 @@ export class CommonPrefecture extends React.Component {
 	 * 値の変更処理
 	 * @param {*} e 
 	 */
-	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+	changed(value) {
+		this.setState({value: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
+	}
+
+	datas = () => {
+		const data = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県']
+		return data.map((value) => {
+			return {
+				label: value,
+				value: value
+			}
+		})
 	}
 
 	render() {
 
 		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				<FormControl
-					componentClass={this.props.componentClass}
-					placeholder="都道府県"
-					name={this.props.name}
-					value={this.state.value}
-					onChange={(e) => this.changed(e)}
-				>
-					<option value="1">北海道</option>
-					<option value="2">青森県</option>
-					<option value="3">岩手県</option>
-					<option value="4">宮城県</option>
-					<option value="5">秋田県</option>
-					<option value="6">山形県</option>
-					<option value="7">福島県</option>
-					<option value="8">茨城県</option>
-					<option value="9">栃木県</option>
-					<option value="10">群馬県</option>
-					<option value="11">埼玉県</option>
-					<option value="12">千葉県</option>
-					<option value="13">東京都</option>
-					<option value="14">神奈川県</option>
-					<option value="15">新潟県</option>
-					<option value="16">富山県</option>
-					<option value="17">石川県</option>
-					<option value="18">福井県</option>
-					<option value="19">山梨県</option>
-					<option value="20">長野県</option>
-					<option value="21">岐阜県</option>
-					<option value="22">静岡県</option>
-					<option value="23">愛知県</option>
-					<option value="24">三重県</option>
-					<option value="25">滋賀県</option>
-					<option value="26">京都府</option>
-					<option value="27">大阪府</option>
-					<option value="28">兵庫県</option>
-					<option value="29">奈良県</option>
-					<option value="30">和歌山県</option>
-					<option value="31">鳥取県</option>
-					<option value="32">島根県</option>
-					<option value="33">岡山県</option>
-					<option value="34">広島県</option>
-					<option value="35">山口県</option>
-					<option value="36">徳島県</option>
-					<option value="37">香川県</option>
-					<option value="38">愛媛県</option>
-					<option value="39">高知県</option>
-					<option value="40">福岡県</option>
-					<option value="41">佐賀県</option>
-					<option value="42">長崎県</option>
-					<option value="43">熊本県</option>
-					<option value="44">大分県</option>
-					<option value="45">宮崎県</option>
-					<option value="46">鹿児島県</option>
-					<option value="47">沖縄県</option>
-				</FormControl>
-			</CommonFormGroup>
+			<CommonSelectBox
+				controlLabel="都道府県"
+				size="sm"
+				name={this.props.name}
+				value={this.state.value}
+				validationState={this.props.validationState}
+				options={this.datas()}
+				onChange={(value)=>this.changed(value)}
+			/>
+
 		)
 	}
 
@@ -995,12 +1068,21 @@ export class CommonSelectBox extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+		const value = e.target.value
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
 
-		const options = this.props.options.map((obj, index) => {
+		const blank = [{
+			label: '--選択してください--',
+			value: ''
+		}]
+		const array = blank.concat(this.props.options)
+		const options = array.map((obj, index) => {
 			return <option key={index} value={obj.value}>{obj.label}</option>
 		})
 
@@ -1034,7 +1116,9 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.size
+			size: this.props.comparison ? 'lg' : this.props.size,
+			isComparison: this.props.comparison || this.props.comparison === '' ? true : false,
+			comparisonValue : this.props.comparison
 		}
 	}
 
@@ -1046,7 +1130,8 @@ export class CommonInputText extends React.Component {
 		this.setState({
 			value: newProps.value,
 			readonly: newProps.readonly,
-			size: newProps.size
+			size: newProps.size,
+			comparisonValue: newProps.comparison
 		})
 	}
 
@@ -1055,38 +1140,77 @@ export class CommonInputText extends React.Component {
 	 * @param {*} e 
 	 */
 	changed(e: InputEvent) {
-		this.setState({value: e.target.value})
+		const value = e.target.value
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
 	}
 
 	render() {
 
-		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				{this.state.readonly === 'true' && 
-					<div>
-						<FormControl.Static name={this.state.name} id={this.state.name}>
-							{ this.state.value }
-						</FormControl.Static>
-						<FormControl
-							name={this.state.name}
-							type={this.state.type}
-							value={this.state.value}
-							className="hide"
-						/>
+		const TextNode = (
+			<FormControl
+				name={this.state.name}
+				type={this.state.type}
+				placeholder={this.state.placeholder}
+				value={this.state.value}
+				onChange={(e) => this.changed(e)}
+				data-validate={this.props.validate}
+				data-required={this.props.required}
+				bsSize="small"
+			/>
+		)
+		const InputTextNode = () => {
+			if (this.state.isComparison) {
+				return (
+					<div className="comparison">
+						<div className="comparison-input">
+							{TextNode}
+						</div>
+						<div className="comparison-value">
+							{this.state.comparisonValue === '' ? <span style={{ color: '#ccc', 'font-size': '11px' }}>比較データなし</span> : this.state.comparisonValue}
+						</div>
 					</div>
+				)
+			} else {
+				return (
+					<div>
+						{TextNode}
+						{this.props.customIcon && 
+							<FormControl.Feedback>
+								<Glyphicon glyph={this.props.customIcon} />
+							</FormControl.Feedback>
+						}
+					</div>	
+				)
+			}
+		}
+
+		return (
+			<div>
+				{ !this.props.table && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{this.state.readonly && 
+							<FormControl.Static name={this.state.name} id={this.state.name}>
+								{ this.state.value }
+								<FormControl
+									name={this.state.name}
+									type={this.state.type}
+									value={this.state.value}
+									className="hide"
+								/>
+							</FormControl.Static>
+						}
+						{(!this.state.readonly || this.state.readonly === 'false') && 
+							InputTextNode()
+						}
+					</CommonFormGroup>
 				}
-				{ (!this.state.readonly || this.state.readonly === 'false') && 
-					<FormControl
-						name={this.state.name}
-						type={this.state.type}
-						placeholder={this.state.placeholder}
-						value={this.state.value}
-						onChange={(e) => this.changed(e)}
-						data-validate={this.props.validate}
-						data-required={this.props.required}
-					/>
+				{ this.props.table && 
+					InputTextNode()
 				}
-			</CommonFormGroup>
+			</div>
 		)
 	}
 
@@ -1101,8 +1225,11 @@ export class CommonTable extends React.Component {
 		super(props)
 		this.state = {
 			data: this.props.data,
-			header: this.props.header
+			header: this.props.header,
+			actionType: this.props.edit ? 'edit' : 'remove'
 		}
+		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
+		this.tableClass = this.props.noneScroll ? 'common-table' : 'common-table scroll'
 	}
 
 	/**
@@ -1113,17 +1240,49 @@ export class CommonTable extends React.Component {
 		this.setState({data: newProps.data, header: newProps.header})
 	}
 
+	actionBtn(_index) {
+		const data = this.state.data[_index]
+		return (
+			<div>
+				{ this.state.actionType === 'edit' && 
+					<Button bsSize="small" onClick={() => this.props.edit(data, _index)}><Glyphicon glyph="pencil" /></Button>
+				}
+				{ this.state.actionType === 'remove' && 
+					<Button bsSize="small" onClick={() => this.props.remove(data, _index)} bsStyle="danger"><Glyphicon glyph="remove" /></Button>
+				}
+			</div>
+		)
+	}
+	showRemoveBtn() {
+		if (this.state.actionType === 'edit') {
+			this.setState({actionType: 'remove'})
+		} else {
+			this.setState({actionType: 'edit'})
+		}
+	}
+
+	editName() {
+		return this.props.edit ? '編集' : '削除'
+	}
+
 	render() {
 
 		// ヘッダー情報をキャッシュする
 		const cashInfo = {}
+		let cashInfolength = 0
 		const header_obj = this.state.header
+		const disabledList = {
+			'link': true,
+			'author': true,
+			'published': true,
+			'updated': true
+		}
 
 		let option = [{
-			field: 'no', title: 'No', width: '50px'
+			field: 'no', title: 'No', width: '20px'
 		}]
-		if (this.props.edit) option.push({
-			field: 'edit', title: this.props.edit.title, width: '50px', onclick: this.props.edit.onclick
+		if (this.props.edit || this.props.remove) option.push({
+			field: 'edit', title: this.editName(), width: '30px'
 		})
 		const thNode = (_obj, _index) => {
 			const bsStyle = {
@@ -1133,6 +1292,7 @@ export class CommonTable extends React.Component {
 			cashInfo[field] = _obj
 			cashInfo[field].style = bsStyle
 			cashInfo[field].index = _index
+			cashInfolength++
 			return (
 				<th key={_index} style={bsStyle}>
 					<div style={bsStyle}>{_obj.title}</div>
@@ -1144,41 +1304,106 @@ export class CommonTable extends React.Component {
 			return thNode(obj, i)
 		})
 
-		const convertValue = (convertData, value) => {
-			return convertData ? convertData[value] : value
+		const convertValue = (value, _cashData, _index) => {
+			const convertData = _cashData.convert
+			const style = _cashData.style ? _cashData.style : null
+			const filter = _cashData.filter
+			const input = _cashData.input
+			if (convertData) {
+				return <div style={style} className="ellipsis">{convertData[value]}</div>
+			} else {
+				if (Array.isArray(value)) {
+					return (
+						<div className="array ellipsis" style={style}>
+							{
+								value.map((_value, i) => {
+									if (Object.prototype.toString.call(_value) === '[object Object]') {
+										return (
+											<div key={i} style={style}>{_value.content}</div>
+										)
+									} else {
+										return (
+											<div key={i} style={style}>{_value}</div>
+										)
+									}
+								})
+							}
+						</div>
+					)
+				} else {
+					if (filter) {
+						return (
+							<CommonFilterBox
+								name="__tableFilter"
+								value={value}
+								options={filter.options}
+								onChange={(data) => filter.onChange(data, _index)}
+								Creatable
+								table
+							/>
+						)
+					} else if (input) {
+						return (
+							<CommonInputText
+								name="__tableInput"
+								type="text"
+								value={value}
+								onChange={(data) => input.onChange(data, _index)}
+								table
+							/>
+						)
+					} else {
+						return <div style={style} className="ellipsis">{value}</div>
+					}
+				}
+			}
 		}
-		const body = this.state.data && this.state.data.map((obj, i) => {
+		const body = (this.state.data && this.state.data.length > 0) && this.state.data.map((obj, i) => {
 
 			const td = (_obj, _index) => {
 
-				let tdCount = 1
-				let array = new Array(cashInfo.length)
+				let tdCount = 0
+				let array = new Array(cashInfolength)
 
-				array[cashInfo.no.index] = <td key="0" style={cashInfo.no.style}>{(_index + 1)}</td>
-				if (this.props.edit) {
-					array[cashInfo.edit.index] = <td key="1" style={cashInfo.edit.style}><Button onClick={() => this.props.edit.onclick(_index)}>{this.props.edit.title}</Button></td>
+				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
+				tdCount++
+				if (this.props.edit || this.props.remove) {
+					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
+					tdCount++
+				}
+
+				if (cashInfo.btn1) {
+					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><Button bsSize="small" onClick={()=>cashInfo.btn1.onClick(_obj)}>{cashInfo.btn1.label}</Button></td>
+					tdCount++
+				}
+				if (cashInfo.btn2) {
+					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><Button bsSize="small" onClick={()=>cashInfo.btn2.onClick(_obj)}>{cashInfo.btn2.label}</Button></td>
+					tdCount++
+				}
+				if (cashInfo.btn3) {
+					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><Button bsSize="small" onClick={()=>cashInfo.btn3.onClick(_obj)}>{cashInfo.btn3.label}</Button></td>
 					tdCount++
 				}
 
 				const setCel = (__obj, _key) => {
+
 					Object.keys(__obj).forEach(function (__key) {
 
-						if (typeof __obj[__key] === 'object') {
+						if (Object.prototype.toString.call(__obj[__key]) === '[object Object]') {
+
 							setCel(__obj[__key], _key + __key + '.')
-						} else {
+
+						} else if (!disabledList[__key]) {
+
 							const field = _key.replace(/\./g, '___') + __key
-							tdCount++
 							if (cashInfo[field]) {
 								array[cashInfo[field].index] = (
 									<td
 										key={tdCount}
 										style={cashInfo[field].style ? cashInfo[field].style : ''}
 										name={_key + __key}
-										data-value={__obj[__key]}
 									>
-										<div style={cashInfo[field].style ? cashInfo[field].style : ''}>
-											{ convertValue(cashInfo[field].convert, __obj[__key]) }
-										</div>
+										{ convertValue(__obj[__key], cashInfo[field], _index) }
 									</td>
 								)
 							} else {
@@ -1187,17 +1412,20 @@ export class CommonTable extends React.Component {
 										key={tdCount}
 										style={{ 'display': 'none' }}
 										name={_key + __key}
-										data-value={__obj[__key]}
 									>
-										<div>
-											{ __obj[__key] }
-										</div>
+										{ convertValue(__obj[__key], {}) }
 									</td>
 								)
 							}
+							tdCount++
 						}
 
 					})
+
+					for (let l = 0, ll = array.length; l < ll; ++l) {
+						array[l] = array[l] ? array[l] : <td key={l}></td>
+					}
+
 					return array
 				}
 				array = setCel(_obj, '')
@@ -1211,7 +1439,22 @@ export class CommonTable extends React.Component {
 		const tableNode = (
 			<div>
 				{ this.props.children }
-				<div className="common-table">
+				{ (this.props.add && this.state.actionType === 'edit' || this.props.add && !this.props.edit) &&
+					<Button onClick={() => this.props.add()} bsSize="sm">
+						<Glyphicon glyph="plus"></Glyphicon>
+					</Button>
+				}
+				{ (this.props.remove && this.state.actionType === 'edit') &&
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger">
+						<Glyphicon glyph="minus"></Glyphicon>
+					</Button>
+				}
+				{ (this.props.remove && this.state.actionType === 'remove' && this.props.edit) &&
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm">
+						キャンセル
+					</Button>
+				}
+				<div className={this.tableClass}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>
 							<tr>{header}</tr>
@@ -1224,12 +1467,12 @@ export class CommonTable extends React.Component {
 
 		return (
 			<div>
-				{ this.props.controlLabel &&
+				{ this.isControlLabel &&
 				<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size="lg">
 					{ tableNode }
 				</CommonFormGroup>
 				}
-				{!this.props.controlLabel &&
+				{ !this.isControlLabel &&
 					tableNode
 				}
 			</div>
@@ -1265,16 +1508,19 @@ export class CommonModal extends React.Component {
 		this.props.closeBtn()
 	}
 
-	add() {
+	getFormData() {
 		const modal_body = document.getElementById('common_modal_body')
 		const form = modal_body.children[0]
-		const obj = {}
-		for (let i = 0, ii = form.elements.length; i < ii; ++i) {
-			const element = form.elements[i]
-			const name = element.getAttribute('name')
-			obj[name] = element.value
-		}
-		this.props.addBtn(obj)
+		let entry = CommonSetUpdateData(form)
+		return entry
+	}
+
+	add() {
+		this.props.addBtn(this.getFormData())
+	}
+
+	edit() {
+		this.props.editBtn(this.getFormData())
 	}
 
 	render() {
@@ -1303,14 +1549,34 @@ export class CommonModal extends React.Component {
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body" id="common_modal_body">
+							<div class="modal-body" id="common_modal_body" style={ this.props.height && {height: this.props.height}}>
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
-								{ this.props.addBtn && 
-									<button type="button" class="btn btn-primary" onClick={() => this.add()}>追加</button>
-								}
-								<button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => this.close()}>閉じる</button>
+								<div>
+									{ this.props.addBtn && 
+										<Button bsStyle="primary" onClick={() => this.add()}>追加</Button>
+									}
+									{ this.props.addAxiosBtn && 
+										<CommonRegistrationBtn
+											url={this.props.addAxiosBtn.url}
+											callback={(data) => this.props.addAxiosBtn.callback(data)}
+											targetFrom={this.props.fromName}
+										/>
+									}
+									{ this.props.editBtn && 
+										<Button bsStyle="success" onClick={() => this.edit()}>更新</Button>
+									}
+									{ this.props.editAxiosBtn && 
+										<CommonUpdateBtn
+											url={this.props.editAxiosBtn.url}
+											callback={(data) => this.props.editAxiosBtn.callback(data)}
+											entry={this.props.editAxiosBtn.entry}
+											targetFrom={this.props.fromName}
+										/>
+									}
+									<Button onClick={() => this.close()}>閉じる</Button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1398,6 +1664,371 @@ export class CommonValidateForm extends React.Component {
 			<Form name={this.props.name} horizontal data-submit-form onChange={(e) => this.onValidate(e)}>
 				{ childrenWithProps(this.props.children) }
 			</Form>
+		)
+	}
+
+}
+
+/**
+ * 検索条件
+ */
+export class CommonSearchConditionsFrom extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			open: false
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps() {
+	}
+
+	doSearch() {
+		let conditions = null
+		const form = document.CommonSearchConditionsFrom
+		for (var i = 0, ii = form.length; i < ii; ++i) {
+			const name = form[i].name
+			const value = form[i].value
+
+			if (value || value !== '') {
+				conditions = conditions ? conditions + '&' : ''
+				conditions = conditions + name + '=*' + value + '*'
+			}
+
+		}
+		this.setState({ open: !this.state.open })
+		this.props.doSearch(conditions)
+	}
+
+	render() {
+
+		const icon = this.state.open === true ? 'menu-up' : 'menu-down'
+		const header = (
+			<div onClick={() => this.setState({ open: !this.state.open })}>検索条件 <Glyphicon glyph={icon} style={{ float: 'right' }} /></div>
+		)
+
+		return (
+			<PanelGroup defaultActiveKey="1">
+				<Panel collapsible header={header} eventKey="1" bsStyle="success" expanded={this.state.open}>
+					<Form horizontal name="CommonSearchConditionsFrom">
+						{this.props.children}
+						<CommonFormGroup controlLabel="">
+							<Button bsStyle="primary" onClick={() => { this.doSearch() }}>検索</Button>
+						</CommonFormGroup>
+					</Form>
+				</Panel>
+			</PanelGroup>
+		)
+	}
+
+}
+
+/**
+ * ページング
+ */
+export class CommonPagination extends React.Component {
+
+	constructor(props:Props) {
+		super(props)
+		this.state = { activePage : 1 , items : 0  }
+		this.pageIndex = 0         // ページネーションを貼る最大index
+		this.resultcount = 0	   // 検索結果件数
+		this.url =''
+	}
+ 
+	/****
+	 * ページネーションのIndex設定処理
+	 * @url ページネーションを設定するURL
+	 * @page 取得したいページ
+	 *****/
+	buildIndex(url, activePage) {
+
+		// ページング取得に必要な設定を行う
+		let param
+		let pageIndex =
+			activePage + this.props.maxButtons > this.pageIndex ? activePage + this.props.maxButtons : this.pageIndex
+		if (pageIndex > this.pageIndex) {
+			if (this.pageIndex > 1) {
+				param = this.pageIndex + ',' + pageIndex
+			} else {
+				param = pageIndex
+			}
+
+		    // サーバにページネーションIndex作成リクエストを送信
+			axios({
+				url: url + '&_pagination=' + param,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.pageIndex = pageIndex
+			}).catch(() => {
+				this.pageIndex = pageIndex
+			})
+        
+		} 
+	}
+
+	 handleSelect(eventKey) {		 
+		this.buildIndex(this.props.url, eventKey)
+		this.setState( {activePage: eventKey} )
+		this.props.onChange(eventKey)	// 再検索
+	}
+	
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+
+		const new_url = newProps.url
+		if (this.url !== new_url) {
+	    	// pageIndex作成処理呼び出し
+			this.buildIndex(new_url, 1)
+			this.url = new_url
+			this.setState({activePage:1})
+		}
+		// 件数取得
+		axios({
+			url: new_url + '&c',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			this.resultcount = Number(response.data.feed.title)
+			const items =  Math.ceil(this.resultcount / this.props.maxDisplayRows)
+			this.setState({ items: items })
+		}).catch(() => {
+			this.setState({ items: 0 })
+		})
+	}
+
+	render() {
+		return (
+			<div className="pagination_area">
+				<div className="count_area">
+					{(this.state.activePage - 1) * this.props.maxDisplayRows} - {(this.state.activePage) * this.props.maxDisplayRows} / {this.resultcount} 件
+				</div>
+				<Pagination
+					prev
+					next
+					first
+					last
+					ellipsis
+					boundaryLinks
+					items={this.state.items}
+					maxButtons={this.props.maxButtons}
+					activePage={this.state.activePage}
+					onSelect={(key) => this.handleSelect(key)} />
+			</div>
+		)
+	}
+}
+
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
+
+/**
+ * セレクトボックス(フィルター機能つき)
+ */
+export class CommonFilterBox extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.addBtn = (
+			<Button bsSize="sm" onClick={() => this.props.add()} className="CommonFilterBox-button">
+				<Glyphicon glyph="plus"></Glyphicon>
+			</Button>
+		)
+		this.editBtn = (
+			<Button bsSize="sm" bsStyle="success" onClick={() => this.props.edit()} className="CommonFilterBox-button">
+				<Glyphicon glyph="pencil"></Glyphicon>
+			</Button>
+		)
+		this.detailBtn = (
+			<Button bsSize="sm" onClick={() => this.props.detail()} className="CommonFilterBox-button">
+				<Glyphicon glyph="list-alt"></Glyphicon>
+			</Button>
+		)
+		this.state = {
+			value: this.props.value,
+			options: this.props.options,
+			size: this.props.size,
+			actionBtn: this.props.add ? this.addBtn : <span></span>
+		}
+		this.classFilterName = (this.props.add || this.props.edit || this.props.detail) && 'btn-type'
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+
+		let actionBtn = <span></span>
+		// ボタンの切り替え処理
+		if (this.props.multi && newProps.value && newProps.value.length > 0) {
+			if (this.props.edit) {
+				actionBtn = this.editBtn
+			} else if (this.props.detail) {
+				actionBtn = this.detailBtn
+			}
+		} else if (!this.props.multi && newProps.value) {
+			if (this.props.edit) {
+				actionBtn = this.editBtn
+			} else if (this.props.detail) {
+				actionBtn = this.detailBtn
+			}
+		} else if (this.props.add) {
+			actionBtn = this.addBtn
+		}
+
+		this.setState({
+			value: newProps.value,
+			options: newProps.options,
+			actionBtn: actionBtn
+		})
+	}
+
+	/**
+	 * 値の変更処理
+	 */
+	changed(obj) {
+		let value = obj ? obj.value : null
+		if (this.props.multi) {
+			value = obj ? obj : []
+		}
+		this.setState({ value: value })
+
+		if (this.props.onChange) {
+			this.props.onChange(obj)
+		}
+	}
+
+	render() {
+
+		const SelectNode = () => {
+			if (this.props.Creatable) {
+				return (
+					<Select.Creatable
+						name={this.props.name}
+						value={this.state.value}
+						options={this.props.options}
+						onChange={(obj) => this.changed(obj)}
+						className={this.classFilterName}
+						multi={this.props.multi}
+					/>
+				)
+			} else {
+				return (
+					<Select
+						name={this.props.name}
+						value={this.state.value}
+						options={this.props.options}
+						onChange={(obj) => this.changed(obj)}
+						className={this.classFilterName}
+						multi={this.props.multi}
+					/>
+				)
+			}
+		}
+		const FilterBoxNode = () => {
+			if (this.props.table) {
+				return (
+					<div style={{width: '100%'}}>
+						{ SelectNode() }
+						{ this.state.actionBtn }
+					</div>
+				)
+			} else {
+				return (
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{ SelectNode() }
+						{ this.state.actionBtn }
+					</CommonFormGroup>
+				)
+			}
+		}
+		return FilterBoxNode()
+	}
+
+}
+
+/**
+ * 月次選択(フィルター機能つき)
+ */
+export class CommonMonthlySelect extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			size: 'sm'
+		}
+		this.option = this.setOptions()
+	}
+
+	setOptions = () => {
+		const startYear = 2017
+		const setMonth = (_array, _yyyy) => {
+			for (let i = 1, ii = 13; i < ii; ++i) {
+				const mm = i < 10 ? '0' + i : i
+				const value = _yyyy + '/' + mm
+				_array.push({
+					label: value,
+					value: value
+				})
+			}
+			return _array
+		}
+		let array = []
+		for (let i = 0, ii = 5; i < ii; ++i) {
+			array = setMonth(array, (startYear + i))
+		}
+		return array
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		if (newProps.value) {
+			this.setState({
+				value: newProps.value
+			})
+		}
+	}
+
+	/**
+	 * 値の変更処理
+	 */
+	changed(obj) {
+		let value = obj ? obj.value : null
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(obj)
+		}
+	}
+
+	render() {
+
+		return (
+			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+				<Select
+					name={this.props.name}
+					value={this.state.value}
+					options={this.option}
+					onChange={(obj) => this.changed(obj)}
+				/>
+			</CommonFormGroup>
 		)
 	}
 

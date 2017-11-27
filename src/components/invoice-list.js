@@ -6,6 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Button,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -16,7 +17,6 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonFilterBox,
 	CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
@@ -27,8 +27,7 @@ type State = {
 	url: string
 }
 
-
-export default class CustomerList extends React.Component {
+export default class InvoiceList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -36,7 +35,7 @@ export default class CustomerList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/customer?f&l=' + this.maxDisplayRows
+		this.url = '/d/invoice?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -85,11 +84,12 @@ export default class CustomerList extends React.Component {
 
 	/**
 	 * 更新画面に遷移する
+	 * @param {*} index 
 	 */
-	onSelect(_data) {
+	onSelect(index) {
 		// 入力画面に遷移
-		const customer_code = _data.customer.customer_code
-		this.props.history.push('/CustomerUpdate?' + customer_code)
+		const customer_code = this.state.feed.entry[index].customer.customer_code
+		this.props.history.push('/InvoiceUpdate?' + customer_code)
 	}
 
 	/**
@@ -120,7 +120,7 @@ export default class CustomerList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>顧客一覧</PageHeader>
+						<PageHeader>請求書一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
@@ -143,27 +143,27 @@ export default class CustomerList extends React.Component {
 							/>
 							<CommonInputText
 								controlLabel="電話番号"
-								name="contact_information.tel"
+								name="customer.customer_tel"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="FAX"
-								name="contact_information.fax"
+								name="customer.customer_fax"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="メールアドレス"
-								name="contact_information.email"
+								name="customer.customer_email"
 								type="email"
 								placeholder="logioffice@gmail.com"
 							/>
 							<CommonInputText
 								controlLabel="郵便番号"
-								name="contact_information.zip_code"
+								name="customer.zip_code"
 								type="text"
 								placeholder="123-4567"
 								size="sm"
@@ -171,62 +171,22 @@ export default class CustomerList extends React.Component {
 							<CommonPrefecture
 								controlLabel="都道府県"
 								componentClass="select"
-								name="contact_information.prefecture"
+								name="customer.prefecture"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="市区郡長村"
-								name="contact_information.address1"
+								name="customer.address1"
 								type="text"
 								placeholder="◯◯市××町"
 							/>
 							<CommonInputText
 								controlLabel="番地"
-								name="contact_information.address2"
+								name="customer.address2"
 								type="text"
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
 							/>
-
-							<CommonInputText
-								controlLabel="URL"
-								name="customer.url"
-								type="text"
-								placeholder="url"
-								size="lg"
-							/>
-
-							<CommonInputText
-								controlLabel="顧客側の担当者"
-								name="customer.person_in_charge"
-								type="text"
-								placeholder="顧客側の担当者"
-								size="lg"
-							/>
-							<CommonInputText
-								controlLabel="取扱品"
-								name="customer.products"
-								type="text"
-								placeholder="取扱品"
-								size="lg"
-							/>
-
-							<CommonFilterBox
-								controlLabel="集荷出荷区分"
-								size="sm"
-								name="customer.shipment_class"
-								options={[{
-									label: '出荷',
-									value: '0'
-								}, {
-									label: '集荷',
-									value: '1'
-								}, {
-									label: '両方',
-									value: '2'
-								}]}
-							/>
-
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -241,48 +201,31 @@ export default class CustomerList extends React.Component {
 							maxButtons={4}
 						/>
 
+						<Button>顧客ごとに表示</Button>
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data)=>this.onSelect(data)}
+							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
-								field: 'customer.customer_class.delivery_company', title: '配送業者', width: '150px'
+								field: 'customer.customer_code',title: '請求番号', width: '200px'
 							}, {
-								field: 'customer.customer_class.classcode', title: '分類コード', width: '150px'
-							},{	
-								field: 'customer.customer_code',title: '顧客コード', width: '100px'
+								field: 'customer.customer_name', title: '見積番号', width: '200px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '150px'
+								field: 'customer.customer_name_kana', title: '合計請求金額', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '150px'
+								field: 'customer.customer_tel', title: '課税対象合計', width: '200px'
 							}, {
-								field: 'contact_information.tel', title: '電話番号', width: '100px'
+								field: 'customer.customer_staff', title: '振込先', width: '200px'
 							}, {
-								field: 'billto.billto_name', title: '請求先', width: '200px'
+								field: 'customer.customer_email', title: '小計金額', width: '200px'
 							}, {
-								field: 'customer.sales_staff', title: '営業担当者', width: '200px'
+								field: 'customer.customer_fax', title: '消費税', width: '200px'
 							}, {
-								field: 'customer.working_staff', title: '作業担当者', width: '200px'
+								field: 'customer.zip_code', title: 'EMS', width: '150px'
 							}, {
-								field: 'contact_information.fax', title: 'FAX', width: '100px'
+								field: 'customer.prefecture', title: '立替金', width: '200px'
 							}, {
-								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
-							}, {
-								field: 'contact_information.zip_code', title: '郵便番号', width: '50px'
-							}, {
-								field: 'contact_information.prefecture', title: '都道府県', width: '50px'
-							}, {
-								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
-							}, {
-								field: 'contact_information.address2', title: '番地', width: '200px'
-							}, {
-								field: 'customer.url', title: '顧客URL', width: '200px'
-							}, {
-								field: 'customer.person_in_charge', title: '顧客の担当者', width: '200px'
-							}, {
-								field: 'customer.products', title: '取扱品', width: '200px'
-							}, {
-								field: 'customer.shipment_class', title: '集荷出荷区分', width: '200px',convert: { 0:'出荷', 1:'集荷', 2:'両方'}
+								field: 'customer.address1', title: '購入、弁済代', width: '200px'
 							}]}
 						/>
 					</Col>  

@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import CustomerForm from './customer-form'
+import StaffForm from './staff-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,7 +22,7 @@ import {
 	CommonBackBtn
 } from './common'
 
-export default class CustomerUpdate extends React.Component {
+export default class StaffUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -30,12 +30,13 @@ export default class CustomerUpdate extends React.Component {
 			isDisabled: false,
 			isError: {}
 		}
+		this.superiorSelect = false
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/staff'
 
 		// 戻る先のURL
-		this.backUrl = '#/CustomerList'
+		this.backUrl = '#/StaffList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -64,7 +65,7 @@ export default class CustomerUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-
+				
 				this.forceUpdate()
 			}
 
@@ -87,6 +88,7 @@ export default class CustomerUpdate extends React.Component {
 		location.href = this.backUrl
 	}
 
+	
 	render() {
 		return (
 			<Grid>
@@ -100,7 +102,7 @@ export default class CustomerUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							顧客情報の更新
+							担当者情報の更新
 						</PageHeader>
 
 					</Col>
@@ -120,7 +122,7 @@ export default class CustomerUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<CustomerForm name="mainForm" entry={this.entry} />
+						<StaffForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
