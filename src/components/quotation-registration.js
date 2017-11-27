@@ -18,7 +18,8 @@ import {
 	CommonFilterBox,
 	CommonMonthlySelect,
 	CommonInputText,
-	CommonRegistrationBtn
+	CommonRegistrationBtn,
+	CommonTable
 } from './common'
 
 import {
@@ -39,7 +40,10 @@ export default class QuotationRegistration extends React.Component {
 
 		// 初期値の設定
 		this.entry = {
-			quotation: {},
+			quotation: {
+				basic_condition: [],
+				manifesto: []
+			},
 			billto: {}
 		}
 
@@ -50,9 +54,15 @@ export default class QuotationRegistration extends React.Component {
 		this.billto = null
 		this.monthly = null
 		this.selfValue = ''
+		this.template = {
+			quotation: {
+				basic_condition: [],
+				manifesto: []
+			}
+		}
 
 	}
- 
+
 	/**
 	 * 画面描画の前処理
 	 */
@@ -184,9 +194,16 @@ export default class QuotationRegistration extends React.Component {
 
 	changeTemplate(_data) {
 		if (_data) {
-			this.template = _data.value
+			this.selectTemplate = _data.value
+			this.template = _data.data
 		} else {
-			this.template = null
+			this.selectTemplate = null
+			this.template = {
+				quotation: {
+					basic_condition: [],
+					manifesto: []
+				}
+			}
 		}
 		this.forceUpdate()
 	}
@@ -263,12 +280,42 @@ export default class QuotationRegistration extends React.Component {
 							<CommonFilterBox
 								controlLabel="コピー元の見積書"
 								name=""
-								value={this.template}
+								value={this.selectTemplate}
 								options={this.templateList}
 								detail={() => this.setState({ showQuotationDetailModal: true })}
 								onChange={(data) => this.changeTemplate(data)}
 							/>
 						}
+						<div className="hide">
+							<CommonTable
+								name="quotation.basic_condition"
+								data={this.template.quotation.basic_condition}
+								header={[{
+									field: 'title',title: '条件名', width: '300px'
+								}]}
+							/>
+							<CommonTable
+								name="item_details"
+								data={this.template.item_details}
+								header={[{
+									field: 'item_name',title: '項目', width: '100px'
+								}]}
+							/>
+							<CommonTable
+								name="remarks"
+								data={this.template.remarks}
+								header={[{
+									field: 'content',title: '備考'
+								}]}
+							/>
+							<CommonTable
+								name="quotation.manifesto"
+								data={this.template.quotation.manifesto}
+								header={[{
+									field: 'manifesto_code',title: '品番', width: '100px'
+								}]}
+							/>
+						</div>
 						<CommonRegistrationBtn label="見積内容入力へ" url={this.url} callback={(data) => this.callbackRegistrationButton(data)} disabled={this.state.disabled} />	
 					</Form>
 				</Row>

@@ -64,11 +64,11 @@ export default class QuotationUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.entry.customer = this.entry.customer || []
-				this.entry.basic_condition = this.entry.basic_condition || []
+				this.entry.quotation = this.entry.quotation || {}
+				this.entry.quotation.basic_condition = this.entry.quotation.basic_condition || []
 				this.entry.item_details = this.entry.item_details || []
 				this.entry.remarks = this.entry.remarks || []
-				this.entry.manifesto = this.entry.manifesto || []
+				this.entry.quotation.manifesto = this.entry.quotation.manifesto || []
 
 				this.forceUpdate()
 			}
@@ -82,6 +82,7 @@ export default class QuotationUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
+		location.reload()
 	}
 
 	/**
