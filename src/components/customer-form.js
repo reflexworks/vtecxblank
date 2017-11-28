@@ -411,7 +411,6 @@ export default class CustomerForm extends React.Component {
 							componentClass="select"
 							name="contact_information.prefecture"
 							value={this.entry.contact_information.prefecture}
-							size="sm"
 						/>
 
 						<CommonInputText
@@ -441,12 +440,11 @@ export default class CustomerForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel="顧客側の担当者"
+							controlLabel="担当者"
 							name="customer.person_in_charge"
 							type="text"
-							placeholder="顧客側の担当者"
+							placeholder="担当者"
 							value={this.entry.customer.person_in_charge}
-							size="lg"
 						/>	
 
 						<CommonInputText
