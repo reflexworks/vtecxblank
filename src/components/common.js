@@ -1428,6 +1428,7 @@ export class CommonTable extends React.Component {
 
 					return array
 				}
+				if (!_obj) _obj = {}
 				array = setCel(_obj, '')
 				return array
 			}
