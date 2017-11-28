@@ -6,7 +6,8 @@ import {
 	Form,
 	Tabs,
 	Tab,
-//	Glyphicon
+	Glyphicon,
+	Button
 } from 'react-bootstrap'
 import type {
 	Props
@@ -14,7 +15,8 @@ import type {
 
 import {
 	CommonInputText,
-	CommonTable
+	CommonTable,
+	CommonFilterBox
 } from './common'
 
 import {
@@ -143,13 +145,36 @@ export default class QuotationForm extends React.Component {
 		if (_celIndex === 2) itemName = 'unit'
 		if (_celIndex === 3) itemName = 'unit_price'
 		if (_celIndex === 4) itemName = 'remarks'
-		if (itemName) this.entry.item_details[_rowindex][itemName] = _data.value
+		if (itemName) this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 		this.forceUpdate()
 	}
 
 	changeRemarks(_data, _rowindex) {
 		this.entry.remarks[_rowindex].content = _data.value
 		this.forceUpdate()
+	}
+
+	getManifestoList(input) {
+		return axios({
+			url: `/d/manifesto?f&manifesto.manifesto_code=*${input}*`,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				const optionsList = response.data.feed.entry.map((_obj) => {
+					return {
+						label: _obj.manifesto.manifesto_code,
+						value: _obj.manifesto.manifesto_code,
+						data: _obj
+					}
+				})
+				return { options: optionsList }
+			}
+
+		})
 	}
 
 	showAddModal(_key) {
@@ -320,7 +345,7 @@ export default class QuotationForm extends React.Component {
 								}]}
 								add={() => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
 								remove={(data, index) => this.removeList('item_details', index)}
-								noneScroll
+								fixed
 							/>
 
 						</Tab>
@@ -355,7 +380,7 @@ export default class QuotationForm extends React.Component {
 								}]}
 								add={() => this.addList('remarks', { content: ''})}
 								remove={(data, index) => this.removeList('remarks', index)}
-								noneScroll
+								fixed
 							/>
 
 						</Tab>
@@ -393,10 +418,19 @@ export default class QuotationForm extends React.Component {
 								}, {
 									field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
 								}]}
-								edit={(data, index) => this.showEditModal('manifesto', data, index)}
-								add={() => this.showAddModal('manifesto')}
 								remove={(data, index) => this.removeList('manifesto', index)}
-							/>
+							>
+								<CommonFilterBox
+									placeholder="品番から追加"
+									name=""
+									value={this.selectManifesto}
+									onChange={(data) => this.addList('manifesto', data.data.manifesto)}
+									style={{float: 'left', width: '200px'}}
+									table
+									async={(input)=>this.getManifestoList(input)}
+								/>
+								<Button bsSize="sm" onClick={()=>this.showAddModal('manifesto')}><Glyphicon glyph="search" /></Button>
+							</CommonTable>
 						</Tab>
 
 						<Tab eventKey={5} title="庫内作業状況">

@@ -848,6 +848,7 @@ h3.title {
   height: auto;
   border: 1px solid #DDDDDD;
   background: #fff;
+  margin-top: 2px;
 }
 .common-table.scroll {
   overflow: scroll;
