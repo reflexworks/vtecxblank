@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'
-import axios from 'axios'
+//import axios from 'axios'
 import {
 	PageHeader,
 	Table,
@@ -11,193 +11,21 @@ import type {
 } from 'demo3.types'
 import {
 	CommonModal,
-	CommonFilterBox
+	CommonTable,
+	CommonInputText,
+//	CommonFilterBox
 } from './common'
-
-export class ItemDetailsModal extends React.Component {
-	constructor(props: Props) {
-		super(props)
-		this.state = {
-			data: this.props.data || {},
-			isShow: this.props.isShow,
-			type: this.props.type
-		}
-		this.master = {
-			typeList: []
-		}
-		this.originTypeList = [[],[],[],[],[]]
-		this.typeList = [[],[],[],[],[]]
-	}
-
-	/**
-     * 親コンポーネントがpropsの値を更新した時に呼び出される
-     * @param {*} newProps
-     */
-	componentWillReceiveProps(newProps) {
-		this.setState({
-			isShow: newProps.isShow,
-			data: newProps.data || {},
-			type: newProps.type
-		})
-	}
-
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
-		this.setTypeaheadMasterData()
-
-	}
-
-	getTitle() {
-		return this.state.type === 'add' ? '見積明細追加' : '見積明細編集'
-	}
-
-	/**
-	 * 入力保管取得処理
-	 */
-	setTypeaheadMasterData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/type_ahead?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.typeList = response.data.feed.entry
-				response.data.feed.entry.map((obj) => {
-					const type = parseInt(obj.type_ahead.type)
-					const res = {
-						label: obj.type_ahead.value,
-						value: obj.type_ahead.value,
-					}
-					this.typeList[type].push(res)
-					this.originTypeList[type].push(res)
-					return obj
-				})
-
-				this.forceUpdate()
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})   
-	}
-	
-	close() {
-		this.props.close()
-	}
-
-	change(_data, _index) {
-		if (this.typeList[_index].length !== this.originTypeList[_index].length) {
-			this.originTypeList[_index].push(_data)
-			const feed = {
-				feed: {
-					entry: [{
-						type_ahead: {
-							type: '' + _index,
-							value: _data.value
-						}
-					}]
-				}
-			}
-			axios({
-				url: '/d/type_ahead',
-				method: 'post',
-				data: feed,
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
-		}
-	}
-
-	add(_obj) {
-		this.props.add(_obj)
-	}
-
-	edit(_obj) {
-		this.props.edit(_obj)
-	}
-
-	render() {
-
-		return (
-			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
-				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
-				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
-				size="lg"
-				height="500px"
-			>
-				<Form name="ItemDetailsModal" horizontal>
-					<CommonFilterBox
-						controlLabel="項目名"
-						name="item_name"
-						value={this.state.data.item_name}
-						options={this.typeList[0]}
-						onChange={(data) => this.change(data, 0)}
-						size="lg"
-						Creatable
-					/>
-					<CommonFilterBox
-						controlLabel="単位名称"
-						name="unit_name"
-						value={this.state.data.unit_name}
-						options={this.typeList[1]}
-						onChange={(data) => this.change(data, 1)}
-						Creatable
-					/>
-					<CommonFilterBox
-						controlLabel="単位"
-						name="unit"
-						value={this.state.data.unit}
-						options={this.typeList[2]}
-						onChange={(data) => this.change(data, 2)}
-						Creatable
-					/>
-					<CommonFilterBox
-						controlLabel="単価"
-						name="unit_price"
-						value={this.state.data.unit_price}
-						options={this.typeList[3]}
-						onChange={(data) => this.change(data, 3)}
-						Creatable
-					/>
-					<CommonFilterBox
-						controlLabel="備考"
-						name="remarks"
-						value={this.state.data.remarks}
-						options={this.typeList[4]}
-						onChange={(data) => this.change(data, 4)}
-						size="lg"
-						Creatable
-					/>
-				</Form>
-			</CommonModal>
-		)
-	}
-}
 
 export class BasicConditionModal extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			data: this.props.data || {},
 			isShow: this.props.isShow,
 			type: this.props.type
 		}
-		this.master = {
-		}
+		this.basic_condition = this.props.data || {}
+		this.basic_condition.condition = this.basic_condition.condition || []
+
 	}
 
 	/**
@@ -205,9 +33,10 @@ export class BasicConditionModal extends React.Component {
      * @param {*} newProps
      */
 	componentWillReceiveProps(newProps) {
+		this.basic_condition = newProps.data || {}
+		this.basic_condition.condition = newProps.data.condition || []
 		this.setState({
 			isShow: newProps.isShow,
-			data: newProps.data || {},
 			type: newProps.type
 		})
 	}
@@ -223,6 +52,28 @@ export class BasicConditionModal extends React.Component {
 		return this.state.type === 'add' ? '基本条件追加' : '基本条件編集'
 	}
 
+	changeTitle(_data) {
+		this.basic_condition.title = _data
+		this.forceUpdate()
+	}
+
+	addList(_data) {
+		this.basic_condition.condition.push(_data)
+		this.forceUpdate()
+	}
+	removeList(_index) {
+		let array = []
+		for (let i = 0, ii = this.basic_condition.condition.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.basic_condition.condition[i])
+		}
+		this.basic_condition.condition = array
+		this.forceUpdate()
+	}
+	change(_data, _rowindex) {
+		this.basic_condition.condition[_rowindex].content = _data.value
+		this.forceUpdate()
+	}
+
 	close() {
 		this.props.close()
 	}
@@ -242,73 +93,32 @@ export class BasicConditionModal extends React.Component {
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
 				size="lg"
-				height="500px"
+				height="320px"
 			>
 				<Form name="BasicConditionModal" horizontal>
 
-				</Form>
-			</CommonModal>
-		)
-	}
-}
+					<CommonInputText
+						controlLabel="条件名"
+						name="title"
+						type="text"
+						value={this.basic_condition.title}
+						onChange={(data)=>this.changeTitle(data)}
+					/>
 
-export class RemarksModal extends React.Component {
-	constructor(props: Props) {
-		super(props)
-		this.state = {
-			data: this.props.data || {},
-			isShow: this.props.isShow,
-			type: this.props.type
-		}
-		this.master = {
-		}
-	}
-
-	/**
-     * 親コンポーネントがpropsの値を更新した時に呼び出される
-     * @param {*} newProps
-     */
-	componentWillReceiveProps(newProps) {
-		this.setState({
-			isShow: newProps.isShow,
-			data: newProps.data || {},
-			type: newProps.type
-		})
-	}
-
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
-	}
-
-	getTitle() {
-		return this.state.type === 'add' ? '備考追加' : '備考編集'
-	}
-
-	close() {
-		this.props.close()
-	}
-
-	add(_obj) {
-		this.props.add(_obj)
-	}
-
-	edit(_obj) {
-		this.props.edit(_obj)
-	}
-
-	render() {
-
-		return (
-			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
-				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
-				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
-				size="lg"
-				height="500px"
-			>
-				<Form name="RemarksModal" horizontal>
+					<CommonTable
+						controlLabel="条件内容"
+						name="condition"
+						data={this.basic_condition.condition}
+						header={[{
+							field: 'content', title: '内容', 
+							input: {
+								onChange: (data, rowindex)=>{this.change(data, rowindex)}
+							}
+						}]}
+						add={() => this.addList({ content: ''})}
+						remove={(data, index) => this.removeList(index)}
+						noneScroll
+					/>
 
 				</Form>
 			</CommonModal>
@@ -316,12 +126,13 @@ export class RemarksModal extends React.Component {
 	}
 }
 
-import ManifestoForm from './manifesto-form'
+//import ManifestoForm from './manifesto-form'
+import ManifestoList from './manifesto-list'
 export class ManifestoModal extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			data: this.props.data || {},
+			data: this.props.data ? { manifesto: this.props.data } : {manifesto: {}},
 			isShow: this.props.isShow,
 			type: this.props.type
 		}
@@ -336,7 +147,7 @@ export class ManifestoModal extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.setState({
 			isShow: newProps.isShow,
-			data: newProps.data || {},
+			data: newProps.data ? { manifesto: newProps.data } : {manifesto: {}},
 			type: newProps.type
 		})
 	}
@@ -373,7 +184,7 @@ export class ManifestoModal extends React.Component {
 				size="lg"
 				height="500px"
 			>
-				<ManifestoForm name="ManifestoModal" entry={this.state.data} />	
+				<ManifestoList name="ManifestoModal" entry={this.state.data} />	
 			</CommonModal>
 		)
 	}

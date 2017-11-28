@@ -154,15 +154,47 @@ class LogicCommonTable {
 
 		const tables = document.getElementsByName(_form_name)[0].getElementsByTagName('table')
 
+		const getValue = (_element) => {
+
+			const isArray = _element.className.indexOf('array') !== -1 ? true : false
+			let value
+			if (isArray) {
+				const arrayEle = _element.getElementsByTagName('div')
+				value = []
+				for (let i = 0, ii = arrayEle.length; i < ii; ++i) {
+					value.push({ content: arrayEle[i].innerHTML ? arrayEle[i].innerHTML : '' })
+				}
+			} else {
+
+				const childNodes = _element.childNodes ? _element.childNodes[0] : false
+				const isFilter = (childNodes && childNodes.className && childNodes.className.indexOf('Select') !== -1)
+				const isInput = (!isFilter && childNodes.children)
+				if (isFilter) {
+					value = childNodes.childNodes[0].value ? childNodes.childNodes[0].value : ''
+				} else if (isInput) {
+					value = childNodes.childNodes[0].value
+				} else {
+					value = _element.innerHTML ? _element.innerHTML : ''
+				}
+
+			}
+
+			return value
+		}
+
 		const setCellData = (_row) => {
 			let cellData = null
-			const td = _row.getElementsByTagName('td')
-			for (var i = 0, ii = td.length; i < ii; ++i) {
-				const name = td[i].getAttribute('name')
-				if (name) {
-					cellData = cellData ? cellData : {}
-					const value = td[i].getElementsByTagName('div')[0].innerHTML
-					cellData[name] = value
+			if (_row) {
+				const td = _row.getElementsByTagName('td')
+				for (let i = 0, ii = td.length; i < ii; ++i) {
+					if (td[i] && td[i].getAttribute('name')) {
+						const name = td[i].getAttribute('name')
+						if (name && name !== '__tableFilter' && name !== '__tableInput') {
+							cellData = cellData ? cellData : {}
+							const value = getValue(td[i].getElementsByTagName('div')[0])
+							cellData[name] = value
+						}
+					}
 				}
 			}
 			return cellData
@@ -173,7 +205,7 @@ class LogicCommonTable {
 			const tableData = []
 
 			const row = _table.getElementsByTagName('tr')
-			for (var i = 0, ii = row.length; i < ii; ++i) {
+			for (let i = 0, ii = row.length; i < ii; ++i) {
 				const rowData = setCellData(row[i])
 				if (rowData) {
 					tableData.push(rowData)
@@ -182,19 +214,21 @@ class LogicCommonTable {
 
 			return tableData
 		}
-		for (var i = 0, ii = tables.length; i < ii; ++i) {
+		for (let i = 0, ii = tables.length; i < ii; ++i) {
 
 			const table = tables[i]
 			const table_name = table.getAttribute('name')
-			const table_names = table_name.split('.')
-			if (table_names.length > 1) {
-				const parent_name = table_name.split('.')[0]
-				const child_name = table_name.split('.')[1]
-				_entry[parent_name] = _entry[parent_name] ? _entry[parent_name] : {}
-				_entry[parent_name][child_name] = setRowData(table)
-			} else {
-				_entry[table_name] = _entry[table_name] || {}
-				_entry[table_name] = setRowData(table)
+			if (table_name && table_name !== '') {
+				const table_names = table_name.split('.')
+				if (table_names.length > 1) {
+					const parent_name = table_name.split('.')[0]
+					const child_name = table_name.split('.')[1]
+					_entry[parent_name] = _entry[parent_name] ? _entry[parent_name] : {}
+					_entry[parent_name][child_name] = setRowData(table)
+				} else {
+					_entry[table_name] = _entry[table_name] || {}
+					_entry[table_name] = setRowData(table)
+				}
 			}
 
 		}
@@ -273,7 +307,7 @@ export class CommonRegistrationBtn extends React.Component {
 
 					entry.link = setLink(entry, element, data)
 
-				} else if (element.name) {
+				} else if (element.name && element.name !== '__tableFilter' && element.name !== '__tableInput') {
 
 					const value = setValue(element)
 
@@ -432,7 +466,7 @@ export function CommonSetUpdateData(_target_form) {
 		for (var i = 0, ii = data.elements.length; i < ii; ++i) {
 			let element = data.elements[i]
 
-			if (element.name) {
+			if (element.name && element.name !== '__tableFilter' && element.name !== '__tableInput') {
 
 				const value = setValue(element)
 
@@ -1124,6 +1158,7 @@ export class CommonInputText extends React.Component {
 				onChange={(e) => this.changed(e)}
 				data-validate={this.props.validate}
 				data-required={this.props.required}
+				bsSize="small"
 			/>
 		)
 		const InputTextNode = () => {
@@ -1153,22 +1188,29 @@ export class CommonInputText extends React.Component {
 		}
 
 		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				{this.state.readonly && 
-					<FormControl.Static name={this.state.name} id={this.state.name}>
-						{ this.state.value }
-						<FormControl
-							name={this.state.name}
-							type={this.state.type}
-							value={this.state.value}
-							className="hide"
-						/>
-					</FormControl.Static>
+			<div>
+				{ !this.props.table && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{this.state.readonly && 
+							<FormControl.Static name={this.state.name} id={this.state.name}>
+								{ this.state.value }
+								<FormControl
+									name={this.state.name}
+									type={this.state.type}
+									value={this.state.value}
+									className="hide"
+								/>
+							</FormControl.Static>
+						}
+						{(!this.state.readonly || this.state.readonly === 'false') && 
+							InputTextNode()
+						}
+					</CommonFormGroup>
 				}
-				{(!this.state.readonly || this.state.readonly === 'false') && 
+				{ this.props.table && 
 					InputTextNode()
 				}
-			</CommonFormGroup>
+			</div>
 		)
 	}
 
@@ -1184,9 +1226,10 @@ export class CommonTable extends React.Component {
 		this.state = {
 			data: this.props.data,
 			header: this.props.header,
-			actionType: 'edit'
+			actionType: this.props.edit ? 'edit' : 'remove'
 		}
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
+		this.tableClass = this.props.noneScroll ? 'common-table' : 'common-table scroll'
 	}
 
 	/**
@@ -1218,6 +1261,10 @@ export class CommonTable extends React.Component {
 		}
 	}
 
+	editName() {
+		return this.props.edit ? '編集' : '削除'
+	}
+
 	render() {
 
 		// ヘッダー情報をキャッシュする
@@ -1234,8 +1281,8 @@ export class CommonTable extends React.Component {
 		let option = [{
 			field: 'no', title: 'No', width: '20px'
 		}]
-		if (this.props.edit) option.push({
-			field: 'edit', title: '編集', width: '30px'
+		if (this.props.edit || this.props.remove) option.push({
+			field: 'edit', title: this.editName(), width: '30px'
 		})
 		const thNode = (_obj, _index) => {
 			const bsStyle = {
@@ -1257,22 +1304,26 @@ export class CommonTable extends React.Component {
 			return thNode(obj, i)
 		})
 
-		const convertValue = (convertData, value, _style) => {
+		const convertValue = (value, _cashData, _index) => {
+			const convertData = _cashData.convert
+			const style = _cashData.style ? _cashData.style : null
+			const filter = _cashData.filter
+			const input = _cashData.input
 			if (convertData) {
-				return <div style={_style}>{convertData[value]}</div>
+				return <div style={style} className="ellipsis">{convertData[value]}</div>
 			} else {
 				if (Array.isArray(value)) {
 					return (
-						<div style={_style}>
+						<div className="array ellipsis" style={style}>
 							{
 								value.map((_value, i) => {
 									if (Object.prototype.toString.call(_value) === '[object Object]') {
 										return (
-											<div key={i} style={_style}>{_value.content}</div>
+											<div key={i} style={style}>{_value.content}</div>
 										)
 									} else {
 										return (
-											<div key={i} style={_style}>{_value}</div>
+											<div key={i} style={style}>{_value}</div>
 										)
 									}
 								})
@@ -1280,7 +1331,30 @@ export class CommonTable extends React.Component {
 						</div>
 					)
 				} else {
-					return <div style={_style}>{value}</div>
+					if (filter) {
+						return (
+							<CommonFilterBox
+								name="__tableFilter"
+								value={value}
+								options={filter.options}
+								onChange={(data) => filter.onChange(data, _index)}
+								Creatable
+								table
+							/>
+						)
+					} else if (input) {
+						return (
+							<CommonInputText
+								name="__tableInput"
+								type="text"
+								value={value}
+								onChange={(data) => input.onChange(data, _index)}
+								table
+							/>
+						)
+					} else {
+						return <div style={style} className="ellipsis">{value}</div>
+					}
 				}
 			}
 		}
@@ -1293,7 +1367,7 @@ export class CommonTable extends React.Component {
 
 				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
 				tdCount++
-				if (this.props.edit) {
+				if (this.props.edit || this.props.remove) {
 					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
 					tdCount++
 				}
@@ -1329,7 +1403,7 @@ export class CommonTable extends React.Component {
 										style={cashInfo[field].style ? cashInfo[field].style : ''}
 										name={_key + __key}
 									>
-										{ convertValue(cashInfo[field].convert, __obj[__key], (cashInfo[field].style ? cashInfo[field].style : '')) }
+										{ convertValue(__obj[__key], cashInfo[field], _index) }
 									</td>
 								)
 							} else {
@@ -1339,9 +1413,7 @@ export class CommonTable extends React.Component {
 										style={{ 'display': 'none' }}
 										name={_key + __key}
 									>
-										<div>
-											{ convertValue(false, __obj[__key]) }
-										</div>
+										{ convertValue(__obj[__key], {}) }
 									</td>
 								)
 							}
@@ -1350,12 +1422,13 @@ export class CommonTable extends React.Component {
 
 					})
 
-					for (var i = 0, ii = array.length; i < ii; ++i) {
-						array[i] = array[i] ? array[i] : <td key={i}></td>
+					for (let l = 0, ll = array.length; l < ll; ++l) {
+						array[l] = array[l] ? array[l] : <td key={l}></td>
 					}
 
 					return array
 				}
+				if (!_obj) _obj = {}
 				array = setCel(_obj, '')
 				return array
 			}
@@ -1367,7 +1440,7 @@ export class CommonTable extends React.Component {
 		const tableNode = (
 			<div>
 				{ this.props.children }
-				{ (this.props.add && this.state.actionType === 'edit') &&
+				{ (this.props.add && this.state.actionType === 'edit' || this.props.add && !this.props.edit) &&
 					<Button onClick={() => this.props.add()} bsSize="sm">
 						<Glyphicon glyph="plus"></Glyphicon>
 					</Button>
@@ -1377,12 +1450,12 @@ export class CommonTable extends React.Component {
 						<Glyphicon glyph="minus"></Glyphicon>
 					</Button>
 				}
-				{ (this.props.remove && this.state.actionType === 'remove') &&
+				{ (this.props.remove && this.state.actionType === 'remove' && this.props.edit) &&
 					<Button onClick={() => this.showRemoveBtn()} bsSize="sm">
 						キャンセル
 					</Button>
 				}
-				<div className="common-table">
+				<div className={this.tableClass}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>
 							<tr>{header}</tr>
@@ -1789,7 +1862,7 @@ export class CommonFilterBox extends React.Component {
 			value: this.props.value,
 			options: this.props.options,
 			size: this.props.size,
-			actionBtn: <span></span>
+			actionBtn: this.props.add ? this.addBtn : <span></span>
 		}
 		this.classFilterName = (this.props.add || this.props.edit || this.props.detail) && 'btn-type'
 	}

@@ -846,9 +846,11 @@ h3.title {
 .common-table {
   width: 100%;
   height: auto;
-  overflow: scroll;
   border: 1px solid #DDDDDD;
   background: #fff;
+}
+.common-table.scroll {
+  overflow: scroll;
 }
 .common-table .table{
   margin-bottom: 0px;
@@ -871,9 +873,14 @@ h3.title {
   color: #fff;
   background: #337ab7;
 }
-.common-table .table td div{
+.common-table .table td div.ellipsis{
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.common-table.Select{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .ReactModalPortal,
 .ReactModal__Overlay,

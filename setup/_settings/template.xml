@@ -83,6 +83,27 @@ quotation
  quotation_code
  quotation_date
  status
+ basic_condition{}
+  title
+  condition{}
+   content
+ manifesto{}
+  manifesto_code
+  manifesto_name
+  material
+  thickness
+  inside_width
+  inside_depth
+  inside_height
+  outer_width
+  outer_depth
+  outer_height
+  outer_total
+  regular_price
+  regular_unit_price
+  special_price
+  special_unit_price
+  islot
 invoice
  invoice_code
  quotation_code
