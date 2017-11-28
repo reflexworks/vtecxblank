@@ -14,7 +14,9 @@ import type {
 import {
 	CommonInputText,
 	CommonPrefecture,
+	CommonDatePicker,
 } from './common'
+
 
 export default class BilltoForm extends React.Component {
 
@@ -76,6 +78,20 @@ export default class BilltoForm extends React.Component {
 							validate="string"
 							required
 						/>
+
+						<CommonDatePicker
+							controlLabel="請求締切日"
+							name="billto.billing_closing_date"
+							selected={this.entry.billto.billing_closing_date}
+							required
+						/>
+
+						<CommonDatePicker
+							controlLabel="支払日"
+							name="billto.payment_date"
+							selected={this.entry.billto.payment_date}
+							required
+						/>						
 
 						<CommonInputText
 							controlLabel="電話番号"

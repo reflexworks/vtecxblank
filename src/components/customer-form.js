@@ -7,6 +7,7 @@ import {
 	FormControl,
 	PanelGroup,
 	Panel,
+	Checkbox,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -20,6 +21,11 @@ import {
 } from './common'
 
 import {
+	CustomerClassModal,
+} from './customerclass-modal'
+
+
+import {
 	BilltoAddModal,
 	BilltoEditModal,
 	StaffAddModal,
@@ -30,7 +36,9 @@ export default class CustomerForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			customer_copy: false,
+		}
 
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
@@ -45,7 +53,54 @@ export default class CustomerForm extends React.Component {
 			sales_staff: [],
 			working_staff: [],
 		}
+
+		this.modal = {
+			customer_class: { data: {} },
+		}
+		
+		this.sampleData()
 	}
+
+
+	sampleData() {
+		this.entry.customer.customer_class = [{delivery_company:'CN',classcode:'test'}]
+	}
+	showAddModal(_key) {
+		this.modal[_key].data = {}
+		this.modal[_key].type = 'add'
+		this.modal[_key].visible = true
+		this.forceUpdate()
+	}
+	showEditModal(_key, _data, _index) {
+		this.modal[_key].data = _data
+		this.modal[_key].index = _index
+		this.modal[_key].type = 'edit'
+		this.modal[_key].visible = true
+		this.forceUpdate()
+	}
+	closeModal(_key) {
+		this.modal[_key].visible = false
+		this.forceUpdate()
+	}
+	removeList(_key, _index) {
+		let array = []
+		for (let i = 0, ii = this.entry[_key].length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry[_key][i])
+		}
+		this.entry[_key] = array
+		this.forceUpdate()
+	}
+	addList(_key, _data) {
+		this.entry[_key].push(_data)
+		this.modal[_key].visible = false
+		this.forceUpdate()
+	}
+	updateList(_key, _data) {
+		this.entry[_key][this.modal[_key].index] = _data
+		this.modal[_key].visible = false
+		this.forceUpdate()
+	}
+
 
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -291,6 +346,28 @@ export default class CustomerForm extends React.Component {
 								readonly="true"
 							/>
 						}
+						
+						<CustomerClassModal
+							isShow={this.modal.customer_class.visible}
+							close={() => this.closeModal('customer_class')}
+							add={(obj) => this.addList('customer_class', obj)}
+							edit={(obj) => this.updateList('customer_class', obj)}
+							data={this.modal.customer_class.data}
+							type={this.modal.customer_class.type}
+						/>
+
+						<CommonTable
+							name="customer.customer_class"
+							data={this.entry.customer.customer_class}
+							header={[{
+								field: 'delivery_company', title: '配送業者', width: '100px',convert: {YN: 'ヤマト', SN: '西濃',CN:'エコ配JP'}
+							}, {
+								field: 'classcode', title: '分類コード', width: '200px'
+							}]}
+							edit={(data, index) => this.showEditModal('customer_class', data, index)}
+							add={() => this.showAddModal('customer_class')}
+							remove={(data, index) => this.removeList('customer_class', index)}
+						/>
 
 						<CommonInputText
 							controlLabel="顧客名"
@@ -311,7 +388,7 @@ export default class CustomerForm extends React.Component {
 							validate="number"
 							required
 						/>
-
+						
 						<CommonInputText
 							controlLabel="電話番号"
 							name="contact_information.tel"
@@ -372,45 +449,102 @@ export default class CustomerForm extends React.Component {
 							size="lg"
 						/>
 					
+						<CommonInputText
+							controlLabel="顧客URL"
+							name="customer.url"
+							type="text"
+							placeholder="url"
+							value={this.entry.customer.url}
+							size="lg"
+						/>
+
+						<CommonInputText
+							controlLabel="顧客側の担当者"
+							name="customer.person_in_charge"
+							type="text"
+							placeholder="顧客側の担当者"
+							value={this.entry.customer.person_in_charge}
+							size="lg"
+						/>	
+
+						<CommonInputText
+							controlLabel="取扱品"
+							name="customer.products"
+							type="text"
+							placeholder="取扱品"
+							value={this.entry.customer.products}
+							size="lg"
+						/>
+
+						<CommonFilterBox
+							controlLabel="集荷出荷区分"
+							size="sm"
+							name="customer.shipment_class"
+							value={this.entry.customer.shipment_class}
+							options={[{
+								label: '出荷',
+								value: '0'
+							}, {
+								label: '集荷',
+								value: '1'
+							}, {
+								label: '両方',
+								value: '2'
+							}]}
+						/>
+					
 					</Panel>
 
 					<Panel collapsible header="請求先情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
-						<CommonFilterBox
-							controlLabel="請求先"
-							name=""
-							value={this.entry.billto.billto_code}
-							options={this.billtoList}
-							add={() => this.setState({ showBilltoAddModal: true })}
-							edit={() => this.setState({ showBilltoEditModal: true })}
-							onChange={(data) => this.changeBillto(data)}
-						/>
-						{ this.entry.billto.billto_code && 
-							<CommonInputText
-								controlLabel="請求先コード"
-								name="billto.billto_code"
-								type="text"
+						
+						<Checkbox inline
+								  value={this.state.customer_copy}
+								  onClick={() => this.setState({customer_copy: !this.state.customer_copy})}>
+							顧客情報と同じにする
+						</Checkbox>
+						
+						{// !this.state.customer_copy &&
+							<CommonFilterBox
+								controlLabel="請求先"
+								name=""
 								value={this.entry.billto.billto_code}
-								readonly
+								options={this.billtoList}
+								add={() => this.setState({ showBilltoAddModal: true })}
+								edit={() => this.setState({ showBilltoEditModal: true })}
+								onChange={(data) => this.changeBillto(data)}
 							/>
 						}
+
+
 						{ this.entry.billto.billto_code && 
-							<FormGroup className="hide">
 								<CommonInputText
-									name="billto.billto_name"
+									controlLabel="請求先コード"
+									name="billto.billto_code"
 									type="text"
-									value={this.entry.billto.billto_name}
+									value={this.entry.billto.billto_code}
+									readonly
 								/>
-							</FormGroup>
+						}
+						{ this.entry.billto.billto_code && 
+								<FormGroup className="hide">
+									<CommonInputText
+										name="billto.billto_name"
+										type="text"
+										value={this.entry.billto.billto_name}
+									/>
+								</FormGroup>
 						}
 						{ !this.entry.billto.billto_code && 
-							<FormGroup className="hide">
-								<CommonInputText
-									name="billto.billto_name"
-									type="text"
-									value=""
-								/>
-							</FormGroup>
+								<FormGroup className="hide">
+									<CommonInputText
+										name="billto.billto_name"
+										type="text"
+										value=""
+									/>
+								</FormGroup>
 						}
+
+
 					</Panel>
 
 					<Panel collapsible header="担当情報" eventKey="3" bsStyle="info" defaultExpanded={true}>
