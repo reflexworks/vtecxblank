@@ -274,7 +274,7 @@ export default class CustomerList extends React.Component {
 							}, {
 								field: 'customer.url', title: '顧客URL', width: '200px'
 							}, {
-								field: 'customer.person_in_charge', title: '顧客の担当者', width: '200px'
+								field: 'customer.person_in_charge', title: '担当者', width: '100px'
 							}, {
 								field: 'customer.products', title: '取扱品', width: '200px'
 							}, {
