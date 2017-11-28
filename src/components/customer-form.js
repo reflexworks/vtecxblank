@@ -347,27 +347,7 @@ export default class CustomerForm extends React.Component {
 							/>
 						}
 						
-						<CustomerClassModal
-							isShow={this.modal.customer_class.visible}
-							close={() => this.closeModal('customer_class')}
-							add={(obj) => this.addList('customer_class', obj)}
-							edit={(obj) => this.updateList('customer_class', obj)}
-							data={this.modal.customer_class.data}
-							type={this.modal.customer_class.type}
-						/>
-
-						<CommonTable
-							name="customer.customer_class"
-							data={this.entry.customer.customer_class}
-							header={[{
-								field: 'delivery_company', title: '配送業者', width: '100px',convert: {YN: 'ヤマト', SN: '西濃',CN:'エコ配JP'}
-							}, {
-								field: 'classcode', title: '分類コード', width: '200px'
-							}]}
-							edit={(data, index) => this.showEditModal('customer_class', data, index)}
-							add={() => this.showAddModal('customer_class')}
-							remove={(data, index) => this.removeList('customer_class', index)}
-						/>
+						
 
 						<CommonInputText
 							controlLabel="顧客名"
@@ -389,6 +369,8 @@ export default class CustomerForm extends React.Component {
 							required
 						/>
 						
+						
+
 						<CommonInputText
 							controlLabel="電話番号"
 							name="contact_information.tel"
@@ -429,7 +411,6 @@ export default class CustomerForm extends React.Component {
 							componentClass="select"
 							name="contact_information.prefecture"
 							value={this.entry.contact_information.prefecture}
-							size="sm"
 						/>
 
 						<CommonInputText
@@ -459,12 +440,11 @@ export default class CustomerForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel="顧客側の担当者"
+							controlLabel="担当者"
 							name="customer.person_in_charge"
 							type="text"
-							placeholder="顧客側の担当者"
+							placeholder="担当者"
 							value={this.entry.customer.person_in_charge}
-							size="lg"
 						/>	
 
 						<CommonInputText
@@ -544,6 +524,7 @@ export default class CustomerForm extends React.Component {
 								</FormGroup>
 						}
 
+						
 
 					</Panel>
 
@@ -588,6 +569,32 @@ export default class CustomerForm extends React.Component {
 								}]}
 							/>
 						}
+					</Panel>
+
+					<Panel collapsible header="配送業者別分類コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
+						
+						<CustomerClassModal
+							isShow={this.modal.customer_class.visible}
+							close={() => this.closeModal('customer_class')}
+							add={(obj) => this.addList('customer_class', obj)}
+							edit={(obj) => this.updateList('customer_class', obj)}
+							data={this.modal.customer_class.data}
+							type={this.modal.customer_class.type}
+						/>
+
+						<CommonTable	
+							name="customer.customer_class"
+							data={this.entry.customer.customer_class}
+							header={[{
+								field: 'delivery_company', title: '配送業者', width: '100px',convert: {YN: 'ヤマト', SN: '西濃',CN:'エコ配JP'}
+							}, {
+								field: 'classcode', title: '分類コード', width: '200px'
+							}]}
+							edit={(data, index) => this.showEditModal('customer_class', data, index)}
+							add={() => this.showAddModal('customer_class')}
+							remove={(data, index) => this.removeList('customer_class', index)}
+						/>
+
 					</Panel>
 
 				</PanelGroup>

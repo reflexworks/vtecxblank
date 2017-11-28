@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import {
-//Form
+	Form
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -62,39 +62,41 @@ export class CustomerClassModal extends React.Component {
 	render() {
 
 		return (
+
+
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
 				size="lg"
 				height="500px"
 			>
+				<Form name="CustomerClassModal" horizontal>
+					<CommonFilterBox
+						controlLabel="入力補完種別"
+						size="sm"
+						name="delivery_company"
+						value={this.delivery_company}
+						options={[{
+							label: 'ヤマト',
+							value: 'YN'
+						}, {
+							label: '西濃',
+							value: 'SN'
+						}, {
+							label: 'エコ配JP',
+							value: 'EC'
+						}]}
+					/>
 
-				<CommonFilterBox
-					controlLabel="入力補完種別"
-					size="sm"
-					name="delivery_company"
-					value={this.delivery_company}
-					options={[{
-						label: 'ヤマト',
-						value: 'YN'
-					}, {
-						label: '西濃',
-						value: 'SN'
-					}, {
-						label: 'エコ配JP',
-						value: 'EC'
-					}]}
-				/>
-
-				<CommonInputText
-					controlLabel="分類コード"   
-					name="classcode"
-					type="text"
-					value={this.classcode}
-					placeholder="分類コード"
-					size='lg'
-				/>	
-
+					<CommonInputText
+						controlLabel="分類コード"   
+						name="classcode"
+						type="text"
+						value={this.classcode}
+						placeholder="分類コード"
+						size='lg'
+					/>	
+				</Form>
 			</CommonModal>
 		)
 	}

@@ -246,10 +246,6 @@ export default class CustomerList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'customer.customer_class.delivery_company', title: '配送業者', width: '150px'
-							}, {
-								field: 'customer.customer_class.classcode', title: '分類コード', width: '150px'
-							},{	
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
 								field: 'customer.customer_name', title: '顧客名', width: '150px'
@@ -278,7 +274,7 @@ export default class CustomerList extends React.Component {
 							}, {
 								field: 'customer.url', title: '顧客URL', width: '200px'
 							}, {
-								field: 'customer.person_in_charge', title: '顧客の担当者', width: '200px'
+								field: 'customer.person_in_charge', title: '担当者', width: '100px'
 							}, {
 								field: 'customer.products', title: '取扱品', width: '200px'
 							}, {
