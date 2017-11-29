@@ -162,6 +162,7 @@ export default class InternalWorkForm extends React.Component {
 		this.deliveryWorks = setDeliveryWorks()
 		this.packingyWorks = setPackingyWorks()
 		this.working_date = '2018/01'
+		this.customer_name = '株式会社 テスト顧客'
 	}
 
 	monthlyTable = () => {
@@ -324,7 +325,7 @@ export default class InternalWorkForm extends React.Component {
 					controlLabel="顧客"
 					name="customer.customer_name"
 					type="text"
-					value={this.entry.customer.customer_name}
+					value={this.customer_name}
 					readonly
 				/>
 
