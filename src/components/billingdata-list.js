@@ -34,7 +34,7 @@ export default class BillingDataList extends React.Component {
     constructor(props:Props) {
     	super(props)
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
-    	this.url = '/d/internal_work?f&l=' + this.maxDisplayRows
+    	this.url = '/d/billing_data?f&l=' + this.maxDisplayRows
     	this.state = {
     		feed: { entry: [] },
     		isDisabled: false,
@@ -42,6 +42,7 @@ export default class BillingDataList extends React.Component {
     		urlToPagenation: '' // ページネーション用に渡すURL
     	}
     	this.activePage = 1
+    	this.sampleDataCreate()
     }
 
     /**
@@ -81,17 +82,31 @@ export default class BillingDataList extends React.Component {
     	})
     }
 	
+
+    sampleDataCreate() {
+		
+    	this.sample = [{
+    		customer_name: '顧客１',
+    		date: '2017/12',
+    		approval_status:'承認',
+    	}, {
+    		customer_name: '顧客2',
+    		date: '2017/12',
+    		approval_status:'未承認',
+    	}]
+    }
     /**
      * 更新画面に遷移する
      * @param {*} index
      */
-    /*更新処理は未作成なのでコメントアウト
-    onSelect(data) {
-        // 入力画面に遷移
-        const internal_work_code = data.internal_work.internal_work_code
-        this.props.history.push('/InternalWorkUpdate?' + internal_work_code)
+
+    onSelect() {
+    	// 入力画面に遷移
+    	//const billing_data_code = data.billing_data.billing_data_code
+    	//this.props.history.push('/InternalWorkUpdate' + billing_data_code)
+    	this.props.history.push('/BillingDataRegistration')
     }
-    */
+    
 
     /**
      * 検索実行
@@ -126,20 +141,20 @@ export default class BillingDataList extends React.Component {
     					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
     						<CommonInputText
     							controlLabel="顧客"
-    							name="internal_work.staff_name"
+    							name="billing_data.staff_name"
     							type="text"
     							placeholder="顧客"
     						/>
 
     						<CommonDatePicker
     							controlLabel="年月"  
-    							name="internal_work.working_date"
+    							name="billing_data.working_date"
     							placeholder="年月"
     						/>
 
     						<CommonInputText
     							controlLabel="承認ステータス"
-    							name="internal_work.approval_status"
+    							name="billing_data.approval_status"
     							type="text"
     							placeholder="承認ステータス"
     						/>
@@ -160,14 +175,14 @@ export default class BillingDataList extends React.Component {
 
     					<CommonTable
     						name="entry"
-    						data={this.state.feed.entry}
-    						//edit={(data) => this.onSelect(data) }
+    						data={this.sample}
+    						edit={() => this.onSelect() }
     						header={[{
-    							field: 'internal_work.staff_name',title: '顧客名', width: '100px'
+    							field: 'customer_name',title: '顧客名', width: '100px'
     						}, {
-    							field: 'internal_work.working_date', title: '年月', width: '100px'
+    							field: 'date', title: '年月', width: '100px'
     						}, {
-    							field: 'internal_work.approval_status', title: '承認ステータス', width: '50px'
+    							field: 'approval_status', title: '承認ステータス', width: '50px'
     						}]}
     					/>
     				</Col>
