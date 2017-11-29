@@ -16,9 +16,9 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonDatePicker,
 	CommonSearchConditionsFrom,
-	CommonPagination
+	CommonPagination,
+	CommonMonthlySelect,
 } from './common'
 
 type State = {
@@ -71,27 +71,45 @@ export default class InternalWorkList extends React.Component {
     		if (response.status === 204) {
     			this.setState({ isDisabled: false, isError: response })
     		} else {
-    			// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-    			// activePageが「2」だったら51件目から100件目が格納されている
     			this.setState({ isDisabled: false, feed: response.data.feed})
     		}
 
     	}).catch((error) => {
     		this.setState({ isDisabled: false, isError: error })
     	})
+		
+    	this.sampleData()
+		
+		
+    }
+	
+    sampleData() {
+    	let feed = {entry: []}
+    	for (let i = 1, ii = 4; i < ii; ++i) {
+    		const data = {
+    			internal_work: {
+    				working_date: '2018/0' + i
+    			},
+    			customer: {
+    				customer_name: 'サンプル顧客'
+    			},
+    			quotation: {
+    				quotation_code: '00000' + i + '-01'
+    			}
+    		}
+    		feed.entry.push(data)
+    	}
+    	this.setState({feed: feed})
     }
 	
     /**
      * 更新画面に遷移する
-     * @param {*} index
      */
-    /*更新処理は未作成なのでコメントアウト
     onSelect(data) {
-        // 入力画面に遷移
-        const internal_work_code = data.internal_work.internal_work_code
-        this.props.history.push('/InternalWorkUpdate?' + internal_work_code)
+    	// 入力画面に遷移
+    	const internal_work_code = data.internal_work.internal_work_code
+    	this.props.history.push('/InternalWorkRegistration?' + internal_work_code)
     }
-    */
 
     /**
      * 検索実行
@@ -124,201 +142,25 @@ export default class InternalWorkList extends React.Component {
     					<PageHeader>庫内作業一覧</PageHeader>
 
     					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
-    						<CommonInputText
-    							controlLabel="担当者"
-    							name="internal_work.staff_name"
-    							type="text"
-    							placeholder="担当者名"
-    						/>
 
-    						<CommonDatePicker
-    							controlLabel="作業日"  
+    						<CommonMonthlySelect
+    							controlLabel="作業年月"
     							name="internal_work.working_date"
-    							placeholder="作業日"
     						/>
 
     						<CommonInputText
-    							controlLabel="承認ステータス"
-    							name="internal_work.approval_status"
+    							controlLabel="顧客"  
+    							name="customer.customer_name"
+    							placeholder="株式会社○○○○"
+    						/>
+
+    						<CommonInputText
+    							controlLabel="対象見積書No"
+    							name="quotation.quotation_code"
     							type="text"
-    							placeholder="承認ステータス"
+    							placeholder="000001-01"
     						/>
 							
-    						<CommonInputText
-    							controlLabel="管理基本料"
-    							name="internal_work.mgmt_basic_fee"
-    							type="text"
-    							placeholder="管理基本料"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="保管費"
-    							name="internal_work.custody_fee"
-    							type="text"
-    							placeholder="保管費"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="追加１パレット"
-    							name="internal_work.additional1_palette"
-    							type="text"
-    							placeholder="追加１パレット"
-    						/>
-							
-    						<CommonInputText
-    							controlLabel="追加２スチール棚"
-    							name="internal_work.additional2_steel_shelf"
-    							type="text"
-    							placeholder="追加２スチール棚"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="削除パレット"
-    							name="internal_work.deletion_palette"
-    							type="text"
-    							placeholder="削除パレット"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="入荷"
-    							name="internal_work.received"
-    							type="text"
-    							placeholder="入荷"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="入荷(通常)"
-    							name="internal_work.received_normal"
-    							type="text"
-    							placeholder="入荷(通常)"							
-    						/>
-
-    						<CommonInputText
-    							controlLabel="返品処理"
-    							name="internal_work.returns"
-    							type="text"
-    							placeholder="返品処理"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="入荷その他"
-    							name="internal_work.received_others"
-    							type="text"
-    							placeholder="入荷その他"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="発送(通常)"
-    							name="internal_work.packing_normal"
-    							type="text"
-    							placeholder="発送(通常)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="発送(その他)"
-    							name="internal_work.packing_others"
-    							type="text"
-    							placeholder="発送(その他)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="梱包数"
-    							name="internal_work.packing"
-    							type="text"
-    							placeholder="梱包数"
-    						/>
-							
-    						<CommonInputText
-    							controlLabel="ヤマト運輸６０サイズ迄"
-    							name="internal_work.yamato60size"
-    							type="text"
-    							placeholder="ヤマト運輸６０サイズ迄"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="西濃運輸"
-    							name="internal_work.seino"
-    							type="text"
-    							placeholder="西濃運輸"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="着払い発送"
-    							name="internal_work.cash_on_arrival"
-    							type="text"
-    							placeholder="着払い発送"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="作業・その他"
-    							name="internal_work.work_others"
-    							type="text"
-    							placeholder="作業・その他"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(160)"
-    							name="internal_work.cardboard160"
-    							type="text"
-    							placeholder="ダンボール(160)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(140)"
-    							name="internal_work.cardboard140"
-    							type="text"
-    							placeholder="ダンボール(140)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(120)"
-    							name="internal_work.cardboard120"
-    							type="text"
-    							placeholder="ダンボール(120)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(100)"
-    							name="internal_work.cardboard100"
-    							type="text"
-    							placeholder="ダンボール(100)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(80)"
-    							name="internal_work.cardboard80"
-    							type="text"
-    							placeholder="ダンボール(80)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="ダンボール(60)"
-    							name="internal_work.cardboard60"
-    							type="text"
-    							placeholder="ダンボール(60)"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="巻段ボール"
-    							name="internal_work.corrugated_cardboard"
-    							type="text"
-    							placeholder="巻段ボール"
-    						/>
-							
-    						<CommonInputText
-    							controlLabel="緩衝材"
-    							name="internal_work.buffer_material"
-    							type="text"
-    							placeholder="緩衝材"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="エアプチ"
-    							name="internal_work.bubble_wrap"
-    							type="text"
-    							placeholder="エアプチ"
-    						/>
-
     					</CommonSearchConditionsFrom>
 
     				</Col>
@@ -336,67 +178,13 @@ export default class InternalWorkList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.state.feed.entry}
-    						//edit={(data) => this.onSelect(data) }
+    						edit={(data) => this.onSelect(data) }
     						header={[{
-    							field: 'internal_work.staff_name',title: '担当者', width: '100px'
+    							field: 'internal_work.working_date',title: '作業年月', width: '100px'
     						}, {
-    							field: 'internal_work.working_date', title: '作業日', width: '200px'
+    							field: 'customer.customer_name', title: '顧客', width: '200px'
     						}, {
-    							field: 'internal_work.approval_status', title: '承認ステータス', width: '200px'
-    						}, {
-    							field: 'internal_work.mgmt_basic_fee', title: '管理基本料', width: '200px'
-    						}, {
-    							field: 'internal_work.custody_fee', title: '保管費', width: '150px'
-    						}, {
-    							field: 'internal_work.additional1_palette', title: '追加１パレット', width: '200px'
-    						}, {
-    							field: 'internal_work.additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
-    						}, {
-    							field: 'internal_work.deletion_palette', title: '削除パレット', width: '150px'
-    						}, {
-    							field: 'internal_work.received', title: '入荷', width: '200px'
-    						}, {
-    							field: 'internal_work.received_normal', title: '入荷（通常）', width: '200px'
-    						}, {
-    							field: 'internal_work.returns', title: '返品処理', width: '200px'
-    						}, {
-    							field: 'internal_work.received_others', title: '入荷（その他）', width: '200px'
-    						}, {
-    							field: 'internal_work.packing_normal', title: '発送（通常）', width: '200px'
-    						}, {
-    							field: 'internal_work.packing_others', title: '発送（その他）', width: '200px'
-    						}, {
-    							field: 'internal_work.packing', title: '梱包数', width: '200px'	
-    						}, {
-    							field: 'internal_work.yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
-    						}, {
-    							field: 'internal_work.seino', title: '西濃運輸', width: '200px'
-    						}, {
-    							field: 'internal_work.cash_on_arrival', title: '着払い発送', width: '200px'
-    						}, {
-    							field: 'internal_work.work_others', title: '作業・その他', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard160', title: '段ボール（１６０）', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard140', title: '段ボール（１４０）', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard120', title: '段ボール（１２０）', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard100', title: '段ボール（１００）', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard80', title: '段ボール（８０）', width: '200px'
-    						}, {
-    							field: 'internal_work.cardboard60', title: '段ボール（６０）', width: '200px'
-    						}, {
-    							field: 'internal_work.corrugated_cardboard', title: '巻段ボール', width: '200px'
-    						}, {
-    							field: 'internal_work.buffer_material', title: '緩衝材', width: '200px'
-    						}, {
-    							field: 'internal_work.bubble_wrap', title: 'エアプチ', width: '200px'
-    						}, {
-    							field: 'internal_work.remarks1', title: '備考１', width: '200px'
-    						}, {
-    							field: 'internal_work.remarks2', title: '備考２', width: '200px'
+    							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
     						}]}
     					/>
     				</Col>

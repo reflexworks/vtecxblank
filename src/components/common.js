@@ -1086,18 +1086,28 @@ export class CommonSelectBox extends React.Component {
 			return <option key={index} value={obj.value}>{obj.label}</option>
 		})
 
+		const selectNode = (
+			<FormControl
+				componentClass="select"
+				placeholder={this.props.placeholder}
+				name={this.props.name}
+				value={this.state.value}
+				onChange={(e) => this.changed(e)}
+				bsSize={this.props.bsSize}
+			>
+				{ options }	
+			</FormControl>
+		)
+
 		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				<FormControl
-					componentClass="select"
-					placeholder={this.props.placeholder}
-					name={this.props.name}
-					value={this.state.value}
-					onChange={(e) => this.changed(e)}
-				>
-					{ options }	
-				</FormControl>
-			</CommonFormGroup>
+			<div style={this.props.style}>
+				{ this.props.pure && selectNode }
+				{ !this.props.pure && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{selectNode}
+					</CommonFormGroup>
+				}
+			</div>
 		)
 	}
 

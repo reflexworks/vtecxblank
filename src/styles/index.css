@@ -959,3 +959,45 @@ h3.title {
   padding-left: 20px;
   padding-top: 5px;
 }
+.monthly-table{
+  border-top: 1px solid rgb(100, 158, 194);
+  border: 1px solid #eee;
+}
+.monthly-table th{
+  font-size: 12px;
+  text-align: center;
+  color: rgb(100, 158, 194);
+  background: rgb(190, 222, 243);
+  font-weight: normal;
+}
+.monthly-table td{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-right: 1px solid #eee;
+}
+.monthly-table tr td:last-child{
+  border-right: 0px;
+}
+.monthly-table .form-control,
+.monthly-table .input-sm{
+  text-align: center;
+  border-radius: 0px;
+  font-size: 14px;
+}
+.monthly-table input {
+  border: 1px solid #eee;
+}
+.monthly-table .monthly-table-title{
+  width: 70px;
+  font-size: 12px;
+  color: rgb(100, 158, 194);
+  background: rgb(190, 222, 243);
+}
+.monthly-table .monthly-table-title div{
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+.monthly-table .monthly-table-title div:first-child{
+  padding-top: 5px;
+}
