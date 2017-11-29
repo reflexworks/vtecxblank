@@ -205,7 +205,7 @@ export default class SideMenu extends React.Component {
 							title: '請求書一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('入力保管管理', 'typeahead') }
+					{ this.sideMenuListTitle('入力補完管理', 'typeahead') }
 					{ this.sideMenuList('typeahead',
 						[{
 							to: 'TypeAheadRegistration',
