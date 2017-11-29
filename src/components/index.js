@@ -62,6 +62,7 @@ import BasicConditionUpdate from './basiccondition-update'
 //請求先
 import BillingDataList from './billingdata-list'
 import BillingDataUpload from './billingdata-upload'
+import BillingDataRegistration from './billingdata-registration'
 
 import {
 //	BrowserRouter as Router,
@@ -471,6 +472,17 @@ class MainContainer extends React.Component {
 		)
 	}
 
+	/**
+	 * コンポーネント：請求データ更新
+	 */
+	BillingDataRegistration = (props) => {
+		return (
+			<BillingDataRegistration
+				history={props.history}
+			/>
+		)
+	}
+
 	
 	/**
 	 * ログアウト処理
@@ -552,6 +564,7 @@ class MainContainer extends React.Component {
 							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
 							<Route path="/BillingDataList" component={this.BillingDataList} />	
 							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
+							<Route path="/BillingDataRegistration" component={this.BillingDataRegistration} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
