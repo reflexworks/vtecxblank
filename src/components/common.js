@@ -168,7 +168,7 @@ class LogicCommonTable {
 
 				const childNodes = _element.childNodes ? _element.childNodes[0] : false
 				const isFilter = (childNodes && childNodes.className && childNodes.className.indexOf('Select') !== -1)
-				const isInput = (!isFilter && childNodes.children)
+				const isInput = (!isFilter && childNodes && childNodes.children)
 				if (isFilter) {
 					value = childNodes.childNodes[0].value ? childNodes.childNodes[0].value : ''
 				} else if (isInput) {
@@ -1086,18 +1086,28 @@ export class CommonSelectBox extends React.Component {
 			return <option key={index} value={obj.value}>{obj.label}</option>
 		})
 
+		const selectNode = (
+			<FormControl
+				componentClass="select"
+				placeholder={this.props.placeholder}
+				name={this.props.name}
+				value={this.state.value}
+				onChange={(e) => this.changed(e)}
+				bsSize={this.props.bsSize}
+			>
+				{ options }	
+			</FormControl>
+		)
+
 		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				<FormControl
-					componentClass="select"
-					placeholder={this.props.placeholder}
-					name={this.props.name}
-					value={this.state.value}
-					onChange={(e) => this.changed(e)}
-				>
-					{ options }	
-				</FormControl>
-			</CommonFormGroup>
+			<div style={this.props.style}>
+				{ this.props.pure && selectNode }
+				{ !this.props.pure && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{selectNode}
+					</CommonFormGroup>
+				}
+			</div>
 		)
 	}
 
@@ -1229,7 +1239,7 @@ export class CommonTable extends React.Component {
 			actionType: this.props.edit ? 'edit' : 'remove'
 		}
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
-		this.tableClass = this.props.noneScroll ? 'common-table' : 'common-table scroll'
+		this.tableClass = this.props.fixed ? 'common-table' : 'common-table scroll'
 	}
 
 	/**
@@ -1338,7 +1348,7 @@ export class CommonTable extends React.Component {
 								value={value}
 								options={filter.options}
 								onChange={(data) => filter.onChange(data, _index)}
-								Creatable
+								creatable
 								table
 							/>
 						)
@@ -1865,6 +1875,7 @@ export class CommonFilterBox extends React.Component {
 			actionBtn: this.props.add ? this.addBtn : <span></span>
 		}
 		this.classFilterName = (this.props.add || this.props.edit || this.props.detail) && 'btn-type'
+		this.style = this,props.style || {width: '100%'}
 	}
 
 	/**
@@ -1891,6 +1902,8 @@ export class CommonFilterBox extends React.Component {
 			actionBtn = this.addBtn
 		}
 
+		this.style = newProps.style || {width: '100%'}
+
 		this.setState({
 			value: newProps.value,
 			options: newProps.options,
@@ -1913,29 +1926,39 @@ export class CommonFilterBox extends React.Component {
 		}
 	}
 
+	getList (input) {
+		if (!input) {
+			return Promise.resolve({ options: [] })
+		}
+		return this.props.async(input)
+	}
+
 	render() {
 
+		const SelectComponent = this.props.creatable ? Select.Creatable : Select
 		const SelectNode = () => {
-			if (this.props.Creatable) {
+			if (this.props.async) {
 				return (
-					<Select.Creatable
+					<Select.Async
+						loadOptions={(input)=>this.getList(input)}
 						name={this.props.name}
 						value={this.state.value}
-						options={this.props.options}
 						onChange={(obj) => this.changed(obj)}
 						className={this.classFilterName}
 						multi={this.props.multi}
+						placeholder={this.props.placeholder}
 					/>
 				)
 			} else {
 				return (
-					<Select
+					<SelectComponent
 						name={this.props.name}
 						value={this.state.value}
 						options={this.props.options}
 						onChange={(obj) => this.changed(obj)}
 						className={this.classFilterName}
 						multi={this.props.multi}
+						placeholder={this.props.placeholder}
 					/>
 				)
 			}
@@ -1943,7 +1966,7 @@ export class CommonFilterBox extends React.Component {
 		const FilterBoxNode = () => {
 			if (this.props.table) {
 				return (
-					<div style={{width: '100%'}}>
+					<div style={this.style}>
 						{ SelectNode() }
 						{ this.state.actionBtn }
 					</div>
