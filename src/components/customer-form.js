@@ -36,15 +36,14 @@ export default class CustomerForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {
-			customer_copy: false,
-		}
+		this.state = {customer_copy:false}
 
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
 		this.entry.customer.sales_staff = this.entry.customer.sales_staff || []
 		this.entry.customer.working_staff = this.entry.customer.working_staff || []
 		this.entry.contact_information = this.entry.contact_information || {}
+		this.entry.customer.customer_class = this.entry.customer_class || []
 		this.entry.billto = this.entry.billto || {}
 		this.master = {
 			billtoList: []
@@ -55,52 +54,48 @@ export default class CustomerForm extends React.Component {
 		}
 
 		this.modal = {
-			customer_class: { data: {} },
+			customer: {
+				customer_class: { data: {} },
+			}
 		}
 		
-		this.sampleData()
 	}
 
-
-	sampleData() {
-		this.entry.customer.customer_class = [{delivery_company:'CN',classcode:'test'}]
-	}
-	showAddModal(_key) {
-		this.modal[_key].data = {}
-		this.modal[_key].type = 'add'
-		this.modal[_key].visible = true
+	showAddModal() {
+		this.modal.customer.customer_class.data = {}
+		this.modal.customer.customer_class.type = 'add'
+		this.modal.customer.customer_class.visible = true
 		this.forceUpdate()
 	}
-	showEditModal(_key, _data, _index) {
-		this.modal[_key].data = _data
-		this.modal[_key].index = _index
-		this.modal[_key].type = 'edit'
-		this.modal[_key].visible = true
+	showEditModal(_data, _index) {
+		this.modal.customer.customer_class.data = _data
+		this.modal.customer.customer_class.index = _index
+		this.modal.customer.customer_class.type = 'edit'
+		this.modal.customer.customer_class.visible = true
 		this.forceUpdate()
 	}
-	closeModal(_key) {
-		this.modal[_key].visible = false
+	closeModal() {
+		this.modal.customer.customer_class.visible = false
 		this.forceUpdate()
 	}
-	removeList(_key, _index) {
+	removeList(_index) {
 		let array = []
-		for (let i = 0, ii = this.entry[_key].length; i < ii; ++i) {
-			if (i !== _index) array.push(this.entry[_key][i])
+		for (let i = 0, ii = this.entry.customer.customer_class.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry.customer.customer_class[i])
 		}
-		this.entry[_key] = array
+		this.entry.customer.customer_class = array
 		this.forceUpdate()
 	}
-	addList(_key, _data) {
-		this.entry[_key].push(_data)
-		this.modal[_key].visible = false
+	addList(_data) {
+		this.entry.customer.customer_class.push(_data)
+		this.modal.customer.customer_class.visible = false
 		this.forceUpdate()
 	}
-	updateList(_key, _data) {
-		this.entry[_key][this.modal[_key].index] = _data
-		this.modal[_key].visible = false
+	updateList(_data) {
+		this.entry.customer.customer_class[this.modal.customer.customer_class.index] = _data
+		this.modal.customer.customer_class.visible = false
 		this.forceUpdate()
 	}
-
 
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -347,8 +342,6 @@ export default class CustomerForm extends React.Component {
 							/>
 						}
 						
-						
-
 						<CommonInputText
 							controlLabel="顧客名"
 							name="customer.customer_name"
@@ -369,8 +362,6 @@ export default class CustomerForm extends React.Component {
 							required
 						/>
 						
-						
-
 						<CommonInputText
 							controlLabel="電話番号"
 							name="contact_information.tel"
@@ -396,7 +387,7 @@ export default class CustomerForm extends React.Component {
 							placeholder="logioffice@gmail.com"
 							value={this.entry.contact_information.email}
 						/>
-
+						
 						<CommonInputText
 							controlLabel="郵便番号"
 							name="contact_information.zip_code"
@@ -477,25 +468,21 @@ export default class CustomerForm extends React.Component {
 
 					<Panel collapsible header="請求先情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 						
-						<Checkbox inline
-								  value={this.state.customer_copy}
-								  onClick={() => this.setState({customer_copy: !this.state.customer_copy})}>
+						<Checkbox inline value={this.state.customer_copy}
+							onClick={()=>{this.setState({customer_copy:!this.state.customer_copy})}}>
 							顧客情報と同じにする
 						</Checkbox>
 						
-						{// !this.state.customer_copy &&
-							<CommonFilterBox
-								controlLabel="請求先"
-								name=""
-								value={this.entry.billto.billto_code}
-								options={this.billtoList}
-								add={() => this.setState({ showBilltoAddModal: true })}
-								edit={() => this.setState({ showBilltoEditModal: true })}
-								onChange={(data) => this.changeBillto(data)}
-							/>
-						}
-
-
+						<CommonFilterBox
+							controlLabel="請求先"
+							name=""
+							value={this.entry.billto.billto_code}
+							options={this.billtoList}
+							add={() => this.setState({ showBilltoAddModal: true })}
+							edit={() => this.setState({ showBilltoEditModal: true })}
+							onChange={(data) => this.changeBillto(data)}
+						/>
+						
 						{ this.entry.billto.billto_code && 
 								<CommonInputText
 									controlLabel="請求先コード"
@@ -523,8 +510,6 @@ export default class CustomerForm extends React.Component {
 									/>
 								</FormGroup>
 						}
-
-						
 
 					</Panel>
 
@@ -574,25 +559,26 @@ export default class CustomerForm extends React.Component {
 					<Panel collapsible header="配送業者別分類コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
 						
 						<CustomerClassModal
-							isShow={this.modal.customer_class.visible}
-							close={() => this.closeModal('customer_class')}
-							add={(obj) => this.addList('customer_class', obj)}
-							edit={(obj) => this.updateList('customer_class', obj)}
-							data={this.modal.customer_class.data}
-							type={this.modal.customer_class.type}
+							isShow={this.modal.customer.customer_class.visible}
+							close={() => this.closeModal()}
+							add={(obj) => this.addList(obj)}
+							edit={(obj) => this.updateList(obj)}
+							data={this.modal.customer.customer_class.data}
+							type={this.modal.customer.customer_class.type}
 						/>
 
 						<CommonTable	
 							name="customer.customer_class"
 							data={this.entry.customer.customer_class}
 							header={[{
-								field: 'delivery_company', title: '配送業者', width: '100px',convert: {YN: 'ヤマト', SN: '西濃',CN:'エコ配JP'}
+								field: 'delivery_company', title: '配送業者', width: '100px',
+								convert: { YN: 'ヤマト', SN: '西濃', EC: 'エコ配JP', ヤマト: 'ヤマト', 西濃: '西濃', エコ配JP: 'エコ配JP' }
 							}, {
 								field: 'classcode', title: '分類コード', width: '200px'
 							}]}
-							edit={(data, index) => this.showEditModal('customer_class', data, index)}
-							add={() => this.showAddModal('customer_class')}
-							remove={(data, index) => this.removeList('customer_class', index)}
+							edit={(data, index) => this.showEditModal(data, index)}
+							add={() => this.showAddModal()}
+							remove={(data, index) => this.removeList(index)}
 						/>
 
 					</Panel>

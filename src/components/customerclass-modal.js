@@ -34,6 +34,17 @@ export class CustomerClassModal extends React.Component {
 			data: newProps.data || {},
 			type: newProps.type
 		})
+		if (newProps.data.delivery_company === 'ヤマト') {
+			this.delivery_company = 'YN'
+		} else if (newProps.data.delivery_company === '西濃') {
+			this.delivery_company = 'SN'
+		} else if(newProps.data.delivery_company === 'エコ配JP'){
+			this.delivery_company = 'EC'
+		} else {
+			this.delivery_company = ''
+		}
+		this.classcode = newProps.data.classcode
+		this.forceUpdate()
 	}
 
 	/**
@@ -52,11 +63,11 @@ export class CustomerClassModal extends React.Component {
 	}
 
 	add(_obj) {
-		this.props.add(_obj.customer_class)
+		this.props.add(_obj)
 	}
 
 	edit(_obj) {
-		this.props.edit(_obj.customer_class)
+		this.props.edit(_obj)
 	}
 
 	render() {
