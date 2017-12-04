@@ -34,11 +34,11 @@ export class CustomerClassModal extends React.Component {
 			data: newProps.data || {},
 			type: newProps.type
 		})
-		if (newProps.data.delivery_company === 'ヤマト') {
+		if (newProps.data.delivery_company === 'ヤマト' || newProps.data.delivery_company === 'YN') {
 			this.delivery_company = 'YN'
-		} else if (newProps.data.delivery_company === '西濃') {
+		} else if (newProps.data.delivery_company === '西濃' || newProps.data.delivery_company === 'SN') {
 			this.delivery_company = 'SN'
-		} else if(newProps.data.delivery_company === 'エコ配JP'){
+		} else if(newProps.data.delivery_company === 'エコ配JP' || newProps.data.delivery_company === 'EC'){
 			this.delivery_company = 'EC'
 		} else {
 			this.delivery_company = ''
@@ -78,13 +78,11 @@ export class CustomerClassModal extends React.Component {
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
-				size="lg"
-				height="500px"
+				height="180px"
 			>
 				<Form name="CustomerClassModal" horizontal>
 					<CommonFilterBox
-						controlLabel="入力補完種別"
-						size="sm"
+						controlLabel="配送業者"
 						name="delivery_company"
 						value={this.delivery_company}
 						options={[{
