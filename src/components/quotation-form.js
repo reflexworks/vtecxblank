@@ -418,6 +418,7 @@ export default class QuotationForm extends React.Component {
 								}, {
 									field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
 								}]}
+								add={() => this.showAddModal('manifesto')}
 								remove={(data, index) => this.removeList('manifesto', index)}
 							>
 								<CommonFilterBox
@@ -429,7 +430,7 @@ export default class QuotationForm extends React.Component {
 									table
 									async={(input)=>this.getManifestoList(input)}
 								/>
-								<Button bsSize="sm" onClick={()=>this.showAddModal('manifesto')}><Glyphicon glyph="search" /></Button>
+								<Button bsSize="sm" onClick={()=>this.showEditModal('manifesto')}><Glyphicon glyph="search" /></Button>
 							</CommonTable>
 						</Tab>
 

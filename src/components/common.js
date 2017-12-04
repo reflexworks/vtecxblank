@@ -360,45 +360,55 @@ export class CommonRegistrationBtn extends React.Component {
 		return data
 	}
 
+	doPost() {
+		this.setState({ isDisabled: true })
+
+		const url = this.props.url
+		axios({
+			url: url + '?_addids=1',
+			method: 'put',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			data: {}
+		}).then((response) => {
+		
+			const reqData = this.setReqestdata(response.data.feed.title)
+
+			axios({
+				url: url,
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data: reqData
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'registration', isError: false })
+				this.props.callback(reqData)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false})
+					this.props.error(error, reqData)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
 	submit(e: InputEvent) {
 
 		e.preventDefault()
 
 		if (!this.state.isDisabled) {
             
-			if (confirm('この情報を登録します。よろしいですか？')) {
-
-				this.setState({ isDisabled: true })
-
-				const url = this.props.url
-				axios({
-					url: url + '?_addids=1',
-					method: 'put',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest'
-					},
-					data: {}
-				}).then((response) => {
-		
-					const reqData = this.setReqestdata(response.data.feed.title)
-
-					axios({
-						url: url,
-						method: 'post',
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						},
-						data: reqData
-					}).then(() => {
-						this.setState({ isDisabled: false, isCompleted: 'registration', isError: false })
-						this.props.callback(reqData)
-					}).catch((error) => {
-						this.setState({ isDisabled: false, isError: error })
-					})
-
-				}).catch((error) => {
-					this.setState({ isDisabled: false, isError: error })
-				})
+			if (!this.props.pure) {
+				if (confirm('この情報を登録します。よろしいですか？')) this.doPost()
+			} else {
+				this.doPost()
 			}
 		}
 	}
@@ -578,7 +588,12 @@ export class CommonUpdateBtn extends React.Component {
 					this.setState({ isDisabled: false, isCompleted: 'update', isError: false })
 					this.props.callback(reqData, response)
 				}).catch((error) => {
-					this.setState({ isDisabled: false, isError: error })
+					if (this.props.error) {
+						this.setState({ isDisabled: false})
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
 				})
 
 			}
@@ -672,7 +687,12 @@ export class CommonDeleteBtn extends React.Component {
 					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
 					this.props.callback(response)
 				}).catch((error) => {
-					this.setState({ isDisabled: false, isError: error })
+					if (this.props.error) {
+						this.setState({ isDisabled: false})
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
 				})
 
 			}

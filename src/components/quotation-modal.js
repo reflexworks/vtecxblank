@@ -126,7 +126,7 @@ export class BasicConditionModal extends React.Component {
 	}
 }
 
-//import ManifestoForm from './manifesto-form'
+import ManifestoForm from './manifesto-form'
 import ManifestoList from './manifesto-list'
 export class ManifestoModal extends React.Component {
 	constructor(props: Props) {
@@ -150,6 +150,8 @@ export class ManifestoModal extends React.Component {
 			data: newProps.data ? { manifesto: newProps.data } : {manifesto: {}},
 			type: newProps.type
 		})
+		this.url = '/d/manifesto'
+		this.fromName = 'ManifestoModal'
 	}
 
 	/**
@@ -179,12 +181,21 @@ export class ManifestoModal extends React.Component {
 
 		return (
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
-				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
-				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
+				addAxiosBtn={this.state.type === 'add' ? {
+					url: this.url,
+					callback: (data) => this.props.add(data)
+				} : false}
+				fromName={this.formName}
+				addBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
 				size="lg"
 				height="500px"
 			>
-				<ManifestoList name="ManifestoModal" entry={this.state.data} />	
+				{ this.state.type === 'add' &&
+					<ManifestoForm name="ManifestoModal" entry={this.state.data} />	
+				}	
+				{ this.state.type === 'edit' &&
+					<ManifestoList name="ManifestoModal" entry={this.state.data} />	
+				}	
 			</CommonModal>
 		)
 	}

@@ -222,6 +222,51 @@ export default class QuotationRegistration extends React.Component {
 		}
 	}
 
+	/**
+	 * 登録エラー時の処理
+	 */
+	callbackRegistrationError(_error, _data) {
+		const status = _error.response.status
+		if (status === 409) {
+			this.setState({ isDisabled: false, isError: null })
+			if (confirm('選択した請求先にはすでに同じ期間の見積書が存在します。新しく作成しますか？')) {
+				const url = '/d' + _data.feed.entry[0].link[0].___href
+				axios({
+					url: url + '?_addids=1',
+					method: 'put',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					data: {}
+				}).then((response) => {
+				
+					const sub_code = response.data.feed.title
+					let reqData = _data
+					reqData.feed.entry[0].link[0].___href = _data.feed.entry[0].link[0].___href + '_' + sub_code
+					reqData.feed.entry[0].quotation.quotation_code = _data.feed.entry[0].quotation.quotation_code + '-' + sub_code
+
+					axios({
+						url: this.url,
+						method: 'post',
+						headers: {
+							'X-Requested-With': 'XMLHttpRequest'
+						},
+						data: reqData
+					}).then(() => {
+						this.callbackRegistrationButton(reqData)
+					}).catch((error) => {
+						this.setState({ isDisabled: false, isError: error })
+					})
+
+				}).catch((error) => {
+					this.setState({ isDisabled: false, isError: error })
+				})
+			} else {
+				alert('見積書の作成は中断されました。')
+			}
+		}
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -321,7 +366,14 @@ export default class QuotationRegistration extends React.Component {
 								}]}
 							/>
 						</div>
-						<CommonRegistrationBtn label="見積内容入力へ" url={this.url} callback={(data) => this.callbackRegistrationButton(data)} disabled={this.state.disabled} />	
+						<CommonRegistrationBtn
+							label="見積内容入力へ"
+							url={this.url}
+							callback={(data) => this.callbackRegistrationButton(data)}
+							disabled={this.state.disabled}
+							error={(error, data) => this.callbackRegistrationError(error, data)}
+							pure
+						/>
 					</Form>
 				</Row>
 			</Grid>
