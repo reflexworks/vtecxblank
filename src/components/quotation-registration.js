@@ -41,10 +41,10 @@ export default class QuotationRegistration extends React.Component {
 		// 初期値の設定
 		this.entry = {
 			quotation: {
-				basic_condition: [],
-				manifesto: []
+				packing_item: []
 			},
-			billto: {}
+			billto: {},
+			basic_condition: []
 		}
 
 		this.master = {
@@ -56,9 +56,9 @@ export default class QuotationRegistration extends React.Component {
 		this.selfValue = ''
 		this.template = {
 			quotation: {
-				basic_condition: [],
-				manifesto: []
-			}
+				packing_item: []
+			},
+			basic_condition: []
 		}
 
 	}
@@ -205,9 +205,9 @@ export default class QuotationRegistration extends React.Component {
 			this.selectTemplate = null
 			this.template = {
 				quotation: {
-					basic_condition: [],
-					manifesto: []
-				}
+					packing_item: []
+				},
+				basic_condition: []
 			}
 		}
 		this.forceUpdate()
@@ -338,8 +338,8 @@ export default class QuotationRegistration extends React.Component {
 						}
 						<div className="hide">
 							<CommonTable
-								name="quotation.basic_condition"
-								data={this.template.quotation.basic_condition}
+								name="basic_condition"
+								data={this.template.basic_condition}
 								header={[{
 									field: 'title',title: '条件名', width: '300px'
 								}]}
@@ -359,10 +359,10 @@ export default class QuotationRegistration extends React.Component {
 								}]}
 							/>
 							<CommonTable
-								name="quotation.manifesto"
-								data={this.template.quotation.manifesto}
+								name="quotation.packing_item"
+								data={this.template.quotation.packing_item}
 								header={[{
-									field: 'manifesto_code',title: '品番', width: '100px'
+									field: 'item_code',title: '品番', width: '100px'
 								}]}
 							/>
 						</div>

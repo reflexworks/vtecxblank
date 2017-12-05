@@ -126,14 +126,14 @@ export class BasicConditionModal extends React.Component {
 	}
 }
 
-import ManifestoForm from './manifesto-form'
-import ManifestoList from './packingitem-list'
+import PackingItemForm from './packingitem-form'
+import PackingItemList from './packingitem-list'
 
-export class ManifestoModal extends React.Component {
+export class PackingItemModal extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			data: this.props.data ? { manifesto: this.props.data } : {manifesto: {}},
+			data: this.props.data ? { packing_item: this.props.data } : {packing_item: {}},
 			isShow: this.props.isShow,
 			type: this.props.type
 		}
@@ -148,11 +148,11 @@ export class ManifestoModal extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.setState({
 			isShow: newProps.isShow,
-			data: newProps.data ? { manifesto: newProps.data } : {manifesto: {}},
+			data: newProps.data ? { packing_item: newProps.data } : {packing_item: {}},
 			type: newProps.type
 		})
-		this.url = '/d/manifesto'
-		this.fromName = 'ManifestoModal'
+		this.url = '/d/packing_item'
+		this.fromName = 'PackingItemModal'
 	}
 
 	/**
@@ -171,11 +171,11 @@ export class ManifestoModal extends React.Component {
 	}
 
 	add(_obj) {
-		this.props.add(_obj.manifesto)
+		this.props.add(_obj.packing_item)
 	}
 
 	edit(_obj) {
-		this.props.edit(_obj.manifesto)
+		this.props.edit(_obj.packing_item)
 	}
 
 	render() {
@@ -192,10 +192,10 @@ export class ManifestoModal extends React.Component {
 				height="500px"
 			>
 				{ this.state.type === 'add' &&
-					<ManifestoForm name="ManifestoModal" entry={this.state.data} />	
+					<PackingItemForm name="PackingItemModal" entry={this.state.data} />	
 				}	
 				{ this.state.type === 'edit' &&
-					<ManifestoList name="ManifestoModal" entry={this.state.data} />	
+					<PackingItemList name="PackingItemModal" entry={this.state.data} />	
 				}	
 			</CommonModal>
 		)
