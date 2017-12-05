@@ -151,7 +151,7 @@ export default class InternalWorkForm extends React.Component {
 			}
 			return array
 		}
-		const setPackingyWorks = ()=>{
+		const setPackingWorks = ()=>{
 			let array = []
 			for (let i = 0, ii = 10; i < ii; ++i) {
 				array.push({
@@ -170,7 +170,7 @@ export default class InternalWorkForm extends React.Component {
 		}
 		this.quotationWorks = setQuotationWorks()
 		this.deliveryWorks = setDeliveryWorks()
-		this.packingyWorks = setPackingyWorks()
+		this.packingWorks = setPackingWorks()
 		this.year = '2017'
 		this.month = '12'
 		this.working_date = this.year + '/' + this.month
@@ -215,8 +215,8 @@ export default class InternalWorkForm extends React.Component {
 					}
 				})
 
-				this.forceUpdate()
 			}
+			this.forceUpdate()
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
@@ -334,7 +334,16 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'work_record.status', title: '承認ステータス', width: '700px'
     						}]}
-    					/>
+    					>
+							<CommonFilterBox
+								placeholder="見積作業選択"
+								name=""
+								value={this.selectQuotationWorks}
+								onChange={(data) => this.addList('quotationWorks', data)}
+								style={{float: 'left', width: '400px'}}
+								table
+							/>
+						</CommonTable>
 
 						<br />
 						<PageHeader>発送作業</PageHeader>
@@ -356,7 +365,16 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'work_record.status', title: '承認ステータス', width: '700px'
     						}]}
-    					/>
+    					>
+							<CommonFilterBox
+								placeholder="配送業者選択"
+								name=""
+								value={this.selectDeliveryWorks}
+								onChange={(data) => this.addList('deliveryWorks', data)}
+								style={{float: 'left', width: '400px'}}
+								table
+							/>
+						</CommonTable>
 
 						<br />
 						<PageHeader>集荷作業</PageHeader>
@@ -378,13 +396,22 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'work_record.status', title: '承認ステータス', width: '700px'
     						}]}
-    					/>
+    					>
+							<CommonFilterBox
+								placeholder="配送業者選択"
+								name=""
+								value={this.selectDeliveryWorks}
+								onChange={(data) => this.addList('deliveryWorks', data.data.packing_item)}
+								style={{float: 'left', width: '400px'}}
+								table
+							/>
+						</CommonTable>
 
 						<br />
 						<PageHeader>資材梱包作業</PageHeader>
     					<CommonTable
-    						name="packingyWorks"
-    						data={this.packingyWorks}
+    						name="packingWorks"
+    						data={this.packingWorks}
     						header={[{
 								field: 'manifesto.manifesto_code',title: '品番', width: '100px'
 							}, {
@@ -397,7 +424,24 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'work_record.status', title: '承認ステータス', width: '600px'
     						}]}
-    					/>
+    					>
+							<CommonFilterBox
+								placeholder="品番で選択"
+								name=""
+								value={this.selectPackingWorks}
+								onChange={(data) => this.addList('packingWorks', data.data.packing_item)}
+								style={{float: 'left', width: '200px'}}
+								table
+							/>
+							<CommonFilterBox
+								placeholder="商品名称で選択"
+								name=""
+								value={this.selectPackingWorks}
+								onChange={(data) => this.addList('packingWorks', data.data.packing_item)}
+								style={{float: 'left', width: '400px'}}
+								table
+							/>
+						</CommonTable>
 
 					</Tab>
 					<Tab eventKey={3} title="見積作業状況">
