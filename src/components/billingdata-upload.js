@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import {
-	CommonFilterBox,
+
 } from './common'
 
 type InputEvent = {
@@ -120,7 +120,6 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<th width="100px">配送業者</th>
 									<th width="70px">種類</th>
-									<th width="200px">顧客選択</th>
 									<th width="500px">ファイル選択</th>
 								</tr>
 							</thead>
@@ -128,15 +127,6 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<td>エコ配JP</td>
 									<td>-</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[6]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -149,15 +139,6 @@ export default class BillingDataUpload extends React.Component {
 									<td rowspan="4">ヤマト運輸</td>
 									<td>発払</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[0]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
@@ -167,15 +148,6 @@ export default class BillingDataUpload extends React.Component {
 								</tr>
 								<tr>
 									<td>代引</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[1]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -187,15 +159,6 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<td>DM便</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[2]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
@@ -205,15 +168,6 @@ export default class BillingDataUpload extends React.Component {
 								</tr>
 								<tr>
 									<td>ネコポス</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[3]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -226,15 +180,6 @@ export default class BillingDataUpload extends React.Component {
 									<td rowspan="2">佐川急便</td>
 									<td>発払</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[4]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
@@ -244,15 +189,6 @@ export default class BillingDataUpload extends React.Component {
 								</tr>
 								<tr>
 									<td>代引</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[5]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -264,35 +200,10 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<td>西濃運輸</td>
 									<td>-</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[6]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
 								</tr>
 								<tr>
 									<td rowspan="3">日本郵政</td>
 									<td>EMS</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[7]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -304,15 +215,6 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<td>ゆうパケット</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[8]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
@@ -322,15 +224,6 @@ export default class BillingDataUpload extends React.Component {
 								</tr>
 								<tr>
 									<td>ゆうメール</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[9]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -342,15 +235,6 @@ export default class BillingDataUpload extends React.Component {
 								<tr>
 									<td>自社配送</td>
 									<td>-</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[10]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
