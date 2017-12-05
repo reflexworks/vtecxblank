@@ -127,7 +127,7 @@ export class BasicConditionModal extends React.Component {
 }
 
 //import ManifestoForm from './manifesto-form'
-import ManifestoList from './manifesto-list'
+import ManifestoList from './packingitem-list'
 export class ManifestoModal extends React.Component {
 	constructor(props: Props) {
 		super(props)

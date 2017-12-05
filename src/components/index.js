@@ -26,9 +26,9 @@ import QuotationRegistration from './quotation-registration'
 import QuotationUpdate from './quotation-update'
 
 //資材
-import ManifestoList from './manifesto-list'
-import ManifestoRegistration from './manifesto-registration'
-import ManifestoUpdate from './manifesto-update'
+import PackingItemList from './packingitem-list'
+import PackingItemRegistration from './packingitem-registration'
+import PackingItemUpdate from './packingitem-update'
 
 //庫内作業
 import InternalWorkList from './internalwork-list'
@@ -211,9 +211,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：資材情報一覧
 	 */
-	ManifestoList = (props) => {
+	PackingItemList = (props) => {
 		return (
-			<ManifestoList 
+			<PackingItemList 
 				history={props.history}
 			/>
 		)
@@ -222,9 +222,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：資材情報登録
 	 */
-	ManifestoRegistration = (props) => {
+	PackingItemRegistration = (props) => {
 		return (
-			<ManifestoRegistration 
+			<PackingItemRegistration 
 				history={props.history}
 			/>
 		)
@@ -233,9 +233,9 @@ class MainContainer extends React.Component {
 	/**
 	 * コンポーネント：資材情報更新
 	 */
-	ManifestoUpdate = (props) => {
+	PackingItemUpdate = (props) => {
 		return (
-			<ManifestoUpdate 
+			<PackingItemUpdate 
 				history={props.history}
 			/>
 		)
@@ -540,9 +540,9 @@ class MainContainer extends React.Component {
 							<Route path="/StaffUpdate" component={this.StaffUpdate} />
 							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
 							<Route path="/WarehouseList" component={this.WarehouseList} />
-							<Route path="/ManifestoRegistration" component={this.ManifestoRegistration} />
-							<Route path="/ManifestoList" component={this.ManifestoList} />
-							<Route path="/ManifestoUpdate" component={this.ManifestoUpdate} />
+							<Route path="/PackingItemRegistration" component={this.PackingItemRegistration} />
+							<Route path="/PackingItemList" component={this.PackingItemList} />
+							<Route path="/PackingItemUpdate" component={this.PackingItemUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
@@ -575,4 +575,3 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
-
