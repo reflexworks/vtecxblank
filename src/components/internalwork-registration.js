@@ -5,8 +5,8 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Navbar,
-	Nav
+//	Navbar,
+//	Nav
 } from 'react-bootstrap'
 import type {
 	Props
@@ -14,8 +14,8 @@ import type {
 
 import InternalWorkForm from './internalwork-form'
 import {
-	CommonRegistrationBtn,
-	CommonClearBtn
+//	CommonRegistrationBtn,
+//	CommonClearBtn
 } from './common'
 
 
@@ -48,36 +48,12 @@ export default class InternalWorkRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>庫内作業情報の登録</PageHeader>
-					</Col>
-				</Row>
-				<Row>
-					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<Navbar collapseOnSelect>
-							<Navbar.Collapse>
-								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
-								</Nav>
-							</Navbar.Collapse>
-						</Navbar>
+						<PageHeader>庫内作業状況：2017年12月 株式会社 テスト顧客</PageHeader>
 					</Col>
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						<InternalWorkForm name="mainForm" entry={this.entry} />
-					</Col>
-				</Row>
-				<Row>
-					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<Navbar collapseOnSelect>
-							<Navbar.Collapse>
-								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
-								</Nav>
-							</Navbar.Collapse>
-						</Navbar>
 					</Col>
 				</Row>
 			</Grid>

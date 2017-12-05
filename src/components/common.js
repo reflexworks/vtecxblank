@@ -2077,3 +2077,139 @@ export class CommonMonthlySelect extends React.Component {
 	}
 
 }
+
+
+/**
+ * 表示用カレンダー
+ */
+export class CommonDisplayCalendar extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {}
+
+		this.weekString = ['日', '月', '火', '水', '木', '金', '土']
+
+		this.date = new Date()
+		this.to = this.setDate(this.date, true)
+
+		this.visible = false
+
+		this.year = parseInt(this.props.year) || this.date.getFullYear()
+		this.month = parseInt(this.props.month) || this.date.getMonth() + 1
+
+	}
+
+	setInit(_year, _month) {
+		this.befor = this.setDate(new Date(_year, _month - 1, 0))
+		this.first = this.setDate(new Date(_year, _month - 1, 1))
+		this.end = this.setDate(new Date(_year, _month, 0))
+	}
+
+	setDate(_date, _isTo) {
+		const weekIndex = _date.getDay()
+		const obj = {
+			day: _date.getDate(),
+			weekIndex: weekIndex,
+			weekString: this.weekString[weekIndex]
+		}
+		if (_isTo) {
+			obj.year = _date.getFullYear()
+			obj.month = _date.getMonth() + 1
+		}
+		return obj
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.visible = true
+		this.setInit(newProps.year, newProps.month)
+		this.forceUpdate()
+	}
+
+	setArray() {
+		let day = 0
+		let nextMonthDay = 0
+		const setWeek = (_index) => {
+			let week = []
+			// 第6週の表示制御
+			let visibleLastWeek = false
+			for (let i = 0, ii = 7; i < ii; ++i) {
+				let value
+				let disabled = false
+				const setDays = (_value) => {
+
+					let data
+					if (i === 0) {
+						data = <span className="sun">{_value}</span>
+					} else if (i === 6) {
+						data = <span className="sat">{_value}</span>
+					} else {
+						data = <span className="other">{_value}</span>
+					}
+
+					return data
+				}
+				if (_index === 0 && i < this.first.weekIndex) {
+					// 前月の最終週
+					disabled = true
+					value = this.befor.day - this.befor.weekIndex + i
+				} else if (_index === 0 && i === this.first.weekIndex) {
+					// 今月の週の始まり
+					day++
+					value = setDays(day)
+				} else if (day === this.end.day) {
+					// 来月の週の始まり
+					nextMonthDay++
+					disabled = true
+					value = nextMonthDay
+					if (_index === 5 && i === 0) visibleLastWeek = true
+				} else {
+					// 今月の週
+					day++
+					value = setDays(day)
+				}
+				if (disabled) {
+					value = <td className="disabled"><div className="day">{value}</div></td>
+				} else {
+					if (this.year === this.to.year && this.month === this.to.month && day === this.to.day) {
+						value = <td className="toDay"><div className="day">{value}</div><div className="value"></div></td>
+					} else {
+						value = <td><div className="day">{value}</div><div className="value"></div></td>
+					}
+				}
+				week.push(value)
+			}
+			return visibleLastWeek ? null : week
+		}
+		let rowIndex = -1
+		const setRow = (_tdlist) => {
+			rowIndex++
+			return <tr key={rowIndex}>{_tdlist}</tr>
+		}
+		const setInitMonth = () => {
+			const array = this.weekString.map((value, i) => {
+				return (
+					<th key={i}>{value}</th>
+				)
+			})
+			return [setRow(array)]
+		}
+		let month = setInitMonth()
+		for (let i = 0, ii = 6; i < ii; ++i) {
+			const array = setWeek(i)
+			if (array) {
+				month.push(setRow(array))
+			}
+		}
+		return <table className="CommonDisplayCalendar">{month}</table>
+	}
+
+	render() {
+		return this.visible ? this.setArray() : <div></div>
+	}
+
+}
