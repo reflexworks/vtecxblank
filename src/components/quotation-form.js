@@ -22,7 +22,7 @@ import {
 import {
 	DeliveryChargeModal,
 	BasicConditionModal,
-	ManifestoModal,
+	PackingItemModal,
 } from './quotation-modal'
 
 export default class QuotationForm extends React.Component {
@@ -33,8 +33,8 @@ export default class QuotationForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.quotation = this.entry.quotation || {}
-		this.entry.quotation.basic_condition = this.entry.quotation.basic_condition || []
-		this.entry.quotation.manifesto = this.entry.quotation.manifesto || []
+		this.entry.basic_condition = this.entry.basic_condition || []
+		this.entry.quotation.packing_item = this.entry.quotation.packing_item || []
 		this.entry.billto = this.entry.billto || {}
 		this.entry.item_details = this.entry.item_details || []
 		this.entry.remarks = this.entry.remarks || []
@@ -52,7 +52,7 @@ export default class QuotationForm extends React.Component {
 			basic_condition: { data: {} },
 			item_details: { data: {} },
 			remarks: { data: {} },
-			manifesto: { data: {} }
+			packing_item: { data: {} }
 		}
 
 	}
@@ -154,9 +154,9 @@ export default class QuotationForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	getManifestoList(input) {
+	getPackingItemList(input) {
 		return axios({
-			url: `/d/manifesto?f&manifesto.manifesto_code=*${input}*`,
+			url: `/d/packing_item?f&packing_item.item_code=*${input}*`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -166,8 +166,8 @@ export default class QuotationForm extends React.Component {
 			if (response.status !== 204) {
 				const optionsList = response.data.feed.entry.map((_obj) => {
 					return {
-						label: _obj.manifesto.manifesto_code,
-						value: _obj.manifesto.manifesto_code,
+						label: _obj.packing_item.item_code,
+						value: _obj.packing_item.item_code,
 						data: _obj
 					}
 				})
@@ -196,11 +196,11 @@ export default class QuotationForm extends React.Component {
 	}
 	removeList(_key, _index) {
 		let array = []
-		const oldEntry = _key === 'basic_condition' || _key === 'manifesto' ? this.entry.quotation[_key] : this.entry[_key]
+		const oldEntry = _key === 'packing_item' ? this.entry.quotation[_key] : this.entry[_key]
 		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
 			if (i !== _index) array.push(oldEntry[i])
 		}
-		if (_key === 'basic_condition' || _key === 'manifesto') {
+		if (_key === 'packing_item') {
 			this.entry.quotation[_key] = array
 		} else {
 			this.entry[_key] = array
@@ -208,7 +208,7 @@ export default class QuotationForm extends React.Component {
 		this.forceUpdate()
 	}
 	addList(_key, _data) {
-		if (_key === 'basic_condition' || _key === 'manifesto') {
+		if (_key === 'packing_item') {
 			this.entry.quotation[_key].push(_data)
 		} else {
 			this.entry[_key].push(_data)
@@ -217,7 +217,7 @@ export default class QuotationForm extends React.Component {
 		this.forceUpdate()
 	}
 	updateList(_key, _data) {
-		if (_key === 'basic_condition' || _key === 'manifesto') {
+		if (_key === 'packing_item') {
 			this.entry.quotation[_key][this.modal[_key].index] = _data
 		} else {
 			this.entry[_key][this.modal[_key].index] = _data
@@ -296,13 +296,13 @@ export default class QuotationForm extends React.Component {
 						data={this.modal.basic_condition.data}
 						type={this.modal.basic_condition.type}
 					/>
-					<ManifestoModal
-						isShow={this.modal.manifesto.visible}
-						close={() => this.closeModal('manifesto')}
-						add={(obj) => this.addList('manifesto', obj)}
-						edit={(obj) => this.updateList('manifesto', obj)}
-						data={this.modal.manifesto.data}
-						type={this.modal.manifesto.type}
+					<PackingItemModal
+						isShow={this.modal.packing_item.visible}
+						close={() => this.closeModal('packing_item')}
+						add={(obj) => this.addList('packing_item', obj)}
+						edit={(obj) => this.updateList('packing_item', obj)}
+						data={this.modal.packing_item.data}
+						type={this.modal.packing_item.type}
 					/>
 						
 					<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
@@ -353,8 +353,8 @@ export default class QuotationForm extends React.Component {
 						<Tab eventKey={2} title="基本条件">
 
 							<CommonTable
-								name="quotation.basic_condition"
-								data={this.entry.quotation.basic_condition}
+								name="basic_condition"
+								data={this.entry.basic_condition}
 								header={[{
 									field: 'title',title: '条件名', width: '300px'
 								}, {
@@ -387,14 +387,22 @@ export default class QuotationForm extends React.Component {
 
 						<Tab eventKey={4} title="梱包資材">
 							<CommonTable
-								name="quotation.manifesto"
-								data={this.entry.quotation.manifesto}
+								name="quotation.packing_item"
+								data={this.entry.quotation.packing_item}
 								header={[{
-									field: 'manifesto_code',title: '品番', width: '100px'
+									field: 'item_code',title: '品番', width: '100px'
 								}, {
-									field: 'manifesto_name', title: '商品名称', width: '200px'
+									field: 'item_name', title: '商品名称', width: '200px'
 								}, {
 									field: 'material', title: '材質', width: '200px'
+								}, {
+									field: 'category', title: 'カテゴリ', width: '200px'
+								}, {
+									field: 'size1', title: 'サイズ１', width: '200px'
+								}, {
+									field: 'size2', title: 'サイズ２', width: '200px'
+								}, {
+									field: 'notices', title: '特記', width: '200px'
 								}, {
 									field: 'thickness', title: '厚み', width: '70px'
 								}, {
@@ -409,27 +417,30 @@ export default class QuotationForm extends React.Component {
 									field: 'outer_depth', title: '外寸奥行', width: '70px'
 								}, {
 									field: 'outer_height', title: '外寸高さ', width: '70px'
+								}, {
+									field: 'outer_total', title: '三辺合計', width: '70px'
+								}, {	
+									field: 'purchase_price', title: '仕入れ単価', width: '150px'
 								}, {	
 									field: 'regular_price', title: '通常販売価格', width: '150px'
 								}, {
-									field: 'regular_unit_price', title: '通常販売価格・単価', width: '150px'
+									field: 'regular_unit_price', title: '通常販売価格・特別', width: '150px'
 								}, {
 									field: 'special_price', title: '特別販売価格', width: '150px'
 								}, {
-									field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
+									field: 'special_unit_price', title: '特別販売価格・特別', width: '150px'
 								}]}
-								remove={(data, index) => this.removeList('manifesto', index)}
 							>
 								<CommonFilterBox
 									placeholder="品番から追加"
 									name=""
-									value={this.selectManifesto}
-									onChange={(data) => this.addList('manifesto', data.data.manifesto)}
+									value={this.selectPackingItem}
+									onChange={(data) => this.addList('packing_item', data.data.packing_item)}
 									style={{float: 'left', width: '200px'}}
 									table
-									async={(input)=>this.getManifestoList(input)}
+									async={(input)=>this.getPackingItemList(input)}
 								/>
-								<Button bsSize="sm" onClick={()=>this.showAddModal('manifesto')}><Glyphicon glyph="search" /></Button>
+								<Button bsSize="sm" onClick={()=>this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
 							</CommonTable>
 						</Tab>
 

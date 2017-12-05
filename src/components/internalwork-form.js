@@ -3,8 +3,8 @@ import React from 'react'
 import axios from 'axios'
 import {
 	Form,
-	//	PanelGroup,
-	//	Panel,
+	PanelGroup,
+	Panel,
 	PageHeader,
 	Tabs,
 	Tab,
@@ -22,7 +22,8 @@ import {
 	//	CommonMonthlySelect,
 	CommonFormGroup,	
 	CommonTable,
-	CommonSelectBox
+	CommonSelectBox,
+	CommonDisplayCalendar
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
@@ -30,6 +31,16 @@ export default class InternalWorkForm extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
+
+		this.year = null
+		this.month = null
+		this.date = new Date()
+		this.to = {
+			year: this.date.getFullYear(),
+			month: (this.date.getMonth() + 1) < 10 ? '0' + (this.date.getMonth() + 1) : this.date.getMonth() + 1,
+			day: this.date.getDate()
+		}
+		this.worksDay = 1
 
 		this.entry = this.props.entry || {}
 		this.entry.quotation = this.entry.quotation || {}
@@ -91,8 +102,7 @@ export default class InternalWorkForm extends React.Component {
 	days = () => {
 		let array = []
 		for (let i = 1, ii = 32; i < ii; ++i) {
-			i = i < 10 ? '0' + i : i
-			array.push({ label: i, value: i })
+			array.push({ label: (i < 10 ? '0' + i : i), value: i })
 		}
 		return array
 	}
@@ -161,72 +171,10 @@ export default class InternalWorkForm extends React.Component {
 		this.quotationWorks = setQuotationWorks()
 		this.deliveryWorks = setDeliveryWorks()
 		this.packingyWorks = setPackingyWorks()
-		this.working_date = '2018/01'
-		this.customer_name = '株式会社 テスト顧客'
-	}
-
-	monthlyTable = () => {
-		const halfHead = (start, end) => {
-			let array = []
-			for (let i = start, ii = end ; i < ii; ++i) {
-				array.push(<th>{i+1}</th>)
-			}
-			if (array.length === 15) array.push(<th></th>)
-			return array
-		}
-		const halfBody = (start, end) => {
-			let array = []
-			for (let i = start, ii = end ; i < ii; ++i) {
-				array.push(<td>{i}</td>)
-			}
-			if (array.length === 15) array.push(<td></td>)
-			return array
-		}
-		return (
-			<table className="monthly-table">
-				<thead><tr>{halfHead(0, 16)}</tr></thead>
-				<tbody><tr>{halfBody(0, 16)}</tr></tbody>
-				<thead><tr>{halfHead(16, 31)}</tr></thead>
-				<tbody><tr>{halfBody(16, 31)}</tr></tbody>
-			</table>
-		)
-	}
-
-	monthlyDeliveryTable = () => {
-		const halfHead = (start, end) => {
-			let array = []
-			array.push(<th></th>)
-			for (let i = start, ii = end ; i < ii; ++i) {
-				array.push(<th>{i+1}</th>)
-			}
-			if (array.length === 16) array.push(<th></th>)
-			return array
-		}
-		const halfBody = (start, end) => {
-			let array = []
-			array.push(
-				<td className="monthly-table-title">
-					<div>梱包数</div>
-					<div>配送料金</div>
-				</td>
-			)
-			for (let i = start, ii = end ; i < ii; ++i) {
-				array.push(<td>
-					<div>{i}</div>
-					<div>{i}00</div>
-				</td>)
-			}
-			if (array.length === 16) array.push(<td></td>)
-			return array
-		}
-		return (
-			<table className="monthly-table">
-				<thead><tr>{halfHead(0, 16)}</tr></thead>
-				<tbody><tr>{halfBody(0, 16)}</tr></tbody>
-				<thead><tr>{halfHead(16, 31)}</tr></thead>
-				<tbody><tr>{halfBody(16, 31)}</tr></tbody>
-			</table>
-		)
+		this.year = '2017'
+		this.month = '12'
+		this.working_date = this.year + '/' + this.month
+		this.worksDay = this.working_date === this.to.year + '/' + this.to.month ? this.to.day : 1
 	}
 
 	monthlyDeliveryTables = () => {
@@ -234,8 +182,9 @@ export default class InternalWorkForm extends React.Component {
 		for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
 			array.push(
 				<div>
-					<PageHeader>{this.deliveryList[i]}</PageHeader>
-					{this.monthlyDeliveryTable()}
+					<CommonFormGroup controlLabel={this.deliveryList[i]} size="lg">
+						<CommonDisplayCalendar year={this.year} month={this.month} />
+					</CommonFormGroup>
 					<hr />
 				</div>
 			)
@@ -305,54 +254,65 @@ export default class InternalWorkForm extends React.Component {
 
 			<Form name={this.props.name} horizontal data-submit-form>
 
-				<CommonFilterBox
-					controlLabel="見積書選択"
-					name="quotation.quotation_code"
-					value={this.entry.quotation.quotation_code}
-					options={this.quotationList}
-					onChange={(data) => this.changed(data)}
-				/>
+				<div className="hide">
+					<CommonInputText
+						controlLabel="作業年月"
+						name="internal_work.working_date"
+						type="text"
+						value={this.working_date}
+						readonly
+					/>
 
-				<CommonInputText
-					controlLabel="作業年月"
-					name="internal_work.working_date"
-					type="text"
-					value={this.working_date}
-					readonly
-				/>
-
-				<CommonInputText
-					controlLabel="顧客"
-					name="customer.customer_name"
-					type="text"
-					value={this.customer_name}
-					readonly
-				/>
-
-				<CommonInputText
-					controlLabel="管理基本料"
-					name="internal_work.mgmt_basic_fee"
-					type="text"
-					placeholder="管理基本料"
-					value={this.entry.internal_work.mgmt_basic_fee}
-				/>
-
-				<CommonInputText
-					controlLabel="保管費"
-					name="internal_work.custody_fee"
-					type="text"
-					placeholder="保管費"
-					value={this.entry.internal_work.custody_fee}
-				/>
+					<CommonInputText
+						controlLabel="顧客"
+						name="customer.customer_name"
+						type="text"
+						value={this.customer_name}
+						readonly
+					/>
+				</div>
 
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
-					<Tab eventKey={1} title="日次作業入力">
+					<Tab eventKey={1} title="見積書 / 月次入力">
+
+						<PanelGroup defaultActiveKey="1">
+							<Panel collapsible header="作業対象見積書" eventKey="2" bsStyle="info" defaultExpanded={true}>
+								<CommonFilterBox
+									controlLabel="見積書選択"
+									name="quotation.quotation_code"
+									value={this.entry.quotation.quotation_code}
+									options={this.quotationList}
+									onChange={(data) => this.changed(data)}
+								/>
+							</Panel>
+
+							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+								<CommonInputText
+									controlLabel="管理基本料"
+									name="internal_work.mgmt_basic_fee"
+									type="text"
+									placeholder="管理基本料"
+									value={this.entry.internal_work.mgmt_basic_fee}
+								/>
+
+								<CommonInputText
+									controlLabel="保管費"
+									name="internal_work.custody_fee"
+									type="text"
+									placeholder="保管費"
+									value={this.entry.internal_work.custody_fee}
+								/>
+							</Panel>
+						</PanelGroup>
+					</Tab>
+
+					<Tab eventKey={2} title="日次作業入力">
 
 						<ListGroup>
 							<ListGroupItem>
 								<div style={{ float: 'left', 'padding-top': '5px', 'padding-right': '10px'}}>作業日：{this.working_date}/</div>
-								<CommonSelectBox pure bsSize="sm" options={this.days()} value="01" style={{ float: 'left', width: '50px' }} />
+								<CommonSelectBox pure bsSize="sm" options={this.days()} value={this.worksDay} style={{ float: 'left', width: '50px' }} />
 								<div style={{ clear: 'both' }}></div>
 							</ListGroupItem>
 						</ListGroup>
@@ -399,6 +359,28 @@ export default class InternalWorkForm extends React.Component {
     					/>
 
 						<br />
+						<PageHeader>集荷作業</PageHeader>
+    					<CommonTable
+    						name="deliveryWorks"
+    						data={this.deliveryWorks}
+    						header={[{
+    							field: 'shipment_service.name',title: '配送業者', width: '200px'
+    						}, {
+    							field: 'delivery_charge_amount.quantity', title: '個数', width: '50px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+								}
+    						}, {
+    							field: 'delivery_charge_amount.delivery_charge',title: '配送料', width: '100px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+								}
+    						}, {
+    							field: 'work_record.status', title: '承認ステータス', width: '700px'
+    						}]}
+    					/>
+
+						<br />
 						<PageHeader>資材梱包作業</PageHeader>
     					<CommonTable
     						name="packingyWorks"
@@ -418,63 +400,67 @@ export default class InternalWorkForm extends React.Component {
     					/>
 
 					</Tab>
-					<Tab eventKey={2} title="見積作業状況">
+					<Tab eventKey={3} title="見積作業状況">
 							
 						<CommonFormGroup controlLabel="日次作業1" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="日次作業2" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="日次作業3" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 						
 						<hr />
 
 						<CommonFormGroup controlLabel="日次作業4" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 					</Tab>
 
-					<Tab eventKey={3} title="発送作業状況">
+					<Tab eventKey={4} title="発送作業状況">
 						{this.monthlyDeliveryTables()}
 					</Tab>
 
-					<Tab eventKey={4} title="資材梱包作業状況">
+					<Tab eventKey={5} title="集荷作業状況">
+						{this.monthlyDeliveryTables()}
+					</Tab>
+
+					<Tab eventKey={6} title="資材梱包作業状況">
 						
 						<CommonFormGroup controlLabel="資材1" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="資材2" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="資材3" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="資材4" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 						<hr />
 
 						<CommonFormGroup controlLabel="資材5" size="lg">
-							{this.monthlyTable()}
+							<CommonDisplayCalendar year={this.year} month={this.month} />
 						</CommonFormGroup>
 
 					</Tab>
