@@ -157,7 +157,7 @@
             <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,CRUD</uri>
         </contributor>
-        <link rel="self" href="/manifesto" />
+        <link rel="self" href="/packing_item" />
     </entry>
     <entry>
         <contributor>

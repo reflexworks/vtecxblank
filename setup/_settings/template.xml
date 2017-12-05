@@ -15,9 +15,11 @@ billto
  payment_date
 customer
  customer_code
- customer_class{}
+ shipper{}
   delivery_company
-  classcode
+  shipper_info{}
+   shipper_code
+   shipment_class
  customer_name
  customer_name_kana
  sales_staff{}
@@ -27,7 +29,6 @@ customer
  url
  person_in_charge
  products
- shipment_class
 contact_information
  tel
  fax 
@@ -48,10 +49,14 @@ warehouse
  prefecture
  address1
  address2
-manifesto
- manifesto_code
- manifesto_name
+packing_item
+ item_code
+ item_name
  material
+ category
+ size1
+ size2
+ notices
  thickness
  inside_width
  inside_depth
@@ -60,14 +65,14 @@ manifesto
  outer_depth
  outer_height
  outer_total
+ purchase_price
  regular_price
  regular_unit_price
  special_price
  special_unit_price
- islot
 remarks{}
  content
-basic_condition
+basic_condition{}
  title
  condition{}
   content
@@ -83,14 +88,14 @@ quotation
  quotation_code
  quotation_date
  status
- basic_condition{}
-  title
-  condition{}
-   content
- manifesto{}
-  manifesto_code
-  manifesto_name
+ packing_item{}
+  item_code
+  item_name
   material
+  category
+  size1
+  size2
+  notices
   thickness
   inside_width
   inside_depth
@@ -99,11 +104,11 @@ quotation
   outer_depth
   outer_height
   outer_total
+  purchase_price
   regular_price
   regular_unit_price
   special_price
   special_unit_price
-  islot
 invoice
  invoice_code
  quotation_code
@@ -160,6 +165,12 @@ used_manifesto
 type_ahead
  type
  value
+inquiry
+ inquiry_date
+ inquiry_time
+ staff_name
+ inquiry_status
+ content
 </content>
 <rights>
 </rights>
