@@ -21,14 +21,13 @@ export default class SideMenu extends React.Component {
 				customer: false,
 				staff: false,
 				warehouse: false,
-				manifesto: false,
+				packingitem: false,
 				internal_work: false,
 				billing_data: false,
 				quotation: false,
 				invoice: false,
 				delivery_charge: false,
 				billto: false,
-				TypeAhead: false,
 				BasicCondition: false,
 			}
 		}
@@ -142,14 +141,14 @@ export default class SideMenu extends React.Component {
 							title: '配送料一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('資材管理', 'manifesto') }
-					{ this.sideMenuList('manifesto',
+					{ this.sideMenuListTitle('資材管理', 'packingitem') }
+					{ this.sideMenuList('packingitem',
 						[{
-							to: 'ManifestoRegistration',
+							to: 'PackingItemRegistration',
 							glyph: 'edit',
 							title: '資材登録'
 						},{
-							to: 'ManifestoList',
+							to: 'PackingItemList',
 							glyph: 'list',
 							title: '資材一覧'
 						}]
@@ -182,15 +181,23 @@ export default class SideMenu extends React.Component {
 					)}
 
 					{ this.sideMenuListTitle('見積書管理', 'quotation') }
-					{ this.sideMenuList('quotation',
+					{this.sideMenuList('quotation',
 						[{
 							to: 'QuotationRegistration',
 							glyph: 'edit',
 							title: '見積書作成'
-						},{
+						}, {
 							to: 'QuotationList',
 							glyph: 'list',
 							title: '見積書一覧'
+						}, {
+							to: 'TypeAheadRegistration',
+							glyph: 'edit',
+							title: '入力補完登録'
+						},{
+							to: 'TypeAheadList',
+							glyph: 'list',
+							title: '入力補完一覧'
 						}]
 					)}
 					{ this.sideMenuListTitle('請求書管理', 'invoice') }
@@ -203,18 +210,6 @@ export default class SideMenu extends React.Component {
 							to: 'InvoiceList',
 							glyph: 'list',
 							title: '請求書一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('入力補完管理', 'typeahead') }
-					{ this.sideMenuList('typeahead',
-						[{
-							to: 'TypeAheadRegistration',
-							glyph: 'edit',
-							title: '入力補完登録'
-						},{
-							to: 'TypeAheadList',
-							glyph: 'list',
-							title: '入力補完一覧'
 						}]
 					)}
 					{ this.sideMenuListTitle('基本条件管理', 'basiccondition') }
