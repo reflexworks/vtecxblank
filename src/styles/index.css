@@ -959,45 +959,62 @@ h3.title {
   padding-left: 20px;
   padding-top: 5px;
 }
-.monthly-table{
-  border-top: 1px solid rgb(100, 158, 194);
+.CommonDisplayCalendar{
+  width: 100%;
   border: 1px solid #eee;
 }
-.monthly-table th{
-  font-size: 12px;
+.CommonDisplayCalendar th{
   text-align: center;
-  color: rgb(100, 158, 194);
-  background: rgb(190, 222, 243);
   font-weight: normal;
+  color: #999;
+  font-size: 11px;
 }
-.monthly-table td{
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border-right: 1px solid #eee;
-}
-.monthly-table tr td:last-child{
-  border-right: 0px;
-}
-.monthly-table .form-control,
-.monthly-table .input-sm{
-  text-align: center;
-  border-radius: 0px;
-  font-size: 14px;
-}
-.monthly-table input {
+.CommonDisplayCalendar th{
   border: 1px solid #eee;
 }
-.monthly-table .monthly-table-title{
-  width: 70px;
-  font-size: 12px;
-  color: rgb(100, 158, 194);
-  background: rgb(190, 222, 243);
+.CommonDisplayCalendar td{
+  border: 1px solid #eee;
+  position: relative;
+  height: 35px;
 }
-.monthly-table .monthly-table-title div{
-  padding-bottom: 5px;
-  padding-left: 10px;
+.CommonDisplayCalendar td.disabled{
+  background: #efefef;
 }
-.monthly-table .monthly-table-title div:first-child{
-  padding-top: 5px;
+.CommonDisplayCalendar td div{
+  width: 100%;
+}
+.CommonDisplayCalendar td .day{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: left;
+  font-size: 11px;
+  padding-left: 2px;
+}
+.CommonDisplayCalendar td.disabled .day{
+  color: #ccc;
+}
+.CommonDisplayCalendar td .value{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  padding: 7px;
+}
+.CommonDisplayCalendar .toDay{
+  background: rgb(220, 241, 255);
+}
+.CommonDisplayCalendar .sun{
+  color: red;
+}
+.CommonDisplayCalendar .sat{
+  color: rgb(5, 65, 177);
+}
+.CommonDisplayCalendar .other{
+  color: #999;
+}
+.CommonTextArea{
+  width: 100%;
 }

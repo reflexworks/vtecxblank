@@ -164,12 +164,6 @@ export default class SideMenu extends React.Component {
 					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
 					{ this.sideMenuList('internal_work',
 						[{
-							/*
-							to: 'InternalWorkRegistration',
-							glyph: 'edit',
-							title: '庫内作業登録'
-						},{
-*/
 							to: 'InternalWorkList',
 							glyph: 'list',
 							title: '庫内作業一覧'

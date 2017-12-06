@@ -41,10 +41,10 @@ export default class QuotationRegistration extends React.Component {
 		// 初期値の設定
 		this.entry = {
 			quotation: {
-				basic_condition: [],
-				manifesto: []
+				packing_item: []
 			},
-			billto: {}
+			billto: {},
+			basic_condition: []
 		}
 
 		this.master = {
@@ -56,9 +56,9 @@ export default class QuotationRegistration extends React.Component {
 		this.selfValue = ''
 		this.template = {
 			quotation: {
-				basic_condition: [],
-				manifesto: []
-			}
+				packing_item: []
+			},
+			basic_condition: []
 		}
 
 	}
@@ -205,9 +205,9 @@ export default class QuotationRegistration extends React.Component {
 			this.selectTemplate = null
 			this.template = {
 				quotation: {
-					basic_condition: [],
-					manifesto: []
-				}
+					packing_item: []
+				},
+				basic_condition: []
 			}
 		}
 		this.forceUpdate()
@@ -219,6 +219,51 @@ export default class QuotationRegistration extends React.Component {
 	callbackRegistrationButton(_data) {
 		if (_data) {
 			location.href = '#/QuotationUpdate?' + _data.feed.entry[0].link[0].___href.replace('/quotation/', '')
+		}
+	}
+
+	/**
+	 * 登録エラー時の処理
+	 */
+	callbackRegistrationError(_error, _data) {
+		const status = _error.response.status
+		if (status === 409) {
+			this.setState({ isDisabled: false, isError: null })
+			if (confirm('選択した請求先にはすでに同じ期間の見積書が存在します。新しく作成しますか？')) {
+				const url = '/d' + _data.feed.entry[0].link[0].___href
+				axios({
+					url: url + '?_addids=1',
+					method: 'put',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					data: {}
+				}).then((response) => {
+				
+					const sub_code = response.data.feed.title
+					let reqData = _data
+					reqData.feed.entry[0].link[0].___href = _data.feed.entry[0].link[0].___href + '_' + sub_code
+					reqData.feed.entry[0].quotation.quotation_code = _data.feed.entry[0].quotation.quotation_code + '-' + sub_code
+
+					axios({
+						url: this.url,
+						method: 'post',
+						headers: {
+							'X-Requested-With': 'XMLHttpRequest'
+						},
+						data: reqData
+					}).then(() => {
+						this.callbackRegistrationButton(reqData)
+					}).catch((error) => {
+						this.setState({ isDisabled: false, isError: error })
+					})
+
+				}).catch((error) => {
+					this.setState({ isDisabled: false, isError: error })
+				})
+			} else {
+				alert('見積書の作成は中断されました。')
+			}
 		}
 	}
 
@@ -293,8 +338,8 @@ export default class QuotationRegistration extends React.Component {
 						}
 						<div className="hide">
 							<CommonTable
-								name="quotation.basic_condition"
-								data={this.template.quotation.basic_condition}
+								name="basic_condition"
+								data={this.template.basic_condition}
 								header={[{
 									field: 'title',title: '条件名', width: '300px'
 								}]}
@@ -314,14 +359,21 @@ export default class QuotationRegistration extends React.Component {
 								}]}
 							/>
 							<CommonTable
-								name="quotation.manifesto"
-								data={this.template.quotation.manifesto}
+								name="quotation.packing_item"
+								data={this.template.quotation.packing_item}
 								header={[{
-									field: 'manifesto_code',title: '品番', width: '100px'
+									field: 'item_code',title: '品番', width: '100px'
 								}]}
 							/>
 						</div>
-						<CommonRegistrationBtn label="見積内容入力へ" url={this.url} callback={(data) => this.callbackRegistrationButton(data)} disabled={this.state.disabled} />	
+						<CommonRegistrationBtn
+							label="見積内容入力へ"
+							url={this.url}
+							callback={(data) => this.callbackRegistrationButton(data)}
+							disabled={this.state.disabled}
+							error={(error, data) => this.callbackRegistrationError(error, data)}
+							pure
+						/>
 					</Form>
 				</Row>
 			</Grid>

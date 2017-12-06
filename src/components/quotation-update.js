@@ -65,10 +65,10 @@ export default class QuotationUpdate extends React.Component {
 			} else {
 				this.entry = response.data.feed.entry[0]
 				this.entry.quotation = this.entry.quotation || {}
-				this.entry.quotation.basic_condition = this.entry.quotation.basic_condition || []
+				this.entry.basic_condition = this.entry.basic_condition || []
 				this.entry.item_details = this.entry.item_details || []
 				this.entry.remarks = this.entry.remarks || []
-				this.entry.quotation.manifesto = this.entry.quotation.manifesto || []
+				this.entry.quotation.packing_item = this.entry.quotation.packing_item || []
 
 				this.forceUpdate()
 			}
