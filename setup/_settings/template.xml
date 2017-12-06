@@ -166,8 +166,8 @@ type_ahead
  type
  value
 inquiry
- inquiry_date
- inquiry_time
+ inquiry_created
+ inquiry_updated
  staff_name
  inquiry_status
  content
