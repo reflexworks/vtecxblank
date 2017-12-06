@@ -103,6 +103,14 @@ export default class SideMenu extends React.Component {
 							to: 'CustomerList',
 							glyph: 'list',
 							title: '顧客一覧'
+						},{
+							to: 'InquiryRegistration',
+							glyph: 'list',
+							title: '問い合わせ記録'
+						},{
+							to: 'InquiryList',
+							glyph: 'list',
+							title: '問い合わせ一覧'
 						}]
 					)}
 					{ this.sideMenuListTitle('担当者管理', 'staff') }
