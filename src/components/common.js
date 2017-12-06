@@ -189,7 +189,7 @@ class LogicCommonTable {
 				for (let i = 0, ii = td.length; i < ii; ++i) {
 					if (td[i] && td[i].getAttribute('name')) {
 						const name = td[i].getAttribute('name')
-						if (name && name !== '__tableFilter' && name !== '__tableInput') {
+						if (name && name !== '__tableFilter' && name !== '__tableInput' && name !== 'is_error') {
 							cellData = cellData ? cellData : {}
 							const value = getValue(td[i].getElementsByTagName('div')[0])
 							cellData[name] = value
@@ -1530,8 +1530,11 @@ export class CommonTable extends React.Component {
 				array = setCel(_obj, '')
 				return array
 			}
+
+			const isError = obj.is_error === true ? 'isError' : null
+
 			return (
-				<tr key={i}>{td(obj, i)}</tr>
+				<tr key={i} className={isError}>{td(obj, i)}</tr>
 			)
 		})
 

@@ -883,6 +883,12 @@ h3.title {
   top: 0;
   left: 0;
 }
+.common-table .isError td,
+.common-table .isError td:hover,
+.common-table .isError td:focus {
+  background: rgb(255, 231, 231);
+}
+
 .ReactModalPortal,
 .ReactModal__Overlay,
 .ReactModal__Content {
