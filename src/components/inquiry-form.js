@@ -14,6 +14,7 @@ import type {
 
 import {
 	CommonInputText,
+	CommonTextArea,
 	CommonFilterBox,
 
 } from './common'
@@ -36,7 +37,6 @@ export default class InquiryForm extends React.Component {
 		}
 		this.forceUpdate()
 	}
-
 
 	/**
 	 * 画面描画の前処理
@@ -85,8 +85,6 @@ export default class InquiryForm extends React.Component {
 	 * @param {*} _data 
 	 */
 	changeCustomer(_data) {
-		console.log(_data)
-	
 		if (_data) {
 			this.entry.customer.customer_name = _data.label
 			this.entry.customer.customer_code = _data.data.customer.customer_code
@@ -131,7 +129,6 @@ export default class InquiryForm extends React.Component {
 							controlLabel="登録日時"
 							name="inquiry.inquiry_created"
 							type="text"
-							//placeholder="登録日時"
 							value={this.entry.inquiry.inquiry_created}
 							validate="string"
 							required
@@ -143,13 +140,13 @@ export default class InquiryForm extends React.Component {
 								controlLabel="更新日時"
 								name="inquiry.inquiry_updated"
 								type="text"
-								//placeholder="更新日時"
 								value={this.entry.inquiry.inquiry_updated}
 								validate="string"
 								required
 								readonly
 							/>
 						}
+
 						<CommonFilterBox
 							controlLabel="ステータス"
 							size="sm"
@@ -170,16 +167,13 @@ export default class InquiryForm extends React.Component {
 							}]}
 						/>
 
-						<CommonInputText
+						<CommonTextArea
 							controlLabel="内容"
 							name="inquiry.content"
-							type="text"
 							placeholder="内容"
 							value={this.entry.inquiry.content}
-							validate="string"
-							required
 							size='lg'
-						/>
+						/>	
 					
 					</Panel>	
 				</PanelGroup>		

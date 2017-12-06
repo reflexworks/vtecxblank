@@ -180,6 +180,7 @@ export default class InquiryList extends React.Component {
 								required
 								size='lg'
 							/>
+							
 						</CommonSearchConditionsFrom>
 
 					</Col>

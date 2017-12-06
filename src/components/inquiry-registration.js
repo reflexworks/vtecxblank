@@ -33,8 +33,8 @@ export default class InquiryRegistration extends React.Component {
 		this.entry = {
 			customer: {},
 			inquiry: {
-				
 				//inquiry_updated: moment().format('YYYY/MM/DD HH:mm')
+				//inquiry_created: moment().format('YYYY/MM/DD HH:mm')
 			},
 		}
 
