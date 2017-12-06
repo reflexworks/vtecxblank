@@ -1531,7 +1531,7 @@ export class CommonTable extends React.Component {
 				return array
 			}
 
-			const isError = obj.is_error === true ? 'isError' : null
+			const isError = (obj && obj.is_error === true) ? 'isError' : null
 
 			return (
 				<tr key={i} className={isError}>{td(obj, i)}</tr>
