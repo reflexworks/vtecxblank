@@ -430,6 +430,8 @@ export default class QuotationForm extends React.Component {
 								}, {
 									field: 'special_unit_price', title: '特別販売価格・特別', width: '150px'
 								}]}
+								add={() => this.showAddModal('packing_item')}
+								remove={(data, index) => this.removeList('packing_item', index)}
 							>
 								<CommonFilterBox
 									placeholder="品番から追加"

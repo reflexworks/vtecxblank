@@ -5,7 +5,7 @@ import {
 	Form,
 	PanelGroup,
 	Panel,
-	PageHeader,
+	//	PageHeader,
 	Tabs,
 	Tab,
 	ListGroup,
@@ -52,9 +52,12 @@ export default class InternalWorkForm extends React.Component {
 		}
 		this.customerList = []
 
+		this.quotationWorksList = null
 		this.quotationWorks = []
-		this.deliveryWorks = []
-		this.packingyWorks = []
+
+		this.packingWorksList = null
+		this.packingWorks = []
+
 		this.deliveryList = [
 			'エコ配JP',
 			'ヤマト運輸(発払い)',
@@ -86,6 +89,10 @@ export default class InternalWorkForm extends React.Component {
 			'定形外(規格外：4000g)',
 			'自社配送'
 		]
+		this.deliveryWorksList = null
+		this.deliveryWorks = []
+		this.pickupWorks = []
+
 	}
 
 
@@ -108,6 +115,9 @@ export default class InternalWorkForm extends React.Component {
 	}
 
 	sampleData() {
+		const setOptions = (_label, _value, _data) => {
+			return { label: _label, value: _value, data: _data }
+		}
 		const setQuotationWorks = ()=>{
 			let array = []
 			const unit = (_index) => {
@@ -120,15 +130,17 @@ export default class InternalWorkForm extends React.Component {
 				return value
 			}
 			for (let i = 0, ii = 5; i < ii; ++i) {
-				array.push({
+				const obj = {
 					work_record: {
 						item_name: '見積作業' + i,
 						unit_name: '',
 						unit: unit(i),
 						quantity: (i === 3 ? '3' : ''),
 						status: (i === 3 ? '上長承認中' : '')
-					}
-				})
+					},
+					id: 'work_record' + i
+				}
+				array.push(setOptions(obj.work_record.item_name, obj.work_record.item_name, obj))
 			}
 			return array
 		}
@@ -136,41 +148,43 @@ export default class InternalWorkForm extends React.Component {
 
 			let array = []
 			for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
-				array.push({
+				const obj = {
 					shipment_service: {
 						name: this.deliveryList[i]
 					},
-					delivery_charge_amount: {
-						delivery_charge: (i === 3 ? '300' : ''),
-						quantity: (i === 3 ? '5' : '')
-					},
 					work_record: {
+						quantity: (i === 3 ? '3' : ''),
 						status: (i === 3 ? '上長承認中' : '')
-					}
-				})
+					},
+					id: 'delivery_charge_amount' + i
+				}
+				array.push(setOptions(obj.shipment_service.name, obj.shipment_service.name, obj))
 			}
 			return array
 		}
-		const setPackingWorks = ()=>{
+		const setPackingWorks = (_key)=>{
 			let array = []
 			for (let i = 0, ii = 10; i < ii; ++i) {
-				array.push({
-					manifesto: {
-						manifesto_code: 'SH0000' + i + '-01',
-						manifesto_name: '資材名称' + i
+				const obj = {
+					packing_item: {
+						item_code: 'SH0000' + i + '-01',
+						item_name: '資材名称' + i
 					},	
 					work_record: {
 						item_name: '資材梱包作業' + i,
 						quantity: (i === 3 ? '3' : ''),
 						status: (i === 3 ? '上長承認中' : '')
-					}
-				})
+					},
+					id: 'packing_item' + i
+				}
+				array.push(setOptions(obj.packing_item[_key], obj.packing_item[_key], obj))
 			}
 			return array
 		}
-		this.quotationWorks = setQuotationWorks()
-		this.deliveryWorks = setDeliveryWorks()
-		this.packingWorks = setPackingWorks()
+		this.quotationWorksList = setQuotationWorks()
+		this.deliveryWorksList = setDeliveryWorks()
+		this.packingWorksCodeList = setPackingWorks('item_code')
+		this.packingWorksNameList = setPackingWorks('item_name')
 		this.year = '2017'
 		this.month = '12'
 		this.working_date = this.year + '/' + this.month
@@ -221,6 +235,57 @@ export default class InternalWorkForm extends React.Component {
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})
+	}
+
+	/**
+	 * 日次作業項目の追加
+	 * @param {*} _key 
+	 * @param {*} _data 
+	 */
+	addList(_key, _data) {
+
+		// 同じ項目は追加しない
+		const checkList = this[_key]
+		let duplicate = false
+		for (let i = 0, ii = checkList.length; i < ii; ++i) {
+			if (checkList[i].id === _data.data.id) {
+				duplicate = true
+				break
+			}
+		}
+
+		if (duplicate) {
+			alert('すでに存在しています。')
+		} else {
+			this[_key].push(_data.data)
+			this.forceUpdate()
+		}
+	}
+
+	/**
+	 * 日次作業項目の編集
+	 * @param {*} _key 
+	 * @param {*} _data 
+	 * @param {*} _index 
+	 */
+	editList(_key, _data, _index) {
+		this[_key][_index].work_record.quantity = _data
+		this.forceUpdate()
+	}
+	
+	/**
+	 * 日次作業項目の削除
+	 * @param {*} _key 
+	 * @param {*} _index 
+	 */
+	removeList(_key, _index) {
+		let array = []
+		const oldEntry = this[_key]
+		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
+			if (i !== _index) array.push(oldEntry[i])
+		}
+		this[_key] = array
+		this.forceUpdate()
 	}
 
 	changed() {
@@ -317,119 +382,119 @@ export default class InternalWorkForm extends React.Component {
 							</ListGroupItem>
 						</ListGroup>
 
-						<PageHeader>見積作業</PageHeader>
-
-    					<CommonTable
+						<CommonTable
+							controlLabel="見積作業"
     						name="quotationWorks"
     						data={this.quotationWorks}
     						header={[{
-    							field: 'work_record.item_name',title: '作業内容', width: '200px'
+    							field: 'work_record.item_name',title: '作業内容', width: '300px'
     						}, {
     							field: 'work_record.quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('quotationWorks', data, rowindex)}
 								}
     						}, {
     							field: 'work_record.unit',title: '単位', width: '50px'
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '700px'
-    						}]}
+    							field: 'work_record.status', title: '承認ステータス', width: '300px'
+							}]}
+							remove={(data, i)=>this.removeList('quotationWorks', i)}
     					>
 							<CommonFilterBox
 								placeholder="見積作業選択"
 								name=""
 								value={this.selectQuotationWorks}
+								options={this.quotationWorksList}
 								onChange={(data) => this.addList('quotationWorks', data)}
 								style={{float: 'left', width: '400px'}}
 								table
 							/>
 						</CommonTable>
 
-						<br />
-						<PageHeader>発送作業</PageHeader>
-    					<CommonTable
+						<hr />
+
+						<CommonTable
+							controlLabel="発送作業"
     						name="deliveryWorks"
     						data={this.deliveryWorks}
     						header={[{
-    							field: 'shipment_service.name',title: '配送業者', width: '200px'
+    							field: 'shipment_service.name',title: '配送業者', width: '300px'
     						}, {
-    							field: 'delivery_charge_amount.quantity', title: '個数', width: '50px',
+    							field: 'work_record.quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('deliveryWorks', data, rowindex)}
 								}
     						}, {
-    							field: 'delivery_charge_amount.delivery_charge',title: '配送料', width: '100px',
-								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
-								}
-    						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '700px'
+    							field: 'work_record.status', title: '承認ステータス', width: '350px'
     						}]}
+							remove={(data, i)=>this.removeList('deliveryWorks', i)}
     					>
 							<CommonFilterBox
 								placeholder="配送業者選択"
 								name=""
 								value={this.selectDeliveryWorks}
+								options={this.deliveryWorksList}
 								onChange={(data) => this.addList('deliveryWorks', data)}
 								style={{float: 'left', width: '400px'}}
 								table
 							/>
 						</CommonTable>
 
-						<br />
-						<PageHeader>集荷作業</PageHeader>
-    					<CommonTable
-    						name="deliveryWorks"
-    						data={this.deliveryWorks}
+						<hr />
+
+						<CommonTable
+							controlLabel="集荷作業"
+    						name="pickupWorks"
+    						data={this.pickupWorks}
     						header={[{
-    							field: 'shipment_service.name',title: '配送業者', width: '200px'
+    							field: 'shipment_service.name',title: '配送業者', width: '300px'
     						}, {
-    							field: 'delivery_charge_amount.quantity', title: '個数', width: '50px',
+    							field: 'work_record.quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('pickupWorks', data, rowindex)}
 								}
     						}, {
-    							field: 'delivery_charge_amount.delivery_charge',title: '配送料', width: '100px',
-								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
-								}
-    						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '700px'
+    							field: 'work_record.status', title: '承認ステータス', width: '350px'
     						}]}
+							remove={(data, i)=>this.removeList('pickupWorks', i)}
     					>
 							<CommonFilterBox
 								placeholder="配送業者選択"
 								name=""
 								value={this.selectDeliveryWorks}
-								onChange={(data) => this.addList('deliveryWorks', data.data.packing_item)}
+								options={this.deliveryWorksList}
+								onChange={(data) => this.addList('pickupWorks', data)}
 								style={{float: 'left', width: '400px'}}
 								table
 							/>
 						</CommonTable>
 
-						<br />
-						<PageHeader>資材梱包作業</PageHeader>
-    					<CommonTable
+						<hr />
+
+						<CommonTable
+							controlLabel="資材梱包作業"
     						name="packingWorks"
     						data={this.packingWorks}
     						header={[{
-								field: 'manifesto.manifesto_code',title: '品番', width: '100px'
+								field: 'packing_item.item_code',title: '品番', width: '100px'
 							}, {
-								field: 'manifesto.manifesto_name', title: '商品名称', width: '300px'
+								field: 'packing_item.item_name', title: '商品名称', width: '300px'
     						}, {
     							field: 'work_record.quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.changeQuotationWorks(data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('packingWorks', data, rowindex)}
 								}
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '600px'
+    							field: 'work_record.status', title: '承認ステータス', width: '200px'
     						}]}
+							remove={(data, i)=>this.removeList('packingWorks', i)}
     					>
 							<CommonFilterBox
 								placeholder="品番で選択"
 								name=""
 								value={this.selectPackingWorks}
-								onChange={(data) => this.addList('packingWorks', data.data.packing_item)}
+								options={this.packingWorksCodeList}
+								onChange={(data) => this.addList('packingWorks', data)}
 								style={{float: 'left', width: '200px'}}
 								table
 							/>
@@ -437,11 +502,14 @@ export default class InternalWorkForm extends React.Component {
 								placeholder="商品名称で選択"
 								name=""
 								value={this.selectPackingWorks}
-								onChange={(data) => this.addList('packingWorks', data.data.packing_item)}
+								options={this.packingWorksNameList}
+								onChange={(data) => this.addList('packingWorks', data)}
 								style={{float: 'left', width: '400px'}}
 								table
 							/>
 						</CommonTable>
+
+						<hr />
 
 					</Tab>
 					<Tab eventKey={3} title="見積作業状況">

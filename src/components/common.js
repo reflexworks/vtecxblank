@@ -2176,9 +2176,9 @@ export class CommonDisplayCalendar extends React.Component {
 					value = <td className="disabled"><div className="day">{value}</div></td>
 				} else {
 					if (this.year === this.to.year && this.month === this.to.month && day === this.to.day) {
-						value = <td className="toDay"><div className="day">{value}</div><div className="value"></div></td>
+						value = <td className="toDay"><div className="day">{value}</div><div className="value">{i}</div></td>
 					} else {
-						value = <td><div className="day">{value}</div><div className="value"></div></td>
+						value = <td><div className="day">{value}</div><div className="value">{i}</div></td>
 					}
 				}
 				week.push(value)
