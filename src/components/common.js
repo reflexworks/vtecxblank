@@ -1142,7 +1142,7 @@ export class CommonInputText extends React.Component {
 		super(props)
 		this.state = {
 			name: this.props.name,
-			type: this.props.type,
+			type: this.props.type || 'text',
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
@@ -1240,6 +1240,74 @@ export class CommonInputText extends React.Component {
 				{ this.props.table && 
 					InputTextNode()
 				}
+			</div>
+		)
+	}
+
+}
+
+/**
+ * テキストエリア
+ */
+export class CommonTextArea extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			name: this.props.name,
+			placeholder: this.props.placeholder,
+			value: this.props.value,
+			size: this.props.comparison ? 'lg' : this.props.size,
+			style: this.props.style || null
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			value: newProps.value,
+			size: newProps.size,
+			style: newProps.style || null
+		})
+	}
+
+	/**
+	 * 値の変更処理
+	 * @param {*} e 
+	 */
+	changed(e: InputEvent) {
+		const value = e.target.value
+		this.setState({ value: value })
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
+	}
+
+	render() {
+
+		const node = (
+			<FormControl
+				componentClass="textarea"
+				name={this.state.name}
+				placeholder={this.state.placeholder}
+				value={this.state.value}
+				onChange={(e) => this.changed(e)}
+				bsSize="small"
+				style={this.state.style}
+				className="CommonTextArea"
+			/>
+		)
+		return (
+			<div>
+				{ this.props.controlLabel && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{node}
+					</CommonFormGroup>
+				}
+				{ !this.props.controlLabel && node}
 			</div>
 		)
 	}

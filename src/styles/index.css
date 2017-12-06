@@ -1015,3 +1015,6 @@ h3.title {
 .CommonDisplayCalendar .other{
   color: #999;
 }
+.CommonTextArea{
+  width: 100%;
+}
