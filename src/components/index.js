@@ -64,6 +64,11 @@ import BillingDataList from './billingdata-list'
 import BillingDataUpload from './billingdata-upload'
 import BillingDataRegistration from './billingdata-registration'
 
+//問い合わせ
+import InquiryList from './inquiry-list'
+import InquiryRegistration from './inquiry-registration'
+import InquiryUpdate from './inquiry-update'
+
 import {
 //	BrowserRouter as Router,
 	Route,
@@ -483,6 +488,39 @@ class MainContainer extends React.Component {
 		)
 	}
 
+	/**
+	 * コンポーネント：問い合わせ一覧
+	 */
+	InquiryList = (props) => {
+		return (
+			<InquiryList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：問い合わせ登録
+	 */
+	InquiryRegistration = (props) => {
+		return (
+			<InquiryRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：問い合わせ更新
+	 */
+	InquiryUpdate = (props) => {
+		return (
+			<InquiryUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
 	
 	/**
 	 * ログアウト処理
@@ -565,6 +603,9 @@ class MainContainer extends React.Component {
 							<Route path="/BillingDataList" component={this.BillingDataList} />	
 							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
 							<Route path="/BillingDataRegistration" component={this.BillingDataRegistration} />
+							<Route path="/InquiryRegistration" component={this.InquiryRegistration} />
+							<Route path="/InquiryList" component={this.InquiryList} />
+							<Route path="/InquiryUpdate" component={this.InquiryUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
