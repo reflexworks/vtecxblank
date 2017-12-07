@@ -152,7 +152,7 @@ export class PackingItemModal extends React.Component {
 			type: newProps.type
 		})
 		this.url = '/d/packing_item'
-		this.fromName = 'PackingItemModal'
+		this.formName = 'PackingItemModal'
 	}
 
 	/**
@@ -171,11 +171,11 @@ export class PackingItemModal extends React.Component {
 	}
 
 	add(_obj) {
-		this.props.add(_obj.packing_item)
+		this.props.add(_obj.feed.entry[0].packing_item)
 	}
 
-	edit(_obj) {
-		this.props.edit(_obj.packing_item)
+	select(_obj) {
+		this.props.select(_obj)
 	}
 
 	render() {
@@ -184,19 +184,19 @@ export class PackingItemModal extends React.Component {
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addAxiosBtn={this.state.type === 'add' ? {
 					url: this.url,
-					callback: (data) => this.props.add(data)
+					callback: (data) => this.add(data)
 				} : false}
 				fromName={this.formName}
-				addBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
+				selectBtn={this.state.type === 'edit' ? (obj) => this.select(obj) : false}
 				size="lg"
 				height="500px"
 			>
 				{ this.state.type === 'add' &&
-					<PackingItemForm name="PackingItemModal" entry={this.state.data} />	
+					<PackingItemForm name={this.formName} entry={this.state.data} />	
 				}	
 				{ this.state.type === 'edit' &&
-					<PackingItemList name="PackingItemModal" entry={this.state.data} />	
-				}	
+					<PackingItemList name={this.formName} entry={this.state.data} selectTable />
+				}
 			</CommonModal>
 		)
 	}

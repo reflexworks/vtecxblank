@@ -225,6 +225,17 @@ export default class QuotationForm extends React.Component {
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
+	selectList(_key, _data) {
+		for (let i = 0, ii = _data.length; i < ii; ++i) {
+			if (_key === 'packing_item') {
+				this.entry.quotation[_key].push(_data[i][_key])
+			} else {
+				this.entry[_key].push(_data[i][_key])
+			}
+		}
+		this.modal[_key].visible = false
+		this.forceUpdate()
+	}
 
 	render() {
 
@@ -300,7 +311,7 @@ export default class QuotationForm extends React.Component {
 						isShow={this.modal.packing_item.visible}
 						close={() => this.closeModal('packing_item')}
 						add={(obj) => this.addList('packing_item', obj)}
-						edit={(obj) => this.updateList('packing_item', obj)}
+						select={(obj) => this.selectList('packing_item', obj)}
 						data={this.modal.packing_item.data}
 						type={this.modal.packing_item.type}
 					/>

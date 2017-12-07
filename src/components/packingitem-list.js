@@ -84,13 +84,15 @@ export default class PackingItemList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-
-	onSelect(data) {
+	moveEdit(data) {
 		// 入力画面に遷移
 		const item_code = data.packing_item.item_code
 		this.props.history.push('/PackingItemUpdate?' + item_code)
 	}
-	
+
+	onSelect(_data) {
+		console.log(_data)
+	}
 
 	/**
 	 * 検索実行
@@ -311,7 +313,8 @@ export default class PackingItemList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data) => this.onSelect(data) }
+							edit={!this.props.selectTable ? (data) => this.moveEdit(data) : null }
+							select={this.props.selectTable ? (data) => this.onSelect(data) : null }
 							header={[{
 								field: 'packing_item.item_code',title: '品番', width: '100px'
 							}, {

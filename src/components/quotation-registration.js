@@ -367,6 +367,7 @@ export default class QuotationRegistration extends React.Component {
 							/>
 						</div>
 						<CommonRegistrationBtn
+							controlLabel=" "
 							label="見積内容入力へ"
 							url={this.url}
 							callback={(data) => this.callbackRegistrationButton(data)}
