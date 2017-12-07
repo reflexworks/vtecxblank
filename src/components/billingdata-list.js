@@ -16,7 +16,7 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonDatePicker,
+	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -37,12 +37,13 @@ export default class BillingDataList extends React.Component {
     	this.url = '/d/billing_data?f&l=' + this.maxDisplayRows
     	this.state = {
     		feed: { entry: [] },
+    		disabled: true,
     		isDisabled: false,
     		isError: {},
     		urlToPagenation: '' // ページネーション用に渡すURL
     	}
     	this.activePage = 1
-    	this.sampleDataCreate()
+    	this.createSampleData()
     }
 
     /**
@@ -83,16 +84,14 @@ export default class BillingDataList extends React.Component {
     }
 	
 
-    sampleDataCreate() {
+    createSampleData() {
 		
     	this.sample = [{
     		customer_name: '顧客１',
     		date: '2017/12',
-    		approval_status:'承認',
     	}, {
     		customer_name: '顧客2',
     		date: '2017/12',
-    		approval_status:'未承認',
     	}]
     }
     /**
@@ -106,8 +105,7 @@ export default class BillingDataList extends React.Component {
     	//this.props.history.push('/InternalWorkUpdate' + billing_data_code)
     	this.props.history.push('/BillingDataRegistration')
     }
-    
-
+		
     /**
      * 検索実行
      * @param {*} conditions
@@ -138,25 +136,18 @@ export default class BillingDataList extends React.Component {
 
     					<PageHeader>請求データ一覧</PageHeader>
 
-    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+    					<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} defaultExpanded={true}>
+
+    						<CommonMonthlySelect
+    							controlLabel="請求月"  
+    							name="quotation.quotation_date"
+    						/>
+							
     						<CommonInputText
     							controlLabel="顧客"
-    							name="billing_data.staff_name"
+    							name="billing_data.customer_name"
     							type="text"
     							placeholder="顧客"
-    						/>
-
-    						<CommonDatePicker
-    							controlLabel="年月"  
-    							name="billing_data.working_date"
-    							placeholder="年月"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="承認ステータス"
-    							name="billing_data.approval_status"
-    							type="text"
-    							placeholder="承認ステータス"
     						/>
 
     					</CommonSearchConditionsFrom>
@@ -181,8 +172,7 @@ export default class BillingDataList extends React.Component {
     							field: 'customer_name',title: '顧客名', width: '100px'
     						}, {
     							field: 'date', title: '年月', width: '100px'
-    						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '50px'
+    						
     						}]}
     					/>
     				</Col>
