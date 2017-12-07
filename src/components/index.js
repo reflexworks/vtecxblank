@@ -551,7 +551,7 @@ class MainContainer extends React.Component {
 								<NavItem eventKey={1} href="#menu-toggle" id="menu-toggle" onClick={ (e) => this.hideSidemenu(e) }><Glyphicon glyph="menu-hamburger" /></NavItem>
 							</Nav>
 							<Navbar.Brand>
-								<a href="#">logioffice <small>- 物流向け販売管理システム -</small></a>
+								<a href="#">logioffice <small>- コネクト顧客管理システム -</small></a>
 							</Navbar.Brand>
 							<Navbar.Toggle />
 						</Navbar.Header>
