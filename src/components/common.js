@@ -14,7 +14,10 @@ import {
 	Form,
 	PanelGroup,
 	Panel,
-	Pagination
+	Pagination,
+	ButtonToolbar,
+	ToggleButtonGroup,
+	ToggleButton
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -150,9 +153,9 @@ export class CommonNetworkMessage extends React.Component {
  */
 class LogicCommonTable {
 
-	setData(_entry, _form_name) {
+	setData(_entry, _form_name, _tables) {
 
-		const tables = document.getElementsByName(_form_name)[0].getElementsByTagName('table')
+		let tables = _tables || document.getElementsByName(_form_name)[0].getElementsByTagName('table')
 
 		const getValue = (_element) => {
 
@@ -192,7 +195,17 @@ class LogicCommonTable {
 						if (name && name !== '__tableFilter' && name !== '__tableInput' && name !== 'is_error') {
 							cellData = cellData ? cellData : {}
 							const value = getValue(td[i].getElementsByTagName('div')[0])
-							cellData[name] = value
+
+							const names = name.split('.')
+							if (names.length > 1) {
+								const parent_name = names[0]
+								const child_name = names[1]
+								cellData[parent_name] = cellData[parent_name] ? cellData[parent_name] : {}
+								cellData[parent_name][child_name] = value
+							} else {
+								cellData[name] = cellData[name] || {}
+								cellData[name] = value
+							}
 						}
 					}
 				}
@@ -880,12 +893,19 @@ export class CommonFormGroup extends React.Component {
 	render() {
 		return (
 			<FormGroup bsSize="small" validationState={this.state.validationState}>
-				<Col componentClass={ControlLabel} sm={this.state.labelSize}>
-					{this.props.controlLabel}
-				</Col>
-				<Col sm={this.state.inputSize}>
-					{this.props.children}
-				</Col>
+				{this.props.controlLabel && 
+					<Col componentClass={ControlLabel} sm={this.state.labelSize}>
+						{this.props.controlLabel}
+					</Col>
+				}
+				{this.props.controlLabel && 
+					<Col sm={this.state.inputSize}>
+						{this.props.children}
+					</Col>
+				}
+				{!this.props.controlLabel && 
+					this.props.children
+				}
 			</FormGroup>
 		)
 	}
@@ -1326,6 +1346,7 @@ export class CommonTable extends React.Component {
 			header: this.props.header,
 			actionType: this.props.edit ? 'edit' : 'remove'
 		}
+		this.selected = []
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
 		this.tableClass = this.props.fixed ? 'common-table' : 'common-table scroll'
 	}
@@ -1335,7 +1356,11 @@ export class CommonTable extends React.Component {
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
-		this.setState({data: newProps.data, header: newProps.header})
+		this.selected = []
+		this.setState({
+			data: newProps.data,
+			eader: newProps.header
+		})
 	}
 
 	actionBtn(_index) {
@@ -1363,6 +1388,11 @@ export class CommonTable extends React.Component {
 		return this.props.edit ? '編集' : '削除'
 	}
 
+	select(_row, _value) {
+		this.selected[_row] = _value[0]
+		this.forceUpdate()
+	}
+
 	render() {
 
 		// ヘッダー情報をキャッシュする
@@ -1379,6 +1409,9 @@ export class CommonTable extends React.Component {
 		let option = [{
 			field: 'no', title: 'No', width: '20px'
 		}]
+		if (this.props.select) option.push({
+			field: 'select', title: '選択', width: '30px'
+		})
 		if (this.props.edit || this.props.remove) option.push({
 			field: 'edit', title: this.editName(), width: '30px'
 		})
@@ -1465,6 +1498,18 @@ export class CommonTable extends React.Component {
 
 				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
 				tdCount++
+				if (this.props.select) {
+					array[cashInfo.select.index] = (
+						<td key={tdCount} style={cashInfo.select.style}>
+							<ButtonToolbar>
+								<ToggleButtonGroup type="checkbox" value={this.selected[i]} onChange={(value)=>this.select(i, value)} >
+									<ToggleButton value={i} bsStyle="success" bsSize="sm"><Glyphicon glyph="ok" /></ToggleButton>
+								</ToggleButtonGroup>
+							</ButtonToolbar>
+						</td>
+					)
+					tdCount++
+				}
 				if (this.props.edit || this.props.remove) {
 					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
 					tdCount++
@@ -1531,10 +1576,11 @@ export class CommonTable extends React.Component {
 				return array
 			}
 
-			const isError = (obj && obj.is_error === true) ? 'isError' : null
+			const isError = (obj && obj.is_error === true) ? 'isError' : ''
+			const isSelected = this.selected[i] === i ? 'isSelected' : ''
 
 			return (
-				<tr key={i} className={isError}>{td(obj, i)}</tr>
+				<tr key={i} className={isError + ' ' + isSelected}>{td(obj, i)}</tr>
 			)
 		})
 
@@ -1595,6 +1641,7 @@ export class CommonModal extends React.Component {
 		this.state = {
 			isShow: this.props.isShow
 		}
+		this.LogicCommonTable = new LogicCommonTable()
 	}
 
 	/**
@@ -1623,6 +1670,27 @@ export class CommonModal extends React.Component {
 
 	edit() {
 		this.props.editBtn(this.getFormData())
+	}
+
+	select() {
+		const modal_body = document.getElementById('common_modal_body')
+		const table = modal_body.getElementsByTagName('table')
+		const form = table[0].getElementsByTagName('input')
+		const tableData = this.LogicCommonTable.setData({}, null, table)
+		const selectData = () => {
+			let array = []
+			for (let i = 0, ii = form.length; i < ii; ++i) {
+				const type = form[i].type
+				if (type === 'checkbox') {
+					const checked = form[i].checked
+					if (checked) {
+						array.push(tableData.entry[form[i].value])
+					}
+				}
+			}
+			return array
+		}
+		this.props.selectBtn(selectData())
 	}
 
 	render() {
@@ -1658,6 +1726,9 @@ export class CommonModal extends React.Component {
 								<div>
 									{ this.props.addBtn && 
 										<Button bsStyle="primary" onClick={() => this.add()}>追加</Button>
+									}
+									{ this.props.selectBtn && 
+										<Button bsStyle="primary" onClick={() => this.select()}>追加</Button>
 									}
 									{ this.props.addAxiosBtn && 
 										<CommonRegistrationBtn
