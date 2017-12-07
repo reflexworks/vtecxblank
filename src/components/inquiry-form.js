@@ -16,10 +16,7 @@ import {
 	CommonInputText,
 	CommonTextArea,
 	CommonFilterBox,
-
 } from './common'
-
-import moment from 'moment'
 
 export default class InquiryForm extends React.Component {
 
@@ -30,7 +27,6 @@ export default class InquiryForm extends React.Component {
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
 		this.entry.inquiry = this.entry.inquiry || {}
-		this.entry.inquiry.inquiry_created = this.entry.inquiry.inquiry_created ? this.entry.inquiry.inquiry_created : moment().format('YYYY/MM/DD HH:mm')
 		
 		this.master = {
 			customerList: [],
@@ -125,28 +121,6 @@ export default class InquiryForm extends React.Component {
 							/>
 						}
 
-						<CommonInputText
-							controlLabel="登録日時"
-							name="inquiry.inquiry_created"
-							type="text"
-							value={this.entry.inquiry.inquiry_created}
-							validate="string"
-							required
-							readonly
-						/>
-
-						{ this.entry.inquiry.inquiry_updated &&
-							<CommonInputText
-								controlLabel="更新日時"
-								name="inquiry.inquiry_updated"
-								type="text"
-								value={this.entry.inquiry.inquiry_updated}
-								validate="string"
-								required
-								readonly
-							/>
-						}
-
 						<CommonFilterBox
 							controlLabel="ステータス"
 							size="sm"
@@ -173,6 +147,7 @@ export default class InquiryForm extends React.Component {
 							placeholder="内容"
 							value={this.entry.inquiry.content}
 							size='lg'
+							style={{'height':'300px'}}
 						/>	
 					
 					</Panel>	

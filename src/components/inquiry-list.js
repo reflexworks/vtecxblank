@@ -19,7 +19,7 @@ import {
 	CommonPagination,
 	CommonInputText,
 	CommonFilterBox,
-	
+	CommonTextArea,
 } from './common'
 
 type State = {
@@ -141,17 +141,25 @@ export default class InquiryList extends React.Component {
 
 							<CommonInputText
 								controlLabel="登録日時"
-								name="inquiry.inquiry_created"
+								name="published"
 								type="text"
 								placeholder="登録日時"
 							/>
 
 							<CommonInputText
 								controlLabel="更新日時"
-								name="inquiry.inquiry_updated"
+								name="updated"
 								type="text"
 								placeholder="更新日時"
-							/>							
+							/>
+							
+							<CommonInputText
+								controlLabel="担当者"
+								name="inquiry.staff_name"
+								type="text"
+								placeholder="担当者"
+							/>
+
 							<CommonFilterBox
 								controlLabel="ステータス"
 								size="sm"
@@ -171,14 +179,12 @@ export default class InquiryList extends React.Component {
 								}]}
 							/>
 							
-							<CommonInputText
+							<CommonTextArea
 								controlLabel="内容"
 								name="inquiry.content"
-								type="text"
 								placeholder="内容"
-								validate="string"
-								required
 								size='lg'
+								style={{'height':'100px'}}
 							/>
 							
 						</CommonSearchConditionsFrom>
@@ -200,9 +206,9 @@ export default class InquiryList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'inquiry.inquiry_created',title: '作成日時', width: '200px'
+								field: 'published',title: '登録日時', width: '200px'
 							}, {
-								field: 'inquiry.inquiry_updated', title: '更新日時', width: '200px'
+								field: 'updated',title: '更新日時', width: '200px'
 							}, {
 								field: 'customer.customer_name', title: '顧客名', width: '200px'
 							}, {

@@ -18,8 +18,6 @@ import {
 	CommonClearBtn
 } from './common'
 
-//import moment from 'moment'
-
 export default class InquiryRegistration extends React.Component {
 
 	constructor(props: Props) {
@@ -32,10 +30,7 @@ export default class InquiryRegistration extends React.Component {
 		// 初期値の設定
 		this.entry = {
 			customer: {},
-			inquiry: {
-				//inquiry_updated: moment().format('YYYY/MM/DD HH:mm')
-				//inquiry_created: moment().format('YYYY/MM/DD HH:mm')
-			},
+			inquiry: {},
 		}
 
 	}
