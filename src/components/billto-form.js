@@ -60,10 +60,10 @@ export default class BilltoForm extends React.Component {
 						{/* 更新の場合 */}
 						{this.entry.billto.billto_code &&
 							<CommonInputText
-								controlLabel="請求書コード"
+								controlLabel="請求先コード"
 								name="billto.billto_code"
 								type="text"
-								placeholder="請求書コード"
+								placeholder="請求先コード"
 								value={this.entry.billto.billto_code}
 								readonly="true"
 							/>
