@@ -1395,15 +1395,15 @@ export class CommonTable extends React.Component {
 
 	render() {
 
-		// ヘッダー情報をキャッシュする
+		// ヘッダー情報をキャッシュ
 		const cashInfo = {}
 		let cashInfolength = 0
 		const header_obj = this.state.header
 		const disabledList = {
 			'link': true,
 			'author': true,
-			'published': true,
-			'updated': true
+			'published': false,
+			'updated': false
 		}
 
 		let option = [{
