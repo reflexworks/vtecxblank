@@ -1402,8 +1402,8 @@ export class CommonTable extends React.Component {
 		const disabledList = {
 			'link': true,
 			'author': true,
-			'published': true,
-			'updated': true
+			'published': false,
+			'updated': false
 		}
 
 		let option = [{
