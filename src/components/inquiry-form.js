@@ -103,13 +103,25 @@ export default class InquiryForm extends React.Component {
 
 					<Panel collapsible header="問い合わせ情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 						
-						<CommonFilterBox
-							controlLabel="顧客名"
-							name="customer.customer_name"
-							value={this.entry.customer.customer_name}
-							options={this.customerList}
-							onChange={(data) => this.changeCustomer(data)}
-						/>
+						{ !this.entry.published && 
+							<CommonFilterBox
+								controlLabel="顧客名"
+								name="customer.customer_name"
+								value={this.entry.customer.customer_name}
+								options={this.customerList}
+								onChange={(data) => this.changeCustomer(data)}
+							/>
+						}
+						
+						{ this.entry.published && 
+							<CommonInputText
+								controlLabel="顧客名"
+								name="customer.customer_name"
+								type="text"
+								value={this.entry.customer.customer_name}
+								readonly
+							/>
+						}
 
 						{ this.entry.customer.customer_name && 
 							<CommonInputText
