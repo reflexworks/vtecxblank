@@ -1166,9 +1166,7 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.comparison ? 'lg' : this.props.size,
-			isComparison: this.props.comparison || this.props.comparison === '' ? true : false,
-			comparisonValue : this.props.comparison
+			size: this.props.comparison ? 'lg' : this.props.size
 		}
 	}
 
@@ -1180,8 +1178,7 @@ export class CommonInputText extends React.Component {
 		this.setState({
 			value: newProps.value,
 			readonly: newProps.readonly,
-			size: newProps.size,
-			comparisonValue: newProps.comparison
+			size: newProps.size
 		})
 	}
 
@@ -1212,49 +1209,38 @@ export class CommonInputText extends React.Component {
 			/>
 		)
 		const InputTextNode = () => {
-			if (this.state.isComparison) {
-				return (
-					<div className="comparison">
-						<div className="comparison-input">
+			return (
+				<div>
+					{this.state.readonly && 
+						<FormControl.Static name={this.state.name} id={this.state.name}>
+							{ this.state.value }
+							<FormControl
+								name={this.state.name}
+								type={this.state.type}
+								value={this.state.value}
+								className="hide"
+							/>
+						</FormControl.Static>
+					}
+					{(!this.state.readonly || this.state.readonly === 'false') && 
+						<div>
 							{TextNode}
+							{this.props.customIcon && 
+								<FormControl.Feedback>
+									<Glyphicon glyph={this.props.customIcon} />
+								</FormControl.Feedback>
+							}
 						</div>
-						<div className="comparison-value">
-							{this.state.comparisonValue === '' ? <span style={{ color: '#ccc', 'font-size': '11px' }}>比較データなし</span> : this.state.comparisonValue}
-						</div>
-					</div>
-				)
-			} else {
-				return (
-					<div>
-						{TextNode}
-						{this.props.customIcon && 
-							<FormControl.Feedback>
-								<Glyphicon glyph={this.props.customIcon} />
-							</FormControl.Feedback>
-						}
-					</div>	
-				)
-			}
+					}
+				</div>	
+			)
 		}
 
 		return (
-			<div>
+			<div style={this.props.style} className={this.props.className}>
 				{ !this.props.table && 
 					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-						{this.state.readonly && 
-							<FormControl.Static name={this.state.name} id={this.state.name}>
-								{ this.state.value }
-								<FormControl
-									name={this.state.name}
-									type={this.state.type}
-									value={this.state.value}
-									className="hide"
-								/>
-							</FormControl.Static>
-						}
-						{(!this.state.readonly || this.state.readonly === 'false') && 
-							InputTextNode()
-						}
+						{InputTextNode()}
 					</CommonFormGroup>
 				}
 				{ this.props.table && 
@@ -1890,7 +1876,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 				<Panel collapsible header={header} eventKey="1" bsStyle="success" expanded={this.state.open}>
 					<Form horizontal name="CommonSearchConditionsFrom">
 						{this.props.children}
-						<CommonFormGroup controlLabel="">
+						<CommonFormGroup controlLabel=" ">
 							<Button bsStyle="primary" onClick={() => { this.doSearch() }}>検索</Button>
 						</CommonFormGroup>
 					</Form>
