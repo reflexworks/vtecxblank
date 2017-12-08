@@ -27,7 +27,7 @@ export default class InquiryForm extends React.Component {
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
 		this.entry.inquiry = this.entry.inquiry || {}
-		
+
 		this.master = {
 			customerList: [],
 		}
@@ -117,6 +117,24 @@ export default class InquiryForm extends React.Component {
 								name="customer.customer_code"
 								type="text"
 								value={this.entry.customer.customer_code}
+								readonly
+							/>
+						}
+
+						{ this.entry.published && 
+							<CommonInputText
+								controlLabel="登録日"
+								type="text"
+								value={this.entry.published}
+								readonly
+							/>
+						}
+
+						{ this.entry.updated && 
+							<CommonInputText
+								controlLabel="更新日"
+								type="text"
+								value={this.entry.updated}
 								readonly
 							/>
 						}
