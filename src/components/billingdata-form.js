@@ -88,11 +88,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -100,10 +100,11 @@ export default class BillingDataForm extends React.Component {
 						/>
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 					
 					</Panel>
@@ -116,11 +117,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -129,10 +130,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 						
 					</Panel>
@@ -144,11 +146,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -157,10 +159,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 						
 					</Panel>
@@ -172,11 +175,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -185,10 +188,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 						
 					</Panel>
@@ -200,11 +204,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -213,10 +217,11 @@ export default class BillingDataForm extends React.Component {
 						
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 						
 					</Panel>
@@ -229,11 +234,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -242,10 +247,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -257,11 +263,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -270,10 +276,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -286,11 +293,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -299,10 +306,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -315,11 +323,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 						
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
@@ -329,10 +337,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -345,11 +354,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -358,10 +367,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -373,11 +383,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'
+								field: 'amount', title: '請求金額', width: '200px'
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -386,10 +396,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -402,11 +413,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -415,10 +426,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -430,11 +442,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -443,10 +455,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -458,11 +471,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -471,10 +484,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -486,11 +500,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -499,10 +513,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -515,11 +530,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -528,10 +543,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -543,11 +559,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -556,10 +572,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -571,11 +588,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -584,10 +601,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -599,11 +617,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -612,10 +630,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -627,11 +646,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -640,10 +659,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -655,11 +675,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -668,10 +688,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -684,11 +705,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -697,10 +718,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -712,11 +734,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -725,10 +747,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -740,11 +763,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -753,10 +776,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -768,11 +792,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -781,10 +805,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -796,11 +821,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -809,10 +834,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -824,11 +850,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -837,10 +863,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -852,11 +879,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -865,10 +892,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -880,11 +908,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -893,10 +921,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
@@ -909,11 +938,11 @@ export default class BillingDataForm extends React.Component {
 							header={[{
 								field: 'day',title: '日付', width: '50px'
 							}, {
-								field: 'work', title: '発送作業個数', width: '150px'
+								field: 'work', title: '発送作業個数', width: '300px'
 							}, {
-								field: 'invoices', title: '請求個数', width: '150px'
+								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '300px'			
+								field: 'amount', title: '請求金額', width: '200px'			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -922,10 +951,11 @@ export default class BillingDataForm extends React.Component {
 
 						<CommonInputText
 							controlLabel="合計金額"
-							name="billingdata.total_amount"
+							name="billing_data.total_amount"
 							type="text"
 							value={this.entry.billing_data.total_amount}
 							readonly
+							className="total_amount"
 						/>
 
 					</Panel>
