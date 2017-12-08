@@ -22,8 +22,6 @@ import {
 	CommonBackBtn
 } from './common'
 
-import moment from 'moment'
-
 export default class InquiryUpdate extends React.Component {
 
 	constructor(props: Props) {
@@ -66,7 +64,6 @@ export default class InquiryUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.entry.inquiry.inquiry_updated = this.entry.inquiry.inquiry_created ? moment().format('YYYY/MM/DD HH:mm') : ''
 				this.forceUpdate()
 			}
 

@@ -18,8 +18,9 @@ import {
 	CommonTable,
 	CommonInputText,
 	CommonPrefecture,
+	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
-	CommonPagination
+	CommonPagination,
 } from './common'
 
 type State = {
@@ -122,7 +123,13 @@ export default class InvoiceList extends React.Component {
 
 						<PageHeader>請求書一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} defaultExpanded={true}>
+
+							<CommonMonthlySelect
+    							controlLabel="請求年月"  
+    							name="quotation.quotation_date"
+							/>
+							
 							<CommonInputText
 								controlLabel="顧客コード"
 								name="customer.customer_code"
@@ -207,6 +214,8 @@ export default class InvoiceList extends React.Component {
 							data={this.state.feed.entry}
 							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
 							header={[{
+								field: 'customer.customer_code',title: '請求年月', width: '100px'
+							}, {
 								field: 'customer.customer_code',title: '請求番号', width: '200px'
 							}, {
 								field: 'customer.customer_name', title: '見積番号', width: '200px'
