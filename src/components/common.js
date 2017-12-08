@@ -1850,7 +1850,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			open: false
+			open: this.props.open
 		}
 	}
 
