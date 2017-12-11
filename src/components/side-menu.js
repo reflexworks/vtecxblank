@@ -214,7 +214,8 @@ export default class SideMenu extends React.Component {
 							title: '請求書一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('基本条件管理', 'basiccondition') }
+					{/*
+					{this.sideMenuListTitle('基本条件管理', 'basiccondition')}
 					{ this.sideMenuList('basiccondition',
 						[{
 							to: 'BasicConditionRegistration',
@@ -226,6 +227,7 @@ export default class SideMenu extends React.Component {
 							title: '基本条件一覧'
 						}]
 					)}
+				*/}
 				</ul>
 			</div>
 		)
