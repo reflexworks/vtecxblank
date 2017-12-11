@@ -191,6 +191,21 @@ h3.title {
 .side-menu ul li.child-menu ul.s500{
   height: 250px;
 }
+.side-menu ul li.child-menu ul.s600{
+  height: 300px;
+}
+.side-menu ul li.child-menu ul.s700{
+  height: 350px;
+}
+.side-menu ul li.child-menu ul.s800{
+  height: 400px;
+}
+.side-menu ul li.child-menu ul.s900{
+  height: 450px;
+}
+.side-menu ul li.child-menu ul.s1000{
+  height: 500px;
+}
 .side-menu ul li.child-menu.menu-hide ul{
   height: 0px;
   border-bottom: 0px;
