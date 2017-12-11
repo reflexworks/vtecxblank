@@ -18,17 +18,12 @@ export default class SideMenu extends React.Component {
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				customer: false,
-				staff: false,
-				warehouse: false,
-				packingitem: false,
-				internal_work: false,
-				billing_data: false,
-				quotation: false,
-				invoice: false,
-				delivery_charge: false,
-				billto: false,
-				BasicCondition: false,
+				customer: false,			//請求、顧客、問い合わせ
+				master: false,				//担当者、倉庫、配送料
+				internal_work: false,		//庫内作業、資材
+				quotation: false,			//見積書
+				invoice: false,				//請求書、請求データ
+				//BasicCondition: false,		//基本条件
 			}
 		}
 	}
@@ -79,20 +74,6 @@ export default class SideMenu extends React.Component {
 		return (
 			<div className={ this.props.visible ? 'side-menu' : 'side-menu side-menu-hide'}>
 				<ul>
-					
-					{ this.sideMenuListTitle('請求先管理', 'billto') }
-					{ this.sideMenuList('billto',
-						[{
-							to: 'BilltoRegistration',
-							glyph: 'edit',
-							title: '請求先作成'
-						},{
-							to: 'BilltoList',
-							glyph: 'list',
-							title: '請求先一覧'
-						}]
-					)}
-
 					{ this.sideMenuListTitle('顧客管理', 'customer') }
 					{ this.sideMenuList('customer',
 						[{
@@ -104,8 +85,16 @@ export default class SideMenu extends React.Component {
 							glyph: 'list',
 							title: '顧客一覧'
 						},{
-							to: 'InquiryRegistration',
+							to: 'BilltoRegistration',
+							glyph: 'edit',
+							title: '請求先作成'
+						},{
+							to: 'BilltoList',
 							glyph: 'list',
+							title: '請求先一覧'	
+						},{
+							to: 'InquiryRegistration',
+							glyph: 'edit',
 							title: '問い合わせ記録'
 						},{
 							to: 'InquiryList',
@@ -113,72 +102,49 @@ export default class SideMenu extends React.Component {
 							title: '問い合わせ一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('担当者管理', 'staff') }
-					{ this.sideMenuList('staff',
+
+					{ this.sideMenuListTitle('マスタ管理', 'master') }
+					{this.sideMenuList('master',
 						[{
 							to: 'StaffRegistration',
 							glyph: 'edit',
 							title: '担当者登録'
-						},{
+						}, {
 							to: 'StaffList',
 							glyph: 'list',
 							title: '担当者一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('倉庫管理', 'warehouse') }
-					{ this.sideMenuList('warehouse',
-						[{
+						}, {
 							to: 'WarehouseRegistration',
 							glyph: 'edit',
 							title: '倉庫登録'
-						},{
+						}, {
 							to: 'WarehouseList',
 							glyph: 'list',
 							title: '倉庫一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('配送料管理', 'delivery_charge') }
-					{ this.sideMenuList('delivery_charge',
-						[{
+						},{
 							to: 'DeliveryChargeRegistration',
 							glyph: 'edit',
 							title: '配送料登録'
 						},{
 							to: 'DeliveryChargeList',
 							glyph: 'list',
-							title: '配送料一覧'
+							title: '配送料一覧'	
 						}]
 					)}
-					{ this.sideMenuListTitle('資材管理', 'packingitem') }
-					{ this.sideMenuList('packingitem',
+					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
+					{this.sideMenuList('internal_work',
 						[{
+							to: 'InternalWorkList',
+							glyph: 'list',
+							title: '庫内作業一覧'
+						}, {
 							to: 'PackingItemRegistration',
 							glyph: 'edit',
 							title: '資材登録'
 						},{
 							to: 'PackingItemList',
 							glyph: 'list',
-							title: '資材一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
-					{ this.sideMenuList('internal_work',
-						[{
-							to: 'InternalWorkList',
-							glyph: 'list',
-							title: '庫内作業一覧'
-						}]
-					)}
-					{ this.sideMenuListTitle('請求データ管理', 'billing_data') }
-					{ this.sideMenuList('billing_data',
-						[{
-							to: 'BillingDataUpload',
-							glyph: 'upload',
-							title: '請求データアップロード'
-						},{
-							to: 'BillingDataList',
-							glyph: 'list',
-							title: '請求データ一覧'
+							title: '資材一覧'	
 						}]
 					)}
 
@@ -202,16 +168,24 @@ export default class SideMenu extends React.Component {
 							title: '入力補完一覧'
 						}]
 					)}
-					{ this.sideMenuListTitle('請求書管理', 'invoice') }
+					{ this.sideMenuListTitle('請求管理', 'invoice') }
 					{ this.sideMenuList('invoice',
 						[{
 							to: 'InvoiceRegistration',
 							glyph: 'edit',
 							title: '請求書作成'
-						},{
+						}, {
 							to: 'InvoiceList',
 							glyph: 'list',
 							title: '請求書一覧'
+						},{
+							to: 'BillingDataUpload',
+							glyph: 'upload',
+							title: '請求データアップロード'
+						},{
+							to: 'BillingDataList',
+							glyph: 'list',
+							title: '請求データ一覧'
 						}]
 					)}
 					{/*
