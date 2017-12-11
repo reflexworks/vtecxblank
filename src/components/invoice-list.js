@@ -123,7 +123,7 @@ export default class InvoiceList extends React.Component {
 
 						<PageHeader>請求書一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} defaultExpanded={true}>
+						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} open={true}>
 
 							<CommonMonthlySelect
     							controlLabel="請求年月"  

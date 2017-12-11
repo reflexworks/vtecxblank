@@ -29,7 +29,7 @@ export default class BillingDataForm extends React.Component {
 	}
 
 	createSampleData() {
-		this.entry.billing_data.total_amount = '21,000円'
+		this.entry.billing_data.total_amount = '¥21,000'
 		this.sample = [{
 			day: '12/1',
 			work: '1',
@@ -92,7 +92,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -121,7 +121,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -150,7 +150,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -179,7 +179,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -208,7 +208,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -238,7 +238,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -267,7 +267,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -297,7 +297,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -327,7 +327,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 						
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
@@ -358,7 +358,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -387,7 +387,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -417,7 +417,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -446,7 +446,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -475,7 +475,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -504,7 +504,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -534,7 +534,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -563,7 +563,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -592,7 +592,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -621,7 +621,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -650,7 +650,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -679,7 +679,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -709,7 +709,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -738,7 +738,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -767,7 +767,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -796,7 +796,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -825,7 +825,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -854,7 +854,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -883,7 +883,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -912,7 +912,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
@@ -942,7 +942,7 @@ export default class BillingDataForm extends React.Component {
 							}, {
 								field: 'invoices', title: '請求個数', width: '300px'
 							}, {
-								field: 'amount', title: '請求金額', width: '200px'			
+								field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
 							}]}
 							//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
 							//add={() => this.showAddModal('basic_condition')}
