@@ -1402,17 +1402,15 @@ export class CommonTable extends React.Component {
 			field: 'edit', title: this.editName(), width: '30px'
 		})
 		const thNode = (_obj, _index) => {
-			const bsStyle = {
-				width: _obj.width
-			}
 			const field = _obj.field.replace(/\./g, '___')
 			cashInfo[field] = _obj
-			cashInfo[field].style = bsStyle
+			cashInfo[field].style = _obj.style || {}
+			cashInfo[field].style.width = _obj.width
 			cashInfo[field].index = _index
 			cashInfolength++
 			return (
-				<th key={_index} style={bsStyle}>
-					<div style={bsStyle}>{_obj.title}</div>
+				<th key={_index} style={{width: _obj.width}}>
+					<div style={{width: _obj.width}}>{_obj.title}</div>
 				</th>
 			)
 		}
