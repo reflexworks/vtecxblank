@@ -43,6 +43,7 @@ import InvoiceUpdate from './invoice-update'
 //配送業者
 import ShipmentServiceList from './shipment-service-list'
 import ShipmentServiceRegistration from './shipment-service-registration'
+import ShipmentServiceUpdate from './shipment-service-update'
 import DeliveryChargeList from './deliverycharge-list'
 import DeliveryChargeRegistration from './deliverycharge-registration'
 
@@ -348,6 +349,17 @@ class MainContainer extends React.Component {
 	}
 
 	/**
+	 * コンポーネント：配送料登録
+	 */
+	ShipmentServiceUpdate = (props) => {
+		return (
+			<ShipmentServiceUpdate
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
 	 * コンポーネント：配送料一覧
 	 */
 	ShipmentServiceList = (props) => {
@@ -614,6 +626,7 @@ class MainContainer extends React.Component {
 							<Route path="/InvoiceList" component={this.InvoiceList} />
 							<Route path="/InvoiceUpdate" component={this.InvoiceUpdate} />
 							<Route path="/ShipmentServiceRegistration" component={this.ShipmentServiceRegistration} />
+							<Route path="/ShipmentServiceUpdate" component={this.ShipmentServiceUpdate} />
 							<Route path="/ShipmentServiceList" component={this.ShipmentServiceList} />
 							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
 							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />

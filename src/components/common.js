@@ -165,7 +165,11 @@ class LogicCommonTable {
 				const arrayEle = _element.getElementsByTagName('div')
 				value = []
 				for (let i = 0, ii = arrayEle.length; i < ii; ++i) {
-					value.push({ content: arrayEle[i].innerHTML ? arrayEle[i].innerHTML : '' })
+					const ele = arrayEle[i]
+					const eleKey = ele.getAttribute('name')
+					let eleObj = {}
+					eleObj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
+					value.push(eleObj)
 				}
 			} else {
 
@@ -175,7 +179,7 @@ class LogicCommonTable {
 				if (isFilter) {
 					value = childNodes.childNodes[0].value ? childNodes.childNodes[0].value : ''
 				} else if (isInput) {
-					value = childNodes.childNodes[0].value
+					value = childNodes.getElementsByTagName('input')[0].value
 				} else {
 					value = _element.innerHTML ? _element.innerHTML : ''
 				}
@@ -1179,6 +1183,7 @@ export class CommonInputText extends React.Component {
 		this.setState({
 			value: newProps.value,
 			readonly: newProps.readonly,
+			placeholder: newProps.placeholder,
 			size: newProps.size
 		})
 	}
@@ -1438,8 +1443,10 @@ export class CommonTable extends React.Component {
 										let _valueCount = -1
 										let __value = []
 										for (let __key in _value) {
-											_valueCount++
-											__value.push(<div key={_valueCount} style={style} name={__key}>{_value[__key]}</div>)
+											if (typeof _value[__key] === 'string') {
+												_valueCount++
+												__value.push(<div key={_valueCount} style={style} name={__key}>{_value[__key]}</div>)
+											}
 										}
 										return __value
 									} else {

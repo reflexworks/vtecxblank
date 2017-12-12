@@ -140,13 +140,17 @@ internal_work
  approval_status
  work_kind_class
 shipment_service
- code
- size
- name
- zone{}
-  zone_code
-  pref_codes{}
-   pref_code
+ code 
+ name  
+ type   
+ service_name  
+ sizes{}
+  size  
+  weight  
+zone{}
+ zone_name
+ pref_codes{}
+  pref_code
 delivery_charge_amount
  shipping_date
  prefecture
