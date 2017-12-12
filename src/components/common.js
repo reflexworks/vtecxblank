@@ -874,6 +874,7 @@ export class CommonFormGroup extends React.Component {
 	inputSize(_option) {
 		let size = 4
 		if (_option === 'sm') size = 2
+		if (_option === 'md') size = 4
 		if (_option === 'lg') size = 9
 		return size
 	}
@@ -1330,7 +1331,8 @@ export class CommonTable extends React.Component {
 		this.state = {
 			data: this.props.data,
 			header: this.props.header,
-			actionType: this.props.edit ? 'edit' : 'remove'
+			actionType: this.props.edit ? 'edit' : 'remove',
+			size: this.props.size || 'lg'
 		}
 		this.selected = []
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
@@ -1433,9 +1435,13 @@ export class CommonTable extends React.Component {
 							{
 								value.map((_value, i) => {
 									if (Object.prototype.toString.call(_value) === '[object Object]') {
-										return (
-											<div key={i} style={style}>{_value.content}</div>
-										)
+										let _valueCount = -1
+										let __value = []
+										for (let __key in _value) {
+											_valueCount++
+											__value.push(<div key={_valueCount} style={style} name={__key}>{_value[__key]}</div>)
+										}
+										return __value
 									} else {
 										return (
 											<div key={i} style={style}>{_value}</div>
@@ -1600,9 +1606,9 @@ export class CommonTable extends React.Component {
 		return (
 			<div>
 				{ this.isControlLabel &&
-				<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size="lg">
-					{ tableNode }
-				</CommonFormGroup>
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{ tableNode }
+					</CommonFormGroup>
 				}
 				{ !this.isControlLabel &&
 					tableNode
