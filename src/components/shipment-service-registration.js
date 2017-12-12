@@ -67,7 +67,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 		}]
 		this.entry.zone = this.zoneList.map((value, i) => {
 			return {
-				zone_code: value,
+				zone_name: value,
 				pref_codes: this.setInitPref(i)
 			}
 		})
