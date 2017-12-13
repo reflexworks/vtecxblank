@@ -62,15 +62,19 @@ function webpackconfig(filename,externals,devtool) {
 			'react-bootstrap': 'ReactBootstrap',
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
-		} : {},
+		} : {
+			'react': 'React',
+			'react-dom': 'ReactDOM',
+			'react-bootstrap': 'ReactBootstrap',
+			'react-router-dom': 'ReactRouterDOM',            
+			'axios': 'axios'				
+		},
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
 		]
-
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
-
 
 gulp.task('watch:components', function(){
 	gulp.watch('./src/components/*.js')
