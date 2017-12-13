@@ -21,6 +21,7 @@ import {
 	CommonPagination
 } from './common'
 
+import moment from 'moment'
 type State = {
     feed: any,
     url: string
@@ -36,6 +37,7 @@ export default class BillingDataList extends React.Component {
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
     	this.url = '/d/billing_data?f&l=' + this.maxDisplayRows
     	this.state = {
+    		searchDate: moment().format('YYYY/MM'),
     		feed: { entry: [] },
     		disabled: true,
     		isDisabled: false,
@@ -139,13 +141,14 @@ export default class BillingDataList extends React.Component {
     					<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} open={true}>
 
     						<CommonMonthlySelect
-    							controlLabel="請求月"  
-    							name="quotation.quotation_date"
+    							controlLabel="請求年月"
+    							name="quotation_date"
+    							value={this.state.searchDate}
     						/>
 							
     						<CommonInputText
     							controlLabel="顧客"
-    							name="billing_data.customer_name"
+    							name="customer_name"
     							type="text"
     							placeholder="顧客"
     						/>
