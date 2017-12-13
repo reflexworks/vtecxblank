@@ -7,6 +7,8 @@ import {
 	Col,
 	PageHeader,
 	Button,
+	Panel,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -23,6 +25,7 @@ import {
 	CommonPagination,
 } from './common'
 
+import moment from 'moment'
 type State = {
 	feed: any,
 	url: string
@@ -38,6 +41,8 @@ export default class InvoiceList extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/invoice?f&l=' + this.maxDisplayRows
 		this.state = {
+			searchDate: moment().format('YYYY/MM'),
+			searchDetails: false,
 			feed: { entry: [] },
 			isDisabled: false,
 			isError: {},
@@ -109,6 +114,10 @@ export default class InvoiceList extends React.Component {
 	}
 
 	render() {
+		const icon = this.state.searchDetails === true ? 'menu-up' : 'menu-down'
+		const header = (
+			<div onClick={() => this.setState({ searchDetails: !this.state.searchDetails })}>詳細検索 <Glyphicon glyph={icon} style={{ float: 'right' }} /></div>
+		)
 		return (
 			<Grid>
 
@@ -127,75 +136,79 @@ export default class InvoiceList extends React.Component {
 
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
-    							name="quotation.quotation_date"
+								name="quotation.quotation_date"
+								value={this.state.searchDate}
 							/>
-							
-							<CommonInputText
-								controlLabel="顧客コード"
-								name="customer.customer_code"
-								type="text"
-								placeholder="顧客コード"
-							/>
-							<CommonInputText
-								controlLabel="顧客名"
-								name="customer.customer_name"
-								type="text"
-								placeholder="株式会社 ◯◯◯"
-							/>
-							<CommonInputText
-								controlLabel="顧客名(カナ)"
-								name="customer.customer_name_kana"
-								type="text"
-								placeholder="カブシキガイシャ ◯◯◯"
-							/>
-							<CommonInputText
-								controlLabel="電話番号"
-								name="customer.customer_tel"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="FAX"
-								name="customer.customer_fax"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="メールアドレス"
-								name="customer.customer_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-							/>
-							<CommonInputText
-								controlLabel="郵便番号"
-								name="customer.zip_code"
-								type="text"
-								placeholder="123-4567"
-								size="sm"
-							/>
-							<CommonPrefecture
-								controlLabel="都道府県"
-								componentClass="select"
-								name="customer.prefecture"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="市区郡長村"
-								name="customer.address1"
-								type="text"
-								placeholder="◯◯市××町"
-							/>
-							<CommonInputText
-								controlLabel="番地"
-								name="customer.address2"
-								type="text"
-								placeholder="1丁目2番地 ◯◯ビル1階"
-								size="lg"
-							/>
-						</CommonSearchConditionsFrom>
+								
+							<Panel collapsible header={header} eventKey="1" bsStyle="success" expanded={this.state.searchDetails}>	
+								<CommonInputText
+									controlLabel="顧客コード"
+									name="customer.customer_code"
+									type="text"
+									placeholder="顧客コード"
+								/>
+								<CommonInputText
+									controlLabel="顧客名"
+									name="customer.customer_name"
+									type="text"
+									placeholder="株式会社 ◯◯◯"
+								/>
+								<CommonInputText
+									controlLabel="顧客名(カナ)"
+									name="customer.customer_name_kana"
+									type="text"
+									placeholder="カブシキガイシャ ◯◯◯"
+								/>
+								<CommonInputText
+									controlLabel="電話番号"
+									name="customer.customer_tel"
+									type="text"
+									placeholder="090-1234-5678"
+									size="sm"
+								/>
+								<CommonInputText
+									controlLabel="FAX"
+									name="customer.customer_fax"
+									type="text"
+									placeholder="090-1234-5678"
+									size="sm"
+								/>
+								<CommonInputText
+									controlLabel="メールアドレス"
+									name="customer.customer_email"
+									type="email"
+									placeholder="logioffice@gmail.com"
+								/>
+								<CommonInputText
+									controlLabel="郵便番号"
+									name="customer.zip_code"
+									type="text"
+									placeholder="123-4567"
+									size="sm"
+								/>
+								<CommonPrefecture
+									controlLabel="都道府県"
+									componentClass="select"
+									name="customer.prefecture"
+									size="sm"
+								/>
+								<CommonInputText
+									controlLabel="市区郡長村"
+									name="customer.address1"
+									type="text"
+									placeholder="◯◯市××町"
+								/>
+								<CommonInputText
+									controlLabel="番地"
+									name="customer.address2"
+									type="text"
+									placeholder="1丁目2番地 ◯◯ビル1階"
+									size="lg"
+								/>
+							</Panel>
 
+						</CommonSearchConditionsFrom>
+						
 					</Col>
 				</Row>
 				<Row>

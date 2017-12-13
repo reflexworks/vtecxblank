@@ -41,8 +41,9 @@ class LoginForm extends React.Component {
 				'X-WSSE': authToken,
 				'X-Requested-With': 'XMLHttpRequest'
 			}
+			
 		}).then(() => {
-			location.href = 'index.html'
+			location.href = '/'
 		}).catch((error) => {
 			if (error.response) {
 				if (error.response.data.feed.title==='Captcha required at next login.') {
