@@ -18,12 +18,12 @@ export default class SideMenu extends React.Component {
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				customer: false,			//請求、顧客、問い合わせ
+				customer: false,			//顧客、請求、問い合わせ
 				master: false,				//担当者、倉庫、配送料
-				internal_work: false,		//庫内作業、資材
-				quotation: false,			//見積書
+				quotation: false,			//見積書、資材、入力補完
+				internal_work: false,		//庫内作業
 				invoice: false,				//請求書、請求データ
-				//BasicCondition: false,		//基本条件
+			//	basic_condition: false,		//基本条件
 			}
 		}
 	}
@@ -104,7 +104,7 @@ export default class SideMenu extends React.Component {
 					)}
 
 					{ this.sideMenuListTitle('マスタ管理', 'master') }
-					{this.sideMenuList('master',
+					{ this.sideMenuList('master',
 						[{
 							to: 'StaffRegistration',
 							glyph: 'edit',
@@ -139,25 +139,9 @@ export default class SideMenu extends React.Component {
 							title: '配送料一覧'	
 						}]
 					)}
-					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
-					{this.sideMenuList('internal_work',
-						[{
-							to: 'InternalWorkList',
-							glyph: 'list',
-							title: '庫内作業一覧'
-						}, {
-							to: 'PackingItemRegistration',
-							glyph: 'edit',
-							title: '資材登録'
-						},{
-							to: 'PackingItemList',
-							glyph: 'list',
-							title: '資材一覧'	
-						}]
-					)}
 
-					{ this.sideMenuListTitle('見積書管理', 'quotation') }
-					{this.sideMenuList('quotation',
+					{ this.sideMenuListTitle('見積管理', 'quotation') }
+					{ this.sideMenuList('quotation',
 						[{
 							to: 'QuotationRegistration',
 							glyph: 'edit',
@@ -167,6 +151,14 @@ export default class SideMenu extends React.Component {
 							glyph: 'list',
 							title: '見積書一覧'
 						}, {
+							to: 'PackingItemRegistration',
+							glyph: 'edit',
+							title: '資材登録'
+						}, {
+							to: 'PackingItemList',
+							glyph: 'list',
+							title: '資材一覧'
+						}, {
 							to: 'TypeAheadRegistration',
 							glyph: 'edit',
 							title: '入力補完登録'
@@ -174,6 +166,14 @@ export default class SideMenu extends React.Component {
 							to: 'TypeAheadList',
 							glyph: 'list',
 							title: '入力補完一覧'
+						}]
+					)}
+					{ this.sideMenuListTitle('庫内作業管理', 'internal_work') }
+					{ this.sideMenuList('internal_work',
+						[{
+							to: 'InternalWorkList',
+							glyph: 'list',
+							title: '庫内作業一覧'	
 						}]
 					)}
 					{ this.sideMenuListTitle('請求管理', 'invoice') }
@@ -197,8 +197,8 @@ export default class SideMenu extends React.Component {
 						}]
 					)}
 					{/*
-					{this.sideMenuListTitle('基本条件管理', 'basiccondition')}
-					{ this.sideMenuList('basiccondition',
+					{ this.sideMenuListTitle('基本条件管理', 'basic_condition')}
+					{ this.sideMenuList('basic_condition',
 						[{
 							to: 'BasicConditionRegistration',
 							glyph: 'edit',
