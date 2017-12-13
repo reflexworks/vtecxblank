@@ -1690,6 +1690,20 @@ export class CommonModal extends React.Component {
 		this.props.selectBtn(selectData())
 	}
 
+	componentWillUpdate() {
+		let commonModal = document.getElementById('common_modal_body')
+		const windowheihgt = window.innerHeight
+		window.onresize = function () {
+			if (commonModal) {
+				if ((commonModal.style.height + 100) > windowheihgt) {
+					commonModal.style.height = windowheihgt - 100
+				}
+			} else {
+				commonModal = document.getElementById('common_modal_body')
+			}
+		}
+	}
+
 	render() {
 
 		const modal_size = () => {

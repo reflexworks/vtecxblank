@@ -107,13 +107,37 @@ export default class ShipmentServiceForm extends React.Component {
 			label: '500g以内',
 			value: '500g以内'
 		},{
-			label: '750g以内',
-			value: '750g以内'
+			label: '700g以内',
+			value: '700g以内'
 		},{
 			label: '1kg以内',
 			value: '1kg以内'
+		},{
+			label: '50g',
+			value: '50g'
+		},{
+			label: '100g',
+			value: '100g'
+		},{
+			label: '150g',
+			value: '150g'
+		},{
+			label: '250g',
+			value: '250g'
+		},{
+			label: '500g',
+			value: '500g'
+		},{
+			label: '1000g',
+			value: '1000g'
+		},{
+			label: '2000g',
+			value: '2000g'
+		},{
+			label: '4000g',
+			value: '4000g'
 		}]
-		
+
 	}
 
 	/**
