@@ -34,7 +34,7 @@ export default class ShipmentServiceList extends React.Component {
     constructor(props:Props) {
     	super(props)
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
-    	this.url = '/d/type_ahead?f&l=' + this.maxDisplayRows
+    	this.url = '/d/shipment_service?f&l=' + this.maxDisplayRows
     	this.state = {
     		feed: { entry: [] },
     		isDisabled: false,
@@ -88,8 +88,8 @@ export default class ShipmentServiceList extends React.Component {
 	
     onSelect(data) {
     	// 入力画面に遷移
-    	const id = data.link[0].___href.slice(12)
-    	this.props.history.push('/TypeAheadUpdate?' + id)
+    	const id = data.link[0].___href.replace('/shipment_service/', '')
+    	this.props.history.push('/ShipmentServiceUpdate?' + id)
     }
 
 
@@ -125,34 +125,39 @@ export default class ShipmentServiceList extends React.Component {
     					<PageHeader>配送業者一覧</PageHeader>
 
     					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
-    						<CommonFilterBox
-    							controlLabel="入力補完種別"
+
+    						<CommonInputText
+    							controlLabel="配送業者コード"   
+    							name="shipment_service.code"
+    							type="text"
+    							placeholder="YH"
     							size="sm"
-    							name="type_ahead.type"
+    						/>
+
+    						<CommonInputText
+    							controlLabel="配送業者名"   
+    							name="shipment_service.name"
+    							type="text"
+    							placeholder="ヤマト運輸"
+    						/>
+
+    						<CommonFilterBox
+    							controlLabel="配送タイプ"
+    							size="sm"
+    							name="shipment_service.type"
     							options={[{
-    								label: '項目名',
-    								value: '0'
+    								label: '発払い',
+    								value: 1
     							}, {
-    								label: '単位名称',
-    								value: '1'
-    							}, {
-    								label: '単位',
-    								value: '2'
-    							}, {
-    								label: '単価',
-    								value: '3'
-    							}, {
-    								label: '備考',
-    								value: '4'
+    								label: 'メール便',
+    								value: 2
     							}]}
     						/>
-								
     						<CommonInputText
-    							controlLabel="入力補完内容"   
-    							name="type_ahead.value"
+    							controlLabel="サービス名"
+    							name="shipment_service.service_name"
     							type="text"
-    							placeholder="入力補完内容"
-    							size='lg'
+    							placeholder="クール"
     						/>
 
     					</CommonSearchConditionsFrom>
@@ -174,9 +179,13 @@ export default class ShipmentServiceList extends React.Component {
     						data={this.state.feed.entry}
     						edit={(data)=>this.onSelect(data)}
     						header={[{
-    							field: 'type_ahead.type',title: '入力補完種別', width: '100px',convert: { 0:'項目名', 1:'単位名称', 2:'単位',3:'単価',4:'備考'}
+    							field: 'shipment_service.code',title: '配送業者コード', width: '100px'
     						}, {
-    							field: 'type_ahead.value', title: '入力補完内容', width: '100px'
+    							field: 'shipment_service.name', title: '配送業者名', width: '200px'
+    						}, {
+    							field: 'shipment_service.type', title: '配送タイプ', width: '100px', convert: { 1:'発払い', 2:'メール便'}
+    						}, {
+    							field: 'shipment_service.service_name', title: 'サービス名', width: '500px'
     						}]}
     					/>
     				</Col>
