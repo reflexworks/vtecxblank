@@ -21,8 +21,8 @@ import {
 } from './common'
 
 import {
-	CustomerClassModal,
-} from './customerclass-modal'
+	CustomerShipperModal,
+} from './customershipper-modal'
 
 
 import {
@@ -43,7 +43,8 @@ export default class CustomerForm extends React.Component {
 		this.entry.customer.sales_staff = this.entry.customer.sales_staff || []
 		this.entry.customer.working_staff = this.entry.customer.working_staff || []
 		this.entry.contact_information = this.entry.contact_information || {}
-		this.entry.customer.customer_class = this.entry.customer_class || []
+		this.entry.customer.shipper = this.entry.customer.shipper || []
+		//this.entry.customer.shipper.shipper_info = this.entry.shipper_info || []
 		this.entry.billto = this.entry.billto || {}
 		this.master = {
 			billtoList: []
@@ -55,45 +56,46 @@ export default class CustomerForm extends React.Component {
 
 		this.modal = {
 			customer: {
-				customer_class: { data: {} },
+				shipper: { data: {} },
+				//shipper_info: { data: {} },
 			}
 		}
 		
 	}
 
 	showAddModal() {
-		this.modal.customer.customer_class.data = {}
-		this.modal.customer.customer_class.type = 'add'
-		this.modal.customer.customer_class.visible = true
+		this.modal.customer.shipper.data = {}
+		this.modal.customer.shipper.type = 'add'
+		this.modal.customer.shipper.visible = true
 		this.forceUpdate()
 	}
 	showEditModal(_data, _index) {
-		this.modal.customer.customer_class.data = _data
-		this.modal.customer.customer_class.index = _index
-		this.modal.customer.customer_class.type = 'edit'
-		this.modal.customer.customer_class.visible = true
+		this.modal.customer.shipper.data = _data
+		this.modal.customer.shipper.index = _index
+		this.modal.customer.shipper.type = 'edit'
+		this.modal.customer.shipper.visible = true
 		this.forceUpdate()
 	}
 	closeModal() {
-		this.modal.customer.customer_class.visible = false
+		this.modal.customer.shipper.visible = false
 		this.forceUpdate()
 	}
 	removeList(_index) {
 		let array = []
-		for (let i = 0, ii = this.entry.customer.customer_class.length; i < ii; ++i) {
-			if (i !== _index) array.push(this.entry.customer.customer_class[i])
+		for (let i = 0, ii = this.entry.customer.shipper.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry.customer.shipper[i])
 		}
-		this.entry.customer.customer_class = array
+		this.entry.customer.shipper = array
 		this.forceUpdate()
 	}
 	addList(_data) {
-		this.entry.customer.customer_class.push(_data)
-		this.modal.customer.customer_class.visible = false
+		this.entry.customer.shipper.push(_data)
+		this.modal.customer.shipper.visible = false
 		this.forceUpdate()
 	}
 	updateList(_data) {
-		this.entry.customer.customer_class[this.modal.customer.customer_class.index] = _data
-		this.modal.customer.customer_class.visible = false
+		this.entry.customer.shipper[this.modal.customer.shipper.index] = _data
+		this.modal.customer.shipper.visible = false
 		this.forceUpdate()
 	}
 
@@ -447,7 +449,7 @@ export default class CustomerForm extends React.Component {
 							size="lg"
 						/>
 
-						<CommonFilterBox
+						{/*<CommonFilterBox
 							controlLabel="集荷出荷区分"
 							size="sm"
 							name="customer.shipment_class"
@@ -463,6 +465,7 @@ export default class CustomerForm extends React.Component {
 								value: '2'
 							}]}
 						/>
+						*/}
 					
 					</Panel>
 
@@ -479,7 +482,7 @@ export default class CustomerForm extends React.Component {
 							value={this.entry.billto.billto_code}
 							options={this.billtoList}
 							add={() => this.setState({ showBilltoAddModal: true })}
-							edit={() => this.setState({ showBilltoEditModal: true })}
+							//edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
 						/>
 						
@@ -555,32 +558,49 @@ export default class CustomerForm extends React.Component {
 							/>
 						}
 					</Panel>
-
+					
 					<Panel collapsible header="配送業者別分類コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
-						
-						<CustomerClassModal
-							isShow={this.modal.customer.customer_class.visible}
+							
+						<CustomerShipperModal
+							isShow={this.modal.customer.shipper.visible}
 							close={() => this.closeModal()}
 							add={(obj) => this.addList(obj)}
 							edit={(obj) => this.updateList(obj)}
-							data={this.modal.customer.customer_class.data}
-							type={this.modal.customer.customer_class.type}
+							data={this.modal.customer.shipper.data}
+							type={this.modal.customer.shipper.type}
 						/>
-
+						
 						<CommonTable	
-							name="customer.customer_class"
-							data={this.entry.customer.customer_class}
+							name="customer.shipper"
+							data={this.entry.customer.shipper}
 							header={[{
 								field: 'delivery_company', title: '配送業者', width: '100px',
-								convert: { YN: 'ヤマト', SN: '西濃', EC: 'エコ配JP', ヤマト: 'ヤマト', 西濃: '西濃', エコ配JP: 'エコ配JP' }
+								convert: {
+									EC: 'エコ配JP', YM: 'ヤマト', SG: '佐川急便', SN: '西濃', PO: '日本郵政', JI: '自社配送',
+									エコ配JP: 'エコ配JP', ヤマト: 'ヤマト', 佐川急便: '佐川急便', 西濃: '西濃', 日本郵政: '日本郵政', 自社配送: '自社配送',
+								}
 							}, {
-								field: 'classcode', title: '分類コード', width: '200px'
+								field: 'shipper_info', title: '荷主コード,集荷出荷区分', width: '100px',//convert: {0:'出荷',1:'集荷',2:'両方'}
+							//}, {
+							//	field: 'shipper_info.shipper_code', title: '荷主コード', width: '100px',
+							//},{
+							//	field: 'shipper_info.shipment_class', title: '集荷出荷区分', width: '100px',convert: {0:'出荷',1:'集荷',2:'両方'}
 							}]}
 							edit={(data, index) => this.showEditModal(data, index)}
 							add={() => this.showAddModal()}
 							remove={(data, index) => this.removeList(index)}
 						/>
-
+						{/*
+						<CommonTable
+							name="customer.shipper.shipper_info"
+							data={this.entry.customer.shipper.shipper_info}
+							header={[{
+								field: 'shipper_code', title: '荷主コード', width: '100px',
+							},{
+								field: 'shipment_class', title: '集荷出荷区分', width: '100px',//convert: {0:'出荷',1:'集荷',2:'両方'}
+							}]}
+						/>
+						*/}
 					</Panel>
 
 				</PanelGroup>
