@@ -2217,16 +2217,30 @@ export class CommonMonthlySelect extends React.Component {
 
 	render() {
 
-		return (
-			<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
-				<Select
-					name={this.props.name}
-					value={this.state.value}
-					options={this.option}
-					onChange={(obj) => this.changed(obj)}
-				/>
-			</CommonFormGroup>
+		const SelectNode = (
+			<Select
+				name={this.props.name}
+				value={this.state.value}
+				options={this.option}
+				onChange={(obj) => this.changed(obj)}
+			/>
 		)
+		const FilterBoxNode = () => {
+			if (this.props.table) {
+				return (
+					<div style={this.props.style}>
+						{SelectNode}
+					</div>
+				)
+			} else {
+				return (
+					<CommonFormGroup controlLabel={this.props.controlLabel} validationState={this.props.validationState} size={this.state.size}>
+						{SelectNode}
+					</CommonFormGroup>
+				)
+			}
+		}
+		return FilterBoxNode()
 	}
 
 }
