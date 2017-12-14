@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	PageHeader,
 	Form,
 	PanelGroup,
-	Panel,
-	Table
+	Panel
 } from 'react-bootstrap'
 import type {
 	Props
@@ -16,7 +16,7 @@ import {
 	CommonInputText,
 	//CommonSelectBox,
 	CommonFilterBox,
-//CommonTable
+	CommonTable
 } from './common'
 
 export default class QuotationForm extends React.Component {
@@ -25,16 +25,23 @@ export default class QuotationForm extends React.Component {
 		super(props)
 		this.state = {}
 
+		// 発払い
+		this.shipmentServiceListType1 = []
+		// メール便
+		this.shipmentServiceListType2 = []
+
+		// 備考
+		this.notes = [
+			{ content:'エコ配JPは、土日祝日は対応不可となります。'},
+			{ content:'離島の別途料金につきましては、ヤマト宅急便はかかりません。'},
+			{ content:'荷物の運送につきましては、業務提携会社に準じます。'},
+			{ content:'コレクト（代金引換）手数料は、1万円以下全国一律300円（税別）、3万円以下全国400円（税別）、10万円以下全国一律（税別）を請求させて頂きます。'}
+		]
+	
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
-		this.entry.work = this.entry.work || []
-		this.entry.item_details = this.entry.item_details || []
-		this.entry.manifesto = this.entry.manifesto || []
-
 
 	}
-
-
 
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -44,7 +51,89 @@ export default class QuotationForm extends React.Component {
 		this.entry = newProps.entry
 	}
 
-	onSelect() {
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			this.setState({ isDisabled: false })
+
+			if (response.status === 204) {
+				alert('配送業者が1件も登録されていません。')
+			} else {
+				const serArea = (_data) => {
+					for (let i = 1, ii = 14; i < ii; ++i) {
+						_data['area' + i] = ''
+					}
+					return _data
+				}
+				const newData = (_data) => {
+					const type = _data.type
+					if (_data.sizes) {
+						for (let i = 0, ii = _data.sizes.length; i < ii; ++i) {
+							let new_data = {}
+							if (i === 0) {
+								new_data.name = _data.name
+								if (_data.service_name) new_data.name = new_data.name + ' / ' + _data.service_name
+							}
+							new_data.size = _data.sizes[i].size || '-'
+							new_data.weight = _data.sizes[i].weight || '-'
+							new_data = serArea(new_data)
+							this['shipmentServiceListType' + type].push(new_data)
+						}
+					} else {
+						let new_data = {}
+						if (_data.service_name) new_data.name = _data.name + ' / ' + _data.service_name
+						new_data.size = '-'
+						new_data.weight = '-'
+						new_data = serArea(new_data)
+						this['shipmentServiceListType' + type].push(new_data)
+					}
+				}
+				const list = response.data.feed.entry
+				for (let i = 0, ii = list.length; i < ii; ++i) {
+					newData(list[i].shipment_service)
+				}
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+
+	changeShipmentServiceListType(_key, _item, _data, _rowindex) {
+		this['shipmentServiceListType' + _key][_rowindex][_item] = _data
+		this.forceUpdate()
+	}
+
+	addNotes() {
+		this.notes.push({content: ''})
+		this.forceUpdate()
+	}
+
+	changeNotes(_data, _rowindex) {
+		this.notes[_rowindex] = {content: _data}
+		this.forceUpdate()
+	}
+
+	removeNotes(_data, _index) {
+		let array = []
+		for (let i = 0, ii = this.notes.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.notes[i])
+		}
+		this.notes = array
+		this.forceUpdate()
 	}
 
 	render() {
@@ -76,241 +165,124 @@ export default class QuotationForm extends React.Component {
 							}]}
 						/>
 
-						<CommonInputText
-							controlLabel="担当者"
-							name="customer.customer_staff"
-							type="text"
-							placeholder="1丁目2番地 ◯◯ビル1階"
-							value={this.entry.customer.customer_staff}
-							readonly
-						/>
-
 					</Panel>
 					<Panel collapsible header="配送料" eventKey="2" bsStyle="info" defaultExpanded="true">
 						
 						<PageHeader>発払い</PageHeader>
-						<Table striped bordered>
-							<thead>
-								<tr>
-									<th>利用運送会社</th>
-									<th>サイズ(cm)</th>
-									<th>重量(kg)</th>
-									<th>南九州</th>
-									<th>北九州</th>
-									<th>四国</th>
-									<th>中国</th>
-									<th>関西</th>
-									<th>北陸</th>
-									<th>東海</th>
-									<th>信越</th>
-									<th>関東</th>
-									<th>南東北</th>
-									<th>北東北</th>
-									<th>北海道</th>
-									<th>沖縄</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>エコ配JP</td>
-									<td>〜80</td>
-									<td>15kg迄</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>600</td>
-									<td>1,000</td>
-								</tr>
-								<tr>
-									<td rowspan="3">ヤマト運輸</td>
-									<td>60</td>
-									<td>2kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>80</td>
-									<td>5kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>100</td>
-									<td>10kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>佐川急便</td>
-									<td>160以上</td>
-									<td>-</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-								</tr>
-								<tr>
-									<td>西濃運輸</td>
-									<td>160以上</td>
-									<td>-</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-								</tr>
-							</tbody>
-						</Table>
-						<p>(※1 都度相談)</p>							
+						<CommonTable
+							name=""
+							data={this.shipmentServiceListType1}
+							header={[{
+								field: 'name', title: '配送業者', width: '150px'
+							}, {
+								field: 'size', title: 'サイズ', width: '70px'
+							}, {
+								field: 'weight', title: '重量', width: '50px'
+							}, {
+								field: 'area1', title: '南九州', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area1', data, rowindex)}
+								}
+							}, {
+								field: 'area2', title: '北九州', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area2', data, rowindex)}
+								}
+							}, {
+								field: 'area3', title: '四国', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area3', data, rowindex)}
+								}
+							}, {
+								field: 'area4', title: '中国', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area4', data, rowindex)}
+								}
+							}, {
+								field: 'area5', title: '関西', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area5', data, rowindex)}
+								}
+							}, {
+								field: 'area6', title: '北陸', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area6', data, rowindex)}
+								}
+							}, {
+								field: 'area7', title: '東海', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area7', data, rowindex)}
+								}
+							}, {
+								field: 'area8', title: '信越', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area8', data, rowindex)}
+								}
+							}, {
+								field: 'area9', title: '関東', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area9', data, rowindex)}
+								}
+							}, {
+								field: 'area10', title: '南東北', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area10', data, rowindex)}
+								}
+							}, {
+								field: 'area11', title: '北東北', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area11', data, rowindex)}
+								}
+							}, {
+								field: 'area12', title: '北海道', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area12', data, rowindex)}
+								}
+							}, {
+								field: 'area13', title: '沖縄', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('1', 'area13', data, rowindex)}
+								}
+							}]}
+						/>
 
-						<PageHeader>メール便・ゆうパケット</PageHeader>
-						<Table striped bordered>
-							<thead>
-								<tr>
-									<th>サービス名</th>
-									<th>サイズ(cm)</th>
-									<th>重量(kg)</th>
-									<th>価格</th>
-									<th>追跡 有/無</th>
-									<th>備考</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>ヤマトDM便</td>
-									<td>2cm以内</td>
-									<td>1kg未満</td>
-									<td>90</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>ネコポス</td>
-									<td>2.5cm以内</td>
-									<td>1kg未満</td>
-									<td>190</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>ゆうパケット</td>
-									<td>3cm以内</td>
-									<td>1kg未満</td>
-									<td>180</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td rowspan="4">ゆうメール</td>
-									<td>3.5cm以内</td>
-									<td>250g以内</td>
-									<td>95</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>500g以内</td>
-									<td>100</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>700g以内</td>
-									<td>115</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>1kg以内</td>
-									<td>120</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>EMS</td>
-									<td>-</td>
-									<td>-</td>
-									<td>定価</td>
-									<td>×</td>
-									<td>18％割引</td>
-								</tr>
-							</tbody>
-						</Table>
+						<hr />
+
+						<PageHeader>メール便</PageHeader>
+						<CommonTable
+							name=""
+							data={this.shipmentServiceListType2}
+							header={[{
+								field: 'name', title: '配送業者', width: '150px'
+							}, {
+								field: 'size', title: 'サイズ', width: '70px'
+							}, {
+								field: 'weight', title: '重量', width: '60px'
+							}, {
+								field: 'area1', title: '配送料', width: '40px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeShipmentServiceListType('2', 'area1', data, rowindex)}
+								}
+							}, {
+								field: 'other', title: '', width: '650px'
+							}]}
+						/>
+
+						<hr />
 
 						<PageHeader>記事</PageHeader>
-						<Table striped bordered>
-							<tbody>
-								<tr><td>エコ配JPは、土日祝日は対応不可となります。</td></tr>
-								<tr><td>離島の別途料金につきましては、ヤマト宅急便はかかりません。</td></tr>
-								<tr><td>荷物の運送につきましては、業務提携会社に準じます。</td></tr>
-								<tr><td>コレクト（代金引換）手数料は、1万円以下全国一律300円(税別)、3万円以下全国一律400円(税別)、10万円以下全国一律600円(税別)を請求させて頂きます。</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-							</tbody>
-						</Table>
+						<CommonTable
+							name=""
+							data={this.notes}
+							header={[{
+								field: 'content', title: '内容', width: '1000px',
+								input: {
+									onChange: (data, rowindex)=>{this.changeNotes(data, rowindex)}
+								}
+							}]}
+							add={()=>this.addNotes()}
+							remove={(data, i)=>this.removeNotes(data, i)}
+						/>
 					
 					</Panel>
 				        
