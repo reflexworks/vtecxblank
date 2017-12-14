@@ -559,7 +559,7 @@ export default class CustomerForm extends React.Component {
 						}
 					</Panel>
 					
-					<Panel collapsible header="配送業者別分類コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
+					<Panel collapsible header="配送業者別荷主コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
 							
 						<CustomerShipperModal
 							isShow={this.modal.customer.shipper.visible}
@@ -603,6 +603,7 @@ export default class CustomerForm extends React.Component {
 						*/}
 					</Panel>
 
+					
 				</PanelGroup>
 
 				<BilltoAddModal isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.setBilltoData(data, 'add')} />
