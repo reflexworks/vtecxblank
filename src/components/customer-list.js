@@ -16,7 +16,6 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonFilterBox,
 	CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
@@ -211,22 +210,6 @@ export default class CustomerList extends React.Component {
 								size="lg"
 							/>
 
-							<CommonFilterBox
-								controlLabel="集荷出荷区分"
-								size="sm"
-								name="customer.shipment_class"
-								options={[{
-									label: '出荷',
-									value: '0'
-								}, {
-									label: '集荷',
-									value: '1'
-								}, {
-									label: '両方',
-									value: '2'
-								}]}
-							/>
-
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -277,8 +260,6 @@ export default class CustomerList extends React.Component {
 								field: 'customer.person_in_charge', title: '担当者', width: '100px'
 							}, {
 								field: 'customer.products', title: '取扱品', width: '200px'
-							}, {
-								field: 'customer.shipment_class', title: '集荷出荷区分', width: '200px',convert: { 0:'出荷', 1:'集荷', 2:'両方'}
 							}]}
 						/>
 					</Col>  
