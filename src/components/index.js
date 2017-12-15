@@ -19,6 +19,7 @@ import StaffUpdate from './staff-update'
 //倉庫
 import WarehouseList from './warehouse-list'
 import WarehouseRegistration from './warehouse-registration'
+import WarehouseUpdate from './warehouse-update'
 
 //見積書
 import QuotationList from './quotation-list'
@@ -211,6 +212,17 @@ class MainContainer extends React.Component {
 	WarehouseRegistration = (props) => {
 		return (
 			<WarehouseRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：倉庫更新
+	 */
+	WarehouseUpdate = (props) => {
+		return (
+			<WarehouseUpdate 
 				history={props.history}
 			/>
 		)
@@ -614,6 +626,7 @@ class MainContainer extends React.Component {
 							<Route path="/StaffUpdate" component={this.StaffUpdate} />
 							<Route path="/WarehouseRegistration" component={this.WarehouseRegistration} />
 							<Route path="/WarehouseList" component={this.WarehouseList} />
+							<Route path="/WarehouseUpdate" component={this.WarehouseUpdate} />
 							<Route path="/PackingItemRegistration" component={this.PackingItemRegistration} />
 							<Route path="/PackingItemList" component={this.PackingItemList} />
 							<Route path="/PackingItemUpdate" component={this.PackingItemUpdate} />
