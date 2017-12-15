@@ -95,7 +95,6 @@ export default class StaffForm extends React.Component {
 		})   
 	}
 
-
 	/**
 	 * 請求先変更処理
 	 * @param {*} _data 
@@ -117,7 +116,11 @@ export default class StaffForm extends React.Component {
 	 * ロール選択で作業員が選ばれたら上長情報パネルフラグを立てる
 	 */
 	changedRole(value) {
-		this.entry.staff.role = value.value
+		if (value) {
+			this.entry.staff.role = value.value	
+		} else {
+			this.entry.staff.role = ''
+		}
 		this.forceUpdate()
 	}
 

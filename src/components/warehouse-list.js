@@ -69,7 +69,8 @@ export default class WarehouseList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				
+				this.setState({ feed:'',isDisabled: false, isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -86,13 +87,40 @@ export default class WarehouseList extends React.Component {
 	 * @param {*} index 
 	 */
 
-	/*更新画面は未完成なのでコメントアウト
-	onSelect(data) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const warehouse_code = data.warehouse.warehouse_code
+		const warehouse_code = _data.warehouse.warehouse_code
 		this.props.history.push('/WarehouseUpdate?' + warehouse_code)
 	}
-	*/
+	
+
+	onDelete(data) {
+		
+		if (confirm('倉庫名:' + data.warehouse.warehouse_name + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.warehouse.warehouse_code
+		
+			axios({
+				url: '/d/warehouse/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
+		
+	}
 
 	/**
 	 * 検索実行
@@ -180,7 +208,8 @@ export default class WarehouseList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							//edit={(data) => this.onSelect(data) }
+							edit={(data) => this.onSelect(data)}
+							remove={(data) => this.onDelete(data)}
 							header={[{
 								field: 'warehouse.warehouse_code',title: '倉庫コード', width: '100px'
 							}, {
