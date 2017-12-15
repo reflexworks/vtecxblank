@@ -69,7 +69,7 @@ export default class TypeAheadList extends React.Component {
     	}).then( (response) => {
 
     		if (response.status === 204) {
-    			this.setState({ isDisabled: false, isError: response })
+    			this.setState({ feed:'',isDisabled: false, isError: response })
     		} else {
     			// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
     			// activePageが「2」だったら51件目から100件目が格納されている
@@ -92,6 +92,37 @@ export default class TypeAheadList extends React.Component {
     	this.props.history.push('/TypeAheadUpdate?' + id)
     }
 
+	/**
+	 * リスト上での削除処理
+	 * @param {*} data 
+	 */
+    onDelete(data) {
+    	
+    	if (confirm('入力補完内容:' + data.type_ahead.value + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+    		const id = data.link[0].___href.slice(12)
+		
+    		axios({
+    			url: '/d/type_ahead/' + id,
+    			method: 'delete',
+    			headers: {
+    				'X-Requested-With': 'XMLHttpRequest'
+    			}
+    		}).then(() => {
+    			this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+    			this.getFeed(this.activePage)
+    		}).catch((error) => {
+    			if (this.props.error) {
+    				this.setState({ isDisabled: false })
+    				this.props.error(error)
+    			} else {
+    				this.setState({ isDisabled: false, isError: error })
+    			}
+    		})
+    		this.forceUpdate()
+    	}
+		
+    }
 
     /**
      * 検索実行
@@ -172,7 +203,8 @@ export default class TypeAheadList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.state.feed.entry}
-    						edit={(data)=>this.onSelect(data)}
+    						edit={(data) => this.onSelect(data)}
+    						remove={(data) => this.onDelete(data)}
     						header={[{
     							field: 'type_ahead.type',title: '入力補完種別', width: '100px',convert: { 0:'項目名', 1:'単位名称', 2:'単位',3:'単価',4:'備考'}
     						}, {
