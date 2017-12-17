@@ -69,7 +69,7 @@ export default class DeliveryList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				this.setState({ feed:'',isDisabled: false, isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -89,6 +89,38 @@ export default class DeliveryList extends React.Component {
 		// 入力画面に遷移
 		const customer_code = this.state.feed.entry[index].customer.customer_code
 		this.props.history.push('/DeliveryUpdate?' + customer_code)
+	}
+
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+	onDelete(/*data*/) {
+	/*
+		if (confirm('配送情報:' + data.deliverycharge. + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.link[0].___href.slice(16)
+		
+			axios({
+				url: '/d/deliverycharge/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
+	*/
 	}
 
 	/**
@@ -153,6 +185,7 @@ export default class DeliveryList extends React.Component {
 							name="entry"
 							data={this.state.feed.entry}
 							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							remove={(data) => this.onDelete(data)}
 							header={[{
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {

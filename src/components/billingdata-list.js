@@ -73,7 +73,7 @@ export default class BillingDataList extends React.Component {
     	}).then( (response) => {
 
     		if (response.status === 204) {
-    			this.setState({ isDisabled: false, isError: response })
+    			this.setState({ feed:'',isDisabled: false, isError: response })
     		} else {
     			// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
     			// activePageが「2」だったら51件目から100件目が格納されている
@@ -107,6 +107,39 @@ export default class BillingDataList extends React.Component {
     	//this.props.history.push('/InternalWorkUpdate' + billing_data_code)
     	this.props.history.push('/BillingDataRegistration')
     }
+	
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+    onDelete(/*data*/) {
+    	/*
+		if (confirm('請求データ:' + data.billing_data. + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.link[0].___href.slice(14)
+		
+			axios({
+				url: '/d/billing_data/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
+	*/
+    }
+	
 		
     /**
      * 検索実行
@@ -170,7 +203,8 @@ export default class BillingDataList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.sample}
-    						edit={() => this.onSelect() }
+    						edit={() => this.onSelect()}
+    						remove={(data) => this.onDelete(data)}
     						header={[{
     							field: 'customer_name',title: '顧客名', width: '100px'
     						}, {

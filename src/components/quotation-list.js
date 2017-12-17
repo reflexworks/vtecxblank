@@ -70,7 +70,7 @@ export default class QuotationList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				this.setState({ feed:'',isDisabled: false, isError: response })
 			} else {
 				this.setState({ isDisabled: false, feed: response.data.feed})
 			}
@@ -87,6 +87,37 @@ export default class QuotationList extends React.Component {
 	onSelect(_data) {
 		// 入力画面に遷移
 		this.props.history.push('/QuotationUpdate?' + _data.link[0].___href.replace('/quotation/', ''))
+	}
+
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+	onDelete(data) {
+
+		if (confirm('見積書No:' + data.quotation.quotation_code + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.link[0].___href.slice(11)
+		
+			axios({
+				url: '/d/quotation/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
 	}
 
 	/**
@@ -167,7 +198,8 @@ export default class QuotationList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data) => this.onSelect(data) }
+							edit={(data) => this.onSelect(data)}
+							remove={(data) => this.onDelete(data)}
 							header={[{
 								field: 'quotation.quotation_code',title: '見積書No', width: '100px'
 							}, {
