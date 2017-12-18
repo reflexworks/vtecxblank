@@ -163,13 +163,32 @@ class LogicCommonTable {
 			let value
 			if (isArray) {
 				const arrayEle = _element.getElementsByTagName('div')
+				const getMultiValue = (_multiObj) => {
+					let obj = {}
+					for (let i = 0, ii = _multiObj.length; i < ii; ++i) {
+						const ele = _multiObj[i]
+						const eleKey = ele.getAttribute('name')
+						if (eleKey) {
+							obj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
+						}
+					}
+					return obj
+				}
 				value = []
 				for (let i = 0, ii = arrayEle.length; i < ii; ++i) {
 					const ele = arrayEle[i]
-					const eleKey = ele.getAttribute('name')
-					let eleObj = {}
-					eleObj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
-					value.push(eleObj)
+					if (ele.getAttribute('class') && ele.getAttribute('class').indexOf('multi') !== -1) {
+						const multiObj = ele.getElementsByTagName('p')
+						const multiValue = getMultiValue(multiObj)
+						value.push(multiValue)
+					} else {
+						const eleKey = ele.getAttribute('name')
+						if (eleKey) {
+							let eleObj = {}
+							eleObj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
+							value.push(eleObj)
+						}
+					}
 				}
 			} else {
 
@@ -1350,9 +1369,10 @@ export class CommonTable extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.selected = []
+		this.isControlLabel = (newProps.controlLabel || newProps.controlLabel === '')
 		this.setState({
 			data: newProps.data,
-			eader: newProps.header
+			header: newProps.header
 		})
 	}
 
@@ -1431,58 +1451,74 @@ export class CommonTable extends React.Component {
 			const style = _cashData.style ? _cashData.style : null
 			const filter = _cashData.filter
 			const input = _cashData.input
-			if (convertData) {
-				return <div style={style} className="ellipsis">{convertData[value]}</div>
-			} else {
-				if (Array.isArray(value)) {
-					return (
-						<div className="array ellipsis" style={style}>
-							{
-								value.map((_value, i) => {
-									if (Object.prototype.toString.call(_value) === '[object Object]') {
-										let _valueCount = -1
-										let __value = []
-										for (let __key in _value) {
-											if (typeof _value[__key] === 'string') {
-												_valueCount++
-												__value.push(<div key={_valueCount} style={style} name={__key}>{_value[__key]}</div>)
+			const getConvertValue = (_value) =>{
+				if (convertData) {
+					return convertData[_value] || _value
+				} else {
+					return _value
+				}
+			}
+			if (Array.isArray(value)) {
+				return (
+					<div className="array ellipsis" style={style}>
+						{
+							value.map((_value, i) => {
+								if (Object.prototype.toString.call(_value) === '[object Object]') {
+									let _valueCount = -1
+									let __value = []
+									const _valueObj = Object.keys(_value)
+									const isMulti = _valueObj.length > 1
+									for (let __key in _value) {
+										_valueCount++
+										if (typeof _value[__key] === 'string') {
+											if (isMulti) {
+												__value.push(<p className="multi_item value" key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</p>)
+												if ((_valueCount + 1) !== _valueObj.length) {
+													__value.push(<p className="multi_item">/</p>)
+												}
+											} else {
+												__value.push(<div key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</div>)
 											}
 										}
-										return __value
-									} else {
-										return (
-											<div key={i} style={style}>{_value}</div>
-										)
 									}
-								})
-							}
-						</div>
+									if (isMulti) {
+										return <div className="multi">{__value}</div>
+									} else {
+										return __value
+									}
+								} else {
+									return (
+										<div key={i} style={style}>{getConvertValue(_value)}</div>
+									)
+								}
+							})
+						}
+					</div>
+				)
+			} else {
+				if (filter) {
+					return (
+						<CommonFilterBox
+							name="__tableFilter"
+							value={value}
+							options={filter.options}
+							onChange={(data) => filter.onChange(data, _index)}
+							creatable
+							table
+						/>
+					)
+				} else if (input) {
+					return (
+						<CommonInputText
+							name="__tableInput"
+							type="text"
+							value={value}
+							onChange={(data) => input.onChange(data, _index)}
+							table
+						/>
 					)
 				} else {
-					if (filter) {
-						return (
-							<CommonFilterBox
-								name="__tableFilter"
-								value={value}
-								options={filter.options}
-								onChange={(data) => filter.onChange(data, _index)}
-								creatable
-								table
-							/>
-						)
-					} else if (input) {
-						return (
-							<CommonInputText
-								name="__tableInput"
-								type="text"
-								value={value}
-								onChange={(data) => input.onChange(data, _index)}
-								table
-							/>
-						)
-					} else {
-						return <div style={style} className="ellipsis">{value}</div>
-					}
+					return <div style={style} className="ellipsis">{getConvertValue(value)}</div>
 				}
 			}
 		}
@@ -1493,7 +1529,7 @@ export class CommonTable extends React.Component {
 				let tdCount = 0
 				let array = new Array(cashInfolength)
 
-				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}>{(_index + 1)}</td>
+				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div>{(_index + 1)}</div></td>
 				tdCount++
 				if (this.props.select) {
 					array[cashInfo.select.index] = (
