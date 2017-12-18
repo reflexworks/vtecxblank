@@ -527,7 +527,7 @@ export default class CustomerForm extends React.Component {
 						/>
 						{ (this.entry.customer.sales_staff && this.entry.customer.sales_staff.length > 0) && 
 							<CommonTable
-								controlLabel=""
+								controlLabel=" "
 								name="customer.sales_staff"
 								data={this.entry.customer.sales_staff}
 								edit={(data, index) => this.editStaff(index, 'sales_staff')}
@@ -547,7 +547,7 @@ export default class CustomerForm extends React.Component {
 						/>
 						{ (this.entry.customer.working_staff && this.entry.customer.working_staff.length > 0) && 
 							<CommonTable
-								controlLabel=""
+								controlLabel=" "
 								name="customer.working_staff"
 								data={this.entry.customer.working_staff}
 								edit={(data, index) => this.editStaff(index, 'working_staff')}
@@ -580,7 +580,7 @@ export default class CustomerForm extends React.Component {
 									エコ配JP: 'エコ配JP', ヤマト: 'ヤマト', 佐川急便: '佐川急便', 西濃: '西濃', 日本郵政: '日本郵政', 自社配送: '自社配送',
 								}
 							}, {
-								field: 'shipper_info', title: '荷主コード,集荷出荷区分', width: '100px',//convert: {0:'出荷',1:'集荷',2:'両方'}
+								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'出荷',1:'集荷',2:'両方'}
 							//}, {
 							//	field: 'shipper_info.shipper_code', title: '荷主コード', width: '100px',
 							//},{
