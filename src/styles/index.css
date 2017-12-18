@@ -914,7 +914,7 @@ h3.title {
   background: rgb(236, 250, 243);
 }
 .common-table .table td .array {
-  display: table;
+  padding: 5px;
 }
 .common-table .table td .multi {
   display: table-row;
@@ -924,7 +924,9 @@ h3.title {
 }
 .common-table .table td .multi p.multi_item.value{
   display: table-cell;
-  padding: 5px 10px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .clear{
   clear: both;

@@ -1471,9 +1471,13 @@ export class CommonTable extends React.Component {
 									for (let __key in _value) {
 										_valueCount++
 										if (typeof _value[__key] === 'string') {
-											__value.push(<p className="multi_item value" key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</p>)
-											if ((_valueCount + 1) !== _valueObj.length) {
-												__value.push(<p className="multi_item">/</p>)
+											if (isMulti) {
+												__value.push(<p className="multi_item value" key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</p>)
+												if ((_valueCount + 1) !== _valueObj.length) {
+													__value.push(<p className="multi_item">/</p>)
+												}
+											} else {
+												__value.push(<div key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</div>)
 											}
 										}
 									}
