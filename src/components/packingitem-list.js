@@ -68,7 +68,7 @@ export default class PackingItemList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				this.setState({ feed: '',isDisabled: false, isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -92,6 +92,38 @@ export default class PackingItemList extends React.Component {
 
 	onSelect(_data) {
 		console.log(_data)
+	}
+
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+	onDelete(data) {
+
+		if (confirm('資材コード:' + data.packing_item.item_code + '\n' +
+					'資材名:' + data.packing_item.item_name + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.packing_item.item_code
+		
+			axios({
+				url: '/d/packing_item/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
 	}
 
 	/**
@@ -314,7 +346,8 @@ export default class PackingItemList extends React.Component {
 							name="entry"
 							data={this.state.feed.entry}
 							edit={!this.props.selectTable ? (data) => this.moveEdit(data) : null }
-							select={this.props.selectTable ? (data) => this.onSelect(data) : null }
+							select={this.props.selectTable ? (data) => this.onSelect(data) : null}
+							remove={(data) => this.onDelete(data)}
 							header={[{
 								field: 'packing_item.item_code',title: '品番', width: '100px'
 							}, {
