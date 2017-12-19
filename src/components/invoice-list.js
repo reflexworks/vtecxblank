@@ -92,24 +92,24 @@ export default class InvoiceList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-	onSelect(index) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = this.state.feed.entry[index].customer.customer_code
-		this.props.history.push('/InvoiceUpdate?' + customer_code)
+		const invoice_code = _data.invoice.invoice_code
+		this.props.history.push('/InvoiceUpdate?' + invoice_code)
 	}
 
 	/**
 	 * リスト上で削除処理
 	 * @param {*} data 
 	 */
-	onDelete(/*data*/) {
-	/*
-		if (confirm('担当者名:' + data.staff.staff_name + '\n' +
+	onDelete(data) {
+	
+		if (confirm('請求番号:' + data.invoice.invoice_code + '\n' +
 					'この情報を削除します。よろしいですか？')) {
-			const id = data.link[0].___href.slice(7)
+			const id = data.invoice.invoice_code
 		
 			axios({
-				url: '/d/staff/' + id,
+				url: '/d/invoice/' + id,
 				method: 'delete',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -127,7 +127,6 @@ export default class InvoiceList extends React.Component {
 			})
 			this.forceUpdate()
 		}
-		*/
 	}
 
 	/**
@@ -169,48 +168,48 @@ export default class InvoiceList extends React.Component {
 								name="quotation.quotation_date"
 								value={this.state.searchDate}
 							/>
-
+							
 							<CommonInputText
 								controlLabel="顧客コード"
-								name="customer.customer_code"
+								name="invoice.customer_code"
 								type="text"
 								placeholder="顧客コード"
 							/>
 							<CommonInputText
 								controlLabel="顧客名"
-								name="customer.customer_name"
+								name="invoice.customer_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
 							<CommonInputText
 								controlLabel="顧客名(カナ)"
-								name="customer.customer_name_kana"
+								name="invoice.customer_name_kana"
 								type="text"
 								placeholder="カブシキガイシャ ◯◯◯"
 							/>
 							<CommonInputText
 								controlLabel="電話番号"
-								name="customer.customer_tel"
+								name="invoice.customer_tel"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="FAX"
-								name="customer.customer_fax"
+								name="invoice.customer_fax"
 								type="text"
 								placeholder="090-1234-5678"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="メールアドレス"
-								name="customer.customer_email"
+								name="invoice.customer_email"
 								type="email"
 								placeholder="logioffice@gmail.com"
 							/>
 							<CommonInputText
 								controlLabel="郵便番号"
-								name="customer.zip_code"
+								name="invoice.zip_code"
 								type="text"
 								placeholder="123-4567"
 								size="sm"
@@ -218,18 +217,18 @@ export default class InvoiceList extends React.Component {
 							<CommonPrefecture
 								controlLabel="都道府県"
 								componentClass="select"
-								name="customer.prefecture"
+								name="invoice.prefecture"
 								size="sm"
 							/>
 							<CommonInputText
 								controlLabel="市区郡長村"
-								name="customer.address1"
+								name="invoice.address1"
 								type="text"
 								placeholder="◯◯市××町"
 							/>
 							<CommonInputText
 								controlLabel="番地"
-								name="customer.address2"
+								name="invoice.address2"
 								type="text"
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
@@ -252,30 +251,25 @@ export default class InvoiceList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data)=>this.onSelect(data)}
 							remove={(data) => this.onDelete(data)}
 							header={[{
-								field: 'customer.customer_code',title: '請求年月', width: '100px'
+								field: 'invoice.invoice_code',title: '請求番号', width: '100px'
 							}, {
-								field: 'customer.customer_code',title: '請求番号', width: '200px'
+								field: 'invoice.quotation_code',title: '見積番号', width: '200px'
 							}, {
-								field: 'customer.customer_name', title: '見積番号', width: '200px'
+								field: 'invoice.internal_work_code', title: '庫内作業コード', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '合計請求金額', width: '200px'
+								field: 'invoice.total_amount', title: '合計請求金額', width: '200px'
 							}, {
-								field: 'customer.customer_tel', title: '課税対象合計', width: '200px'
+								field: 'invoice.subtotal', title: '小計', width: '200px'
 							}, {
-								field: 'customer.customer_staff', title: '振込先', width: '200px'
+								field: 'invoice.consumption_tax', title: '消費税', width: '200px'
 							}, {
-								field: 'customer.customer_email', title: '小計金額', width: '200px'
+								field: 'invoice.issue_status', title: '発行ステータス', width: '150px'
 							}, {
-								field: 'customer.customer_fax', title: '消費税', width: '200px'
-							}, {
-								field: 'customer.zip_code', title: 'EMS', width: '150px'
-							}, {
-								field: 'customer.prefecture', title: '立替金', width: '200px'
-							}, {
-								field: 'customer.address1', title: '購入、弁済代', width: '200px'
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px'
+					
 							}]}
 						>
 							<CommonMonthlySelect
@@ -284,6 +278,7 @@ export default class InvoiceList extends React.Component {
 								style={{float: 'left', width: '150px', 'margin': '0px 10px'}}
 								table
 							/>
+
 							<Button bsSize="sm">顧客ごとに表示</Button>
 						</CommonTable>
 					</Col>  
