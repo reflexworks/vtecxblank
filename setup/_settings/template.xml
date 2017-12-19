@@ -114,15 +114,12 @@ invoice
  quotation_code
  internal_work_code 
  total_amount
- taxation_amount
  payee{}
   content
  subtotal
  consumption_tax
- ems
- advance_payment
- payment_cost
- status
+ issue_status
+ deposit_status
 delivery_charge
  delivery_company{}
   service_code
