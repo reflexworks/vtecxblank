@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import QuotationForm from './quotation-form'
+import InvoiceForm from './invoice-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,9 +22,8 @@ import {
 	CommonBackBtn
 } from './common'
 
-import moment from 'moment'
 
-export default class QuotationUpdate extends React.Component {
+export default class InvoiceUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -34,10 +33,10 @@ export default class QuotationUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/customer'
+		this.url = '/d/invoice'
 
 		// 戻る先のURL
-		this.backUrl = '#/CustomerList'
+		this.backUrl = '#/InvoiceList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -66,8 +65,6 @@ export default class QuotationUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.entry.account_info.billing_closing_date = this.entry ? moment(Date.parse(this.entry.account_info.billing_closing_date)) : moment()
-				this.entry.account_info.date_of_payment = this.entry ? moment(Date.parse(this.entry.account_info.date_of_payment)) : moment()
 
 				this.forceUpdate()
 			}
@@ -104,7 +101,7 @@ export default class QuotationUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							顧客情報の更新
+							請求書情報の更新
 						</PageHeader>
 
 					</Col>
@@ -124,7 +121,7 @@ export default class QuotationUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<QuotationForm name="mainForm" entry={this.entry} />
+						<InvoiceForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
