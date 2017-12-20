@@ -6,7 +6,9 @@ import {
 	Col,
 	PageHeader,
 	Navbar,
-	Nav
+	Nav,
+	//Button,
+	//Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -54,7 +56,7 @@ export default class InvoiceRegistration extends React.Component {
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
-								<Nav>
+								<Nav>	
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
 									<CommonClearBtn NavItem />
 								</Nav>
