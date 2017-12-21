@@ -262,8 +262,6 @@ export default class InvoiceList extends React.Component {
 							}, {
 								field: 'invoice.total_amount', title: '合計請求金額', width: '200px'
 							}, {
-								field: 'invoice.subtotal', title: '小計', width: '200px'
-							}, {
 								field: 'invoice.consumption_tax', title: '消費税', width: '200px'
 							}, {
 								field: 'invoice.issue_status', title: '発行ステータス', width: '150px'

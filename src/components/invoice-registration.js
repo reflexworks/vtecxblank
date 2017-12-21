@@ -33,6 +33,11 @@ export default class InvoiceRegistration extends React.Component {
 		// 初期値の設定
 		this.entry = {
 			invoice: {},
+			item_details: [],
+			billto: {},
+			billfrom: {},
+			contact_information:{},
+			remarks:[],
 		}
 	}
  
