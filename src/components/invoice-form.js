@@ -18,7 +18,7 @@ import type {
 import {
 	CommonInputText,
 	CommonTable,
-	//CommonRadioBtn,
+	CommonRadioBtn,
 } from './common'
 
 export default class InvoiceForm extends React.Component {
@@ -33,23 +33,24 @@ export default class InvoiceForm extends React.Component {
 		this.entry.invoice = this.entry.invoice || {}
 		this.entry.invoice.other_quotation = this.entry.invoice.other_quotaton || []
 		//this.entry.billto = this.entry.billto || {}
-		//this.entry.contact_information = this.entry.contact_information
+		this.entry.billfrom = this.entry.billfrom || {}
+		this.entry.billfrom.payee = this.entry.billfrom.payee || []
+		this.entry.contact_information = this.entry.contact_information
 		//this.entry.item_details = this.entry.item_details || []
 		//this.entry.remarks = this.entry.remarks || []
-		
-		//this.entry.work = this.entry.work || []
-		//this.entry.manifesto = this.entry.manifesto || []
+
 
 		this.sampleData()
 	}
 
+
 	sampleData() {
 		this.entry.invoice.quotation_code = '1710-01317'
-		//this.entry.invoice.subtotal = '¥100,000'
-		this.entry.invoice.consumption_tax = '¥8,000'
-		this.entry.invoice.total_amount = '¥108,000'
-		this.entry.invoice.content = 'CONNECTロジスティクス株式会社'
-		
+		//684030
+		this.entry.invoice.consumption_tax = '¥54,722'
+		this.entry.invoice.total_amount = '¥738,752'
+		this.entry.billfrom.payee.account_type = '普通'
+
 		this.sampleMonthlyWork = [{
 			work: '保管料',
 			quantity: '4',
@@ -59,17 +60,17 @@ export default class InvoiceForm extends React.Component {
 			remarks: '棚、ラックリース(新品:500円/中古品:300円)支給品利用可能',
 		}, {
 			work: '保管料',
-			quantity: '5',
+			quantity: '4',
 			unit: '1パレット/月',
 			unit_price: '¥2,500',
-			cost: '¥12,500',
+			cost: '¥10,000',
 			remarks: 'サイズ1,100×1,100',
 		}, {
 			work: '保管料',
-			quantity: '5',
+			quantity: '4',
 			unit: '1パレット/月',
 			unit_price: '¥2,500',
-			cost: '¥12,500',
+			cost: '¥10,000',
 			remarks: 'パレットラック縦積み',
 		}, {
 			work: '運営管理費',
@@ -296,8 +297,25 @@ export default class InvoiceForm extends React.Component {
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
+				
+				<Button className="total_amount"><Glyphicon glyph="print" />　請求書発行</Button>	
 
-				<Button className="total_amount"><Glyphicon glyph="print" />　請求書発行</Button>				
+				<br/>
+				<br/>
+				<p className="total_amount">CONNECTロジスティクス株式会社</p>
+				
+				<br/>
+				<br/>
+				<p className="total_amount">〒332-0027</p>
+
+				<br/>
+				<br/>
+				<p className="total_amount">埼玉県川口市緑町9-35</p>
+
+				<br/>
+				<br/>
+				<p className="total_amount">電話:048-299-8213</p>
+								
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
 							<FormGroup className="hide">
@@ -326,6 +344,19 @@ export default class InvoiceForm extends React.Component {
 					value={this.entry.invoice.quotation_code}
 					readonly='true'
 				/>
+
+				<CommonRadioBtn 
+					controlLabel="入金ステータス"
+					name="invoice.deposit_status"
+					checked={this.entry.invoice.deposit_status}
+					data={[{
+						label: '未入金',
+						value: '0',
+					}, {
+						label: '入金済',
+						value: '1',
+					}]}
+				/>	
 						
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
@@ -421,7 +452,7 @@ export default class InvoiceForm extends React.Component {
 									//name="other_quotation"
 									data={this.entry.invoice.other_quotation}
 									header={[{
-										field: 'details', title: '項目', width: '100px',
+										field: 'details', title: 'ご請求内容(作業内容)', width: '100px',
 										input: {
 											onChange: (data, rowindex)=>{this.changeDetails(data,rowindex)}
 										}
@@ -487,11 +518,32 @@ export default class InvoiceForm extends React.Component {
 					<Tab eventKey={2} title="振込先"> 
 						<CommonInputText
 							controlLabel="振込先"
-							//name="invoice.payee.content"
+							//name="billfrom.payee.bank_info"
 							type="text"
-							placeholder="振込先"
-							value={this.entry.invoice.content}
-							readonly
+							placeholder="銀行名"
+							//value={this.entry.billfrom.payee.bank_info}
+							//readonly
+						/>
+
+						<CommonRadioBtn 
+							controlLabel="口座種別"
+							//name="billfrom.payee.account_type"
+							checked={this.entry.billfrom.payee.account_type}
+							data={[{
+								label: '普通',
+								value: '0',
+							}, {
+								label: '当座',
+								value: '1',
+							}]}
+						/>
+						<CommonInputText
+							controlLabel="口座番号"
+							//name="billfrom.payee.bankinfo"
+							type="text"
+							placeholder="口座番号"
+							//value={this.entry.billfrom.payee.account_number}
+							//readonly
 						/>
 
 					</Tab>
