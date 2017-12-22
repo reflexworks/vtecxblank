@@ -26,9 +26,6 @@ export class CustomerShipperModal extends React.Component {
 		}, {	
 			label: '出荷',
 			value: '1'
-		}, {	
-			label: '両方',
-			value: '2'	
 		}]
 		this.shipper = this.props.data || {}
 		this.shipper.shipper_info = this.shipper.shipper_info || []
@@ -85,7 +82,6 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	add(_obj) {
-		console.log(this.shipper)
 		this.props.add(_obj)
 	}
 	
