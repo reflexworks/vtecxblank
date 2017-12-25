@@ -43,7 +43,6 @@ export default class CustomerForm extends React.Component {
 		this.entry.customer.working_staff = this.entry.customer.working_staff || []
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.entry.customer.shipper = this.entry.customer.shipper || []
-		//this.entry.customer.shipper.shipper_info = this.entry.shipper_info || []
 		this.entry.billto = this.entry.billto || {}
 		this.master = {
 			billtoList: []
@@ -56,7 +55,6 @@ export default class CustomerForm extends React.Component {
 		this.modal = {
 			customer: {
 				shipper: { data: {} },
-				//shipper_info: { data: {} },
 			}
 		}
 		
@@ -88,6 +86,9 @@ export default class CustomerForm extends React.Component {
 		this.forceUpdate()
 	}
 	addList(_data) {
+		if (!this.entry.customer.shipper) {
+			this.entry.customer.shipper = []
+		}
 		this.entry.customer.shipper.push(_data)
 		this.modal.customer.shipper.visible = false
 		this.forceUpdate()
@@ -561,7 +562,7 @@ export default class CustomerForm extends React.Component {
 									エコ配JP: 'エコ配JP', ヤマト: 'ヤマト', 佐川急便: '佐川急便', 西濃: '西濃', 日本郵政: '日本郵政', 自社配送: '自社配送',
 								}
 							}, {
-								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'出荷',1:'集荷'}
+								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'集荷',1:'出荷'}
 							}]}
 							edit={(data, index) => this.showEditModal(data, index)}
 							add={() => this.showAddModal()}

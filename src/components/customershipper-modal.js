@@ -7,7 +7,6 @@ import type {
 	Props,
 } from 'demo3.types'
 import {
-	//CommonInputText,
 	CommonTable,
 	CommonModal,
 	CommonFilterBox,
@@ -29,7 +28,6 @@ export class CustomerShipperModal extends React.Component {
 		}]
 		this.shipper = this.props.data || {}
 		this.shipper.shipper_info = this.shipper.shipper_info || []
-		//this.master = {}
 	}
 
 	/**
@@ -44,21 +42,32 @@ export class CustomerShipperModal extends React.Component {
 			type: newProps.type
 		})
 		
-		if(newProps.data.delivery_company === 'エコ配JP' || newProps.data.delivery_company === 'EC'){
-			this.delivery_company = 'EC'
-		}else if (newProps.data.delivery_company === 'ヤマト' || newProps.data.delivery_company === 'YM') {
-			this.delivery_company = 'YM'
-		} else if (newProps.data.delivery_company === '佐川急便' || newProps.data.delivery_company === 'SG') {
-			this.delivery_company = 'SG'
-		} else if (newProps.data.delivery_company === '西濃' || newProps.data.delivery_company === 'SN') {
-			this.delivery_company = 'SN'
-		} else if (newProps.data.delivery_company === '日本郵政' || newProps.data.delivery_company === 'PO') {
-			this.delivery_company = 'PO'
-		} else if (newProps.data.delivery_company === '自社配送' || newProps.data.delivery_company === 'JI') {
-			this.delivery_company = 'JI'
+		if(this.shipper.delivery_company === 'エコ配JP' || this.shipper.delivery_company === 'EC'){
+			this.shipper.delivery_company = 'EC'
+		}else if (this.shipper.delivery_company === 'ヤマト' || this.shipper.delivery_company === 'YM') {
+			this.shipper.delivery_company = 'YM'
+		} else if (this.shipper.delivery_company === '佐川急便' || this.shipper.delivery_company === 'SG') {
+			this.shipper.delivery_company = 'SG'
+		} else if (this.shipper.delivery_company === '西濃' || this.shipper.delivery_company === 'SN') {
+			this.shipper.delivery_company = 'SN'
+		} else if (this.shipper.delivery_company === '日本郵政' || this.shipper.delivery_company === 'PO') {
+			this.shipper.delivery_company = 'PO'
+		} else if (this.shipper.delivery_company === '自社配送' || this.shipper.delivery_company === 'JI') {
+			this.shipper.delivery_company = 'JI'
 		} else {
-			this.delivery_company = ''
+			this.shipper.delivery_company = ''
 		}
+		
+		for(let i=0;i<this.shipper.shipper_info.length;++i){
+			if (this.shipper.shipper_info[i].shipment_class === '集荷' || this.shipper.shipper_info[i].shipment_class === '0') {
+				this.shipper.shipper_info[i].shipment_class = '0'
+			} else if (this.shipper.shipper_info[i].shipment_class === '出荷' || this.shipper.shipper_info[i].shipment_class === '1') {
+				this.shipper.shipper_info[i].shipment_class = '1'
+			} else {
+				this.shipper.shipper_info[i].shipment_class = ''
+			}
+		}
+		
 
 		this.forceUpdate()
 	}
@@ -132,13 +141,13 @@ export class CustomerShipperModal extends React.Component {
 							label: 'エコ配JP',
 							value: 'EC'
 						}, {	
-							label: 'ヤマト',
+							label: 'ヤマト運輸',
 							value: 'YM'
 						}, {	
-							label: '佐川',
+							label: '佐川急便',
 							value: 'SG'
 						}, {
-							label: '西濃',
+							label: '西濃運輸',
 							value: 'SN'
 						}, {
 							label: '日本郵政',
