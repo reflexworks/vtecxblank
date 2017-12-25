@@ -24,7 +24,6 @@ import {
 	CustomerShipperModal,
 } from './customershipper-modal'
 
-
 import {
 	BilltoAddModal,
 	BilltoEditModal,
@@ -44,7 +43,6 @@ export default class CustomerForm extends React.Component {
 		this.entry.customer.working_staff = this.entry.customer.working_staff || []
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.entry.customer.shipper = this.entry.customer.shipper || []
-		//this.entry.customer.shipper.shipper_info = this.entry.shipper_info || []
 		this.entry.billto = this.entry.billto || {}
 		this.master = {
 			billtoList: []
@@ -57,7 +55,6 @@ export default class CustomerForm extends React.Component {
 		this.modal = {
 			customer: {
 				shipper: { data: {} },
-				//shipper_info: { data: {} },
 			}
 		}
 		
@@ -89,6 +86,9 @@ export default class CustomerForm extends React.Component {
 		this.forceUpdate()
 	}
 	addList(_data) {
+		if (!this.entry.customer.shipper) {
+			this.entry.customer.shipper = []
+		}
 		this.entry.customer.shipper.push(_data)
 		this.modal.customer.shipper.visible = false
 		this.forceUpdate()
@@ -448,24 +448,6 @@ export default class CustomerForm extends React.Component {
 							value={this.entry.customer.products}
 							size="lg"
 						/>
-
-						{/*<CommonFilterBox
-							controlLabel="集荷出荷区分"
-							size="sm"
-							name="customer.shipment_class"
-							value={this.entry.customer.shipment_class}
-							options={[{
-								label: '出荷',
-								value: '0'
-							}, {
-								label: '集荷',
-								value: '1'
-							}, {
-								label: '両方',
-								value: '2'
-							}]}
-						/>
-						*/}
 					
 					</Panel>
 
@@ -580,27 +562,12 @@ export default class CustomerForm extends React.Component {
 									エコ配JP: 'エコ配JP', ヤマト: 'ヤマト', 佐川急便: '佐川急便', 西濃: '西濃', 日本郵政: '日本郵政', 自社配送: '自社配送',
 								}
 							}, {
-								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'出荷',1:'集荷',2:'両方'}
-							//}, {
-							//	field: 'shipper_info.shipper_code', title: '荷主コード', width: '100px',
-							//},{
-							//	field: 'shipper_info.shipment_class', title: '集荷出荷区分', width: '100px',convert: {0:'出荷',1:'集荷',2:'両方'}
+								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'集荷',1:'出荷'}
 							}]}
 							edit={(data, index) => this.showEditModal(data, index)}
 							add={() => this.showAddModal()}
 							remove={(data, index) => this.removeList(index)}
 						/>
-						{/*
-						<CommonTable
-							name="customer.shipper.shipper_info"
-							data={this.entry.customer.shipper.shipper_info}
-							header={[{
-								field: 'shipper_code', title: '荷主コード', width: '100px',
-							},{
-								field: 'shipment_class', title: '集荷出荷区分', width: '100px',//convert: {0:'出荷',1:'集荷',2:'両方'}
-							}]}
-						/>
-						*/}
 					</Panel>
 
 					
