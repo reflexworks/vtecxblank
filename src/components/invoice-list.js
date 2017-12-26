@@ -221,7 +221,7 @@ export default class InvoiceList extends React.Component {
 								size="sm"
 							/>
 							<CommonInputText
-								controlLabel="市区郡長村"
+								controlLabel="市区郡町村"
 								name="invoice.address1"
 								type="text"
 								placeholder="◯◯市××町"
@@ -264,9 +264,9 @@ export default class InvoiceList extends React.Component {
 							}, {
 								field: 'invoice.consumption_tax', title: '消費税', width: '200px'
 							}, {
-								field: 'invoice.issue_status', title: '発行ステータス', width: '150px'
+								field: 'invoice.issue_status', title: '発行ステータス', width: '150px',convert: {0:'未発行',1:'発行済'}
 							}, {
-								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px'
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px',convert: {0:'未入金',1:'入金済'}
 					
 							}]}
 						>

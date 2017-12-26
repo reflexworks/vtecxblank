@@ -13,6 +13,8 @@ billto
  billto_name
  billing_closing_date
  payment_date
+ post_has_sizeweight
+ yamato_has_details
 customer
  customer_code
  shipper{}
@@ -153,6 +155,8 @@ zone{}
  zone_name
  pref_codes{}
   pref_code
+ invoice_zones{}
+  invoice_zone
 delivery_charge_amount
  shipping_date
  prefecture
