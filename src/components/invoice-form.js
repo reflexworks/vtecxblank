@@ -39,6 +39,38 @@ export default class InvoiceForm extends React.Component {
 		//this.entry.item_details = this.entry.item_details || []
 		//this.entry.remarks = this.entry.remarks || []
 
+		this.taxationList=[{
+			label: '税込',
+			value: '0'
+		}, {	
+			label: '税抜',
+			value: '1'
+		}]
+		
+		this.bankList=[{
+			label: 'みずほ銀行',
+			value: '1'
+		}, {
+			label: '三菱東京UFJ銀行',
+			value: '2'
+		}, {
+			label: '三井住友銀行',
+			value: '3'
+		}, {
+			label: 'りそな銀行',
+			value: '4'
+		}, {
+			label: '埼玉りそな銀行',
+			value: '5'	
+		}]
+		
+		this.bankTypeList = [{
+			label: '普通',
+			value: '0',
+		}, {
+			label: '当座',
+			value: '1',
+		}]
 
 		this.sampleData()
 	}
@@ -46,10 +78,15 @@ export default class InvoiceForm extends React.Component {
 
 	sampleData() {
 		this.entry.invoice.quotation_code = '1710-01317'
-		//684030
 		this.entry.invoice.consumption_tax = '¥54,722'
 		this.entry.invoice.total_amount = '¥738,752'
 		this.entry.billfrom.payee.account_type = '普通'
+
+		this.entry.billfrom.billfrom_name = 'CONNECTロジスティクス株式会社'
+
+		this.entry.contact_information.zip_code = '〒332 - 0027'
+		this.entry.contact_information.address1 = '埼玉県川口市緑町9-35'
+		this.entry.contact_information.tel = '048-299-8213'	
 
 		this.sampleMonthlyWork = [{
 			work: '保管料',
@@ -279,13 +316,37 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 	
-	changeDetails(_data,_rowindex) {
-		this.entry.invoice.other_quotation[_rowindex].details = _data
+	changeOtherQuotation(_data, _rowindex, _celindex) {
+		if (_celindex === 'is_taxation') {
+			this.entry.invoice.other_quotation[_rowindex][_celindex] = _data ? _data.value : ''
+		} else {
+			this.entry.invoice.other_quotation[_rowindex][_celindex] = _data	
+		}
+		
 		this.forceUpdate()
 	}
 
-	changeCost(_data, _rowindex) {
-		this.entry.invoice.other_quotation[_rowindex].cost = _data
+	changePayee(_data, _rowindex, _celindex) {
+		if (_celindex === 'bank_info' || _celindex === 'account_type') {
+			this.entry.billfrom.payee[_rowindex][_celindex] = _data ? _data.value : ''
+		} else {
+			this.entry.billfrom.payee[_rowindex][_celindex] = _data	
+		}
+		
+		this.forceUpdate()
+	}
+
+	addPayeeList(_data) {
+		this.entry.billfrom.payee.push(_data)
+		this.forceUpdate()
+	}
+
+	removePayeeList(_index) {
+		let array = []
+		for (let i = 0, ii = this.entry.billfrom.payee.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry.billfrom.payee[i])
+		}
+		this.entry.billfrom.payee = array
 		this.forceUpdate()
 	}
 
@@ -299,22 +360,6 @@ export default class InvoiceForm extends React.Component {
 			<Form name={this.props.name} horizontal data-submit-form>
 				
 				<Button className="total_amount"><Glyphicon glyph="print" />　請求書発行</Button>	
-
-				<br/>
-				<br/>
-				<p className="total_amount">CONNECTロジスティクス株式会社</p>
-				
-				<br/>
-				<br/>
-				<p className="total_amount">〒332-0027</p>
-
-				<br/>
-				<br/>
-				<p className="total_amount">埼玉県川口市緑町9-35</p>
-
-				<br/>
-				<br/>
-				<p className="total_amount">電話:048-299-8213</p>
 								
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
@@ -425,7 +470,7 @@ export default class InvoiceForm extends React.Component {
 								/>
 							</Panel>
 
-							<Panel collapsible header="配送料" eventKey="4" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="配送料(出荷)" eventKey="4" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
 									data={this.sampleDelivery}
@@ -446,50 +491,79 @@ export default class InvoiceForm extends React.Component {
 									}]}
 								/>
 							</Panel>	
-									
-							<Panel collapsible header="その他" eventKey="5" bsStyle="info" defaultExpanded="true">
+							
+							<Panel collapsible header="配送料(集荷)" eventKey="5" bsStyle="info" defaultExpanded="true">
+								<CommonTable
+									//name="item_details"
+									data={this.sampleDelivery}
+									edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+									header={[{
+										field: 'work', title: 'ご請求内容(作業内容)', width: '200px'
+									}, {
+										field: 'quantity',title: '数量', width: '50px'
+									}, {
+										field: 'unit',title: '単位', width: '50px'
+									}, {
+										field: 'unit_price',title: '単価', width: '100px'
+									}, {
+										field: 'cost', title: '金額', width: '500px'
+									}, {
+										field: 'remarks',title: '備考', width: '500px'	
+									}]}
+								/>
+							</Panel>
+
+							<Panel collapsible header="その他" eventKey="6" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="other_quotation"
 									data={this.entry.invoice.other_quotation}
 									header={[{
-										field: 'details', title: 'ご請求内容(作業内容)', width: '100px',
+										field: 'details', title: 'ご請求内容(作業内容)', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeDetails(data,rowindex)}
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'details')}
 										}
 									}, {
-										field: 'quantity',title: '数量', width: '50px',
+										field: 'quantity',title: '数量', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeCost(data,rowindex)}
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'quantity')}
 										}
 									}, {
-										field: 'unit',title: '単位', width: '50px',
+										field: 'unit',title: '単位', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeCost(data,rowindex)}
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'unit')}
 										}
 									}, {
-										field: 'unit_price',title: '単価', width: '50px',
+										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeCost(data,rowindex)}
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'unit_price')}
 										}
 									}, {
-										field: 'cost',title: '金額', width: '50px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeCost(data,rowindex)}
+										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
+										filter: {
+											options: this.taxationList,
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'is_taxation')}
 										}
 									}, {
-										field: 'remarks',title: '備考', width: '50px',
+										field: 'cost',title: '金額', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeCost(data,rowindex)}
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'cost')}
+										}
+									}, {
+										field: 'remarks',title: '備考', width: '30px',
+										input: {
+											onChange: (data, rowindex)=>{this.changeOtherQuotation(data,rowindex,'remarks')}
 										}
 									}]}
-									add={() => this.addList({ details: '',quantity: '',unit: '',unit_price: '',cost: '',remarks:'',})}
+									add={() => this.addList({ details: '',quantity: '',unit: '',unit_price: '',is_taxation:'0',cost: '',remarks:'',})}
 									remove={(data, index) => this.removeList(index)}
 									fixed
 								/>
 							</Panel>	
 						</PanelGroup>
+
 						<br />
 						<br />
+
 						<CommonInputText
 							controlLabel="消費税"
 							name="invoice.consumption_tax"
@@ -499,8 +573,10 @@ export default class InvoiceForm extends React.Component {
 							readonly
 							className="total_amount"
 						/>
+
 						<br />
 						<br />
+
 						<CommonInputText
 							controlLabel="合計請求金額"
 							name="invoice.total_amount"
@@ -513,37 +589,74 @@ export default class InvoiceForm extends React.Component {
 
 						<br />
 						<br />
+
 					</Tab>
 
-					<Tab eventKey={2} title="振込先"> 
+					<Tab eventKey={2} title="請求元"> 
+						
+						
 						<CommonInputText
-							controlLabel="振込先"
-							//name="billfrom.payee.bank_info"
+							controlLabel="　"
+							name="billfrom.billfrom_name"
 							type="text"
-							placeholder="銀行名"
-							//value={this.entry.billfrom.payee.bank_info}
-							//readonly
+							//placeholder="請求元名"
+							value={this.entry.billfrom.billfrom_name}
+							readonly
 						/>
 
-						<CommonRadioBtn 
-							controlLabel="口座種別"
-							//name="billfrom.payee.account_type"
-							checked={this.entry.billfrom.payee.account_type}
-							data={[{
-								label: '普通',
-								value: '0',
-							}, {
-								label: '当座',
-								value: '1',
-							}]}
-						/>
 						<CommonInputText
-							controlLabel="口座番号"
-							//name="billfrom.payee.bankinfo"
+							controlLabel="　"
+							name="contact_information.zip_code"
 							type="text"
-							placeholder="口座番号"
-							//value={this.entry.billfrom.payee.account_number}
-							//readonly
+							placeholder="郵便番号"
+							value={this.entry.contact_information.zip_code}
+							readonly
+						/>
+
+						<CommonInputText
+							controlLabel="　"
+							name="contact_information.address1"
+							type="text"
+							//placeholder=""
+							value={this.entry.contact_information.address1}
+							readonly
+						/>
+
+						
+						<CommonInputText
+							controlLabel="電話"
+							name="contact_information.tel"
+							type="text"
+							placeholder="電話番号"
+							value={this.entry.contact_information.tel}
+							readonly
+						/>
+
+						<CommonTable
+							controlLabel="口座情報"	
+							name="billfrom.payee"
+							data={this.entry.billfrom.payee}
+							header={[{
+								field: 'bank_info',title: '口座名', width: '30px',
+								filter: {
+									options: this.bankList,
+									onChange: (data, rowindex)=>{this.changePayee(data,rowindex,'bank_info')}
+								}
+							}, {
+								field: 'account_type',title: '口座種類', width: '30px',
+								filter: {
+									options: this.bankTypeList,
+									onChange: (data, rowindex)=>{this.changePayee(data,rowindex,'account_type')}
+								}
+							}, {
+								field: 'account_number',title: '口座番号', width: '30px',
+								input: {
+									onChange: (data, rowindex)=>{this.changePayee(data,rowindex,'account_number')}
+								}
+							}]}
+							add={() => this.addPayeeList({ 'bank_info':'0', 'account_type':'0', 'account_number':'',})}
+							remove={(data, index) => this.removePayeeList(index)}
+							fixed
 						/>
 
 					</Tab>
