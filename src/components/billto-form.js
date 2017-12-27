@@ -17,7 +17,6 @@ import {
 	CommonDatePicker,
 } from './common'
 
-
 export default class BilltoForm extends React.Component {
 
 	constructor(props: Props) {
@@ -136,7 +135,7 @@ export default class BilltoForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel="市区郡長村"
+							controlLabel="市区郡町村"
 							name="contact_information.address1"
 							type="text"
 							placeholder="◯◯市××町"
