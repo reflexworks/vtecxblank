@@ -65,7 +65,6 @@ export default class InvoiceUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-
 				this.forceUpdate()
 			}
 
