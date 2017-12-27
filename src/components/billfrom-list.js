@@ -26,7 +26,7 @@ type State = {
 	url: string
 }
 
-export default class WarehouseList extends React.Component {
+export default class BillfromList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -34,7 +34,7 @@ export default class WarehouseList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/warehouse?f&l=' + this.maxDisplayRows
+		this.url = '/d/billfrom?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -69,8 +69,7 @@ export default class WarehouseList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				
-				this.setState({ feed:'',isDisabled: false, isError: response })
+				this.setState({ isDisabled: false, isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -86,40 +85,11 @@ export default class WarehouseList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-
-	onSelect(_data) {
-		// 入力画面に遷移
-		const warehouse_code = _data.warehouse.warehouse_code
-		this.props.history.push('/WarehouseUpdate?' + warehouse_code)
-	}
 	
-
-	onDelete(data) {
-		
-		if (confirm('倉庫名:' + data.warehouse.warehouse_name + '\n' +
-					'この情報を削除します。よろしいですか？')) {
-			const id = data.warehouse.warehouse_code
-		
-			axios({
-				url: '/d/warehouse/' + id,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(this.activePage)
-			}).catch((error) => {
-				if (this.props.error) {
-					this.setState({ isDisabled: false })
-					this.props.error(error)
-				} else {
-					this.setState({ isDisabled: false, isError: error })
-				}
-			})
-			this.forceUpdate()
-		}
-		
+	onSelect(data) {
+		// 入力画面に遷移
+		const billfrom_code = data.billfrom.billfrom_code
+		this.props.history.push('/BillfromUpdate?' + billfrom_code)
 	}
 
 	/**
@@ -150,47 +120,75 @@ export default class WarehouseList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>倉庫一覧</PageHeader>
-						
+						<PageHeader>請求元一覧</PageHeader>
+
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
-								controlLabel="倉庫コード"
-								name="warehouse.warehouse_code"
+								controlLabel="請求元コード"
+								name="billfrom.billfrom_code"
 								type="text"
-								placeholder="倉庫コード"
+								placeholder="請求元コード"
 							/>
 							<CommonInputText
-								controlLabel="倉庫名"
-								name="warehouse.warehouse_name"
+								controlLabel="請求元名"
+								name="billfrom.billfrom_name"
 								type="text"
-								placeholder="倉庫名"
+								placeholder="株式会社 ◯◯◯"
 							/>
+
+							<CommonInputText
+								controlLabel="電話番号"
+								name="contact_information.tel"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+
+							<CommonInputText
+								controlLabel="FAX"
+								name="contact_information.fax"
+								type="text"
+								placeholder="090-1234-5678"
+								size="sm"
+							/>
+							
+							<CommonInputText
+								controlLabel="メールアドレス"
+								name="contact_information.email"
+								type="email"
+								placeholder="logioffice@gmail.com"
+							/>
+
 							<CommonInputText
 								controlLabel="郵便番号"
-								name="warehouse.zip_code"
+								name="contact_information.zip_code"
 								type="text"
 								placeholder="123-4567"
 								size="sm"
 							/>
+
 							<CommonPrefecture
 								controlLabel="都道府県"
 								componentClass="select"
-								name="warehouse.prefecture"
+								name="contact_information.prefecture"
 								size="sm"
 							/>
+
 							<CommonInputText
 								controlLabel="市区郡町村"
-								name="warehouse.address1"
+								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
 							/>
+
 							<CommonInputText
 								controlLabel="番地"
-								name="warehouse.address2"
+								name="contact_information.address2"
 								type="text"
 								placeholder="1丁目2番地 ◯◯ビル1階"
 								size="lg"
 							/>
+						
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -208,23 +206,27 @@ export default class WarehouseList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data) => this.onSelect(data)}
-							remove={(data) => this.onDelete(data)}
+							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'warehouse.warehouse_code',title: '倉庫コード', width: '100px'
+								field: 'billfrom.billfrom_code',title: '請求元コード', width: '200px'
 							}, {
-								field: 'warehouse.warehouse_name', title: '倉庫名', width: '70px'
+								field: 'billfrom.billfrom_name', title: '請求元名', width: '200px'
 							}, {
-								field: 'warehouse.zip_code', title: '郵便番号', width: '200px'
+								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {
-								field: 'warehouse.prefecture', title: '都道府県', width: '150px'
+								field: 'contact_information.fax', title: 'FAX', width: '200px'
 							}, {
-								field: 'warehouse.address1', title: '市区郡町村', width: '150px'
+								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'warehouse.address2', title: '番地', width: '150px'
+								field: 'contact_information.zip_code', title: '郵便番号', width: '200px'
+							}, {
+								field: 'contact_information.prefecture', title: '都道府県', width: '200px'
+							}, {
+								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
+							}, {
+								field: 'contact_information.address2', title: '番地', width: '200px'
 							}]}
-						/>			
-						
+						/>
 					</Col>  
 				</Row>  
 		 </Grid>

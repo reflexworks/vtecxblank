@@ -174,7 +174,7 @@ export default class CustomerList extends React.Component {
 								size="sm"
 							/>
 							<CommonInputText
-								controlLabel="市区郡長村"
+								controlLabel="市区郡町村"
 								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
