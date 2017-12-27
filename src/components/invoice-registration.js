@@ -37,7 +37,7 @@ export default class InvoiceRegistration extends React.Component {
 			billto: {},
 			billfrom: {},
 			contact_information:{},
-			remarks:[],
+			remarks: [],
 		}
 	}
  
