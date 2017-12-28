@@ -12,28 +12,24 @@ import type {
 	Props
 } from 'demo3.types'
 
-import BilltoForm from './billto-form'
+import BillfromForm from './billfrom-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn
 } from './common'
 
-import moment from 'moment'
-export default class BilltoRegistration extends React.Component {
+export default class BillfromRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		// 登録先のURL
-		this.url = '/d/billto'
+		this.url = '/d/billfrom'
 
 		// 初期値の設定
 		this.entry = {
-			billto: {
-				billing_closing_date: moment(),
-				payment_date: moment(),
-			},
+			billfrom: {},
 			contact_information: {},
 		}
 
@@ -44,7 +40,7 @@ export default class BilltoRegistration extends React.Component {
 	 */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/BilltoList'
+		location.href = '#/BillfromList'
 	}
 
 	render() {
@@ -52,7 +48,7 @@ export default class BilltoRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>請求先情報の登録</PageHeader>
+						<PageHeader>請求元情報の登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -69,7 +65,7 @@ export default class BilltoRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<BilltoForm name="mainForm" entry={this.entry} />
+						<BillfromForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

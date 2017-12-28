@@ -91,7 +91,7 @@ export default class SideMenu extends React.Component {
 						},{
 							to: 'BilltoList',
 							glyph: 'list',
-							title: '請求先一覧'	
+							title: '請求先一覧'
 						},{
 							to: 'InquiryRegistration',
 							glyph: 'edit',
@@ -179,6 +179,14 @@ export default class SideMenu extends React.Component {
 					{ this.sideMenuListTitle('請求管理', 'invoice') }
 					{ this.sideMenuList('invoice',
 						[{
+							to: 'BillfromRegistration',
+							glyph: 'edit',
+							title: '請求元作成'
+						},{
+							to: 'BillfromList',
+							glyph: 'list',
+							title: '請求元一覧'
+						},{
 							to: 'InvoiceRegistration',
 							glyph: 'edit',
 							title: '請求書作成'

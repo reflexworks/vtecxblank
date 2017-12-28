@@ -17,8 +17,6 @@ import {
 	CommonTable,
 	CommonInputText,
 	CommonPrefecture,
-	CommonDatePicker,
-	CommonRadioBtn,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -28,7 +26,7 @@ type State = {
 	url: string
 }
 
-export default class BilltoList extends React.Component {
+export default class BillfromList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -36,7 +34,7 @@ export default class BilltoList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/billto?f&l=' + this.maxDisplayRows
+		this.url = '/d/billfrom?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -90,8 +88,8 @@ export default class BilltoList extends React.Component {
 	
 	onSelect(data) {
 		// 入力画面に遷移
-		const billto_code = data.billto.billto_code
-		this.props.history.push('/BilltoUpdate?' + billto_code)
+		const billfrom_code = data.billfrom.billfrom_code
+		this.props.history.push('/BillfromUpdate?' + billfrom_code)
 	}
 
 	/**
@@ -122,57 +120,20 @@ export default class BilltoList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>請求先一覧</PageHeader>
+						<PageHeader>請求元一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
-								controlLabel="請求先コード"
-								name="billto.billto_code"
+								controlLabel="請求元コード"
+								name="billfrom.billfrom_code"
 								type="text"
-								placeholder="請求先コード"
+								placeholder="請求元コード"
 							/>
-
 							<CommonInputText
-								controlLabel="請求先名"
-								name="billto.billto_name"
+								controlLabel="請求元名"
+								name="billfrom.billfrom_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
-							/>
-
-							<CommonDatePicker
-								controlLabel="請求締切日"
-								name="billto.billing_closing_date"
-								required
-							/>
-
-							<CommonDatePicker
-								controlLabel="支払日"
-								name="billto.payment_date"
-								required
-							/>
-
-							<CommonRadioBtn
-								controlLabel='日本郵政/請求明細表示'	
-								name="billto.post_has_sizeweight"
-								data={[{
-									label: 'サイズ・重量を区別する',
-									value: '0',
-								}, {
-									label: '区別しない',
-									value: '1',
-								}]}
-							/>
-
-							<CommonRadioBtn
-								controlLabel="ヤマト/請求明細表示"	
-								name="billto.yamato_has_details"
-								data={[{
-									label: '簡易',
-									value: '0',
-								}, {
-									label: '詳細',
-									value: '1',
-								}]}
 							/>
 
 							<CommonInputText
@@ -241,23 +202,15 @@ export default class BilltoList extends React.Component {
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
-						
+
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'billto.billto_code',title: '請求先コード', width: '200px'
+								field: 'billfrom.billfrom_code',title: '請求元コード', width: '200px'
 							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '200px'
-							}, {
-								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
-							}, {
-								field: 'billto.payment_date', title: '支払日', width: '200px'
-							}, {
-								field: 'billto.post_has_sizeweight', title: '日本郵政/請求明細表示', width: '200px', convert: {0:'サイズ・重量を区別する',1:'区別しない'}
-							}, {
-								field: 'billto.yamato_has_details', title: 'ヤマト/請求明細表示', width: '200px', convert: {0:'簡易',1:'詳細'}
+								field: 'billfrom.billfrom_name', title: '請求元名', width: '200px'
 							}, {
 								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {

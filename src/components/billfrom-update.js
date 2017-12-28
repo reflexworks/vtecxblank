@@ -13,7 +13,7 @@ import type {
 	Props
 } from 'demo3.types'
 
-import InvoiceForm from './invoice-form'
+import BillfromForm from './billfrom-form'
 import {
 	CommonIndicator,
 	CommonNetworkMessage,
@@ -22,8 +22,7 @@ import {
 	CommonBackBtn
 } from './common'
 
-
-export default class InvoiceUpdate extends React.Component {
+export default class BillfromUpdate extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -33,10 +32,10 @@ export default class InvoiceUpdate extends React.Component {
 		}
 
 		// URL設定
-		this.url = '/d/invoice'
+		this.url = '/d/billfrom'
 
 		// 戻る先のURL
-		this.backUrl = '#/InvoiceList'
+		this.backUrl = '#/BillfromList'
 
 		// 初期値の設定
 		this.entry = {}
@@ -65,6 +64,7 @@ export default class InvoiceUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				
 				this.forceUpdate()
 			}
 
@@ -100,7 +100,7 @@ export default class InvoiceUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							請求書情報の更新
+							請求元情報の更新
 						</PageHeader>
 
 					</Col>
@@ -120,7 +120,7 @@ export default class InvoiceUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InvoiceForm name="mainForm" entry={this.entry} />
+						<BillfromForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>

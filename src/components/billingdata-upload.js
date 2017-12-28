@@ -39,9 +39,7 @@ export default class BillingDataUpload extends React.Component {
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
-
 		this.setCustomerMasterData()
-
 	}
 
 	setCustomerMasterData() {
@@ -136,8 +134,8 @@ export default class BillingDataUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td rowspan="4">ヤマト運輸</td>
-									<td>発払</td>
+									<td rowspan="2">ヤマト運輸</td>
+									<td>発払/コレクト</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
@@ -155,85 +153,9 @@ export default class BillingDataUpload extends React.Component {
 											</FormGroup>
 										</Form>
 									</td>
-								</tr>
+								</tr>	
 								<tr>
-									<td>DM便</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ネコポス</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td rowspan="2">佐川急便</td>
-									<td>発払</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>代引</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>西濃運輸</td>
-									<td>-</td>
-								</tr>
-								<tr>
-									<td rowspan="3">日本郵政</td>
-									<td>EMS</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ゆうパケット</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ゆうメール</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>自社配送</td>
+									<td>日本郵政</td>
 									<td>-</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
@@ -251,4 +173,3 @@ export default class BillingDataUpload extends React.Component {
 		)
 	}
 }
-
