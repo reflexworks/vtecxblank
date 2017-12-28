@@ -6,6 +6,8 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Button,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -162,8 +164,9 @@ export default class InternalWorkList extends React.Component {
     						/>
 							
     					</CommonSearchConditionsFrom>
-
-    				</Col>
+						
+    					<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
+ 					</Col>
     			</Row>
     			<Row>
     				<Col xs={12} sm={12} md={12} lg={12} xl={12} >
