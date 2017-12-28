@@ -17,6 +17,8 @@ import {
 	CommonTable,
 	CommonInputText,
 	CommonPrefecture,
+	CommonDatePicker,
+	CommonRadioBtn,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -129,11 +131,48 @@ export default class BilltoList extends React.Component {
 								type="text"
 								placeholder="請求先コード"
 							/>
+
 							<CommonInputText
 								controlLabel="請求先名"
 								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
+							/>
+
+							<CommonDatePicker
+								controlLabel="請求締切日"
+								name="billto.billing_closing_date"
+								required
+							/>
+
+							<CommonDatePicker
+								controlLabel="支払日"
+								name="billto.payment_date"
+								required
+							/>
+
+							<CommonRadioBtn
+								controlLabel='日本郵政/請求明細表示'	
+								name="billto.post_has_sizeweight"
+								data={[{
+									label: 'サイズ・重量を区別する',
+									value: '0',
+								}, {
+									label: '区別しない',
+									value: '1',
+								}]}
+							/>
+
+							<CommonRadioBtn
+								controlLabel="ヤマト/請求明細表示"	
+								name="billto.yamato_has_details"
+								data={[{
+									label: '簡易',
+									value: '0',
+								}, {
+									label: '詳細',
+									value: '1',
+								}]}
 							/>
 
 							<CommonInputText
@@ -202,7 +241,7 @@ export default class BilltoList extends React.Component {
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
-
+						
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
@@ -215,6 +254,10 @@ export default class BilltoList extends React.Component {
 								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
 							}, {
 								field: 'billto.payment_date', title: '支払日', width: '200px'
+							}, {
+								field: 'billto.post_has_sizeweight', title: '日本郵政/請求明細表示', width: '200px', convert: {0:'サイズ・重量を区別する',1:'区別しない'}
+							}, {
+								field: 'billto.yamato_has_details', title: 'ヤマト/請求明細表示', width: '200px', convert: {0:'簡易',1:'詳細'}
 							}, {
 								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {
