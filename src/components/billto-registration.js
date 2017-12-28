@@ -18,6 +18,7 @@ import {
 	CommonClearBtn
 } from './common'
 
+import moment from 'moment'
 export default class BilltoRegistration extends React.Component {
 
 	constructor(props: Props) {
@@ -29,10 +30,12 @@ export default class BilltoRegistration extends React.Component {
 
 		// 初期値の設定
 		this.entry = {
-			billto: {},
+			billto: {
+				billing_closing_date: moment(),
+				payment_date: moment(),
+			},
 			contact_information: {},
 		}
-
 
 	}
  

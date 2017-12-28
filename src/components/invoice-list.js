@@ -7,8 +7,8 @@ import {
 	Col,
 	PageHeader,
 	Button,
-//	Panel,
-//	Glyphicon,
+	//	Panel,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -161,8 +161,9 @@ export default class InvoiceList extends React.Component {
 
 						<PageHeader>請求書一覧</PageHeader>
 
+						
 						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
-
+						 
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
 								name="quotation.quotation_date"
@@ -235,6 +236,8 @@ export default class InvoiceList extends React.Component {
 							/>
 
 						</CommonSearchConditionsFrom>
+						
+						<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
 						
 					</Col>
 				</Row>
