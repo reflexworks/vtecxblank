@@ -6,6 +6,8 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Button,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -182,7 +184,8 @@ export default class QuotationList extends React.Component {
 								}]}
 							/>
 						</CommonSearchConditionsFrom>
-
+						
+						<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
 					</Col>
 				</Row>
 				<Row>

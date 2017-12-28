@@ -13,6 +13,8 @@ billto
  billto_name
  billing_closing_date
  payment_date
+ post_has_sizeweight
+ yamato_has_details
 customer
  customer_code
  shipper{}
@@ -29,6 +31,13 @@ customer
  url
  person_in_charge
  products
+billfrom
+ billfrom_code
+ billfrom_name
+ payee{}
+  bank_info
+  account_type
+  account_number
 contact_information
  tel
  fax 
@@ -77,6 +86,7 @@ basic_condition{}
  condition{}
   content
 item_details{}
+ category
  item_name
  unit_name
  unit
@@ -112,11 +122,8 @@ quotation
 invoice
  invoice_code
  quotation_code
- internal_work_code 
+ internal_work_code
  total_amount
- payee{}
-  content
- subtotal
  consumption_tax
  issue_status
  deposit_status
@@ -148,6 +155,8 @@ zone{}
  zone_name
  pref_codes{}
   pref_code
+ invoice_zones{}
+  invoice_zone
 delivery_charge_amount
  shipping_date
  prefecture

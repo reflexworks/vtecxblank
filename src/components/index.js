@@ -58,12 +58,12 @@ import TypeAheadList from './typeahead-list'
 import TypeAheadRegistration from './typeahead-registration'
 import TypeAheadUpdate from './typeahead-update'
 
-//入力保管管理
+//基本条件管理
 import BasicConditionList from './basiccondition-list'
 import BasicConditionRegistration from './basiccondition-registration'
 import BasicConditionUpdate from './basiccondition-update'
 
-//請求先
+//請求データ
 import BillingDataList from './billingdata-list'
 import BillingDataUpload from './billingdata-upload'
 import BillingDataRegistration from './billingdata-registration'
@@ -72,6 +72,11 @@ import BillingDataRegistration from './billingdata-registration'
 import InquiryList from './inquiry-list'
 import InquiryRegistration from './inquiry-registration'
 import InquiryUpdate from './inquiry-update'
+
+//請求先
+import BillfromList from './billfrom-list'
+import BillfromRegistration from './billfrom-registration'
+import BillfromUpdate from './billfrom-update'
 
 import {
 //	BrowserRouter as Router,
@@ -569,6 +574,38 @@ class MainContainer extends React.Component {
 		)
 	}
 
+	/**
+	 * コンポーネント：請求元一覧
+	 */
+	BillfromList = (props) => {
+		return (
+			<BillfromList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求元情報登録
+	 */
+	BillfromRegistration = (props) => {
+		return (
+			<BillfromRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：請求元情報更新
+	 */
+	BillfromUpdate = (props) => {
+		return (
+			<BillfromUpdate 
+				history={props.history}
+			/>
+		)
+	}
 	
 	/**
 	 * ログアウト処理
@@ -658,6 +695,9 @@ class MainContainer extends React.Component {
 							<Route path="/InquiryRegistration" component={this.InquiryRegistration} />
 							<Route path="/InquiryList" component={this.InquiryList} />
 							<Route path="/InquiryUpdate" component={this.InquiryUpdate} />
+							<Route path="/BillfromRegistration" component={this.BillfromRegistration} />
+							<Route path="/BillfromList" component={this.BillfromList} />
+							<Route path="/BillfromUpdate" component={this.BillfromUpdate} />
 							<Route component={this.CustomerRegistration} />
 						</Switch>	
 					</div>
@@ -668,3 +708,4 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
+

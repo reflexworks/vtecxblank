@@ -15,8 +15,8 @@ import {
 	CommonInputText,
 	CommonPrefecture,
 	CommonDatePicker,
+	CommonRadioBtn,
 } from './common'
-
 
 export default class BilltoForm extends React.Component {
 
@@ -91,7 +91,33 @@ export default class BilltoForm extends React.Component {
 							name="billto.payment_date"
 							selected={this.entry.billto.payment_date}
 							required
-						/>						
+						/>
+
+						<CommonRadioBtn
+							controlLabel='日本郵政/請求明細表示'	
+							name="billto.post_has_sizeweight"
+							checked={this.entry.billto.post_has_sizeweight}
+							data={[{
+								label: 'サイズ・重量を区別する',
+								value: '0',
+							}, {
+								label: '区別しない',
+								value: '1',
+							}]}
+						/>
+
+						<CommonRadioBtn
+							controlLabel="ヤマト/請求明細表示"	
+							name="billto.yamato_has_details"
+							checked={this.entry.billto.yamato_has_details}
+							data={[{
+								label: '簡易',
+								value: '0',
+							}, {
+								label: '詳細',
+								value: '1',
+							}]}
+						/>
 
 						<CommonInputText
 							controlLabel="電話番号"
@@ -136,7 +162,7 @@ export default class BilltoForm extends React.Component {
 						/>
 
 						<CommonInputText
-							controlLabel="市区郡長村"
+							controlLabel="市区郡町村"
 							name="contact_information.address1"
 							type="text"
 							placeholder="◯◯市××町"
