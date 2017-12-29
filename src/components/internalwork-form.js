@@ -103,7 +103,6 @@ export default class InternalWorkForm extends React.Component {
 
 		this.setCustomerMasterData()
 
-		this.sampleData()
 	}
 
 	days = () => {
@@ -311,6 +310,9 @@ export default class InternalWorkForm extends React.Component {
      */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.deliveryList = newProps.master.shipment_service
+		this.sampleData()
+		this.forceUpdate()
 	}
 
 	render() {
