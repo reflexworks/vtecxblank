@@ -1201,35 +1201,36 @@ export function CommonEntry() {
 		},
 		setValue: (_key, _value) => {
 
-			const keys = _key.split('.')
-			const setKey = (_obj, _index) => {
+			if (_CommonEntry.feed) {
+				const keys = _key.split('.')
+				const setKey = (_obj, _index) => {
 
-				const thisKey = keys[_index]
+					const thisKey = keys[_index]
 
-				if (keys[_index + 1]) {
-					const isArray = thisKey.indexOf('[') !== -1 ? true : false
-					if (isArray) {
-						const arrayKey = thisKey.split('[')[0]
-						const number = parseInt(thisKey.split('[')[1].split(']')[0])
-						if (!_obj[arrayKey]) _obj[arrayKey] = []
-						if (!_obj[arrayKey][number]) _obj[arrayKey][number] = {}
-						_obj[arrayKey][number] = setKey(_obj[arrayKey][number], (_index + 1))
+					if (keys[_index + 1]) {
+						const isArray = thisKey.indexOf('[') !== -1 ? true : false
+						if (isArray) {
+							const arrayKey = thisKey.split('[')[0]
+							const number = parseInt(thisKey.split('[')[1].split(']')[0])
+							if (!_obj[arrayKey]) _obj[arrayKey] = []
+							if (!_obj[arrayKey][number]) _obj[arrayKey][number] = {}
+							_obj[arrayKey][number] = setKey(_obj[arrayKey][number], (_index + 1))
+						} else {
+							if (!_obj[thisKey]) _obj[thisKey] = {}
+							_obj[thisKey] = setKey(_obj[thisKey], (_index + 1))
+						}
 					} else {
-						if (!_obj[thisKey]) _obj[thisKey] = {}
-						_obj[thisKey] = setKey(_obj[thisKey], (_index + 1))
+						_obj[keys[_index]] = _value
 					}
-				} else {
-					_obj[keys[_index]] = _value
+					return _obj
 				}
-				return _obj
-			}
 
-			if (_key.indexOf('entry') === -1) {
-				_CommonEntry.feed.entry[0] = setKey(_CommonEntry.feed.entry[0], 0)
-			} else {
-				_CommonEntry.feed = setKey(_CommonEntry.feed, 0)
+				if (_key.indexOf('entry') === -1) {
+					_CommonEntry.feed.entry[0] = setKey(_CommonEntry.feed.entry[0], 0)
+				} else {
+					_CommonEntry.feed = setKey(_CommonEntry.feed, 0)
+				}
 			}
-			console.log(_CommonEntry)
 
 		},
 		setFeed: (_obj) => {
