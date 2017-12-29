@@ -107,7 +107,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 	 */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/DeliveryChargeList'
+		location.reload()
 	}
 
 	/**
@@ -115,7 +115,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 	 */
 	callbackUpdateButton() {
 		alert('更新が完了しました。')
-		location.href = '#/DeliveryChargeList'
+		location.reload()
 	}
 
 	render() {

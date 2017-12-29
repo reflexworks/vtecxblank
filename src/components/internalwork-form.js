@@ -58,37 +58,7 @@ export default class InternalWorkForm extends React.Component {
 		this.packingWorksList = null
 		this.packingWorks = []
 
-		this.deliveryList = [
-			'エコ配JP',
-			'ヤマト運輸(発払い)',
-			'ヤマト運輸(DM便)',
-			'ヤマト運輸(ネコポス)',
-			'ヤマト運輸(クール)',
-			'佐川急便',
-			'西濃運輸',
-			'EMS',
-			'ゆうメール(250g以内)',
-			'ゆうメール(500g以内)',
-			'ゆうメール(700g以内)',
-			'ゆうメール(1kg以内)',
-			'ゆうパケット(2cm)',
-			'ゆうパケット(3cm)',
-			'定形外(規格内：50g)',
-			'定形外(規格内：100g)',
-			'定形外(規格内：150g)',
-			'定形外(規格内：250g)',
-			'定形外(規格内：500g)',
-			'定形外(規格内：1000g)',
-			'定形外(規格外：50g)',
-			'定形外(規格外：100g)',
-			'定形外(規格外：150g)',
-			'定形外(規格外：250g)',
-			'定形外(規格外：500g)',
-			'定形外(規格外：1000g)',
-			'定形外(規格外：2000g)',
-			'定形外(規格外：4000g)',
-			'自社配送'
-		]
+		this.deliveryList = []
 		this.deliveryWorksList = null
 		this.deliveryWorks = []
 		this.pickupWorks = []

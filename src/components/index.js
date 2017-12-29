@@ -45,7 +45,6 @@ import InvoiceUpdate from './invoice-update'
 import ShipmentServiceList from './shipment-service-list'
 import ShipmentServiceRegistration from './shipment-service-registration'
 import ShipmentServiceUpdate from './shipment-service-update'
-import DeliveryChargeList from './deliverycharge-list'
 import DeliveryChargeRegistration from './deliverycharge-registration'
 
 //請求先
@@ -355,7 +354,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料登録
+	 * コンポーネント：配送業者登録
 	 */
 	ShipmentServiceRegistration = (props) => {
 		return (
@@ -366,7 +365,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料登録
+	 * コンポーネント：配送業者更新
 	 */
 	ShipmentServiceUpdate = (props) => {
 		return (
@@ -377,7 +376,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料一覧
+	 * コンポーネント：配送業者一覧
 	 */
 	ShipmentServiceList = (props) => {
 		return (
@@ -393,17 +392,6 @@ class MainContainer extends React.Component {
 	DeliveryChargeRegistration = (props) => {
 		return (
 			<DeliveryChargeRegistration
-				history={props.history}
-			/>
-		)
-	}
-
-	/**
-	 * コンポーネント：配送料一覧
-	 */
-	DeliveryChargeList = (props) => {
-		return (
-			<DeliveryChargeList 
 				history={props.history}
 			/>
 		)
@@ -679,7 +667,6 @@ class MainContainer extends React.Component {
 							<Route path="/ShipmentServiceUpdate" component={this.ShipmentServiceUpdate} />
 							<Route path="/ShipmentServiceList" component={this.ShipmentServiceList} />
 							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
-							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
 							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
 							<Route path="/BilltoList" component={this.BilltoList} />
 							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />
