@@ -409,7 +409,12 @@ export class CommonRegistrationBtn extends React.Component {
 			data: {}
 		}).then((response) => {
 		
-			const reqData = this.setReqestdata(response.data.feed.title)
+			let reqData
+			if (this.props.type === 'entitiy') {
+				reqData = CommonEntry().get()
+			} else {
+				reqData = this.setReqestdata(response.data.feed.title)
+			}
 
 			axios({
 				url: url,
@@ -611,7 +616,13 @@ export class CommonUpdateBtn extends React.Component {
 				this.setState({ isDisabled: true })
 
 				const url = this.props.url
-				const reqData = this.setReqestdata()
+
+				let reqData
+				if (this.props.type === 'entitiy') {
+					reqData = CommonEntry().get()
+				} else {
+					reqData = this.setReqestdata()
+				}
 
 				axios({
 					url: url,
@@ -1177,6 +1188,63 @@ export class CommonSelectBox extends React.Component {
 
 }
 
+let _CommonEntry = {}
+export function CommonEntry() {
+
+	const _event = {
+		init: (_init = {}) => {
+			_CommonEntry = _event.setFeed(_init)
+			return _CommonEntry
+		},
+		get: () => {
+			return _CommonEntry
+		},
+		setValue: (_key, _value) => {
+
+			const keys = _key.split('.')
+			const setKey = (_obj, _index) => {
+
+				const thisKey = keys[_index]
+
+				if (keys[_index + 1]) {
+					const isArray = thisKey.indexOf('[') !== -1 ? true : false
+					if (isArray) {
+						const arrayKey = thisKey.split('[')[0]
+						const number = parseInt(thisKey.split('[')[1].split(']')[0])
+						if (!_obj[arrayKey]) _obj[arrayKey] = []
+						if (!_obj[arrayKey][number]) _obj[arrayKey][number] = {}
+						_obj[arrayKey][number] = setKey(_obj[arrayKey][number], (_index + 1))
+					} else {
+						if (!_obj[thisKey]) _obj[thisKey] = {}
+						_obj[thisKey] = setKey(_obj[thisKey], (_index + 1))
+					}
+				} else {
+					_obj[keys[_index]] = _value
+				}
+				return _obj
+			}
+
+			if (_key.indexOf('entry') === -1) {
+				_CommonEntry.feed.entry[0] = setKey(_CommonEntry.feed.entry[0], 0)
+			} else {
+				_CommonEntry.feed = setKey(_CommonEntry.feed, 0)
+			}
+			console.log(_CommonEntry)
+
+		},
+		setFeed: (_obj) => {
+			if (!_obj.feed && !_obj.entry) {
+				return { feed: { entry: [_obj] } }
+			} else if (!_obj.feed) {
+				return { feed: _obj }
+			} else {
+				return _obj
+			}
+		}
+	}
+	return _event
+}
+
 /**
  * テキストボックス
  */
@@ -1190,7 +1258,8 @@ export class CommonInputText extends React.Component {
 			placeholder: this.props.placeholder,
 			value: this.props.value,
 			readonly: this.props.readonly,
-			size: this.props.comparison ? 'lg' : this.props.size
+			size: this.props.comparison ? 'lg' : this.props.size,
+			entitiykey: this.props.entitiykey
 		}
 	}
 
@@ -1213,6 +1282,8 @@ export class CommonInputText extends React.Component {
 	 */
 	changed(e: InputEvent) {
 		const value = e.target.value
+		const entitiykey = this.state.entitiykey || this.state.name
+		CommonEntry().setValue(entitiykey, value)
 		this.setState({ value: value })
 		if (this.props.onChange) {
 			this.props.onChange(value)
@@ -1496,6 +1567,10 @@ export class CommonTable extends React.Component {
 					</div>
 				)
 			} else {
+				let entitiykey = _cashData.field
+				if (_cashData.entitiykey) {
+					entitiykey = _cashData.entitiykey.replace('{}', '[' + _index + ']')
+				}
 				if (filter) {
 					return (
 						<CommonFilterBox
@@ -1504,6 +1579,7 @@ export class CommonTable extends React.Component {
 							options={filter.options}
 							onChange={(data) => filter.onChange(data, _index)}
 							creatable
+							entitiykey={entitiykey}
 							table
 						/>
 					)
@@ -1514,6 +1590,7 @@ export class CommonTable extends React.Component {
 							type="text"
 							value={value}
 							onChange={(data) => input.onChange(data, _index)}
+							entitiykey={entitiykey}
 							table
 						/>
 					)
@@ -1549,15 +1626,15 @@ export class CommonTable extends React.Component {
 				}
 
 				if (cashInfo.btn1) {
-					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><Button bsSize="small" onClick={()=>cashInfo.btn1.onClick(_obj)}>{cashInfo.btn1.label}</Button></td>
+					array[cashInfo.btn1.index] = <td key={tdCount} style={cashInfo.btn1.style}><div><Button bsSize="small" onClick={()=>cashInfo.btn1.onClick(_obj)}>{cashInfo.btn1.label}</Button></div></td>
 					tdCount++
 				}
 				if (cashInfo.btn2) {
-					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><Button bsSize="small" onClick={()=>cashInfo.btn2.onClick(_obj)}>{cashInfo.btn2.label}</Button></td>
+					array[cashInfo.btn2.index] = <td key={tdCount} style={cashInfo.btn2.style}><div><Button bsSize="small" onClick={()=>cashInfo.btn2.onClick(_obj)}>{cashInfo.btn2.label}</Button></div></td>
 					tdCount++
 				}
 				if (cashInfo.btn3) {
-					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><Button bsSize="small" onClick={()=>cashInfo.btn3.onClick(_obj)}>{cashInfo.btn3.label}</Button></td>
+					array[cashInfo.btn3.index] = <td key={tdCount} style={cashInfo.btn3.style}><div><Button bsSize="small" onClick={()=>cashInfo.btn3.onClick(_obj)}>{cashInfo.btn3.label}</Button></div></td>
 					tdCount++
 				}
 
@@ -1571,7 +1648,8 @@ export class CommonTable extends React.Component {
 
 						} else if (!disabledList[__key]) {
 
-							const field = _key.replace(/\./g, '___') + __key
+							const field = _key.replace(/\./g, '___') + __key.replace(/\./g, '___')
+
 							if (cashInfo[field]) {
 								array[cashInfo[field].index] = (
 									<td
@@ -1675,6 +1753,10 @@ export class CommonModal extends React.Component {
 			isShow: this.props.isShow
 		}
 		this.LogicCommonTable = new LogicCommonTable()
+	}
+
+	componentWillMount() {
+    	ReactModal.setAppElement('body')
 	}
 
 	/**

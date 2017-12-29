@@ -231,6 +231,7 @@ export default class ShipmentServiceForm extends React.Component {
 				<ZoneModal
 					isShow={this.modal.zone.visible}
 					close={() => this.closeModal('zone')}
+					add={(obj) => this.addList('zone', obj)}
 					edit={(obj) => this.updateList('zone', obj)}
 					data={this.modal.zone.data}
 				/>
@@ -325,7 +326,9 @@ export default class ShipmentServiceForm extends React.Component {
 								}, {
 									field: 'pref_codes', title: '所属する都道府県', width: '900px'
 								}]}
+								add={()=>this.showModal('zone')}
 								edit={(data, i) =>this.showModal('zone', data, i)}
+								remove={(data, i) => this.removeList('zone', i)}
 							/>
 
 						</Panel>
