@@ -127,16 +127,19 @@ invoice
  consumption_tax
  issue_status
  deposit_status
-delivery_charge
- delivery_company{}
-  service_code
-  kind_class
-  delivery_charge_details{}
-   size
-   weight
-   charge_by_zone{}
-    zone_code
-    delivery_charge
+delivery_charge{}
+ shipment_service_name
+ shipment_service_code
+ shipment_service_type
+ service_name
+ delivery_charge_details{}
+  size
+  weight
+  price
+  charge_by_zone{}
+   zone_code
+   zone_name
+   price
 internal_work
  internal_work_code 
  staff_name
