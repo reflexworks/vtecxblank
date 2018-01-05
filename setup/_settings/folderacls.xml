@@ -207,7 +207,7 @@
             <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,CRUD</uri>
         </contributor>
-        <link rel="self" href="/delivery_charge" />
+        <link rel="self" href="/deliverycharge_template" />
     </entry>
     <entry>
         <contributor>
