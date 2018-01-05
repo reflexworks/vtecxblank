@@ -1,14 +1,44 @@
 import reflexcontext from 'reflexcontext' 
+import { CommonGetFlag } from './common'
 
 const shipment_service = reflexcontext.getFeed('/shipment_service')
-const customer_code = reflexcontext.getQueryString('customer_code')
-const uri = '/customer/'+ customer_code +'/deliverycharge'
-const customer = reflexcontext.getEntry('/customer/'+ customer_code)
+const isShipment = CommonGetFlag(shipment_service)
 
-if (shipment_service && shipment_service.feed.entry && customer && customer.feed.entry) {
+if (isShipment) {
 
-	const delivery_charge = reflexcontext.getEntry(uri)
-	const isDc = delivery_charge && delivery_charge.feed.entry
+	const customer_code = reflexcontext.getQueryString('customer_code')
+	const template = reflexcontext.getQueryString('template')
+
+	let uri
+	let customer = false
+	let delivery_charge
+
+	if (customer_code) {
+		// 顧客ごとの配送料登録の場合
+		uri = '/customer/' + customer_code + '/deliverycharge'
+		customer = reflexcontext.getEntry('/customer/'+ customer_code)
+		const isCustomer = CommonGetFlag(customer)
+
+		if (isCustomer) {
+			delivery_charge = reflexcontext.getEntry(uri)
+		} else {
+			// 顧客がいない場合
+	    	reflexcontext.sendMessage(400, '顧客が存在しません。')
+		}
+	} else if (template) {
+		// テンプレート登録の場合
+		if (template === 'registration') {
+			uri = '/deliverycharge_template'
+		} else {
+			// テンプレート編集の場合
+			uri = '/deliverycharge_template/' + template
+			delivery_charge = reflexcontext.getEntry(uri)
+		}
+	} else {
+    	reflexcontext.sendMessage(400, '不正なURLです。')
+	}
+
+	const isDc = CommonGetFlag(delivery_charge)
 
 	// 登録済みの配送料を検索用にキャッシュ化
 	let _cashDc = {}
@@ -70,7 +100,7 @@ if (shipment_service && shipment_service.feed.entry && customer && customer.feed
 		const setSeizes = (_entry) => {
 			let array = []
 			for (let i = 0, ii = _entry.shipment_service.sizes.length; i < ii; ++i) {
-    			const cashData = getCash(_entry.shipment_service.code, i)
+				const cashData = getCash(_entry.shipment_service.code, i)
 				const sizes = _entry.shipment_service.sizes[i]
 				let obj = {
 					size: sizes.size,
@@ -100,13 +130,13 @@ if (shipment_service && shipment_service.feed.entry && customer && customer.feed
 				// サイズ・重量がある場合
 				delivery_charge_obj.delivery_charge_details = setSeizes(entry)
 			} else if (entry.zone) {
-    			const cashData = getCash(entry.shipment_service.code, 0)
+				const cashData = getCash(entry.shipment_service.code, 0)
 				// サイズ・重量がない かつ 地域帯がある場合
 				delivery_charge_obj.delivery_charge_details.push({
 					charge_by_zone: setZone(entry, cashData)
 				})
 			} else {
-    			const cashData = getCash(entry.shipment_service.code, 0)
+				const cashData = getCash(entry.shipment_service.code, 0)
 				delivery_charge_obj.delivery_charge_details.push({
 					price: cashData ? cashData.price : ''
 				})
@@ -124,21 +154,23 @@ if (shipment_service && shipment_service.feed.entry && customer && customer.feed
 	const res = setShipmentService(shipment_service.feed)
 
 	if (isDc) {
+		res.feed.entry[0].title = delivery_charge.feed.entry[0].title
 		res.feed.entry[0].id = delivery_charge.feed.entry[0].id
 		res.feed.entry[0].link = delivery_charge.feed.entry[0].link
 		res.feed.entry[0].remarks = delivery_charge.feed.entry[0].remarks
 	} else {
-		res.feed.entry[0].link = [{
-			___href: uri,
-			___rel: 'self'
-		}]
+		if (customer) {
+			res.feed.entry[0].link = [{
+				___href: uri,
+				___rel: 'self'
+			}]
+		}
 	}
-	res.feed.entry[0].customer = customer.feed.entry[0].customer
+	if (customer) {
+		res.feed.entry[0].customer = customer.feed.entry[0].customer
+	}
 	reflexcontext.doResponse(res)
+
 } else {
-	if (!shipment_service || !shipment_service.feed.entry) {
-    	reflexcontext.sendMessage(204, null)
-	} else if (!customer || !customer.feed.entry) {
-    	reflexcontext.sendMessage(400, 'customer not found.')
-	}
+	reflexcontext.sendMessage(204, null)
 }

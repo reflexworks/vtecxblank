@@ -9,10 +9,10 @@ import type {
 } from 'demo3.types'
 
 import {
-	CommonTable,
+	CommonTable, CommonInputText,
 } from './common'
 
-export default class DeliveryChargeForm extends React.Component {
+export default class DeliveryChargeTemplateForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
@@ -171,6 +171,15 @@ export default class DeliveryChargeForm extends React.Component {
 		return (
 			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
 
+				<CommonInputText
+					controlLabel="テンプレート名"
+					name="title"
+					type="text"
+					placeholder=""
+					value={this.entry.title}
+					entitiykey="title"
+				/>
+				
 				<PageHeader>発払い</PageHeader>
 				<div>
 					{this.shipmentServiceListType1}
