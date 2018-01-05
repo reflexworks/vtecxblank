@@ -148,21 +148,21 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	}
 
 	addNotes() {
-		this.entry.remark.push({content: ''})
+		this.entry.remarks.push({content: ''})
 		this.forceUpdate()
 	}
 
 	changeNotes(_data, _rowindex) {
-		this.entry.remark[_rowindex] = {content: _data}
+		this.entry.remarks[_rowindex] = {content: _data}
 		this.forceUpdate()
 	}
 
 	removeNotes(_data, _index) {
 		let array = []
-		for (let i = 0, ii = this.entry.remark.length; i < ii; ++i) {
-			if (i !== _index) array.push(this.entry.remark[i])
+		for (let i = 0, ii = this.entry.remarks.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry.remarks[i])
 		}
-		this.entry.remark = array
+		this.entry.remarks = array
 		this.forceUpdate()
 	}
 
