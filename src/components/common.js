@@ -1689,10 +1689,11 @@ export class CommonTable extends React.Component {
 			}
 
 			const isError = (obj && obj.is_error === true) ? 'isError' : ''
+			const isTotal = (obj && obj.is_total === true) ? 'isTotal' : ''
 			const isSelected = this.selected[i] === i ? 'isSelected' : ''
 
 			return (
-				<tr key={i} className={isError + ' ' + isSelected}>{td(obj, i)}</tr>
+				<tr key={i} className={isError + ' ' + isTotal + ' ' + isSelected}>{td(obj, i)}</tr>
 			)
 		})
 
@@ -2167,7 +2168,7 @@ export class CommonFilterBox extends React.Component {
 			actionBtn: this.props.add ? this.addBtn : <span></span>
 		}
 		this.classFilterName = (this.props.add || this.props.edit || this.props.detail) && 'btn-type'
-		this.style = this,props.style || {width: '100%'}
+		this.style = this.props.style || { width: '100%' }
 	}
 
 	/**
@@ -2194,7 +2195,7 @@ export class CommonFilterBox extends React.Component {
 			actionBtn = this.addBtn
 		}
 
-		this.style = newProps.style || {width: '100%'}
+		this.style = newProps.style || this.style
 
 		this.setState({
 			value: newProps.value,

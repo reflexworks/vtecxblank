@@ -41,7 +41,8 @@ export default class QuotationForm extends React.Component {
 		this.selectItemDetails = null
 
 		this.master = {
-			typeList: []
+			typeList: [],
+			packingItemTemplateList: []
 		}
 		this.originTypeList = [[],[],[],[],[]]
 		this.typeList = [[], [], [], [], []]
@@ -72,7 +73,42 @@ export default class QuotationForm extends React.Component {
 	componentWillMount() {
 
 		this.setTypeaheadMasterData()
+		this.setPackingItemTemplateData()
 
+	}
+
+	/**
+	 * 資材テンプレート取得処理
+	 */
+	setPackingItemTemplateData() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/packing_item_template?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.master.packingItemTemplateList = response.data.feed.entry
+				this.packingItemTemplateList = this.master.packingItemTemplateList.map((obj) => {
+					return {
+						label: obj.title,
+						value: obj.title,
+						data: obj
+					}
+				})
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
 	}
 
 	/**
@@ -234,6 +270,19 @@ export default class QuotationForm extends React.Component {
 		}
 		this.modal[_key].visible = false
 		this.forceUpdate()
+	}
+
+	changePackingItem(_key, _data, _rowindex) {
+		this.entry.quotation.packing_item[_rowindex][_key] = _data
+	}
+	changePackingItemTemplate(_data) {
+		this.packingItemTemplate = _data ? _data.value : null
+		if (_data) {
+			if (confirm('設定した資材が破棄されます。よろしいでしょうか？')) {
+				this.entry.quotation.packing_item = _data.data.quotation.packing_item
+				this.forceUpdate()
+			}
+		}
 	}
 
 	render() {
@@ -402,6 +451,26 @@ export default class QuotationForm extends React.Component {
 								header={[{
 									field: 'item_code',title: '品番', width: '100px'
 								}, {
+									field: 'regular_price', title: '通常販売価格', width: '100px',
+									input: {
+										onChange: (data, rowindex)=>{this.changePackingItem('regular_price', data, rowindex)}
+									}
+								}, {
+									field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
+									input: {
+										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)}
+									}
+								}, {
+									field: 'special_price', title: '特別販売価格', width: '100px',
+									input: {
+										onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)}
+									}
+								}, {
+									field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
+									input: {
+										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)}
+									}
+								}, {
 									field: 'item_name', title: '商品名称', width: '200px'
 								}, {
 									field: 'material', title: '材質', width: '200px'
@@ -431,14 +500,6 @@ export default class QuotationForm extends React.Component {
 									field: 'outer_total', title: '三辺合計', width: '70px'
 								}, {	
 									field: 'purchase_price', title: '仕入れ単価', width: '150px'
-								}, {	
-									field: 'regular_price', title: '通常販売価格', width: '150px'
-								}, {
-									field: 'regular_unit_price', title: '通常販売価格・特別', width: '150px'
-								}, {
-									field: 'special_price', title: '特別販売価格', width: '150px'
-								}, {
-									field: 'special_unit_price', title: '特別販売価格・特別', width: '150px'
 								}]}
 								add={() => this.showAddModal('packing_item')}
 								remove={(data, index) => this.removeList('packing_item', index)}
@@ -452,7 +513,18 @@ export default class QuotationForm extends React.Component {
 									table
 									async={(input)=>this.getPackingItemList(input)}
 								/>
-								<Button bsSize="sm" onClick={()=>this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
+
+								<Button bsSize="sm" onClick={() => this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
+
+								<CommonFilterBox
+									placeholder="テンプレート選択"
+									name=""
+									value={this.packingItemTemplate}
+									options={this.packingItemTemplateList}
+									onChange={(data) => this.changePackingItemTemplate(data)}
+									style={{float: 'right', width: '200px'}}
+									table
+								/>
 							</CommonTable>
 						</Tab>
 

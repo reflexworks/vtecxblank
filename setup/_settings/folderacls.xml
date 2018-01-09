@@ -167,6 +167,16 @@
             <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
             <uri>urn:vte.cx:acl:+,CRUD</uri>
         </contributor>
+        <link rel="self" href="/packing_item_template" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- serverをログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
         <link rel="self" href="/internal_work" />
     </entry>
     <entry>
