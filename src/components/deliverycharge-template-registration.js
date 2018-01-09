@@ -13,22 +13,21 @@ import type {
 	Props
 } from 'demo3.types'
 
-import DeliveryChargeForm from './deliverycharge-form'
+import DeliveryChargeTemplateForm from './deliverycharge-template-form'
 import {
 	CommonRegistrationBtn,
-	CommonUpdateBtn,
 	CommonClearBtn,
 	CommonEntry
 } from './common'
 
-export default class DeliveryChargeRegistration extends React.Component {
+export default class DeliveryChargeTemplateRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		// 登録先のURL
-		this.url = '/d/'
+		this.url = '/d/deliverycharge_template'
 
 		// 備考
 		this.remarks = [
@@ -61,7 +60,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 			this.initEntry()
 
 			axios({
-				url: '/s/deliverycharge?customer_code=' + customer_code,
+				url: '/s/deliverycharge?template=registration',
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -78,12 +77,6 @@ export default class DeliveryChargeRegistration extends React.Component {
 					}
 					const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
 					this.entry = obj.feed.entry[0]
-					if (this.entry.id) {
-						this.button = <CommonUpdateBtn NavItem url={this.url} entry={this.entry} callback={this.callbackUpdateButton} type="entitiy" />
-					} else {
-						this.button = <CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
-					}
-
 					this.forceUpdate()
 				}
 
@@ -92,13 +85,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 			})
 		}
 
-		const customer_code = location.hash.split('=')[1] ? location.hash.split('=')[1] : null
-
-		if (customer_code) {
-			init()
-		} else {
-			location.href = '#'
-		}
+		init()
 
 	}
 
@@ -110,20 +97,12 @@ export default class DeliveryChargeRegistration extends React.Component {
 		location.reload()
 	}
 
-	/**
-	 * 更新完了後の処理
-	 */
-	callbackUpdateButton() {
-		alert('更新が完了しました。')
-		location.reload()
-	}
-
 	render() {
 		return (
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>配送料詳細：{this.entry.customer.customer_name}({this.entry.customer.customer_code})</PageHeader>
+						<PageHeader>配送料テンプレート登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
@@ -131,7 +110,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									{this.button}
+									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
@@ -140,7 +119,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<DeliveryChargeForm name="mainForm" entry={this.entry} />
+						<DeliveryChargeTemplateForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
@@ -148,7 +127,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									{this.button}
+									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>

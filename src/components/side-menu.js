@@ -130,13 +130,13 @@ export default class SideMenu extends React.Component {
 							glyph: 'list',
 							title: '配送業者一覧'
 						},{
-							to: 'DeliveryChargeRegistration',
+							to: 'DeliveryChargeTemplateRegistration',
 							glyph: 'edit',
-							title: '配送料登録'
+							title: '配送料テンプレート登録'
 						},{
-							to: 'DeliveryChargeList',
+							to: 'DeliveryChargeTemplateList',
 							glyph: 'list',
-							title: '配送料一覧'	
+							title: '配送料テンプレート一覧'
 						}]
 					)}
 

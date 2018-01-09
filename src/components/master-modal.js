@@ -251,6 +251,10 @@ export class ZoneModal extends React.Component {
 		this.props.close()
 	}
 
+	add(_obj) {
+		this.props.add(_obj)
+	}
+
 	edit(_obj) {
 		this.props.edit(_obj)
 	}
@@ -259,7 +263,8 @@ export class ZoneModal extends React.Component {
 
 		return (
 			<CommonModal isShow={this.state.isShow} title="地域帯編集" closeBtn={() => this.close()}
-				editBtn={(obj) => this.edit(obj)}
+				addBtn={!this.props.data ? (obj) => this.add(obj) : false}
+				editBtn={this.props.data ? (obj) => this.edit(obj) : false}
 				size="lg"
 				height="320px"
 			>
@@ -270,7 +275,6 @@ export class ZoneModal extends React.Component {
 						name="zone_name"
 						type="text"
 						value={this.zone.zone_name}
-						readonly
 					/>
 
 					<CommonTable

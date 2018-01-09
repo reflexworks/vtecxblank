@@ -1,12 +1,11 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Grid,
 	Row,
 	Col,
 	PageHeader,
-//	Navbar,
-//	Nav
 } from 'react-bootstrap'
 import type {
 	Props
@@ -33,8 +32,78 @@ export default class InternalWorkRegistration extends React.Component {
 			internal_work: {},
 			remarks: [],
 		}
+
+		this.master = {
+			shipment_service: []
+		}
 	}
 	
+	setShipmentService(entrys) {
+		let shipment_service = []
+		for (let entry of entrys) {
+			const name = entry.shipment_service.name
+			const type = entry.shipment_service.type
+			const service_name = entry.shipment_service.service_name
+			const sizes = entry.shipment_service.sizes
+			const setName = (_name, _type, _service_name, _size, _weight) => {
+				let array = []
+				if (_name) array.push(_name)
+				if (_service_name) {
+					array.push(_service_name)
+				} else {
+					array.push((_type === '1') ? '発払い' : 'メール便')
+				}
+				if (_size) array.push(_size)
+				if (_weight) array.push(_weight)
+				return array.join(' / ')
+			}
+			if (sizes && name !== 'ヤマト運輸') {
+				for (let size of sizes) {
+					shipment_service.push(setName(name, type, service_name, size.size, size.weight))
+				}
+			} else {
+				shipment_service.push(setName(name, type, service_name))
+			}
+		}
+		return shipment_service
+	}
+
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+
+		const init = () => {
+
+			this.setState({ isDisabled: true })
+
+			axios({
+				url: '/d/shipment_service?f',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+
+				this.setState({ isDisabled: false })
+
+				if (response.status === 204) {
+					alert('配送業者が1件も登録されていません。')
+				} else {
+
+					this.master.shipment_service = this.setShipmentService(response.data.feed.entry)
+
+					this.forceUpdate()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+
+		init()
+
+	}
 	/**
      * 登録完了後の処理
      */
@@ -53,7 +122,7 @@ export default class InternalWorkRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InternalWorkForm name="mainForm" entry={this.entry} />
+						<InternalWorkForm name="mainForm" entry={this.entry} master={this.master} />
 					</Col>
 				</Row>
 			</Grid>

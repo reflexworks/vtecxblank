@@ -6,6 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -104,6 +105,14 @@ export default class CustomerList extends React.Component {
 	 */
 	componentDidMount() {
 		this.getFeed(1)
+	}
+
+	/**
+	 * 配送料登録へ移動
+	 * @param {*} _data 
+	 */
+	moveDeliverycharge(_data) {
+		this.props.history.push('/DeliveryChargeRegistration?customer_code=' + _data.customer.customer_code)
 	}
 
 	render() {
@@ -229,6 +238,9 @@ export default class CustomerList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
+								field: 'btn1', title: '配送料', width: '30px',
+								label: <Glyphicon glyph="usd" />,onClick: (_data) => this.moveDeliverycharge(_data)
+							}, {
 								field: 'customer.customer_code',title: '顧客コード', width: '100px'
 							}, {
 								field: 'customer.customer_name', title: '顧客名', width: '150px'

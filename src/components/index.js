@@ -45,8 +45,14 @@ import InvoiceUpdate from './invoice-update'
 import ShipmentServiceList from './shipment-service-list'
 import ShipmentServiceRegistration from './shipment-service-registration'
 import ShipmentServiceUpdate from './shipment-service-update'
-import DeliveryChargeList from './deliverycharge-list'
+
+//配送料
 import DeliveryChargeRegistration from './deliverycharge-registration'
+
+//配送料テンプレート
+import DeliveryChargeTemplateRegistration from './deliverycharge-template-registration'
+import DeliveryChargeTemplateUpdate from './deliverycharge-template-update'
+import DeliveryChargeTemplateList from './deliverycharge-template-list'
 
 //請求先
 import BilltoList from './billto-list'
@@ -355,7 +361,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料登録
+	 * コンポーネント：配送業者登録
 	 */
 	ShipmentServiceRegistration = (props) => {
 		return (
@@ -366,7 +372,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料登録
+	 * コンポーネント：配送業者更新
 	 */
 	ShipmentServiceUpdate = (props) => {
 		return (
@@ -377,7 +383,7 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料一覧
+	 * コンポーネント：配送業者一覧
 	 */
 	ShipmentServiceList = (props) => {
 		return (
@@ -399,11 +405,33 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：配送料一覧
+	 * コンポーネント：配送料テンプレート登録
 	 */
-	DeliveryChargeList = (props) => {
+	DeliveryChargeTemplateRegistration = (props) => {
 		return (
-			<DeliveryChargeList 
+			<DeliveryChargeTemplateRegistration
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料テンプレート編集
+	 */
+	DeliveryChargeTemplateUpdate = (props) => {
+		return (
+			<DeliveryChargeTemplateUpdate
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：配送料テンプレート一覧
+	 */
+	DeliveryChargeTemplateList = (props) => {
+		return (
+			<DeliveryChargeTemplateList
 				history={props.history}
 			/>
 		)
@@ -679,7 +707,9 @@ class MainContainer extends React.Component {
 							<Route path="/ShipmentServiceUpdate" component={this.ShipmentServiceUpdate} />
 							<Route path="/ShipmentServiceList" component={this.ShipmentServiceList} />
 							<Route path="/DeliveryChargeRegistration" component={this.DeliveryChargeRegistration} />
-							<Route path="/DeliveryChargeList" component={this.DeliveryChargeList} />
+							<Route path="/DeliveryChargeTemplateRegistration" component={this.DeliveryChargeTemplateRegistration} />
+							<Route path="/DeliveryChargeTemplateUpdate" component={this.DeliveryChargeTemplateUpdate} />
+							<Route path="/DeliveryChargeTemplateList" component={this.DeliveryChargeTemplateList} />
 							<Route path="/BilltoRegistration" component={this.BilltoRegistration} />
 							<Route path="/BilltoList" component={this.BilltoList} />
 							<Route path="/BilltoUpdate" component={this.BilltoUpdate} />

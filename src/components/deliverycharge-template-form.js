@@ -1,6 +1,5 @@
 /* @flow */
 import React from 'react'
-import axios from 'axios'
 import {
 	PageHeader,
 	Form,
@@ -10,21 +9,16 @@ import type {
 } from 'demo3.types'
 
 import {
-	CommonTable,
-	CommonFilterBox,
-	CommonEntry
+	CommonTable, CommonInputText,
 } from './common'
 
-export default class DeliveryChargeForm extends React.Component {
+export default class DeliveryChargeTemplateForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
 		this.entry = this.props.entry || {}
-
-		this.master = {}
-		this.templateList = []
 
 		this.init()
 	}
@@ -172,104 +166,20 @@ export default class DeliveryChargeForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	/**
-	 * テンプレート変更処理
-	 */
-	changeTemplate(_data) {
-
-		const setTemplate = (_code) => {
-
-			this.setState({ isDisabled: true })
-
-			axios({
-				url: '/s/deliverycharge?template=' + _code,
-				method: 'get',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then((response) => {
-
-				this.setState({ isDisabled: false })
-
-				const delivery_charge = response.data.feed.entry[0].delivery_charge
-				const remarks = response.data.feed.entry[0].remarks
-				this.entry.delivery_charge = delivery_charge
-				this.entry.remarks = remarks
-				CommonEntry().init(this.entry)
-				this.setTable()
-
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
-		}
-		if (_data) {
-			if (confirm('入力したものが破棄されます。よろしいでしょうか？')) {
-				this.template = _data.value
-				const code = _data.data.id.split(',')[0].split('/deliverycharge_template/')[1]
-				setTemplate(code)
-			} else {
-				this.template = null
-				this.forceUpdate()
-			}
-		}
-	}
-
-	/**
-	 * テンプレート取得処理
-	 */
-	setTemplateData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/deliverycharge_template?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.templateList = response.data.feed.entry
-				this.templateList = this.master.templateList.map((obj) => {
-					return {
-						label: obj.title,
-						value: obj.title,
-						data: obj
-					}
-				})
-
-				this.forceUpdate()
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})   
-	}
-
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
-		this.setTemplateData()
-
-	}
-
 	render() {
 
 		return (
 			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
 
-				<CommonFilterBox
-					controlLabel="テンプレート選択"
-					name=""
-					value={this.template}
-					options={this.templateList}
-					onChange={(data) => this.changeTemplate(data)}
+				<CommonInputText
+					controlLabel="テンプレート名"
+					name="title"
+					type="text"
+					placeholder=""
+					value={this.entry.title}
+					entitiykey="title"
 				/>
-
+				
 				<PageHeader>発払い</PageHeader>
 				<div>
 					{this.shipmentServiceListType1}

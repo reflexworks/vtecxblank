@@ -16,7 +16,6 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	//CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
@@ -26,7 +25,7 @@ type State = {
 	url: string
 }
 
-export default class DeliveryList extends React.Component {
+export default class DeliveryChargeTemplateList extends React.Component {
 	state : State
 	maxDisplayRows: number
 	activePage: number
@@ -34,7 +33,7 @@ export default class DeliveryList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/delivery?f&l=' + this.maxDisplayRows
+		this.url = '/d/deliverycharge_template?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -69,7 +68,7 @@ export default class DeliveryList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ feed:'',isDisabled: false, isError: response })
+				this.setState({ isDisabled: false, isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -83,44 +82,11 @@ export default class DeliveryList extends React.Component {
 
 	/**
 	 * 更新画面に遷移する
-	 * @param {*} index 
 	 */
-	onSelect(index) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = this.state.feed.entry[index].customer.customer_code
-		this.props.history.push('/DeliveryUpdate?' + customer_code)
-	}
-
-	/**
-	 * リスト上で削除処理
-	 * @param {*} data 
-	 */
-	onDelete(/*data*/) {
-	/*
-		if (confirm('配送情報:' + data.deliverycharge. + '\n' +
-					'この情報を削除します。よろしいですか？')) {
-			const id = data.link[0].___href.slice(16)
-		
-			axios({
-				url: '/d/deliverycharge/' + id,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(this.activePage)
-			}).catch((error) => {
-				if (this.props.error) {
-					this.setState({ isDisabled: false })
-					this.props.error(error)
-				} else {
-					this.setState({ isDisabled: false, isError: error })
-				}
-			})
-			this.forceUpdate()
-		}
-	*/
+		const code = _data.id.split(',')[0].split('/deliverycharge_template/')[1]
+		this.props.history.push('/DeliveryChargeTemplateUpdate?code=' + code)
 	}
 
 	/**
@@ -151,22 +117,16 @@ export default class DeliveryList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>配送料一覧</PageHeader>
+						<PageHeader>配送料テンプレート一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
-								controlLabel="顧客コード"
-								name="customer.customer_code"
+								controlLabel="テンプレート名"
+								name="title"
 								type="text"
-								placeholder="顧客コード"
+								placeholder=""
 							/>
-							<CommonInputText
-								controlLabel="顧客名"
-								name="customer.customer_name"
-								type="text"
-								placeholder="株式会社 ◯◯◯"
-							/>
-							
+
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -184,12 +144,9 @@ export default class DeliveryList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
-							remove={(data) => this.onDelete(data)}
+							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'customer.customer_code',title: '顧客コード', width: '100px'
-							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'title',title: 'テンプレート名', width: '500px'
 							}]}
 						/>
 					</Col>  
