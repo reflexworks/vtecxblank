@@ -1689,10 +1689,11 @@ export class CommonTable extends React.Component {
 			}
 
 			const isError = (obj && obj.is_error === true) ? 'isError' : ''
+			const isTotal = (obj && obj.is_total === true) ? 'isTotal' : ''
 			const isSelected = this.selected[i] === i ? 'isSelected' : ''
 
 			return (
-				<tr key={i} className={isError + ' ' + isSelected}>{td(obj, i)}</tr>
+				<tr key={i} className={isError + ' ' + isTotal + ' ' + isSelected}>{td(obj, i)}</tr>
 			)
 		})
 

@@ -910,6 +910,11 @@ h3.title {
 .common-table .isError td:focus {
   background: rgb(255, 231, 231);
 }
+.common-table .isTotal td,
+.common-table .isTotal td:hover,
+.common-table .isTotal td:focus {
+  background: rgb(231, 255, 233);
+}
 .common-table .isSelected td{
   background: rgb(236, 250, 243);
 }
