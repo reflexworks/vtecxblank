@@ -185,7 +185,6 @@ export default class QuotationList extends React.Component {
 							/>
 						</CommonSearchConditionsFrom>
 						
-						<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
 					</Col>
 				</Row>
 				<Row>
@@ -212,7 +211,9 @@ export default class QuotationList extends React.Component {
 							}, {
 								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
 							}]}
-						/>
+						>
+							<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>	
+						</CommonTable>	
 					</Col>  
 				</Row>  
 		 </Grid>

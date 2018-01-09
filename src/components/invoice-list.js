@@ -237,8 +237,6 @@ export default class InvoiceList extends React.Component {
 
 						</CommonSearchConditionsFrom>
 						
-						<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
-						
 					</Col>
 				</Row>
 				<Row>
@@ -273,6 +271,7 @@ export default class InvoiceList extends React.Component {
 					
 							}]}
 						>
+							
 							<CommonMonthlySelect
 								name="quotation.quotation_date"
 								value={this.state.searchDate}
@@ -281,6 +280,7 @@ export default class InvoiceList extends React.Component {
 							/>
 
 							<Button bsSize="sm">顧客ごとに表示</Button>
+							<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>
 						</CommonTable>
 					</Col>  
 				</Row>  

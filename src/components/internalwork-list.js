@@ -165,7 +165,6 @@ export default class InternalWorkList extends React.Component {
 							
     					</CommonSearchConditionsFrom>
 						
-    					<Button className="total_amount"><Glyphicon glyph="download" /> CSVダウンロード</Button>
  					</Col>
     			</Row>
     			<Row>
@@ -189,7 +188,9 @@ export default class InternalWorkList extends React.Component {
     						}, {
     							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
     						}]}
-    					/>
+    					>
+    						<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>	
+    					</CommonTable>
     				</Col>
     			</Row>
     		</Grid>
