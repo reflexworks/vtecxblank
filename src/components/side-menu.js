@@ -22,8 +22,7 @@ export default class SideMenu extends React.Component {
 				master: false,				//担当者、倉庫、配送料
 				quotation: false,			//見積書、資材、入力補完
 				internal_work: false,		//庫内作業
-				invoice: false,				//請求書、請求データ
-			//	basic_condition: false,		//基本条件
+				invoice: false				//請求書、請求データ
 			}
 		}
 	}
@@ -129,18 +128,31 @@ export default class SideMenu extends React.Component {
 							to: 'ShipmentServiceList',
 							glyph: 'list',
 							title: '配送業者一覧'
-						},{
-							to: 'DeliveryChargeTemplateRegistration',
-							glyph: 'edit',
-							title: '配送料テンプレート登録'
-						},{
-							to: 'DeliveryChargeTemplateList',
-							glyph: 'list',
-							title: '配送料テンプレート一覧'
 						}]
 					)}
 
-					{ this.sideMenuListTitle('見積管理', 'quotation') }
+					{ this.sideMenuListTitle('テンプレート管理', 'template') }
+					{ this.sideMenuList('template',
+						[{
+							to: 'DeliveryChargeTemplateRegistration',
+							glyph: 'edit',
+							title: '配送料登録'
+						},{
+							to: 'DeliveryChargeTemplateList',
+							glyph: 'list',
+							title: '配送料一覧'
+						},{
+							to: 'PackingItemTemplateRegistration',
+							glyph: 'edit',
+							title: '資材登録'
+						},{
+							to: 'PackingItemTemplateList',
+							glyph: 'list',
+							title: '資材一覧'
+						}]
+					)}
+
+					{this.sideMenuListTitle('見積管理', 'quotation')}
 					{ this.sideMenuList('quotation',
 						[{
 							to: 'QuotationRegistration',
