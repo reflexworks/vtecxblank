@@ -211,7 +211,6 @@ export default class ShipmentServiceForm extends React.Component {
 	updateList(_key, _data) {
 		this.modal[_key].visible = false
 		this.entry[_key][this.modal[_key].index] = _data
-		console.log(this.entry.zone)
 		this.forceUpdate()
 	}
 
