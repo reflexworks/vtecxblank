@@ -179,6 +179,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					value={this.entry.title}
 					entitiykey="title"
 				/>
+				<hr />
 				
 				<PageHeader>発払い</PageHeader>
 				<div>

@@ -146,6 +146,7 @@ export default class ShipmentServiceForm extends React.Component {
      */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.entry.shipment_service.sizes = this.entry.shipment_service.sizes || []
 		this.setShipmentServiceTypeInfo(this.entry.shipment_service.type)
 		this.forceUpdate()
 	}

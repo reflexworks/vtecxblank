@@ -31,6 +31,11 @@ import PackingItemList from './packingitem-list'
 import PackingItemRegistration from './packingitem-registration'
 import PackingItemUpdate from './packingitem-update'
 
+//資材
+import PackingItemTemplateList from './packingitem-template-list'
+import PackingItemTemplateRegistration from './packingitem-template-registration'
+import PackingItemTemplateUpdate from './packingitem-template-update'
+
 //庫内作業
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
@@ -267,6 +272,40 @@ class MainContainer extends React.Component {
 	PackingItemUpdate = (props) => {
 		return (
 			<PackingItemUpdate 
+				history={props.history}
+			/>
+		)
+	}
+
+
+	/**
+	 * コンポーネント：資材テンプレート一覧
+	 */
+	PackingItemTemplateList = (props) => {
+		return (
+			<PackingItemTemplateList 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材テンプレート登録
+	 */
+	PackingItemTemplateRegistration = (props) => {
+		return (
+			<PackingItemTemplateRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：資材テンプレート登録
+	 */
+	PackingItemTemplateUpdate = (props) => {
+		return (
+			<PackingItemTemplateUpdate 
 				history={props.history}
 			/>
 		)
@@ -695,6 +734,9 @@ class MainContainer extends React.Component {
 							<Route path="/PackingItemRegistration" component={this.PackingItemRegistration} />
 							<Route path="/PackingItemList" component={this.PackingItemList} />
 							<Route path="/PackingItemUpdate" component={this.PackingItemUpdate} />
+							<Route path="/PackingItemTemplateRegistration" component={this.PackingItemTemplateRegistration} />
+							<Route path="/PackingItemTemplateList" component={this.PackingItemTemplateList} />
+							<Route path="/PackingItemTemplateUpdate" component={this.PackingItemTemplateUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
