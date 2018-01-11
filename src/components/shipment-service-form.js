@@ -325,7 +325,9 @@ export default class ShipmentServiceForm extends React.Component {
 								header={[{
 									field: 'zone_name', title: '地域帯名称', width: '100px'
 								}, {
-									field: 'pref_codes', title: '所属する都道府県', width: '900px'
+									field: 'invoice_zones', title: '請求地域帯', width: '100px'
+								}, {
+									field: 'pref_codes', title: '所属する都道府県', width: '800px'
 								}]}
 								add={()=>this.showModal('zone')}
 								edit={(data, i) =>this.showModal('zone', data, i)}

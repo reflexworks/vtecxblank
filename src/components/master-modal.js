@@ -207,6 +207,7 @@ export class ZoneModal extends React.Component {
 		}
 		this.zone = this.props.data || {}
 		this.zone.pref_codes = this.zone.pref_codes || []
+		this.zone.invoice_zones = this.zone.invoice_zones || []
 
 	}
 
@@ -217,6 +218,7 @@ export class ZoneModal extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.zone = newProps.data || {}
 		this.zone.pref_codes = this.zone.pref_codes || []
+		this.zone.invoice_zones = this.zone.invoice_zones || []
 		this.setState({
 			isShow: newProps.isShow,
 			type: newProps.type
@@ -230,20 +232,20 @@ export class ZoneModal extends React.Component {
 
 	}
 
-	addList(_data) {
-		this.zone.pref_codes.push(_data)
+	addList(_key, _data) {
+		this.zone[_key].push(_data)
 		this.forceUpdate()
 	}
-	removeList(_index) {
+	removeList(_key, _index) {
 		let array = []
-		for (let i = 0, ii = this.zone.pref_codes.length; i < ii; ++i) {
-			if (i !== _index) array.push(this.zone.pref_codes[i])
+		for (let i = 0, ii = this.zone[_key].length; i < ii; ++i) {
+			if (i !== _index) array.push(this.zone[_key][i])
 		}
-		this.zone.pref_codes = array
+		this.zone[_key] = array
 		this.forceUpdate()
 	}
-	change(_data, _rowindex) {
-		this.zone.pref_codes[_rowindex].pref_code = _data
+	change(_parent, _key, _data, _rowindex) {
+		this.zone[_parent][_rowindex][_key] = _data
 		this.forceUpdate()
 	}
 
@@ -278,17 +280,32 @@ export class ZoneModal extends React.Component {
 					/>
 
 					<CommonTable
+						controlLabel="請求地域帯"
+						name="invoice_zones"
+						data={this.zone.invoice_zones}
+						header={[{
+							field: 'invoice_zone', title: '名称', 
+							input: {
+								onChange: (data, rowindex)=>{this.change('invoice_zones','invoice_zone', data, rowindex)}
+							}
+						}]}
+						add={() => this.addList('invoice_zones', { invoice_zone: ''})}
+						remove={(data, index) => this.removeList('invoice_zones', index)}
+						noneScroll
+					/>
+
+					<CommonTable
 						controlLabel="所属する都道府県"
 						name="pref_codes"
 						data={this.zone.pref_codes}
 						header={[{
 							field: 'pref_code', title: '内容', 
 							input: {
-								onChange: (data, rowindex)=>{this.change(data, rowindex)}
+								onChange: (data, rowindex)=>{this.change('pref_codes', 'pref_code', data, rowindex)}
 							}
 						}]}
-						add={() => this.addList({ pref_code: ''})}
-						remove={(data, index) => this.removeList(index)}
+						add={() => this.addList('pref_codes', { pref_code: ''})}
+						remove={(data, index) => this.removeList('pref_codes',index)}
 						noneScroll
 					/>
 
