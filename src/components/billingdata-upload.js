@@ -134,7 +134,7 @@ export default class BillingDataUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td rowspan="2">ヤマト運輸</td>
+									<td rowspan="3">ヤマト運輸</td>
 									<td>発払/コレクト</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
@@ -153,7 +153,18 @@ export default class BillingDataUpload extends React.Component {
 											</FormGroup>
 										</Form>
 									</td>
-								</tr>	
+								</tr>
+								<tr>
+									<td>DM便/ネコポス</td>
+									<td>
+										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+											<FormGroup>
+												<FormControl type="file" name="csv" />
+											</FormGroup>
+										</Form>
+									</td>
+								</tr>
+								
 								<tr>
 									<td>日本郵政</td>
 									<td>-</td>
