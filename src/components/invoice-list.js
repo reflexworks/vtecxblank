@@ -279,8 +279,13 @@ export default class InvoiceList extends React.Component {
 								table
 							/>
 
-							<Button bsSize="sm">顧客ごとに表示</Button>
-							<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>
+
+							<Button bsSize="sm" style={{ float: 'left', width: '110px', 'margin': '0px 10px' }}>
+								顧客ごとに表示
+							</Button>
+							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 10px'}}>
+								<Glyphicon glyph="download" />CSVダウンロード
+							</Button>
 						</CommonTable>
 					</Col>  
 				</Row>  
