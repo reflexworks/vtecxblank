@@ -212,8 +212,10 @@ export default class QuotationList extends React.Component {
 								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
 							}]}
 						>
-							<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>	
-						</CommonTable>	
+							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 10px'}}>
+								<Glyphicon glyph="download" />CSVダウンロード
+							</Button>
+						</CommonTable>
 					</Col>  
 				</Row>  
 		 </Grid>

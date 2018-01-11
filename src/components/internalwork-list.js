@@ -189,7 +189,9 @@ export default class InternalWorkList extends React.Component {
     							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
     						}]}
     					>
-    						<Button bsSize="sm"><Glyphicon glyph="download" />CSVダウンロード</Button>	
+    						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 10px'}}>
+    							<Glyphicon glyph="download" />CSVダウンロード
+    						</Button>
     					</CommonTable>
     				</Col>
     			</Row>
