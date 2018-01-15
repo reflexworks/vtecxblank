@@ -275,15 +275,14 @@ export default class InvoiceList extends React.Component {
 							<CommonMonthlySelect
 								name="quotation.quotation_date"
 								value={this.state.searchDate}
-								style={{float: 'left', width: '150px', 'margin': '0px 10px'}}
+								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
 								table
 							/>
 
-
-							<Button bsSize="sm" style={{ float: 'left', width: '110px', 'margin': '0px 10px' }}>
+							<Button bsSize="sm" style={{ float: 'left', width: '110px', 'margin': '0px 0px' }}>
 								顧客ごとに表示
 							</Button>
-							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 10px'}}>
+							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
 								<Glyphicon glyph="download" />CSVダウンロード
 							</Button>
 						</CommonTable>
