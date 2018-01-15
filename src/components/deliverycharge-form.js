@@ -66,13 +66,34 @@ export default class DeliveryChargeForm extends React.Component {
 					field: 'weight', title: '重量', width: '80px'
 				}]
 			}
+			const setOldNew = (_old, _new, _isCreate) => {
+				let array = []
+				const mes = _isCreate ? '[追加]' : '[変更]'
+				if (_old) array.push(<div className="old">[削除] <span>{_old}</span></div>)
+				if (_new) array.push(<div className="new">{mes} {_new}</div>)
+				return (
+					<div>{array}</div>
+				)
+			}
 			const setZone = (_data, _entry, _tableIndex, _code) => {
 				let _header = initHeader()
 				for (let i = 0, ii = _entry.length; i < ii; ++i) {
 					const key = _entry[i].zone_code
 					_data[key] = _entry[i].price
+
+					let zone_name = _entry[i].zone_name
+					if (_entry[i].zone_name_old) {
+						zone_name = setOldNew(_entry[i].zone_name_old, zone_name)
+					}
+					if (_entry[i].is_zone === '1') {
+						zone_name = setOldNew(zone_name)
+					}
+					if (_entry[i].is_zone === '2') {
+						zone_name = setOldNew(null, zone_name, true)
+					}
+
 					_header.push({
-						field: key, title: _entry[i].zone_name, width: '60px',
+						field: key, title: zone_name, width: '60px',
 						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.charge_by_zone['+ i +'].price',
 						input: {
 							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(_code, key, data, rowindex)}
@@ -84,11 +105,34 @@ export default class DeliveryChargeForm extends React.Component {
 			}
 			let tableIndex = 0
 			const newData = (_delivery_charge) => {
+
+				const is_shipment = _delivery_charge.is_shipment
 				const s_code = _delivery_charge.shipment_service_code
 				const s_type = _delivery_charge.shipment_service_type
 				let s_name = _delivery_charge.shipment_service_name
 				if (_delivery_charge.service_name) {
 					s_name = s_name + ' / ' + _delivery_charge.service_name
+				}
+
+				if (_delivery_charge.shipment_service_name_old) {
+					s_name = setOldNew(_delivery_charge.shipment_service_name_old, s_name)
+				}
+				if (_delivery_charge.service_name_old || _delivery_charge.service_name_old === '') {
+					let ssn = _delivery_charge.shipment_service_name
+					if (_delivery_charge.shipment_service_name_old) {
+						ssn = _delivery_charge.shipment_service_name_old
+					}
+					let sn
+					if (_delivery_charge.service_name_old === '') {
+						sn = ssn
+					} else {
+						sn = ssn + ' / ' +_delivery_charge.service_name_old
+					}
+					s_name = setOldNew(sn, s_name)
+				}
+
+				if (is_shipment === '2') {
+					s_name = setOldNew(_delivery_charge.shipment_service_name)
 				}
 
 				this.shipment_service[s_code] = []
@@ -98,6 +142,14 @@ export default class DeliveryChargeForm extends React.Component {
 					new_data.name = s_name
 					new_data.size = dd.size || '-'
 					new_data.weight = dd.weight || '-'
+					if (dd.is_sizes === '1') {
+						new_data.size = setOldNew(new_data.size)
+						new_data.weight = setOldNew(new_data.weight)
+					}
+					if (dd.is_sizes === '2') {
+						new_data.size = setOldNew(null, new_data.size, true)
+						new_data.weight = setOldNew(null, new_data.weight, true)
+					}
 					new_data.price = dd.price || ''
 					if (dd.charge_by_zone) {
 						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)

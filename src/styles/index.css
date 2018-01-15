@@ -933,6 +933,21 @@ h3.title {
   padding-left: 5px;
   padding-right: 5px;
 }
+.common-table th .old{
+  color: rgb(231, 141, 141);
+}
+.common-table td .old{
+  color: red;
+}
+.common-table .old span{
+  text-decoration: line-through;
+}
+.common-table th .new{
+  color: rgb(80, 211, 158);
+}
+.common-table td .new{
+  color: rgb(5, 184, 115);
+}
 .clear{
   clear: both;
 }

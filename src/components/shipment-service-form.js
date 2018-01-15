@@ -37,7 +37,9 @@ export default class ShipmentServiceForm extends React.Component {
 			})
 		this.modal = {
 			sizes: {},
-			zone: {}
+			zone: {
+				size: 0
+			}
 		}
 		
 		this.sizeListType1 = [{
@@ -176,6 +178,9 @@ export default class ShipmentServiceForm extends React.Component {
 		this.modal[_key].visible = true
 		this.modal[_key].data = _data
 		this.modal[_key].index = _index
+		if (_key === 'zone') {
+			this.modal[_key].size = _data ? parseInt(_data.zone_code.split('zone_')[1]) : this.entry[_key].length
+		}
 		this.forceUpdate()
 	}
 
@@ -235,6 +240,7 @@ export default class ShipmentServiceForm extends React.Component {
 					add={(obj) => this.addList('zone', obj)}
 					edit={(obj) => this.updateList('zone', obj)}
 					data={this.modal.zone.data}
+					index={this.modal.zone.size}
 				/>
 
 				<PanelGroup defaultActiveKey="1">

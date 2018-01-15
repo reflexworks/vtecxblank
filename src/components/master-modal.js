@@ -208,7 +208,8 @@ export class ZoneModal extends React.Component {
 		this.zone = this.props.data || {}
 		this.zone.pref_codes = this.zone.pref_codes || []
 		this.zone.invoice_zones = this.zone.invoice_zones || []
-
+		this.zoneIndex = 0
+		this.setZoneCode()
 	}
 
 	/**
@@ -219,17 +220,16 @@ export class ZoneModal extends React.Component {
 		this.zone = newProps.data || {}
 		this.zone.pref_codes = this.zone.pref_codes || []
 		this.zone.invoice_zones = this.zone.invoice_zones || []
+		this.zoneIndex = newProps.index
+		this.setZoneCode()
 		this.setState({
 			isShow: newProps.isShow,
 			type: newProps.type
 		})
 	}
 
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
+	setZoneCode() {
+		this.zone_code = 'zone_' + this.zoneIndex
 	}
 
 	addList(_key, _data) {
@@ -278,6 +278,10 @@ export class ZoneModal extends React.Component {
 						type="text"
 						value={this.zone.zone_name}
 					/>
+
+					<div className="hide">
+						<input type="text" name="zone_code" value={this.zone_code} />
+					</div>
 
 					<CommonTable
 						controlLabel="請求地域帯"
