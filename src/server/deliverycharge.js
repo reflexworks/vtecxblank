@@ -162,7 +162,7 @@ if (isShipment) {
 						}
 						array.push(iz)
 
-						_cashIz[i].invoice_zone = false
+						_cashIz[i].invoice_zone = null
 
 					}
 				}
@@ -170,7 +170,7 @@ if (isShipment) {
 				// マスタに新規追加された請求地域帯を最後尾に追加する
 				if (_cashIz) {
 					_cashIz.map((__value) => {
-						if (__value !== false) {
+						if (__value) {
 							array.push({
 								invoice_zone: __value.invoice_zone
 							})
@@ -197,9 +197,13 @@ if (isShipment) {
 						if (cz.zone_name !== cashCz.zone_name) {
 							cz.zone_name_old = cz.zone_name
 							cz.zone_name = cashCz.zone_name
+							cz.is_zone = '0'
+						} else {
+							cz.is_zone = null
 						}
 						cz.invoice_zones = margeInvoiceZones(cz.invoice_zones, cashCz.invoice_zones)
 						_cashData.zones[cz.zone_code].invoice_zones = cz.invoice_zones
+						_cashData.zones[cz.zone_code].is_zone = true
 					}
 
 					_init_charge_by_zone.push({
@@ -210,8 +214,6 @@ if (isShipment) {
 					})
 
 					array.push(cz)
-
-					_cashData.zones[cz.zone_code] = false
 
 				}
 
@@ -232,7 +234,7 @@ if (isShipment) {
 					// マスタに新規追加された地域帯を最後尾に追加する
 					Object.keys(_cashData.zones).forEach((__key) => {
 						const cz = _cashData.zones[__key]
-						if (cz !== false) {
+						if (!cz.is_zone) {
 							dcd.charge_by_zone.push({
 								is_zone: '2',
 								zone_code: cz.zone_code,
@@ -275,21 +277,31 @@ if (isShipment) {
 			let entry = _entry.delivery_charge[i]
 			const cashData = _cashSS[entry.shipment_service_code]
 
-			// 配送業者名が変更されている場合
-			const new_shipment_service_name = cashData.shipment_service.name
-			if (entry.shipment_service_name !== new_shipment_service_name) {
-				entry.shipment_service_name_old = entry.shipment_service_name
-				entry.shipment_service_name = new_shipment_service_name
-			}
+			if (cashData) {
+				// 配送業者名が変更されている場合
+				const new_shipment_service_name = cashData.shipment_service.name
+				if (entry.shipment_service_name !== new_shipment_service_name) {
+					entry.shipment_service_name_old = entry.shipment_service_name
+					entry.shipment_service_name = new_shipment_service_name
+				} else {
+					entry.shipment_service_name_old = null
+				}
 
-			// 配送サービス名が変更されている場合
-			const new_service_name = cashData.shipment_service.service_name
-			if (entry.service_name !== new_service_name) {
-				entry.service_name_old = entry.service_name
-				entry.service_name = new_service_name
-			}
+				// 配送サービス名が変更されている場合
+				const new_service_name = cashData.shipment_service.service_name
+				if (entry.service_name !== new_service_name) {
+					entry.service_name_old = entry.service_name
+					entry.service_name = new_service_name
+				} else {
+					entry.service_name_old = null
+				}
 
-			entry.delivery_charge_details = margeDeliveryChargeDetails(entry.delivery_charge_details, cashData)
+				entry.is_shipment_service = null
+				entry.delivery_charge_details = margeDeliveryChargeDetails(entry.delivery_charge_details, cashData)
+
+			} else {
+				entry.is_shipment_service = '1'
+			}
 
 			obj.feed.entry[0].delivery_charge.push(entry)
 
@@ -301,7 +313,7 @@ if (isShipment) {
 			const data = _cashSS[__key]
 			if (_cashSS[__key] !== false) {
 				const delivery_charge = setShipmentService(data)
-				delivery_charge.is_shipment = '2'
+				delivery_charge.is_shipment_service = '2'
 				obj.feed.entry[0].delivery_charge.push(delivery_charge)
 			}
 		})

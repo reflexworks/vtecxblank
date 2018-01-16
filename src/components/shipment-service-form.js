@@ -41,6 +41,8 @@ export default class ShipmentServiceForm extends React.Component {
 				size: 0
 			}
 		}
+
+		this.maxIndex = 0
 		
 		this.sizeListType1 = [{
 			label: '〜80cm',
@@ -150,6 +152,7 @@ export default class ShipmentServiceForm extends React.Component {
 		this.entry = newProps.entry
 		this.entry.shipment_service.sizes = this.entry.shipment_service.sizes || []
 		this.setShipmentServiceTypeInfo(this.entry.shipment_service.type)
+		this.maxIndex = this.entry.zone.length
 		this.forceUpdate()
 	}
 
@@ -179,7 +182,7 @@ export default class ShipmentServiceForm extends React.Component {
 		this.modal[_key].data = _data
 		this.modal[_key].index = _index
 		if (_key === 'zone') {
-			this.modal[_key].size = _data ? parseInt(_data.zone_code.split('zone_')[1]) : this.entry[_key].length
+			this.modal[_key].size = _data ? parseInt(_data.zone_code.split('zone_')[1]) : this.maxIndex
 		}
 		this.forceUpdate()
 	}
@@ -194,6 +197,7 @@ export default class ShipmentServiceForm extends React.Component {
 		if (_key === 'sizes') {
 			this.entry.shipment_service[_key].push(_data)
 		} else {
+			this.maxIndex++
 			this.entry[_key].push(_data)
 		}
 		this.forceUpdate()

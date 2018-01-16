@@ -948,6 +948,10 @@ h3.title {
 .common-table td .new{
   color: rgb(5, 184, 115);
 }
+.common-table td .disabled{
+  color: #ccc;
+  text-decoration: line-through;
+}
 .clear{
   clear: both;
 }

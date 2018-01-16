@@ -1293,18 +1293,26 @@ export class CommonInputText extends React.Component {
 
 	render() {
 
-		const TextNode = (
-			<FormControl
-				name={this.state.name}
-				type={this.state.type}
-				placeholder={this.state.placeholder}
-				value={this.state.value}
-				onChange={(e) => this.changed(e)}
-				data-validate={this.props.validate}
-				data-required={this.props.required}
-				bsSize="small"
-			/>
-		)
+		const TextNode = () => {
+			if (Object.prototype.toString.call(this.state.value) === '[object Object]') {
+				if (this.state.value['$$typeof']) {
+					return this.state.value
+				}
+			} else {
+				return (
+					<FormControl
+						name={this.state.name}
+						type={this.state.type}
+						placeholder={this.state.placeholder}
+						value={this.state.value}
+						onChange={(e) => this.changed(e)}
+						data-validate={this.props.validate}
+						data-required={this.props.required}
+						bsSize="small"
+					/>
+				)
+			}
+		}
 		const InputTextNode = () => {
 			return (
 				<div>
@@ -1321,7 +1329,7 @@ export class CommonInputText extends React.Component {
 					}
 					{(!this.state.readonly || this.state.readonly === 'false') && 
 						<div>
-							{TextNode}
+							{TextNode()}
 							{this.props.customIcon && 
 								<FormControl.Feedback>
 									<Glyphicon glyph={this.props.customIcon} />
@@ -1654,7 +1662,6 @@ export class CommonTable extends React.Component {
 					}
 					return flg
 				}
-
 				const setCel = (__obj, _key) => {
 
 					Object.keys(__obj).forEach(function (__key) {

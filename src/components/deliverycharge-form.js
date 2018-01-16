@@ -75,11 +75,16 @@ export default class DeliveryChargeForm extends React.Component {
 					<div>{array}</div>
 				)
 			}
-			const setZone = (_data, _entry, _tableIndex, _code) => {
+			const setDisabled = (_value) => {
+				return <div className="disabled">{_value}</div>
+			}
+			const setZone = (_data, _entry, _tableIndex, _code, _is_disable) => {
 				let _header = initHeader()
+				const is_disable = _is_disable ? true : false
 				for (let i = 0, ii = _entry.length; i < ii; ++i) {
+
+					let is_zone_disable = is_disable ? true : false
 					const key = _entry[i].zone_code
-					_data[key] = _entry[i].price
 
 					let zone_name = _entry[i].zone_name
 					if (_entry[i].zone_name_old) {
@@ -87,9 +92,18 @@ export default class DeliveryChargeForm extends React.Component {
 					}
 					if (_entry[i].is_zone === '1') {
 						zone_name = setOldNew(zone_name)
+						is_zone_disable = true
+					} else {
+						is_zone_disable = is_disable ? true : false
 					}
 					if (_entry[i].is_zone === '2') {
 						zone_name = setOldNew(null, zone_name, true)
+					}
+
+					if (is_zone_disable === true) {
+						_data[key] = setDisabled(_entry[i].price)
+					} else {
+						_data[key] = _entry[i].price
 					}
 
 					_header.push({
@@ -106,37 +120,47 @@ export default class DeliveryChargeForm extends React.Component {
 			let tableIndex = 0
 			const newData = (_delivery_charge) => {
 
-				const is_shipment = _delivery_charge.is_shipment
+				const is_shipment_service = _delivery_charge.is_shipment_service
 				const s_code = _delivery_charge.shipment_service_code
 				const s_type = _delivery_charge.shipment_service_type
+
 				let s_name = _delivery_charge.shipment_service_name
+				let is_shipment_disable = is_shipment_service === '1' ? true : false
+
 				if (_delivery_charge.service_name) {
 					s_name = s_name + ' / ' + _delivery_charge.service_name
 				}
 
-				if (_delivery_charge.shipment_service_name_old) {
-					s_name = setOldNew(_delivery_charge.shipment_service_name_old, s_name)
-				}
-				if (_delivery_charge.service_name_old || _delivery_charge.service_name_old === '') {
-					let ssn = _delivery_charge.shipment_service_name
+				if (is_shipment_disable) {
+					// 配送業者がマスタから削除されている場合
+					s_name = setOldNew(s_name)
+				} else if (is_shipment_service === '2') {
+					// 配送業者がマスタから新規追加されている場合
+					s_name = setOldNew(null, s_name, true)
+				} else {
+					// 配送業者のマスタ情報が変更されている場合
 					if (_delivery_charge.shipment_service_name_old) {
-						ssn = _delivery_charge.shipment_service_name_old
+						s_name = setOldNew(_delivery_charge.shipment_service_name_old, s_name)
 					}
-					let sn
-					if (_delivery_charge.service_name_old === '') {
-						sn = ssn
-					} else {
-						sn = ssn + ' / ' +_delivery_charge.service_name_old
+					if (_delivery_charge.service_name_old || _delivery_charge.service_name_old === '') {
+						let ssn = _delivery_charge.shipment_service_name
+						if (_delivery_charge.shipment_service_name_old) {
+							ssn = _delivery_charge.shipment_service_name_old
+						}
+						let sn
+						if (_delivery_charge.service_name_old === '') {
+							sn = ssn
+						} else {
+							sn = ssn + ' / ' + _delivery_charge.service_name_old
+						}
+						s_name = setOldNew(sn, s_name)
 					}
-					s_name = setOldNew(sn, s_name)
-				}
-
-				if (is_shipment === '2') {
-					s_name = setOldNew(_delivery_charge.shipment_service_name)
 				}
 
 				this.shipment_service[s_code] = []
 				for (let dd of _delivery_charge.delivery_charge_details) {
+
+					let is_size_disable = is_shipment_disable ? true : false
 
 					let new_data = {}
 					new_data.name = s_name
@@ -145,15 +169,24 @@ export default class DeliveryChargeForm extends React.Component {
 					if (dd.is_sizes === '1') {
 						new_data.size = setOldNew(new_data.size)
 						new_data.weight = setOldNew(new_data.weight)
+						is_size_disable = true
+					} else {
+						is_size_disable = is_shipment_disable ? true : false
 					}
 					if (dd.is_sizes === '2') {
 						new_data.size = setOldNew(null, new_data.size, true)
 						new_data.weight = setOldNew(null, new_data.weight, true)
 					}
-					new_data.price = dd.price || ''
-					if (dd.charge_by_zone) {
-						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)
+					if (is_size_disable) {
+						new_data.price = setDisabled(dd.price)
+					} else {
+						new_data.price = dd.price || ''
 					}
+					if (dd.charge_by_zone) {
+						const is_zone_disable = is_shipment_disable || is_size_disable ? true : false
+						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code, is_zone_disable)
+					}
+
 					this.shipment_service[s_code].push(new_data)
 					s_name = ''
 
