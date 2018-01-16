@@ -128,20 +128,27 @@ invoice
  issue_status
  deposit_status
 delivery_charge{}
+ is_shipment_service
  shipment_service_name
+ shipment_service_name_old
  shipment_service_code
  shipment_service_type
  service_name
+ service_name_old
  delivery_charge_details{}
   size
   weight
+  is_sizes
   price
-  invoice_zones{}
-   invoice_zone
   charge_by_zone{}
    zone_code
    zone_name
+   zone_name_old
+   is_zone
    price
+   invoice_zones{}
+    invoice_zone
+    invoice_zone_old
 internal_work
  internal_work_code 
  staff_name
@@ -157,6 +164,7 @@ shipment_service
   size  
   weight  
 zone{}
+ zone_code
  zone_name
  pref_codes{}
   pref_code
