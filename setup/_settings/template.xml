@@ -18,7 +18,8 @@ billto
 customer
  customer_code
  shipper{}
-  delivery_company
+  shipment_service_name
+  shipment_service_code
   shipper_info{}
    shipper_code
    shipment_class
@@ -123,38 +124,42 @@ invoice
  invoice_code
  quotation_code
  internal_work_code
+ invoice_yearmonth
  total_amount
  consumption_tax
  issue_status
  deposit_status
 delivery_charge{}
- is_shipment_service
  shipment_service_name
- shipment_service_name_old
  shipment_service_code
  shipment_service_type
- service_name
- service_name_old
+ shipment_service_service_name
  delivery_charge_details{}
   size
   weight
-  is_sizes
   price
   charge_by_zone{}
    zone_code
    zone_name
-   zone_name_old
-   is_zone
    price
-   invoice_zones{}
-    invoice_zone
-    invoice_zone_old
 internal_work
- internal_work_code 
  staff_name
- working_date
+ working_yearmonth
+ working_day
  approval_status
- work_kind_class
+ work_type
+ quantity
+ item_details_name
+ packing_item_code
+ packing_item_name
+ shipment_service_code
+ shipment_service_name
+ shipment_service_type
+ shipment_service_service_name
+ shipment_service_size
+ shipment_service_weight
+ monthly_name
+ monthly_content
 shipment_service
  code 
  name  
@@ -164,7 +169,6 @@ shipment_service
   size  
   weight  
 zone{}
- zone_code
  zone_name
  pref_codes{}
   pref_code
@@ -177,14 +181,6 @@ delivery_charge_amount
  size
  quantity
  delivery_charge
-work_record
- item_name
- unit_name
- unit
- quantity
-used_packing_item
- item_code
- quantity 
 type_ahead
  type
  value
@@ -207,7 +203,18 @@ billing_summary
   zone_name
   quantity
   delivery_charge
-  subtotal
+  subtotal  
+billing_data
+ shipment_service_name
+ shipment_service_type
+ service_name
+ shipment_class
+ content{}
+  shipping_date
+  working_quantity
+  billing_quantity
+  billing_amount
+
 </content>
 <rights>
 </rights>
