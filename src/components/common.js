@@ -1293,18 +1293,26 @@ export class CommonInputText extends React.Component {
 
 	render() {
 
-		const TextNode = (
-			<FormControl
-				name={this.state.name}
-				type={this.state.type}
-				placeholder={this.state.placeholder}
-				value={this.state.value}
-				onChange={(e) => this.changed(e)}
-				data-validate={this.props.validate}
-				data-required={this.props.required}
-				bsSize="small"
-			/>
-		)
+		const TextNode = () => {
+			if (Object.prototype.toString.call(this.state.value) === '[object Object]') {
+				if (this.state.value['$$typeof']) {
+					return this.state.value
+				}
+			} else {
+				return (
+					<FormControl
+						name={this.state.name}
+						type={this.state.type}
+						placeholder={this.state.placeholder}
+						value={this.state.value}
+						onChange={(e) => this.changed(e)}
+						data-validate={this.props.validate}
+						data-required={this.props.required}
+						bsSize="small"
+					/>
+				)
+			}
+		}
 		const InputTextNode = () => {
 			return (
 				<div>
@@ -1321,7 +1329,7 @@ export class CommonInputText extends React.Component {
 					}
 					{(!this.state.readonly || this.state.readonly === 'false') && 
 						<div>
-							{TextNode}
+							{TextNode()}
 							{this.props.customIcon && 
 								<FormControl.Feedback>
 									<Glyphicon glyph={this.props.customIcon} />
@@ -1523,7 +1531,7 @@ export class CommonTable extends React.Component {
 			const style = _cashData.style ? _cashData.style : null
 			const filter = _cashData.filter
 			const input = _cashData.input
-			const getConvertValue = (_value) =>{
+			const getConvertValue = (_value) => {
 				if (convertData) {
 					return convertData[_value] || _value
 				} else {
@@ -1639,11 +1647,26 @@ export class CommonTable extends React.Component {
 					tdCount++
 				}
 
+				/**
+				 * ReactオブジェクトはObject型と判断しない
+				 * @param {*} _value 
+				 */
+				const checkObj = (_value) => {
+					let flg = false
+					if (Object.prototype.toString.call(_value) === '[object Object]') {
+						if (_value['$$typeof']) {
+							flg = false
+						} else {
+							flg = true
+						}
+					}
+					return flg
+				}
 				const setCel = (__obj, _key) => {
 
 					Object.keys(__obj).forEach(function (__key) {
 
-						if (Object.prototype.toString.call(__obj[__key]) === '[object Object]') {
+						if (checkObj(__obj[__key]) === true) {
 
 							setCel(__obj[__key], _key + __key + '.')
 
