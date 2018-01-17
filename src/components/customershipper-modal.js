@@ -44,16 +44,10 @@ export class CustomerShipperModal extends React.Component {
 		
 		if(this.shipper.delivery_company === 'エコ配JP' || this.shipper.delivery_company === 'EC'){
 			this.shipper.delivery_company = 'EC'
-		}else if (this.shipper.delivery_company === 'ヤマト' || this.shipper.delivery_company === 'YM') {
+		}else if (this.shipper.delivery_company === 'ヤマト運輸' || this.shipper.delivery_company === 'YM') {
 			this.shipper.delivery_company = 'YM'
-		} else if (this.shipper.delivery_company === '佐川急便' || this.shipper.delivery_company === 'SG') {
-			this.shipper.delivery_company = 'SG'
-		} else if (this.shipper.delivery_company === '西濃' || this.shipper.delivery_company === 'SN') {
-			this.shipper.delivery_company = 'SN'
 		} else if (this.shipper.delivery_company === '日本郵政' || this.shipper.delivery_company === 'PO') {
 			this.shipper.delivery_company = 'PO'
-		} else if (this.shipper.delivery_company === '自社配送' || this.shipper.delivery_company === 'JI') {
-			this.shipper.delivery_company = 'JI'
 		} else {
 			this.shipper.delivery_company = ''
 		}
@@ -79,11 +73,6 @@ export class CustomerShipperModal extends React.Component {
 
 	getTitle() {
 		return this.state.type === 'add' ? '荷主コード追加' : '荷主コード編集'
-	}
-
-	changeDeliveryCompany(_data) {
-		this.shipper.delivery_company = _data
-		this.forceUpdate()
 	}
 
 	close() {
@@ -112,13 +101,18 @@ export class CustomerShipperModal extends React.Component {
 		this.forceUpdate()
 	}
 
-	shipperCodeChange(_data, _rowindex) {
+	changeDeliveryCompany(_data) {
+		this.shipper.delivery_company = _data ? _data.value : ''
+		this.forceUpdate()
+	}
+
+	changeShipperCode(_data, _rowindex) {
 		this.shipper.shipper_info[_rowindex].shipper_code = _data
 		this.forceUpdate()
 	}
 
-	shipmentClassChange(_data, _rowindex) {
-		this.shipper.shipper_info[_rowindex].shipment_class = _data.value
+	changeShipmentClass(_data, _rowindex) {
+		this.shipper.shipper_info[_rowindex].shipment_class = _data ? _data.value : ''
 		this.forceUpdate()
 	}
 
@@ -143,19 +137,9 @@ export class CustomerShipperModal extends React.Component {
 						}, {	
 							label: 'ヤマト運輸',
 							value: 'YM'
-						}, {	
-							label: '佐川急便',
-							value: 'SG'
-						}, {
-							label: '西濃運輸',
-							value: 'SN'
 						}, {
 							label: '日本郵政',
 							value: 'PO',
-						}, {	
-							label: '自社配送',
-							value: 'JI'
-							
 						}]}
 						onChange={(data)=>this.changeDeliveryCompany(data)}
 					/>
@@ -167,13 +151,13 @@ export class CustomerShipperModal extends React.Component {
 						header={[{
 							field: 'shipper_code', title: '荷主コード',
 							input: {
-								onChange: (data, rowindex) => { this.shipperCodeChange(data, rowindex) }
+								onChange: (data, rowindex) => { this.changeShipperCode(data, rowindex) }
 							}
 						},{
 							field: 'shipment_class',title: '集荷出荷区分', width: '50px',
 							filter: {
 								options: this.shipmentClassList,
-								onChange:(data,rowindex) => {this.shipmentClassChange(data,rowindex)}
+								onChange:(data,rowindex) => {this.changeShipmentClass(data,rowindex)}
 							}
 						}]}
 						add={() => this.addList({ shipper_code: '',shipment_class: '0'})}

@@ -111,10 +111,8 @@ export default class CustomerForm extends React.Component {
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
-
 		this.setBilltoMasterData()
 		this.setStaffMasterData()
-
 	}
 
 	/**
@@ -558,8 +556,8 @@ export default class CustomerForm extends React.Component {
 							header={[{
 								field: 'delivery_company', title: '配送業者', width: '100px',
 								convert: {
-									EC: 'エコ配JP', YM: 'ヤマト', SG: '佐川急便', SN: '西濃', PO: '日本郵政', JI: '自社配送',
-									エコ配JP: 'エコ配JP', ヤマト: 'ヤマト', 佐川急便: '佐川急便', 西濃: '西濃', 日本郵政: '日本郵政', 自社配送: '自社配送',
+									EC: 'エコ配JP', YM: 'ヤマト運輸',PO: '日本郵政',
+									エコ配JP: 'エコ配JP', ヤマト運輸: 'ヤマト運輸', 日本郵政: '日本郵政',
 								}
 							}, {
 								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'集荷',1:'出荷'}

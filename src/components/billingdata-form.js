@@ -67,10 +67,11 @@ export default class BillingDataForm extends React.Component {
 			work: '161',
 			invoices: '161',
 			amount: '¥62,790',
+			is_total:true,
 		}]
 		
 
-		this.yamatoDep = [{
+		this.YAMATOdep = [{
 			day: '12/1',
 			work: '4',
 			invoices: '4',
@@ -105,9 +106,10 @@ export default class BillingDataForm extends React.Component {
 			work: '97',
 			invoices: '97',
 			amount: '¥48,500',
+			is_total:true,
 		}]
 		
-		this.sagawaDep = [{
+		this.YAMATOcash = [{
 			day: '12/1',
 			work: '3',
 			invoices: '3',
@@ -142,9 +144,10 @@ export default class BillingDataForm extends React.Component {
 			work: '32',
 			invoices: '32',
 			amount: '¥12,800',
+			is_total:true,
 		}]
 		
-		this.sagawaCash = [{
+		this.YAMATOdm = [{
 			day: '12/1',
 			work: '41',
 			invoices: '40',
@@ -184,7 +187,7 @@ export default class BillingDataForm extends React.Component {
 			is_error:true,
 		}]
 		
-		this.seinou = [{
+		this.JPems = [{
 			day: '12/1',
 			work: '40',
 			invoices: '40',
@@ -219,6 +222,7 @@ export default class BillingDataForm extends React.Component {
 			work: '144',
 			invoices: '144',
 			amount: '¥154,080',
+			is_total:true,
 		}]
 			
 		this.JPpacket = [{
@@ -256,6 +260,7 @@ export default class BillingDataForm extends React.Component {
 			work: '98',
 			invoices: '98',
 			amount: '¥14,700',
+			is_total:true,
 		}]
 
 		this.JPmail = [{
@@ -293,8 +298,8 @@ export default class BillingDataForm extends React.Component {
 			work: '180',
 			invoices: '180',
 			amount: '¥54,000',
+			is_total:true,
 		}]
-
 
 		this.self = [{
 			day: '12/1',
@@ -331,10 +336,9 @@ export default class BillingDataForm extends React.Component {
 			work: '180',
 			invoices: '180',
 			amount: '¥54,000',
+			is_total:true,
 		}]
-		
-		
-			
+					
 	}
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -380,7 +384,7 @@ export default class BillingDataForm extends React.Component {
 						
 								<CommonTable
 									//name="quotation.basic_condition"
-									data={this.yamatoDep}
+									data={this.YAMATOdep}
 									header={[{
 										field: 'day',title: '日付', width: '50px'
 									}, {
@@ -400,7 +404,7 @@ export default class BillingDataForm extends React.Component {
 						
 								<CommonTable
 									//name="quotation.basic_condition"
-									data={this.sample}
+									data={this.YAMATOdep}
 									header={[{
 										field: 'day',title: '日付', width: '50px'
 									}, {
@@ -416,31 +420,11 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="ヤマト運輸(DM便)" eventKey="4" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="ヤマト運輸(DM便/ネコポス)" eventKey="4" bsStyle="info" defaultExpanded="true">
 						
 								<CommonTable
 									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-						
-							</Panel>
-							<Panel collapsible header="ヤマト運輸(ネコポス)" eventKey="5" bsStyle="info" defaultExpanded="true">
-						
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
+									data={this.YAMATOdm}
 									header={[{
 										field: 'day',title: '日付', width: '50px'
 									}, {
@@ -457,73 +441,11 @@ export default class BillingDataForm extends React.Component {
 						
 							</Panel>
 
-							<Panel collapsible header="佐川急便(発払)" eventKey="6" bsStyle="info" defaultExpanded="true">
-
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sagawaDep}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="佐川急便(代引)" eventKey="7" bsStyle="info" defaultExpanded="true">
-
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sagawaCash}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-
-							<Panel collapsible header="西濃運輸" eventKey="8" bsStyle="info" defaultExpanded="true">
-	
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.seinou}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-
-							<Panel collapsible header="日本郵政(EMS)" eventKey="9" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(EMS)" eventKey="5" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
-									data={this.sample}
+									data={this.JPems}
 									header={[{
 										field: 'day',title: '日付', width: '50px'
 									}, {
@@ -540,8 +462,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-
-							<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="10" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="6" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -561,8 +482,128 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
+							<Panel collapsible header="日本郵政(ゆうメール)" eventKey="7" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.JPmail}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
 
-							<Panel collapsible header="日本郵政(ゆうメール)" eventKey="11" bsStyle="info" defaultExpanded="true">
+							</Panel>
+
+							<Panel collapsible header="日本郵政(定形外 規格内:50g)" eventKey="8" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.sample}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
+
+							</Panel>
+							<Panel collapsible header="日本郵政(定形外 規格内:100g)" eventKey="9" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.sample}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
+
+							</Panel>
+							<Panel collapsible header="日本郵政(定形外 規格内:150g)" eventKey="10" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.sample}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
+
+							</Panel>
+							<Panel collapsible header="日本郵政(定形外 規格内:250g)" eventKey="11" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.sample}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
+
+							</Panel>
+							<Panel collapsible header="日本郵政(定形外 規格内:500g)" eventKey="12" bsStyle="info" defaultExpanded="true">
+		
+								<CommonTable
+									//name="quotation.basic_condition"
+									data={this.sample}
+									header={[{
+										field: 'day',title: '日付', width: '50px'
+									}, {
+										field: 'work', title: '発送作業個数', width: '300px'
+									}, {
+										field: 'invoices', title: '請求個数', width: '300px'
+									}, {
+										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+									}]}
+									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+									//add={() => this.showAddModal('basic_condition')}
+									//remove={(data, index) => this.removeList('basic_condition', index)}
+								/>
+
+							</Panel>
+							<Panel collapsible header="日本郵政(定形外 規格内:1000g)" eventKey="13" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -583,7 +624,7 @@ export default class BillingDataForm extends React.Component {
 
 							</Panel>
 
-							<Panel collapsible header="日本郵政(定形外 規格内:50g)" eventKey="15" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:50g)" eventKey="14" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -603,7 +644,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格内:100g)" eventKey="16" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:100g)" eventKey="15" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -623,7 +664,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格内:150g)" eventKey="17" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:150g)" eventKey="16" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -643,7 +684,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格内:250g)" eventKey="18" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:250kg)" eventKey="17" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -663,7 +704,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格内:500g)" eventKey="19" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:500kg)" eventKey="18" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -683,7 +724,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格内:1000g)" eventKey="20" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:1000kg)" eventKey="19" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -703,8 +744,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-
-							<Panel collapsible header="日本郵政(定形外 規格外:50g)" eventKey="21" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:2000kg)" eventKey="20" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -724,127 +764,7 @@ export default class BillingDataForm extends React.Component {
 								/>
 
 							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:100g)" eventKey="22" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:150g)" eventKey="23" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:250kg)" eventKey="24" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:500kg)" eventKey="25" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:1000kg)" eventKey="26" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:2000kg)" eventKey="27" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.sample}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
-							<Panel collapsible header="日本郵政(定形外 規格外:4000kg)" eventKey="28" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="日本郵政(定形外 規格外:4000kg)" eventKey="21" bsStyle="info" defaultExpanded="true">
 		
 								<CommonTable
 									//name="quotation.basic_condition"
@@ -865,26 +785,6 @@ export default class BillingDataForm extends React.Component {
 
 							</Panel>
 
-							<Panel collapsible header="自社配送" eventKey="29" bsStyle="info" defaultExpanded="true">
-		
-								<CommonTable
-									//name="quotation.basic_condition"
-									data={this.self}
-									header={[{
-										field: 'day',title: '日付', width: '50px'
-									}, {
-										field: 'work', title: '発送作業個数', width: '300px'
-									}, {
-										field: 'invoices', title: '請求個数', width: '300px'
-									}, {
-										field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-									}]}
-									//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-									//add={() => this.showAddModal('basic_condition')}
-									//remove={(data, index) => this.removeList('basic_condition', index)}
-								/>
-
-							</Panel>
 						
 						</PanelGroup>
 					</Tab>
@@ -991,69 +891,7 @@ export default class BillingDataForm extends React.Component {
 						
 						</Panel>
 
-						<Panel collapsible header="佐川急便(発払)" eventKey="6" bsStyle="info" defaultExpanded="true">
-
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sagawaDep}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="佐川急便(代引)" eventKey="7" bsStyle="info" defaultExpanded="true">
-
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sagawaCash}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-
-						<Panel collapsible header="西濃運輸" eventKey="8" bsStyle="info" defaultExpanded="true">
-	
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.seinou}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-
-						<Panel collapsible header="日本郵政(EMS)" eventKey="9" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(EMS)" eventKey="6" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1075,7 +913,7 @@ export default class BillingDataForm extends React.Component {
 
 						</Panel>
 
-						<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="10" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="7" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1096,7 +934,7 @@ export default class BillingDataForm extends React.Component {
 
 						</Panel>
 
-						<Panel collapsible header="日本郵政(ゆうメール)" eventKey="11" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(ゆうメール)" eventKey="8" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1117,7 +955,7 @@ export default class BillingDataForm extends React.Component {
 
 						</Panel>
 
-						<Panel collapsible header="日本郵政(定形外 規格内:50g)" eventKey="15" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:50g)" eventKey="9" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1137,7 +975,7 @@ export default class BillingDataForm extends React.Component {
 							/>
 
 						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格内:100g)" eventKey="16" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:100g)" eventKey="10" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1157,7 +995,7 @@ export default class BillingDataForm extends React.Component {
 							/>
 
 						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格内:150g)" eventKey="17" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:150g)" eventKey="11" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1177,7 +1015,7 @@ export default class BillingDataForm extends React.Component {
 							/>
 
 						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格内:250g)" eventKey="18" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:250g)" eventKey="12" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1197,7 +1035,7 @@ export default class BillingDataForm extends React.Component {
 							/>
 
 						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格内:500g)" eventKey="19" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:500g)" eventKey="13" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1217,168 +1055,7 @@ export default class BillingDataForm extends React.Component {
 							/>
 
 						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格内:1000g)" eventKey="20" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-
-						<Panel collapsible header="日本郵政(定形外 規格外:50g)" eventKey="21" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:100g)" eventKey="22" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:150g)" eventKey="23" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:250kg)" eventKey="24" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:500kg)" eventKey="25" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:1000kg)" eventKey="26" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:2000kg)" eventKey="27" bsStyle="info" defaultExpanded="true">
-		
-							<CommonTable
-								//name="quotation.basic_condition"
-								data={this.sample}
-								header={[{
-									field: 'day',title: '日付', width: '50px'
-								}, {
-									field: 'work', title: '発送作業個数', width: '300px'
-								}, {
-									field: 'invoices', title: '請求個数', width: '300px'
-								}, {
-									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
-								}]}
-								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								//add={() => this.showAddModal('basic_condition')}
-								//remove={(data, index) => this.removeList('basic_condition', index)}
-							/>
-
-						</Panel>
-						<Panel collapsible header="日本郵政(定形外 規格外:4000kg)" eventKey="28" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格内:1000g)" eventKey="14" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
@@ -1399,11 +1076,11 @@ export default class BillingDataForm extends React.Component {
 
 						</Panel>
 
-						<Panel collapsible header="自社配送" eventKey="29" bsStyle="info" defaultExpanded="true">
+						<Panel collapsible header="日本郵政(定形外 規格外:50g)" eventKey="15" bsStyle="info" defaultExpanded="true">
 		
 							<CommonTable
 								//name="quotation.basic_condition"
-								data={this.self}
+								data={this.sample}
 								header={[{
 									field: 'day',title: '日付', width: '50px'
 								}, {
@@ -1418,7 +1095,147 @@ export default class BillingDataForm extends React.Component {
 								//remove={(data, index) => this.removeList('basic_condition', index)}
 							/>
 
-						</Panel>	
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:100g)" eventKey="16" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:150g)" eventKey="17" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:250kg)" eventKey="18" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:500kg)" eventKey="19" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:1000kg)" eventKey="20" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:2000kg)" eventKey="21" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(定形外 規格外:4000kg)" eventKey="22" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.sample}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
 					</Tab>		
 				</Tabs>
 			</Form>
