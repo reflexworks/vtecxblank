@@ -41,7 +41,7 @@ export default class InvoiceList extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/d/invoice?f&l=' + this.maxDisplayRows
 		this.state = {
-			searchDate: moment().format('YYYY/MM'),
+			searchYearMonth: moment().format('YYYY/MM'),
 			searchDetails: false,
 			feed: { entry: [] },
 			isDisabled: false,
@@ -167,7 +167,7 @@ export default class InvoiceList extends React.Component {
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
 								name="quotation.quotation_date"
-								value={this.state.searchDate}
+								value={this.state.searchYearMonth}
 							/>
 							
 							<CommonInputText
@@ -257,9 +257,9 @@ export default class InvoiceList extends React.Component {
 							header={[{
 								field: 'invoice.invoice_code',title: '請求番号', width: '100px'
 							}, {
-								field: 'invoice.quotation_code',title: '見積番号', width: '200px'
+								field: 'invoice.invoice_yearmonth',title: '請求年月', width: '200px'
 							}, {
-								field: 'invoice.internal_work_code', title: '庫内作業コード', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
 								field: 'invoice.total_amount', title: '合計請求金額', width: '200px'
 							}, {
@@ -274,13 +274,13 @@ export default class InvoiceList extends React.Component {
 							
 							<CommonMonthlySelect
 								name="quotation.quotation_date"
-								value={this.state.searchDate}
+								value={this.state.searchYearMonth}
 								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
 								table
 							/>
 
-							<Button bsSize="sm" style={{ float: 'left', width: '110px', 'margin': '0px 0px' }}>
-								顧客ごとに表示
+							<Button bsSize="sm" style={{ float: 'left', width: '120px', 'margin': '0px 0px' }}>
+								請求先ごとに表示
 							</Button>
 							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
 								<Glyphicon glyph="download" />CSVダウンロード
