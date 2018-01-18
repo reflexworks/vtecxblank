@@ -870,15 +870,6 @@ export default class InvoiceForm extends React.Component {
 					readonly='true'
 				/>
 
-				<CommonInputText
-					controlLabel="庫内作業コード"	
-					name='invoice.internal_work_code'							
-					type="text"
-					placeholder="庫内作業コード"
-					value={this.entry.invoice.internal_work_code}
-					readonly='true'
-				/>
-
 				<CommonRadioBtn 
 					controlLabel="入金ステータス"
 					name="invoice.deposit_status"
@@ -1325,21 +1316,21 @@ export default class InvoiceForm extends React.Component {
 							//name="""
 								data={this.YAMATO_details}
 								header={[{
-									field: 'shipping_date',title: '出荷日', width: '50px'
+									field: 'shipping_date',title: '出荷日', width: '100px'
 								}, {
-									field: 'tracking_number', title: '原票番号', width: '150px'
+									field: 'tracking_number', title: '原票番号', width: '200px'
 								}, {
-									field: 'delivery_class1', title: '配送区分１', width: '80px'
+									field: 'delivery_class1', title: '配送区分１', width: '100px'
 								}, {
-									field: 'delivery_class2', title: '配送区分２', width: '80px',
+									field: 'delivery_class2', title: '配送区分２', width: '100px',
 								}, {
-									field: 'size', title: 'サイズ', width: '50px',
+									field: 'size', title: 'サイズ', width: '100px',
 								}, {
-									field: 'quantity', title: '個数', width: '50px',
+									field: 'quantity', title: '個数', width: '100px',
 								}, {
-									field: 'prefecture', title: '取扱県', width: '80px',
+									field: 'prefecture', title: '取扱県', width: '100px',
 								}, {
-									field: 'delivery_charge', title: '運賃', width: '50px',
+									field: 'delivery_charge', title: '運賃', width: '100px',
 								}]}
 								
 							/>
@@ -1474,7 +1465,7 @@ export default class InvoiceForm extends React.Component {
 						
 					</Tab>
 					
-					<Tab eventKey={4} title="請求データ">
+					<Tab eventKey={4} title="請求データ(発送)">
 						<CommonFilterBox
 							controlLabel="顧客選択"
 							name=""
@@ -1625,7 +1616,159 @@ export default class InvoiceForm extends React.Component {
 							/>
 
 						</Panel>
-					</Tab>	
+					</Tab>
+					<Tab eventKey={5} title="請求データ(集荷)">
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>
+						<Panel collapsible header="エコ配JP" eventKey="1" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.ecoJP}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+					
+						</Panel>
+
+						<Panel collapsible header="ヤマト運輸(発払)" eventKey="2" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(代引)" eventKey="3" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(DM便/ネコポス)" eventKey="4" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdm}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+
+						<Panel collapsible header="日本郵政(EMS)" eventKey="5" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPems}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+						
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="6" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPpacket}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうメール)" eventKey="7" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPmail}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+					</Tab>
 				</Tabs>	
 						
 				
