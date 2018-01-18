@@ -110,7 +110,7 @@ export default class InternalWorkList extends React.Component {
     onSelect(data) {
     	// 入力画面に遷移
     	const internal_work_code = data.internal_work.internal_work_code
-    	this.props.history.push('/InternalWorkRegistration?' + internal_work_code)
+    	this.props.history.push('/InternalWorkUpdate?' + internal_work_code)
     }
 
     /**
