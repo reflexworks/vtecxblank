@@ -198,10 +198,6 @@ export default class SideMenu extends React.Component {
 							to: 'BillfromList',
 							glyph: 'list',
 							title: '請求元一覧'
-						},{
-							to: 'InvoiceRegistration',
-							glyph: 'edit',
-							title: '請求書作成'
 						}, {
 							to: 'InvoiceList',
 							glyph: 'list',
@@ -210,10 +206,6 @@ export default class SideMenu extends React.Component {
 							to: 'BillingDataUpload',
 							glyph: 'upload',
 							title: '請求データアップロード'
-						},{
-							to: 'BillingDataList',
-							glyph: 'list',
-							title: '請求データ一覧'
 						}]
 					)}
 					{/*
