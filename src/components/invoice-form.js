@@ -25,7 +25,9 @@ import {
 	CommonTable,
 	CommonRadioBtn,
 	CommonFilterBox,
+	CommonMonthlySelect,
 } from './common'
+
 
 export default class InvoiceForm extends React.Component {
 
@@ -33,14 +35,16 @@ export default class InvoiceForm extends React.Component {
 		super(props)
 		this.state = {
 			showBillfromAddModal: false,
-			showBillfromEditModal:false,
+			showBillfromEditModal: false,
+			selectCustomer: '',
+			selectQuotation: '',
 		}
 
 		this.entry = this.props.entry
 
 		this.entry = this.props.entry
 		this.entry.invoice = this.entry.invoice || {}
-		//this.entry.billto = this.entry.billto || {}
+		this.entry.billto = this.entry.billto || {}
 		this.entry.billfrom = this.entry.billfrom || {}
 		this.entry.billfrom.payee = this.entry.billfrom.payee || []
 		this.entry.contact_information = this.entry.contact_information || {}
@@ -48,7 +52,9 @@ export default class InvoiceForm extends React.Component {
 		this.item_details = this.item_details || []
 		this.entry.remarks = this.entry.remarks || []
 		this.master = {
-			billfromList: []
+			customerList: [],
+			billfromList: [],
+			quotationList: [],
 		}
 
 		this.taxationList=[{
@@ -103,14 +109,27 @@ export default class InvoiceForm extends React.Component {
 		}]
 
 	}
-
+	
 	componentWillMount() {
 		this.sampleData()
+		this.getService()
 		this.setBillfromMasterData()
+		this.setCustomerMasterData()
 	}
 
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.entry = newProps.entry
+		this.sortItemDetails()
+	}
+
+	/**
+	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
+	 */
 	sortItemDetails() {
-		console.log('sort')
 		if (this.entry.item_details) {
 			for (let i = 0; i < this.entry.item_details.length; ++i) {
 				switch (this.entry.item_details[i].category) {
@@ -156,298 +175,404 @@ export default class InvoiceForm extends React.Component {
 			}
 		}
 	}
+
+	/**
+	 * サービスで受け取ったitem_detailsをカテゴリ毎に振り分ける
+	 */
+	getService() {
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/invoice',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				if (response.data.feed.entry[0].item_details) {
+					for (let i = 0; i < response.data.feed.entry[0].item_details.length; ++i) {
+						switch (response.data.feed.entry[0].item_details[i].category) {
+						case 'monthly':
+							if (!this.monthly) {
+								this.monthly = []
+							}
+							this.monthly[this.monthly.length] = response.data.feed.entry[0].item_details[i]
+							break
+						case 'daily':
+							if (!this.daily) {
+								this.daily = []
+							}
+							this.daily[this.daily.length] = response.data.feed.entry[0].item_details[i]
+							break
+						case 'packing_item':
+							if (!this.packing_item) {
+								this.packing_item = []
+							}
+							this.packing_item[this.packing_item.length] = response.data.feed.entry[0].item_details[i]
+							break
+						case 'delivery_charge_shipping':
+							if (!this.delivery_charge_shipping) {
+								this.delivery_charge_shipping = []
+							}
+							this.delivery_charge_shipping[this.delivery_charge_shipping.length] = response.data.feed.entry[0].item_details[i]
+							break
+						case 'delivery_charge_collecting':
+							if (!this.delivery_charge_collecting) {
+								this.delivery_charge_collecting = []
+							}
+							this.delivery_charge_collecting[this.delivery_charge_collecting.length] = response.data.feed.entry[0].item_details[i]
+							break
+						
+						case 'others':
+							if (!this.entry.item_details) {
+								this.entry.item_details = []
+							}
+							this.entry.item_details[this.entry.item_details.length] = response.data.feed.entry[0].item_details[i]
+							break
+						}
+					}
+				}
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
 	sampleData() {
-		
 		this.entry.invoice.quotation_code = '1710-01317'
 		this.entry.invoice.consumption_tax = '¥39,022'
 		this.entry.invoice.total_amount = '¥1,025,142'
+		this.ecoJP = [{
+			day: '12/1',
+			work: '10',
+			invoices: '10',
+			amount: '¥3,900',
+		}, {
+			day: '12/2',
+			work: '60',
+			invoices: '60',
+			amount: '¥23,400',
+		}, {
+			day: '12/3',
+			work: '7',
+			invoices: '7',
+			amount: '¥2,730',
+		}, {
+			day: '12/4',
+			work: '25',
+			invoices: '25',
+			amount: '¥9,750',
+		}, {
+			day: '12/5',
+			work: '14',
+			invoices: '14',
+			amount: '¥5,460',			
+		}, {
+			day: '12/6',
+			work: '45',
+			invoices: '45',
+			amount: '¥17,750',
+		}, {
+			day: '合計',
+			work: '161',
+			invoices: '161',
+			amount: '¥62,790',
+			is_total:true,
+		}]
 		
-		this.item_details = [{
-			category: 'monthly',
-			item_name: '保管料',
-			quantity: '4',
-			unit: '1坪/月',
-			unit_price: '¥5,000',
-			remarks: '棚、ラックリース(新品:500円/中古品:300円)支給品利用可能',
+
+		this.YAMATOdep = [{
+			day: '12/1',
+			work: '4',
+			invoices: '4',
+			amount: '¥2,000',
 		}, {
-			category: 'monthly',	
-			item_name: '保管料',
-			quantity: '4',
-			unit: '1パレット/月',
-			unit_price: '¥2,500',
-			remarks: 'サイズ1,100×1,100',
+			day: '12/2',
+			work: '6',
+			invoices: '6',
+			amount: '¥3,000',
 		}, {
-			category: 'monthly',	
-			item_name: '保管料',
-			quantity: '4',
-			unit: '1パレット/月',
-			unit_price: '¥2,500',
-			remarks: 'パレットラック縦積み',
+			day: '12/3',
+			work: '10',
+			invoices: '10',
+			amount: '¥5,000',
 		}, {
-			category: 'monthly',	
-			item_name: '運営管理費',
-			quantity: '',
-			unit: 'データ変換ソフト/月額',
-			unit_price: '¥10,000',
-			remarks: 'ご希望に応じて',
+			day: '12/4',
+			work: '30',
+			invoices: '30',
+			amount: '¥15,000',
 		}, {
-			category: 'monthly',
-			item_name: '運営管理費',
-			quantity: '',
-			unit: '月額',
-			unit_price: '¥35,000',
-			remarks: '専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談',
+			day: '12/5',
+			work: '25',
+			invoices: '25',
+			amount: '¥12,500',
 		}, {
-			category: 'daily',
-			item_name: '入庫作業料',
-			quantity: '4',
-			unit: '入庫量/1点',
-			unit_price: '¥10~30',
-			remarks: 'バラ、アソート入庫、外装検品、品番確認、数量検品、棚格納',
+			day: '12/6',
+			work: '22',
+			invoices: '22',
+			amount: '¥11,000',
 		}, {
-			category: 'daily',	
-			item_name: '入庫作業料',
-			quantity: '4',
-			unit: '入庫量/1箱',
-			unit_price: '¥50',
-			remarks: '外装検品、品番確認、内容未見、箱積み',
+			day: '合計',
+			work: '97',
+			invoices: '97',
+			amount: '¥48,500',
+			is_total:true,
+		}]
+		
+		this.YAMATOcash = [{
+			day: '12/1',
+			work: '3',
+			invoices: '3',
+			amount: '¥1,200',
 		}, {
-			category: 'daily',
-			item_name: '入庫作業料',
-			quantity: '4',
-			unit: 'デバンニング/20F',
-			unit_price: '¥18,000',
-			remarks: 'ハイキューブ＋¥3,000',
+			day: '12/2',
+			work: '4',
+			invoices: '4',
+			amount: '¥1,600',
 		}, {
-			category: 'daily',
-			item_name: '入庫作業料',
-			quantity: '4',
-			unit: 'デバンニング/40F',
-			unit_price: '¥33,000',
-			remarks: 'ハイキューブ＋¥3,000',
+			day: '12/3',
+			work: '1',
+			invoices: '1',
+			amount: '¥400',
 		}, {
-			category: 'daily',
-			item_name: '出荷作業料',
-			quantity: '4',
-			unit: 'DM便・ネコポス・ゆうパケット・ゆうメール・定形外/1封緘',
-			unit_price: '¥200',
-			remarks: '',
+			day: '12/4',
+			work: '8',
+			invoices: '8',
+			amount: '¥3,200',
 		}, {
-			category: 'daily',
-			item_name: '出荷作業料',
-			quantity: '4',
-			unit: '宅配便/1梱包',
-			unit_price: '¥300',
-			remarks: '',
+			day: '12/5',
+			work: '10',
+			invoices: '10',
+			amount: '¥4,000',
 		}, {
-			category: 'daily',
-			item_name: '出荷作業料',
-			quantity: '4',
-			unit: 'ピッキング/1点',
-			unit_price: '¥30',
-			remarks: '',
+			day: '12/6',
+			work: '6',
+			invoices: '6',
+			amount: '¥2,400',
 		}, {
-			category: 'daily',
-			item_name: '出荷作業料',
-			quantity: '4',
-			unit: '同梱作業/1枚/冊',
-			unit_price: '¥10',
-			remarks: 'ステッカー、チラシ、カタログ、パンフレットなどの販促物',
+			day: '合計',
+			work: '32',
+			invoices: '32',
+			amount: '¥12,800',
+			is_total:true,
+		}]
+		
+		this.YAMATOdm = [{
+			day: '12/1',
+			work: '41',
+			invoices: '40',
+			amount: '¥40,000',
+			is_error: true,
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: 'エアキャップ巻き/1点',
-			unit_price: '¥15',
-			remarks: 'アクセサリー、小物(資材別)',
+			day: '12/2',
+			work: '5',
+			invoices: '4',
+			amount: '¥4,000',
+			is_error: true,
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: 'エアキャップ巻き/1箱',
-			unit_price: '¥50',
-			remarks: '(資材別)',
+			day: '12/3',
+			work: '36',
+			invoices: '36',
+			amount: '¥36,000',
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: '簡易包装/1箱',
-			unit_price: '¥100',
-			remarks: 'ラッピング袋などへ詰め込みのみ(資材別)',
+			day: '12/4',
+			work: '8',
+			invoices: '8',
+			amount: '¥8,000',
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: '完全包装/1箱',
-			unit_price: '¥200',
-			remarks: 'ラッピング、ギフト梱包(資材別)',
+			day: '12/5',
+			work: '10',
+			invoices: '10',
+			amount: '¥10,000',
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: '商品品番シール貼り/1点',
-			unit_price: '¥5',
-			remarks: 'シール印字・貼り作業(ペーパー代別)',
+			day: '12/6',
+			work: '50',
+			invoices: '50',
+			amount: '¥50,000',
 		}, {
-			category: 'daily',
-			item_name: '付帯作業料',
-			quantity: '4',
-			unit: 'バーコード作成/1KSU',
-			unit_price: '¥200',
-			remarks: 'JAN登録は行いません',
+			day: '合計',
+			work: '150',
+			invoices: '148',
+			amount: '¥148,000',
+			is_total:true,
+		}]
+		
+		this.JPems = [{
+			day: '12/1',
+			work: '40',
+			invoices: '40',
+			amount: '¥42,800',
 		}, {
-			category: 'daily',
-			item_name: '実地棚卸作業',
-			quantity: '4',
-			unit: '人口/1時間',
-			unit_price: '¥2,500',
-			remarks: '必要な場合',
+			day: '12/2',
+			work: '10',
+			invoices: '10',
+			amount: '¥10,700',
 		}, {
-			category: 'daily',
-			item_name: 'イレギュラー処理費用',
-			quantity: '4',
-			unit: '返品処理/1件',
-			unit_price: '¥200',
-			remarks: '住所不明・長期不在などで返品になった商品の在庫戻し、貴社報告',
+			day: '12/3',
+			work: '21',
+			invoices: '21',
+			amount: '¥22,470',
 		}, {
-			category: 'packing_item',
-			item_name: '資材費(ダンボール3.5cm<大>)',
-			quantity: '2,300',
-			unit: '枚',
-			unit_price: '¥21',
-			remarks: '',
+			day: '12/4',
+			work: '25',
+			invoices: '25',
+			amount: '¥26,750',
 		}, {
-			category: 'packing_item',
-			item_name: '資材費(ダンボール160サイズ)',
-			quantity: '0',
-			unit: 'セット',
-			unit_price: '¥767',
-			remarks: '',
+			day: '12/5',
+			work: '35',
+			invoices: '35',
+			amount: '¥37,450',			
 		}, {
-			category: 'delivery_charge_shipping',
-			item_name: 'エコ配JP',
-			quantity: '161',
-			unit: '個',
-			unit_price: '¥390',
-			remarks: '',
+			day: '12/6',
+			work: '13',
+			invoices: '13',
+			amount: '¥13,910',
 		}, {
-			category: 'delivery_charge_shipping',	
-			item_name: 'ヤマト運輸発払',
-			quantity: '97',
-			unit: '個',
-			unit_price: '¥500',
-			remarks: '',
+			day: '合計',
+			work: '144',
+			invoices: '144',
+			amount: '¥154,080',
+			is_total:true,
+		}]
+			
+
+		this.JPpacket = [{
+			day: '12/1',
+			work: '8',
+			invoices: '8',
+			amount: '¥1,200',
 		}, {
-			category: 'delivery_charge_shipping',
-			item_name: '佐川急便発払',
-			quantity: '32',
-			unit: '個',
-			unit_price: '¥400',
-			remarks: '',
+			day: '12/2',
+			work: '10',
+			invoices: '10',
+			amount: '¥1,500',
 		}, {
-			category: 'delivery_charge_shipping',
-			item_name: '西濃運輸',
-			quantity: '144',
-			unit: '個',
-			unit_price: '¥1,070',
-			remarks: '',
+			day: '12/3',
+			work: '5',
+			invoices: '5',
+			amount: '¥750',
 		}, {
-			category: 'delivery_charge_shipping',
-			item_name: '自社配送',
-			quantity: '180',
-			unit: '個',
-			unit_price: '¥300',
-			remarks: '',
+			day: '12/4',
+			work: '30',
+			invoices: '30',
+			amount: '¥4,500',
 		}, {
-			category: 'delivery_charge_collecting',
-			item_name: 'エコ配JP',
-			quantity: '131',
-			unit: '個',
-			unit_price: '¥390',
-			remarks: '',
+			day: '12/5',
+			work: '28',
+			invoices: '28',
+			amount: '¥4,200',			
 		}, {
-			category: 'delivery_charge_collecting',	
-			item_name: 'ヤマト運輸発払',
-			quantity: '95',
-			unit: '個',
-			unit_price: '¥500',
-			remarks: '',
+			day: '12/6',
+			work: '17',
+			invoices: '17',
+			amount: '¥2,550',
 		}, {
-			category: 'delivery_charge_collecting',
-			item_name: '佐川急便発払',
-			quantity: '34',
-			unit: '個',
-			unit_price: '¥400',
-			remarks: '',
-		}, {
-			category: 'delivery_charge_collecting',
-			item_name: '西濃運輸',
-			quantity: '14',
-			unit: '個',
-			unit_price: '¥1,070',
-			remarks: '',
-		}, {
-			category: 'delivery_charge_collecting',
-			item_name: '自社配送',
-			quantity: '130',
-			unit: '個',
-			unit_price: '¥300',
-			remarks: '',
+			day: '合計',
+			work: '98',
+			invoices: '98',
+			amount: '¥14,700',
+			is_total:true,
 		}]
 
-		//サンプルデータをカテゴリ毎に仕分け
-		if (this.item_details) {
-			for (let i = 0; i < this.item_details.length; ++i) {
-				switch (this.item_details[i].category) {
-				case 'monthly':
-					if (!this.monthly) {
-						this.monthly = []
-					}
-					this.monthly[this.monthly.length] = this.item_details[i]
-					break
-				case 'daily':
-					if (!this.daily) {
-						this.daily = []
-					}
-					this.daily[this.daily.length] = this.item_details[i]
-					break
-				case 'packing_item':
-					if (!this.packing_item) {
-						this.packing_item = []
-					}
-					this.packing_item[this.packing_item.length] = this.item_details[i]
-					break
-				case 'delivery_charge_shipping':
-					if (!this.delivery_charge_shipping) {
-						this.delivery_charge_shipping = []
-					}
-					this.delivery_charge_shipping[this.delivery_charge_shipping.length] = this.item_details[i]
-					break
-				case 'delivery_charge_collecting':
-					if (!this.delivery_charge_collecting) {
-						this.delivery_charge_collecting = []
-					}
-					this.delivery_charge_collecting[this.delivery_charge_collecting.length] = this.item_details[i]
-					break
-					
-				case 'others':
-					if (!this.entry.item_details) {
-						this.entry.item_details = []
-					}
-					this.entry.item_details[this.entry.item_details.length] = this.item_details[i]
-					break
-				}
-			}
-		}	
-	}
+		this.JPmail = [{
+			day: '12/1',
+			work: '30',
+			invoices: '30',
+			amount: '¥9,000',
+		}, {
+			day: '12/2',
+			work: '10',
+			invoices: '10',
+			amount: '¥3,000',
+		}, {
+			day: '12/3',
+			work: '11',
+			invoices: '11',
+			amount: '¥3,300',
+		}, {
+			day: '12/4',
+			work: '50',
+			invoices: '50',
+			amount: '¥15,000',
+		}, {
+			day: '12/5',
+			work: '35',
+			invoices: '35',
+			amount: '¥10,500',			
+		}, {
+			day: '12/6',
+			work: '44',
+			invoices: '44',
+			amount: '¥13.500',
+		}, {
+			day: '合計',
+			work: '180',
+			invoices: '180',
+			amount: '¥54,000',
+			is_total:true,
+		}]
 
-	/**
-	 * 親コンポーネントがpropsの値を更新した時に呼び出される
-	 * @param {*} newProps 
-	 */
-	componentWillReceiveProps(newProps) {
-		this.entry = newProps.entry
-		this.sortItemDetails()
+		this.self = [{
+			day: '12/1',
+			work: '30',
+			invoices: '30',
+			amount: '¥9,000',
+		}, {
+			day: '12/2',
+			work: '10',
+			invoices: '10',
+			amount: '¥3,000',
+		}, {
+			day: '12/3',
+			work: '11',
+			invoices: '11',
+			amount: '¥3,300',
+		}, {
+			day: '12/4',
+			work: '50',
+			invoices: '50',
+			amount: '¥15,000',
+		}, {
+			day: '12/5',
+			work: '35',
+			invoices: '35',
+			amount: '¥10,500',			
+		}, {
+			day: '12/6',
+			work: '44',
+			invoices: '44',
+			amount: '¥13.500',
+		}, {
+			day: '合計',
+			work: '180',
+			invoices: '180',
+			amount: '¥54,000',
+			is_total:true,
+		}]
+		
+		this.YAMATO_details = [{
+			shipping_date:'11月1日',
+			tracking_number:'3054-7340-9570',
+			delivery_class1:'宅急便発払',
+			delivery_class2:'宅急便',
+			size:'140',
+			quantity:'1',
+			prefecture:'香川県',
+			delivery_charge:'840',
+		}, {
+			shipping_date:'11月1日',
+			tracking_number:'3054-7340-9581',
+			delivery_class1:'宅急便発払',
+			delivery_class2:'宅急便',
+			size:'140',
+			quantity:'1',
+			prefecture:'東京都',
+			delivery_charge:'640',
+		}]
 	}
 
 	/**
@@ -463,7 +588,6 @@ export default class InvoiceForm extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-	
 			if (response.status !== 204) {
 
 				this.master.billfromList = response.data.feed.entry
@@ -494,16 +618,6 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})   
 	}
-
-	setBillfromData(_data, _modal) {
-		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
-		if (_modal === 'add') {
-			this.setState({ showBillfromAddModal: false })
-		} else {
-			this.setState({ showBillfromEditModal: false })
-		}
-	}
-
 	/**
 	 * 請求元変更
 	 */
@@ -519,6 +633,61 @@ export default class InvoiceForm extends React.Component {
 			this.entry.billfrom = {}
 			this.billfrom = {}
 			this.entry.contact_information = {}
+		}
+		this.forceUpdate()
+	}
+	setBillfromData(_data, _modal) {
+		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
+		if (_modal === 'add') {
+			this.setState({ showBillfromAddModal: false })
+		} else {
+			this.setState({ showBillfromEditModal: false })
+		}
+	}
+
+	/**
+	 * 顧客情報取得処理
+	 */
+	setCustomerMasterData() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/customer?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.master.customerList = response.data.feed.entry
+				this.customerList = this.master.customerList.map((obj) => {
+					return {
+						label: obj.customer.customer_name,
+						value: obj.customer.customer_code,
+						data: obj
+					}
+				})
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+	/**
+	 * 請求先変更処理
+	 */
+	changeCustomer(_data) {
+		console.log(_data)
+		if (_data) {
+			this.setState({selectCustomer :_data.data.customer})
+			this.customer = _data.data
+		} else {
+			this.setState({ selectCustomer: {} })
+			this.customer = {}
 		}
 		this.forceUpdate()
 	}
@@ -540,7 +709,6 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.forceUpdate()
 	}
-
 	/** 
 	 * 	備考リスト、振込先リストの削除
 	 */
@@ -559,7 +727,6 @@ export default class InvoiceForm extends React.Component {
 		}	
 		this.forceUpdate()
 	}
-
 	/**
 	 * 請求リストの変更
 	 */
@@ -582,7 +749,6 @@ export default class InvoiceForm extends React.Component {
 
 		this.forceUpdate()
 	}
-
 	/*
 	 * 請求書内で月次作業、日時作業、資材などに項目を追加する
 	 */
@@ -621,7 +787,6 @@ export default class InvoiceForm extends React.Component {
 		
 		this.forceUpdate()
 	}
-
 	/**
 	 * 	請求元の振込情報リスト変更
 	 */
@@ -634,7 +799,6 @@ export default class InvoiceForm extends React.Component {
 		
 		this.forceUpdate()
 	}
-
 	/**
 	 *  備考タブ変更
 	 */
@@ -642,7 +806,6 @@ export default class InvoiceForm extends React.Component {
 		this.entry.remarks[_rowindex].content = _data
 		this.forceUpdate()
 	}
-
 	/**
 	 * 	入金ステータス変更 
 	 */
@@ -664,23 +827,39 @@ export default class InvoiceForm extends React.Component {
 								
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
-							<FormGroup className="hide">
-								<FormControl name="invoice.invoice_code" type="text" value="${_addids}" />
-								<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}" />
-							</FormGroup>
+					<FormGroup className="hide">
+						<FormControl name="invoice.invoice_code" type="text" value="${_addids}" />
+						<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}" />
+					</FormGroup>
 				}
 
 				{/* 更新の場合 */}
 				{this.entry.invoice.invoice_code &&
-							<CommonInputText
-								controlLabel="請求コード"
-								name="invoice.invoice_code"
-								type="text"
-								placeholder="請求コード"
-								value={this.entry.invoice.invoice_code}
-								readonly="true"
-							/>
+					<CommonInputText
+						controlLabel="請求番号"
+						name="invoice.invoice_code"
+						type="text"
+						placeholder="請求番号"
+						value={this.entry.invoice.invoice_code}
+						readonly="true"
+					/>
 				}
+
+				<CommonMonthlySelect
+					controlLabel="請求年月"  
+					name="invoice.invoice_yearmonth"
+					value={this.entry.invoice.invoice_yearmonth}
+					//onChange={(data) =>}
+				/>
+				
+				<CommonInputText
+					controlLabel="請求先名"	
+					name='billto.billto_name'							
+					type="text"
+					placeholder="請求先名"
+					value={this.entry.billto.billto_name}
+					readonly='true'
+				/>
 
 				<CommonInputText
 					controlLabel="見積番号"	
@@ -709,6 +888,15 @@ export default class InvoiceForm extends React.Component {
 
 					<Tab eventKey={1} title="請求内容">
 						<PanelGroup defaultActiveKey="1">
+							
+							<CommonFilterBox
+								controlLabel="顧客選択"
+								name=""
+								value={this.state.selectCustomer.customer_code}
+								options={this.customerList}
+								onChange={(data) => this.changeCustomer(data)}
+							/>
+
 							<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
@@ -1121,11 +1309,38 @@ export default class InvoiceForm extends React.Component {
 							/>
 						</FormGroup>
 					</Tab>
+					
+					<Tab eventKey={2} title="請求詳細">
+						<Panel collapsible header="ヤマト運輸発払明細" eventKey="1" bsStyle="info" defaultExpanded="true">
+							<CommonTable
+							//name="""
+								data={this.YAMATO_details}
+								header={[{
+									field: 'shipping_date',title: '出荷日', width: '100px'
+								}, {
+									field: 'tracking_number', title: '原票番号', width: '200px'
+								}, {
+									field: 'delivery_class1', title: '配送区分１', width: '100px'
+								}, {
+									field: 'delivery_class2', title: '配送区分２', width: '100px',
+								}, {
+									field: 'size', title: 'サイズ', width: '100px',
+								}, {
+									field: 'quantity', title: '個数', width: '100px',
+								}, {
+									field: 'prefecture', title: '取扱県', width: '100px',
+								}, {
+									field: 'delivery_charge', title: '運賃', width: '100px',
+								}]}
+								
+							/>
+						</Panel>
+					</Tab>
 
-					<Tab eventKey={2} title="請求元"> 
+					<Tab eventKey={3} title="請求元"> 
 						
 						<CommonFilterBox
-							controlLabel="請求元選択"
+							controlLabel="請求元"
 							name="billfrom.billfrom_code"
 							value={this.entry.billfrom.billfrom_code}
 							options={this.billfromList}
@@ -1249,8 +1464,314 @@ export default class InvoiceForm extends React.Component {
 						}
 						
 					</Tab>
+					
+					<Tab eventKey={4} title="請求データ(発送)">
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>
+						<Panel collapsible header="エコ配JP" eventKey="1" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.ecoJP}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+					
+						</Panel>
+
+						<Panel collapsible header="ヤマト運輸(発払)" eventKey="2" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(代引)" eventKey="3" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(DM便/ネコポス)" eventKey="4" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdm}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+
+						<Panel collapsible header="日本郵政(EMS)" eventKey="5" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPems}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+						
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="6" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPpacket}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうメール)" eventKey="7" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPmail}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+					</Tab>
+					<Tab eventKey={5} title="請求データ(集荷)">
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>
+						<Panel collapsible header="エコ配JP" eventKey="1" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.ecoJP}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+					
+						</Panel>
+
+						<Panel collapsible header="ヤマト運輸(発払)" eventKey="2" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(代引)" eventKey="3" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdep}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="ヤマト運輸(DM便/ネコポス)" eventKey="4" bsStyle="info" defaultExpanded="true">
+						
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.YAMATOdm}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+						
+						</Panel>
+
+						<Panel collapsible header="日本郵政(EMS)" eventKey="5" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPems}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+						
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうパケット)" eventKey="6" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPpacket}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+						<Panel collapsible header="日本郵政(ゆうメール)" eventKey="7" bsStyle="info" defaultExpanded="true">
+		
+							<CommonTable
+								//name="quotation.basic_condition"
+								data={this.JPmail}
+								header={[{
+									field: 'day',title: '日付', width: '50px'
+								}, {
+									field: 'work', title: '発送作業個数', width: '300px'
+								}, {
+									field: 'invoices', title: '請求個数', width: '300px'
+								}, {
+									field: 'amount', title: '請求金額', width: '200px',style: {'text-align': 'right'}			
+								}]}
+								//edit={(data, index) => this.showEditModal('basic_condition', data, index)}
+								//add={() => this.showAddModal('basic_condition')}
+								//remove={(data, index) => this.removeList('basic_condition', index)}
+							/>
+
+						</Panel>
+					</Tab>
 				</Tabs>	
 						
+				
 				<BillfromAddModal isShow={this.state.showBillfromAddModal} close={() => this.setState({ showBillfromAddModal: false })} add={(data) => this.setBillfromData(data, 'add')} />
 				<BillfromEditModal isShow={this.state.showBillfromEditModal} close={() => this.setState({ showBillfromEditModal: false })} edit={(data) => this.setBillfromData(data, 'edit')} data={this.billfrom} />
 			</Form>

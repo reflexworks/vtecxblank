@@ -76,9 +76,9 @@ import BasicConditionRegistration from './basiccondition-registration'
 import BasicConditionUpdate from './basiccondition-update'
 
 //請求データ
-import BillingDataList from './billingdata-list'
+//import BillingDataList from './billingdata-list'
 import BillingDataUpload from './billingdata-upload'
-import BillingDataRegistration from './billingdata-registration'
+//import BillingDataRegistration from './billingdata-registration'
 
 //問い合わせ
 import InquiryList from './inquiry-list'
@@ -599,28 +599,6 @@ class MainContainer extends React.Component {
 	}
 
 	/**
-	 * コンポーネント：請求データ一覧
-	 */
-	BillingDataList = (props) => {
-		return (
-			<BillingDataList
-				history={props.history}
-			/>
-		)
-	}
-
-	/**
-	 * コンポーネント：請求データ更新
-	 */
-	BillingDataRegistration = (props) => {
-		return (
-			<BillingDataRegistration
-				history={props.history}
-			/>
-		)
-	}
-
-	/**
 	 * コンポーネント：問い合わせ一覧
 	 */
 	InquiryList = (props) => {
@@ -774,9 +752,8 @@ class MainContainer extends React.Component {
 							<Route path="/BasicConditionRegistration" component={this.BasicConditionRegistration} />
 							<Route path="/BasicConditionList" component={this.BasicConditionList} />
 							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
-							<Route path="/BillingDataList" component={this.BillingDataList} />	
+						
 							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
-							<Route path="/BillingDataRegistration" component={this.BillingDataRegistration} />
 							<Route path="/InquiryRegistration" component={this.InquiryRegistration} />
 							<Route path="/InquiryList" component={this.InquiryList} />
 							<Route path="/InquiryUpdate" component={this.InquiryUpdate} />
