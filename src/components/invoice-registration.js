@@ -152,7 +152,7 @@ export default class InvoiceRegistration extends React.Component {
 		this.setDisabled()
 		this.forceUpdate()
 	}
-	
+
 	/**
 	 * 請求先変更処理
 	 * @param {*} _data 
@@ -317,7 +317,7 @@ export default class InvoiceRegistration extends React.Component {
 							controlLabel="請求年月"  
 							name="invoice.invoice_yearmonth"
 							value={this.entry.invoice.invoice_yearmonth}
-							onChange={() =>this.changeYearmonth()}
+							onChange={(data) =>this.changeYearmonth(data)}
 						/>
 
 						<CommonFilterBox
