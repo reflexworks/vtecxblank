@@ -47,7 +47,6 @@ export default class InvoiceRegistration extends React.Component {
 		// 登録先のURL
 		this.url = '/d/invoice'
 
-
 		// 初期値の設定
 		this.entry = {
 			invoice: {
@@ -142,6 +141,16 @@ export default class InvoiceRegistration extends React.Component {
 			this.setState({ showBilltoEditModal: false })
 		}
 		this.setDisabled()
+	}
+
+	changeYearmonth(_data) {
+		if (_data) {
+			this.entry.invoice.invoice_yearmonth = _data
+		} else {
+			this.entry.invoice.invoice_yearmonth = ''
+		}
+		this.setDisabled()
+		this.forceUpdate()
 	}
 
 	/**
@@ -295,8 +304,7 @@ export default class InvoiceRegistration extends React.Component {
 					<BillfromEditModal isShow={this.state.showBillfromEditModal} close={() => this.setState({ showBillfromEditModal: false })} edit={(data) => this.setBillfromData(data, 'edit')} data={this.billfrom} />
 					
 					<Form name="mainForm" horizontal data-submit-form>
-						{
-						/*
+						
 						<CommonFilterBox
 							controlLabel="見積番号"	
 							name='invoice.quotation_code'
@@ -304,20 +312,12 @@ export default class InvoiceRegistration extends React.Component {
 							options={this.quotationList}
 							onChange={(data) => this.changeQuotation(data)}
 						/>
-						*/
-						}
-						<CommonInputText
-							controlLabel="見積番号"		
-							name="invoice.quotation_code"
-							type="text"
-							value={this.entry.invoice.quotation_code}
-						/>
 						
 						<CommonMonthlySelect
 							controlLabel="請求年月"  
 							name="invoice.invoice_yearmonth"
 							value={this.entry.invoice.invoice_yearmonth}
-							onChange={() =>this.setDisabled()}
+							onChange={(data) =>this.changeYearmonth(data)}
 						/>
 
 						<CommonFilterBox
