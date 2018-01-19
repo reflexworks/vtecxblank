@@ -2242,11 +2242,11 @@ export class CommonFilterBox extends React.Component {
 		}
 	}
 
-	getList (input) {
+	getList (input, callback) {
 		if (!input) {
 			return Promise.resolve({ options: [] })
 		}
-		return this.props.async(input)
+		return this.props.async(input, callback)
 	}
 
 	render() {
@@ -2316,7 +2316,7 @@ export class CommonMonthlySelect extends React.Component {
 	}
 
 	setOptions = () => {
-		const startYear = 2017
+		const startYear = 2018
 		const setMonth = (_array, _yyyy) => {
 			for (let i = 1, ii = 13; i < ii; ++i) {
 				const mm = i < 10 ? '0' + i : i

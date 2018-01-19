@@ -170,17 +170,11 @@ shipment_service
   weight  
 zone{}
  zone_name
+ zone_code
  pref_codes{}
   pref_code
  invoice_zones{}
   invoice_zone
-delivery_charge_amount
- shipping_date
- prefecture
- city
- size
- quantity
- delivery_charge
 type_ahead
  type
  value
@@ -188,7 +182,12 @@ inquiry
  staff_name
  inquiry_status
  content
-billing_details
+billing_data
+ shipment_service_code
+ shipment_service_type
+ shipment_service_service_name
+ shipment_class
+ shipper_code
  shipping_date
  tracking_number
  delivery_class1
@@ -204,17 +203,16 @@ billing_summary
   quantity
   delivery_charge
   subtotal  
-billing_data
+billing_details
  shipment_service_name
  shipment_service_type
- service_name
+ shipment_service_service_name
  shipment_class
  content{}
   shipping_date
   working_quantity
   billing_quantity
   billing_amount
-
 </content>
 <rights>
 </rights>

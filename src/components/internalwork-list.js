@@ -80,37 +80,16 @@ export default class InternalWorkList extends React.Component {
     		this.setState({ isDisabled: false, isError: error })
     	})
 		
-    	this.sampleData()
 		
-		
-    }
-	
-    sampleData() {
-    	let feed = {entry: []}
-    	for (let i = 1, ii = 4; i < ii; ++i) {
-    		const data = {
-    			internal_work: {
-    				working_date: '2018/0' + i
-    			},
-    			customer: {
-    				customer_name: 'サンプル顧客'
-    			},
-    			quotation: {
-    				quotation_code: '00000' + i + '-01'
-    			}
-    		}
-    		feed.entry.push(data)
-    	}
-    	this.setState({feed: feed})
     }
 	
     /**
      * 更新画面に遷移する
      */
-    onSelect(data) {
+    onSelect(_data) {
     	// 入力画面に遷移
-    	const internal_work_code = data.internal_work.internal_work_code
-    	this.props.history.push('/InternalWorkRegistration?' + internal_work_code)
+    	const code = _data.id.split(',')[0].split('/internal_work/')[1]
+    	this.props.history.push('/InternalWorkUpdate?code=' + code)
     }
 
     /**
@@ -182,7 +161,7 @@ export default class InternalWorkList extends React.Component {
     						data={this.state.feed.entry}
     						edit={(data) => this.onSelect(data) }
     						header={[{
-    							field: 'internal_work.working_date',title: '作業年月', width: '100px'
+    							field: 'internal_work.working_yearmonth',title: '作業年月', width: '100px'
     						}, {
     							field: 'customer.customer_name', title: '顧客', width: '200px'
     						}, {

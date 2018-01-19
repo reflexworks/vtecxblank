@@ -39,6 +39,7 @@ import PackingItemTemplateUpdate from './packingitem-template-update'
 //庫内作業
 import InternalWorkList from './internalwork-list'
 import InternalWorkRegistration from './internalwork-registration'
+import InternalWorkUpdate from './internalwork-update'
 //import InternalWorkExUpload from './internalwork-ex-upload'
 
 //請求書
@@ -328,6 +329,17 @@ class MainContainer extends React.Component {
 	InternalWorkRegistration = (props) => {
 		return (
 			<InternalWorkRegistration 
+				history={props.history}
+			/>
+		)
+	}
+
+	/**
+	 * コンポーネント：庫内作業更新
+	 */
+	InternalWorkUpdate = (props) => {
+		return (
+			<InternalWorkUpdate 
 				history={props.history}
 			/>
 		)
@@ -716,6 +728,7 @@ class MainContainer extends React.Component {
 							<Route path="/PackingItemTemplateList" component={this.PackingItemTemplateList} />
 							<Route path="/PackingItemTemplateUpdate" component={this.PackingItemTemplateUpdate} />
 							<Route path="/InternalWorkRegistration" component={this.InternalWorkRegistration} />
+							<Route path="/InternalWorkUpdate" component={this.InternalWorkUpdate} />
 							<Route path="/InternalWorkList" component={this.InternalWorkList} />
 							<Route path="/QuotationRegistration" component={this.QuotationRegistration} />
 							<Route path="/QuotationList" component={this.QuotationList} />
