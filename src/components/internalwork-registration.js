@@ -65,7 +65,7 @@ export default class InternalWorkRegistration extends React.Component {
 				this.getCustomerListFromBilltoCode()
 			}
 			if (this.entry.customer.customer_code) {
-				this.isPost = true
+				this.getCustomerListFromCustomerCode()
 			}
 		}
 		this.forceUpdate()
@@ -175,7 +175,7 @@ export default class InternalWorkRegistration extends React.Component {
 	}
 
 	/**
-	 * 請求書変更処理
+	 * 顧客選択変更処理
 	 * @param {*} _data 
 	 */
 	changeCustomer(_data) {
@@ -183,7 +183,9 @@ export default class InternalWorkRegistration extends React.Component {
 		this.isPost = false
 		if (_data) {
 			this.entry.customer = _data.data.customer
-			this.isPost = true
+			if (this.monthly) {
+				this.getCustomerListFromCustomerCode()
+			}
 		}
 		this.forceUpdate()
 	}
@@ -203,30 +205,7 @@ export default class InternalWorkRegistration extends React.Component {
 	
 			if (response.status !== 204) {
 				this.master.customerList = response.data.feed.entry
-				this.postData.feed.entry = []
-				for (let entry of response.data.feed.entry) {
-					let obj = {}
-					if (entry.title !== 'create') {
-						if (this.entry.quotation.quotation_code) {
-							obj.quotation = {
-								quotation_code: this.entry.quotation.quotation_code
-							}
-						}
-						obj.customer = {
-							customer_code: entry.customer.customer_code,
-							customer_name: entry.customer.customer_name
-						}
-						obj.internal_work = {
-							working_yearmonth: this.monthly
-						}
-						obj.link = [{
-							___href: '/internalwork/' + entry.customer.customer_code + '_' + this.monthly.replace('/', ''),
-							___rel: 'self'
-						}]
-						this.postData.feed.entry.push(obj)
-					}
-				}
-				this.isPost = true
+				this.setCustomerList(response.data.feed.entry)
 			} else[
 				alert('顧客情報が存在しません。')
 			]
@@ -237,12 +216,82 @@ export default class InternalWorkRegistration extends React.Component {
 		})
 	}
 
+	getCustomerListFromCustomerCode() {
+
+		this.setState({ isDisabled: true })
+
+		const option = '?customer_code=' + this.entry.customer.customer_code + '&working_yearmonth=' + this.monthly
+		axios({
+			url: '/s/internalwork-registration' + option,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				this.entry.customer = response.data.feed.entry[0].customer
+				this.entry.title = response.data.feed.entry[0].title
+				this.setCustomerList(response.data.feed.entry)
+			} else[
+				alert('顧客情報が存在しません。')
+			]
+			this.forceUpdate()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	setCustomerList(_entrys) {
+
+		this.postData.feed.entry = []
+		let isCreate = false
+		for (let entry of _entrys) {
+			let obj = {}
+			if (entry.title !== 'create') {
+				isCreate = true
+				if (this.entry.quotation.quotation_code) {
+					obj.quotation = {
+						quotation_code: this.entry.quotation.quotation_code
+					}
+				}
+				obj.customer = {
+					customer_code: entry.customer.customer_code,
+					customer_name: entry.customer.customer_name
+				}
+				obj.internal_work = {
+					working_yearmonth: this.monthly
+				}
+				obj.link = [{
+					___href: '/internal_work/' + entry.customer.customer_code + '_' + this.monthly.replace('/', ''),
+					___rel: 'self'
+				}]
+				this.postData.feed.entry.push(obj)
+			}
+		}
+		if (isCreate) {
+			this.isPost = true
+		}
+	}
 	/**
-     * 登録完了後の処理
+     * 登録処理
      */
-	callbackRegistrationButton() {
-		alert('登録が完了しました。')
-		location.href = '#/InternalWorkList'
+	doPost() {
+
+		axios({
+			url: '/d/',
+			method: 'post',
+			data: this.postData,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+			alert('登録が完了しました。')
+			location.href = '#/InternalWorkList'
+		}).then(() => {
+		})
+
 	}
 
 	changeStatus(_data) {
@@ -252,10 +301,6 @@ export default class InternalWorkRegistration extends React.Component {
 		this.entry.customer = {}
 		this.isPost = false
 		this.forceUpdate()
-	}
-
-	doPost() {
-		console.log(this.postData)
 	}
 
 	render() {
@@ -314,13 +359,15 @@ export default class InternalWorkRegistration extends React.Component {
 										async={(input)=>this.getQuotationList(input)}
 									/>
 
-									<CommonInputText
-										controlLabel="選択中の見積書"
-										name=""
-										type="text"
-										value={this.entry.quotation.quotation_code}
-										readonly
-									/>
+									{this.entry.quotation.quotation_code &&
+										<CommonInputText
+											controlLabel="選択中の見積書"
+											name=""
+											type="text"
+											value={this.entry.quotation.quotation_code}
+											readonly
+										/>
+									}
 								</div>
 							}
 
@@ -367,21 +414,33 @@ export default class InternalWorkRegistration extends React.Component {
 										async={(input)=>this.getCustomerList(input)}
 									/>
 
-									<CommonInputText
-										controlLabel="顧客コード"
-										name=""
-										type="text"
-										value={this.entry.customer.customer_code}
-										readonly
-									/>
+									{this.entry.customer.customer_code &&
+										<div>
+											<CommonInputText
+												controlLabel="顧客コード"
+												name=""
+												type="text"
+												value={this.entry.customer.customer_code}
+												readonly
+											/>
 
-									<CommonInputText
-										controlLabel="顧客名"
-										name=""
-										type="text"
-										value={this.entry.customer.customer_name}
-										readonly
-									/>
+											<CommonInputText
+												controlLabel="顧客名"
+												name=""
+												type="text"
+												value={this.entry.customer.customer_name}
+												readonly
+											/>
+
+											<CommonInputText
+												controlLabel="庫内作業作成済み"
+												name=""
+												type="text"
+												value={(this.entry.title && this.entry.title === 'create' ? '作成済み' : '未作成')}
+												readonly
+											/>
+										</div>
+									}
 								</div>
 							}
 
