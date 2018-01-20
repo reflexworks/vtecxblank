@@ -1,0 +1,20 @@
+<feed>
+    <entry>
+        <billto>
+            <billto_code>0000001</billto_code>
+            <billto_name>テスト請求先</billto_name>
+            <billing_closing_date></billing_closing_date>
+            <payment_date></payment_date>
+        </billto>
+        <contact_information>
+            <tel></tel>
+            <fax></fax>
+            <email></email>
+            <zip_code></zip_code>
+            <prefecture></prefecture>
+            <address1></address1>
+            <address2></address2>
+        </contact_information>
+        <link href="/billto/0000001" rel="self"/>
+    </entry>
+</feed>
