@@ -1,0 +1,79 @@
+<feed>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000001</warehouse_code>
+            <warehouse_name>川口デリバリーセンター</warehouse_name>
+            <zip_code>332-0027</zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>川口市緑町</address1>
+            <address2>9-35 1F</address2>
+        </warehouse>
+        <link href="/warehouse/0000001" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000002</warehouse_code>
+            <warehouse_name>東京フルフィルメントセンター1</warehouse_name>
+            <zip_code></zip_code>
+            <prefecture>東京都</prefecture>
+            <address1>板橋区高島平</address1>
+            <address2>6-2-1</address2>
+        </warehouse>
+        <link href="/warehouse/0000002" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000003</warehouse_code>
+            <warehouse_name>貨物デリバリーセンター</warehouse_name>
+            <zip_code>332-0027</zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>川口市緑町</address1>
+            <address2>9-35</address2>
+        </warehouse>
+        <link href="/warehouse/0000003" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000004</warehouse_code>
+            <warehouse_name>東京フルフィルメントセンター2</warehouse_name>
+            <zip_code></zip_code>
+            <prefecture>東京都</prefecture>
+            <address1>板橋区高島平</address1>
+            <address2>6-2-3</address2>
+        </warehouse>
+        <link href="/warehouse/0000004" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000005</warehouse_code>
+            <warehouse_name>戸田ディストリビューションセンター1</warehouse_name>
+            <zip_code></zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>戸田市笹目南町</address1>
+            <address2>17-34</address2>
+        </warehouse>
+        <link href="/warehouse/0000005" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000006</warehouse_code>
+            <warehouse_name>戸田ディストリビューションセンター2</warehouse_name>
+            <zip_code></zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>戸田市笹目南町</address1>
+            <address2>18-18</address2>
+        </warehouse>
+        <link href="/warehouse/0000006" rel="self"/>
+    </entry>
+    <entry>
+        <warehouse>
+            <warehouse_code>0000007</warehouse_code>
+            <warehouse_name>川越ディストリビューションセンター</warehouse_name>
+            <zip_code></zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>川越市南大塚</address1>
+            <address2>6-38-3</address2>
+        </warehouse>
+        <link href="/warehouse/0000007" rel="self"/>
+    </entry>
+</feed>

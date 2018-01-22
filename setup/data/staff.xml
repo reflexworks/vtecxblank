@@ -1,0 +1,19 @@
+<feed>
+    <entry>
+        <staff>
+            <staff_name>テストタロウ</staff_name>
+            <role>2</role>
+            <staff_email>xxx@xxx.com</staff_email>
+        </staff>
+        <link href="/staff/0-10-25-3-4-10-1" rel="self"/>
+    </entry>
+    <entry>
+        <staff>
+            <staff_name>テストジロウ</staff_name>
+            <role>3</role>
+            <superior_email>xxx@xxx.com</superior_email>
+            <staff_email>xxx@xxx.com</staff_email>
+        </staff>
+        <link href="/staff/0-10-25-3-4-3-1" rel="self"/>
+    </entry>
+</feed>

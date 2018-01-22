@@ -48,9 +48,8 @@ export default class InternalWorkForm extends React.Component {
 		this.entry.internal_work = this.entry.internal_work || {}
 
 		this.master = {
-			customerList: []
+			shipment_service: []
 		}
-		this.customerList = []
 
 		this.quotationWorksList = null
 		this.quotationWorks = []
@@ -71,7 +70,70 @@ export default class InternalWorkForm extends React.Component {
 	 */
 	componentWillMount() {
 
-		this.setCustomerMasterData()
+		this.getShipmentService()
+
+	}
+
+	setShipmentService(entrys) {
+		let shipment_service = []
+		for (let entry of entrys) {
+			const name = entry.shipment_service.name
+			const type = entry.shipment_service.type
+			const service_name = entry.shipment_service.service_name
+			const sizes = entry.shipment_service.sizes
+			const setName = (_name, _type, _service_name, _size, _weight) => {
+				let array = []
+				if (_name) array.push(_name)
+				if (_service_name) {
+					array.push(_service_name)
+				} else {
+					array.push((_type === '1') ? '発払い' : 'メール便')
+				}
+				if (_size) array.push(_size)
+				if (_weight) array.push(_weight)
+				return array.join(' / ')
+			}
+			if (sizes && name !== 'ヤマト運輸') {
+				for (let size of sizes) {
+					shipment_service.push(setName(name, type, service_name, size.size, size.weight))
+				}
+			} else {
+				shipment_service.push(setName(name, type, service_name))
+			}
+		}
+		return shipment_service
+	}
+
+	/**
+	 * 配送業者取得処理
+	 */
+	getShipmentService() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+
+			if (response.status === 204) {
+				alert('配送業者が1件も登録されていません。')
+			} else {
+
+				this.master.shipment_service = this.setShipmentService(response.data.feed.entry)
+
+				this.sampleData()
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 
 	}
 
@@ -151,6 +213,7 @@ export default class InternalWorkForm extends React.Component {
 			return array
 		}
 		this.quotationWorksList = setQuotationWorks()
+		this.deliveryList = this.master.shipment_service
 		this.deliveryWorksList = setDeliveryWorks()
 		this.packingWorksCodeList = setPackingWorks('item_code')
 		this.packingWorksNameList = setPackingWorks('item_name')
@@ -173,37 +236,6 @@ export default class InternalWorkForm extends React.Component {
 			)
 		}
 		return array
-	}
-
-	setCustomerMasterData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/customer?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.customerList = response.data.feed.entry
-				this.customerList = this.master.customerList.map((obj) => {
-					return {
-						label: obj.customer.customer_name,
-						value: obj.customer.customer_name,
-						data: obj
-					}
-				})
-
-			}
-			this.forceUpdate()
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
 	}
 
 	/**
@@ -280,7 +312,6 @@ export default class InternalWorkForm extends React.Component {
      */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		this.deliveryList = newProps.master.shipment_service
 		this.sampleData()
 		this.forceUpdate()
 	}

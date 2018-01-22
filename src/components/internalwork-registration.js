@@ -6,17 +6,22 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Form,
+	Button
 } from 'react-bootstrap'
 import type {
 	Props
 } from 'demo3.types'
 
-import InternalWorkForm from './internalwork-form'
 import {
-//	CommonRegistrationBtn,
-//	CommonClearBtn
+	CommonMonthlySelect,
+	CommonFilterBox,
+	//	CommonRegistrationBtn,
+	CommonInputText,
+	CommonRadioBtn,
+	CommonTable,
+	CommonFormGroup,
 } from './common'
-
 
 export default class InternalWorkRegistration extends React.Component {
 
@@ -27,89 +32,275 @@ export default class InternalWorkRegistration extends React.Component {
 		// 登録先のURL
 		this.url = '/d/internal_work'
 
+		// POSTデータ
+		this.postData = {
+			feed: {
+				entry: []
+			}
+		}
+
 		// 初期値の設定
 		this.entry = {
 			internal_work: {},
-			remarks: [],
+			quotation: {},
+			billto: {},
+			customer: {}
 		}
 
 		this.master = {
-			shipment_service: []
+			customerList: []
 		}
+		this.status = '0'
+		this.monthly = null
+		this.isPost = false
+
 	}
+
+	setMonthly(_data) {
+		this.monthly = null
+		this.isPost = false
+		if (_data) {
+			this.monthly = _data.value
+			if (this.entry.billto.billto_code) {
+				this.getCustomerListFromBilltoCode()
+			}
+			if (this.entry.customer.customer_code) {
+				this.getCustomerListFromCustomerCode()
+			}
+		}
+		this.forceUpdate()
+	}
+
+	getQuotationList(_input) {
+		return axios({
+			url: `/d/quotation?f&quotation.quotation_code=*${_input}*`,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
 	
-	setShipmentService(entrys) {
-		let shipment_service = []
-		for (let entry of entrys) {
-			const name = entry.shipment_service.name
-			const type = entry.shipment_service.type
-			const service_name = entry.shipment_service.service_name
-			const sizes = entry.shipment_service.sizes
-			const setName = (_name, _type, _service_name, _size, _weight) => {
-				let array = []
-				if (_name) array.push(_name)
-				if (_service_name) {
-					array.push(_service_name)
-				} else {
-					array.push((_type === '1') ? '発払い' : 'メール便')
-				}
-				if (_size) array.push(_size)
-				if (_weight) array.push(_weight)
-				return array.join(' / ')
+			if (response.status !== 204) {
+				const optionsList = response.data.feed.entry.map((_obj) => {
+					return {
+						label: _obj.quotation.quotation_code,
+						value: _obj.quotation.quotation_code,
+						data: _obj
+					}
+				})
+				return { options: optionsList }
 			}
-			if (sizes && name !== 'ヤマト運輸') {
-				for (let size of sizes) {
-					shipment_service.push(setName(name, type, service_name, size.size, size.weight))
-				}
-			} else {
-				shipment_service.push(setName(name, type, service_name))
-			}
-		}
-		return shipment_service
+
+		})
 	}
 
 	/**
-	 * 画面描画の前処理
+	 * 見積書変更処理
+	 * @param {*} _data 
 	 */
-	componentWillMount() {
-
-		const init = () => {
-
-			this.setState({ isDisabled: true })
-
-			axios({
-				url: '/d/shipment_service?f',
-				method: 'get',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then((response) => {
-
-				this.setState({ isDisabled: false })
-
-				if (response.status === 204) {
-					alert('配送業者が1件も登録されていません。')
-				} else {
-
-					this.master.shipment_service = this.setShipmentService(response.data.feed.entry)
-
-					this.forceUpdate()
-				}
-
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
+	changeQuotation(_data) {
+		this.entry.quotation = {}
+		this.entry.billto = {}
+		this.isPost = false
+		if (_data) {
+			this.entry.quotation = _data.data.quotation
+			this.entry.billto = _data.data.billto
+			if (this.monthly) {
+				this.getCustomerListFromBilltoCode()
+			}
 		}
+		this.forceUpdate()
+	}
 
-		init()
+	getBilltoList(_input) {
+		return axios({
+			url: `/d/billto?f&billto.billto_name=*${_input}*`,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				const optionsList = response.data.feed.entry.map((_obj) => {
+					return {
+						label: _obj.billto.billto_name,
+						value: _obj.billto.billto_code,
+						data: _obj
+					}
+				})
+				return { options: optionsList }
+			}
 
+		})
+	}
+
+	/**
+	 * 請求書変更処理
+	 * @param {*} _data 
+	 */
+	changeBillto(_data) {
+		this.entry.billto = {}
+		this.isPost = false
+		if (_data) {
+			this.entry.billto = _data.data.billto
+			if (this.monthly) {
+				this.getCustomerListFromBilltoCode()
+			}
+		}
+		this.forceUpdate()
+	}
+
+	getCustomerList(_input) {
+		return axios({
+			url: `/d/customer?f&customer.customer_name=*${_input}*`,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				const optionsList = response.data.feed.entry.map((_obj) => {
+					return {
+						label: _obj.customer.customer_name,
+						value: _obj.customer.customer_code,
+						data: _obj
+					}
+				})
+				return { options: optionsList }
+			}
+
+		})
+	}
+
+	/**
+	 * 顧客選択変更処理
+	 * @param {*} _data 
+	 */
+	changeCustomer(_data) {
+		this.entry.customer = {}
+		this.isPost = false
+		if (_data) {
+			this.entry.customer = _data.data.customer
+			if (this.monthly) {
+				this.getCustomerListFromCustomerCode()
+			}
+		}
+		this.forceUpdate()
+	}
+
+	getCustomerListFromBilltoCode() {
+
+		this.setState({ isDisabled: true })
+
+		const option = '?billto_code=' + this.entry.billto.billto_code + '&working_yearmonth=' + this.monthly
+		axios({
+			url: '/s/internalwork-registration' + option,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				this.master.customerList = response.data.feed.entry
+				this.setCustomerList(response.data.feed.entry)
+			} else[
+				alert('顧客情報が存在しません。')
+			]
+			this.forceUpdate()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	getCustomerListFromCustomerCode() {
+
+		this.setState({ isDisabled: true })
+
+		const option = '?customer_code=' + this.entry.customer.customer_code + '&working_yearmonth=' + this.monthly
+		axios({
+			url: '/s/internalwork-registration' + option,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				this.entry.customer = response.data.feed.entry[0].customer
+				this.entry.title = response.data.feed.entry[0].title
+				this.setCustomerList(response.data.feed.entry)
+			} else[
+				alert('顧客情報が存在しません。')
+			]
+			this.forceUpdate()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	setCustomerList(_entrys) {
+
+		this.postData.feed.entry = []
+		let isCreate = false
+		for (let entry of _entrys) {
+			let obj = {}
+			if (entry.title !== 'create') {
+				isCreate = true
+				if (this.entry.quotation.quotation_code) {
+					obj.quotation = {
+						quotation_code: this.entry.quotation.quotation_code
+					}
+				}
+				obj.customer = {
+					customer_code: entry.customer.customer_code,
+					customer_name: entry.customer.customer_name
+				}
+				obj.internal_work = {
+					working_yearmonth: this.monthly
+				}
+				obj.link = [{
+					___href: '/internal_work/' + entry.customer.customer_code + '_' + this.monthly.replace('/', ''),
+					___rel: 'self'
+				}]
+				this.postData.feed.entry.push(obj)
+			}
+		}
+		if (isCreate) {
+			this.isPost = true
+		}
 	}
 	/**
-     * 登録完了後の処理
+     * 登録処理
      */
-	callbackRegistrationButton() {
-		alert('登録が完了しました。')
-		location.href = '#/InternalWorkList'
+	doPost() {
+
+		axios({
+			url: '/d/',
+			method: 'post',
+			data: this.postData,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+			alert('登録が完了しました。')
+			location.href = '#/InternalWorkList'
+		}).then(() => {
+		})
+
+	}
+
+	changeStatus(_data) {
+		this.status = _data
+		this.entry.quotation = {}
+		this.entry.billto = {}
+		this.entry.customer = {}
+		this.isPost = false
+		this.forceUpdate()
 	}
 
 	render() {
@@ -117,13 +308,184 @@ export default class InternalWorkRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>庫内作業状況：2017年12月 株式会社 テスト顧客</PageHeader>
+						<PageHeader>庫内作業登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InternalWorkForm name="mainForm" entry={this.entry} master={this.master} />
+						<Form name="mainForm" horizontal data-submit-form>
+
+							<CommonMonthlySelect
+								controlLabel="作業年月"
+								name="internal_work.working_yearmonth"
+								value={this.entry.internal_work.working_yearmonth}
+								onChange={(data)=>this.setMonthly(data)}
+							/>
+
+							<CommonRadioBtn
+								controlLabel=" "
+								name=""
+								checked={this.status}
+								data={[{
+									label: '見積書から作成',
+									value: '0',
+								}, {
+									label: '請求先から作成',
+									value: '1',
+								}, {
+									label: '顧客から作成',
+									value: '2',
+								}]}
+								onChange={(data)=>this.changeStatus(data)}
+							/>
+
+							{this.status === '0' &&
+								<div>
+									<CommonInputText
+										controlLabel=" "
+										name=""
+										type="text"
+										value="見積書に紐付けされている請求先から顧客ごとに庫内作業を作成します。"
+										readonly
+										size="lg"
+									/>
+
+									<CommonFilterBox
+										controlLabel="見積書選択"
+										placeholder="見積書コード"
+										name=""
+										value={this.entry.quotation.quotation_code}
+										onChange={(data) => this.changeQuotation(data)}
+										async={(input)=>this.getQuotationList(input)}
+									/>
+
+									{this.entry.quotation.quotation_code &&
+										<CommonInputText
+											controlLabel="選択中の見積書"
+											name=""
+											type="text"
+											value={this.entry.quotation.quotation_code}
+											readonly
+										/>
+									}
+								</div>
+							}
+
+							{this.status === '1' &&
+								<div>
+									<CommonInputText
+										controlLabel=" "
+										name=""
+										type="text"
+										value="請求先に紐付けされている顧客ごとに庫内作業を作成します。"
+										readonly
+										size="lg"
+									/>
+
+									<CommonFilterBox
+										controlLabel="請求先選択"
+										placeholder="請求先名"
+										name=""
+										value={this.entry.billto.billto_name}
+										onChange={(data) => this.changeBillto(data)}
+										async={(input)=>this.getBilltoList(input)}
+									/>
+
+								</div>
+							}
+
+							{this.status === '2' &&
+								<div>
+									<CommonInputText
+										controlLabel=" "
+										name=""
+										type="text"
+										value="選択した顧客の庫内作業を作成します。"
+										readonly
+										size="lg"
+									/>
+
+									<CommonFilterBox
+										controlLabel="顧客選択"
+										placeholder="顧客名"
+										name=""
+										value={this.entry.customer.customer_name}
+										onChange={(data) => this.changeCustomer(data)}
+										async={(input)=>this.getCustomerList(input)}
+									/>
+
+									{this.entry.customer.customer_code &&
+										<div>
+											<CommonInputText
+												controlLabel="顧客コード"
+												name=""
+												type="text"
+												value={this.entry.customer.customer_code}
+												readonly
+											/>
+
+											<CommonInputText
+												controlLabel="顧客名"
+												name=""
+												type="text"
+												value={this.entry.customer.customer_name}
+												readonly
+											/>
+
+											<CommonInputText
+												controlLabel="庫内作業作成済み"
+												name=""
+												type="text"
+												value={(this.entry.title && this.entry.title === 'create' ? '作成済み' : '未作成')}
+												readonly
+											/>
+										</div>
+									}
+								</div>
+							}
+
+							{((this.status === '0' && this.monthly && this.entry.quotation.quotation_code) || this.status === '1' && this.entry.billto.billto_code) && 
+								<div>
+									<CommonInputText
+										controlLabel="請求先コード"
+										name="billto.billto_code"
+										type="text"
+										value={this.entry.billto.billto_code}
+										readonly
+									/>
+									<CommonInputText
+										controlLabel="請求先名"
+										name="billto.billto_name"
+										type="text"
+										value={this.entry.billto.billto_name}
+										readonly
+									/>
+									<CommonTable
+										controlLabel=" "
+										name=""
+										data={this.master.customerList}
+										header={[{
+											field: 'customer.customer_code', title: '顧客コード', width: '100px'
+										}, {
+											field: 'customer.customer_name', title: '顧客名', width: '200px'
+										}, {
+											field: 'title', title: '庫内作業作成済み', width: '200px', convert: { 'create': '作成済み', 'none': '未作成'}
+										}]}
+									/>
+								</div>
+							}
+						</Form>
 					</Col>
+					<CommonFormGroup controlLabel=" ">
+						<Button
+							bsStyle="primary"
+							bsSize="small"
+							disabled={!this.isPost}
+							onClick={() => this.doPost()}
+						>
+							新規作成
+						</Button>
+					</CommonFormGroup>
 				</Row>
 			</Grid>
 		)
