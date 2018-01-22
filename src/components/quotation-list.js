@@ -91,8 +91,8 @@ export default class QuotationList extends React.Component {
 		this.props.history.push('/QuotationUpdate?' + _data.link[0].___href.replace('/quotation/', ''))
 	}
 
-	moveInvoiceRegistration(/*_data*/) {
-		this.props.history.push('/InvoiceRegistration')
+	moveInvoiceRegistration(_data) {
+		this.props.history.push('/InvoiceRegistration?'+ _data.link[0].___href.replace('/quotation/', ''))
 		//location.href = '#/InvoiceRegistration'
 	}
 	/**
