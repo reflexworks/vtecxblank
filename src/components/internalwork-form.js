@@ -62,46 +62,146 @@ export default class InternalWorkForm extends React.Component {
 		this.deliveryWorks = []
 		this.pickupWorks = []
 
-	}
+		// 月次作業
+		this.monthlyWorks = []
+		// 月次作業（見積明細の一覧データキャッシュ）
+		this.monthlyWorksCash = {}
 
+		this.convert_approval_status = { '0': '未承認', '1': '承認中', '2': '承認済み'}
+
+	}
 
 	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
+     * 親コンポーネントがpropsの値を更新した時に呼び出される
+     * @param {*} newProps
+     */
+	componentWillReceiveProps(newProps) {
+		this.entry = newProps.entry
+		if (this.entry.id) {
+			this.getShipmentService()
+		}
+	}
 
-		this.getShipmentService()
+	/**
+	 * 庫内作業詳細取得処理
+	 */
+	getQuotation() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d'+ this.entry.internal_work.quotation_key,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			const entry = response.data.feed.entry[0]
+			this.setMasterList(entry.item_details, entry.quotation.packing_item)
+
+			this.getInternalWork()
+			this.setState({ isDisabled: false })
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 
 	}
 
-	setShipmentService(entrys) {
-		let shipment_service = []
-		for (let entry of entrys) {
-			const name = entry.shipment_service.name
-			const type = entry.shipment_service.type
-			const service_name = entry.shipment_service.service_name
-			const sizes = entry.shipment_service.sizes
-			const setName = (_name, _type, _service_name, _size, _weight) => {
-				let array = []
-				if (_name) array.push(_name)
-				if (_service_name) {
-					array.push(_service_name)
+	/**
+	 * 庫内作業詳細取得処理
+	 */
+	getInternalWork() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/get-internalwork?code='+ this.entry.id.split(',')[0] + '&day=' + this.worksDay,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+
+			this.quotationWorks = []
+			this.deliveryWorks = []
+			this.pickupWorks = []
+			this.packingWorks = []
+			for (let entry of response.data.feed.entry) {
+				const internal_work = entry.internal_work
+				let key
+				let obj
+				if (internal_work.work_type === '4') {
+					key = 'monthlyWorks'
+					obj = {
+						monthly_name: internal_work.monthly_name,
+						monthly_content: internal_work.monthly_content ? internal_work.monthly_content : '',
+						unit: internal_work.item_details_unit,
+						approval_status: internal_work.approval_status,
+						id: '_monthlyWorks_' + internal_work.item_details_name,
+						data: entry
+					}
+					const index = this.monthlyWorksCash[obj.monthly_name]
+					if (index || index === 0) {
+						this[key][index] = obj
+					} else {
+						this[key].push(obj)
+					}
 				} else {
-					array.push((_type === '1') ? '発払い' : 'メール便')
+					if (internal_work.work_type === '0') {
+						key = 'quotationWorks'
+						obj = {
+							item_name: internal_work.item_details_name,
+							quantity: internal_work.quantity ? internal_work.quantity : '',
+							unit: internal_work.item_details_unit,
+							approval_status: internal_work.approval_status,
+							id: '_item_details_' + internal_work.item_details_name,
+							data: entry
+						}
+					}
+					if (internal_work.work_type === '1') {
+						key = 'deliveryWorks'
+						obj = {
+							name: internal_work.shipment_service_name,
+							quantity: internal_work.quantity ? internal_work.quantity : '',
+							approval_status: internal_work.approval_status,
+							id: '_shipment_service_' + internal_work.shipment_service_name,
+							data: entry
+						}
+					}
+					if (internal_work.work_type === '2') {
+						key = 'pickupWorks'
+						obj = {
+							name: internal_work.shipment_service_name,
+							quantity: internal_work.quantity ? internal_work.quantity : '',
+							approval_status: internal_work.approval_status,
+							id: '_shipment_service_' + internal_work.shipment_service_name,
+							data: entry
+						}
+					}
+					if (internal_work.work_type === '3') {
+						key = 'packingWorks'
+						obj = {
+							item_code: internal_work.packing_item_code,
+							item_name: internal_work.packing_item_name,
+							quantity: internal_work.quantity ? internal_work.quantity : '',
+							approval_status: internal_work.approval_status,
+							id: '_packing_item_' + internal_work.packing_item_code,
+							data: entry
+						}
+					}
+					this[key].push(obj)
 				}
-				if (_size) array.push(_size)
-				if (_weight) array.push(_weight)
-				return array.join(' / ')
 			}
-			if (sizes && name !== 'ヤマト運輸') {
-				for (let size of sizes) {
-					shipment_service.push(setName(name, type, service_name, size.size, size.weight))
-				}
-			} else {
-				shipment_service.push(setName(name, type, service_name))
-			}
-		}
-		return shipment_service
+			this.forceUpdate()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+
 	}
 
 	/**
@@ -126,15 +226,57 @@ export default class InternalWorkForm extends React.Component {
 			} else {
 
 				this.master.shipment_service = this.setShipmentService(response.data.feed.entry)
+				this.getQuotation()
 
-				this.sampleData()
-				this.forceUpdate()
 			}
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})
 
+	}
+
+	setShipmentService(entrys) {
+		let shipment_service = []
+		for (let entry of entrys) {
+			const code = entry.shipment_service.code
+			const name = entry.shipment_service.name
+			const type = entry.shipment_service.type
+			const service_name = entry.shipment_service.service_name
+			const sizes = entry.shipment_service.sizes
+			const setName = (_name, _type, _service_name, _size, _weight) => {
+				let array = []
+				if (_name) array.push(_name)
+				if (_service_name) {
+					array.push(_service_name)
+				} else {
+					array.push((_type === '1') ? '発払い' : 'メール便')
+				}
+				if (_size) array.push(_size)
+				if (_weight) array.push(_weight)
+				return array.join(' / ')
+			}
+			if (sizes && name !== 'ヤマト運輸') {
+				for (let size of sizes) {
+					shipment_service.push({
+						code: code,
+						name: setName(name, type, service_name, size.size, size.weight),
+						type: type,
+						service_name: service_name,
+						size: size.size,
+						weight: size.weight
+					})
+				}
+			} else {
+				shipment_service.push({
+					code: code,
+					name: setName(name, type, service_name),
+					type: type,
+					service_name: service_name
+				})
+			}
+		}
+		return shipment_service
 	}
 
 	days = () => {
@@ -145,33 +287,36 @@ export default class InternalWorkForm extends React.Component {
 		return array
 	}
 
-	sampleData() {
+	setMasterList(_item_details, _packing_item) {
 		const setOptions = (_label, _value, _data) => {
 			return { label: _label, value: _value, data: _data }
 		}
 		const setQuotationWorks = ()=>{
 			let array = []
-			const unit = (_index) => {
-				let value = ''
-				if (_index === 0) value = '1個'
-				if (_index === 1) value = '1箱'
-				if (_index === 2) value = '20F'
-				if (_index === 3) value = '1梱包'
-				if (_index === 4) value = '1点'
-				return value
-			}
-			for (let i = 0, ii = 5; i < ii; ++i) {
-				const obj = {
-					work_record: {
-						item_name: '見積作業' + i,
-						unit_name: '',
-						unit: unit(i),
-						quantity: (i === 3 ? '3' : ''),
-						status: (i === 3 ? '上長承認中' : '')
-					},
-					id: 'work_record' + i
+			this.monthlyWorks = []
+			let monthlyWorksIndex = 0
+			for (let i = 0, ii = _item_details.length; i < ii; ++i) {
+				const obj = _item_details[i]
+				if (obj.unit_name === '月') {
+					this.monthlyWorksCash[obj.item_name] = monthlyWorksIndex
+					this.monthlyWorks.push({
+						monthly_name: obj.item_name,
+						monthly_content: '',
+						unit: obj.unit,
+						approval_status: '',
+						data: {
+							internal_work: {
+								work_type: '4',
+								monthly_name: obj.item_name,
+								item_details_unit: obj.unit
+							}
+						}
+					})
+					monthlyWorksIndex++
+				} else {
+					obj.id = '_item_details_' + obj.item_name
+					array.push(setOptions(obj.item_name, obj.item_name, obj))
 				}
-				array.push(setOptions(obj.work_record.item_name, obj.work_record.item_name, obj))
 			}
 			return array
 		}
@@ -179,36 +324,18 @@ export default class InternalWorkForm extends React.Component {
 
 			let array = []
 			for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
-				const obj = {
-					shipment_service: {
-						name: this.deliveryList[i]
-					},
-					work_record: {
-						quantity: (i === 3 ? '3' : ''),
-						status: (i === 3 ? '上長承認中' : '')
-					},
-					id: 'delivery_charge_amount' + i
-				}
-				array.push(setOptions(obj.shipment_service.name, obj.shipment_service.name, obj))
+				const obj = this.deliveryList[i]
+				obj.id = '_shipment_service_' + obj.name
+				array.push(setOptions(obj.name, obj.name, obj))
 			}
 			return array
 		}
 		const setPackingWorks = (_key)=>{
 			let array = []
-			for (let i = 0, ii = 10; i < ii; ++i) {
-				const obj = {
-					packing_item: {
-						item_code: 'SH0000' + i + '-01',
-						item_name: '資材名称' + i
-					},	
-					work_record: {
-						item_name: '資材梱包作業' + i,
-						quantity: (i === 3 ? '3' : ''),
-						status: (i === 3 ? '上長承認中' : '')
-					},
-					id: 'packing_item' + i
-				}
-				array.push(setOptions(obj.packing_item[_key], obj.packing_item[_key], obj))
+			for (let i = 0, ii = _packing_item.length; i < ii; ++i) {
+				const obj = _packing_item[i]
+				obj.id = '_packing_item_' + obj.item_code
+				array.push(setOptions(obj[_key], obj[_key], obj))
 			}
 			return array
 		}
@@ -217,10 +344,13 @@ export default class InternalWorkForm extends React.Component {
 		this.deliveryWorksList = setDeliveryWorks()
 		this.packingWorksCodeList = setPackingWorks('item_code')
 		this.packingWorksNameList = setPackingWorks('item_name')
-		this.year = '2017'
-		this.month = '12'
-		this.working_date = this.year + '/' + this.month
-		this.worksDay = this.working_date === this.to.year + '/' + this.to.month ? this.to.day : 1
+		this.working_date = this.entry.internal_work.working_yearmonth
+		if (this.working_date) {
+			this.year = this.working_date.split('/')[0]
+			this.month = this.working_date.split('/')[1]
+			this.worksDay = this.working_date === this.to.year + '/' + this.to.month ? this.to.day : 1
+		}
+		this.forceUpdate()
 	}
 
 	monthlyDeliveryTables = () => {
@@ -228,7 +358,7 @@ export default class InternalWorkForm extends React.Component {
 		for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
 			array.push(
 				<div>
-					<CommonFormGroup controlLabel={this.deliveryList[i]} size="lg">
+					<CommonFormGroup controlLabel={this.deliveryList[i].name} size="lg">
 						<CommonDisplayCalendar year={this.year} month={this.month} />
 					</CommonFormGroup>
 					<hr />
@@ -255,12 +385,84 @@ export default class InternalWorkForm extends React.Component {
 			}
 		}
 
-		if (duplicate) {
-			alert('すでに存在しています。')
-		} else {
+		if (!duplicate) {
+			this.postInternalWork(_key, _data)
+		}
+	}
+
+	postInternalWork(_key, _data) {
+
+		this.setState({ isDisabled: true })
+
+		let obj = {
+			feed: {
+				entry: [{
+					internal_work: {
+
+					}
+				}]
+			}
+		}
+		// 見積作業の場合
+		if (_key === 'quotationWorks') {
+			obj.feed.entry[0].internal_work = {
+				work_type: '0',
+				item_details_name: _data.value,
+				item_details_unit: _data.data.unit
+			}
+		}
+		// 発送作業の場合
+		if (_key === 'deliveryWorks') {
+			obj.feed.entry[0].internal_work = {
+				work_type: '1',
+				shipment_service_code: _data.data.code,
+				shipment_service_name: _data.data.name,
+				shipment_service_type: _data.data.type,
+				shipment_service_service_name: _data.data.service_name,
+				shipment_service_size: _data.data.size,
+				shipment_service_weight: _data.data.weight
+			}
+		}
+		// 集荷作業の場合
+		if (_key === 'pickupWorks') {
+			obj.feed.entry[0].internal_work = {
+				work_type: '2',
+				shipment_service_code: _data.data.code,
+				shipment_service_name: _data.data.name,
+				shipment_service_type: _data.data.type,
+				shipment_service_service_name: _data.data.service_name,
+				shipment_service_size: _data.data.size,
+				shipment_service_weight: _data.data.weight
+			}
+		}
+		// 資材作業の場合
+		if (_key === 'packingWorks') {
+			obj.feed.entry[0].internal_work = {
+				work_type: '3',
+				packing_item_code: _data.data.item_code,
+				packing_item_name: _data.data.item_name
+			}
+		}
+		axios({
+			url: '/d' + this.entry.link[0].___href + '/list',
+			method: 'post',
+			data: obj,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+
+			this.setState({ isDisabled: false })
+
+			_data.data.quantity = ''
+			_data.data.approval_status = ''
+			_data.data.data = obj.feed.entry[0]
 			this[_key].push(_data.data)
 			this.forceUpdate()
-		}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 	}
 
 	/**
@@ -270,8 +472,81 @@ export default class InternalWorkForm extends React.Component {
 	 * @param {*} _index 
 	 */
 	editList(_key, _data, _index) {
-		this[_key][_index].work_record.quantity = _data
+		if (_key === 'monthlyWorks') {
+			this[_key][_index].monthly_content = _data
+		} else {
+			this[_key][_index].quantity = _data
+		}
 		this.forceUpdate()
+	}
+
+	blurList(_key, _data, _index) {
+		const updateInternalWork = (_entry, _isCreate) => {
+			const obj = {feed: {entry: [_entry]}}
+			axios({
+				url: '/d' + this.entry.id.split(',')[0] + '/data',
+				method: _isCreate ? 'post' : 'put',
+				data: obj,
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+
+				this.setState({ isDisabled: false })
+
+				if (_isCreate) {
+					const key = response.data.feed.title
+					this[_key][_index].data.id = response.data.feed.title + ',1'
+					this[_key][_index].data.link = [{
+						___href: key,
+						___rel: 'self'
+					}]
+				} else {
+					const ids = this[_key][_index].data.id.split(',')
+					const id = ids[0]
+					const revision = parseInt(ids[1]) + 1
+					this[_key][_index].data.id = id + ',' + revision
+				}
+				this[_key][_index].data.internal_work.quantity = _data
+				this[_key][_index].data.internal_work.approval_status = _entry.internal_work.approval_status
+				this[_key][_index].approval_status = _entry.internal_work.approval_status
+				this.forceUpdate()
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+		const entry = this[_key][_index].data
+		if (!_data && entry.internal_work.quantity) {
+			// 個数が元々入力されていて、かつ変更値が空の場合
+			// 空白を元の値に戻す
+			this[_key][_index].quantity = entry.internal_work.quantity
+			this.forceUpdate()
+		} else if (!_data || _data && entry.internal_work.quantity === _data) {
+			// 入力値に変更なし
+		} else if (_data && !entry.internal_work.quantity){
+			// 新規入力
+			let obj = {
+				internal_work: entry.internal_work
+			}
+			obj.internal_work.approval_status = '0'
+			if (_key === 'monthlyWorks') {
+				obj.internal_work.monthly_content = _data
+			} else {
+				obj.internal_work.quantity = _data
+				obj.internal_work.working_day = this.worksDay + ''
+			}
+			updateInternalWork(obj, true)
+		} else {
+			// 入力値更新
+			entry.internal_work.approval_status = '1'
+			if (_key === 'monthlyWorks') {
+				entry.internal_work.monthly_content = _data
+			} else {
+				entry.internal_work.quantity = _data
+			}
+			updateInternalWork(entry)
+		}
 	}
 	
 	/**
@@ -289,7 +564,7 @@ export default class InternalWorkForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	changed() {
+	changedQuotationCode() {
 		
 	}
 
@@ -306,14 +581,10 @@ export default class InternalWorkForm extends React.Component {
 	closeRemarks() {
 		this.setState({showRemarksModal:false})
 	}
-	/**
-     * 親コンポーネントがpropsの値を更新した時に呼び出される
-     * @param {*} newProps
-     */
-	componentWillReceiveProps(newProps) {
-		this.entry = newProps.entry
-		this.sampleData()
-		this.forceUpdate()
+
+	changeDays(_data) {
+		this.worksDay = _data
+		this.getInternalWork()
 	}
 
 	render() {
@@ -321,24 +592,6 @@ export default class InternalWorkForm extends React.Component {
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
-
-				<div className="hide">
-					<CommonInputText
-						controlLabel="作業年月"
-						name="internal_work.working_date"
-						type="text"
-						value={this.working_date}
-						readonly
-					/>
-
-					<CommonInputText
-						controlLabel="顧客"
-						name="customer.customer_name"
-						type="text"
-						value={this.customer_name}
-						readonly
-					/>
-				</div>
 
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
@@ -351,25 +604,35 @@ export default class InternalWorkForm extends React.Component {
 									name="quotation.quotation_code"
 									value={this.entry.quotation.quotation_code}
 									options={this.quotationList}
-									onChange={(data) => this.changed(data)}
+									onChange={(data) => this.changedQuotationCode(data)}
+								/>
+								<CommonInputText
+									controlLabel="作業対象見積書"
+									name="quotation.quotation_code"
+									type="text"
+									value={this.entry.quotation.quotation_code}
+									readonly
 								/>
 							</Panel>
 
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
-								<CommonInputText
-									controlLabel="管理基本料"
-									name="internal_work.mgmt_basic_fee"
-									type="text"
-									placeholder="管理基本料"
-									value={this.entry.internal_work.mgmt_basic_fee}
-								/>
-
-								<CommonInputText
-									controlLabel="保管費"
-									name="internal_work.custody_fee"
-									type="text"
-									placeholder="保管費"
-									value={this.entry.internal_work.custody_fee}
+								<CommonTable
+									controlLabel=""
+									name="monthlyWorks"
+									data={this.monthlyWorks}
+									header={[{
+										field: 'monthly_name',title: '作業内容', width: '300px'
+									}, {
+										field: 'monthly_content', title: '入力値', width: '50px',
+										input: {
+											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
+											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
+										}
+									}, {
+										field: 'unit',title: '単位', width: '50px'
+									}, {
+										field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
+									}]}
 								/>
 							</Panel>
 						</PanelGroup>
@@ -380,7 +643,14 @@ export default class InternalWorkForm extends React.Component {
 						<ListGroup>
 							<ListGroupItem>
 								<div style={{ float: 'left', 'padding-top': '5px', 'padding-right': '10px'}}>作業日：{this.working_date}/</div>
-								<CommonSelectBox pure bsSize="sm" options={this.days()} value={this.worksDay} style={{ float: 'left', width: '50px' }} />
+								<CommonSelectBox
+									pure
+									bsSize="sm"
+									options={this.days()}
+									value={this.worksDay}
+									style={{ float: 'left', width: '50px' }}
+									onChange={(data) => this.changeDays(data)}
+								/>
 								<div style={{ clear: 'both' }}></div>
 							</ListGroupItem>
 						</ListGroup>
@@ -390,16 +660,17 @@ export default class InternalWorkForm extends React.Component {
     						name="quotationWorks"
     						data={this.quotationWorks}
     						header={[{
-    							field: 'work_record.item_name',title: '作業内容', width: '300px'
+    							field: 'item_name',title: '作業内容', width: '300px'
     						}, {
-    							field: 'work_record.quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.editList('quotationWorks', data, rowindex)}
+									onChange: (data, rowindex) => { this.editList('quotationWorks', data, rowindex) },
+									onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'work_record.unit',title: '単位', width: '50px'
+    							field: 'unit',title: '単位', width: '50px'
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '300px'
+    							field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
 							}]}
 							remove={(data, i)=>this.removeList('quotationWorks', i)}
     					>
@@ -421,14 +692,15 @@ export default class InternalWorkForm extends React.Component {
     						name="deliveryWorks"
     						data={this.deliveryWorks}
     						header={[{
-    							field: 'shipment_service.name',title: '配送業者', width: '300px'
+    							field: 'name',title: '配送業者', width: '300px'
     						}, {
-    							field: 'work_record.quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.editList('deliveryWorks', data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('deliveryWorks', data, rowindex)},
+									onBlur: (data, rowindex) => { this.blurList('deliveryWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '350px'
+    							field: 'approval_status', title: '承認ステータス', width: '350px', convert: this.convert_approval_status
     						}]}
 							remove={(data, i)=>this.removeList('deliveryWorks', i)}
     					>
@@ -450,14 +722,15 @@ export default class InternalWorkForm extends React.Component {
     						name="pickupWorks"
     						data={this.pickupWorks}
     						header={[{
-    							field: 'shipment_service.name',title: '配送業者', width: '300px'
+    							field: 'name',title: '配送業者', width: '300px'
     						}, {
-    							field: 'work_record.quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.editList('pickupWorks', data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('pickupWorks', data, rowindex)},
+									onBlur: (data, rowindex) => { this.blurList('pickupWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '350px'
+    							field: 'approval_status', title: '承認ステータス', width: '350px', convert: this.convert_approval_status
     						}]}
 							remove={(data, i)=>this.removeList('pickupWorks', i)}
     					>
@@ -479,16 +752,17 @@ export default class InternalWorkForm extends React.Component {
     						name="packingWorks"
     						data={this.packingWorks}
     						header={[{
-								field: 'packing_item.item_code',title: '品番', width: '100px'
+								field: 'item_code',title: '品番', width: '100px'
 							}, {
-								field: 'packing_item.item_name', title: '商品名称', width: '300px'
+								field: 'item_name', title: '商品名称', width: '300px'
     						}, {
-    							field: 'work_record.quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '50px',
 								input: {
-									onChange: (data, rowindex)=>{this.editList('packingWorks', data, rowindex)}
+									onChange: (data, rowindex)=>{this.editList('packingWorks', data, rowindex)},
+									onBlur: (data, rowindex) => { this.blurList('packingWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'work_record.status', title: '承認ステータス', width: '200px'
+    							field: 'approval_status', title: '承認ステータス', width: '200px', convert: this.convert_approval_status
     						}]}
 							remove={(data, i)=>this.removeList('packingWorks', i)}
     					>
