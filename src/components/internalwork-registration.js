@@ -105,6 +105,7 @@ export default class InternalWorkRegistration extends React.Component {
 		if (_data) {
 			this.entry.quotation = _data.data.quotation
 			this.entry.billto = _data.data.billto
+			this.entry.link = _data.data.link
 			if (this.monthly) {
 				this.getCustomerListFromBilltoCode()
 			}
@@ -261,13 +262,27 @@ export default class InternalWorkRegistration extends React.Component {
 					customer_name: entry.customer.customer_name
 				}
 				obj.internal_work = {
-					working_yearmonth: this.monthly
+					working_yearmonth: this.monthly,
+					quotation_key: this.entry.link[0].___href
 				}
+				const uri = '/internal_work/' + entry.customer.customer_code + '_' + this.monthly.replace('/', '')
 				obj.link = [{
-					___href: '/internal_work/' + entry.customer.customer_code + '_' + this.monthly.replace('/', ''),
+					___href: uri,
 					___rel: 'self'
 				}]
 				this.postData.feed.entry.push(obj)
+				this.postData.feed.entry.push({
+					link : [{
+						___href: uri + '/list',
+						___rel: 'self'
+					}]
+				})
+				this.postData.feed.entry.push({
+					link : [{
+						___href: uri + '/data',
+						___rel: 'self'
+					}]
+				})
 			}
 		}
 		if (isCreate) {
@@ -351,8 +366,8 @@ export default class InternalWorkRegistration extends React.Component {
 									/>
 
 									<CommonFilterBox
-										controlLabel="見積書選択"
-										placeholder="見積書コード"
+										controlLabel="見積書検索"
+										placeholder="見積書コードで検索"
 										name=""
 										value={this.entry.quotation.quotation_code}
 										onChange={(data) => this.changeQuotation(data)}
@@ -383,8 +398,8 @@ export default class InternalWorkRegistration extends React.Component {
 									/>
 
 									<CommonFilterBox
-										controlLabel="請求先選択"
-										placeholder="請求先名"
+										controlLabel="請求先検索"
+										placeholder="請求先名で検索"
 										name=""
 										value={this.entry.billto.billto_name}
 										onChange={(data) => this.changeBillto(data)}
@@ -406,8 +421,8 @@ export default class InternalWorkRegistration extends React.Component {
 									/>
 
 									<CommonFilterBox
-										controlLabel="顧客選択"
-										placeholder="顧客名"
+										controlLabel="顧客検索"
+										placeholder="顧客名で検索"
 										name=""
 										value={this.entry.customer.customer_name}
 										onChange={(data) => this.changeCustomer(data)}

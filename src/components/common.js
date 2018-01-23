@@ -1291,6 +1291,17 @@ export class CommonInputText extends React.Component {
 		}
 	}
 
+	/**
+	 * フォーカスアウト時
+	 * @param {*} e 
+	 */
+	blured(e: InputEvent) {
+		const value = e.target.value
+		if (this.props.onBlur) {
+			this.props.onBlur(value)
+		}
+	}
+
 	render() {
 
 		const TextNode = () => {
@@ -1306,6 +1317,7 @@ export class CommonInputText extends React.Component {
 						placeholder={this.state.placeholder}
 						value={this.state.value}
 						onChange={(e) => this.changed(e)}
+						onBlur={(e) => this.blured(e)}
 						data-validate={this.props.validate}
 						data-required={this.props.required}
 						bsSize="small"
@@ -1599,6 +1611,7 @@ export class CommonTable extends React.Component {
 							type="text"
 							value={value}
 							onChange={(data) => input.onChange(data, _index)}
+							onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
 							entitiykey={entitiykey}
 							table
 						/>
