@@ -229,7 +229,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 							<CommonFilterBox
 								controlLabel="見積書検索"
-								placeholder="見積書コードで検索"
+								placeholder="見積書コードを入力してください"
 								name=""
 								value={this.entry.quotation.quotation_code}
 								onChange={(data) => this.changeQuotation(data)}
