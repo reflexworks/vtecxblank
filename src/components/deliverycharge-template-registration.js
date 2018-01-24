@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'
-import axios from 'axios'
+//import axios from 'axios'
 import {
 	Grid,
 	Row,
@@ -17,7 +17,7 @@ import DeliveryChargeTemplateForm from './deliverycharge-template-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn,
-	CommonEntry
+//	CommonEntry
 } from './common'
 
 export default class DeliveryChargeTemplateRegistration extends React.Component {
@@ -37,56 +37,6 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 			{ content:'コレクト（代金引換）手数料は、1万円以下全国一律300円（税別）、3万円以下全国400円（税別）、10万円以下全国一律（税別）を請求させて頂きます。'}
 		]
 
-		this.initEntry()
-	}
-
-	// 初期値の設定
-	initEntry() {
-		this.entry = {
-			customer: {},
-			remarks: []
-		}
-	}
- 
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
-		const init = () => {
-
-			this.setState({ isDisabled: true })
-
-			this.initEntry()
-
-			axios({
-				url: '/s/deliverycharge?template=registration',
-				method: 'get',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then((response) => {
-
-				this.setState({ isDisabled: false })
-
-				if (response.status === 204) {
-					alert('配送業者が1件も登録されていません。')
-				} else {
-					if (!response.data.feed.entry[0].remarks) {
-						response.data.feed.entry[0].remarks = this.remarks
-					}
-					const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
-					this.entry = obj.feed.entry[0]
-					this.forceUpdate()
-				}
-
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
-		}
-
-		init()
-
 	}
 
 	/**
@@ -94,7 +44,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 	 */
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.reload()
+		//location.href = '/#/DeliveryChargeTemplateList'
 	}
 
 	render() {
@@ -119,7 +69,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<DeliveryChargeTemplateForm name="mainForm" entry={this.entry} />
+						<DeliveryChargeTemplateForm name="mainForm" />
 					</Col>
 				</Row>
 				<Row>

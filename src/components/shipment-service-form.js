@@ -152,7 +152,7 @@ export default class ShipmentServiceForm extends React.Component {
 		this.entry = newProps.entry
 		this.entry.shipment_service.sizes = this.entry.shipment_service.sizes || []
 		this.setShipmentServiceTypeInfo(this.entry.shipment_service.type)
-		this.maxIndex = this.entry.zone.length
+		this.maxIndex = this.entry.zone ? this.entry.zone.length : 0
 		this.forceUpdate()
 	}
 

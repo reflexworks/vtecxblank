@@ -127,6 +127,20 @@ export default class DeliveryChargeTemplateList extends React.Component {
 								placeholder=""
 							/>
 
+							<CommonInputText
+								controlLabel="配送業者名"
+								name="shipment_service.name"
+								type="text"
+								placeholder=""
+							/>
+
+							<CommonInputText
+								controlLabel="サービス名"
+								name="shipment_service.service_name"
+								type="text"
+								placeholder=""
+							/>
+
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -146,7 +160,11 @@ export default class DeliveryChargeTemplateList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'title',title: 'テンプレート名', width: '500px'
+								field: 'title',title: 'テンプレート名', width: '300px'
+							}, {
+								field: 'shipment_service.name',title: '配送業者名', width: '300px'
+							}, {
+								field: 'shipment_service.service_name',title: 'サービス名', width: '300px'
 							}]}
 						/>
 					</Col>  

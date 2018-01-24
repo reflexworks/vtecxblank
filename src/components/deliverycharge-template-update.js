@@ -56,7 +56,7 @@ export default class DeliveryChargeTemplateUpdate extends React.Component {
 			this.initEntry()
 
 			axios({
-				url: '/s/deliverycharge?template=' + _code,
+				url: '/d/deliverycharge_template/' + _code,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'

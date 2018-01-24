@@ -127,8 +127,8 @@ export default class DeliveryChargeForm extends React.Component {
 				let s_name = _delivery_charge.shipment_service_name
 				let is_shipment_disable = is_shipment_service === '1' ? true : false
 
-				if (_delivery_charge.service_name) {
-					s_name = s_name + ' / ' + _delivery_charge.service_name
+				if (_delivery_charge.shipment_service_service_name) {
+					s_name = s_name + ' / ' + _delivery_charge.shipment_service_service_name
 				}
 
 				if (is_shipment_disable) {
@@ -143,7 +143,7 @@ export default class DeliveryChargeForm extends React.Component {
 						s_name = setOldNew(_delivery_charge.shipment_service_name_old, s_name)
 					}
 					if (_delivery_charge.service_name_old || _delivery_charge.service_name_old === '') {
-						let ssn = _delivery_charge.shipment_service_name
+						let ssn = _delivery_charge.shipment_service_service_name
 						if (_delivery_charge.shipment_service_name_old) {
 							ssn = _delivery_charge.shipment_service_name_old
 						}
@@ -198,8 +198,19 @@ export default class DeliveryChargeForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={header[s_code]}
-						/>
+						>
+							<CommonFilterBox
+								placeholder="テンプレート選択"
+								name=""
+								value={this.template}
+								options={this.templateList}
+								onChange={(data) => this.changeTemplate(data)}
+								style={{float: 'left', width: '200px'}}
+								table
+							/>
+						</CommonTable>
 					)
+					this.shipmentServiceListType1.push(<hr />)
 				} else {
 					// メール便
 					let _header = initHeader()
@@ -218,8 +229,19 @@ export default class DeliveryChargeForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={_header}
-						/>
+						>
+							<CommonFilterBox
+								placeholder="テンプレート選択"
+								name=""
+								value={this.template}
+								options={this.templateList}
+								onChange={(data) => this.changeTemplate(data)}
+								style={{float: 'left', width: '200px'}}
+								table
+							/>
+						</CommonTable>	
 					)
+					this.shipmentServiceListType2.push(<hr />)
 				}
 
 			}
@@ -347,27 +369,15 @@ export default class DeliveryChargeForm extends React.Component {
 		return (
 			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
 
-				<CommonFilterBox
-					controlLabel="テンプレート選択"
-					name=""
-					value={this.template}
-					options={this.templateList}
-					onChange={(data) => this.changeTemplate(data)}
-				/>
-
 				<PageHeader>発払い</PageHeader>
 				<div>
 					{this.shipmentServiceListType1}
 				</div>
 
-				<hr />
-
 				<PageHeader>メール便</PageHeader>
 				<div>
 					{this.shipmentServiceListType2}
 				</div>
-
-				<hr />
 
 				<PageHeader>記事</PageHeader>
 				<CommonTable
