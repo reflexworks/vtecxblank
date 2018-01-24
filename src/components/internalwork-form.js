@@ -60,6 +60,7 @@ export default class InternalWorkForm extends React.Component {
 		this.deliveryList = []
 		this.deliveryWorksList = null
 		this.deliveryWorks = []
+		this.pickupWorksList = null
 		this.pickupWorks = []
 
 		// 月次作業
@@ -141,7 +142,6 @@ export default class InternalWorkForm extends React.Component {
 						monthly_content: internal_work.monthly_content ? internal_work.monthly_content : '',
 						unit: internal_work.item_details_unit,
 						approval_status: internal_work.approval_status,
-						id: '_monthlyWorks_' + internal_work.item_details_name,
 						data: entry
 					}
 					const index = this.monthlyWorksCash[obj.monthly_name]
@@ -158,27 +158,34 @@ export default class InternalWorkForm extends React.Component {
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							unit: internal_work.item_details_unit,
 							approval_status: internal_work.approval_status,
-							id: '_item_details_' + internal_work.item_details_name,
 							data: entry
 						}
 					}
 					if (internal_work.work_type === '1') {
 						key = 'deliveryWorks'
 						obj = {
-							name: internal_work.shipment_service_name,
+							name: this.setShipmentServicetName(
+								internal_work.shipment_service_name,
+								internal_work.shipment_service_type,
+								internal_work.shipment_service_service_name,
+								internal_work.shipment_service_size,
+								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
-							id: '_shipment_service_' + internal_work.shipment_service_name,
 							data: entry
 						}
 					}
 					if (internal_work.work_type === '2') {
 						key = 'pickupWorks'
 						obj = {
-							name: internal_work.shipment_service_name,
+							name: this.setShipmentServicetName(
+								internal_work.shipment_service_name,
+								internal_work.shipment_service_type,
+								internal_work.shipment_service_service_name,
+								internal_work.shipment_service_size,
+								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
-							id: '_shipment_service_' + internal_work.shipment_service_name,
 							data: entry
 						}
 					}
@@ -189,7 +196,6 @@ export default class InternalWorkForm extends React.Component {
 							item_name: internal_work.packing_item_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
-							id: '_packing_item_' + internal_work.packing_item_code,
 							data: entry
 						}
 					}
@@ -236,6 +242,18 @@ export default class InternalWorkForm extends React.Component {
 
 	}
 
+	setShipmentServicetName = (_name, _type, _service_name, _size, _weight) => {
+		let array = []
+		if (_name) array.push(_name)
+		if (_service_name) {
+			array.push(_service_name)
+		} else {
+			array.push((_type === '1') ? '発払い' : 'メール便')
+		}
+		if (_size) array.push(_size)
+		if (_weight) array.push(_weight)
+		return array.join(' / ')
+	}
 	setShipmentService(entrys) {
 		let shipment_service = []
 		for (let entry of entrys) {
@@ -244,35 +262,29 @@ export default class InternalWorkForm extends React.Component {
 			const type = entry.shipment_service.type
 			const service_name = entry.shipment_service.service_name
 			const sizes = entry.shipment_service.sizes
-			const setName = (_name, _type, _service_name, _size, _weight) => {
-				let array = []
-				if (_name) array.push(_name)
-				if (_service_name) {
-					array.push(_service_name)
-				} else {
-					array.push((_type === '1') ? '発払い' : 'メール便')
-				}
-				if (_size) array.push(_size)
-				if (_weight) array.push(_weight)
-				return array.join(' / ')
-			}
 			if (sizes && name !== 'ヤマト運輸') {
 				for (let size of sizes) {
 					shipment_service.push({
-						code: code,
-						name: setName(name, type, service_name, size.size, size.weight),
-						type: type,
-						service_name: service_name,
-						size: size.size,
-						weight: size.weight
+						name: this.setShipmentServicetName(name, type, service_name, size.size, size.weight),
+						internal_work: {
+							shipment_service_code: code,
+							shipment_service_name: name,
+							shipment_service_type: type,
+							shipment_service_service_name: service_name,
+							shipment_service_size: size.size,
+							shipment_service_weight: size.weight
+						}
 					})
 				}
 			} else {
 				shipment_service.push({
-					code: code,
-					name: setName(name, type, service_name),
-					type: type,
-					service_name: service_name
+					name: this.setShipmentServicetName(name, type, service_name),
+					internal_work: {
+						shipment_service_code: code,
+						shipment_service_name: name,
+						shipment_service_type: type,
+						shipment_service_service_name: service_name
+					}
 				})
 			}
 		}
@@ -295,53 +307,69 @@ export default class InternalWorkForm extends React.Component {
 			let array = []
 			this.monthlyWorks = []
 			let monthlyWorksIndex = 0
-			for (let i = 0, ii = _item_details.length; i < ii; ++i) {
-				const obj = _item_details[i]
-				if (obj.unit_name === '月') {
-					this.monthlyWorksCash[obj.item_name] = monthlyWorksIndex
+			_item_details.map((_value) => {
+				if (_value.unit_name === '月') {
+					this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
 					this.monthlyWorks.push({
-						monthly_name: obj.item_name,
+						monthly_name: _value.item_name,
 						monthly_content: '',
-						unit: obj.unit,
+						unit: _value.unit,
 						approval_status: '',
 						data: {
 							internal_work: {
 								work_type: '4',
-								monthly_name: obj.item_name,
-								item_details_unit: obj.unit
+								monthly_name: _value.item_name,
+								item_details_unit: _value.unit
 							}
 						}
 					})
 					monthlyWorksIndex++
 				} else {
-					obj.id = '_item_details_' + obj.item_name
+					let obj = {}
+					obj.item_name = _value.item_name
+					obj.unit = _value.unit
+					obj.internal_work = {
+						work_type: '0',
+						item_details_name: _value.item_name,
+						item_details_unit: _value.unit
+					}
 					array.push(setOptions(obj.item_name, obj.item_name, obj))
-				}
-			}
+				}	
+			})
+
 			return array
 		}
-		const setDeliveryWorks = () => {
+		const setDeliveryWorks = (_type) => {
 
 			let array = []
-			for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
-				const obj = this.deliveryList[i]
-				obj.id = '_shipment_service_' + obj.name
+			this.deliveryList.map((_value) => {
+				let obj = {}
+				obj.name = _value.name
+				obj.internal_work = _value.internal_work
+				obj.internal_work.work_type = _type
 				array.push(setOptions(obj.name, obj.name, obj))
-			}
+			})
 			return array
 		}
 		const setPackingWorks = (_key)=>{
 			let array = []
-			for (let i = 0, ii = _packing_item.length; i < ii; ++i) {
-				const obj = _packing_item[i]
-				obj.id = '_packing_item_' + obj.item_code
+			_packing_item.map((_value) => {
+				let obj = {}
+				obj.item_code = _value.item_code
+				obj.item_name = _value.item_name
+				obj.internal_work = {
+					work_type: '3',
+					packing_item_code: _value.item_code,
+					packing_item_name: _value.item_name
+				}
 				array.push(setOptions(obj[_key], obj[_key], obj))
-			}
+			})
 			return array
 		}
 		this.quotationWorksList = setQuotationWorks()
 		this.deliveryList = this.master.shipment_service
-		this.deliveryWorksList = setDeliveryWorks()
+		this.deliveryWorksList = setDeliveryWorks('1')
+		this.pickupWorksList = setDeliveryWorks('2')
 		this.packingWorksCodeList = setPackingWorks('item_code')
 		this.packingWorksNameList = setPackingWorks('item_name')
 		this.working_date = this.entry.internal_work.working_yearmonth
@@ -378,8 +406,24 @@ export default class InternalWorkForm extends React.Component {
 		// 同じ項目は追加しない
 		const checkList = this[_key]
 		let duplicate = false
+		const getKey = (_internal_work) => {
+			const type = _internal_work.work_type
+			let key = _internal_work.work_type
+			if (type === '0') key += _internal_work.item_details_name
+			if (type === '1' || type === '2') {
+				key += _internal_work.shipment_service_code
+				key += _internal_work.shipment_service_name
+				key += _internal_work.shipment_service_name_service_name || ''
+				key += _internal_work.shipment_service_size || ''
+				key += _internal_work.shipment_service_weight || ''
+			}
+			if (type === '3') key += _internal_work.packing_item_code
+			return key
+		}
 		for (let i = 0, ii = checkList.length; i < ii; ++i) {
-			if (checkList[i].id === _data.data.id) {
+			const checkKey = getKey(checkList[i].data.internal_work)
+			const thisKey = getKey(_data.data.internal_work)
+			if (checkKey === thisKey) {
 				duplicate = true
 				break
 			}
@@ -404,43 +448,45 @@ export default class InternalWorkForm extends React.Component {
 			}
 		}
 		// 見積作業の場合
+		const iw = _data.data.internal_work
 		if (_key === 'quotationWorks') {
 			obj.feed.entry[0].internal_work = {
 				work_type: '0',
-				item_details_name: _data.value,
-				item_details_unit: _data.data.unit
+				item_details_name: iw.item_details_name,
+				item_details_unit: iw.item_details_unit
 			}
 		}
 		// 発送作業の場合
 		if (_key === 'deliveryWorks') {
 			obj.feed.entry[0].internal_work = {
 				work_type: '1',
-				shipment_service_code: _data.data.code,
-				shipment_service_name: _data.data.name,
-				shipment_service_type: _data.data.type,
-				shipment_service_service_name: _data.data.service_name,
-				shipment_service_size: _data.data.size,
-				shipment_service_weight: _data.data.weight
+				shipment_service_code: iw.shipment_service_code,
+				shipment_service_name: iw.shipment_service_name,
+				shipment_service_type: iw.shipment_service_type,
+				shipment_service_service_name: iw.shipment_service_service_name,
+				shipment_service_size: iw.shipment_service_size,
+				shipment_service_weight: iw.shipment_service_weight
 			}
 		}
 		// 集荷作業の場合
 		if (_key === 'pickupWorks') {
+			const iw = _data.data.internal_work
 			obj.feed.entry[0].internal_work = {
 				work_type: '2',
-				shipment_service_code: _data.data.code,
-				shipment_service_name: _data.data.name,
-				shipment_service_type: _data.data.type,
-				shipment_service_service_name: _data.data.service_name,
-				shipment_service_size: _data.data.size,
-				shipment_service_weight: _data.data.weight
+				shipment_service_code: iw.shipment_service_code,
+				shipment_service_name: iw.shipment_service_name,
+				shipment_service_type: iw.shipment_service_type,
+				shipment_service_service_name: iw.shipment_service_service_name,
+				shipment_service_size: iw.shipment_service_size,
+				shipment_service_weight: iw.shipment_service_weight
 			}
 		}
 		// 資材作業の場合
 		if (_key === 'packingWorks') {
 			obj.feed.entry[0].internal_work = {
 				work_type: '3',
-				packing_item_code: _data.data.item_code,
-				packing_item_name: _data.data.item_name
+				packing_item_code: iw.packing_item_code,
+				packing_item_name: iw.packing_item_name
 			}
 		}
 		axios({
@@ -737,8 +783,8 @@ export default class InternalWorkForm extends React.Component {
 							<CommonFilterBox
 								placeholder="配送業者選択"
 								name=""
-								value={this.selectDeliveryWorks}
-								options={this.deliveryWorksList}
+								value={this.selectPickupWorks}
+								options={this.pickupWorksList}
 								onChange={(data) => this.addList('pickupWorks', data)}
 								style={{float: 'left', width: '400px'}}
 								table
