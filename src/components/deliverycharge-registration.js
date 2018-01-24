@@ -18,7 +18,9 @@ import {
 	CommonRegistrationBtn,
 	CommonUpdateBtn,
 	CommonClearBtn,
-	CommonEntry
+	CommonEntry,
+	CommonBackBtn,
+	CommonDeleteBtn
 } from './common'
 
 export default class DeliveryChargeRegistration extends React.Component {
@@ -29,6 +31,9 @@ export default class DeliveryChargeRegistration extends React.Component {
 
 		// 登録先のURL
 		this.url = '/d/'
+
+		// 戻る先のURL
+		this.backUrl = '#/CustomerList'
 
 		// 備考
 		this.remarks = [
@@ -78,10 +83,14 @@ export default class DeliveryChargeRegistration extends React.Component {
 					}
 					const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
 					this.entry = obj.feed.entry[0]
+					this.button = []
 					if (this.entry.id) {
-						this.button = <CommonUpdateBtn NavItem url={this.url} entry={this.entry} callback={this.callbackUpdateButton} type="entitiy" />
+						this.button.push(<CommonBackBtn NavItem href={this.backUrl} />)
+						this.button.push(<CommonUpdateBtn NavItem url={this.url} entry={this.entry} callback={this.callbackUpdateButton} type="entitiy" />)
+						this.button.push(<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />)
 					} else {
-						this.button = <CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
+						this.button.push(<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />)
+						this.button.push(<CommonClearBtn NavItem />)
 					}
 
 					this.forceUpdate()
@@ -118,6 +127,14 @@ export default class DeliveryChargeRegistration extends React.Component {
 		location.reload()
 	}
 
+	/**
+	 * 削除完了後の処理
+	 */
+	callbackDeleteButton() {
+		alert('削除が完了しました。')
+		location.href = this.backUrl
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -132,7 +149,6 @@ export default class DeliveryChargeRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									{this.button}
-									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -149,7 +165,6 @@ export default class DeliveryChargeRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									{this.button}
-									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
