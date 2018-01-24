@@ -54,7 +54,7 @@ export default class InternalWorkUpdate extends React.Component {
 
 				this.entry = response.data.feed.entry[0]
 				const working_yearmonth = this.entry.internal_work.working_yearmonth
-				this.monthly = working_yearmonth.split('/')[0] + '年' + working_yearmonth.split('/')[1] + '日'
+				this.monthly = working_yearmonth.split('/')[0] + '年' + working_yearmonth.split('/')[1] + '月'
 
 				this.forceUpdate()
 
@@ -67,14 +67,6 @@ export default class InternalWorkUpdate extends React.Component {
 
 		init(code)
 
-	}
-
-	/**
-     * 登録完了後の処理
-     */
-	callbackRegistrationButton() {
-		alert('登録が完了しました。')
-		location.href = '#/InternalWorkList'
 	}
 
 	render() {
