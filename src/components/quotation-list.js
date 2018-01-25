@@ -91,8 +91,8 @@ export default class QuotationList extends React.Component {
 		this.props.history.push('/QuotationUpdate?' + _data.link[0].___href.replace('/quotation/', ''))
 	}
 
-	moveInvoiceRegistration(/*_data*/) {
-		this.props.history.push('/InvoiceRegistration')
+	moveInvoiceRegistration(_data) {
+		this.props.history.push('/InvoiceRegistration?'+ _data.link[0].___href.replace('/quotation/', ''))
 		//location.href = '#/InvoiceRegistration'
 	}
 	/**
@@ -207,7 +207,7 @@ export default class QuotationList extends React.Component {
 							edit={(data) => this.onSelect(data)}
 							remove={(data) => this.onDelete(data)}
 							header={[{
-								field: 'btn1', title:'請求書を作成する', width: '80px',
+								field: 'btn1', title:'請求書作成', width: '80px',
 								label: <Glyphicon glyph="open-file" />,
 								onClick: (_data) => this.moveInvoiceRegistration(_data)
 							},{

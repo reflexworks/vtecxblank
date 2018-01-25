@@ -28,7 +28,6 @@ import {
 	CommonMonthlySelect,
 } from './common'
 
-
 export default class InvoiceForm extends React.Component {
 
 	constructor(props: Props) {
@@ -243,7 +242,6 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	sampleData() {
-		this.entry.invoice.quotation_code = '1710-01317'
 		this.entry.invoice.consumption_tax = '¥39,022'
 		this.entry.invoice.total_amount = '¥1,025,142'
 		this.ecoJP = [{
@@ -439,7 +437,6 @@ export default class InvoiceForm extends React.Component {
 			is_total:true,
 		}]
 			
-
 		this.JPpacket = [{
 			day: '12/1',
 			work: '8',
