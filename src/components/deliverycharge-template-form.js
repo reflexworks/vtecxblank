@@ -157,8 +157,6 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 			let header = {}
 			const initHeader = () => {
 				return [{
-					field: 'name', title: '配送業者', width: '200px'
-				}, {
 					field: 'size', title: 'サイズ', width: '80px'
 				}, {
 					field: 'weight', title: '重量', width: '80px'
@@ -197,12 +195,17 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					new_data.size = dd.size || '-'
 					new_data.weight = dd.weight || '-'
 					new_data.price = dd.price || ''
+					new_data.note = dd.note || ''
 					if (dd.charge_by_zone) {
 						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)
 					}
 					this.shipment_service[s_code].push(new_data)
-					s_name = ''
 
+				}
+				const menu = () => {
+					return (
+						<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+					)
 				}
 				if (s_type === '1') {
 					// 発払い
@@ -211,7 +214,9 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={header[s_code]}
-						/>
+						>
+							{menu()}
+						</CommonTable>
 					)
 				} else {
 					// メール便
@@ -224,6 +229,13 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 						}
 					})
 					_header.push({
+						field: 'note', title: '記事', width: '100px',
+						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.note',
+						input: {
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'note', data, rowindex)}
+						}
+					})
+					_header.push({
 						field: 'other', title: '', width: '600px'
 					})
 					this.shipmentServiceListType2.push(
@@ -231,7 +243,9 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={_header}
-						/>
+						>
+							{menu()}
+						</CommonTable>	
 					)
 				}
 

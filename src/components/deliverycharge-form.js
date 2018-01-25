@@ -1,9 +1,10 @@
 /* @flow */
 import React from 'react'
-import axios from 'axios'
 import {
 	PageHeader,
 	Form,
+	Button,
+	Glyphicon
 } from 'react-bootstrap'
 import type {
 	Props
@@ -11,7 +12,7 @@ import type {
 
 import {
 	CommonTable,
-	//	CommonFilterBox,
+	CommonFilterBox,
 	CommonEntry
 } from './common'
 
@@ -24,7 +25,8 @@ export default class DeliveryChargeForm extends React.Component {
 		this.entry = this.props.entry || {}
 
 		this.master = {}
-		this.templateList = []
+		this.template = {}
+		this.templateList = {}
 
 		this.init()
 	}
@@ -44,7 +46,85 @@ export default class DeliveryChargeForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.setTemplateList(newProps.templateList)
 		this.setTable()
+	}
+
+	setTemplateList(_templateList) {
+		if (_templateList) {
+			const getOption = (_obj) => {
+				return {
+					label: _obj.title,
+					value: _obj.title,
+					data: _obj
+				}
+			}
+			_templateList.map((_obj) => {
+				const shipment_service = _obj.shipment_service
+				if (shipment_service) {
+					const flg = this.templateList[shipment_service.code]
+					if (!flg || flg.length === 0) {
+						this.templateList[shipment_service.code] = []
+					}
+					this.templateList[shipment_service.code].push(getOption(_obj))
+				}
+			})
+
+			this.forceUpdate()
+		}
+	}
+
+	/**
+	 * テンプレート変更処理
+	 */
+	changeTemplate(_data) {
+
+		if (_data) {
+			const shipment_service_code = _data.data.shipment_service.code
+			const setTemplate = () => {
+				for (let i = 0, ii = this.entry.delivery_charge.length; i < ii; ++i) {
+					const delivery_charge = this.entry.delivery_charge[i]
+					if (delivery_charge.shipment_service_code === shipment_service_code) {
+						this.entry.delivery_charge[i] = JSON.parse(JSON.stringify(_data.data.delivery_charge[0]))
+						break
+					}
+				}
+				this.setTable()
+				CommonEntry().init(this.entry)
+				this.forceUpdate()
+			}
+			if (confirm('入力したものが破棄されます。よろしいでしょうか？')) {
+				this.template[shipment_service_code] = _data.data.title
+				setTemplate()
+			} else {
+				this.template[shipment_service_code] = ''
+				this.forceUpdate()
+			}
+		}
+	}
+
+	/**
+	 * 配送業者削除処理
+	 * @param {*} _code 
+	 */
+	removeDeliveryCharge(_code) {
+		const name = this.shipment_service[_code][0].name
+		const remove = () => {
+			let array = []
+			for (let i = 0, ii = this.entry.delivery_charge.length; i < ii; ++i) {
+				const delivery_charge = this.entry.delivery_charge[i]
+				if (delivery_charge.shipment_service_code !== _code) {
+					array.push(JSON.parse(JSON.stringify(this.entry.delivery_charge[i])))
+				}
+			}
+			this.entry.delivery_charge = array
+			this.setTable()
+			CommonEntry().init(this.entry)
+			this.forceUpdate()
+		}
+		if (confirm(name + 'を削除します。よろしいでしょうか？')) {
+			remove()
+		}
 	}
 
 	/**
@@ -59,52 +139,19 @@ export default class DeliveryChargeForm extends React.Component {
 			let header = {}
 			const initHeader = () => {
 				return [{
-					field: 'name', title: '配送業者', width: '200px'
-				}, {
 					field: 'size', title: 'サイズ', width: '80px'
 				}, {
 					field: 'weight', title: '重量', width: '80px'
 				}]
 			}
-			const setOldNew = (_old, _new, _isCreate) => {
-				let array = []
-				const mes = _isCreate ? '[追加]' : '[変更]'
-				if (_old) array.push(<div className="old">[削除] <span>{_old}</span></div>)
-				if (_new) array.push(<div className="new">{mes} {_new}</div>)
-				return (
-					<div>{array}</div>
-				)
-			}
-			const setDisabled = (_value) => {
-				return <div className="disabled">{_value}</div>
-			}
-			const setZone = (_data, _entry, _tableIndex, _code, _is_disable) => {
+			const setZone = (_data, _entry, _tableIndex, _code) => {
 				let _header = initHeader()
-				const is_disable = _is_disable ? true : false
 				for (let i = 0, ii = _entry.length; i < ii; ++i) {
 
-					let is_zone_disable = is_disable ? true : false
 					const key = _entry[i].zone_code
 
 					let zone_name = _entry[i].zone_name
-					if (_entry[i].zone_name_old) {
-						zone_name = setOldNew(_entry[i].zone_name_old, zone_name)
-					}
-					if (_entry[i].is_zone === '1') {
-						zone_name = setOldNew(zone_name)
-						is_zone_disable = true
-					} else {
-						is_zone_disable = is_disable ? true : false
-					}
-					if (_entry[i].is_zone === '2') {
-						zone_name = setOldNew(null, zone_name, true)
-					}
-
-					if (is_zone_disable === true) {
-						_data[key] = setDisabled(_entry[i].price)
-					} else {
-						_data[key] = _entry[i].price
-					}
+					_data[key] = _entry[i].price
 
 					_header.push({
 						field: key, title: zone_name, width: '60px',
@@ -120,76 +167,56 @@ export default class DeliveryChargeForm extends React.Component {
 			let tableIndex = 0
 			const newData = (_delivery_charge) => {
 
-				const is_shipment_service = _delivery_charge.is_shipment_service
 				const s_code = _delivery_charge.shipment_service_code
 				const s_type = _delivery_charge.shipment_service_type
 
 				let s_name = _delivery_charge.shipment_service_name
-				let is_shipment_disable = is_shipment_service === '1' ? true : false
 
 				if (_delivery_charge.shipment_service_service_name) {
 					s_name = s_name + ' / ' + _delivery_charge.shipment_service_service_name
 				}
 
-				if (is_shipment_disable) {
-					// 配送業者がマスタから削除されている場合
-					s_name = setOldNew(s_name)
-				} else if (is_shipment_service === '2') {
-					// 配送業者がマスタから新規追加されている場合
-					s_name = setOldNew(null, s_name, true)
-				} else {
-					// 配送業者のマスタ情報が変更されている場合
-					if (_delivery_charge.shipment_service_name_old) {
-						s_name = setOldNew(_delivery_charge.shipment_service_name_old, s_name)
-					}
-					if (_delivery_charge.service_name_old || _delivery_charge.service_name_old === '') {
-						let ssn = _delivery_charge.shipment_service_service_name
-						if (_delivery_charge.shipment_service_name_old) {
-							ssn = _delivery_charge.shipment_service_name_old
-						}
-						let sn
-						if (_delivery_charge.service_name_old === '') {
-							sn = ssn
-						} else {
-							sn = ssn + ' / ' + _delivery_charge.service_name_old
-						}
-						s_name = setOldNew(sn, s_name)
-					}
-				}
-
 				this.shipment_service[s_code] = []
 				for (let dd of _delivery_charge.delivery_charge_details) {
-
-					let is_size_disable = is_shipment_disable ? true : false
 
 					let new_data = {}
 					new_data.name = s_name
 					new_data.size = dd.size || '-'
 					new_data.weight = dd.weight || '-'
-					if (dd.is_sizes === '1') {
-						new_data.size = setOldNew(new_data.size)
-						new_data.weight = setOldNew(new_data.weight)
-						is_size_disable = true
-					} else {
-						is_size_disable = is_shipment_disable ? true : false
-					}
-					if (dd.is_sizes === '2') {
-						new_data.size = setOldNew(null, new_data.size, true)
-						new_data.weight = setOldNew(null, new_data.weight, true)
-					}
-					if (is_size_disable) {
-						new_data.price = setDisabled(dd.price)
-					} else {
-						new_data.price = dd.price || ''
-					}
+					new_data.price = dd.price || ''
+					new_data.note = dd.note || ''
 					if (dd.charge_by_zone) {
-						const is_zone_disable = is_shipment_disable || is_size_disable ? true : false
-						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code, is_zone_disable)
+						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)
 					}
 
 					this.shipment_service[s_code].push(new_data)
-					s_name = ''
+					if (!this.templateList[s_code] || this.templateList[s_code].length === 0) {
+						this.templateList[s_code] = []
+					}
+					this.template[s_code] = ''
 
+				}
+				const menu = () => {
+					return (
+						<div>
+							<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+							<Button
+								bsSize="small"
+								bsStyle="danger"
+								style={{ float: 'left', 'margin-right': '10px' }}
+								onClick={()=>this.removeDeliveryCharge(s_code)}
+							><Glyphicon glyph="remove" /></Button>
+							<CommonFilterBox
+								placeholder="テンプレート選択"
+								name=""
+								value={this.template[s_code]}
+								options={this.templateList[s_code]}
+								onChange={(data) => this.changeTemplate(data)}
+								style={{float: 'left', width: '200px'}}
+								table
+							/>
+						</div>
+					)
 				}
 				if (s_type === '1') {
 					// 発払い
@@ -199,17 +226,7 @@ export default class DeliveryChargeForm extends React.Component {
 							data={this.shipment_service[s_code]}
 							header={header[s_code]}
 						>
-							{/** 
-							<CommonFilterBox
-								placeholder="テンプレート選択"
-								name=""
-								value={this.template}
-								options={this.templateList}
-								onChange={(data) => this.changeTemplate(data)}
-								style={{float: 'left', width: '200px'}}
-								table
-							/>
-						*/}
+							{menu()}
 						</CommonTable>
 					)
 					this.shipmentServiceListType1.push(<hr />)
@@ -224,7 +241,14 @@ export default class DeliveryChargeForm extends React.Component {
 						}
 					})
 					_header.push({
-						field: 'other', title: '', width: '600px'
+						field: 'note', title: '記事', width: '100px',
+						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.note',
+						input: {
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'note', data, rowindex)}
+						}
+					})
+					_header.push({
+						field: 'other', title: '', width: '400px'
 					})
 					this.shipmentServiceListType2.push(
 						<CommonTable
@@ -232,6 +256,7 @@ export default class DeliveryChargeForm extends React.Component {
 							data={this.shipment_service[s_code]}
 							header={_header}
 						>
+							{menu()}
 						</CommonTable>	
 					)
 					this.shipmentServiceListType2.push(<hr />)
@@ -270,91 +295,6 @@ export default class DeliveryChargeForm extends React.Component {
 		}
 		this.entry.remarks = array
 		this.forceUpdate()
-	}
-
-	/**
-	 * テンプレート変更処理
-	 */
-	changeTemplate(_data) {
-
-		const setTemplate = (_code) => {
-
-			this.setState({ isDisabled: true })
-
-			axios({
-				url: '/s/deliverycharge?template=' + _code,
-				method: 'get',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then((response) => {
-
-				this.setState({ isDisabled: false })
-
-				const delivery_charge = response.data.feed.entry[0].delivery_charge
-				const remarks = response.data.feed.entry[0].remarks
-				this.entry.delivery_charge = delivery_charge
-				this.entry.remarks = remarks
-				CommonEntry().init(this.entry)
-				this.setTable()
-
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
-		}
-		if (_data) {
-			if (confirm('入力したものが破棄されます。よろしいでしょうか？')) {
-				this.template = _data.value
-				const code = _data.data.id.split(',')[0].split('/deliverycharge_template/')[1]
-				setTemplate(code)
-			} else {
-				this.template = null
-				this.forceUpdate()
-			}
-		}
-	}
-
-	/**
-	 * テンプレート取得処理
-	 */
-	setTemplateData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/deliverycharge_template?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.templateList = response.data.feed.entry
-				this.templateList = this.master.templateList.map((obj) => {
-					return {
-						label: obj.title,
-						value: obj.title,
-						data: obj
-					}
-				})
-
-				this.forceUpdate()
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})   
-	}
-
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-
-		this.setTemplateData()
-
 	}
 
 	render() {

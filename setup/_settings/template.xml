@@ -138,6 +138,7 @@ delivery_charge{}
   size
   weight
   price
+  note
   charge_by_zone{}
    zone_code
    zone_name

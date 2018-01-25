@@ -31,22 +31,46 @@ if (isShipment) {
 
 	const isDc = CommonGetFlag(delivery_charge)
 
-	let res
+	let obj
 
 	if (isDc) {
-		res = delivery_charge
+		obj = delivery_charge
 	} else {
-		res = getShipmentService(shipment_service.feed)
+		obj = getShipmentService(shipment_service.feed)
 		if (customer) {
-			res.feed.entry[0].link = [{
+			obj.feed.entry[0].link = [{
 				___href: uri,
 				___rel: 'self'
 			}]
 		}
 	}
 	if (customer) {
-		res.feed.entry[0].customer = customer.feed.entry[0].customer
+		obj.feed.entry[0].customer = customer.feed.entry[0].customer
 	}
+
+	/**
+	 * 対象のテンプレート情報を取得する
+	 * @param {*} _entry 
+	 */
+	const margeTemplateData = (_entry) => {
+		const setTemplate = (_tempalte_entry, _res_entry) => {
+			_tempalte_entry.map((_value) => {
+				_res_entry.push(_value)
+			})
+			return _res_entry
+		}
+		let res = { feed: { entry: [] } }
+		res.feed.entry.push(_entry)
+		_entry.delivery_charge.map((_value) => {
+			const shipment_service_code = _value.shipment_service_code
+			const tempalte_data = reflexcontext.getFeed('/deliverycharge_template?shipment_service.code=' + shipment_service_code)
+			if (CommonGetFlag(tempalte_data)) {
+				res.feed.entry = setTemplate(tempalte_data.feed.entry, res.feed.entry)
+			}
+		})
+		return res
+	}
+	const res = margeTemplateData(obj.feed.entry[0])
 	reflexcontext.doResponse(res)
 
 } else {
