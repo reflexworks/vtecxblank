@@ -207,15 +207,15 @@ export default class QuotationList extends React.Component {
 							edit={(data) => this.onSelect(data)}
 							remove={(data) => this.onDelete(data)}
 							header={[{
-								field: 'btn1', title:'請求書作成', width: '80px',
+								field: 'btn1', title:'請求書', width: '30px',
 								label: <Glyphicon glyph="open-file" />,
 								onClick: (_data) => this.moveInvoiceRegistration(_data)
 							},{
-								field: 'quotation.quotation_code',title: '見積書No', width: '100px'
+								field: 'quotation.quotation_code',title: '見積書No', width: '250px'
 							}, {
-								field: 'quotation.quotation_date',title: '見積年月', width: '100px'
+								field: 'quotation.quotation_date',title: '見積年月', width: '200px'
 							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '250px'
 							}, {
 								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
 							}]}

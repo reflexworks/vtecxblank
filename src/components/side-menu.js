@@ -120,6 +120,14 @@ export default class SideMenu extends React.Component {
 							to: 'WarehouseList',
 							glyph: 'list',
 							title: '倉庫一覧'
+						}, {
+							to: 'PackingItemRegistration',
+							glyph: 'edit',
+							title: '資材登録'
+						}, {
+							to: 'PackingItemList',
+							glyph: 'list',
+							title: '資材一覧'
 						},{
 							to: 'ShipmentServiceRegistration',
 							glyph: 'edit',
@@ -162,14 +170,6 @@ export default class SideMenu extends React.Component {
 							to: 'QuotationList',
 							glyph: 'list',
 							title: '見積書一覧'
-						}, {
-							to: 'PackingItemRegistration',
-							glyph: 'edit',
-							title: '資材登録'
-						}, {
-							to: 'PackingItemList',
-							glyph: 'list',
-							title: '資材一覧'
 						}, {
 							to: 'TypeAheadRegistration',
 							glyph: 'edit',

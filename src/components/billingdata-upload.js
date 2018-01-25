@@ -145,29 +145,7 @@ export default class BillingDataUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td>代引</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
 									<td>DM便/ネコポス</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								
-								<tr>
-									<td>日本郵政</td>
-									<td>-</td>
 									<td>
 										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 											<FormGroup>
