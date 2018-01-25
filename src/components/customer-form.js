@@ -312,6 +312,17 @@ export default class CustomerForm extends React.Component {
 		this.forceUpdate()
 	}
 
+	changeCustomer(_data,_key) {
+		this.entry.customer[_key] = _data
+		console.log(this.entry.customer[_key])
+		this.forceUpdate()
+	}
+	copyCustomerToBillto(){
+		this.entry.billto.billto_name = this.entry.customer.customer_name
+		this.setState({customer_copy:!this.state.customer_copy})
+		console.log(this.entry.billto.billto_name)
+		this.forceUpdate()
+	}
 	render() {
 
 		return (
@@ -348,6 +359,7 @@ export default class CustomerForm extends React.Component {
 							type="text"
 							placeholder="株式会社 ◯◯◯"
 							value={this.entry.customer.customer_name}
+							onChange={(data)=> this.changeCustomer(data,'customer_name')}
 							validate="string"
 							required
 						/>
@@ -452,7 +464,7 @@ export default class CustomerForm extends React.Component {
 					<Panel collapsible header="請求先情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 						
 						<Checkbox inline value={this.state.customer_copy}
-							onClick={()=>{this.setState({customer_copy:!this.state.customer_copy})}}>
+							onClick={()=>{this.copyCustomerToBillto()}}>
 							顧客情報と同じにする
 						</Checkbox>
 						
@@ -464,6 +476,7 @@ export default class CustomerForm extends React.Component {
 							add={() => this.setState({ showBilltoAddModal: true })}
 							//edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
+							//disabled='true'
 						/>
 						
 						{ this.entry.billto.billto_code && 
@@ -489,7 +502,7 @@ export default class CustomerForm extends React.Component {
 									<CommonInputText
 										name="billto.billto_name"
 										type="text"
-										value=""
+										value={this.entry.billto.billto_name}
 									/>
 								</FormGroup>
 						}
@@ -554,10 +567,10 @@ export default class CustomerForm extends React.Component {
 							name="customer.shipper"
 							data={this.entry.customer.shipper}
 							header={[{
-								field: 'delivery_company', title: '配送業者', width: '100px',
+								field: 'shipment_service_code', title: '配送業者コード', width: '100px',
 								convert: {
-									EC: 'エコ配JP', YM: 'ヤマト運輸',PO: '日本郵政',
-									エコ配JP: 'エコ配JP', ヤマト運輸: 'ヤマト運輸', 日本郵政: '日本郵政',
+									EC: 'エコ配JP', YM: 'ヤマト運輸',
+									エコ配JP: 'エコ配JP', ヤマト運輸: 'ヤマト運輸',
 								}
 							}, {
 								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',convert: {0:'集荷',1:'出荷'}
