@@ -11,7 +11,7 @@ import type {
 
 import {
 	CommonTable,
-	CommonFilterBox,
+	//	CommonFilterBox,
 	CommonEntry
 } from './common'
 
@@ -199,6 +199,7 @@ export default class DeliveryChargeForm extends React.Component {
 							data={this.shipment_service[s_code]}
 							header={header[s_code]}
 						>
+							{/** 
 							<CommonFilterBox
 								placeholder="テンプレート選択"
 								name=""
@@ -208,6 +209,7 @@ export default class DeliveryChargeForm extends React.Component {
 								style={{float: 'left', width: '200px'}}
 								table
 							/>
+						*/}
 						</CommonTable>
 					)
 					this.shipmentServiceListType1.push(<hr />)
@@ -230,15 +232,6 @@ export default class DeliveryChargeForm extends React.Component {
 							data={this.shipment_service[s_code]}
 							header={_header}
 						>
-							<CommonFilterBox
-								placeholder="テンプレート選択"
-								name=""
-								value={this.template}
-								options={this.templateList}
-								onChange={(data) => this.changeTemplate(data)}
-								style={{float: 'left', width: '200px'}}
-								table
-							/>
 						</CommonTable>	
 					)
 					this.shipmentServiceListType2.push(<hr />)
