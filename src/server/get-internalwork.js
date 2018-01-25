@@ -17,21 +17,25 @@ if (isList) {
 		}
 	}
 	if (isData) {
+		const getKey = (_internal_work) => {
+			const type = _internal_work.work_type
+			let key = _internal_work.work_type
+			if (type === '0') key += _internal_work.item_details_name
+			if (type === '1' || type === '2') {
+				key += _internal_work.shipment_service_code
+				key += _internal_work.shipment_service_name
+				key += _internal_work.shipment_service_name_service_name || ''
+				key += _internal_work.shipment_service_size || ''
+				key += _internal_work.shipment_service_weight || ''
+			}
+			if (type === '3') key += _internal_work.packing_item_code
+			return key
+		}
 		const setCash = () => {
 			let obj = {}
 			for (let i = 0, ii = data.feed.entry.length; i < ii; ++i) {
 				const entry = data.feed.entry[i]
-				const type = entry.internal_work.work_type
-				let key = type
-				if (type === '0') key += entry.internal_work.item_details_name
-				if (type === '1' || type === '2') {
-					key += entry.internal_work.shipment_service_code
-					key += entry.internal_work.shipment_service_name
-					key += entry.internal_work.shipment_service_name_service_name || ''
-					key += entry.internal_work.shipment_service_size || ''
-					key += entry.internal_work.shipment_service_weight || ''
-				}
-				if (type === '3') key += entry.internal_work.packing_item_name
+				const key = getKey(entry.internal_work)
 				obj[key] = entry
 			}
 			return obj
@@ -40,16 +44,7 @@ if (isList) {
 		for (let i = 0, ii = list.feed.entry.length; i < ii; ++i) {
 			const entry = list.feed.entry[i]
 			const type = entry.internal_work.work_type
-			let key = type
-			if (type === '0') key += entry.internal_work.item_details_name
-			if (type === '1' || type === '2') {
-				key += entry.internal_work.shipment_service_code
-				key += entry.internal_work.shipment_service_name
-				key += entry.internal_work.shipment_service_name_service_name || ''
-				key += entry.internal_work.shipment_service_size || ''
-				key += entry.internal_work.shipment_service_weight || ''
-			}
-			if (type === '3') key += entry.internal_work.packing_item_name
+			const key = getKey(entry.internal_work)
 			if (cash[key]) {
 				list.feed.entry[i] = cash[key]
 			} else {
