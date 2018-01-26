@@ -17,7 +17,6 @@ import DeliveryChargeForm from './deliverycharge-form'
 import {
 	CommonRegistrationBtn,
 	CommonUpdateBtn,
-	CommonClearBtn,
 	CommonEntry,
 	CommonBackBtn,
 	CommonDeleteBtn
@@ -84,14 +83,14 @@ export default class DeliveryChargeRegistration extends React.Component {
 					const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
 					this.entry = obj.feed.entry[0]
 					this.button = []
+					this.button.push(<CommonBackBtn NavItem href={this.backUrl} />)
 					if (this.entry.id) {
-						this.button.push(<CommonBackBtn NavItem href={this.backUrl} />)
 						this.button.push(<CommonUpdateBtn NavItem url={this.url} entry={this.entry} callback={this.callbackUpdateButton} type="entitiy" />)
 						this.button.push(<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />)
 					} else {
 						this.button.push(<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />)
-						this.button.push(<CommonClearBtn NavItem />)
 					}
+					this.tempalteList = response.data.feed.entry
 
 					this.forceUpdate()
 				}
@@ -156,7 +155,7 @@ export default class DeliveryChargeRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<DeliveryChargeForm name="mainForm" entry={this.entry} />
+						<DeliveryChargeForm name="mainForm" entry={this.entry} templateList={this.tempalteList} />
 					</Col>
 				</Row>
 				<Row>
