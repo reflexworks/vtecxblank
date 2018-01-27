@@ -117,7 +117,7 @@ export default class PackingitemTemplateList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>配送料テンプレート一覧</PageHeader>
+						<PageHeader>資材テンプレート一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							<CommonInputText
