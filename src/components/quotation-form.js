@@ -64,6 +64,13 @@ export default class QuotationForm extends React.Component {
 	componentWillReceiveProps(newProps) {
 
 		this.entry = newProps.entry
+		if (this.entry.quotation.status === '0') {
+			this.status = '未発行'
+			this.isDisabled = false
+		} else if (this.entry.quotation.status === '1'){
+			this.status = '発行済み'
+			this.isDisabled = true
+		}
 
 	}
 
@@ -294,9 +301,9 @@ export default class QuotationForm extends React.Component {
 
 					<CommonInputText
 						controlLabel="見積書コード"
-						name="quotation.quotation_code"
+						name=""
 						type="text"
-						value={this.entry.quotation.quotation_code}
+						value={this.entry.quotation.quotation_code + '-' +this.entry.quotation.quotation_code_sub}
 						readonly
 					/>
 					<CommonInputText
@@ -304,6 +311,13 @@ export default class QuotationForm extends React.Component {
 						name="quotation.quotation_date"
 						type="text"
 						value={this.entry.quotation.quotation_date}
+						readonly
+					/>
+					<CommonInputText
+						controlLabel="発行ステータス"
+						name="quotation.status"
+						type="text"
+						value={this.status}
 						readonly
 					/>
 					<CommonInputText
@@ -325,6 +339,12 @@ export default class QuotationForm extends React.Component {
 							value={this.entry.quotation.quotation_code}
 						/>
 						<CommonInputText
+							controlLabel="枝番"
+							name="quotation.quotation_code_sub"
+							type="text"
+							value={this.entry.quotation.quotation_code_sub}
+						/>
+						<CommonInputText
 							controlLabel="見積月"
 							name="quotation.quotation_date"
 							type="text"
@@ -342,6 +362,13 @@ export default class QuotationForm extends React.Component {
 							name="billto.billto_name"
 							type="text"
 							value={this.entry.billto.billto_name}
+							readonly
+						/>
+						<CommonInputText
+							controlLabel="発行ステータス"
+							name="quotation.status"
+							type="text"
+							value={this.entry.quotation.status}
 							readonly
 						/>
 					</div>
@@ -372,38 +399,38 @@ export default class QuotationForm extends React.Component {
 								name="item_details"
 								data={this.entry.item_details}
 								header={[{
-									field: 'item_name', title: '項目', width: '100px',
-									filter: {
+									field: 'item_name', title: '項目', style: { width: '300px' },
+									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 0, rowindex)}
 									}
 								}, {
 									field: 'unit_name',title: '単位名称', width: '50px',
-									filter: {
+									filter: this.isDisabled ? false : {
 										options: this.typeList[1],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)}
 									}
 								}, {
 									field: 'unit',title: '単位', width: '50px',
-									filter: {
+									filter: this.isDisabled ? false : {
 										options: this.typeList[2],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)}
 									}
 								}, {
 									field: 'unit_price',title: '単価', width: '100px',
-									filter: {
+									filter: this.isDisabled ? false : {
 										options: this.typeList[3],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 3, rowindex)}
 									}
 								}, {
-									field: 'remarks',title: '備考', width: '500px',
-									filter: {
+									field: 'remarks',title: '備考', width: '300px',
+									filter: this.isDisabled ? false : {
 										options: this.typeList[4],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)}
 									}
 								}]}
-								add={() => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
-								remove={(data, index) => this.removeList('item_details', index)}
+								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('item_details', index)}
 								fixed
 							/>
 
@@ -419,9 +446,9 @@ export default class QuotationForm extends React.Component {
 								}, {
 									field: 'condition', title: '条件内容', width: '800px'
 								}]}
-								edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								add={() => this.showAddModal('basic_condition')}
-								remove={(data, index) => this.removeList('basic_condition', index)}
+								edit={this.isDisabled ? false : (data, index) => this.showEditModal('basic_condition', data, index)}
+								add={this.isDisabled ? false : () => this.showAddModal('basic_condition')}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('basic_condition', index)}
 							/>
 
 						</Tab>
@@ -433,12 +460,12 @@ export default class QuotationForm extends React.Component {
 								data={this.entry.remarks}
 								header={[{
 									field: 'content', title: '備考', 
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
 									}
 								}]}
-								add={() => this.addList('remarks', { content: ''})}
-								remove={(data, index) => this.removeList('remarks', index)}
+								add={this.isDisabled ? false : () => this.addList('remarks', { content: ''})}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('remarks', index)}
 								fixed
 							/>
 
@@ -452,22 +479,22 @@ export default class QuotationForm extends React.Component {
 									field: 'item_code',title: '品番', width: '100px'
 								}, {
 									field: 'regular_price', title: '通常販売価格', width: '100px',
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('regular_price', data, rowindex)}
 									}
 								}, {
 									field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)}
 									}
 								}, {
 									field: 'special_price', title: '特別販売価格', width: '100px',
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)}
 									}
 								}, {
 									field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)}
 									}
 								}, {
@@ -501,30 +528,34 @@ export default class QuotationForm extends React.Component {
 								}, {	
 									field: 'purchase_price', title: '仕入れ単価', width: '150px'
 								}]}
-								add={() => this.showAddModal('packing_item')}
-								remove={(data, index) => this.removeList('packing_item', index)}
+								add={this.isDisabled ? false : () => this.showAddModal('packing_item')}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('packing_item', index)}
 							>
-								<CommonFilterBox
-									placeholder="品番から追加"
-									name=""
-									value={this.selectPackingItem}
-									onChange={(data) => this.addList('packing_item', data.data.packing_item)}
-									style={{float: 'left', width: '200px'}}
-									table
-									async={(input)=>this.getPackingItemList(input)}
-								/>
+								{!this.isDisabled && 
+									<div>
+										<CommonFilterBox
+											placeholder="品番から追加"
+											name=""
+											value={this.selectPackingItem}
+											onChange={(data) => this.addList('packing_item', data.data.packing_item)}
+											style={{float: 'left', width: '200px'}}
+											table
+											async={(input)=>this.getPackingItemList(input)}
+										/>
 
-								<Button bsSize="sm" onClick={() => this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
+										<Button style={{float: 'left'}} bsSize="sm" onClick={() => this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
 
-								<CommonFilterBox
-									placeholder="テンプレート選択"
-									name=""
-									value={this.packingItemTemplate}
-									options={this.packingItemTemplateList}
-									onChange={(data) => this.changePackingItemTemplate(data)}
-									style={{float: 'right', width: '200px'}}
-									table
-								/>
+										<CommonFilterBox
+											placeholder="テンプレート選択"
+											name=""
+											value={this.packingItemTemplate}
+											options={this.packingItemTemplateList}
+											onChange={(data) => this.changePackingItemTemplate(data)}
+											style={{float: 'right', width: '200px'}}
+											table
+										/>
+									</div>
+								}
 							</CommonTable>
 						</Tab>
 

@@ -97,6 +97,7 @@ item_details{}
  is_taxation
 quotation
  quotation_code
+ quotation_code_sub
  quotation_date
  status
  packing_item{}

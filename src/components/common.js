@@ -316,19 +316,24 @@ export class CommonRegistrationBtn extends React.Component {
 		}
 		const setLink = (entry, element) => {
 			let link = entry.link ? entry.link : []
-			const selfMark = element.value.split('${')
-			let selfValue = element.value
-			if (selfMark.length > 1) {
-				const selfKey = selfMark[1].split('}')[0]
-				if (selfKey === '_addids') {
-					selfValue = selfValue.replace('${_addids}', addids)
+			const selfSplit = element.value.split(',')
+			let selfValue = []
+			selfSplit.map((_value) => {
+				const selfMark = _value.split('${')
+				if (selfMark.length > 1) {
+					const selfKey = selfMark[1].split('}')[0]
+					if (selfKey === '_addids') {
+						selfValue.push(_value.replace('${_addids}', addids))
+					} else {
+						const childNode = document.getElementsByName(selfKey)[0]
+						selfValue.push(_value.replace('${'+ selfKey +'}', childNode.value))
+					}
 				} else {
-					const childNode = document.getElementsByName(selfKey)[0]
-					selfValue = selfValue.replace('${'+ selfKey +'}', childNode.value)
+					selfValue.push(_value)
 				}
-			}
+			})
 			let data = {
-				'___href': selfValue,
+				'___href': selfValue.join(''),
 				'___rel': element.dataset.rel
 			}
 			link.push(data)
@@ -415,7 +420,6 @@ export class CommonRegistrationBtn extends React.Component {
 			} else {
 				reqData = this.setReqestdata(response.data.feed.title)
 			}
-
 			axios({
 				url: url,
 				method: 'post',
@@ -655,7 +659,7 @@ export class CommonUpdateBtn extends React.Component {
 				return (
 					<NavItem href="#" className="common-action-btn">
 						<span className="common-action-btn-span update" onClick={(e) => this.submit(e)}>
-							<Glyphicon glyph="ok" /> 更新
+							{this.label}
 						</span>
 						<CommonIndicator visible={this.state.isDisabled} />
 						<CommonNetworkMessage
@@ -783,6 +787,65 @@ export class CommonDeleteBtn extends React.Component {
 		}
 
 		return deleteNode()
+	}
+
+}
+
+/**
+ * 汎用ボタン（ボタン名を呼び出し先で設定する）
+ */
+export class CommonGeneralBtn extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			isCompleted: false,
+			isError: {},
+			isDisabled: false,
+			label: this.props.label,
+			buttonStyle: this.props.buttonStyle ? 'btn ' + this.props.buttonStyle : 'btn',
+			navStyle: this.props.navStyle ? 'common-action-btn-span ' + this.props.navStyle : 'common-action-btn-span'
+		}
+	}
+
+	render() {
+
+		const node = () => {
+			if (this.props.NavItem) {
+				return (
+					<NavItem href="#" className="common-action-btn">
+						<span className={this.state.navStyle} onClick={(e) => this.props.onClick(e, this.data)}>
+							{this.state.label}
+						</span>
+						<CommonIndicator visible={this.state.isDisabled} />
+						<CommonNetworkMessage
+							isError={this.state.isError}
+							isCompleted={this.state.isCompleted}
+						/>
+					</NavItem>
+				)
+			} else {
+				return (
+					<div>
+
+						<CommonIndicator visible={this.state.isDisabled} />
+						
+						<CommonFormGroup controlLabel={this.props.controlLabel}>
+							<Button type="submit" className={this.state.buttonStyle} onClick={(e) => this.props.onClick(e, this.data)}>
+								{this.state.label}
+							</Button>
+						</CommonFormGroup>
+
+						<CommonNetworkMessage
+							isError={this.state.isError}
+							isCompleted={this.state.isCompleted}
+						/>
+					</div>
+				)
+			}
+		}
+
+		return node()
 	}
 
 }
@@ -1517,7 +1580,7 @@ export class CommonTable extends React.Component {
 		if (this.props.select) option.push({
 			field: 'select', title: '選択', width: '30px'
 		})
-		if (this.props.edit || this.props.remove) option.push({
+		if (this.props.edit || (this.props.remove && this.props.remove !== false)) option.push({
 			field: 'edit', title: this.editName(), width: '30px'
 		})
 		const thNode = (_obj, _index) => {
@@ -1528,7 +1591,7 @@ export class CommonTable extends React.Component {
 			cashInfo[field].index = _index
 			cashInfolength++
 			return (
-				<th key={_index} style={{width: _obj.width}}>
+				<th key={_index} style={{ width: _obj.width }} data-field={field}>
 					<div style={{width: _obj.width}}>{_obj.title}</div>
 				</th>
 			)
