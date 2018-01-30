@@ -7,7 +7,6 @@ import {
 	FormControl,
 	PanelGroup,
 	Panel,
-	Checkbox,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -35,7 +34,7 @@ export default class CustomerForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {customer_copy:false}
+		this.state = {}
 
 		this.entry = this.props.entry
 		this.entry.customer = this.entry.customer || {}
@@ -105,6 +104,7 @@ export default class CustomerForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.forceUpdate()
 	}
 
 	/**
@@ -314,15 +314,14 @@ export default class CustomerForm extends React.Component {
 
 	changeCustomer(_data,_key) {
 		this.entry.customer[_key] = _data
-		console.log(this.entry.customer[_key])
 		this.forceUpdate()
 	}
-	copyCustomerToBillto(){
-		this.entry.billto.billto_name = this.entry.customer.customer_name
-		this.setState({customer_copy:!this.state.customer_copy})
-		console.log(this.entry.billto.billto_name)
+
+	changeContactInformation(_data,_key) {
+		this.entry.contact_information[_key] = _data
 		this.forceUpdate()
 	}
+
 	render() {
 
 		return (
@@ -372,6 +371,7 @@ export default class CustomerForm extends React.Component {
 							value={this.entry.customer.customer_name_kana}
 							validate="number"
 							required
+							onChange={(data)=> this.changeCustomer(data,'customer_name_kana')}
 						/>
 						
 						<CommonInputText
@@ -381,6 +381,7 @@ export default class CustomerForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.tel}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'tel')}
 						/>
 
 						<CommonInputText
@@ -390,6 +391,7 @@ export default class CustomerForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.fax}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'fax')}
 						/>
 						
 						<CommonInputText
@@ -398,6 +400,7 @@ export default class CustomerForm extends React.Component {
 							type="email"
 							placeholder="logioffice@gmail.com"
 							value={this.entry.contact_information.email}
+							onChange={(data) => this.changeContactInformation(data,'email')}
 						/>
 						
 						<CommonInputText
@@ -407,6 +410,7 @@ export default class CustomerForm extends React.Component {
 							placeholder="123-4567"
 							value={this.entry.contact_information.zip_code}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'zip_code')}
 						/>
 
 						<CommonPrefecture
@@ -414,6 +418,7 @@ export default class CustomerForm extends React.Component {
 							componentClass="select"
 							name="contact_information.prefecture"
 							value={this.entry.contact_information.prefecture}
+							onChange={(data) => this.changeContactInformation(data,'prefecture')}
 						/>
 
 						<CommonInputText
@@ -422,6 +427,7 @@ export default class CustomerForm extends React.Component {
 							type="text"
 							placeholder="◯◯市××町"
 							value={this.entry.contact_information.address1}
+							onChange={(data) => this.changeContactInformation(data,'address1')}
 						/>
 
 						<CommonInputText
@@ -431,6 +437,7 @@ export default class CustomerForm extends React.Component {
 							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.contact_information.address2}
 							size="lg"
+							onChange={(data) => this.changeContactInformation(data,'address2')}
 						/>
 					
 						<CommonInputText
@@ -463,11 +470,6 @@ export default class CustomerForm extends React.Component {
 
 					<Panel collapsible header="請求先情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 						
-						<Checkbox inline value={this.state.customer_copy}
-							onClick={()=>{this.copyCustomerToBillto()}}>
-							顧客情報と同じにする
-						</Checkbox>
-						
 						<CommonFilterBox
 							controlLabel="請求先"
 							name=""
@@ -476,7 +478,6 @@ export default class CustomerForm extends React.Component {
 							add={() => this.setState({ showBilltoAddModal: true })}
 							//edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
-							//disabled='true'
 						/>
 						
 						{ this.entry.billto.billto_code && 
@@ -584,8 +585,8 @@ export default class CustomerForm extends React.Component {
 					
 				</PanelGroup>
 
-				<BilltoAddModal isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.setBilltoData(data, 'add')} />
-				<BilltoEditModal isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
+				<BilltoAddModal customerEntry={this.entry} isShow={this.state.showBilltoAddModal} close={() => this.setState({ showBilltoAddModal: false })} add={(data) => this.setBilltoData(data, 'add')} />
+				<BilltoEditModal customer={this.entry.customer} contact_information={this.entry.contact_information} isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
 				<StaffAddModal isShow={this.state.showStaffAddModal} close={() => this.setState({ showStaffAddModal: false })} add={(data) => this.setStaffData(data, 'add')} />
 				<StaffEditModal isShow={this.state.showStaffEditModal} close={() => this.setState({ showStaffEditModal: false })} edit={(data) => this.setStaffData(data, 'edit')} data={this.staff} />
 

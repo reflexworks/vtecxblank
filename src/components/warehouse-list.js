@@ -213,9 +213,9 @@ export default class WarehouseList extends React.Component {
 							header={[{
 								field: 'warehouse.warehouse_code',title: '倉庫コード', width: '100px'
 							}, {
-								field: 'warehouse.warehouse_name', title: '倉庫名', width: '70px'
+								field: 'warehouse.warehouse_name', title: '倉庫名', width: '200px'
 							}, {
-								field: 'warehouse.zip_code', title: '郵便番号', width: '200px'
+								field: 'warehouse.zip_code', title: '郵便番号', width: '70px'
 							}, {
 								field: 'warehouse.prefecture', title: '都道府県', width: '150px'
 							}, {
