@@ -303,7 +303,7 @@ export default class QuotationForm extends React.Component {
 						controlLabel="見積書コード"
 						name=""
 						type="text"
-						value={this.entry.quotation.quotation_code + '-' +this.entry.quotation.quotation_code_sub}
+						value={this.entry.quotation.quotation_code + ' - ' +this.entry.quotation.quotation_code_sub}
 						readonly
 					/>
 					<CommonInputText
