@@ -67,7 +67,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 	getQuotationList(_input) {
 		return axios({
-			url: `/d/quotation?f&quotation.quotation_code=*${_input}*`,
+			url: `/d/quotation?f&quotation.quotation_code=*${_input}*&quotation.status=1`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -111,7 +111,8 @@ export default class InternalWorkRegistration extends React.Component {
 
 		this.setState({ isDisabled: true })
 
-		const option = '?billto_code=' + this.entry.billto.billto_code + '&working_yearmonth=' + this.monthly
+		const option = '?quotation_code=' + this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub + 
+		'&working_yearmonth=' + this.monthly
 		axios({
 			url: '/s/internalwork-registration' + option,
 			method: 'get',
@@ -225,6 +226,14 @@ export default class InternalWorkRegistration extends React.Component {
 								name=""
 								type="text"
 								value="見積書に紐付けされている請求先から顧客ごとに庫内作業を作成します。"
+								readonly
+								size="lg"
+							/>
+							<CommonInputText
+								controlLabel=" "
+								name=""
+								type="text"
+								value="発行済の見積書を対象に検索します。"
 								readonly
 								size="lg"
 							/>
