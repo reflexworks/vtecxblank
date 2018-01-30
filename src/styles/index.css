@@ -1114,3 +1114,104 @@ h3.title {
 .shipment_service_table .common-table{
   margin-bottom: 10px;
 }
+
+.invoiceDetails-table {
+  width: 100%;
+  height: auto;
+  border: 1px solid #DDDDDD;
+  background: #fff;
+  margin-top: 2px;
+}
+.invoiceDetails-table.scroll {
+  overflow: scroll;
+}
+.invoiceDetails-table .table{
+  margin-bottom: 0px;
+  border: 0px;
+  margin-left: -1px;
+  margin-right: -1px;
+  font-size: 12px;
+}
+.invoiceDetails-table>.table>tbody>tr>th, 
+.invoiceDetails-table>.table>tfoot>tr>td, 
+.invoiceDetails-table>.table>tfoot>tr>th, 
+.invoiceDetails-table>.table>thead>tr>td, 
+.invoiceDetails-table>.table>thead>tr>th {
+  padding: 5px 50px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.invoiceDetails-table>.table>tbody>tr>td {
+
+  padding: 5px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.invoiceDetails-table>.table>tbody>tr>td>div {
+  padding: 5px;
+}
+.invoiceDetails-table .table th{
+  color: #fff;
+  background: #337ab7;
+}
+.invoiceDetails-table .table td div.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.invoiceDetails-table.Select{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.invoiceDetails-table .isError td,
+.invoiceDetails-table .isError td:hover,
+.invoiceDetails-table .isError td:focus {
+  background: rgb(255, 231, 231);
+}
+.invoiceDetails-table .isTotal td,
+.invoiceDetails-table .isTotal td:hover,
+.invoiceDetails-table .isTotal td:focus {
+  background: rgb(231, 255, 233);
+}
+.invoiceDetails-table .isSelected td{
+  background: rgb(236, 250, 243);
+}
+.invoiceDetails-table .table td .array {
+  padding: 5px;
+}
+.invoiceDetails-table .table td .multi {
+  display: table-row;
+}
+.invoiceDetails-table .table td .multi p.multi_item{
+  display: table-cell;
+}
+.invoiceDetails-table .table td .multi p.multi_item.value{
+  display: table-cell;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.invoiceDetails-table th .old{
+  color: rgb(231, 141, 141);
+}
+.invoiceDetails-table td .old{
+  color: red;
+}
+.invoiceDetails-table .old span{
+  text-decoration: line-through;
+}
+.invoiceDetails-table th .new{
+  color: rgb(80, 211, 158);
+}
+.invoiceDetails-table td .new{
+  color: rgb(5, 184, 115);
+}
+.invoiceDetails-table td .disabled{
+  color: #ccc;
+  text-decoration: line-through;
+}
+
+.test{
+  color:red;
+  padding: 100px 100px
+}

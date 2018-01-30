@@ -38,6 +38,7 @@ export default class InvoiceForm extends React.Component {
 			showBillfromEditModal: false,
 			selectCustomer: '',
 			selectQuotation: '',
+			selectYearMonth:'',
 		}
 
 		this.entry = this.props.entry
@@ -118,6 +119,7 @@ export default class InvoiceForm extends React.Component {
 		this.getService()
 		this.setBillfromMasterData()
 		this.setCustomerMasterData()
+		//this.setInternalWorkYearMonth()
 	}
 
 	/**
@@ -128,6 +130,26 @@ export default class InvoiceForm extends React.Component {
 		this.entry = newProps.entry
 		this.sortItemDetails()
 	}
+	/*
+	setInternalWorkYearMonth() {
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/internal_work?f&quotation.quotation_code=0000001',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			if (response.status !== 204) {
+				console.log(response)
+			}
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+			//alert("庫内作業データがありません")
+		})
+	}
+	*/
 
 	/**
 	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
@@ -247,13 +269,13 @@ export default class InvoiceForm extends React.Component {
 
 	getHead() {
 		let head = []
-		head.push(<th>178</th>)
+		head.push(<th aling="middle"></th>)
 
 		this.zoneArray.map((_value) => {
-			head.push(<th colspan="3" align="middle">{_value}</th>)
+			head.push(<th colspan="3" align="middle" margin="20px">{_value}</th>)
 		})
 
-		head.push(<th width="100">　　</th>)
+		head.push(<th></th>)
 		head.push(<th align="middle">合計</th>)	
 
 		return head
@@ -261,16 +283,16 @@ export default class InvoiceForm extends React.Component {
 	getBody() {
 		let body = []
 
-		body.push(<td align="middle" width="150">サイズ</td>)
+		body.push(<td align="middle">サイズ</td>)
 
 		this.zoneArray.map(() => {
-			body.push(<td align="middle" style={{width: '300px'}}>個数</td>)
-			body.push(<td align="middle" style={{width: '500px'}}>単価</td>)
+			body.push(<td align="middle" >個数</td>)
+			body.push(<td align="middle" >単価</td>)
 			body.push(<td align="middle" >小計</td>)
 		})
 
-		body.push(<td align="middle">総個数</td>)
-		body.push(<td align="middle">金額</td>)
+		body.push(<td  align="middle">総個数</td>)
+		body.push(<td  align="middle">金額</td>)
 
 		return body
 	}
@@ -285,28 +307,28 @@ export default class InvoiceForm extends React.Component {
 	}
 	getEtr(size){
 		let tdnode = []
-		tdnode.push(<td align="center" >{size}</td>)
+		tdnode.push(<td  align="center" >{size}</td>)
 		this.zoneArray.map(() => {
-			tdnode.push(<td valign="top" align="right">26</td>)
-			tdnode.push(<td valign="top" align="right">480</td>)
-			tdnode.push(<td valign="top" align="right">12,480</td>)
+			tdnode.push(<td  align="right">26</td>)
+			tdnode.push(<td  align="right">480</td>)
+			tdnode.push(<td  align="right">12,480</td>)
 		})
-		tdnode.push(<td  valign="top" ></td>)
-		tdnode.push(<td valign="top" ></td>)
+		tdnode.push(<td  align="right">338</td>)
+		tdnode.push(<td  align="right">162,240</td>)
 		
 		return <tr>{tdnode}</tr>
 	}
 	getTotal() {
 		let tdnode = []
-		tdnode.push(<td valign="top" >合計</td>)
+		tdnode.push(<td valign="top" align="middle">合計</td>)
 		this.zoneArray.map(() => {
-			tdnode.push(<td valign="top" align="right"></td>)
-			tdnode.push(<td valign="top" align="right"></td>)
-			tdnode.push(<td valign="top" align="right"></td>)
+			tdnode.push(<td  align="right"></td>)
+			tdnode.push(<td  align="right"></td>)
+			tdnode.push(<td  align="right">74,880</td>)
 		})
 
-		tdnode.push(<td valign="top" ></td>)
-		tdnode.push(<td valign="top" align="right" >156,330</td>)
+		tdnode.push(<td  align="right">2,028</td>)
+		tdnode.push(<td  align="right">973,440</td>)
 		return <tr>{tdnode}</tr>
 	}
 
@@ -758,7 +780,6 @@ export default class InvoiceForm extends React.Component {
 	 * 請求先変更処理
 	 */
 	changeCustomer(_data) {
-		console.log(_data)
 		if (_data) {
 			this.setState({selectCustomer :_data.data.customer})
 			this.customer = _data.data
@@ -891,8 +912,7 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	onSelect() {
-	}
+	//onSelect() {}
 
 	render() {
 
@@ -959,13 +979,22 @@ export default class InvoiceForm extends React.Component {
 						value: '1',
 					}]}
 					onChange={(data) => this.changeDepositStatus(data)}
-				/>	
+				/>
+
+				<CommonMonthlySelect
+					controlLabel="庫内作業年月選択"	
+					value={this.state.selectYearMonth}
+				/>
 						
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
 					<Tab eventKey={1} title="請求内容">
 						<PanelGroup defaultActiveKey="1">
 							
+							<Button bsSize="sm" style={{width:'130px'}} className="total_amount">
+								<Glyphicon glyph="download" />CSVダウンロード
+							</Button>
+
 							<CommonFilterBox
 								controlLabel="顧客選択"
 								name=""
@@ -1388,8 +1417,18 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 					
 					<Tab eventKey={2} title="請求明細(簡易)">
+
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>	
+
 						<Panel collapsible header="エコ配JP簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
-							<div className="common-table scroll">	
+
+							<div className="invoiceDetails-table scroll">	
 								<Table striped bordered hover>
 									<thead>
 										<tr>
@@ -1406,7 +1445,7 @@ export default class InvoiceForm extends React.Component {
 							</div>
 						</Panel>	
 						<Panel collapsible header="ヤマト運輸発払簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
-							<div className="common-table scroll">	
+							<div className="invoiceDetails-table scroll">	
 								<Table striped bordered hover>
 									<thead>
 										<tr>
@@ -1425,6 +1464,13 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 
 					<Tab eventKey={3} title="請求明細(詳細)">
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>
 						<Panel collapsible header="明細CSVダウンロード" eventKey="3" bsStyle="info" defaultExpanded="true">
 							<CommonTable
 							//name="""
