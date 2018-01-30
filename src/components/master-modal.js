@@ -6,6 +6,7 @@ import type {
 
 import {
 	Form,
+	Button,
 } from 'react-bootstrap'
 
 import {
@@ -23,7 +24,7 @@ export class BilltoAddModal extends React.Component {
 		super(props)
 		this.state = {
 			value: this.props.value,
-			isShow: this.props.isShow
+			isShow: this.props.isShow,
 		}
 		this.formName = 'BilltoAddModal'
 		this.url = '/d/billto'
@@ -31,6 +32,7 @@ export class BilltoAddModal extends React.Component {
 			billto: {},
 			contact_information: {}
 		}
+		this.customerEntry = this.props.customerEntry
 	}
 
 	/**
@@ -38,9 +40,16 @@ export class BilltoAddModal extends React.Component {
      * @param {*} newProps
      */
 	componentWillReceiveProps(newProps) {
+		this.customerEntry = newProps.customerEntry
 		this.setState({isShow: newProps.isShow})
 	}
 
+	copyCustomerToBillto() {
+		console.log(this.customerEntry)
+		this.entry.billto.billto_name = this.customerEntry.customer.customer_name
+		this.entry.contact_information = this.customerEntry.contact_information
+		this.forceUpdate()
+	}
 	close() {
 		this.props.close()
 	}
@@ -49,13 +58,18 @@ export class BilltoAddModal extends React.Component {
 
 		return (
 			<CommonModal isShow={this.state.isShow} title="請求先新規登録"
-				closeBtn={() => this.close()} size="lg"
-				addAxiosBtn={{
-					url: this.url,
-					callback: (data) => this.props.add(data)
-				}}
-				fromName={this.formName}
+						 closeBtn={() => this.close()} size="lg"
+						 addAxiosBtn={{
+								 url: this.url,
+						 	callback: (data) => this.props.add(data)
+						 }}
+						 fromName={this.formName}
 			>
+				<Button onClick={()=>{this.copyCustomerToBillto()}}>
+						顧客情報と同じ内容にする
+				</Button>
+				<br />
+				<br/>
 				<BilltoForm name={this.formName} entry={this.entry} />
 			</CommonModal>
 		)
@@ -75,6 +89,8 @@ export class BilltoEditModal extends React.Component {
 			billto: {},
 			contact_information: {}
 		}
+		this.customer = this.props.customer
+		this.contact_information = this.props.contact_information
 	}
 
 	/**
@@ -84,6 +100,13 @@ export class BilltoEditModal extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.data
 		this.setState({ isShow: newProps.isShow })
+	}
+
+	copyCustomerToBillto() {
+		console.log(this.customer)
+		this.entry.billto.billto_name = this.customer.customer_name
+		this.entry.contact_information = this.contact_information
+		this.forceUpdate()
 	}
 
 	close() {
@@ -102,6 +125,9 @@ export class BilltoEditModal extends React.Component {
 				}}
 				fromName={this.formName}
 				size="lg">
+				<Button onClick={()=>{this.copyCustomerToBillto()}}>
+						顧客情報と同じ連絡先にする
+				</Button>
 				<BilltoForm name={this.formName} entry={this.entry} />
 			</CommonModal>
 		)
