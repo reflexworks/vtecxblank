@@ -42,14 +42,12 @@ export class CustomerShipperModal extends React.Component {
 			type: newProps.type
 		})
 		
-		if(this.shipper.delivery_company === 'エコ配JP' || this.shipper.delivery_company === 'EC'){
-			this.shipper.delivery_company = 'EC'
-		}else if (this.shipper.delivery_company === 'ヤマト運輸' || this.shipper.delivery_company === 'YM') {
-			this.shipper.delivery_company = 'YM'
-		} else if (this.shipper.delivery_company === '日本郵政' || this.shipper.delivery_company === 'PO') {
-			this.shipper.delivery_company = 'PO'
+		if(this.shipper.shipment_service_code === 'エコ配JP' || this.shipper.shipment_service_code === 'EC'){
+			this.shipper.shipment_service_code = 'EC'
+		}else if (this.shipper.shipment_service_code === 'ヤマト運輸' || this.shipper.shipment_service_code === 'YM') {
+			this.shipper.shipment_service_code = 'YM'
 		} else {
-			this.shipper.delivery_company = ''
+			this.shipper.shipment_service_code = ''
 		}
 		
 		for(let i=0;i<this.shipper.shipper_info.length;++i){
@@ -61,8 +59,6 @@ export class CustomerShipperModal extends React.Component {
 				this.shipper.shipper_info[i].shipment_class = ''
 			}
 		}
-		
-
 		this.forceUpdate()
 	}
 
@@ -102,7 +98,7 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	changeDeliveryCompany(_data) {
-		this.shipper.delivery_company = _data ? _data.value : ''
+		this.shipper.shipment_service_code = _data ? _data.value : ''
 		this.forceUpdate()
 	}
 
@@ -120,7 +116,6 @@ export class CustomerShipperModal extends React.Component {
 
 		return (
 
-
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
@@ -129,17 +124,14 @@ export class CustomerShipperModal extends React.Component {
 				<Form name="CustomerShipperModal" horizontal>
 					<CommonFilterBox
 						controlLabel="配送業者"
-						name="delivery_company"
-						value={this.shipper.delivery_company}
+						name="shipment_service_code"
+						value={this.shipper.shipment_service_code}
 						options={[{
 							label: 'エコ配JP',
 							value: 'EC'
 						}, {	
 							label: 'ヤマト運輸',
 							value: 'YM'
-						}, {
-							label: '日本郵政',
-							value: 'PO',
 						}]}
 						onChange={(data)=>this.changeDeliveryCompany(data)}
 					/>

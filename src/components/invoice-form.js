@@ -11,6 +11,7 @@ import {
 	Tab,
 	Button,
 	Glyphicon,
+	Table,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -37,6 +38,7 @@ export default class InvoiceForm extends React.Component {
 			showBillfromEditModal: false,
 			selectCustomer: '',
 			selectQuotation: '',
+			selectYearMonth:'',
 		}
 
 		this.entry = this.props.entry
@@ -107,6 +109,9 @@ export default class InvoiceForm extends React.Component {
 			value: '1',
 		}]
 
+		this.zoneArray = ['南九州', '北九州', '四国', '中国', '関西', '北陸', '東海', '信越', '関東', '南東北', '北東北', '北海道', '沖縄']
+		this.deliverySize = ['60', '80', '100', '120', '140', '160']
+
 	}
 	
 	componentWillMount() {
@@ -114,6 +119,7 @@ export default class InvoiceForm extends React.Component {
 		this.getService()
 		this.setBillfromMasterData()
 		this.setCustomerMasterData()
+		//this.setInternalWorkYearMonth()
 	}
 
 	/**
@@ -124,6 +130,26 @@ export default class InvoiceForm extends React.Component {
 		this.entry = newProps.entry
 		this.sortItemDetails()
 	}
+	/*
+	setInternalWorkYearMonth() {
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/internal_work?f&quotation.quotation_code=0000001',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			if (response.status !== 204) {
+				console.log(response)
+			}
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+			//alert("庫内作業データがありません")
+		})
+	}
+	*/
 
 	/**
 	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
@@ -241,7 +267,77 @@ export default class InvoiceForm extends React.Component {
 		})
 	}
 
+	getHead() {
+		let head = []
+		head.push(<th aling="middle"></th>)
+
+		this.zoneArray.map((_value) => {
+			head.push(<th colspan="3" align="middle" margin="20px">{_value}</th>)
+		})
+
+		head.push(<th></th>)
+		head.push(<th align="middle">合計</th>)	
+
+		return head
+	}
+	getBody() {
+		let body = []
+
+		body.push(<td align="middle">サイズ</td>)
+
+		this.zoneArray.map(() => {
+			body.push(<td align="middle" >個数</td>)
+			body.push(<td align="middle" >単価</td>)
+			body.push(<td align="middle" >小計</td>)
+		})
+
+		body.push(<td  align="middle">総個数</td>)
+		body.push(<td  align="middle">金額</td>)
+
+		return body
+	}
+
+	getEtrTotal() {
+		let etr = []
+		this.deliverySize.map((_size) => {
+			etr.push(this.getEtr(_size))
+		})
+		etr.push(this.getTotal())
+		return etr
+	}
+	getEtr(size){
+		let tdnode = []
+		tdnode.push(<td  align="center" >{size}</td>)
+		this.zoneArray.map(() => {
+			tdnode.push(<td  align="right">26</td>)
+			tdnode.push(<td  align="right">480</td>)
+			tdnode.push(<td  align="right">12,480</td>)
+		})
+		tdnode.push(<td  align="right">338</td>)
+		tdnode.push(<td  align="right">162,240</td>)
+		
+		return <tr>{tdnode}</tr>
+	}
+	getTotal() {
+		let tdnode = []
+		tdnode.push(<td valign="top" align="middle">合計</td>)
+		this.zoneArray.map(() => {
+			tdnode.push(<td  align="right"></td>)
+			tdnode.push(<td  align="right"></td>)
+			tdnode.push(<td  align="right">74,880</td>)
+		})
+
+		tdnode.push(<td  align="right">2,028</td>)
+		tdnode.push(<td  align="right">973,440</td>)
+		return <tr>{tdnode}</tr>
+	}
+
 	sampleData() {
+
+		this.ehead = this.getHead()
+		this.ebody = this.getBody()
+		this.etr = this.getEtrTotal()
+
 		this.entry.invoice.consumption_tax = '¥39,022'
 		this.entry.invoice.total_amount = '¥1,025,142'
 		this.ecoJP = [{
@@ -282,7 +378,6 @@ export default class InvoiceForm extends React.Component {
 			is_total:true,
 		}]
 		
-
 		this.YAMATOdep = [{
 			day: '12/1',
 			work: '4',
@@ -570,6 +665,13 @@ export default class InvoiceForm extends React.Component {
 			prefecture:'東京都',
 			delivery_charge:'640',
 		}]
+		
+		this.deliveryCSV = [{
+			delivery:'エコ配JP',
+		}, {
+			delivery:'ヤマト運輸'	
+		}]
+	
 	}
 
 	/**
@@ -678,7 +780,6 @@ export default class InvoiceForm extends React.Component {
 	 * 請求先変更処理
 	 */
 	changeCustomer(_data) {
-		console.log(_data)
 		if (_data) {
 			this.setState({selectCustomer :_data.data.customer})
 			this.customer = _data.data
@@ -811,8 +912,7 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	onSelect() {
-	}
+	//onSelect() {}
 
 	render() {
 
@@ -879,13 +979,22 @@ export default class InvoiceForm extends React.Component {
 						value: '1',
 					}]}
 					onChange={(data) => this.changeDepositStatus(data)}
-				/>	
+				/>
+
+				<CommonMonthlySelect
+					controlLabel="庫内作業年月選択"	
+					value={this.state.selectYearMonth}
+				/>
 						
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
 					<Tab eventKey={1} title="請求内容">
 						<PanelGroup defaultActiveKey="1">
 							
+							<Button bsSize="sm" style={{width:'130px'}} className="total_amount">
+								<Glyphicon glyph="download" />CSVダウンロード
+							</Button>
+
 							<CommonFilterBox
 								controlLabel="顧客選択"
 								name=""
@@ -1307,34 +1416,78 @@ export default class InvoiceForm extends React.Component {
 						</FormGroup>
 					</Tab>
 					
-					<Tab eventKey={2} title="請求詳細">
-						<Panel collapsible header="ヤマト運輸発払明細" eventKey="1" bsStyle="info" defaultExpanded="true">
+					<Tab eventKey={2} title="請求明細(簡易)">
+
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>	
+
+						<Panel collapsible header="エコ配JP簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
+
+							<div className="invoiceDetails-table scroll">	
+								<Table striped bordered hover>
+									<thead>
+										<tr>
+											{this.ehead}
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											{this.ebody}
+										</tr>
+										{this.etr}
+									</tbody>
+								</Table>
+							</div>
+						</Panel>	
+						<Panel collapsible header="ヤマト運輸発払簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
+							<div className="invoiceDetails-table scroll">	
+								<Table striped bordered hover>
+									<thead>
+										<tr>
+											{this.ehead}
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											{this.ebody}
+										</tr>
+										{this.etr}
+									</tbody>
+								</Table>
+							</div>
+						</Panel>
+					</Tab>
+
+					<Tab eventKey={3} title="請求明細(詳細)">
+						<CommonFilterBox
+							controlLabel="顧客選択"
+							name=""
+							value={this.state.selectCustomer.customer_code}
+							options={this.customerList}
+							onChange={(data) => this.changeCustomer(data)}
+						/>
+						<Panel collapsible header="明細CSVダウンロード" eventKey="3" bsStyle="info" defaultExpanded="true">
 							<CommonTable
 							//name="""
-								data={this.YAMATO_details}
+								data={this.deliveryCSV}
 								header={[{
-									field: 'shipping_date',title: '出荷日', width: '100px'
+									field: 'btn1', title: 'CSV', width: '10px',
+									label: <Glyphicon glyph="download" />,
+									//onClick:
 								}, {
-									field: 'tracking_number', title: '原票番号', width: '200px'
-								}, {
-									field: 'delivery_class1', title: '配送区分１', width: '100px'
-								}, {
-									field: 'delivery_class2', title: '配送区分２', width: '100px',
-								}, {
-									field: 'size', title: 'サイズ', width: '100px',
-								}, {
-									field: 'quantity', title: '個数', width: '100px',
-								}, {
-									field: 'prefecture', title: '取扱県', width: '100px',
-								}, {
-									field: 'delivery_charge', title: '運賃', width: '100px',
+									field:'delivery', title:'配送業者',width:'1000px',
 								}]}
 								
 							/>
 						</Panel>
 					</Tab>
 
-					<Tab eventKey={3} title="請求元"> 
+					<Tab eventKey={4} title="請求元"> 
 						
 						<CommonFilterBox
 							controlLabel="請求元"
@@ -1462,7 +1615,7 @@ export default class InvoiceForm extends React.Component {
 						
 					</Tab>
 					
-					<Tab eventKey={4} title="請求データ(発送)">
+					<Tab eventKey={5} title="請求データ(発送)">
 						<CommonFilterBox
 							controlLabel="顧客選択"
 							name=""
@@ -1614,7 +1767,7 @@ export default class InvoiceForm extends React.Component {
 
 						</Panel>
 					</Tab>
-					<Tab eventKey={5} title="請求データ(集荷)">
+					<Tab eventKey={6} title="請求データ(集荷)">
 						<CommonFilterBox
 							controlLabel="顧客選択"
 							name=""
@@ -1767,8 +1920,7 @@ export default class InvoiceForm extends React.Component {
 						</Panel>
 					</Tab>
 				</Tabs>	
-						
-				
+							
 				<BillfromAddModal isShow={this.state.showBillfromAddModal} close={() => this.setState({ showBillfromAddModal: false })} add={(data) => this.setBillfromData(data, 'add')} />
 				<BillfromEditModal isShow={this.state.showBillfromEditModal} close={() => this.setState({ showBillfromEditModal: false })} edit={(data) => this.setBillfromData(data, 'edit')} data={this.billfrom} />
 			</Form>
