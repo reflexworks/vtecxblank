@@ -71,7 +71,7 @@ export default class QuotationUpdate extends React.Component {
 				this.entry.basic_condition = this.entry.basic_condition || []
 				this.entry.item_details = this.entry.item_details || []
 				this.entry.remarks = this.entry.remarks || []
-				this.entry.quotation.packing_item = this.entry.quotation.packing_item || []
+				this.entry.packing_items = this.entry.packing_items || []
 
 				CommonEntry().init(this.entry)
 				this.setButton()
@@ -174,8 +174,7 @@ export default class QuotationUpdate extends React.Component {
 			const basic_condition = entry.basic_condition || []
 			const item_details = entry.item_details || []
 			const remarks = entry.remarks || []
-
-			quotation.packing_item = entry.quotation.packing_item || []
+			const packing_items = entry.packing_items || []
 
 			const setObj = (_obj) => {
 				return JSON.parse(JSON.stringify(_obj))
@@ -188,6 +187,7 @@ export default class QuotationUpdate extends React.Component {
 						basic_condition: basic_condition,
 						item_details: item_details,
 						remarks: remarks,
+						packing_items: packing_items,
 						link: [{
 							___href: '/quotation/' + quotation.quotation_code + '-' + sub_code,
 							___rel: 'self'

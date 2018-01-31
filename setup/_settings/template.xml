@@ -80,6 +80,27 @@ packing_item
  regular_unit_price
  special_price
  special_unit_price
+packing_items{}
+ item_code
+ item_name
+ material
+ category
+ size1
+ size2
+ notices
+ thickness
+ inside_width
+ inside_depth
+ inside_height
+ outer_width
+ outer_depth
+ outer_height
+ outer_total
+ purchase_price
+ regular_price
+ regular_unit_price
+ special_price
+ special_unit_price
 remarks{}
  content
 basic_condition{}
@@ -100,27 +121,6 @@ quotation
  quotation_code_sub
  quotation_date
  status
- packing_item{}
-  item_code
-  item_name
-  material
-  category
-  size1
-  size2
-  notices
-  thickness
-  inside_width
-  inside_depth
-  inside_height
-  outer_width
-  outer_depth
-  outer_height
-  outer_total
-  purchase_price
-  regular_price
-  regular_unit_price
-  special_price
-  special_unit_price
 invoice
  invoice_code
  quotation_code

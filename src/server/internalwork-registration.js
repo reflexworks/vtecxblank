@@ -5,7 +5,7 @@ const quotation_code = reflexcontext.getQueryString('quotation_code')
 let quotation
 let customer
 if (quotation_code) {
-	quotation = reflexcontext.getEntry('/quotation/' + quotation_code)
+	quotation = reflexcontext.getFeed('/quotation?quotation.quotation_code=' + quotation_code)
 	customer = reflexcontext.getFeed('/customer?billto.billto_code=' + quotation.feed.entry[0].billto.billto_code)
 }
 const isCustomer = CommonGetFlag(customer)
