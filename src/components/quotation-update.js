@@ -175,26 +175,29 @@ export default class QuotationUpdate extends React.Component {
 			const item_details = entry.item_details || []
 			const remarks = entry.remarks || []
 
-			quotation.quotation_code_sub = sub_code
-
-			quotation.status = '0'
 			quotation.packing_item = entry.quotation.packing_item || []
 
+			const setObj = (_obj) => {
+				return JSON.parse(JSON.stringify(_obj))
+			}
 			let req = {
 				feed: {
 					entry: [{
-						quotation: quotation,
+						quotation: setObj(quotation),
 						billto: billto,
 						basic_condition: basic_condition,
 						item_details: item_details,
 						remarks: remarks,
 						link: [{
-							___href: '/quotation/' + quotation.quotation_code + '-' + quotation.quotation_code_sub,
+							___href: '/quotation/' + quotation.quotation_code + '-' + sub_code,
 							___rel: 'self'
 						}]
 					}]
 				}
 			}
+			req.feed.entry[0].quotation.quotation_code_sub = sub_code
+			req.feed.entry[0].quotation.status = '0'
+
 			return req
 		}
 		const create = (_data) => {
@@ -206,7 +209,8 @@ export default class QuotationUpdate extends React.Component {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			}).then(() => {
-				location.href = '/#/QuotationUpdate?' + entry.quotation.quotation_code + '-' + sub_code
+				this.props.history.push('/QuotationUpdate?' + entry.quotation.quotation_code + '-' + sub_code)
+				location.reload()
 			}).catch((error) => {
 				this.setState({ isDisabled: false, isError: error })
 			})
