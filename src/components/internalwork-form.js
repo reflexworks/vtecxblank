@@ -99,7 +99,7 @@ export default class InternalWorkForm extends React.Component {
 		}).then((response) => {
 
 			const entry = response.data.feed.entry[0]
-			this.setMasterList(entry.item_details, entry.quotation.packing_item)
+			this.setMasterList(entry.item_details, entry.packing_items)
 
 			this.getInternalWork()
 			this.setState({ isDisabled: false })
@@ -613,10 +613,6 @@ export default class InternalWorkForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	changedQuotationCode() {
-		
-	}
-
 	/**
 	 * remarksにRemarksModalのフォームで入力した物を追加する
 	 */
@@ -648,13 +644,7 @@ export default class InternalWorkForm extends React.Component {
 
 						<PanelGroup defaultActiveKey="1">
 							<Panel collapsible header="作業対象見積書" eventKey="2" bsStyle="info" defaultExpanded={true}>
-								<CommonFilterBox
-									controlLabel="見積書選択"
-									name="quotation.quotation_code"
-									value={this.entry.quotation.quotation_code}
-									options={this.quotationList}
-									onChange={(data) => this.changedQuotationCode(data)}
-								/>
+
 								<CommonInputText
 									controlLabel="作業対象見積書"
 									name="quotation.quotation_code"
@@ -662,6 +652,7 @@ export default class InternalWorkForm extends React.Component {
 									value={this.entry.quotation.quotation_code + ' - ' + this.entry.quotation.quotation_code_sub}
 									readonly
 								/>
+
 							</Panel>
 
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
