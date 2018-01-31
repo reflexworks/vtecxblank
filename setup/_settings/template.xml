@@ -97,6 +97,7 @@ item_details{}
  is_taxation
 quotation
  quotation_code
+ quotation_code_sub
  quotation_date
  status
  packing_item{}
@@ -162,7 +163,6 @@ internal_work
  shipment_service_weight
  monthly_name
  monthly_content
- quotation_key
 shipment_service
  code 
  name  
