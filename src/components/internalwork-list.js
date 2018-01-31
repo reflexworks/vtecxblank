@@ -141,13 +141,6 @@ export default class InternalWorkList extends React.Component {
     							type="text"
     							placeholder="000001"
     						/>
-							
-    						<CommonInputText
-    							controlLabel="枝番"
-    							name="quotation.quotation_code_sub"
-    							type="text"
-    							placeholder="01"
-    						/>
 
     					</CommonSearchConditionsFrom>
 						
@@ -173,8 +166,6 @@ export default class InternalWorkList extends React.Component {
     							field: 'customer.customer_name', title: '顧客', width: '200px'
     						}, {
     							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
-    						}, {
-    							field: 'quotation.quotation_code_sub', title: '枝番', width: '200px'
     						}]}
     					>
     						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>

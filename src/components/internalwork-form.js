@@ -91,7 +91,7 @@ export default class InternalWorkForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/quotation/'+ this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub,
+			url: '/s/get-latest-quotation?quotation_code='+ this.entry.quotation.quotation_code,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -99,6 +99,7 @@ export default class InternalWorkForm extends React.Component {
 		}).then((response) => {
 
 			const entry = response.data.feed.entry[0]
+			this.quotation_code = entry.quotation.quotation_code + '-' + entry.quotation.quotation_code_sub
 			this.setMasterList(entry.item_details, entry.packing_items)
 
 			this.getInternalWork()
@@ -647,9 +648,9 @@ export default class InternalWorkForm extends React.Component {
 
 								<CommonInputText
 									controlLabel="作業対象見積書"
-									name="quotation.quotation_code"
+									name=""
 									type="text"
-									value={this.entry.quotation.quotation_code + ' - ' + this.entry.quotation.quotation_code_sub}
+									value={this.quotation_code}
 									readonly
 								/>
 
