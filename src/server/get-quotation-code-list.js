@@ -10,7 +10,6 @@ if (quotation_code) {
 		option = option + '&quotation.status=' + status
 	}
 	quotation = reflexcontext.getFeed('/quotation?' + option)
-	reflexcontext.log('/quotation?' + option)
 }
 const isQuotation = CommonGetFlag(quotation)
 
