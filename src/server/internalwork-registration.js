@@ -1,24 +1,24 @@
 import reflexcontext from 'reflexcontext' 
 import { CommonGetFlag } from './common'
 
-const billto_code = reflexcontext.getQueryString('billto_code')
-const customer_code = reflexcontext.getQueryString('customer_code')
+const quotation_code = reflexcontext.getQueryString('quotation_code')
+let quotation
 let customer
-if (billto_code) {
-	customer = reflexcontext.getFeed('/customer?billto.billto_code=' + billto_code)
-} else if (customer_code) {
-	customer = reflexcontext.getFeed('/customer?customer.customer_code=' + customer_code)
+if (quotation_code) {
+	quotation = reflexcontext.getEntry('/quotation/' + quotation_code)
+	customer = reflexcontext.getFeed('/customer?billto.billto_code=' + quotation.feed.entry[0].billto.billto_code)
 }
 const isCustomer = CommonGetFlag(customer)
 
 if (isCustomer) {
+	const quotation_code = quotation.feed.entry[0].quotation.quotation_code
 	let working_yearmonth = reflexcontext.getQueryString('working_yearmonth')
 	working_yearmonth = working_yearmonth.replace('/', '')
 	let res = {feed: {entry: []}}
 	for (let i = 0, ii = customer.feed.entry.length; i < ii; ++i) {
 		let entry = customer.feed.entry[i]
 		const customer_code = entry.customer.customer_code
-		const internalwork = reflexcontext.getEntry('/internal_work/' + customer_code + '_' + working_yearmonth)
+		const internalwork = reflexcontext.getEntry('/internal_work/'+ quotation_code + '-' + working_yearmonth + '-' + customer_code)
 		const isInternalwork = CommonGetFlag(internalwork)
 		if (isInternalwork) {
 			entry.title = 'create'

@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	PageHeader,
 	Form,
@@ -9,7 +10,10 @@ import type {
 } from 'demo3.types'
 
 import {
-	CommonTable, CommonInputText,
+	CommonTable,
+	CommonInputText,
+	CommonFilterBox,
+	CommonEntry
 } from './common'
 
 export default class DeliveryChargeTemplateForm extends React.Component {
@@ -19,6 +23,9 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 		this.state = {}
 
 		this.entry = this.props.entry || {}
+		this.entry.title = ''
+
+		this.isCreate = true
 
 		this.init()
 	}
@@ -38,7 +45,104 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.entry.title = this.entry.title || ''
+		this.isCreate = false
 		this.setTable()
+	}
+
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+		this.getShipmentServiceList()
+	}
+
+	/**
+	 * 配送業者一覧取得処理
+	 */
+	getShipmentServiceList() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+
+			if (response.status === 204) {
+				alert('配送業者が1件も登録されていません。')
+			} else {
+				this.shipmentServiceList = []
+				const getName = (_shipment_service) => {
+					let name = _shipment_service.name
+					if (_shipment_service.service_name && _shipment_service.service_name !== '') {
+						name = name + ' / ' + _shipment_service.service_name
+					}
+					return name
+				}
+				response.data.feed.entry.map((_value) => {
+					this.shipmentServiceList.push({
+						label: getName(_value.shipment_service),
+						value: _value.shipment_service.name,
+						data: _value
+					})
+				})
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	changeShipmentServiceList(_data) {
+		this.shipment_service_name = _data.value
+		this.selectShipmentService = _data.data.shipment_service
+		this.getDeliveryChargeTemplate()
+	}
+
+	/**
+	 * 選択した配送業者のテンプレート取得処理
+	 */
+	getDeliveryChargeTemplate() {
+
+		this.setState({ isDisabled: true })
+
+		let option = '?name=' + this.selectShipmentService.name
+		if (this.selectShipmentService.service_name && this.selectShipmentService.service_name !== '') {
+			option = option + '&service_name=' + this.selectShipmentService.service_name
+		}
+
+		axios({
+			url: '/s/deliverycharge-template' + option,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+
+			if (response.status === 204) {
+				alert('該当の配送業者が存在しません。')
+			} else {
+				if (this.entry.title) {
+					response.data.feed.entry[0].title = this.entry.title
+				}
+				const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
+				this.entry = obj.feed.entry[0]
+				this.setTable()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 	}
 
 	/**
@@ -53,8 +157,6 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 			let header = {}
 			const initHeader = () => {
 				return [{
-					field: 'name', title: '配送業者', width: '200px'
-				}, {
 					field: 'size', title: 'サイズ', width: '80px'
 				}, {
 					field: 'weight', title: '重量', width: '80px'
@@ -81,8 +183,8 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				const s_code = _delivery_charge.shipment_service_code
 				const s_type = _delivery_charge.shipment_service_type
 				let s_name = _delivery_charge.shipment_service_name
-				if (_delivery_charge.service_name) {
-					s_name = s_name + ' / ' + _delivery_charge.service_name
+				if (_delivery_charge.shipment_service_service_name) {
+					s_name = s_name + ' / ' + _delivery_charge.shipment_service_service_name
 				}
 
 				this.shipment_service[s_code] = []
@@ -93,12 +195,17 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					new_data.size = dd.size || '-'
 					new_data.weight = dd.weight || '-'
 					new_data.price = dd.price || ''
+					new_data.note = dd.note || ''
 					if (dd.charge_by_zone) {
 						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)
 					}
 					this.shipment_service[s_code].push(new_data)
-					s_name = ''
 
+				}
+				const menu = () => {
+					return (
+						<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+					)
 				}
 				if (s_type === '1') {
 					// 発払い
@@ -107,7 +214,9 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={header[s_code]}
-						/>
+						>
+							{menu()}
+						</CommonTable>
 					)
 				} else {
 					// メール便
@@ -120,6 +229,13 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 						}
 					})
 					_header.push({
+						field: 'note', title: '記事', width: '100px',
+						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.note',
+						input: {
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'note', data, rowindex)}
+						}
+					})
+					_header.push({
 						field: 'other', title: '', width: '600px'
 					})
 					this.shipmentServiceListType2.push(
@@ -127,7 +243,9 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 							name=""
 							data={this.shipment_service[s_code]}
 							header={_header}
-						/>
+						>
+							{menu()}
+						</CommonTable>	
 					)
 				}
 
@@ -147,23 +265,8 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	addNotes() {
-		this.entry.remarks.push({content: ''})
-		this.forceUpdate()
-	}
-
-	changeNotes(_data, _rowindex) {
-		this.entry.remarks[_rowindex] = {content: _data}
-		this.forceUpdate()
-	}
-
-	removeNotes(_data, _index) {
-		let array = []
-		for (let i = 0, ii = this.entry.remarks.length; i < ii; ++i) {
-			if (i !== _index) array.push(this.entry.remarks[i])
-		}
-		this.entry.remarks = array
-		this.forceUpdate()
+	changeTitle(_data) {
+		this.entry.title = _data
 	}
 
 	render() {
@@ -177,38 +280,39 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					type="text"
 					placeholder=""
 					value={this.entry.title}
+					onChange={(data) => this.changeTitle(data)}
 					entitiykey="title"
 				/>
+
+				{this.isCreate && 
+					<CommonFilterBox
+						controlLabel="配送業者選択"
+						name=""
+						value={this.shipment_service_name}
+						options={this.shipmentServiceList}
+						onChange={(data) => this.changeShipmentServiceList(data)}
+					/>
+				}
+
 				<hr />
 				
-				<PageHeader>発払い</PageHeader>
-				<div>
-					{this.shipmentServiceListType1}
-				</div>
+				{(this.shipmentServiceListType1.length ? true : false) && 
+					<div>
+						<PageHeader>発払い</PageHeader>
+						<div>
+							{this.shipmentServiceListType1}
+						</div>
+					</div>
+				}
 
-				<hr />
-
-				<PageHeader>メール便</PageHeader>
-				<div>
-					{this.shipmentServiceListType2}
-				</div>
-
-				<hr />
-
-				<PageHeader>記事</PageHeader>
-				<CommonTable
-					name=""
-					data={this.entry.remarks}
-					header={[{
-						field: 'content', title: '内容', width: '1000px',
-						entitiykey:'remarks{}.content',
-						input: {
-							onChange: (data, rowindex)=>{this.changeNotes(data, rowindex)}
-						}
-					}]}
-					add={()=>this.addNotes()}
-					remove={(data, i)=>this.removeNotes(data, i)}
-				/>
+				{(this.shipmentServiceListType2.length ? true : false) && 
+					<div>
+						<PageHeader>メール便</PageHeader>
+						<div>
+							{this.shipmentServiceListType2}
+						</div>
+					</div>
+				}
 
 			</Form>
 		)

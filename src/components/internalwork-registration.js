@@ -67,7 +67,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 	getQuotationList(_input) {
 		return axios({
-			url: `/d/quotation?f&quotation.quotation_code=*${_input}*`,
+			url: `/d/quotation?f&quotation.quotation_code=*${_input}*&quotation.status=1`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -77,8 +77,8 @@ export default class InternalWorkRegistration extends React.Component {
 			if (response.status !== 204) {
 				const optionsList = response.data.feed.entry.map((_obj) => {
 					return {
-						label: _obj.quotation.quotation_code,
-						value: _obj.quotation.quotation_code,
+						label: _obj.quotation.quotation_code + '-' + _obj.quotation.quotation_code_sub,
+						value: _obj.quotation.quotation_code + '-' + _obj.quotation.quotation_code_sub,
 						data: _obj
 					}
 				})
@@ -111,7 +111,8 @@ export default class InternalWorkRegistration extends React.Component {
 
 		this.setState({ isDisabled: true })
 
-		const option = '?billto_code=' + this.entry.billto.billto_code + '&working_yearmonth=' + this.monthly
+		const option = '?quotation_code=' + this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub + 
+		'&working_yearmonth=' + this.monthly
 		axios({
 			url: '/s/internalwork-registration' + option,
 			method: 'get',
@@ -123,6 +124,7 @@ export default class InternalWorkRegistration extends React.Component {
 			if (response.status !== 204) {
 				this.master.customerList = response.data.feed.entry
 				this.setCustomerList(response.data.feed.entry)
+				this.forceUpdate()
 			} else[
 				alert('顧客情報が存在しません。')
 			]
@@ -143,7 +145,8 @@ export default class InternalWorkRegistration extends React.Component {
 				isCreate = true
 				if (this.entry.quotation.quotation_code) {
 					obj.quotation = {
-						quotation_code: this.entry.quotation.quotation_code
+						quotation_code: this.entry.quotation.quotation_code,
+						quotation_code_sub: this.entry.quotation.quotation_code_sub
 					}
 				}
 				obj.customer = {
@@ -151,10 +154,9 @@ export default class InternalWorkRegistration extends React.Component {
 					customer_name: entry.customer.customer_name
 				}
 				obj.internal_work = {
-					working_yearmonth: this.monthly,
-					quotation_key: this.entry.link[0].___href
+					working_yearmonth: this.monthly
 				}
-				const uri = '/internal_work/' + entry.customer.customer_code + '_' + this.monthly.replace('/', '')
+				const uri = '/internal_work/' + this.entry.quotation.quotation_code + '-' + this.monthly.replace('/', '') + '-' + entry.customer.customer_code
 				obj.link = [{
 					___href: uri,
 					___rel: 'self'
@@ -174,6 +176,7 @@ export default class InternalWorkRegistration extends React.Component {
 				})
 			}
 		}
+		console.log(isCreate)
 		if (isCreate) {
 			this.isPost = true
 		}
@@ -226,6 +229,14 @@ export default class InternalWorkRegistration extends React.Component {
 								readonly
 								size="lg"
 							/>
+							<CommonInputText
+								controlLabel=" "
+								name=""
+								type="text"
+								value="発行済の見積書を対象に検索します。"
+								readonly
+								size="lg"
+							/>
 
 							<CommonFilterBox
 								controlLabel="見積書検索"
@@ -241,7 +252,7 @@ export default class InternalWorkRegistration extends React.Component {
 									controlLabel="選択中の見積書"
 									name=""
 									type="text"
-									value={this.entry.quotation.quotation_code}
+									value={this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub}
 									readonly
 								/>
 							}

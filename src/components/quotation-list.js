@@ -163,6 +163,12 @@ export default class QuotationList extends React.Component {
 								type="text"
 								placeholder="000000000"
 							/>
+							<CommonInputText
+								controlLabel="枝番"
+								name="quotation.quotation_code_sub"
+								type="text"
+								placeholder="01"
+							/>
 							<CommonMonthlySelect
 								controlLabel="見積月"  
 								name="quotation.quotation_date"
@@ -213,7 +219,9 @@ export default class QuotationList extends React.Component {
 							},{
 								field: 'quotation.quotation_code',title: '見積書No', width: '250px'
 							}, {
-								field: 'quotation.quotation_date',title: '見積年月', width: '200px'
+								field: 'quotation.quotation_code_sub',title: '枝番', width: '100px'
+							}, {
+								field: 'quotation.quotation_date',title: '見積年月', width: '100px'
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '250px'
 							}, {

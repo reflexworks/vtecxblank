@@ -48,6 +48,39 @@ export default class ShipmentServiceForm extends React.Component {
 			label: '〜80cm',
 			value: '〜80cm'
 		},{
+			label: '～130㎝',
+			value: '～130㎝'
+		},{
+			label: '～140㎝',
+			value: '～140㎝'
+		},{
+			label: '～160㎝',
+			value: '～160㎝'
+		},{
+			label: '～200㎝',
+			value: '～200㎝'
+		},{
+			label: '～260㎝',
+			value: '～260㎝'
+		},{
+			label: '60～160㎝',
+			value: '60～160㎝'
+		},{
+			label: '140～160㎝',
+			value: '140～160㎝'
+		},{
+			label: '140～200㎝',
+			value: '140～200㎝'
+		},{
+			label: '160～200㎝',
+			value: '160～200㎝'
+		},{
+			label: '170～260㎝',
+			value: '170～260㎝'
+		},{
+			label: '180～200㎝',
+			value: '180～200㎝'
+		}, {
 			label: '60cm',
 			value: '60cm'
 		},{
@@ -66,8 +99,38 @@ export default class ShipmentServiceForm extends React.Component {
 			label: '160cm',
 			value: '160cm'
 		},{
+			label: '170㎝',
+			value: '170㎝'
+		},{
+			label: '180㎝',
+			value: '180㎝'
+		},{
+			label: '200㎝',
+			value: '200㎝'
+		},{
+			label: '220㎝',
+			value: '220㎝'
+		},{
+			label: '240㎝',
+			value: '240㎝'
+		},{
+			label: '260㎝',
+			value: '260㎝'
+		}, {
 			label: '160cm以上',
 			value: '160cm以上'
+		}, {
+			label: '160㎝まで',
+			value: '160㎝まで'
+		}, {
+			label: '180㎝まで',
+			value: '180㎝まで'
+		}, {
+			label: '200㎝まで',
+			value: '200㎝まで'
+		}, {
+			label: '250㎝まで',
+			value: '250㎝まで'
 		}]
 
 		this.sizeListType2 = [{
@@ -99,6 +162,21 @@ export default class ShipmentServiceForm extends React.Component {
 		},{
 			label: '25kg迄',
 			value: '25kg迄'
+		},{
+			label: '30kg迄',
+			value: '30kg迄'
+		},{
+			label: '40kg迄',
+			value: '40kg迄'
+		},{
+			label: '60kg迄',
+			value: '60kg迄'
+		},{
+			label: '80kg迄',
+			value: '80kg迄'
+		},{
+			label: '160kg迄',
+			value: '160kg迄'
 		}]
 
 		this.weightListType2 = [{
@@ -152,7 +230,7 @@ export default class ShipmentServiceForm extends React.Component {
 		this.entry = newProps.entry
 		this.entry.shipment_service.sizes = this.entry.shipment_service.sizes || []
 		this.setShipmentServiceTypeInfo(this.entry.shipment_service.type)
-		this.maxIndex = this.entry.zone.length
+		this.maxIndex = this.entry.zone ? this.entry.zone.length : 0
 		this.forceUpdate()
 	}
 

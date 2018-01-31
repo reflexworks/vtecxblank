@@ -91,7 +91,7 @@ export default class InternalWorkForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d'+ this.entry.internal_work.quotation_key,
+			url: '/d/quotation/'+ this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -307,36 +307,37 @@ export default class InternalWorkForm extends React.Component {
 			let array = []
 			this.monthlyWorks = []
 			let monthlyWorksIndex = 0
-			_item_details.map((_value) => {
-				if (_value.unit_name === '月') {
-					this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
-					this.monthlyWorks.push({
-						monthly_name: _value.item_name,
-						monthly_content: '',
-						unit: _value.unit,
-						approval_status: '',
-						data: {
-							internal_work: {
-								work_type: '4',
-								monthly_name: _value.item_name,
-								item_details_unit: _value.unit
+			if (_item_details) {
+				_item_details.map((_value) => {
+					if (_value.unit_name === '月') {
+						this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
+						this.monthlyWorks.push({
+							monthly_name: _value.item_name,
+							monthly_content: '',
+							unit: _value.unit,
+							approval_status: '',
+							data: {
+								internal_work: {
+									work_type: '4',
+									monthly_name: _value.item_name,
+									item_details_unit: _value.unit
+								}
 							}
+						})
+						monthlyWorksIndex++
+					} else {
+						let obj = {}
+						obj.item_name = _value.item_name
+						obj.unit = _value.unit
+						obj.internal_work = {
+							work_type: '0',
+							item_details_name: _value.item_name,
+							item_details_unit: _value.unit
 						}
-					})
-					monthlyWorksIndex++
-				} else {
-					let obj = {}
-					obj.item_name = _value.item_name
-					obj.unit = _value.unit
-					obj.internal_work = {
-						work_type: '0',
-						item_details_name: _value.item_name,
-						item_details_unit: _value.unit
-					}
-					array.push(setOptions(obj.item_name, obj.item_name, obj))
-				}	
-			})
-
+						array.push(setOptions(obj.item_name, obj.item_name, obj))
+					}	
+				})
+			}
 			return array
 		}
 		const setDeliveryWorks = (_type) => {
@@ -353,17 +354,19 @@ export default class InternalWorkForm extends React.Component {
 		}
 		const setPackingWorks = (_key)=>{
 			let array = []
-			_packing_item.map((_value) => {
-				let obj = {}
-				obj.item_code = _value.item_code
-				obj.item_name = _value.item_name
-				obj.internal_work = {
-					work_type: '3',
-					packing_item_code: _value.item_code,
-					packing_item_name: _value.item_name
-				}
-				array.push(setOptions(obj[_key], obj[_key], obj))
-			})
+			if (_packing_item) {
+				_packing_item.map((_value) => {
+					let obj = {}
+					obj.item_code = _value.item_code
+					obj.item_name = _value.item_name
+					obj.internal_work = {
+						work_type: '3',
+						packing_item_code: _value.item_code,
+						packing_item_name: _value.item_name
+					}
+					array.push(setOptions(obj[_key], obj[_key], obj))
+				})
+			}
 			return array
 		}
 		this.quotationWorksList = setQuotationWorks()
@@ -656,7 +659,7 @@ export default class InternalWorkForm extends React.Component {
 									controlLabel="作業対象見積書"
 									name="quotation.quotation_code"
 									type="text"
-									value={this.entry.quotation.quotation_code}
+									value={this.entry.quotation.quotation_code + ' - ' + this.entry.quotation.quotation_code_sub}
 									readonly
 								/>
 							</Panel>

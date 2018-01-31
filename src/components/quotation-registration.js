@@ -53,7 +53,7 @@ export default class QuotationRegistration extends React.Component {
 
 		this.billto = null
 		this.monthly = null
-		this.selfValue = ''
+
 		this.template = {
 			quotation: {
 				packing_item: []
@@ -78,10 +78,6 @@ export default class QuotationRegistration extends React.Component {
 
 	setMonthly(_data) {
 		this.monthly = _data
-		if (_data) {
-			if (this.selfValue !== '') this.selfValue = this.selfValue.split('_')[0]
-			this.selfValue = this.selfValue + '_' + _data.value.replace('/', '')
-		}
 		this.setDisabled()
 	}
 
@@ -150,8 +146,6 @@ export default class QuotationRegistration extends React.Component {
 		if (_data) {
 			this.entry.billto = _data.data.billto
 			this.billto = _data.data
-			if (this.selfValue !== '') this.selfValue = this.selfValue.split('_')[1]
-			this.selfValue = '/quotation/' + this.entry.billto.billto_code + '_' + this.selfValue
 			this.templateList = null
 			this.setTemplateData(this.entry.billto.billto_code)
 		} else {
@@ -222,51 +216,6 @@ export default class QuotationRegistration extends React.Component {
 		}
 	}
 
-	/**
-	 * 登録エラー時の処理
-	 */
-	callbackRegistrationError(_error, _data) {
-		const status = _error.response.status
-		if (status === 409) {
-			this.setState({ isDisabled: false, isError: null })
-			if (confirm('選択した請求先にはすでに同じ期間の見積書が存在します。新しく作成しますか？')) {
-				const url = '/d' + _data.feed.entry[0].link[0].___href
-				axios({
-					url: url + '?_addids=1',
-					method: 'put',
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest'
-					},
-					data: {}
-				}).then((response) => {
-				
-					const sub_code = response.data.feed.title
-					let reqData = _data
-					reqData.feed.entry[0].link[0].___href = _data.feed.entry[0].link[0].___href + '_' + sub_code
-					reqData.feed.entry[0].quotation.quotation_code = _data.feed.entry[0].quotation.quotation_code + '-' + sub_code
-
-					axios({
-						url: this.url,
-						method: 'post',
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						},
-						data: reqData
-					}).then(() => {
-						this.callbackRegistrationButton(reqData)
-					}).catch((error) => {
-						this.setState({ isDisabled: false, isError: error })
-					})
-
-				}).catch((error) => {
-					this.setState({ isDisabled: false, isError: error })
-				})
-			} else {
-				alert('見積書の作成は中断されました。')
-			}
-		}
-	}
-
 	render() {
 		return (
 			<Grid>
@@ -313,7 +262,9 @@ export default class QuotationRegistration extends React.Component {
 									value={this.entry.billto.billto_code}
 								/>
 								<FormControl name="quotation.quotation_code" type="text" value="${_addids}" />
-								<FormControl name="link" data-rel="self" type="text" value={this.selfValue} />
+								<FormControl name="quotation.quotation_code_sub" type="text" value="01" />
+								<FormControl name="quotation.status" type="text" value="0" />
+								<FormControl name="link" data-rel="self" type="text" value="/quotation/,${_addids},-,${quotation.quotation_code_sub}" />
 							</FormGroup>
 						}
 						{ !this.entry.billto.billto_code && 
@@ -372,7 +323,6 @@ export default class QuotationRegistration extends React.Component {
 							url={this.url}
 							callback={(data) => this.callbackRegistrationButton(data)}
 							disabled={this.state.disabled}
-							error={(error, data) => this.callbackRegistrationError(error, data)}
 							pure
 						/>
 					</Form>

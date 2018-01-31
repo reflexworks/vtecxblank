@@ -68,6 +68,14 @@ export default class ShipmentServiceUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				if (this.entry.zone) {
+					this.entry.zone = this.entry.zone.map((_value) => {
+						if (!_value.invoice_zones) {
+							_value.invoice_zones = []
+						}
+						return _value
+					})
+				}
 				
 				this.forceUpdate()
 			}
