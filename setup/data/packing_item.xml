@@ -1,6 +1,306 @@
 <feed>
     <entry>
         <packing_item>
+            <item_code>band_001</item_code>
+            <item_name>自動梱包用PPバンド（青）　15.5mm×2500ｍ　2巻入り/セット</item_name>
+            <material>自動梱包用PPバンド</material>
+            <category>自動梱包用PPバンド青</category>
+            <size1>15.5ｍｍ × 2500ｍ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4455.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/band_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>band_002</item_code>
+            <item_name>自動梱包用PPバンド（黄）　15.5mm×2500ｍ　2巻入り/セット</item_name>
+            <material>自動梱包用PPバンド</material>
+            <category>自動梱包用PPバンド（黄）</category>
+            <size1>15.5mm × 2500ｍ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4455.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/band_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>band_003</item_code>
+            <item_name>自動梱包用PPバンド（白）　15.5mm×2500ｍ　2巻入り/セット</item_name>
+            <material>自動梱包用PPバンド</material>
+            <category>自動梱包用PPバンド（白）</category>
+            <size1>15.5mm × 2500ｍ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4455.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/band_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>bfukuro_001</item_code>
+            <item_name>宅配ビニール袋　470サイズ</item_name>
+            <material>宅配ビニール袋</material>
+            <category>宅配ビニール袋</category>
+            <size1>470サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>3000.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/bfukuro_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>bfukuro_002</item_code>
+            <item_name>宅配ビニール袋　600サイズ</item_name>
+            <material>宅配ビニール袋</material>
+            <category>宅配ビニール袋</category>
+            <size1>600サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4000.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/bfukuro_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>bfukuro_003</item_code>
+            <item_name>宅配ビニール袋　800サイズ</item_name>
+            <material>宅配ビニール袋</material>
+            <category>宅配ビニール袋</category>
+            <size1>800サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>7000.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/bfukuro_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>bfukuro_004</item_code>
+            <item_name>宅配ビニール袋 　970サイズ</item_name>
+            <material>宅配ビニール袋</material>
+            <category>宅配ビニール袋</category>
+            <size1>970サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>10500.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/bfukuro_004" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>cushion_001</item_code>
+            <item_name>エアキャップ（プチプチ） 600mm×42m</item_name>
+            <material>エアキャップ</material>
+            <category>エアキャップ（プチプチ）</category>
+            <size1>エアキャップ（プチプチ）</size1>
+            <size2>エアキャップ（プチプチ）</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>748.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/cushion_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>cushion_002</item_code>
+            <item_name>エアキャップ（プチプチ） 1200mm×42m</item_name>
+            <material>エアーキャップ</material>
+            <category>エアキャップ（プチプチ）</category>
+            <size1>エアキャップ（プチプチ）</size1>
+            <size2>エアキャップ（プチプチ）</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>1265.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/cushion_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>cushion_003</item_code>
+            <item_name>ボーカスペーパー 538mm×50m ミシン目無し</item_name>
+            <material>ボーカスペーパー</material>
+            <category>ボーカスペーパー</category>
+            <size1>538mm × 50m</size1>
+            <size2></size2>
+            <notices>ミシン目無し</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>345.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/cushion_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>cushion_004</item_code>
+            <item_name>ボーカスペーパー 538mm×350m ミシン目無し</item_name>
+            <material>ボーカスペーパー</material>
+            <category>ボーカスペーパー</category>
+            <size1>538mm × 350m</size1>
+            <size2></size2>
+            <notices>ミシン目無し</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>1800.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/cushion_004" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>cushion_005</item_code>
+            <item_name>ボーカスペーパー 538mm×350m ミシン目有り</item_name>
+            <material>ボーカスペーパー</material>
+            <category>ボーカスペーパー</category>
+            <size1>538mm × 350m</size1>
+            <size2></size2>
+            <notices>ミシン目有り</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>1955.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/cushion_005" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
             <item_code>dbox_001</item_code>
             <item_name>ダンボール箱 SSサイズ① 底面A4 10枚入り</item_name>
             <material>ダンボール</material>
@@ -873,5 +1173,855 @@
             <special_unit_price></special_unit_price>
         </packing_item>
         <link href="/packing_item/dbox_035" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_036</item_code>
+            <item_name>ダンボール箱 特売 60サイズ 底面A5</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>60サイズ</size1>
+            <size2>底面A5</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>246</outer_width>
+            <outer_depth>166</outer_depth>
+            <outer_height>182</outer_height>
+            <outer_total>594</outer_total>
+            <purchase_price>14.30</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_036" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_037</item_code>
+            <item_name>ダンボール箱 特売 80サイズ 底面A4</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>80サイズ</size1>
+            <size2>底面A4</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>316</outer_width>
+            <outer_depth>226</outer_depth>
+            <outer_height>252</outer_height>
+            <outer_total>794</outer_total>
+            <purchase_price>37.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_037" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_038</item_code>
+            <item_name>ダンボール箱 特売 100サイズ 底面A3</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>100サイズ</size1>
+            <size2>底面A3</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>446</outer_width>
+            <outer_depth>326</outer_depth>
+            <outer_height>222</outer_height>
+            <outer_total>994</outer_total>
+            <purchase_price>53.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_038" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_039</item_code>
+            <item_name>ダンボール箱 卵①</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>卵①</size1>
+            <size2></size2>
+            <notices>ダンボール箱 卵用</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>45.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_039" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_040</item_code>
+            <item_name>ダンボール箱 卵②</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>ダンボール卵②</size1>
+            <size2></size2>
+            <notices>ダンボール箱 卵用②</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>58.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_040" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_041</item_code>
+            <item_name>ダンボール箱 卵③</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>ダンボール卵③</size1>
+            <size2></size2>
+            <notices>ダンボール箱 卵用③</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>77.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_041" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_042</item_code>
+            <item_name>ダンボール箱 卵④</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>ダンボール卵④</size1>
+            <size2></size2>
+            <notices>ダンボール箱 卵用④</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>91.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_042" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_043</item_code>
+            <item_name>ダンボール箱 60サイズ</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>60サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>245</outer_width>
+            <outer_depth>195</outer_depth>
+            <outer_height>145</outer_height>
+            <outer_total>585</outer_total>
+            <purchase_price>22.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_043" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_044</item_code>
+            <item_name>ダンボール箱 160サイズ</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1>160サイズ</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>500</outer_width>
+            <outer_depth>400</outer_depth>
+            <outer_height>680</outer_height>
+            <outer_total>1580</outer_total>
+            <purchase_price>100.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_044" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_045</item_code>
+            <item_name>輸出用ダンボール箱 60サイズ 底面A5</item_name>
+            <material>ダンボール</material>
+            <category>輸出用ダンボール箱 </category>
+            <size1>60サイズ</size1>
+            <size2>底面A5</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>250</outer_width>
+            <outer_depth>170</outer_depth>
+            <outer_height>190</outer_height>
+            <outer_total>610</outer_total>
+            <purchase_price>46.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_045" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_046</item_code>
+            <item_name>輸出用ダンボール箱 80サイズ 底面A4</item_name>
+            <material>ダンボール</material>
+            <category>輸出用ダンボール箱 </category>
+            <size1>80サイズ</size1>
+            <size2>底面A4</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>320</outer_width>
+            <outer_depth>230</outer_depth>
+            <outer_height>250</outer_height>
+            <outer_total>800</outer_total>
+            <purchase_price>57.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_046" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_047</item_code>
+            <item_name>輸出用ダンボール箱 100サイズ 底面B4</item_name>
+            <material>ダンボール</material>
+            <category>輸出用ダンボール箱</category>
+            <size1>100サイズ</size1>
+            <size2>底面B4</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>385</outer_width>
+            <outer_depth>275</outer_depth>
+            <outer_height>340</outer_height>
+            <outer_total>1000</outer_total>
+            <purchase_price>76.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_047" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_048</item_code>
+            <item_name>輸出用ダンボール箱 120サイズ 底面A3</item_name>
+            <material>ダンボール</material>
+            <category>輸出用ダンボール箱</category>
+            <size1>120サイズ</size1>
+            <size2>底面A3</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>450</outer_width>
+            <outer_depth>330</outer_depth>
+            <outer_height>420</outer_height>
+            <outer_total>1200</outer_total>
+            <purchase_price>89.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_048" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_049</item_code>
+            <item_name>輸出用ダンボール箱 140サイズ 底面B3</item_name>
+            <material>ダンボール</material>
+            <category>輸出用ダンボール箱</category>
+            <size1>140サイズ</size1>
+            <size2>底面B3</size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>540</outer_width>
+            <outer_depth>390</outer_depth>
+            <outer_height>470</outer_height>
+            <outer_total>1400</outer_total>
+            <purchase_price>128.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_049" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_052</item_code>
+            <item_name>ダンボール箱　高島平　オリンピック鏡用　罫線入りシート</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1></size1>
+            <size2></size2>
+            <notices>オリンピック鏡用　罫線入りシート</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>56.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_052" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_053</item_code>
+            <item_name>ダンボール箱　高島平　ジェネパ用</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1></size1>
+            <size2></size2>
+            <notices>ジェネパ用</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>24.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_053" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>dbox_054</item_code>
+            <item_name>ダンボール箱　高島平　ICE FIELD用</item_name>
+            <material>ダンボール</material>
+            <category>ダンボール箱</category>
+            <size1></size1>
+            <size2></size2>
+            <notices>ICE FIELD用</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>74.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/dbox_054" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>film_001</item_code>
+            <item_name>ストレッチフイルム 500mm×300m 6本入り/箱</item_name>
+            <material>ストレッチフイルム</material>
+            <category>ストレッチフイルム</category>
+            <size1>500mm × 300m</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>3234.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/film_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>film_005</item_code>
+            <item_name>ストレッチフイルム 500mm×500m 8本入り/箱</item_name>
+            <material>ストレッチフイルム</material>
+            <category>ストレッチフイルム</category>
+            <size1>500mm × 500m</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>6000.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/film_005" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>fukuro_001</item_code>
+            <item_name>宅配紙袋（白）小 封緘テープ付き</item_name>
+            <material>宅配紙袋</material>
+            <category>宅配紙袋（白）</category>
+            <size1>小</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>260</outer_width>
+            <outer_depth>80</outer_depth>
+            <outer_height>320</outer_height>
+            <outer_total>660</outer_total>
+            <purchase_price>5.25</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/fukuro_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>fukuro_002</item_code>
+            <item_name>宅配紙袋（白）大 封緘テープ付き</item_name>
+            <material>宅配紙袋</material>
+            <category>宅配紙袋（白）</category>
+            <size1>大</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>320</outer_width>
+            <outer_depth>100</outer_depth>
+            <outer_height>430</outer_height>
+            <outer_total>850</outer_total>
+            <purchase_price>6.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/fukuro_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>fukuro_003</item_code>
+            <item_name>宅配紙袋（茶）小 封緘テープ付き</item_name>
+            <material>宅配紙袋</material>
+            <category>宅配紙袋（茶）</category>
+            <size1>小</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>260</outer_width>
+            <outer_depth>80</outer_depth>
+            <outer_height>320</outer_height>
+            <outer_total>660</outer_total>
+            <purchase_price>15.30</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/fukuro_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>fukuro_004</item_code>
+            <item_name>宅配紙袋（茶）大 封緘テープ付き</item_name>
+            <material>宅配紙袋</material>
+            <category>宅配紙袋（茶）</category>
+            <size1>大</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>320</outer_width>
+            <outer_depth>100</outer_depth>
+            <outer_height>430</outer_height>
+            <outer_total>850</outer_total>
+            <purchase_price>19.20</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/fukuro_004" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>fukuro_005</item_code>
+            <item_name>宅配袋　PPフィルム加工（白）大　封緘テープ付</item_name>
+            <material>宅配紙袋</material>
+            <category>宅配紙袋（白）</category>
+            <size1>大PPフィルム加工</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>320</outer_width>
+            <outer_depth>100</outer_depth>
+            <outer_height>430</outer_height>
+            <outer_total>850</outer_total>
+            <purchase_price>37.26</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/fukuro_005" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>futo_001</item_code>
+            <item_name>クラフト封筒 長3 封緘テープ付き</item_name>
+            <material>クラフト</material>
+            <category>クラフト封筒</category>
+            <size1>長3</size1>
+            <size2></size2>
+            <notices>封緘テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>120</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>235</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4.10</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/futo_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>futo_002</item_code>
+            <item_name>クラフト封筒 角2 封緘テープ付き</item_name>
+            <material>クラフト</material>
+            <category>クラフト封筒</category>
+            <size1>角2</size1>
+            <size2></size2>
+            <notices>封緘テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>240</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>332</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>6.20</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/futo_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>futo_003</item_code>
+            <item_name>クラフト封筒 角1 封緘テープ付き</item_name>
+            <material>クラフト</material>
+            <category>クラフト封筒</category>
+            <size1>角1</size1>
+            <size2></size2>
+            <notices>封緘テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>270</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>382</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>8.40</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/futo_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>kfuto_001</item_code>
+            <item_name>クッション封筒（白）CD・DVD1枚用 封緘・開封テープ付き　50枚入り/箱</item_name>
+            <material>クッション</material>
+            <category>クッション封筒</category>
+            <size1>CD・DVD1枚用</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>200</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>270</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>15.50</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/kfuto_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>kfuto_002</item_code>
+            <item_name>クッション封筒（白）CD・DVD2枚用 封緘・開封テープ付き　50枚入り/箱</item_name>
+            <material>クッション</material>
+            <category>クッション封筒</category>
+            <size1>CD・DVD2枚用</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>240</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>280</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>16.90</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/kfuto_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>kfuto_003</item_code>
+            <item_name>クッション封筒（白）A4用 封緘・開封テープ付き　50枚入り/箱</item_name>
+            <material>クッション</material>
+            <category>クッション封筒</category>
+            <size1>A4用</size1>
+            <size2></size2>
+            <notices>封緘開封テープ付き</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width>260</outer_width>
+            <outer_depth></outer_depth>
+            <outer_height>320</outer_height>
+            <outer_total></outer_total>
+            <purchase_price>22.10</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/kfuto_003" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>tape_001</item_code>
+            <item_name>クラフトテープ 50mm×50m 重ね貼りできる 50巻入り/箱</item_name>
+            <material>クラフトテープ</material>
+            <category>クラフトテープ</category>
+            <size1>50ｍｍ × 50m</size1>
+            <size2></size2>
+            <notices>重ね貼り可</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>7100.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/tape_001" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>tape_002</item_code>
+            <item_name>布テープ 50mm×25m 30巻入り/箱</item_name>
+            <material>布テープ</material>
+            <category>布テープ</category>
+            <size1>50mm × 25m</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>4200.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/tape_002" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>tape_004</item_code>
+            <item_name>養生テープ 50mm×25m 30巻入り/箱</item_name>
+            <material>養生テープ</material>
+            <category>養生テープ</category>
+            <size1>50mm × 25m</size1>
+            <size2></size2>
+            <notices></notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>6000.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/tape_004" rel="self"/>
+    </entry>
+    <entry>
+        <packing_item>
+            <item_code>tape_005</item_code>
+            <item_name>OPPテープ 48mm×100m 50巻入り/箱    SS-2-48C</item_name>
+            <material>OPPテープ</material>
+            <category>OPPテープ</category>
+            <size1>48ｍｍ × 100ｍ</size1>
+            <size2></size2>
+            <notices>SS-2-48C</notices>
+            <thickness></thickness>
+            <inside_width></inside_width>
+            <inside_depth></inside_depth>
+            <inside_height></inside_height>
+            <outer_width></outer_width>
+            <outer_depth></outer_depth>
+            <outer_height></outer_height>
+            <outer_total></outer_total>
+            <purchase_price>3775.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_item>
+        <link href="/packing_item/tape_005" rel="self"/>
     </entry>
 </feed>
