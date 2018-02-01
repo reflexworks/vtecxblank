@@ -169,7 +169,7 @@ class LogicCommonTable {
 						const ele = _multiObj[i]
 						const eleKey = ele.getAttribute('name')
 						if (eleKey) {
-							obj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
+							obj[eleKey] = ele.dataset.value ? ele.dataset.value : ''
 						}
 					}
 					return obj
@@ -185,7 +185,7 @@ class LogicCommonTable {
 						const eleKey = ele.getAttribute('name')
 						if (eleKey) {
 							let eleObj = {}
-							eleObj[eleKey] = ele.innerHTML ? ele.innerHTML : ''
+							eleObj[eleKey] = ele.dataset.value ? ele.dataset.value : ''
 							value.push(eleObj)
 						}
 					}
@@ -200,7 +200,7 @@ class LogicCommonTable {
 				} else if (isInput) {
 					value = childNodes.getElementsByTagName('input')[0].value
 				} else {
-					value = _element.innerHTML ? _element.innerHTML : ''
+					value = _element.dataset.value ? _element.dataset.value : ''
 				}
 
 			}
@@ -1627,12 +1627,12 @@ export class CommonTable extends React.Component {
 										_valueCount++
 										if (typeof _value[__key] === 'string') {
 											if (isMulti) {
-												__value.push(<p className="multi_item value" key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</p>)
+												__value.push(<p className="multi_item value" key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key])}</p>)
 												if ((_valueCount + 1) !== _valueObj.length) {
 													__value.push(<p className="multi_item">/</p>)
 												}
 											} else {
-												__value.push(<div key={_valueCount} name={__key}>{getConvertValue(_value[__key])}</div>)
+												__value.push(<div key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key])}</div>)
 											}
 										}
 									}
@@ -1643,7 +1643,7 @@ export class CommonTable extends React.Component {
 									}
 								} else {
 									return (
-										<div key={i} style={style}>{getConvertValue(_value)}</div>
+										<div key={i} style={style} data-value={_value}>{getConvertValue(_value)}</div>
 									)
 								}
 							})
@@ -1680,7 +1680,7 @@ export class CommonTable extends React.Component {
 						/>
 					)
 				} else {
-					return <div style={style} className="ellipsis">{getConvertValue(value)}</div>
+					return <div style={style} className="ellipsis" data-value={value}>{getConvertValue(value)}</div>
 				}
 			}
 		}
