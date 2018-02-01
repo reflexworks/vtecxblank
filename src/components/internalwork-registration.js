@@ -67,7 +67,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 	getQuotationList(_input) {
 		return axios({
-			url: `/d/quotation?f&quotation.quotation_code=*${_input}*&quotation.status=1`,
+			url: `/s/get-quotation-code-list?f&quotation_code=*${_input}*&status=1`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -77,8 +77,8 @@ export default class InternalWorkRegistration extends React.Component {
 			if (response.status !== 204) {
 				const optionsList = response.data.feed.entry.map((_obj) => {
 					return {
-						label: _obj.quotation.quotation_code + '-' + _obj.quotation.quotation_code_sub,
-						value: _obj.quotation.quotation_code + '-' + _obj.quotation.quotation_code_sub,
+						label: _obj.quotation.quotation_code,
+						value: _obj.quotation.quotation_code,
 						data: _obj
 					}
 				})
@@ -111,8 +111,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 		this.setState({ isDisabled: true })
 
-		const option = '?quotation_code=' + this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub + 
-		'&working_yearmonth=' + this.monthly
+		const option = '?quotation_code=' + this.entry.quotation.quotation_code + '&working_yearmonth=' + this.monthly
 		axios({
 			url: '/s/internalwork-registration' + option,
 			method: 'get',
@@ -145,8 +144,7 @@ export default class InternalWorkRegistration extends React.Component {
 				isCreate = true
 				if (this.entry.quotation.quotation_code) {
 					obj.quotation = {
-						quotation_code: this.entry.quotation.quotation_code,
-						quotation_code_sub: this.entry.quotation.quotation_code_sub
+						quotation_code: this.entry.quotation.quotation_code
 					}
 				}
 				obj.customer = {
@@ -176,7 +174,6 @@ export default class InternalWorkRegistration extends React.Component {
 				})
 			}
 		}
-		console.log(isCreate)
 		if (isCreate) {
 			this.isPost = true
 		}
@@ -248,13 +245,22 @@ export default class InternalWorkRegistration extends React.Component {
 							/>
 
 							{this.entry.quotation.quotation_code &&
-								<CommonInputText
-									controlLabel="選択中の見積書"
-									name=""
-									type="text"
-									value={this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub}
-									readonly
-								/>
+								<div>
+									<CommonInputText
+										controlLabel="選択中の見積書"
+										name=""
+										type="text"
+										value={this.entry.quotation.quotation_code}
+										readonly
+									/>
+									<CommonInputText
+										controlLabel="発行済の最新枝番"
+										name=""
+										type="text"
+										value={this.entry.quotation.quotation_code_sub}
+										readonly
+									/>
+								</div>
 							}
 
 							{(this.monthly && this.entry.quotation.quotation_code) && 

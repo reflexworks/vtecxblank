@@ -33,7 +33,7 @@ export default class QuotationForm extends React.Component {
 		this.entry = this.props.entry
 		this.entry.quotation = this.entry.quotation || {}
 		this.entry.basic_condition = this.entry.basic_condition || []
-		this.entry.quotation.packing_item = this.entry.quotation.packing_item || []
+		this.entry.packing_items = this.entry.packing_items || []
 		this.entry.billto = this.entry.billto || {}
 		this.entry.item_details = this.entry.item_details || []
 		this.entry.remarks = this.entry.remarks || []
@@ -52,7 +52,7 @@ export default class QuotationForm extends React.Component {
 			basic_condition: { data: {} },
 			item_details: { data: {} },
 			remarks: { data: {} },
-			packing_item: { data: {} }
+			packing_items: { data: {} }
 		}
 
 	}
@@ -238,55 +238,39 @@ export default class QuotationForm extends React.Component {
 	}
 	removeList(_key, _index) {
 		let array = []
-		const oldEntry = _key === 'packing_item' ? this.entry.quotation[_key] : this.entry[_key]
+		const oldEntry = this.entry[_key]
 		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
 			if (i !== _index) array.push(oldEntry[i])
 		}
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key] = array
-		} else {
-			this.entry[_key] = array
-		}
+		this.entry[_key] = array
 		this.forceUpdate()
 	}
 	addList(_key, _data) {
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key].push(_data)
-		} else {
-			this.entry[_key].push(_data)
-		}
+		this.entry[_key].push(_data)
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 	updateList(_key, _data) {
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key][this.modal[_key].index] = _data
-		} else {
-			this.entry[_key][this.modal[_key].index] = _data
-		}
+		this.entry[_key][this.modal[_key].index] = _data
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 	selectList(_key, _data) {
 		for (let i = 0, ii = _data.length; i < ii; ++i) {
-			if (_key === 'packing_item') {
-				this.entry.quotation[_key].push(_data[i][_key])
-			} else {
-				this.entry[_key].push(_data[i][_key])
-			}
+			this.entry[_key].push(_data[i][_key])
 		}
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 
 	changePackingItem(_key, _data, _rowindex) {
-		this.entry.quotation.packing_item[_rowindex][_key] = _data
+		this.entry.packing_items[_rowindex][_key] = _data
 	}
 	changePackingItemTemplate(_data) {
 		this.packingItemTemplate = _data ? _data.value : null
 		if (_data) {
 			if (confirm('設定した資材が破棄されます。よろしいでしょうか？')) {
-				this.entry.quotation.packing_item = _data.data.quotation.packing_item
+				this.entry.packing_items = _data.data.packing_items
 				this.forceUpdate()
 			}
 		}
@@ -383,12 +367,12 @@ export default class QuotationForm extends React.Component {
 						type={this.modal.basic_condition.type}
 					/>
 					<PackingItemModal
-						isShow={this.modal.packing_item.visible}
-						close={() => this.closeModal('packing_item')}
-						add={(obj) => this.addList('packing_item', obj)}
-						select={(obj) => this.selectList('packing_item', obj)}
-						data={this.modal.packing_item.data}
-						type={this.modal.packing_item.type}
+						isShow={this.modal.packing_items.visible}
+						close={() => this.closeModal('packing_items')}
+						add={(obj) => this.addList('packing_items', obj)}
+						select={(obj) => this.selectList('packing_items', obj)}
+						data={this.modal.packing_items.data}
+						type={this.modal.packing_items.type}
 					/>
 						
 					<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
@@ -473,8 +457,8 @@ export default class QuotationForm extends React.Component {
 
 						<Tab eventKey={4} title="梱包資材">
 							<CommonTable
-								name="quotation.packing_item"
-								data={this.entry.quotation.packing_item}
+								name="packing_items"
+								data={this.entry.packing_items}
 								header={[{
 									field: 'item_code',title: '品番', width: '100px'
 								}, {
@@ -528,8 +512,8 @@ export default class QuotationForm extends React.Component {
 								}, {	
 									field: 'purchase_price', title: '仕入れ単価', width: '150px'
 								}]}
-								add={this.isDisabled ? false : () => this.showAddModal('packing_item')}
-								remove={this.isDisabled ? false : (data, index) => this.removeList('packing_item', index)}
+								add={this.isDisabled ? false : () => this.showAddModal('packing_items')}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('packing_items', index)}
 							>
 								{!this.isDisabled && 
 									<div>
@@ -537,13 +521,13 @@ export default class QuotationForm extends React.Component {
 											placeholder="品番から追加"
 											name=""
 											value={this.selectPackingItem}
-											onChange={(data) => this.addList('packing_item', data.data.packing_item)}
+											onChange={(data) => this.addList('packing_items', data.data.packing_item)}
 											style={{float: 'left', width: '200px'}}
 											table
 											async={(input)=>this.getPackingItemList(input)}
 										/>
 
-										<Button style={{float: 'left'}} bsSize="sm" onClick={() => this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
+										<Button style={{float: 'left'}} bsSize="sm" onClick={() => this.showEditModal('packing_items')}><Glyphicon glyph="search" /></Button>
 
 										<CommonFilterBox
 											placeholder="テンプレート選択"

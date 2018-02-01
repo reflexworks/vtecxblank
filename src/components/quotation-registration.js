@@ -40,9 +40,8 @@ export default class QuotationRegistration extends React.Component {
 
 		// 初期値の設定
 		this.entry = {
-			quotation: {
-				packing_item: []
-			},
+			quotation: {},
+			packing_items: [],
 			billto: {},
 			basic_condition: []
 		}
@@ -55,9 +54,8 @@ export default class QuotationRegistration extends React.Component {
 		this.monthly = null
 
 		this.template = {
-			quotation: {
-				packing_item: []
-			},
+			quotation: {},
+			packing_items: [],
 			basic_condition: []
 		}
 
@@ -198,9 +196,7 @@ export default class QuotationRegistration extends React.Component {
 		} else {
 			this.selectTemplate = null
 			this.template = {
-				quotation: {
-					packing_item: []
-				},
+				packing_items: [],
 				basic_condition: []
 			}
 		}
@@ -310,8 +306,8 @@ export default class QuotationRegistration extends React.Component {
 								}]}
 							/>
 							<CommonTable
-								name="quotation.packing_item"
-								data={this.template.quotation.packing_item}
+								name="packing_items"
+								data={this.template.packing_items}
 								header={[{
 									field: 'item_code',title: '品番', width: '100px'
 								}]}
