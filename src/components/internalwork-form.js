@@ -310,7 +310,7 @@ export default class InternalWorkForm extends React.Component {
 			let monthlyWorksIndex = 0
 			if (_item_details) {
 				_item_details.map((_value) => {
-					if (_value.unit_name === '月') {
+					if (_value.unit_name && _value.unit_name.indexOf('月') !== -1) {
 						this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
 						this.monthlyWorks.push({
 							monthly_name: _value.item_name,
