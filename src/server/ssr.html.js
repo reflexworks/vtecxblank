@@ -1,4 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 
@@ -8,7 +8,7 @@ const element = (
 
 const html = ReactDOMServer.renderToStaticMarkup(element)
 
-reflexcontext.doResponseHtml(html)
+vtecxapi.doResponseHtml(html)
 
 
 

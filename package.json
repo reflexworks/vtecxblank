@@ -56,7 +56,7 @@
     "moment": "^2.20.1",
     "node-sass": "^4.7.2",
     "recursive-readdir": "^2.2.1",
-    "reflexcontext": "0.9.13",
+    "vtecxapi": "0.9.13",
     "run-sequence": "^2.2.0",
     "sass-loader": "^6.0.6",
     "should": "^13.1.3",
