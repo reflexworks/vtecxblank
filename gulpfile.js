@@ -4,7 +4,6 @@ const webserver  = require('gulp-webserver')
 const imagemin  = require('gulp-imagemin')
 const vfs = require('vinyl-fs') 
 const runSequence = require('run-sequence')
-const exec = require('child_process').exec
 const clean = require('gulp-clean')
 const argv = require('minimist')(process.argv.slice(2))
 const webpack = require('webpack')
@@ -12,9 +11,11 @@ const webpackStream = require('webpack-stream')
 const gutil = require('gulp-util')
 const eventStream = require('event-stream')
 const fs = require('fs-sync')
+const fsasync = require('fs')
 const tap = require('gulp-tap')
 const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
+const request = require('request')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
@@ -62,14 +63,19 @@ function webpackconfig(filename,externals,devtool) {
 			'react-bootstrap': 'ReactBootstrap',
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
-		} : {},
+		} : {
+			'react': 'React',
+			'react-dom': 'ReactDOM',
+			'react-bootstrap': 'ReactBootstrap',
+			'react-router-dom': 'ReactRouterDOM',            
+			'axios': 'axios'				
+		},
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
 		]
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
-
 
 gulp.task('watch:components', function(){
 	gulp.watch('./src/components/*.js')
@@ -138,7 +144,7 @@ gulp.task('watch:settings', function(){
 	gulp.watch('./setup/_settings/*')
 		.on('change', function(changedFile) {
 			const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
-			sendentry(file, null)
+			sendfile(file, null,false,false)
 		})
 })
 
@@ -175,59 +181,93 @@ gulp.task('build:html_components',['copy:images','copy:pdf','copy:xls'], functio
 		.pipe(webpack_files('./src/components','./dist/components',done))
 })
 
-gulp.task('upload:content', function(){
-	recursive('dist', [sendcontent],function(){})
-})
-
-gulp.task('upload:server', function(){
-	recursive('dist/server', [sendcontent],function(){})
-})
-
-gulp.task('upload:settings', function(){
-	recursive('setup/_settings', [sendentry],function(){})
-})
-
-gulp.task('upload:data', function(){
-	recursive('setup/data', [sendentry],function(){})
-})
-
-function sendcontent(file, stats) { 
-	const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1) : argv.h
-	curl(getargs(file,stats,argvh,'?_content'),file,argvh,false)
-}
-
-function sendentry(file, stats) {  
-	const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1)+'/d' : argv.h+'/d'
-	curl(getargs(file,stats,argvh,''),file,argvh,true)
-}
-
-function getargs(file, stats, argvh, option) {
-	let args = ''
-	if (stats&&stats.isDirectory()) {
-		args += '-H "Authorization:Token '+argv.k+'"'
-		args += ' -H "Content-Type:'+gettype(file)+'"'
-		args += ' -H "Content-Length:0"'
-		args += ' -X PUT '+argvh+file.substring(file.indexOf('/'))+'?_content'
-	}else {
-		args += '-H "Authorization:Token '+argv.k+'"'
-		args += ' -H "Content-Type:'+gettype(file)+'"'
-		args += ' -T '+file
-		args += ' '+argvh+file.substring(file.indexOf('/'))+option    
-	}
-	return args
-}
-
-function curl(args,file,argvh,isentry) {
-	exec('curl '+args,function (err, stdout, stderr) {
-		if (isentry) {
-			console.log(file)
-		}else {
-			console.log(file+' --> '+argvh+file.substring(file.indexOf('/')))
-		}
-		console.log(stdout)
-		console.log(stderr)
+gulp.task('upload:content', function(done){
+	recursive('dist', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
 	})
+})
+
+gulp.task('upload:server', function(done){
+	recursive('dist/server', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:components', function(done){
+	recursive('dist/components', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:entry', function (done) {
+	recursive('setup', [], function (err, files) {
+		files.map( (file) => sendfile(file,'') )		
+		done()
+	})
+})
+
+gulp.task('upload:init', function (done) {
+	sendfile('setup/_settings/folderacls.xml', '')
+	sendfile('setup/_settings/template.xml','',done)
+})
+
+function sendcontent(file) {
+	sendfile(file,'?_content',false,false)
 }
+
+function sendfile(file,iscontent,done,isdirectory) {
+
+	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	const url = path+file.substring(file.indexOf('/'))
+
+	var options = {
+		url: url+iscontent,
+		headers: {
+			'Content-Type': gettype(file),
+			'X-Requested-With': 'XMLHttpRequest',
+			'Authorization': 'Token ' + argv.k,
+		}
+	}
+	if (isdirectory) {
+		options.headers['Content-Length'] = '0'
+	}
+ 
+	function callback(error, response, body) {
+		var dir =''
+		if (isdirectory) {
+			dir = ' (folder)'
+		}
+		console.log(file+dir+' --> '+url)
+		if (!error && response.statusCode == 200) {
+			console.log(body)
+		} else {
+			console.log('can\'t PUT content. status='+response.statusCode)				
+			console.log(response.body)				
+		}
+		if (done) {
+			done()		
+		}
+	}
+	if (isdirectory) {
+		request.put(options,callback)
+	} else {
+		fsasync.createReadStream(file).pipe(request.put(options,callback))	
+	}
+
+}
+
+function createfolder(file, stats) { 
+
+	if (stats && stats.isDirectory()) {
+		sendfile(file, '?_content', false, true)
+		return true
+	}
+	return false
+}
+
 
 function gettype(file) {
 	const ext = file.match(/(.*)(?:\.([^.]+$))/)
@@ -293,7 +333,7 @@ gulp.task('build:server_test', function(done){
 })
 
 gulp.task('build:server', function ( callback ) {
-	runSequence('clean-dist',['build:server_dist','build:server_test'])
+	runSequence('clean-dist',['build:server_dist','build:server_test'],callback)
 }) 
 
 gulp.task( 'copy:images', function() {
@@ -377,25 +417,21 @@ gulp.task('clean-dist', function () {
 })
 
 gulp.task('build:client', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'])
+	runSequence('clean-dist',['build:html_components'],callback)
 }) 
 gulp.task('build', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'],['build:server_dist','build:server_test'])
+	runSequence('clean-dist',['build:html_components'],['build:server_dist','build:server_test'],callback)
 }) 
 gulp.task('deploy', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'],'build:server_dist','upload')
+	runSequence('clean-dist',['build:html_components'],'build:server_dist','upload',callback)
 }) 
 
 gulp.task('deploy:server', function ( callback ) {
-	runSequence('clean-dist','build:server_dist','upload:server')
-}) 
-
-gulp.task('upload:images', function ( callback ) {
-	runSequence('copy:images','upload:content')
+	runSequence('clean-dist','build:server_dist','upload:server',callback)
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:settings',['upload:content','upload:server'],'upload:data')
+	runSequence('upload:init','copy:images',['upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
