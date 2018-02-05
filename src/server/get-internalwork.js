@@ -20,7 +20,7 @@ if (isList) {
 		const getKey = (_internal_work) => {
 			const type = _internal_work.work_type
 			let key = _internal_work.work_type
-			if (type === '0') key += _internal_work.item_details_name
+			if (type === '0' || type === '4') key += _internal_work.item_details_name
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code
 				key += _internal_work.shipment_service_name
