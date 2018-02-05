@@ -1,7 +1,7 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 
 const param = new Object()
-param.picture1 = reflexcontext.getQueryString('key1')
-param.picture2 = reflexcontext.getQueryString('key2')
+param.picture1 = vtecxapi.getQueryString('key1')
+param.picture2 = vtecxapi.getQueryString('key2')
 
-reflexcontext.saveFiles(param)
+vtecxapi.saveFiles(param)

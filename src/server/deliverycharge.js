@@ -1,13 +1,13 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 import { getShipmentService } from './get-shipment-service'
 
-const shipment_service = reflexcontext.getFeed('/shipment_service')
+const shipment_service = vtecxapi.getFeed('/shipment_service')
 const isShipment = CommonGetFlag(shipment_service)
 
 if (isShipment) {
 
-	const customer_code = reflexcontext.getQueryString('customer_code')
+	const customer_code = vtecxapi.getQueryString('customer_code')
 
 	let customer = false
 	let delivery_charge
@@ -16,17 +16,17 @@ if (isShipment) {
 	if (customer_code) {
 		// 顧客ごとの配送料登録の場合
 		uri = '/customer/' + customer_code + '/deliverycharge'
-		customer = reflexcontext.getEntry('/customer/'+ customer_code)
+		customer = vtecxapi.getEntry('/customer/'+ customer_code)
 		const isCustomer = CommonGetFlag(customer)
 
 		if (isCustomer) {
-			delivery_charge = reflexcontext.getEntry(uri)
+			delivery_charge = vtecxapi.getEntry(uri)
 		} else {
 			// 顧客がいない場合
-	    	reflexcontext.sendMessage(400, '顧客が存在しません。')
+	    	vtecxapi.sendMessage(400, '顧客が存在しません。')
 		}
 	} else {
-    	reflexcontext.sendMessage(400, '不正なURLです。')
+    	vtecxapi.sendMessage(400, '不正なURLです。')
 	}
 
 	const isDc = CommonGetFlag(delivery_charge)
@@ -63,7 +63,7 @@ if (isShipment) {
 		res.feed.entry.push(_entry)
 		_entry.delivery_charge.map((_value) => {
 			const shipment_service_code = _value.shipment_service_code
-			const tempalte_data = reflexcontext.getFeed('/deliverycharge_template?shipment_service.code=' + shipment_service_code)
+			const tempalte_data = vtecxapi.getFeed('/deliverycharge_template?shipment_service.code=' + shipment_service_code)
 			if (CommonGetFlag(tempalte_data)) {
 				res.feed.entry = setTemplate(tempalte_data.feed.entry, res.feed.entry)
 			}
@@ -71,8 +71,8 @@ if (isShipment) {
 		return res
 	}
 	const res = margeTemplateData(obj.feed.entry[0])
-	reflexcontext.doResponse(res)
+	vtecxapi.doResponse(res)
 
 } else {
-	reflexcontext.sendMessage(204, null)
+	vtecxapi.sendMessage(204, null)
 }

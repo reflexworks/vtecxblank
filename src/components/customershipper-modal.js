@@ -41,31 +41,8 @@ export class CustomerShipperModal extends React.Component {
 			isShow: newProps.isShow,
 			type: newProps.type
 		})
-		
-		if(this.shipper.shipment_service_code === 'エコ配JP' || this.shipper.shipment_service_code === 'EC'){
-			this.shipper.shipment_service_code = 'EC'
-		}else if (this.shipper.shipment_service_code === 'ヤマト運輸' || this.shipper.shipment_service_code === 'YM') {
-			this.shipper.shipment_service_code = 'YM'
-		} else {
-			this.shipper.shipment_service_code = ''
-		}
-		
-		for(let i=0;i<this.shipper.shipper_info.length;++i){
-			if (this.shipper.shipper_info[i].shipment_class === '集荷' || this.shipper.shipper_info[i].shipment_class === '0') {
-				this.shipper.shipper_info[i].shipment_class = '0'
-			} else if (this.shipper.shipper_info[i].shipment_class === '出荷' || this.shipper.shipper_info[i].shipment_class === '1') {
-				this.shipper.shipper_info[i].shipment_class = '1'
-			} else {
-				this.shipper.shipper_info[i].shipment_class = ''
-			}
-		}
 		this.forceUpdate()
 	}
-
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {}
 
 	getTitle() {
 		return this.state.type === 'add' ? '荷主コード追加' : '荷主コード編集'

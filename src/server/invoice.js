@@ -1,4 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 
 const resData = {
 	'feed': {
@@ -244,4 +244,4 @@ let entry = {
 }
 
 resData.feed.entry.push(entry)
-reflexcontext.doResponse(resData) 
+vtecxapi.doResponse(resData) 

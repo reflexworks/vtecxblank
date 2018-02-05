@@ -1,4 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 
 const items = ['billto_name', 'customer_name', 'customer_name_kana', 'tel', 'fax', 'email', 'zip_code', 'prefecture', 'address1', 'url', 'person_in_charge', 'products', 'is_billto', 'sales_staff', 'working_staff', 'shipper_code_ymta', 'shipper_code_ymtb', 'shipper_code_ymtc', 'shipper_code_ecs1', 'shipper_code_ecs2', 'shipper_code_ecs3','shipper_code_ecs4']
 const header = ['請求顧客名', '顧客名', '顧客名(カナ)','電話番号','FAX','メールアドレス','郵便番号','都道府県','市区郡町村','顧客URL','担当者','取扱品','請求先にも登録','営業担当','作業担当','ヤマト荷主コード1(出荷A)','ヤマト荷主コード2(出荷B)','ヤマト荷主コード3(集荷)','エコ配荷主コード1(出荷)','エコ配荷主コード2(出荷)','エコ配荷主コード3(集荷)','エコ配荷主コード4(集荷)']
@@ -8,7 +8,7 @@ const skip = 0
 const encoding = 'UTF-8'
 
 // CSV取得
-const result = reflexcontext.getCsv(header, items, parent, skip, encoding)
+const result = vtecxapi.getCsv(header, items, parent, skip, encoding)
 
 let reqdata = {
 	'feed': {
@@ -31,17 +31,17 @@ result.feed.entry.map( csventry => {
 	}
 	reqdata.feed.entry.push(entry)
 })
-reflexcontext.put(reqdata)
+vtecxapi.put(reqdata)
 
 
 
 function getBillto_code(csventry) {
-	const billto = reflexcontext.getFeed('/billto?f&billto.billto_name=' + csventry.customer.billto_name)
+	const billto = vtecxapi.getFeed('/billto?f&billto.billto_name=' + csventry.customer.billto_name)
 	if (billto.feed.entry) {
 		return billto.feed.entry[0].billto.billto_code
 	} else {
 
-		const billto_code =('00000000'+reflexcontext.allocids('/billto',1)).slice(-7)
+		const billto_code =('00000000'+vtecxapi.allocids('/billto',1)).slice(-7)
 		let reqdata = {
 			'feed': {
 				'entry': []
@@ -57,9 +57,9 @@ function getBillto_code(csventry) {
     		[{ '___rel': 'self', '___href': '/billto/'+ billto_code }]
 		}
 		reqdata.feed.entry.push(entry)
-		reflexcontext.log('billto='+JSON.stringify(reqdata)) 
+		vtecxapi.log('billto='+JSON.stringify(reqdata)) 
         
-		reflexcontext.put(reqdata)
+		vtecxapi.put(reqdata)
 		return billto_code
 	}
 }
@@ -197,10 +197,11 @@ function getCustomer(csventry) {
 }
 
 function getCustomerCode(csventry) {
-	const customer = reflexcontext.getFeed('/customer?f&customer.customer_name=' + csventry.customer.customer_name)
+	const customer = vtecxapi.getFeed('/customer?f&customer.customer_name=' + csventry.customer.customer_name)
 	if (customer.feed.entry) {
 		return customer.feed.entry[0].customer.customer_code
 	} else {
-	    return ('00000000'+reflexcontext.allocids('/customer',1)).slice(-7)
+	    return ('00000000'+vtecxapi.allocids('/customer',1)).slice(-7)
 	}
 }
+

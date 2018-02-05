@@ -1,4 +1,4 @@
-//import reflexcontext from 'reflexcontext' 
+//import vtecxapi from 'vtecxapi' 
 
 export function CommonGetFlag(_obj) {
 	let flg
