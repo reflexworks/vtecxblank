@@ -9,7 +9,10 @@ import {
 	Tabs,
 	Tab,
 	ListGroup,
-	ListGroupItem
+	ListGroupItem,
+	Button,
+	Glyphicon,
+	Alert
 } from 'react-bootstrap'
 import type {
 	Props
@@ -68,7 +71,9 @@ export default class InternalWorkForm extends React.Component {
 		// 月次作業（見積明細の一覧データキャッシュ）
 		this.monthlyWorksCash = {}
 
-		this.convert_approval_status = { '0': '未承認', '1': '承認中', '2': '承認済み'}
+		this.convert_approval_status = { '0': ' ', '1': '未承認', '2': '承認済' }
+		this.isApproval = false
+		this.approvalDays = []
 
 	}
 
@@ -80,7 +85,43 @@ export default class InternalWorkForm extends React.Component {
 		this.entry = newProps.entry
 		if (this.entry.id) {
 			this.getShipmentService()
+			this.getApprovalInternalWork()
 		}
+	}
+
+	/**
+	 * 未承認の作業一覧取得処理
+	 */
+	getApprovalInternalWork() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/get-approval-internalwork?code='+ this.entry.id.split(',')[0],
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+
+			if (response.status !== 204) {
+				const array = response.data.feed.entry[0].title.split(',')
+				this.approvalDays = []
+				let days = []
+				for (let day of array) {
+					days.push(day+'日')
+				}
+				this.approvalDays = <p>{days.join(',')}に未承認の作業があります。</p>
+				this.isApproval = true
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+
 	}
 
 	/**
@@ -139,31 +180,42 @@ export default class InternalWorkForm extends React.Component {
 				if (internal_work.work_type === '4') {
 					key = 'monthlyWorks'
 					obj = {
-						monthly_name: internal_work.monthly_name,
-						monthly_content: internal_work.monthly_content ? internal_work.monthly_content : '',
+						item_name: internal_work.item_details_name,
+						quantity: internal_work.quantity ? internal_work.quantity : '',
 						unit: internal_work.item_details_unit,
 						approval_status: internal_work.approval_status,
+						approval_status_btn: '',
 						data: entry
 					}
-					const index = this.monthlyWorksCash[obj.monthly_name]
+					const index = this.monthlyWorksCash[obj.item_name]
 					if (index || index === 0) {
 						this[key][index] = obj
 					} else {
 						this[key].push(obj)
 					}
 				} else {
+					const setApprovalStatusBtn = (_key) => {
+						let approval_status_btn = ''
+						if (internal_work.approval_status === '1') {
+							approval_status_btn = this.setApprovalStatusBtn(_key, this[key].length, entry)
+						}
+						return approval_status_btn
+					}
 					if (internal_work.work_type === '0') {
 						key = 'quotationWorks'
+						const approval_status_btn = setApprovalStatusBtn(key)
 						obj = {
 							item_name: internal_work.item_details_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							unit: internal_work.item_details_unit,
 							approval_status: internal_work.approval_status,
+							approval_status_btn: approval_status_btn,
 							data: entry
 						}
 					}
 					if (internal_work.work_type === '1') {
 						key = 'deliveryWorks'
+						const approval_status_btn = setApprovalStatusBtn(key)
 						obj = {
 							name: this.setShipmentServicetName(
 								internal_work.shipment_service_name,
@@ -173,11 +225,13 @@ export default class InternalWorkForm extends React.Component {
 								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
+							approval_status_btn: approval_status_btn,
 							data: entry
 						}
 					}
 					if (internal_work.work_type === '2') {
 						key = 'pickupWorks'
+						const approval_status_btn = setApprovalStatusBtn(key)
 						obj = {
 							name: this.setShipmentServicetName(
 								internal_work.shipment_service_name,
@@ -187,16 +241,19 @@ export default class InternalWorkForm extends React.Component {
 								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
+							approval_status_btn: approval_status_btn,
 							data: entry
 						}
 					}
 					if (internal_work.work_type === '3') {
 						key = 'packingWorks'
+						const approval_status_btn = setApprovalStatusBtn(key)
 						obj = {
 							item_code: internal_work.packing_item_code,
 							item_name: internal_work.packing_item_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							approval_status: internal_work.approval_status,
+							approval_status_btn: approval_status_btn,
 							data: entry
 						}
 					}
@@ -313,14 +370,13 @@ export default class InternalWorkForm extends React.Component {
 					if (_value.unit_name && _value.unit_name.indexOf('月') !== -1) {
 						this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
 						this.monthlyWorks.push({
-							monthly_name: _value.item_name,
-							monthly_content: '',
+							item_name: _value.item_name,
+							quantity: '',
 							unit: _value.unit,
-							approval_status: '',
 							data: {
 								internal_work: {
 									work_type: '4',
-									monthly_name: _value.item_name,
+									item_details_name: _value.item_name,
 									item_details_unit: _value.unit
 								}
 							}
@@ -381,6 +437,7 @@ export default class InternalWorkForm extends React.Component {
 			this.year = this.working_date.split('/')[0]
 			this.month = this.working_date.split('/')[1]
 			this.worksDay = this.working_date === this.to.year + '/' + this.to.month ? this.to.day : 1
+			this.isToDay = this.setIsToDay()
 		}
 		this.forceUpdate()
 	}
@@ -413,7 +470,7 @@ export default class InternalWorkForm extends React.Component {
 		const getKey = (_internal_work) => {
 			const type = _internal_work.work_type
 			let key = _internal_work.work_type
-			if (type === '0') key += _internal_work.item_details_name
+			if (type === '0' || type === '4') key += _internal_work.item_details_name
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code
 				key += _internal_work.shipment_service_name
@@ -506,6 +563,7 @@ export default class InternalWorkForm extends React.Component {
 
 			_data.data.quantity = ''
 			_data.data.approval_status = ''
+			_data.data.approval_status_btn = ''
 			_data.data.data = obj.feed.entry[0]
 			this[_key].push(_data.data)
 			this.forceUpdate()
@@ -522,11 +580,7 @@ export default class InternalWorkForm extends React.Component {
 	 * @param {*} _index 
 	 */
 	editList(_key, _data, _index) {
-		if (_key === 'monthlyWorks') {
-			this[_key][_index].monthly_content = _data
-		} else {
-			this[_key][_index].quantity = _data
-		}
+		this[_key][_index].quantity = _data
 		this.forceUpdate()
 	}
 
@@ -579,26 +633,64 @@ export default class InternalWorkForm extends React.Component {
 			let obj = {
 				internal_work: entry.internal_work
 			}
-			obj.internal_work.approval_status = '0'
-			if (_key === 'monthlyWorks') {
-				obj.internal_work.monthly_content = _data
+			if (this.isToDay) {
+				obj.internal_work.approval_status = '0'
 			} else {
-				obj.internal_work.quantity = _data
-				obj.internal_work.working_day = this.worksDay + ''
+				obj.internal_work.approval_status = '1'
 			}
+			obj.internal_work.quantity = _data
+			obj.internal_work.working_day = this.worksDay + ''
 			updateInternalWork(obj, true)
 		} else {
 			// 入力値更新
-			entry.internal_work.approval_status = '1'
-			if (_key === 'monthlyWorks') {
-				entry.internal_work.monthly_content = _data
-			} else {
-				entry.internal_work.quantity = _data
+			if (!this.isToDay) {
+				entry.internal_work.approval_status = '1'
 			}
+			entry.internal_work.quantity = _data
 			updateInternalWork(entry)
 		}
 	}
 	
+	/**
+	 * 承認するボタン
+	 */
+	setApprovalStatusBtn(_key, _index, _entry) {
+		const doApproval = (__entry) => {
+			__entry.internal_work.approval_status = '2'
+			const obj = { 'feed': { 'entry': [__entry] } }
+			axios({
+				url: '/d/',
+				method: 'put',
+				data: obj,
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+
+				this.setState({ isDisabled: false })
+
+				const ids = this[_key][_index].data.id.split(',')
+				const id = ids[0]
+				const revision = parseInt(ids[1]) + 1
+				this[_key][_index].data.id = id + ',' + revision
+				this[_key][_index].data.internal_work.approval_status = __entry.internal_work.approval_status
+				this[_key][_index].approval_status = __entry.internal_work.approval_status
+				this[_key][_index].approval_status_btn = ''
+				this.forceUpdate()
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+		return (
+			<Button
+				bsSize="small" bsStyle="success"
+				onClick={() => doApproval(_entry)}>
+				<Glyphicon glyph="ok" /> 承認する
+			</Button>
+		)
+	}
+
 	/**
 	 * 日次作業項目の削除
 	 * @param {*} _key 
@@ -628,8 +720,16 @@ export default class InternalWorkForm extends React.Component {
 		this.setState({showRemarksModal:false})
 	}
 
+	/**
+	 * 入力日が当日かどうかの判定
+	 */
+	setIsToDay() {
+		return this.year + this.month + this.worksDay === this.to.year + this.to.month + this.to.day ? true : false
+	}
+
 	changeDays(_data) {
 		this.worksDay = _data
+		this.isToDay = this.setIsToDay()
 		this.getInternalWork()
 	}
 
@@ -639,32 +739,89 @@ export default class InternalWorkForm extends React.Component {
 
 			<Form name={this.props.name} horizontal data-submit-form>
 
+				<CommonInputText
+					controlLabel="作業対象見積書"
+					name=""
+					type="text"
+					value={this.quotation_code}
+					readonly
+				/>
+
+				{this.isApproval &&
+					<Alert bsStyle="warning">
+						{this.approvalDays}
+					</Alert>
+				}
+
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
-					<Tab eventKey={1} title="見積書 / 月次入力">
+					<Tab eventKey={1} title="月次入力 / 旬次入力">
 
 						<PanelGroup defaultActiveKey="1">
-							<Panel collapsible header="作業対象見積書" eventKey="2" bsStyle="info" defaultExpanded={true}>
-
-								<CommonInputText
-									controlLabel="作業対象見積書"
-									name=""
-									type="text"
-									value={this.quotation_code}
-									readonly
-								/>
-
-							</Panel>
-
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 								<CommonTable
-									controlLabel=""
 									name="monthlyWorks"
 									data={this.monthlyWorks}
 									header={[{
-										field: 'monthly_name',title: '作業内容', width: '300px'
+										field: 'item_name',title: '作業内容', width: '300px'
 									}, {
-										field: 'monthly_content', title: '入力値', width: '50px',
+										field: 'quantity', title: '入力値', width: '50px',
+										input: {
+											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
+											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
+										}
+									}, {
+										field: 'unit',title: '単位', width: '50px'
+									}, {
+										field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
+									}]}
+								/>
+							</Panel>
+							<Panel collapsible header="旬次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+								<h4>1期（1日〜10日）</h4>
+								<CommonTable
+									name="monthlyWorks"
+									data={this.monthlyWorks}
+									header={[{
+										field: 'item_name',title: '作業内容', width: '300px'
+									}, {
+										field: 'quantity', title: '入力値', width: '50px',
+										input: {
+											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
+											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
+										}
+									}, {
+										field: 'unit',title: '単位', width: '50px'
+									}, {
+										field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
+									}]}
+								/>
+								<h4>2期（11日〜20日）</h4>
+								<CommonTable
+									name="monthlyWorks"
+									data={this.monthlyWorks}
+									header={[{
+										field: 'item_name',title: '作業内容', width: '300px'
+									}, {
+										field: 'quantity', title: '入力値', width: '50px',
+										input: {
+											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
+											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
+										}
+									}, {
+										field: 'unit',title: '単位', width: '50px'
+									}, {
+										field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
+									}]}
+								/>
+								<h4>3期（21日以降）</h4>
+								<CommonTable
+									name="monthlyWorks"
+									data={this.monthlyWorks}
+									header={[{
+										field: 'item_name',title: '作業内容', width: '300px'
+									}, {
+										field: 'quantity', title: '入力値', width: '50px',
 										input: {
 											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
@@ -711,7 +868,9 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'unit',title: '単位', width: '50px'
     						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '300px', convert: this.convert_approval_status
+    							field: 'approval_status', title: '承認ステータス', width: '100px', convert: this.convert_approval_status
+							}, {
+								field: 'approval_status_btn', title: '', width: '200px'
 							}]}
 							remove={(data, i)=>this.removeList('quotationWorks', i)}
     					>
@@ -741,7 +900,9 @@ export default class InternalWorkForm extends React.Component {
 									onBlur: (data, rowindex) => { this.blurList('deliveryWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '350px', convert: this.convert_approval_status
+    							field: 'approval_status', title: '承認ステータス', width: '100px', convert: this.convert_approval_status
+							}, {
+								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('deliveryWorks', i)}
     					>
@@ -771,7 +932,9 @@ export default class InternalWorkForm extends React.Component {
 									onBlur: (data, rowindex) => { this.blurList('pickupWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '350px', convert: this.convert_approval_status
+    							field: 'approval_status', title: '承認ステータス', width: '100px', convert: this.convert_approval_status
+							}, {
+								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('pickupWorks', i)}
     					>
@@ -803,7 +966,9 @@ export default class InternalWorkForm extends React.Component {
 									onBlur: (data, rowindex) => { this.blurList('packingWorks', data, rowindex) }
 								}
     						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '200px', convert: this.convert_approval_status
+    							field: 'approval_status', title: '承認ステータス', width: '100px', convert: this.convert_approval_status
+							}, {
+								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('packingWorks', i)}
     					>
