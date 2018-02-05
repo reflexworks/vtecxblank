@@ -1,6 +1,6 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import Person from './person'
 
 const person = new Person('Steve')
-reflexcontext.log(person.say())
-reflexcontext.sendMessage(200, person.say())
+vtecxapi.log(person.say())
+vtecxapi.sendMessage(200, person.say())

@@ -1,10 +1,10 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-const quotation_code = reflexcontext.getQueryString('quotation_code')
+const quotation_code = vtecxapi.getQueryString('quotation_code')
 let quotation
 if (quotation_code) {
-	quotation = reflexcontext.getFeed('/quotation?quotation.quotation_code=' + quotation_code + '&quotation.status=1')
+	quotation = vtecxapi.getFeed('/quotation?quotation.quotation_code=' + quotation_code + '&quotation.status=1')
 }
 const isQuotation = CommonGetFlag(quotation)
 
@@ -21,7 +21,7 @@ if (isQuotation) {
 		}
 	}
 	res.feed.entry.push(quotation.feed.entry[set_index])
-	reflexcontext.doResponse(res)
+	vtecxapi.doResponse(res)
 } else {
-	reflexcontext.sendMessage(204, null)
+	vtecxapi.sendMessage(204, null)
 }

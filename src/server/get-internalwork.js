@@ -1,15 +1,15 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-const uri = reflexcontext.getQueryString('code')
-const list = reflexcontext.getFeed(uri + '/list')
+const uri = vtecxapi.getQueryString('code')
+const list = vtecxapi.getFeed(uri + '/list')
 const isList = CommonGetFlag(list)
-const monthly_data = reflexcontext.getFeed(uri + '/data?internal_work.work_type=4')
+const monthly_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=4')
 const isMonthly = CommonGetFlag(monthly_data)
 
 if (isList) {
-	const day = reflexcontext.getQueryString('day')
-	const data = reflexcontext.getFeed(uri + '/data?internal_work.working_day=' + day)
+	const day = vtecxapi.getQueryString('day')
+	const data = vtecxapi.getFeed(uri + '/data?internal_work.working_day=' + day)
 	const isData = CommonGetFlag(data)
 	if (isMonthly) {
 		for (let i = 0, ii = monthly_data.feed.entry.length; i < ii; ++i) {
@@ -20,7 +20,7 @@ if (isList) {
 		const getKey = (_internal_work) => {
 			const type = _internal_work.work_type
 			let key = _internal_work.work_type
-			if (type === '0') key += _internal_work.item_details_name
+			if (type === '0' || type === '4') key += _internal_work.item_details_name
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code
 				key += _internal_work.shipment_service_name
@@ -54,7 +54,7 @@ if (isList) {
 				}
 			}
 		}
-		reflexcontext.doResponse(list)
+		vtecxapi.doResponse(list)
 	} else {
 		for (let i = 0, ii = list.feed.entry.length; i < ii; ++i) {
 			const entry = list.feed.entry[i]
@@ -63,12 +63,12 @@ if (isList) {
 				list.feed.entry[i].id = null
 			}
 		}
-		reflexcontext.doResponse(list)
+		vtecxapi.doResponse(list)
 	}
 } else {
 	if (isMonthly) {
-		reflexcontext.doResponse(monthly_data)
+		vtecxapi.doResponse(monthly_data)
 	} else {
-		reflexcontext.sendMessage(204, null)
+		vtecxapi.sendMessage(204, null)
 	}
 }

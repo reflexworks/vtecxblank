@@ -1,6 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 
-const feed = reflexcontext.getFeed('/registration')
-reflexcontext.doResponse(feed) 
-
-
+const feed = vtecxapi.getFeed('/customer')
+vtecxapi.doResponse(feed) 

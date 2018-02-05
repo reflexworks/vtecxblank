@@ -62,4 +62,3 @@ class UploadCsvForm extends React.Component {
 }
 
 ReactDOM.render(<UploadCsvForm />, document.getElementById('container'))
-

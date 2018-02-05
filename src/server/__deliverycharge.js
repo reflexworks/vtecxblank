@@ -1,13 +1,13 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-const shipment_service = reflexcontext.getFeed('/shipment_service')
+const shipment_service = vtecxapi.getFeed('/shipment_service')
 const isShipment = CommonGetFlag(shipment_service)
 
 if (isShipment) {
 
-	const customer_code = reflexcontext.getQueryString('customer_code')
-	const template = reflexcontext.getQueryString('template')
+	const customer_code = vtecxapi.getQueryString('customer_code')
+	const template = vtecxapi.getQueryString('template')
 
 	let uri
 	let customer = false
@@ -16,14 +16,14 @@ if (isShipment) {
 	if (customer_code) {
 		// 顧客ごとの配送料登録の場合
 		uri = '/customer/' + customer_code + '/deliverycharge'
-		customer = reflexcontext.getEntry('/customer/' + customer_code)
+		customer = vtecxapi.getEntry('/customer/' + customer_code)
 		const isCustomer = CommonGetFlag(customer)
 
 		if (isCustomer) {
-			delivery_charge = reflexcontext.getEntry(uri)
+			delivery_charge = vtecxapi.getEntry(uri)
 		} else {
 			// 顧客がいない場合
-	    	reflexcontext.sendMessage(400, '顧客が存在しません。')
+	    	vtecxapi.sendMessage(400, '顧客が存在しません。')
 		}
 	} else if (template) {
 		// テンプレート登録の場合
@@ -32,10 +32,10 @@ if (isShipment) {
 		} else {
 			// テンプレート編集の場合
 			uri = '/deliverycharge_template/' + template
-			delivery_charge = reflexcontext.getEntry(uri)
+			delivery_charge = vtecxapi.getEntry(uri)
 		}
 	} else {
-    	reflexcontext.sendMessage(400, '不正なURLです。')
+    	vtecxapi.sendMessage(400, '不正なURLです。')
 	}
 
 	const isDc = CommonGetFlag(delivery_charge)
@@ -349,8 +349,8 @@ if (isShipment) {
 	if (customer) {
 		res.feed.entry[0].customer = customer.feed.entry[0].customer
 	}
-	reflexcontext.doResponse(res)
+	vtecxapi.doResponse(res)
 
 } else {
-	reflexcontext.sendMessage(204, null)
+	vtecxapi.sendMessage(204, null)
 }

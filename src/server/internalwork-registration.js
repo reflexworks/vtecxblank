@@ -1,24 +1,24 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-const quotation_code = reflexcontext.getQueryString('quotation_code')
+const quotation_code = vtecxapi.getQueryString('quotation_code')
 let quotation
 let customer
 if (quotation_code) {
-	quotation = reflexcontext.getFeed('/quotation?quotation.quotation_code=' + quotation_code)
-	customer = reflexcontext.getFeed('/customer?billto.billto_code=' + quotation.feed.entry[0].billto.billto_code)
+	quotation = vtecxapi.getFeed('/quotation?quotation.quotation_code=' + quotation_code)
+	customer = vtecxapi.getFeed('/customer?billto.billto_code=' + quotation.feed.entry[0].billto.billto_code)
 }
 const isCustomer = CommonGetFlag(customer)
 
 if (isCustomer) {
 	const quotation_code = quotation.feed.entry[0].quotation.quotation_code
-	let working_yearmonth = reflexcontext.getQueryString('working_yearmonth')
+	let working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
 	working_yearmonth = working_yearmonth.replace('/', '')
 	let res = {feed: {entry: []}}
 	for (let i = 0, ii = customer.feed.entry.length; i < ii; ++i) {
 		let entry = customer.feed.entry[i]
 		const customer_code = entry.customer.customer_code
-		const internalwork = reflexcontext.getEntry('/internal_work/'+ quotation_code + '-' + working_yearmonth + '-' + customer_code)
+		const internalwork = vtecxapi.getEntry('/internal_work/'+ quotation_code + '-' + working_yearmonth + '-' + customer_code)
 		const isInternalwork = CommonGetFlag(internalwork)
 		if (isInternalwork) {
 			entry.title = 'create'
@@ -27,7 +27,7 @@ if (isCustomer) {
 		}
 		res.feed.entry.push(entry)
 	}
-	reflexcontext.doResponse(res)
+	vtecxapi.doResponse(res)
 } else {
-	reflexcontext.sendMessage(204, null)
+	vtecxapi.sendMessage(204, null)
 }
