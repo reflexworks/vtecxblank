@@ -165,7 +165,7 @@ function webpack_files(src,dest,done) {
 
 function webpack_file(filename,src,dest) {
 	      return gulp.src(src+'/'+filename)
-	      .pipe(webpackStream(webpackconfig(filename,false,false),webpack))
+	      .pipe(webpackStream(webpackconfig(filename,true,false),webpack))
 	      .pipe(gulp.dest(dest))
 }
 
