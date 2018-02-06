@@ -1,0 +1,23 @@
+<feed>
+    <entry>
+        <billfrom>
+            <billfrom_code>0000001</billfrom_code>
+            <billfrom_name>CONNECT・EC</billfrom_name>
+            <payee>
+                <bank_info>5</bank_info>
+                <account_type>0</account_type>
+                <account_number>000000000000</account_number>
+            </payee>
+        </billfrom>
+        <contact_information>
+            <tel>0482998475</tel>
+            <fax>0482998476</fax>
+            <email>info@connect-ec.co.jp</email>
+            <zip_code>3320027</zip_code>
+            <prefecture>埼玉県</prefecture>
+            <address1>川口市緑町</address1>
+            <address2>9-35</address2>
+        </contact_information>
+        <link href="/billfrom/0000001" rel="self"/>
+    </entry>
+</feed>
