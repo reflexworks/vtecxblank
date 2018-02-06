@@ -1,8 +1,8 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-const uri = reflexcontext.getQueryString('code')
-const approval_data = reflexcontext.getFeed(uri + '/data?internal_work.approval_status=1')
+const uri = vtecxapi.getQueryString('code')
+const approval_data = vtecxapi.getFeed(uri + '/data?internal_work.approval_status=1')
 const isApproval = CommonGetFlag(approval_data)
 
 if (isApproval) {
@@ -22,7 +22,7 @@ if (isApproval) {
 		return 0
 	})
 	const obj = { feed: { entry: [{title: array.join(',')}] } }
-	reflexcontext.doResponse(obj)
+	vtecxapi.doResponse(obj)
 } else {
-	reflexcontext.sendMessage(204, null)
+	vtecxapi.sendMessage(204, null)
 }
