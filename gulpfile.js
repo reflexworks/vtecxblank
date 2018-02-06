@@ -64,11 +64,6 @@ function webpackconfig(filename,externals,devtool) {
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
 		} : {
-			'react': 'React',
-			'react-dom': 'ReactDOM',
-			'react-bootstrap': 'ReactBootstrap',
-			'react-router-dom': 'ReactRouterDOM',            
-			'axios': 'axios'				
 		},
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
@@ -183,6 +178,13 @@ gulp.task('build:html_components',['copy:images','copy:pdf','copy:xls'], functio
 
 gulp.task('upload:content', function(done){
 	recursive('dist', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:images', function(done){
+	recursive('dist/img', [createfolder], function (err, files) {
 		files.map( (file) => sendcontent(file) )		
 		done()
 	})
@@ -431,7 +433,7 @@ gulp.task('deploy:server', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:init','copy:images',['upload:content','upload:components','upload:entry','upload:server'],callback)
+	runSequence('upload:init','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
