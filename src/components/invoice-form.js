@@ -187,6 +187,7 @@ export default class InvoiceForm extends React.Component {
 	getService() {
 		this.setState({ isDisabled: true })
 
+		//item_details
 		axios({
 			url: '/s/invoice',
 			method: 'get',
@@ -246,6 +247,19 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})
 		
+		/* 請求データ用
+		axios({
+			url: '/s/billingdetails',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			console.log(response)
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+		*/
 	}
 
 	getHead() {
@@ -782,18 +796,18 @@ export default class InvoiceForm extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-			if (response.status !== 204) {
+			if (response.status === 204) {
+				this.setState({ isDisabled: false })
+				//alert('庫内作業データがありません')
+			}else if (response.status !== 204) {
 				this.master.internalWorkYearMonthList = response.data.feed.entry
 				
 				//重複したものを削除する
 				this.internalWorkYearMonthList = this.master.internalWorkYearMonthList.map((obj) => {
 					return obj.internal_work.working_yearmonth
-				})
-				this.internalWorkYearMonthList = this.internalWorkYearMonthList.filter((x, i, self) => {
+				}).filter((x, i, self) => {
 					return self.indexOf(x) === i
-				})
-
-				this.internalWorkYearMonthList = this.internalWorkYearMonthList.map((obj) => {
+				}).map((obj) => {
 					return {
 						label: obj,
 						value: obj,
@@ -802,9 +816,7 @@ export default class InvoiceForm extends React.Component {
 				this.forceUpdate()
 			}
 		}).catch((error) => {
-			alert('庫内作業データがありません')
 			this.setState({ isDisabled: false, isError: error })
-			
 		})
 	}
 
@@ -1023,6 +1035,8 @@ export default class InvoiceForm extends React.Component {
 								<Glyphicon glyph="download" />CSVダウンロード
 							</Button>
 
+							<br />
+							<br />
 							<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
