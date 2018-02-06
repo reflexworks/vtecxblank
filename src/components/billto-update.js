@@ -22,7 +22,7 @@ import {
 	CommonBackBtn
 } from './common'
 
-import moment from 'moment'
+//import moment from 'moment'
 
 export default class BilltoUpdate extends React.Component {
 
@@ -67,11 +67,7 @@ export default class BilltoUpdate extends React.Component {
 			} else {
 				
 				this.entry = response.data.feed.entry[0]
-				
-				this.entry.billto.billing_closing_date = moment(Date.parse(this.entry.billto.billing_closing_date))
-				this.entry.billto.payment_date = moment(Date.parse(this.entry.billto.payment_date))
-
-
+				//this.entry.billto.payment_date = moment(Date.parse(this.entry.billto.payment_date))
 				this.forceUpdate()
 			}
 
