@@ -251,7 +251,7 @@ export default class BilltoList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
+								field: 'billto.billing_closing_date', title: '請求締日', width: '200px',convert: {0:'月末',1:'20日'}
 							}, {
 								field: 'billto.payment_date', title: '支払日', width: '200px'
 							}, {
