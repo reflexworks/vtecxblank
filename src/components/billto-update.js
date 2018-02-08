@@ -68,7 +68,6 @@ export default class BilltoUpdate extends React.Component {
 				
 				this.entry = response.data.feed.entry[0]
 				
-				this.entry.billto.billing_closing_date = moment(Date.parse(this.entry.billto.billing_closing_date))
 				this.entry.billto.payment_date = moment(Date.parse(this.entry.billto.payment_date))
 
 

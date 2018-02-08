@@ -79,11 +79,17 @@ export default class BilltoForm extends React.Component {
 							required
 						/>
 
-						<CommonDatePicker
-							controlLabel="請求締切日"
+						<CommonRadioBtn
+							controlLabel='請求締切日'	
 							name="billto.billing_closing_date"
-							selected={this.entry.billto.billing_closing_date}
-							required
+							checked={this.entry.billto.billing_closing_date}
+							data={[{
+								label: '月末',
+								value: '0',
+							}, {
+								label: '20日締',
+								value: '1',
+							}]}
 						/>
 
 						<CommonDatePicker
