@@ -32,6 +32,7 @@ customer
  url
  person_in_charge
  products
+ warehouse_code
 billfrom
  billfrom_code
  billfrom_name
