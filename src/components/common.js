@@ -1087,7 +1087,8 @@ export class CommonDatePicker extends React.Component {
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
 	 */
-	componentWillReceiveProps() {
+	componentWillReceiveProps(newProps) {
+		this.setState({selected: newProps.selected})
 	}
 
 	/**
