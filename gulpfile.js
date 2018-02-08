@@ -64,11 +64,6 @@ function webpackconfig(filename,externals,devtool) {
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
 		} : {
-			'react': 'React',
-			'react-dom': 'ReactDOM',
-			'react-bootstrap': 'ReactBootstrap',
-			'react-router-dom': 'ReactRouterDOM',            
-			'axios': 'axios'				
 		},
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
@@ -148,7 +143,7 @@ gulp.task('watch:settings', function(){
 		})
 })
 
-function webpack_files(src,dest,done) {
+function webpack_files(src,dest,externals,done) {
 	let filenames = []
 	let streams = tap(function(file){
 		const filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
@@ -159,7 +154,7 @@ function webpack_files(src,dest,done) {
 
 	eventStream.merge(streams).on('end', function() { 
 		let tasks = filenames.map(function(filename) {
-			return webpack_file(filename,src,dest)   
+			return webpack_file(filename,src,dest,externals)   
 		}
 		)
 		eventStream.merge(tasks).on('end', done) 
@@ -168,9 +163,9 @@ function webpack_files(src,dest,done) {
 	return streams
 }
 
-function webpack_file(filename,src,dest) {
+function webpack_file(filename,src,dest,externals) {
 	      return gulp.src(src+'/'+filename)
-	      .pipe(webpackStream(webpackconfig(filename,false,false),webpack))
+	      .pipe(webpackStream(webpackconfig(filename,externals,false),webpack))
 	      .pipe(gulp.dest(dest))
 }
 
@@ -178,11 +173,18 @@ gulp.task('build:html_components',['copy:images','copy:pdf','copy:xls'], functio
 	gulp.src('./src/*.html')
 		.pipe(minifyHtml({ empty: true }))
 		.pipe(gulp.dest('./dist'))
-		.pipe(webpack_files('./src/components','./dist/components',done))
+		.pipe(webpack_files('./src/components','./dist/components',true,done))
 })
 
 gulp.task('upload:content', function(done){
 	recursive('dist', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:images', function(done){
+	recursive('dist/img', [createfolder], function (err, files) {
 		files.map( (file) => sendcontent(file) )		
 		done()
 	})
@@ -324,12 +326,12 @@ gulp.task('watch:server',['watch:settings'], function(){
 
 gulp.task('build:server_dist', function(done){
 	gulp.src('./src/server/*.js')
-		.pipe(webpack_files('./src/server','./dist/server',done))      
+		.pipe(webpack_files('./src/server','./dist/server',false,done))      
 })
 
 gulp.task('build:server_test', function(done){
 	gulp.src('./test/*.html')
-		.pipe(webpack_files('./src/server','./test/server',done))      
+		.pipe(webpack_files('./src/server','./test/server',false,done))      
 })
 
 gulp.task('build:server', function ( callback ) {
@@ -431,7 +433,7 @@ gulp.task('deploy:server', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:init','copy:images',['upload:content','upload:components','upload:entry','upload:server'],callback)
+	runSequence('upload:init','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])

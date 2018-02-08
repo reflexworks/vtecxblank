@@ -37,6 +37,19 @@ export default class BilltoForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		//this.entry.billto.payment_date = this.entry.billto.payment_date ? moment(Date.parse(this.entry.billto.payment_date)) : moment()
+		console.log(this.entry)
+		this.forceUpdate()
+	}
+
+	changeBillto(_data,_key) {
+		this.entry.billto[_key] = _data
+		this.forceUpdate()
+	}
+
+	changeContactInformation(_data,_key) {
+		this.entry.contact_information[_key] = _data
+		this.forceUpdate()
 	}
 
 	render() {
@@ -77,10 +90,11 @@ export default class BilltoForm extends React.Component {
 							value={this.entry.billto.billto_name}
 							validate="string"
 							required
+							onChange={(data) => this.changeBillto(data,'billto_name')}
 						/>
 
 						<CommonRadioBtn
-							controlLabel='請求締切日'	
+							controlLabel="請求締日"
 							name="billto.billing_closing_date"
 							checked={this.entry.billto.billing_closing_date}
 							data={[{
@@ -90,13 +104,14 @@ export default class BilltoForm extends React.Component {
 								label: '20日締',
 								value: '1',
 							}]}
+							onChange={(data) => this.changeBillto(data,'billing_closing_date')}
 						/>
 
 						<CommonDatePicker
 							controlLabel="支払日"
 							name="billto.payment_date"
 							selected={this.entry.billto.payment_date}
-							required
+							onChange={(data) => this.changeBillto(data,'payment_date')}
 						/>
 
 						<CommonRadioBtn
@@ -110,6 +125,7 @@ export default class BilltoForm extends React.Component {
 								label: '区別しない',
 								value: '1',
 							}]}
+							onChange={(data) => this.changeBillto(data,'post_has_sizeweight')}
 						/>
 
 						<CommonRadioBtn
@@ -123,6 +139,7 @@ export default class BilltoForm extends React.Component {
 								label: '詳細',
 								value: '1',
 							}]}
+							onChange={(data) => this.changeBillto(data,'yamato_has_details')}
 						/>
 
 						<CommonInputText
@@ -132,6 +149,7 @@ export default class BilltoForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.tel}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'tel')}
 						/>
 
 						<CommonInputText
@@ -141,6 +159,7 @@ export default class BilltoForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.fax}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'fax')}
 						/>
 						
 						<CommonInputText
@@ -149,6 +168,7 @@ export default class BilltoForm extends React.Component {
 							type="email"
 							placeholder="logioffice@gmail.com"
 							value={this.entry.contact_information.email}
+							onChange={(data) => this.changeContactInformation(data,'email')}
 						/>
 
 						<CommonInputText
@@ -158,6 +178,7 @@ export default class BilltoForm extends React.Component {
 							placeholder="123-4567"
 							value={this.entry.contact_information.zip_code}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'zip_code')}
 						/>
 
 						<CommonPrefecture
@@ -165,6 +186,7 @@ export default class BilltoForm extends React.Component {
 							componentClass="select"
 							name="contact_information.prefecture"
 							value={this.entry.contact_information.prefecture}
+							onChange={(data) => this.changeContactInformation(data,'prefecture')}
 						/>
 
 						<CommonInputText
@@ -173,6 +195,7 @@ export default class BilltoForm extends React.Component {
 							type="text"
 							placeholder="◯◯市××町"
 							value={this.entry.contact_information.address1}
+							onChange={(data) => this.changeContactInformation(data,'address1')}
 						/>
 
 						<CommonInputText
@@ -182,6 +205,7 @@ export default class BilltoForm extends React.Component {
 							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.contact_information.address2}
 							size="lg"
+							onChange={(data) => this.changeContactInformation(data,'address2')}
 						/>
 					
 					</Panel>	

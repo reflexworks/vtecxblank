@@ -26,12 +26,15 @@ customer
  customer_name
  customer_name_kana
  sales_staff{}
-  content
+  staff_name
+  staff_email
  working_staff{}
-  content
+  staff_name
+  staff_email
  url
  person_in_charge
  products
+ warehouse_code
 billfrom
  billfrom_code
  billfrom_name
