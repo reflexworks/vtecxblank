@@ -139,7 +139,7 @@ gulp.task('watch:settings', function(){
 	gulp.watch('./setup/_settings/*')
 		.on('change', function(changedFile) {
 			const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
-			sendfile(file, null,false,false)
+			sendfile(file, '',false,false)
 		})
 })
 
@@ -247,7 +247,14 @@ function sendfile(file,iscontent,done,isdirectory) {
 			console.log(body)
 		} else {
 			console.log('can\'t PUT content. status='+response.statusCode)				
-			console.log(response.body)				
+			console.log(response.body)			
+			if (response.statusCode == 302) {
+				response.headers['set-cookie'].map((msg) => { 
+					if (msg.indexOf('ERROR_') >= 0) {
+						console.log(msg)							
+					}
+				})
+			}
 		}
 		if (done) {
 			done()		
