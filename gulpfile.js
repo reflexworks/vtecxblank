@@ -206,14 +206,22 @@ gulp.task('upload:components', function(done){
 
 gulp.task('upload:entry', function (done) {
 	recursive('setup', [], function (err, files) {
-		files.map( (file) => sendfile(file,'') )		
+		files.map((file) => {
+			if ((file.indexOf('template.xml')< 0) &&
+				(file.indexOf('folderacls.xml') < 0)) {
+				sendfile(file, '')	
+			}
+		})		
 		done()
 	})
 })
 
-gulp.task('upload:init', function (done) {
-	sendfile('setup/_settings/folderacls.xml', '')
+gulp.task('upload:template', function (done) {
 	sendfile('setup/_settings/template.xml','',done)
+})
+
+gulp.task('upload:folderacls', function (done) {
+	sendfile('setup/_settings/folderacls.xml', '',done)
 })
 
 function sendcontent(file) {
@@ -440,7 +448,7 @@ gulp.task('deploy:server', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:init','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
+	runSequence('upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
