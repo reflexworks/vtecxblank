@@ -55,6 +55,8 @@ staff
  role
  superior_email 
  staff_email
+ uid
+ password
 warehouse
  warehouse_code
  warehouse_name
