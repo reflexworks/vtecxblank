@@ -1,4 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/pdfstyles.js'
@@ -32,9 +32,9 @@ const element = (
 const html = ReactDOMServer.renderToStaticMarkup(element)
  
 // HTML出力
-//reflexcontext.doResponseHtml(html)
+//vtecxapi.doResponseHtml(html)
 
 // PDF出力
-reflexcontext.toPdf({}, html, 'test.pdf')
+vtecxapi.toPdf({}, html, 'test.pdf')
 
 
