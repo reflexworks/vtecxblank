@@ -83,7 +83,7 @@ export default class VtecxPagination extends React.Component {
 		this.props.onChange(eventKey)	// 再検索
 	}
 	
-	 componentDidUpdate() {
+	componentDidMount() {
 		 if (this.url !== this.props.url) {
 
 	    // pageIndex作成処理呼び出し
