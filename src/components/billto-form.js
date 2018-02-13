@@ -101,7 +101,7 @@ export default class BilltoForm extends React.Component {
 								label: '月末',
 								value: '0',
 							}, {
-								label: '20日',
+								label: '20日締',
 								value: '1',
 							}]}
 							onChange={(data) => this.changeBillto(data,'billing_closing_date')}

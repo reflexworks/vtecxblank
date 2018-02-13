@@ -1,4 +1,4 @@
-import vtecxapi from 'vtecxapi' 
+import vtecxapi from 'vtecxapi'
 import { CommonGetFlag } from './common'
 
 const uri = vtecxapi.getQueryString('code')

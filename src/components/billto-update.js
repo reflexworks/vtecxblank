@@ -67,7 +67,6 @@ export default class BilltoUpdate extends React.Component {
 			} else {
 				
 				this.entry = response.data.feed.entry[0]
-				//this.entry.billto.payment_date = moment(Date.parse(this.entry.billto.payment_date))
 				this.forceUpdate()
 			}
 
