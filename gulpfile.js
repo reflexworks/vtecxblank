@@ -139,7 +139,7 @@ gulp.task('watch:settings', function(){
 	gulp.watch('./setup/_settings/*')
 		.on('change', function(changedFile) {
 			const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
-			sendfile(file, null,false,false)
+			sendfile(file, '',false,false)
 		})
 })
 
@@ -206,14 +206,22 @@ gulp.task('upload:components', function(done){
 
 gulp.task('upload:entry', function (done) {
 	recursive('setup', [], function (err, files) {
-		files.map( (file) => sendfile(file,'') )		
+		files.map((file) => {
+			if ((file.indexOf('template.xml')< 0) &&
+				(file.indexOf('folderacls.xml') < 0)) {
+				sendfile(file, '')	
+			}
+		})		
 		done()
 	})
 })
 
-gulp.task('upload:init', function (done) {
-	sendfile('setup/_settings/folderacls.xml', '')
+gulp.task('upload:template', function (done) {
 	sendfile('setup/_settings/template.xml','',done)
+})
+
+gulp.task('upload:folderacls', function (done) {
+	sendfile('setup/_settings/folderacls.xml', '',done)
 })
 
 function sendcontent(file) {
@@ -247,7 +255,14 @@ function sendfile(file,iscontent,done,isdirectory) {
 			console.log(body)
 		} else {
 			console.log('can\'t PUT content. status='+response.statusCode)				
-			console.log(response.body)				
+			console.log(response.body)			
+			if (response.statusCode == 302) {
+				response.headers['set-cookie'].map((msg) => { 
+					if (msg.indexOf('ERROR_') >= 0) {
+						console.log(msg)							
+					}
+				})
+			}
 		}
 		if (done) {
 			done()		
@@ -433,7 +448,7 @@ gulp.task('deploy:server', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:init','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
+	runSequence('upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
