@@ -37,7 +37,8 @@ export default class QuotationList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/quotation?f&l=' + this.maxDisplayRows
+		//		this.url = '/d/quotation?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-quotation?l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
