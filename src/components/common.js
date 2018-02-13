@@ -17,7 +17,8 @@ import {
 	Pagination,
 	ButtonToolbar,
 	ToggleButtonGroup,
-	ToggleButton
+	ToggleButton,
+	Checkbox
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -2096,8 +2097,16 @@ export class CommonSearchConditionsFrom extends React.Component {
 		let conditions = null
 		const form = document.CommonSearchConditionsFrom
 		for (var i = 0, ii = form.length; i < ii; ++i) {
+
 			const name = form[i].name
 			const value = form[i].value
+			const type = form[i].type
+			if (type === 'radio' && !form[i].checked) {
+				 continue
+			}
+			if (type === 'checkbox' && !form[i].checked) {
+				 continue
+			}
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
@@ -2597,6 +2606,115 @@ export class CommonDisplayCalendar extends React.Component {
 
 	render() {
 		return this.visible ? this.setArray() : <div></div>
+	}
+
+}
+
+
+/**
+ * パスワード
+ */
+export class CommonPassword extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			name: this.props.name,
+			controlLabel: this.props.controlLabel || 'パスワード',
+			placeholder: this.props.placeholder,
+			size: this.props.comparison ? 'lg' : this.props.size,
+			entitiykey: this.props.entitiykey
+		}
+		this.type = 'password'
+		this.ok = false
+		this.validation = ''
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			placeholder: newProps.placeholder,
+			size: newProps.size
+		})
+	}
+
+	/**
+	 * 値の変更処理
+	 * @param {*} e 
+	 */
+	changed(e: InputEvent) {
+		const value = e.target.value
+		this.input_password = value
+		this.check()
+		if (this.props.onChange) {
+			this.props.onChange(value, this.ok)
+		}
+		this.forceUpdate()
+	}
+
+	changedRePassword(e: InputEvent) {
+		const value = e.target.value
+		this.re_password = value
+		this.check()
+		if (this.props.onChange) {
+			this.props.onChange(value, this.ok)
+		}
+		this.forceUpdate()
+	}
+
+	check() {
+		if (this.input_password && this.re_password && this.input_password === this.re_password) {
+			this.validation = ''
+			this.ok = true
+		} else {
+			if (this.input_password && this.re_password || this.re_password) {
+				this.validation = 'error'
+			}
+			this.ok = false
+		}
+	}
+
+	changedStyle(e: InputEvent) {
+		const isChecked = e.target.checked
+		if (isChecked) {
+			this.type = 'text'
+		} else {
+			this.type = 'password'
+		}
+		this.forceUpdate()
+	}
+
+	render() {
+
+		return (
+			<div style={this.props.style} className={this.props.className}>
+				<CommonFormGroup controlLabel={this.state.controlLabel} size={this.state.size}>
+					<FormControl
+						name={this.state.name}
+						type={this.type}
+						placeholder={this.state.placeholder}
+						value={this.input_password}
+						onChange={(e) => this.changed(e)}
+						bsSize="small"
+					/>
+				</CommonFormGroup>
+				<CommonFormGroup controlLabel={this.state.controlLabel+'確認'} size={this.state.size} validationState={this.validation}>
+					<FormControl
+						name=""
+						type={this.type}
+						value={this.re_password}
+						onChange={(e) => this.changedRePassword(e)}
+						bsSize="small"
+					/>
+				</CommonFormGroup>
+				<CommonFormGroup controlLabel=" " size={this.state.size}>
+					<Checkbox onChange={(e) => this.changedStyle(e)}>{this.state.controlLabel}を表示する</Checkbox>	
+				</CommonFormGroup>
+			</div>
+		)
 	}
 
 }
