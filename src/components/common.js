@@ -2097,8 +2097,16 @@ export class CommonSearchConditionsFrom extends React.Component {
 		let conditions = null
 		const form = document.CommonSearchConditionsFrom
 		for (var i = 0, ii = form.length; i < ii; ++i) {
+
 			const name = form[i].name
 			const value = form[i].value
+			const type = form[i].type
+			if (type === 'radio' && !form[i].checked) {
+				 continue
+			}
+			if (type === 'checkbox' && !form[i].checked) {
+				 continue
+			}
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
