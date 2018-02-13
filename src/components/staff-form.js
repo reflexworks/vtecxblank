@@ -146,7 +146,7 @@ export default class StaffForm extends React.Component {
 
 						<div className="hide">
 							<FormControl name="link" data-rel="self" type="text" value="/staff/${staff.staff_email}" />
-							<FormControl name="staff.staff_code" type="text" value="${_addids}" />
+							<FormControl name="staff.uid" type="text" value="${_addids}" />
 						</div>
 
 						<CommonInputText
