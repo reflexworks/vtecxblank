@@ -88,7 +88,7 @@ export default class StaffList extends React.Component {
 	 */
 	onSelect(data) {
 		// 入力画面に遷移
-		const id = data.link[0].___href.slice(7)
+		const id = data.staff.uid
 		this.props.history.push('/StaffUpdate?' + id)
 	}
 	
@@ -175,14 +175,14 @@ export default class StaffList extends React.Component {
 								}]}
 							/>
 							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
+								controlLabel="メールアドレス"
+								name="staff.staff_email"
 								type="text"
 								placeholder="logioffice@gmail.com"
 							/>
 							<CommonInputText
-								controlLabel="メールアドレス"
-								name="staff.staff_email"
+								controlLabel="上長メールアドレス"
+								name="staff.superior_email"
 								type="text"
 								placeholder="logioffice@gmail.com"
 							/>
@@ -211,9 +211,9 @@ export default class StaffList extends React.Component {
 							}, {
 								field: 'staff.role', title: 'ロール', width: '70px', convert: { 1:'管理者', 2:'上長', 3:'作業員', 4:'営業', 5:'経理'}
 							}, {
-								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
+								field: 'staff.staff_email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'staff.staff_email', title: 'メールアドレス', width: '150px'
+								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
 							}]}
 						/>
 
