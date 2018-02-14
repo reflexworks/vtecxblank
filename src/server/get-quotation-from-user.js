@@ -5,6 +5,7 @@ export function getQuotation() {
 
 	const uid = vtecxapi.uid()
 	const email = vtecxapi.getEntry('/' + uid).feed.entry[0].title
+	const role = vtecxapi.getFeed('/staff?staff.staff_email=' + email).feed.entry[0].staff.role
 
 	const isCount = vtecxapi.getQueryString('c') === ''
 
@@ -57,7 +58,13 @@ export function getQuotation() {
 			}
 			return array.length ? array : false
 		}
-		const customerFromUser = getCustomerFromUser()
+		let customerFromUser
+		// 管理者と経理担当は全ての顧客が対象
+		if (role === '1' || role === '5') {
+			customerFromUser = customer_data.feed.entry
+		} else {
+			customerFromUser = getCustomerFromUser()
+		}
 
 		if (customerFromUser) {
 
