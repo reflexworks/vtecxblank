@@ -1,9 +1,9 @@
 import vtecxapi from 'vtecxapi' 
 import { getData } from './get-data-from-user'
 
-const quotation = getData('quotation')
-if (quotation) {
-	vtecxapi.doResponse(quotation)
+const inquiry = getData('inquiry')
+if (inquiry) {
+	vtecxapi.doResponse(inquiry)
 } else {
 	vtecxapi.sendMessage(204, null)
 }
