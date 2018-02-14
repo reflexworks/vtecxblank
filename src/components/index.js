@@ -109,6 +109,10 @@ import type {
 	InputEvent
 } from 'demo.types'
 
+import {
+	getAuthList
+} from './common'
+
 class MainContainer extends React.Component {
 
 	/**
@@ -125,8 +129,24 @@ class MainContainer extends React.Component {
 			sideMenu: {
 				// 初期表示（true：する, false: しない）
 				isVisible: true
-			}
+			},
+			authList: getAuthList()
 		}
+		this.aushScreenList = []
+	}
+	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+		this.setAuthList()
+	}
+
+
+	setAuthList() {
+		this.aushScreenList = []
+		//Object.keys(this.state.authList).forEach((_key, _value) => {
+		//this.aushScreenList.push(<Route path="/" component={this.CustomerRegistration} />)
+		//})
 	}
 
 	/**
@@ -752,7 +772,6 @@ class MainContainer extends React.Component {
 							<Route path="/BasicConditionRegistration" component={this.BasicConditionRegistration} />
 							<Route path="/BasicConditionList" component={this.BasicConditionList} />
 							<Route path="/BasicConditionUpdate" component={this.BasicConditionUpdate} />
-						
 							<Route path="/BillingDataUpload" component={this.BillingDataUpload} />
 							<Route path="/InquiryRegistration" component={this.InquiryRegistration} />
 							<Route path="/InquiryList" component={this.InquiryList} />
@@ -761,7 +780,7 @@ class MainContainer extends React.Component {
 							<Route path="/BillfromList" component={this.BillfromList} />
 							<Route path="/BillfromUpdate" component={this.BillfromUpdate} />
 							<Route component={this.CustomerRegistration} />
-						</Switch>	
+						</Switch>
 					</div>
 				</div>
 			</HashRouter>            

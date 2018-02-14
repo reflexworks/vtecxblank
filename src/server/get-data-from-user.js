@@ -5,51 +5,59 @@ export function getCustomer() {
 
 	const uid = vtecxapi.uid()
 	const email = vtecxapi.getEntry('/' + uid).feed.entry[0].title
-	const role = vtecxapi.getFeed('/staff?staff.staff_email=' + email).feed.entry[0].staff.role
+	const staff_data = vtecxapi.getFeed('/staff?staff.staff_email=' + email)
+	const isStaff = CommonGetFlag(staff_data)
 
-	const customer_data = vtecxapi.getFeed('/customer', true)
-	const isCustomer = CommonGetFlag(customer_data)
+	if (isStaff) {
 
-	if (isCustomer) {
+		const role = staff_data.feed.entry[0].staff.role
 
-		// 担当の顧客一覧を取得する
-		const getCustomerFromUser = () => {
-			let array = []
-			for (let i = 0, ii = customer_data.feed.entry.length; i < ii; ++i) {
-				const entry = customer_data.feed.entry[i]
-				let isPush = false
-				// 営業担当検索
-				if (entry.customer.sales_staff) {
-					entry.customer.sales_staff.map((_value) => {
-						if (_value.staff_email === email) {
-							array.push(entry)
-							isPush = true
-						}
-					})
-				}
-				if (!isPush) {
-					// 作業担当検索
-					if (entry.customer.working_staff) {
-						entry.customer.working_staff.map((_value) => {
+		const customer_data = vtecxapi.getFeed('/customer', true)
+		const isCustomer = CommonGetFlag(customer_data)
+
+		if (isCustomer) {
+
+			// 担当の顧客一覧を取得する
+			const getCustomerFromUser = () => {
+				let array = []
+				for (let i = 0, ii = customer_data.feed.entry.length; i < ii; ++i) {
+					const entry = customer_data.feed.entry[i]
+					let isPush = false
+					// 営業担当検索
+					if (entry.customer.sales_staff) {
+						entry.customer.sales_staff.map((_value) => {
 							if (_value.staff_email === email) {
 								array.push(entry)
+								isPush = true
 							}
 						})
 					}
+					if (!isPush) {
+						// 作業担当検索
+						if (entry.customer.working_staff) {
+							entry.customer.working_staff.map((_value) => {
+								if (_value.staff_email === email) {
+									array.push(entry)
+								}
+							})
+						}
+					}
 				}
+				return array.length ? array : false
 			}
-			return array.length ? array : false
-		}
-		let customerFromUser
-		// 管理者と経理担当は全ての顧客が対象
-		if (role === '1' || role === '5') {
-			customerFromUser = customer_data.feed.entry
+			let customerFromUser
+			// 管理者と経理担当は全ての顧客が対象
+			if (role === '1' || role === '5') {
+				customerFromUser = customer_data.feed.entry
+			} else {
+				customerFromUser = getCustomerFromUser()
+			}
+
+			return customerFromUser
+
 		} else {
-			customerFromUser = getCustomerFromUser()
+			return null
 		}
-
-		return customerFromUser
-
 	} else {
 		return null
 	}
