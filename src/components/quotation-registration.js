@@ -87,7 +87,7 @@ export default class QuotationRegistration extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/billto?f',
+			url: '/s/get-billto',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'

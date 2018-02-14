@@ -146,7 +146,7 @@ export default class ShipmentServiceList extends React.Component {
     							size="sm"
     							name="shipment_service.type"
     							options={[{
-    								label: '発払い',
+    								label: '発払',
     								value: 1
     							}, {
     								label: 'メール便',
@@ -183,7 +183,7 @@ export default class ShipmentServiceList extends React.Component {
     						}, {
     							field: 'shipment_service.name', title: '配送業者名', width: '200px'
     						}, {
-    							field: 'shipment_service.type', title: '配送タイプ', width: '100px', convert: { 1:'発払い', 2:'メール便'}
+    							field: 'shipment_service.type', title: '配送タイプ', width: '100px', convert: { 1:'発払', 2:'メール便'}
     						}, {
     							field: 'shipment_service.service_name', title: 'サービス名', width: '500px'
     						}]}
