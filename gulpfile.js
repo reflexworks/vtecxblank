@@ -209,11 +209,25 @@ gulp.task('upload:entry', function (done) {
 		files.map((file) => {
 			if ((file.indexOf('template.xml')< 0) &&
 				(file.indexOf('folderacls.xml') < 0)) {
-				sendfile(file, '')	
+				sendfile(file, 'putfeed')	
 			}
 		})		
 		done()
 	})
+})
+
+gulp.task('upload:htmlfolders', function (done) {
+	sendfile('setup/_settings/htmlfolders.xml', '',done)
+})
+
+gulp.task('upload:putfeed', function (done) {
+	sendfile('dist/server/putfeed.js', '?_content')
+	const d1 = new Date()
+	let d2 = new Date()
+	while (d2 - d1 < 30000) {
+	  d2 = new Date()
+  	}
+	done()
 })
 
 gulp.task('upload:template', function (done) {
@@ -221,7 +235,7 @@ gulp.task('upload:template', function (done) {
 })
 
 gulp.task('upload:folderacls', function (done) {
-	sendfile('setup/_settings/folderacls.xml', '',done)
+	sendfile('setup/_settings/folderacls.xml', 'putfeed',done)
 })
 
 function sendcontent(file) {
@@ -229,10 +243,13 @@ function sendcontent(file) {
 }
 
 function sendfile(file,iscontent,done,isdirectory) {
-
 	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
-	const url = path+file.substring(file.indexOf('/'))
+	let url = path + file.substring(file.indexOf('/'))
 
+	if (iscontent === 'putfeed') {
+		url = path + '/s/putfeed'
+		iscontent =''
+	}
 	var options = {
 		url: url+iscontent,
 		headers: {
@@ -254,14 +271,18 @@ function sendfile(file,iscontent,done,isdirectory) {
 		if (!error && response.statusCode == 200) {
 			console.log(body)
 		} else {
-			console.log('can\'t PUT content. status='+response.statusCode)				
-			console.log(response.body)			
-			if (response.statusCode == 302) {
-				response.headers['set-cookie'].map((msg) => { 
-					if (msg.indexOf('ERROR_') >= 0) {
-						console.log(msg)							
-					}
-				})
+			if (response.statusCode) {
+				console.log('can\'t PUT content. status='+response.statusCode)				
+				console.log(response.body)			
+				if (response.statusCode == 302) {
+					response.headers['set-cookie'].map((msg) => { 
+						if (msg.indexOf('ERROR_') >= 0) {
+							console.log(msg)							
+						}
+					})
+				}
+			} else {
+				console.log('can\'t PUT content. Retry it may work.')								
 			}
 		}
 		if (done) {
@@ -448,7 +469,7 @@ gulp.task('deploy:server', function ( callback ) {
 }) 
 
 gulp.task('upload', function ( callback ) {
-	runSequence('upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
+	runSequence('upload:htmlfolders','upload:putfeed','upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
