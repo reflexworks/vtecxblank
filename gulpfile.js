@@ -241,9 +241,10 @@ function sendfile(file,iscontent,done,isdirectory) {
 	let url = path + file.substring(file.indexOf('/'))
 
 	if (iscontent === 'putfeed') {
-		url = path + '/s/putfeed'
+	//	url = path + '/s/putfeed'
 		iscontent =''
 	}
+	
 	var options = {
 		url: url+iscontent,
 		headers: {
