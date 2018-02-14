@@ -208,7 +208,8 @@ gulp.task('upload:entry', function (done) {
 	recursive('setup', [], function (err, files) {
 		files.map((file) => {
 			if ((file.indexOf('template.xml')< 0) &&
-				(file.indexOf('folderacls.xml') < 0)) {
+				(file.indexOf('htmlfolders.xml') < 0)&&
+				(file.indexOf('putfeed.js') < 0)) {
 				sendfile(file, 'putfeed')	
 			}
 		})		
@@ -222,11 +223,6 @@ gulp.task('upload:htmlfolders', function (done) {
 
 gulp.task('upload:putfeed', function (done) {
 	sendfile('dist/server/putfeed.js', '?_content')
-	const d1 = new Date()
-	let d2 = new Date()
-	while (d2 - d1 < 30000) {
-	  d2 = new Date()
-  	}
 	done()
 })
 
