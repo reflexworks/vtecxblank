@@ -65,7 +65,7 @@
     "through2": "^2.0.3",
     "url-loader": "^0.6.2",
     "vinyl-fs": "^3.0.0",
-    "vtecxapi": "0.9.13",
+    "vtecxapi": "0.9.17",
     "webpack": "^3.10.0",
     "webpack-async-await": "^1.1.0",
     "webpack-stream": "^4.0.0"

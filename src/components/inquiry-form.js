@@ -51,7 +51,7 @@ export default class InquiryForm extends React.Component {
 	setCustomerMasterData() {
 		this.setState({ isDisabled: true })
 		axios({
-			url: '/d/customer?f',
+			url: '/s/get-customer',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'

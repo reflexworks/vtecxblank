@@ -34,7 +34,7 @@ export default class DeliveryChargeForm extends React.Component {
 	init() {
 		// データキャッシュ
 		this.shipment_service = {}
-		// 発払い
+		// 発払
 		this.shipmentServiceListType1 = []
 		// メール便
 		this.shipmentServiceListType2 = []
@@ -219,7 +219,7 @@ export default class DeliveryChargeForm extends React.Component {
 					)
 				}
 				if (s_type === '1') {
-					// 発払い
+					// 発払
 					this.shipmentServiceListType1.push(
 						<CommonTable
 							name=""
@@ -302,7 +302,7 @@ export default class DeliveryChargeForm extends React.Component {
 		return (
 			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
 
-				<PageHeader>発払い</PageHeader>
+				<PageHeader>発払</PageHeader>
 				<div>
 					{this.shipmentServiceListType1}
 				</div>

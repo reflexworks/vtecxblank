@@ -28,6 +28,8 @@ import {
 	BilltoEditModal,
 	StaffAddModal,
 	StaffEditModal,
+	WarehouseAddModal,
+	WarehouseEditModal
 } from './master-modal'
 
 export default class CustomerForm extends React.Component {
@@ -43,14 +45,18 @@ export default class CustomerForm extends React.Component {
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.entry.customer.shipper = this.entry.customer.shipper || []
 		this.entry.billto = this.entry.billto || {}
-		this.master = {
-			billtoList: []
-		}
+
 		this.cash = {
-			sales_staff: [],
-			working_staff: [],
+			working_staff: {},
+			sales_staff: {}
+
 		}
 
+		this.master = {
+			billtoList: [],
+			staffList: [],
+			warehouseList: []
+		}
 		this.modal = {
 			customer: {
 				shipper: { data: {} },
@@ -104,6 +110,7 @@ export default class CustomerForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.setWarehouseMasterData(this.entry.customer.warehouse_code)
 		this.forceUpdate()
 	}
 
@@ -113,6 +120,7 @@ export default class CustomerForm extends React.Component {
 	componentWillMount() {
 		this.setBilltoMasterData()
 		this.setStaffMasterData()
+		this.setWarehouseMasterData()
 	}
 
 	/**
@@ -123,7 +131,7 @@ export default class CustomerForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/billto?f',
+			url: '/s/get-billto',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -183,6 +191,94 @@ export default class CustomerForm extends React.Component {
 	}
 
 	/**
+	 * 倉庫取得処理
+	 */
+	setWarehouseMasterData(_warehouse) {
+
+		const setThisWarehouse = () => {
+			if (_warehouse) {
+				this.entry.customer.warehouse_code = _warehouse
+				this.warehouse_name = ''
+			}
+			if (this.entry.customer.warehouse_code) {
+				for (let i = 0, ii = this.warehouseList.length; i < ii; ++i) {
+					if (this.entry.customer.warehouse_code === this.warehouseList[i].value) {
+						this.warehouse = this.warehouseList[i].data
+						this.warehouse_name = this.warehouseList[i].label
+						break
+					}
+				}
+			}
+		}
+
+		const get = () => {
+
+			this.setState({ isDisabled: true })
+
+			axios({
+				url: '/d/warehouse?f',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+		
+				if (response.status !== 204) {
+
+					this.master.warehouseList = response.data.feed.entry
+					this.warehouseList = this.master.warehouseList.map((obj) => {
+						return {
+							label: obj.warehouse.warehouse_name,
+							value: obj.warehouse.warehouse_code,
+							data: obj
+						}
+					})
+					setThisWarehouse()
+
+					this.forceUpdate()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+
+		if (!this.warehouseList) {
+			get()
+		} else {
+			setThisWarehouse()
+		}
+
+	}
+
+	/**
+	 * 倉庫変更処理
+	 * @param {*} _data 
+	 */
+	changeWarehouse(_data) {
+		if (_data) {
+			this.entry.customer.warehouse_code = _data.value
+			this.warehouse_name = _data.label
+			this.warehouse = _data.data
+		} else {
+			this.entry.customer.warehouse_code = false
+			this.warehouse_name = ''
+			this.warehouse = {}
+		}
+		this.forceUpdate()
+	}
+
+	setWarehouseData(_data, _modal) {
+		this.warehouseList = null
+		this.setWarehouseMasterData(_data.feed.entry[0].warehouse.warehouse_code)
+		if (_modal === 'add') {
+			this.setState({ showWarehouseAddModal: false })
+		} else {
+			this.setState({ showWarehouseEditModal: false })
+		}
+	}
+
+	/**
 	 * 担当者取得処理
 	 */
 	setStaffMasterData(_entry, _modal) {
@@ -205,34 +301,46 @@ export default class CustomerForm extends React.Component {
 				let staffListFromKey = {}
 				this.staffList = this.master.staffList.map((obj) => {
 					const name = obj.staff.staff_name
+					const email = obj.staff.staff_email
 					const res = {
 						label: name,
-						value: name,
+						value: email,
 						data: obj
 					}
-					staffListFromKey[obj.staff.staff_name] = res
+					staffListFromKey[email] = res
 					return res
 				})
 
 				const targetKey = this.typeStaffModal
 				if (_entry && _modal === 'add') {
-					this.entry.customer[targetKey].push({ content: _entry.staff.staff_name })
+					this.entry.customer[targetKey].push({
+						staff_name: _entry.staff.staff_name,
+						staff_email: _entry.staff.staff_email
+					})
 				} else if (_entry && _modal === 'edit') {
-					this.entry.customer[targetKey][this.typeStaffModalFromIndex] = { content: _entry.staff.staff_name }
-				}
-				if (this.entry.customer[targetKey]) {
-					this.cash[targetKey] = []
-					for (let i = 0, ii = this.entry.customer[targetKey].length; i < ii; ++i) {
-						this.cash[targetKey].push(staffListFromKey[this.entry.customer[targetKey][i].content])
+					this.entry.customer[targetKey][this.typeStaffModalFromIndex] = {
+						staff_name: _entry.staff.staff_name,
+						staff_email: _entry.staff.staff_email
 					}
 				}
-
+				this.setCash(this.staffList)
 				this.forceUpdate()
 			}
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})
+	}
+
+	/**
+	 * 担当者データをキャッシュ化し、担当者編集画面で使用する
+	 */
+	setCash() {
+		if (this.master.staffList) {
+			for (let staff_master of this.master.staffList) {
+				this.cash[staff_master.staff.staff_email] = staff_master
+			}
+		}
 	}
 
 	/**
@@ -244,14 +352,16 @@ export default class CustomerForm extends React.Component {
 		let isDuplicate = false
 		if (!this.entry.customer[_key]) this.entry.customer[_key] = []
 		for (let i = 0, ii = this.entry.customer[_key].length; i < ii; ++i) {
-			if (_data.value === this.entry.customer[_key][i].content) {
+			if (_data.value === this.entry.customer[_key][i].staff_email) {
 				isDuplicate = true
 				break
 			}
 		}
 		if (!isDuplicate) {
-			this.entry.customer[_key].push({ content: _data.value })
-			this.cash[_key].push(_data)
+			this.entry.customer[_key].push({
+				staff_name: _data.data.staff.staff_name,
+				staff_email: _data.data.staff.staff_email
+			})
 		}
 
 		this.forceUpdate()
@@ -273,42 +383,23 @@ export default class CustomerForm extends React.Component {
 	}
 
 	editStaff(_index, _key) {
-		let targetCash = this.cash[_key]
-		if (targetCash[_index]) {
-			this.staff = targetCash[_index].data
-			this.typeStaffModal = _key
-			this.typeStaffModalFromIndex = _index
-			this.setState({ showStaffEditModal: true })
-		} else {
-			this.setStaffMasterData()
-			alert('担当者情報の取得中です。もう一度クリックを実行してください。')
-		}
+		const email = this.entry.customer[_key][_index].staff_email
+		this.staff = this.cash[email]
+		this.typeStaffModal = _key
+		this.typeStaffModalFromIndex = _index
+		this.setState({ showStaffEditModal: true })
 	}
 
 	removeStaff(_data, _index, _key) {
 		let array = []
-		let cash = []
-		let targetCash = this.cash[_key]
 
-		let setNewArray = () => {
-			for (let i = 0, ii = this.entry.customer[_key].length; i < ii; ++i) {
-				if (i !== _index) {
-					array.push(this.entry.customer[_key][i])
-				}
+		for (let i = 0, ii = this.entry.customer[_key].length; i < ii; ++i) {
+			if (i !== _index) {
+				array.push(this.entry.customer[_key][i])
 			}
 		}
-		let setNewCashArray = () => {
-			for (let i = 0, ii = targetCash.length; i < ii; ++i) {
-				if (targetCash[i].value !== _data.content) {
-					cash.push(targetCash[i])
-				}
-			}
-		}
-		setNewArray()
-		setNewCashArray()
 
 		this.entry.customer[_key] = array
-		this.cash[_key] = cash
 		this.forceUpdate()
 	}
 
@@ -476,7 +567,6 @@ export default class CustomerForm extends React.Component {
 							value={this.entry.billto.billto_code}
 							options={this.billtoList}
 							add={() => this.setState({ showBilltoAddModal: true })}
-							//edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
 						/>
 						
@@ -527,7 +617,9 @@ export default class CustomerForm extends React.Component {
 								edit={(data, index) => this.editStaff(index, 'sales_staff')}
 								remove={(data, index)=>this.removeStaff(data, index, 'sales_staff') }
 								header={[{
-									field: 'content',title: '担当者名', width: '700px'
+									field: 'staff_name',title: '担当者名', width: '200px'
+								}, {
+									field: 'staff_email',title: 'メールアドレス', width: '500px'
 								}]}
 							/>
 						}
@@ -547,7 +639,9 @@ export default class CustomerForm extends React.Component {
 								edit={(data, index) => this.editStaff(index, 'working_staff')}
 								remove={(data, index)=>this.removeStaff(data, index, 'working_staff') }
 								header={[{
-									field: 'content',title: '担当者名', width: '700px'
+									field: 'staff_name',title: '担当者名', width: '200px'
+								}, {
+									field: 'staff_email',title: 'メールアドレス', width: '500px'
 								}]}
 							/>
 						}
@@ -564,7 +658,7 @@ export default class CustomerForm extends React.Component {
 							type={this.modal.customer.shipper.type}
 						/>
 						
-						<CommonTable	
+						<CommonTable
 							name="customer.shipper"
 							data={this.entry.customer.shipper}
 							header={[{
@@ -580,6 +674,28 @@ export default class CustomerForm extends React.Component {
 						/>
 					</Panel>
 
+					<Panel collapsible header="倉庫情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+						
+						<CommonFilterBox
+							controlLabel="倉庫"
+							name=""
+							value={this.entry.customer.warehouse_code}
+							options={this.warehouseList}
+							add={() => this.setState({ showWarehouseAddModal: true })}
+							onChange={(data) => this.changeWarehouse(data)}
+						/>
+
+						{this.entry.customer.warehouse_code && 
+							<CommonInputText
+								controlLabel="倉庫コード"
+								name="customer.warehouse_code"
+								type="text"
+								value={this.entry.customer.warehouse_code}
+								readonly
+							/>
+						}
+
+					</Panel>
 					
 				</PanelGroup>
 
@@ -587,6 +703,8 @@ export default class CustomerForm extends React.Component {
 				<BilltoEditModal customer={this.entry.customer} contact_information={this.entry.contact_information} isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
 				<StaffAddModal isShow={this.state.showStaffAddModal} close={() => this.setState({ showStaffAddModal: false })} add={(data) => this.setStaffData(data, 'add')} />
 				<StaffEditModal isShow={this.state.showStaffEditModal} close={() => this.setState({ showStaffEditModal: false })} edit={(data) => this.setStaffData(data, 'edit')} data={this.staff} />
+				<WarehouseAddModal isShow={this.state.showWarehouseAddModal} close={() => this.setState({ showWarehouseAddModal: false })} add={(data) => this.setWarehouseData(data, 'add')} />
+				<WarehouseEditModal isShow={this.state.showWarehouseEditModal} close={() => this.setState({ showWarehouseEditModal: false })} edit={(data) => this.setWarehouseData(data, 'edit')} data={this.warehouse} />
 
 			</Form>
 		)

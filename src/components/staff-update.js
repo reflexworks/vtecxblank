@@ -52,7 +52,7 @@ export default class StaffUpdate extends React.Component {
 		this.entrykey = location.hash.substring(location.hash.indexOf('?')+1)
 		
 		axios({
-			url: this.url + '/' + this.entrykey+'?e',
+			url: '/d/staff?f&staff.uid=' + this.entrykey,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'

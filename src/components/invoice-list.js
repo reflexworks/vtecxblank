@@ -39,7 +39,7 @@ export default class InvoiceList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/invoice?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-invoice?f&l=' + this.maxDisplayRows
 		this.state = {
 			searchYearMonth: moment().format('YYYY/MM'),
 			searchDetails: false,
