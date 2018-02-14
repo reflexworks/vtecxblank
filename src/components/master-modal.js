@@ -18,6 +18,7 @@ import {
 
 import BilltoForm from './billto-form'
 import StaffForm from './staff-form'
+import WarehouseForm from './warehouse-form'
 
 export class BilltoAddModal extends React.Component {
 	constructor(props: Props) {
@@ -421,6 +422,93 @@ export class ShipmentServiceSizeModal extends React.Component {
 					/>
 
 				</Form>
+			</CommonModal>
+		)
+	}
+}
+export class WarehouseAddModal extends React.Component {
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			isShow: this.props.isShow,
+		}
+		this.formName = 'WarehouseAddModal'
+		this.url = '/d/warehouse'
+		this.entry = {
+			warehouse: {}
+		}
+	}
+
+	/**
+     * 親コンポーネントがpropsの値を更新した時に呼び出される
+     * @param {*} newProps
+     */
+	componentWillReceiveProps(newProps) {
+		this.setState({isShow: newProps.isShow})
+	}
+
+	close() {
+		this.props.close()
+	}
+
+	render() {
+
+		return (
+			<CommonModal isShow={this.state.isShow} title="倉庫新規登録"
+						 closeBtn={() => this.close()} size="lg"
+						 addAxiosBtn={{
+								 url: this.url,
+						 	callback: (data) => this.props.add(data)
+						 }}
+						 fromName={this.formName}
+			>
+				<WarehouseForm name={this.formName} entry={this.entry} />
+			</CommonModal>
+		)
+	}
+}
+
+export class WarehouseEditModal extends React.Component {
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			isShow: this.props.isShow,
+		}
+		this.formName = 'WarehouseEditModal'
+		this.url = '/d/warehouse'
+		this.entry = this.props.data || {
+			warehouse: {}
+		}
+	}
+
+	/**
+     * 親コンポーネントがpropsの値を更新した時に呼び出される
+     * @param {*} newProps
+     */
+	componentWillReceiveProps(newProps) {
+		this.entry = newProps.data
+		this.setState({ isShow: newProps.isShow })
+	}
+
+	close() {
+		this.props.close()
+	}
+
+	render() {
+
+		return (
+			<CommonModal isShow={this.state.isShow} title="倉庫情報編集"
+				closeBtn={() => this.close()}
+				editAxiosBtn={{
+					url: this.url,
+					callback: (data) => this.props.edit(data),
+					entry: this.entry
+				}}
+				fromName={this.formName}
+				size="lg">
+				<WarehouseForm name={this.formName} entry={this.entry} />
 			</CommonModal>
 		)
 	}

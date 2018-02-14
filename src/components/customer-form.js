@@ -28,6 +28,8 @@ import {
 	BilltoEditModal,
 	StaffAddModal,
 	StaffEditModal,
+	WarehouseAddModal,
+	WarehouseEditModal
 } from './master-modal'
 
 export default class CustomerForm extends React.Component {
@@ -52,7 +54,8 @@ export default class CustomerForm extends React.Component {
 
 		this.master = {
 			billtoList: [],
-			staffList: []
+			staffList: [],
+			warehouseList: []
 		}
 		this.modal = {
 			customer: {
@@ -107,6 +110,7 @@ export default class CustomerForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.setWarehouseMasterData(this.entry.customer.warehouse_code)
 		this.forceUpdate()
 	}
 
@@ -116,6 +120,7 @@ export default class CustomerForm extends React.Component {
 	componentWillMount() {
 		this.setBilltoMasterData()
 		this.setStaffMasterData()
+		this.setWarehouseMasterData()
 	}
 
 	/**
@@ -126,7 +131,7 @@ export default class CustomerForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/billto?f',
+			url: '/s/get-billto',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -183,6 +188,94 @@ export default class CustomerForm extends React.Component {
 			this.billto = {}
 		}
 		this.forceUpdate()
+	}
+
+	/**
+	 * 倉庫取得処理
+	 */
+	setWarehouseMasterData(_warehouse) {
+
+		const setThisWarehouse = () => {
+			if (_warehouse) {
+				this.entry.customer.warehouse_code = _warehouse
+				this.warehouse_name = ''
+			}
+			if (this.entry.customer.warehouse_code) {
+				for (let i = 0, ii = this.warehouseList.length; i < ii; ++i) {
+					if (this.entry.customer.warehouse_code === this.warehouseList[i].value) {
+						this.warehouse = this.warehouseList[i].data
+						this.warehouse_name = this.warehouseList[i].label
+						break
+					}
+				}
+			}
+		}
+
+		const get = () => {
+
+			this.setState({ isDisabled: true })
+
+			axios({
+				url: '/d/warehouse?f',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+		
+				if (response.status !== 204) {
+
+					this.master.warehouseList = response.data.feed.entry
+					this.warehouseList = this.master.warehouseList.map((obj) => {
+						return {
+							label: obj.warehouse.warehouse_name,
+							value: obj.warehouse.warehouse_code,
+							data: obj
+						}
+					})
+					setThisWarehouse()
+
+					this.forceUpdate()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+
+		if (!this.warehouseList) {
+			get()
+		} else {
+			setThisWarehouse()
+		}
+
+	}
+
+	/**
+	 * 倉庫変更処理
+	 * @param {*} _data 
+	 */
+	changeWarehouse(_data) {
+		if (_data) {
+			this.entry.customer.warehouse_code = _data.value
+			this.warehouse_name = _data.label
+			this.warehouse = _data.data
+		} else {
+			this.entry.customer.warehouse_code = false
+			this.warehouse_name = ''
+			this.warehouse = {}
+		}
+		this.forceUpdate()
+	}
+
+	setWarehouseData(_data, _modal) {
+		this.warehouseList = null
+		this.setWarehouseMasterData(_data.feed.entry[0].warehouse.warehouse_code)
+		if (_modal === 'add') {
+			this.setState({ showWarehouseAddModal: false })
+		} else {
+			this.setState({ showWarehouseEditModal: false })
+		}
 	}
 
 	/**
@@ -474,7 +567,6 @@ export default class CustomerForm extends React.Component {
 							value={this.entry.billto.billto_code}
 							options={this.billtoList}
 							add={() => this.setState({ showBilltoAddModal: true })}
-							//edit={() => this.setState({ showBilltoEditModal: true })}
 							onChange={(data) => this.changeBillto(data)}
 						/>
 						
@@ -566,7 +658,7 @@ export default class CustomerForm extends React.Component {
 							type={this.modal.customer.shipper.type}
 						/>
 						
-						<CommonTable	
+						<CommonTable
 							name="customer.shipper"
 							data={this.entry.customer.shipper}
 							header={[{
@@ -582,6 +674,28 @@ export default class CustomerForm extends React.Component {
 						/>
 					</Panel>
 
+					<Panel collapsible header="倉庫情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+						
+						<CommonFilterBox
+							controlLabel="倉庫"
+							name=""
+							value={this.entry.customer.warehouse_code}
+							options={this.warehouseList}
+							add={() => this.setState({ showWarehouseAddModal: true })}
+							onChange={(data) => this.changeWarehouse(data)}
+						/>
+
+						{this.entry.customer.warehouse_code && 
+							<CommonInputText
+								controlLabel="倉庫コード"
+								name="customer.warehouse_code"
+								type="text"
+								value={this.entry.customer.warehouse_code}
+								readonly
+							/>
+						}
+
+					</Panel>
 					
 				</PanelGroup>
 
@@ -589,6 +703,8 @@ export default class CustomerForm extends React.Component {
 				<BilltoEditModal customer={this.entry.customer} contact_information={this.entry.contact_information} isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
 				<StaffAddModal isShow={this.state.showStaffAddModal} close={() => this.setState({ showStaffAddModal: false })} add={(data) => this.setStaffData(data, 'add')} />
 				<StaffEditModal isShow={this.state.showStaffEditModal} close={() => this.setState({ showStaffEditModal: false })} edit={(data) => this.setStaffData(data, 'edit')} data={this.staff} />
+				<WarehouseAddModal isShow={this.state.showWarehouseAddModal} close={() => this.setState({ showWarehouseAddModal: false })} add={(data) => this.setWarehouseData(data, 'add')} />
+				<WarehouseEditModal isShow={this.state.showWarehouseEditModal} close={() => this.setState({ showWarehouseEditModal: false })} edit={(data) => this.setWarehouseData(data, 'edit')} data={this.warehouse} />
 
 			</Form>
 		)

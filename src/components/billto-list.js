@@ -36,7 +36,7 @@ export default class BilltoList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/billto?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-billto?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
