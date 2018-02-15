@@ -1,16 +1,19 @@
 import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
+let role
+
 export function getCustomer() {
 
 	const uid = vtecxapi.uid()
 	const email = vtecxapi.getEntry('/' + uid).feed.entry[0].title
 	const staff_data = vtecxapi.getFeed('/staff?staff.staff_email=' + email)
 	const isStaff = CommonGetFlag(staff_data)
+	role = null
 
 	if (isStaff) {
 
-		const role = staff_data.feed.entry[0].staff.role
+		role = staff_data.feed.entry[0].staff.role
 
 		const customer_data = vtecxapi.getFeed('/customer', true)
 		const isCustomer = CommonGetFlag(customer_data)
@@ -130,41 +133,22 @@ export function getData(_type) {
 
 		} else if (_type === 'inquiry') {
 
-			// 問い合わせの場合
-			for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
-
-				const customer_code = customerFromUser[i].customer.customer_code
-
-				// 顧客単位で問い合わせ検索
-				const uri = '/'+ _type +'?customer.customer_code=' + customer_code + queryString
+			// 管理者と経理担当は全てのデータが対象
+			if (role === '1' || role === '5') {
+				const uri = '/'+ _type +'?f' + queryString
 				const data = vtecxapi.getFeed(uri, true)
-
 				const isData = CommonGetFlag(data)
 				if (isData) {
-					// 検索結果マージ
-					Array.prototype.push.apply(total_array, data.feed.entry)
+					total_array = data.feed.entry
 				}
+			} else {
+				// 問い合わせの場合
+				for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
 
-				// 検索の最大件数になったらループを中止
-				if (end_size && end_size < total_array) {
-					break
-				}
+					const customer_code = customerFromUser[i].customer.customer_code
 
-			}
-		} else {
-
-			// 見積書 or 請求先 or 請求書の場合
-			for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
-
-				const billto_code = customerFromUser[i].billto.billto_code
-
-				if (!cashBilltoCode[billto_code]) {
-
-					// すでに一度検索した請求先コードは再検索しない
-					cashBilltoCode[billto_code] = true
-
-					// 請求先単位で見積書検索
-					const uri = '/'+ _type +'?billto.billto_code=' + billto_code + queryString
+					// 顧客単位で問い合わせ検索
+					const uri = '/'+ _type +'?customer.customer_code=' + customer_code + queryString
 					const data = vtecxapi.getFeed(uri, true)
 
 					const isData = CommonGetFlag(data)
@@ -176,6 +160,45 @@ export function getData(_type) {
 					// 検索の最大件数になったらループを中止
 					if (end_size && end_size < total_array) {
 						break
+					}
+
+				}
+			}
+		} else {
+
+			// 管理者と経理担当は全てのデータが対象
+			if (role === '1' || role === '5') {
+				const uri = '/'+ _type +'?f' + queryString
+				const data = vtecxapi.getFeed(uri, true)
+				const isData = CommonGetFlag(data)
+				if (isData) {
+					total_array = data.feed.entry
+				}
+			} else {
+				// 見積書 or 請求先 or 請求書の場合
+				for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
+
+					const billto_code = customerFromUser[i].billto.billto_code
+
+					if (!cashBilltoCode[billto_code]) {
+
+						// すでに一度検索した請求先コードは再検索しない
+						cashBilltoCode[billto_code] = true
+
+						// 請求先単位で見積書検索
+						const uri = '/' + _type + '?billto.billto_code=' + billto_code + queryString
+						const data = vtecxapi.getFeed(uri, true)
+
+						const isData = CommonGetFlag(data)
+						if (isData) {
+							// 検索結果マージ
+							Array.prototype.push.apply(total_array, data.feed.entry)
+						}
+
+						// 検索の最大件数になったらループを中止
+						if (end_size && end_size < total_array) {
+							break
+						}
 					}
 				}
 			}

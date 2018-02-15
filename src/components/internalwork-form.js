@@ -26,7 +26,8 @@ import {
 	CommonFormGroup,	
 	CommonTable,
 	CommonSelectBox,
-	CommonDisplayCalendar
+	CommonDisplayCalendar,
+	CommonLoginUser
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
@@ -85,6 +86,15 @@ export default class InternalWorkForm extends React.Component {
 		// 未承認の作業日一覧用
 		this.isApproval = false
 		this.approvalDays = []
+
+		// ログインユーザ情報
+		this.loginUser = CommonLoginUser().get()
+
+		// 編集権限の有無
+		this.isEdit = this.loginUser.role !== '5'
+
+		// 承認権限者かどうか
+		this.isApprovalAuther = this.loginUser.role === '2' || this.loginUser.role === '1'
 
 	}
 
@@ -221,7 +231,7 @@ export default class InternalWorkForm extends React.Component {
 				} else {
 					const setApprovalStatusBtn = (_key) => {
 						let approval_status_btn = ''
-						if (internal_work.approval_status === '1') {
+						if (internal_work.approval_status === '1' && this.isApprovalAuther) {
 							approval_status_btn = this.setApprovalStatusBtn(_key, this[key].length, entry)
 						}
 						return approval_status_btn
@@ -331,7 +341,7 @@ export default class InternalWorkForm extends React.Component {
 		if (_service_name) {
 			array.push(_service_name)
 		} else {
-			array.push((_type === '1') ? '発払い' : 'メール便')
+			array.push((_type === '1') ? '発払' : 'メール便')
 		}
 		if (_size) array.push(_size)
 		if (_weight) array.push(_weight)
@@ -818,7 +828,7 @@ export default class InternalWorkForm extends React.Component {
 										field: 'item_name',title: '作業内容', width: '400px'
 									}, {
 										field: 'quantity', title: '入力値', width: '50px',
-										input: {
+										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
 										}
@@ -836,7 +846,7 @@ export default class InternalWorkForm extends React.Component {
 										field: 'item_name',title: '作業内容', width: '400px'
 									}, {
 										field: 'quantity', title: '入力値', width: '50px',
-										input: {
+										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks1', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks1', data, rowindex) }
 										}
@@ -852,7 +862,7 @@ export default class InternalWorkForm extends React.Component {
 										field: 'item_name',title: '作業内容', width: '400px'
 									}, {
 										field: 'quantity', title: '入力値', width: '50px',
-										input: {
+										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks2', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks2', data, rowindex) }
 										}
@@ -868,7 +878,7 @@ export default class InternalWorkForm extends React.Component {
 										field: 'item_name',title: '作業内容', width: '400px'
 									}, {
 										field: 'quantity', title: '入力値', width: '50px',
-										input: {
+										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks3', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks3', data, rowindex) }
 										}
@@ -905,7 +915,7 @@ export default class InternalWorkForm extends React.Component {
     							field: 'item_name',title: '作業内容', width: '300px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
-								input: {
+								input: !this.isEdit ? false : {
 									onChange: (data, rowindex) => { this.editList('quotationWorks', data, rowindex) },
 									onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) }
 								}
@@ -918,15 +928,17 @@ export default class InternalWorkForm extends React.Component {
 							}]}
 							remove={(data, i)=>this.removeList('quotationWorks', i)}
     					>
-							<CommonFilterBox
-								placeholder="見積作業選択"
-								name=""
-								value={this.selectQuotationWorks}
-								options={this.quotationWorksList}
-								onChange={(data) => this.addList('quotationWorks', data)}
-								style={{float: 'left', width: '400px'}}
-								table
-							/>
+							{this.isEdit &&
+								<CommonFilterBox
+									placeholder="見積作業選択"
+									name=""
+									value={this.selectQuotationWorks}
+									options={this.quotationWorksList}
+									onChange={(data) => this.addList('quotationWorks', data)}
+									style={{ float: 'left', width: '400px' }}
+									table
+								/>
+							}
 						</CommonTable>
 
 						<hr />
@@ -939,7 +951,7 @@ export default class InternalWorkForm extends React.Component {
     							field: 'name',title: '配送業者', width: '300px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
-								input: {
+								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('deliveryWorks', data, rowindex)},
 									onBlur: (data, rowindex) => { this.blurList('deliveryWorks', data, rowindex) }
 								}
@@ -950,15 +962,17 @@ export default class InternalWorkForm extends React.Component {
     						}]}
 							remove={(data, i)=>this.removeList('deliveryWorks', i)}
     					>
-							<CommonFilterBox
-								placeholder="配送業者選択"
-								name=""
-								value={this.selectDeliveryWorks}
-								options={this.deliveryWorksList}
-								onChange={(data) => this.addList('deliveryWorks', data)}
-								style={{float: 'left', width: '400px'}}
-								table
-							/>
+							{this.isEdit &&
+								<CommonFilterBox
+									placeholder="配送業者選択"
+									name=""
+									value={this.selectDeliveryWorks}
+									options={this.deliveryWorksList}
+									onChange={(data) => this.addList('deliveryWorks', data)}
+									style={{ float: 'left', width: '400px' }}
+									table
+								/>
+							}	
 						</CommonTable>
 
 						<hr />
@@ -971,7 +985,7 @@ export default class InternalWorkForm extends React.Component {
     							field: 'name',title: '配送業者', width: '300px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
-								input: {
+								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('pickupWorks', data, rowindex)},
 									onBlur: (data, rowindex) => { this.blurList('pickupWorks', data, rowindex) }
 								}
@@ -982,15 +996,17 @@ export default class InternalWorkForm extends React.Component {
     						}]}
 							remove={(data, i)=>this.removeList('pickupWorks', i)}
     					>
-							<CommonFilterBox
-								placeholder="配送業者選択"
-								name=""
-								value={this.selectPickupWorks}
-								options={this.pickupWorksList}
-								onChange={(data) => this.addList('pickupWorks', data)}
-								style={{float: 'left', width: '400px'}}
-								table
-							/>
+							{this.isEdit &&
+								<CommonFilterBox
+									placeholder="配送業者選択"
+									name=""
+									value={this.selectPickupWorks}
+									options={this.pickupWorksList}
+									onChange={(data) => this.addList('pickupWorks', data)}
+									style={{ float: 'left', width: '400px' }}
+									table
+								/>
+							}	
 						</CommonTable>
 
 						<hr />
@@ -1005,7 +1021,7 @@ export default class InternalWorkForm extends React.Component {
 								field: 'item_name', title: '商品名称', width: '300px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
-								input: {
+								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('packingWorks', data, rowindex)},
 									onBlur: (data, rowindex) => { this.blurList('packingWorks', data, rowindex) }
 								}
@@ -1015,25 +1031,29 @@ export default class InternalWorkForm extends React.Component {
 								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('packingWorks', i)}
-    					>
-							<CommonFilterBox
-								placeholder="品番で選択"
-								name=""
-								value={this.selectPackingWorks}
-								options={this.packingWorksCodeList}
-								onChange={(data) => this.addList('packingWorks', data)}
-								style={{float: 'left', width: '200px'}}
-								table
-							/>
-							<CommonFilterBox
-								placeholder="商品名称で選択"
-								name=""
-								value={this.selectPackingWorks}
-								options={this.packingWorksNameList}
-								onChange={(data) => this.addList('packingWorks', data)}
-								style={{float: 'left', width: '400px'}}
-								table
-							/>
+						>
+							{this.isEdit && 
+								<CommonFilterBox
+									placeholder="品番で選択"
+									name=""
+									value={this.selectPackingWorks}
+									options={this.packingWorksCodeList}
+									onChange={(data) => this.addList('packingWorks', data)}
+									style={{float: 'left', width: '200px'}}
+									table
+								/>
+							}
+							{this.isEdit && 
+								<CommonFilterBox
+									placeholder="商品名称で選択"
+									name=""
+									value={this.selectPackingWorks}
+									options={this.packingWorksNameList}
+									onChange={(data) => this.addList('packingWorks', data)}
+									style={{float: 'left', width: '400px'}}
+									table
+								/>
+							}
 						</CommonTable>
 
 						<hr />

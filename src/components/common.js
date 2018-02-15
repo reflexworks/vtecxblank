@@ -29,60 +29,15 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
-export function getAuthList(_role) {
-	let list = {
-		CustomerRegistration: false,
-		CustomerList: false,
-		CustomerUpdate: false,
-		StaffRegistration: false,
-		StaffList: false,
-		StaffUpdate: false,
-		WarehouseRegistration: false,
-		WarehouseList: false,
-		WarehouseUpdate: false,
-		PackingItemRegistration: false,
-		PackingItemList: false,
-		PackingItemUpdate: false,
-		PackingItemTemplateRegistration: false,
-		PackingItemTemplateList: false,
-		PackingItemTemplateUpdate: false,
-		InternalWorkRegistration: false,
-		InternalWorkUpdate: false,
-		InternalWorkList: false,
-		QuotationRegistration: false,
-		QuotationList: false,
-		QuotationUpdate: false,
-		InvoiceRegistration: false,
-		InvoiceList: false,
-		InvoiceUpdate: false,
-		ShipmentServiceRegistration: false,
-		ShipmentServiceUpdate: false,
-		ShipmentServiceList: false,
-		DeliveryChargeRegistration: false,
-		DeliveryChargeTemplateRegistration: false,
-		DeliveryChargeTemplateUpdate: false,
-		DeliveryChargeTemplateList: false,
-		BilltoRegistration: false,
-		BilltoList: false,
-		BilltoUpdate: false,
-		TypeAheadRegistration: false,
-		TypeAheadList: false,
-		TypeAheadUpdate: false,
-		BasicConditionRegistration: false,
-		BasicConditionList: false,
-		BasicConditionUpdate: false,
-		BillingDataUpload: false,
-		InquiryRegistration: false,
-		InquiryList: false,
-		InquiryUpdate: false,
-		BillfromRegistration: false,
-		BillfromList: false,
-		BillfromUpdate: false
-	}
-	if (!_role) {
-		return list
-	} else {
-		return list
+let CommonLoginUserValue
+export function CommonLoginUser() {
+	return {
+		set: (_login_user_data) => {
+			CommonLoginUserValue = _login_user_data
+		},
+		get: () => {
+			return CommonLoginUserValue
+		}
 	}
 }
 

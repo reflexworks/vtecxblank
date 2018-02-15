@@ -111,6 +111,9 @@ import type {
 
 import {
 	getAuthList
+} from './common-auth'
+import {
+	CommonLoginUser
 } from './common'
 
 class MainContainer extends React.Component {
@@ -138,15 +141,62 @@ class MainContainer extends React.Component {
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
-		this.setAuthList()
-	}
+		const init = () => {
 
+			this.setState({ isDisabled: true })
+
+			/**
+			 * ユーザー情報取得
+			 */
+			axios({
+				url: '/s/get-staff',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+
+				if (response.status !== 204) {
+					const staff = response.data.feed.entry[0].staff
+					const role = staff.role
+					const role_name = (_role) => {
+						if (_role === '1') return 'システム管理'
+						if (_role === '2') return '上長'
+						if (_role === '3') return '作業員'
+						if (_role === '4') return '営業'
+						if (_role === '5') return '経理'
+					}
+
+					// ログインユーザ情報を保存
+					CommonLoginUser().set(staff)
+
+					this.userName = (
+						<span><Glyphicon glyph="user" /> { staff.staff_name } [ {role_name(role)} ]</span>
+					)
+					this.userEmail = staff.staff_email
+					this.setState({ isDisabled: false, authList: getAuthList(role) })
+					this.setAuthList()
+				} else {
+					this.setState({ isDisabled: false })
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+
+		init()
+	}
 
 	setAuthList() {
 		this.aushScreenList = []
-		//Object.keys(this.state.authList).forEach((_key, _value) => {
-		//this.aushScreenList.push(<Route path="/" component={this.CustomerRegistration} />)
-		//})
+		Object.keys(this.state.authList).forEach((_key) => {
+			if (this.state.authList[_key] === true) {
+				const path = '/' + _key
+				this.aushScreenList.push(<Route path={path} component={this[_key]} />)
+			}
+		})
+		this.forceUpdate()
 	}
 
 	/**
@@ -719,19 +769,21 @@ class MainContainer extends React.Component {
 						</Navbar.Header>
 						<Navbar.Collapse>
 							<Nav pullRight>
-								<NavDropdown eventKey={3} title="UserName" id="basic-nav-dropdown" pullRight>
-									<MenuItem eventKey={3.1}>設定</MenuItem>
+								<NavDropdown title={this.userName} id="basic-nav-dropdown" pullRight>
+									<MenuItem header>{this.userEmail}</MenuItem>	
 									<MenuItem divider />
-									<MenuItem eventKey={3.2} onClick={ () => this.logout() }>サインアウト</MenuItem>
+									<MenuItem onClick={ () => this.logout() }>サインアウト</MenuItem>
 								</NavDropdown>
 							</Nav>
 						</Navbar.Collapse>
 					</Navbar>
 
-					<SideMenu visible={this.state.sideMenu.isVisible}></SideMenu>
+					<SideMenu authList={this.state.authList} visible={this.state.sideMenu.isVisible}></SideMenu>
 
 					<div id="page-content-wrapper">
 						<Switch>
+							{this.aushScreenList}
+							{/*
 							<Route path="/CustomerRegistration" component={this.CustomerRegistration} />
 							<Route path="/CustomerList" component={this.CustomerList} />
 							<Route path="/CustomerUpdate" component={this.CustomerUpdate} />
@@ -780,6 +832,7 @@ class MainContainer extends React.Component {
 							<Route path="/BillfromList" component={this.BillfromList} />
 							<Route path="/BillfromUpdate" component={this.BillfromUpdate} />
 							<Route component={this.CustomerRegistration} />
+							*/}
 						</Switch>
 					</div>
 				</div>
