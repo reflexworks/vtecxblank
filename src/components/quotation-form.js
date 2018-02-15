@@ -257,7 +257,7 @@ export default class QuotationForm extends React.Component {
 	}
 	selectList(_key, _data) {
 		for (let i = 0, ii = _data.length; i < ii; ++i) {
-			this.entry[_key].push(_data[i][_key])
+			this.entry[_key].push(_data[i].packing_item)
 		}
 		this.modal[_key].visible = false
 		this.forceUpdate()
