@@ -28,10 +28,10 @@ export default class PackingitemTemplateForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.quotation = this.entry.quotation || {}
-		this.entry.quotation.packing_item = this.entry.quotation.packing_item || []
+		this.entry.packing_items = this.entry.packing_items || []
 
 		this.modal = {
-			packing_item: { data: {} }
+			packing_items: { data: {} }
 		}
 
 	}
@@ -95,49 +95,33 @@ export default class PackingitemTemplateForm extends React.Component {
 	}
 	removeList(_key, _index) {
 		let array = []
-		const oldEntry = _key === 'packing_item' ? this.entry.quotation[_key] : this.entry[_key]
+		const oldEntry = this.entry[_key]
 		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
 			if (i !== _index) array.push(oldEntry[i])
 		}
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key] = array
-		} else {
-			this.entry[_key] = array
-		}
+		this.entry[_key] = array
 		this.forceUpdate()
 	}
 	addList(_key, _data) {
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key].push(_data)
-		} else {
-			this.entry[_key].push(_data)
-		}
+		this.entry[_key].push(_data)
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 	updateList(_key, _data) {
-		if (_key === 'packing_item') {
-			this.entry.quotation[_key][this.modal[_key].index] = _data
-		} else {
-			this.entry[_key][this.modal[_key].index] = _data
-		}
+		this.entry[_key][this.modal[_key].index] = _data
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 	selectList(_key, _data) {
 		for (let i = 0, ii = _data.length; i < ii; ++i) {
-			if (_key === 'packing_item') {
-				this.entry.quotation[_key].push(_data[i][_key])
-			} else {
-				this.entry[_key].push(_data[i][_key])
-			}
+			this.entry[_key].push(_data[i][_key])
 		}
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 
 	changePackingItem(_key, _data, _rowindex) {
-		this.entry.quotation.packing_item[_rowindex][_key] = _data
+		this.entry.packing_items[_rowindex][_key] = _data
 	}
 
 	render() {
@@ -147,12 +131,12 @@ export default class PackingitemTemplateForm extends React.Component {
 			<Form name={this.props.name} horizontal data-submit-form>
 
 				<PackingItemModal
-					isShow={this.modal.packing_item.visible}
-					close={() => this.closeModal('packing_item')}
-					add={(obj) => this.addList('packing_item', obj)}
-					select={(obj) => this.selectList('packing_item', obj)}
-					data={this.modal.packing_item.data}
-					type={this.modal.packing_item.type}
+					isShow={this.modal.packing_items.visible}
+					close={() => this.closeModal('packing_items')}
+					add={(obj) => this.addList('packing_items', obj)}
+					select={(obj) => this.selectList('packing_items', obj)}
+					data={this.modal.packing_items.data}
+					type={this.modal.packing_items.type}
 				/>
 
 				<CommonInputText
@@ -166,8 +150,8 @@ export default class PackingitemTemplateForm extends React.Component {
 				<hr />
 
 				<CommonTable
-					name="quotation.packing_item"
-					data={this.entry.quotation.packing_item}
+					name="packing_items"
+					data={this.entry.packing_items}
 					header={[{
 						field: 'item_code',title: '品番', width: '100px'
 					}, {
@@ -221,19 +205,19 @@ export default class PackingitemTemplateForm extends React.Component {
 					}, {
 						field: 'purchase_price', title: '仕入れ単価', width: '150px'
 					}]}
-					add={() => this.showAddModal('packing_item')}
-					remove={(data, index) => this.removeList('packing_item', index)}
+					add={() => this.showAddModal('packing_items')}
+					remove={(data, index) => this.removeList('packing_items', index)}
 				>
 					<CommonFilterBox
 						placeholder="品番から追加"
 						name=""
 						value={this.selectPackingItem}
-						onChange={(data) => this.addList('packing_item', data.data.packing_item)}
+						onChange={(data) => this.addList('packing_items', data.data.packing_item)}
 						style={{float: 'left', width: '200px'}}
 						table
 						async={(input)=>this.getPackingItemList(input)}
 					/>
-					<Button bsSize="sm" onClick={()=>this.showEditModal('packing_item')}><Glyphicon glyph="search" /></Button>
+					<Button bsSize="sm" onClick={()=>this.showEditModal('packing_items')}><Glyphicon glyph="search" /></Button>
 				</CommonTable>
 				<br />
 			</Form>
