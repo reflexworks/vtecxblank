@@ -29,6 +29,18 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
+let CommonLoginUserValue
+export function CommonLoginUser() {
+	return {
+		set: (_login_user_data) => {
+			CommonLoginUserValue = _login_user_data
+		},
+		get: () => {
+			return CommonLoginUserValue
+		}
+	}
+}
+
 /**
  * 通信中インジケータ
  */

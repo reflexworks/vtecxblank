@@ -163,9 +163,9 @@ export default class InternalWorkList extends React.Component {
     						header={[{
     							field: 'internal_work.working_yearmonth',title: '作業年月', width: '100px'
     						}, {
-    							field: 'customer.customer_name', title: '顧客', width: '200px'
+    							field: 'customer.customer_name', title: '顧客', width: '400px'
     						}, {
-    							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
+    							field: 'quotation.quotation_code', title: '対象見積書No', width: '500px'
     						}]}
     					>
     						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>

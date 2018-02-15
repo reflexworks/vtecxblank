@@ -112,6 +112,9 @@ import type {
 import {
 	getAuthList
 } from './common-auth'
+import {
+	CommonLoginUser
+} from './common'
 
 class MainContainer extends React.Component {
 
@@ -163,6 +166,10 @@ class MainContainer extends React.Component {
 						if (_role === '4') return '営業'
 						if (_role === '5') return '経理'
 					}
+
+					// ログインユーザ情報を保存
+					CommonLoginUser().set(staff)
+
 					this.userName = (
 						<span><Glyphicon glyph="user" /> { staff.staff_name } [ {role_name(role)} ]</span>
 					)
