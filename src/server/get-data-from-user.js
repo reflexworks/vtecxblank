@@ -87,7 +87,6 @@ export function getCustomer(_option) {
 export function getData(_type) {
 
 	const isCount = vtecxapi.getQueryString('c') === ''
-	const role = getRole()
 
 	const doResponse = (_count, _entry) => {
 		if (isCount) {
@@ -106,6 +105,7 @@ export function getData(_type) {
 	}
 
 	const customerFromUser = getCustomer()
+	const role = getRole()
 
 	if (customerFromUser) {
 
