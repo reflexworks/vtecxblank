@@ -30,14 +30,13 @@ const item = {
 
 invoice.item.push(item)
 
-const quotation_code = '0000001'
-const quotation_code_sub = '01'
 
+const url = vtecxapi.getQueryString('quotation_code')
+const url2 = vtecxapi.getQueryString('quotation_code_sub')
+let result = vtecxapi.getFeed('/quotation?f&quotation.quotation_code=' + url + '&quotation.quotation_code_sub=' + url2)
 
-let result = vtecxapi.getFeed('/quotation?f&quotation.quotation_code=' + quotation_code + '&quotation.quotation_code_sub=' + quotation_code_sub)
 const entry = result.feed.entry[0]
 
-//let result = vtecxapi.getQueryString()
 /*
 let tempArray = entry.item_details.map((item_details) => {
 	return item_details.item_name
@@ -63,7 +62,7 @@ entry.item_details.map(() => {
 })
 */
 
-//vtecxapi.log('remarks='+entry.remarks[0].content)
+
 
 const element = (
 	<html>

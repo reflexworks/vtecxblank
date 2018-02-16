@@ -278,7 +278,7 @@ export default class QuotationForm extends React.Component {
 
 	//PDFダウンロード
 	printPDF() {
-		//location.href = 's/quotationpdf2'
+		location.href = 's/quotationpdf2?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub		
 	}
 
 
