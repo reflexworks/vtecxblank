@@ -1597,6 +1597,8 @@ export class CommonTable extends React.Component {
 		if (this.props.edit || (this.props.remove && this.props.remove !== false)) option.push({
 			field: 'edit', title: this.editName(), width: '30px'
 		})
+
+		let cashHeaderIndex = []
 		const thNode = (_obj, _index) => {
 			const field = _obj.field.replace(/\./g, '___')
 			cashInfo[field] = _obj
@@ -1604,6 +1606,7 @@ export class CommonTable extends React.Component {
 			cashInfo[field].style.width = _obj.width
 			cashInfo[field].index = _index
 			cashInfolength++
+			cashHeaderIndex[_index] = _obj.field
 			return (
 				<th key={_index} style={{ width: _obj.width }} data-field={field}>
 					<div style={{width: _obj.width}}>{_obj.title}</div>
@@ -1704,6 +1707,7 @@ export class CommonTable extends React.Component {
 
 				let tdCount = 0
 				let array = new Array(cashInfolength)
+				let noneDisplayIndex = parseInt(cashInfolength + '')
 
 				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div>{(_index + 1)}</div></td>
 				tdCount++
@@ -1767,7 +1771,7 @@ export class CommonTable extends React.Component {
 							if (cashInfo[field]) {
 								array[cashInfo[field].index] = (
 									<td
-										key={tdCount}
+										key={cashInfo[field].index}
 										style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
 										name={_key + __key}
 									>
@@ -1777,21 +1781,21 @@ export class CommonTable extends React.Component {
 							} else {
 								array.push(
 									<td
-										key={tdCount}
+										key={noneDisplayIndex}
 										style={{ 'display': 'none' }}
 										name={_key + __key}
 									>
 										{ convertValue(__obj[__key], {}) }
 									</td>
 								)
+								noneDisplayIndex++
 							}
-							tdCount++
 						}
 
 					})
 
 					for (let l = 0, ll = array.length; l < ll; ++l) {
-						array[l] = array[l] ? array[l] : <td key={l}></td>
+						array[l] = array[l] ? array[l] : <td key={l} name={cashHeaderIndex[l]}></td>
 					}
 
 					return array
