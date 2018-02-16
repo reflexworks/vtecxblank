@@ -1,16 +1,8 @@
 import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
+import { getData } from './get-data-from-user'
 
-const quotation_code = vtecxapi.getQueryString('quotation_code')
-let quotation
-if (quotation_code) {
-	const status = vtecxapi.getQueryString('status')
-	let option = 'quotation.quotation_code=' + quotation_code
-	if (status) {
-		option = option + '&quotation.status=' + status
-	}
-	quotation = vtecxapi.getFeed('/quotation?' + option)
-}
+const quotation = getData('quotation')
 const isQuotation = CommonGetFlag(quotation)
 
 if (isQuotation) {
