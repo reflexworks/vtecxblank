@@ -16,12 +16,14 @@ const contenttype = vtecxapi.getContentType()
 vtecxapi.log('contenttype', contenttype)
 const feed = vtecxapi.getFeed('/registration')
 vtecxapi.log('feed', JSON.stringify(feed))
+const feedc = vtecxapi.getFeed('/registration?c')
+vtecxapi.log('feed count', JSON.stringify(feedc))
 const entry = vtecxapi.getEntry('/registration')
 vtecxapi.log('entry', JSON.stringify(entry))
 
 
 try {
-	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たん', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/101', ___rel: 'self' }] }] } }
+	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たん', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/102', ___rel: 'self' }] }] } }
 	vtecxapi.post(request)
 } catch (e) {
 	vtecxapi.log('post', e.message)    
@@ -34,20 +36,20 @@ try {
 	vtecxapi.log('post2', e.message)    
 }
 
-
 try {
-	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たえ', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/101', ___rel: 'self' }] }] } }
+	const request = { feed : { entry : [{ userinfo: { id: 1, email: 'foo@bar.com' }, favorite: { food: '牛たえ', music: 'J−ポップ' }, hobby: [{ type: '屋外', name: 'テニス' }, { type: '屋内', name: '卓球' }], link: [{ ___href: '/registration/102', ___rel: 'self' }] }] } }
 	vtecxapi.put(request)
 } catch (e) {
 	vtecxapi.log('put', e.message)    
 }
 
-vtecxapi.delete('/registration/101')
+vtecxapi.delete('/registration/102')
 try {
-	vtecxapi.deleteFolder('/registration/101')
+	vtecxapi.deleteFolder('/registration/102')
 } catch (e) {
 	vtecxapi.log('delete', e.message)    
 }
+
 
 //vtecxapi.setids('/registration',1)
 const ids = vtecxapi.addids('/registration',0) // 1
