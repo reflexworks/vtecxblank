@@ -67,7 +67,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 	getQuotationList(_input) {
 		return axios({
-			url: `/s/get-quotation-code-list?f&quotation_code=*${_input}*&status=1`,
+			url: `/s/get-quotation-code-list?quotation.quotation_code=*${_input}*&quotation.status=1`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -286,7 +286,7 @@ export default class InternalWorkRegistration extends React.Component {
 										header={[{
 											field: 'customer.customer_code', title: '顧客コード', width: '100px'
 										}, {
-											field: 'customer.customer_name', title: '顧客名', width: '200px'
+											field: 'customer.customer_name', title: '顧客名', width: '400px'
 										}, {
 											field: 'title', title: '庫内作業作成済み', width: '200px', convert: { 'create': '作成済み', 'none': '未作成'}
 										}]}
