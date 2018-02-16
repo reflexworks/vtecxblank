@@ -1530,6 +1530,7 @@ export class CommonTable extends React.Component {
 		this.selected = []
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
 		this.tableClass = this.props.fixed ? 'common-table' : 'common-table scroll'
+		this.tableHeight = window.innerHeight - 280
 	}
 
 	/**
@@ -1832,7 +1833,7 @@ export class CommonTable extends React.Component {
 						キャンセル
 					</Button>
 				}
-				<div className={this.tableClass}>
+				<div className={this.tableClass} style={this.props.fixed ? null : {'max-height': this.tableHeight + 'px'}}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>
 							<tr>{header}</tr>
@@ -1872,6 +1873,7 @@ export class CommonModal extends React.Component {
 			isShow: this.props.isShow
 		}
 		this.LogicCommonTable = new LogicCommonTable()
+		this.modalHeight = window.innerHeight - 200
 	}
 
 	componentWillMount() {
@@ -1927,20 +1929,6 @@ export class CommonModal extends React.Component {
 		this.props.selectBtn(selectData())
 	}
 
-	componentWillUpdate() {
-		let commonModal = document.getElementById('common_modal_body')
-		const windowheihgt = window.innerHeight
-		window.onresize = function () {
-			if (commonModal) {
-				if ((commonModal.style.height + 100) > windowheihgt) {
-					commonModal.style.height = windowheihgt - 100
-				}
-			} else {
-				commonModal = document.getElementById('common_modal_body')
-			}
-		}
-	}
-
 	render() {
 
 		const modal_size = () => {
@@ -1967,7 +1955,7 @@ export class CommonModal extends React.Component {
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body" id="common_modal_body" style={ this.props.height && {height: this.props.height}}>
+							<div class="modal-body" id="common_modal_body" style={{ height: this.modalHeight + 'px' }}>
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
