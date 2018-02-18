@@ -17,6 +17,8 @@ let reqdata = {
 	}
 }
 
+registerstaff('システム管理者','logioffice.test@gmail.com',1)
+
 result.feed.entry.map( csventry => {
 	const customer_name = csventry.customer.customer_name ? csventry.customer.customer_name : csventry.customer.billto_name
 	const customer_name_duplicated = reqdata.feed.entry.filter(e => { return (e.customer.customer_name === customer_name) })
@@ -118,7 +120,11 @@ function getCustomer(csventry) {
 	// 上長の登録
 	if (csventry.customer.superior_email) {
 		registerstaff(csventry.customer.superior,csventry.customer.superior_email,2)
+		const superior = { 'staff_name': csventry.customer.superior, 'staff_email': csventry.customer.superior_email }
+		customer.sales_staff.push(superior)
+		customer.working_staff.push(superior)
 	}
+
 
 	// 作業員の登録
 	if (csventry.customer.working_staff1_email) {
