@@ -108,7 +108,10 @@
                 <pref_code>和歌山県</pref_code>
             </pref_codes>
             <invoice_zones>
-                <invoice_zone>Aエリア,エコエリア</invoice_zone>
+                <invoice_zone>Aエリア</invoice_zone>
+            </invoice_zones>
+            <invoice_zones>
+                <invoice_zone>エコエリア</invoice_zone>
             </invoice_zones>
         </zone>
         <zone>
@@ -143,7 +146,10 @@
                 <pref_code>三重県</pref_code>
             </pref_codes>
             <invoice_zones>
-                <invoice_zone>Aエリア,エコエリア</invoice_zone>
+                <invoice_zone>Aエリア</invoice_zone>
+            </invoice_zones>
+            <invoice_zones>
+                <invoice_zone>エコエリア</invoice_zone>
             </invoice_zones>
         </zone>
         <zone>
@@ -187,7 +193,10 @@
                 <pref_code>山梨県</pref_code>
             </pref_codes>
             <invoice_zones>
-                <invoice_zone>Aエリア,エコエリア</invoice_zone>
+                <invoice_zone>Aエリア</invoice_zone>
+            </invoice_zones>
+            <invoice_zones>
+                <invoice_zone>エコエリア</invoice_zone>
             </invoice_zones>
         </zone>
         <zone>
