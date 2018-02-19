@@ -1,7 +1,7 @@
 import vtecxapi from 'vtecxapi' 
 
-const items = ['billto_name', 'customer_name', 'customer_name_kana', 'tel', 'fax', 'email', 'zip_code', 'prefecture', 'address1', 'url', 'person_in_charge', 'products', 'is_billto', 'shipper_code_ymta', 'shipper_code_ymtb', 'shipper_code_ymtc', 'shipper_code_ecs1', 'shipper_code_ecs2', 'shipper_code_ecs3','shipper_code_ecs4','warehouse','sales_staff','sales_staff_email','superior','superior_email','working_staff1','working_staff1_email','working_staff2','working_staff2_email','working_staff3','working_staff3_email','working_staff4','working_staff4_email','working_staff5','working_staff5_email','working_staff6','working_staff6_email','working_staff7','working_staff7_email']
-const header = ['請求顧客名', '顧客名', '顧客名(カナ)','電話番号','FAX','メールアドレス','郵便番号','都道府県','市区郡町村','顧客URL','担当者','取扱品','請求先にも登録','ヤマト荷主コード1(出荷A)','ヤマト荷主コード2(出荷B)','ヤマト荷主コード3(集荷)','エコ配荷主コード1(出荷)','エコ配荷主コード2(出荷)','エコ配荷主コード3(集荷)','エコ配荷主コード4(集荷)','倉庫','営業担当','営業担当メールアドレス','上長','上長メールアドレス','作業担当者1','作業担当者1メールアドレス','作業担当者2','作業担当者2メールアドレス','作業担当者3','作業担当者3メールアドレス','作業担当者4','作業担当者4メールアドレス','作業担当者5','作業担当者5メールアドレス','作業担当者6','作業担当者6メールアドレス','作業担当者7','作業担当者7メールアドレス']
+const items = ['billto_name', 'customer_name', 'customer_name_kana', 'tel', 'fax', 'email', 'zip_code', 'prefecture', 'address1', 'url', 'person_in_charge', 'products', 'is_billto', 'shipper_code_ymta', 'shipper_code_ymtb', 'shipper_code_ymtc', 'shipper_code_ecs1', 'shipper_code_ecs2', 'shipper_code_ecs3','shipper_code_ecs4','shipment_service_code','warehouse','sales_staff','sales_staff_email','superior','superior_email','working_staff1','working_staff1_email','working_staff2','working_staff2_email','working_staff3','working_staff3_email','working_staff4','working_staff4_email','working_staff5','working_staff5_email','working_staff6','working_staff6_email','working_staff7','working_staff7_email']
+const header = ['請求顧客名', '顧客名', '顧客名(カナ)','電話番号','FAX','メールアドレス','郵便番号','都道府県','市区郡町村','顧客URL','担当者','取扱品','請求先にも登録','ヤマト荷主コード1(出荷A)','ヤマト荷主コード2(出荷B)','ヤマト荷主コード3(集荷)','エコ配荷主コード1(出荷)','エコ配荷主コード2(出荷)','エコ配荷主コード3(集荷)','エコ配荷主コード4(集荷)','エコ配配送業者コード','倉庫','営業担当','営業担当メールアドレス','上長','上長メールアドレス','作業担当者1','作業担当者1メールアドレス','作業担当者2','作業担当者2メールアドレス','作業担当者3','作業担当者3メールアドレス','作業担当者4','作業担当者4メールアドレス','作業担当者5','作業担当者5メールアドレス','作業担当者6','作業担当者6メールアドレス','作業担当者7','作業担当者7メールアドレス']
 const parent = 'customer'
 const skip = 0
 //const encoding = 'SJIS'
@@ -165,8 +165,8 @@ function getCustomer(csventry) {
 
 	if (csventry.customer.shipper_code_ymta.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'YM',
-			'delivery_company_name': 'ヤマト運輸',
+			'shipment_service_code': 'YH',
+			'shipment_service_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymta,
@@ -178,8 +178,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtb.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'YM',
-			'delivery_company_name': 'ヤマト運輸',
+			'shipment_service_code': 'YH',
+			'shipment_service_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymtb,
@@ -191,8 +191,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtc.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'YM',
-			'delivery_company_name': 'ヤマト運輸',
+			'shipment_service_code': 'YH',
+			'shipment_service_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymtc,
@@ -204,8 +204,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs1.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'EC',
-			'delivery_company_name': 'エコ配JP',
+			'shipment_service_code': csventry.customer.shipment_service_code,
+			//			'shipment_service_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs1,
@@ -217,8 +217,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs2.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'EC',
-			'delivery_company_name': 'エコ配JP',
+			'shipment_service_code': csventry.customer.shipment_service_code,
+			//			'shipment_service_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs2,
@@ -230,8 +230,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs3.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'EC',
-			'delivery_company_name': 'エコ配JP',
+			'shipment_service_code': csventry.customer.shipment_service_code,
+			//			'shipment_service_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs3,
@@ -243,8 +243,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs4.trim().length>0) {
 		let shipper = {
-			'delivery_company_code': 'EC',
-			'delivery_company_name': 'エコ配JP',
+			'shipment_service_code': csventry.customer.shipment_service_code,
+			//			'shipment_service_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs4,

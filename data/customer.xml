@@ -7,24 +7,24 @@
         <customer>
             <customer_code>0000001</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>200</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484345580250</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484565817252</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -76,24 +76,24 @@
         <customer>
             <customer_code>0000002</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>800</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484565817251</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484565817253</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -145,24 +145,24 @@
         <customer>
             <customer_code>0000003</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>300</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359809848250</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359809848251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -218,24 +218,24 @@
         <customer>
             <customer_code>0000004</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>600</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482297962250</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482297962251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -287,32 +287,32 @@
         <customer>
             <customer_code>0000005</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>1</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484307475251</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484307475500</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482997968250</shipper_code>
                     <shipment_class>1</shipment_class>
@@ -348,16 +348,16 @@
         <customer>
             <customer_code>0000006</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>2</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>492995898250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -430,8 +430,8 @@
         <customer>
             <customer_code>0000008</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>4</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -499,16 +499,16 @@
         <customer>
             <customer_code>0000009</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>5</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>368079396250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -544,16 +544,16 @@
         <customer>
             <customer_code>0000010</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>6</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>492935899250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -589,8 +589,8 @@
         <customer>
             <customer_code>0000011</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>8</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -719,16 +719,16 @@
         <customer>
             <customer_code>0000013</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>130</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359671531250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -796,8 +796,8 @@
         <customer>
             <customer_code>0000014</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>147</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -865,24 +865,24 @@
         <customer>
             <customer_code>0000015</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>11</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>12</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>369041806250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -918,16 +918,16 @@
         <customer>
             <customer_code>0000016</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>13</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>422249022250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -963,8 +963,8 @@
         <customer>
             <customer_code>0000017</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>15</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1061,8 +1061,8 @@
         <customer>
             <customer_code>0000019</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>16</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1098,24 +1098,24 @@
         <customer>
             <customer_code>0000020</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>18</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>90</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>368855112250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1183,8 +1183,8 @@
         <customer>
             <customer_code>0000021</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>20</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1252,8 +1252,8 @@
         <customer>
             <customer_code>0000022</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>21</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1289,8 +1289,8 @@
         <customer>
             <customer_code>0000023</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>25</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1358,8 +1358,8 @@
         <customer>
             <customer_code>0000024</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>27</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1411,16 +1411,16 @@
         <customer>
             <customer_code>0000025</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>28</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>7031461028250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1484,8 +1484,8 @@
         <customer>
             <customer_code>0000026</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>30</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1549,8 +1549,8 @@
         <customer>
             <customer_code>0000027</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>31</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1614,8 +1614,8 @@
         <customer>
             <customer_code>0000028</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>32</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1671,8 +1671,8 @@
         <customer>
             <customer_code>0000029</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>35</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1728,32 +1728,32 @@
         <customer>
             <customer_code>0000030</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>33</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>111</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482423128250</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482423128253</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1801,24 +1801,24 @@
         <customer>
             <customer_code>0000031</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>39</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482423128251</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482423128252</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1866,16 +1866,16 @@
         <customer>
             <customer_code>0000032</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>34</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>367098498250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -1943,16 +1943,16 @@
         <customer>
             <customer_code>0000033</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>49</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>367098498251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2020,8 +2020,8 @@
         <customer>
             <customer_code>0000034</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>115</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2089,16 +2089,16 @@
         <customer>
             <customer_code>0000035</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>36</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>52</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2166,16 +2166,16 @@
         <customer>
             <customer_code>0000036</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>37</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>358095380252</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2211,8 +2211,8 @@
         <customer>
             <customer_code>0000037</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>40</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2248,8 +2248,8 @@
         <customer>
             <customer_code>0000038</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>55</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2285,8 +2285,8 @@
         <customer>
             <customer_code>0000039</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>121</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2322,8 +2322,8 @@
         <customer>
             <customer_code>0000040</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>124</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2359,8 +2359,8 @@
         <customer>
             <customer_code>0000041</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>131</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2396,8 +2396,8 @@
         <customer>
             <customer_code>0000042</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>170</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2470,8 +2470,8 @@
         <customer>
             <customer_code>0000044</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>89</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2507,8 +2507,8 @@
         <customer>
             <customer_code>0000045</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>150</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2576,8 +2576,8 @@
         <customer>
             <customer_code>0000046</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>43</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2629,16 +2629,16 @@
         <customer>
             <customer_code>0000047</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>44</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>8033447519250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2706,16 +2706,16 @@
         <customer>
             <customer_code>0000048</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>120</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>333433544250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2783,16 +2783,16 @@
         <customer>
             <customer_code>0000049</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>47</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359671531251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2860,16 +2860,16 @@
         <customer>
             <customer_code>0000050</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>48</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>107</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2937,16 +2937,16 @@
         <customer>
             <customer_code>0000051</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>50</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359449808251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -2990,16 +2990,16 @@
         <customer>
             <customer_code>0000052</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>53</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484234155250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3035,8 +3035,8 @@
         <customer>
             <customer_code>0000053</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>54</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3096,8 +3096,8 @@
         <customer>
             <customer_code>0000054</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>56</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3133,8 +3133,8 @@
         <customer>
             <customer_code>0000055</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>57</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3202,8 +3202,8 @@
         <customer>
             <customer_code>0000056</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>58</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3239,16 +3239,16 @@
         <customer>
             <customer_code>0000057</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>59</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359278253251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3316,16 +3316,16 @@
         <customer>
             <customer_code>0000058</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>60</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>359278253250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3393,8 +3393,8 @@
         <customer>
             <customer_code>0000059</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>61</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3462,16 +3462,16 @@
         <customer>
             <customer_code>0000060</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>62</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>9098417488250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3539,8 +3539,8 @@
         <customer>
             <customer_code>0000061</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>63</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3576,8 +3576,8 @@
         <customer>
             <customer_code>0000062</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>64</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3645,16 +3645,16 @@
         <customer>
             <customer_code>0000063</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>66</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484477644250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3690,8 +3690,8 @@
         <customer>
             <customer_code>0000064</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>85</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3727,8 +3727,8 @@
         <customer>
             <customer_code>0000065</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>86</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3764,8 +3764,8 @@
         <customer>
             <customer_code>0000066</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>87</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3801,8 +3801,8 @@
         <customer>
             <customer_code>0000067</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>88</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3838,8 +3838,8 @@
         <customer>
             <customer_code>0000068</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>206</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3875,8 +3875,8 @@
         <customer>
             <customer_code>0000069</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>68</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -3944,16 +3944,16 @@
         <customer>
             <customer_code>0000070</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>69</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>5035558151250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4021,8 +4021,8 @@
         <customer>
             <customer_code>0000071</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>70</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4090,8 +4090,8 @@
         <customer>
             <customer_code>0000072</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>71</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4159,8 +4159,8 @@
         <customer>
             <customer_code>0000073</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>75</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4228,8 +4228,8 @@
         <customer>
             <customer_code>0000074</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>78</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4297,8 +4297,8 @@
         <customer>
             <customer_code>0000075</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>79</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4334,16 +4334,16 @@
         <customer>
             <customer_code>0000076</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>81</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>362402558251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4395,16 +4395,16 @@
         <customer>
             <customer_code>0000077</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>82</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>368041781251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4440,8 +4440,8 @@
         <customer>
             <customer_code>0000078</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>83</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4509,8 +4509,8 @@
         <customer>
             <customer_code>0000079</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>84</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4578,8 +4578,8 @@
         <customer>
             <customer_code>0000080</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>91</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4647,8 +4647,8 @@
         <customer>
             <customer_code>0000081</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>92</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4684,8 +4684,8 @@
         <customer>
             <customer_code>0000082</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>93</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4753,16 +4753,16 @@
         <customer>
             <customer_code>0000083</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>94</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>480534663250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4830,8 +4830,8 @@
         <customer>
             <customer_code>0000084</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>95</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4867,16 +4867,16 @@
         <customer>
             <customer_code>0000085</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>96</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>9022379846250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -4944,8 +4944,8 @@
         <customer>
             <customer_code>0000086</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>97</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5013,8 +5013,8 @@
         <customer>
             <customer_code>0000087</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>98</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5082,16 +5082,16 @@
         <customer>
             <customer_code>0000088</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>99</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>5055771128250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5127,16 +5127,16 @@
         <customer>
             <customer_code>0000089</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>101</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>356430398251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5204,24 +5204,24 @@
         <customer>
             <customer_code>0000090</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>102</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998213252</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998213501</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5257,24 +5257,24 @@
         <customer>
             <customer_code>0000091</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>103</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998213251</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998213500</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5310,16 +5310,16 @@
         <customer>
             <customer_code>0000092</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>106</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>7039796528250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5387,8 +5387,8 @@
         <customer>
             <customer_code>0000093</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>109</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5424,16 +5424,16 @@
         <customer>
             <customer_code>0000094</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>110</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>8051804803250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5501,8 +5501,8 @@
         <customer>
             <customer_code>0000095</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>119</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5657,8 +5657,8 @@
         <customer>
             <customer_code>0000099</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>123</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5694,16 +5694,16 @@
         <customer>
             <customer_code>0000100</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>112</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>9029105540250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5747,8 +5747,8 @@
         <customer>
             <customer_code>0000101</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>219</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5804,16 +5804,16 @@
         <customer>
             <customer_code>0000102</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>114</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>353489730251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5923,8 +5923,8 @@
         <customer>
             <customer_code>0000105</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>113</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5960,8 +5960,8 @@
         <customer>
             <customer_code>0000106</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>116</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -5997,8 +5997,8 @@
         <customer>
             <customer_code>0000107</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>117</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6034,8 +6034,8 @@
         <customer>
             <customer_code>0000108</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>118</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6071,8 +6071,8 @@
         <customer>
             <customer_code>0000109</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>127</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6108,8 +6108,8 @@
         <customer>
             <customer_code>0000110</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>128</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6145,8 +6145,8 @@
         <customer>
             <customer_code>0000111</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>129</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6182,8 +6182,8 @@
         <customer>
             <customer_code>0000112</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>136</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6219,8 +6219,8 @@
         <customer>
             <customer_code>0000113</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>198</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6256,8 +6256,8 @@
         <customer>
             <customer_code>0000114</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>206</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6293,8 +6293,8 @@
         <customer>
             <customer_code>0000115</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>229</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6330,16 +6330,16 @@
         <customer>
             <customer_code>0000116</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>185</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>444555023250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6436,8 +6436,8 @@
         <customer>
             <customer_code>0000118</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>137</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6473,8 +6473,8 @@
         <customer>
             <customer_code>0000119</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>138</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6510,8 +6510,8 @@
         <customer>
             <customer_code>0000120</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>139</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6547,8 +6547,8 @@
         <customer>
             <customer_code>0000121</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>145</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6584,8 +6584,8 @@
         <customer>
             <customer_code>0000122</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>152</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6621,8 +6621,8 @@
         <customer>
             <customer_code>0000123</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>153</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6658,8 +6658,8 @@
         <customer>
             <customer_code>0000124</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>154</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6695,8 +6695,8 @@
         <customer>
             <customer_code>0000125</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>155</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6732,8 +6732,8 @@
         <customer>
             <customer_code>0000126</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>156</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6769,8 +6769,8 @@
         <customer>
             <customer_code>0000127</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>157</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6806,8 +6806,8 @@
         <customer>
             <customer_code>0000128</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>158</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6843,8 +6843,8 @@
         <customer>
             <customer_code>0000129</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>159</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6880,8 +6880,8 @@
         <customer>
             <customer_code>0000130</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>160</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6917,8 +6917,8 @@
         <customer>
             <customer_code>0000131</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>161</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6954,8 +6954,8 @@
         <customer>
             <customer_code>0000132</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>174</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -6991,8 +6991,8 @@
         <customer>
             <customer_code>0000133</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>175</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7028,8 +7028,8 @@
         <customer>
             <customer_code>0000134</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>176</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7065,8 +7065,8 @@
         <customer>
             <customer_code>0000135</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>177</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7102,8 +7102,8 @@
         <customer>
             <customer_code>0000136</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>207</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7139,8 +7139,8 @@
         <customer>
             <customer_code>0000137</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>162</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7205,8 +7205,8 @@
         <customer>
             <customer_code>0000139</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>164</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7242,8 +7242,8 @@
         <customer>
             <customer_code>0000140</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>165</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7279,8 +7279,8 @@
         <customer>
             <customer_code>0000141</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>166</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7316,16 +7316,16 @@
         <customer>
             <customer_code>0000142</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>167</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>487828555250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7361,8 +7361,8 @@
         <customer>
             <customer_code>0000143</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>168</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7398,8 +7398,8 @@
         <customer>
             <customer_code>0000144</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>169</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7435,8 +7435,8 @@
         <customer>
             <customer_code>0000145</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>211</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7472,8 +7472,8 @@
         <customer>
             <customer_code>0000146</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>212</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7509,8 +7509,8 @@
         <customer>
             <customer_code>0000147</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>213</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7546,8 +7546,8 @@
         <customer>
             <customer_code>0000148</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>140</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7595,16 +7595,16 @@
         <customer>
             <customer_code>0000149</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>146</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>369030740250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7672,8 +7672,8 @@
         <customer>
             <customer_code>0000150</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>144</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7741,8 +7741,8 @@
         <customer>
             <customer_code>0000151</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>142</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7810,16 +7810,16 @@
         <customer>
             <customer_code>0000152</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>132</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>424006671250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7916,8 +7916,8 @@
         <customer>
             <customer_code>0000154</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>171</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -7985,8 +7985,8 @@
         <customer>
             <customer_code>0000155</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>141</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8054,8 +8054,8 @@
         <customer>
             <customer_code>0000156</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>133</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8184,8 +8184,8 @@
         <customer>
             <customer_code>0000158</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>149</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8302,8 +8302,8 @@
         <customer>
             <customer_code>0000160</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>194</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8339,16 +8339,16 @@
         <customer>
             <customer_code>0000161</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>210</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>368694667250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8416,16 +8416,16 @@
         <customer>
             <customer_code>0000162</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>187</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>449455523251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8493,8 +8493,8 @@
         <customer>
             <customer_code>0000163</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>186</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8546,16 +8546,16 @@
         <customer>
             <customer_code>0000164</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>179</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>5037360919250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8607,16 +8607,16 @@
         <customer>
             <customer_code>0000165</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>180</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>8095418470250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8684,16 +8684,16 @@
         <customer>
             <customer_code>0000166</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>196</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>5035680547250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8761,8 +8761,8 @@
         <customer>
             <customer_code>0000167</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>183</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8830,16 +8830,16 @@
         <customer>
             <customer_code>0000168</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>184</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482825959250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8912,8 +8912,8 @@
         <customer>
             <customer_code>0000170</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>225</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -8998,8 +8998,8 @@
         <customer>
             <customer_code>0000172</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>216</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9104,16 +9104,16 @@
         <customer>
             <customer_code>0000174</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>209</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>364046227250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9149,16 +9149,16 @@
         <customer>
             <customer_code>0000175</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>214</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482405569250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9226,8 +9226,8 @@
         <customer>
             <customer_code>0000176</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>217</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9295,16 +9295,16 @@
         <customer>
             <customer_code>0000177</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>193</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>665823155250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9433,8 +9433,8 @@
         <customer>
             <customer_code>0000179</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>222</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9572,8 +9572,8 @@
         <customer>
             <customer_code>0000182</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>73</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9609,16 +9609,16 @@
         <customer>
             <customer_code>0000183</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>215</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>申請中</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9654,8 +9654,8 @@
         <customer>
             <customer_code>0000184</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>191</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9691,16 +9691,16 @@
         <customer>
             <customer_code>0000185</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>220</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>申請中</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9748,8 +9748,8 @@
         <customer>
             <customer_code>0000186</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>108</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9785,8 +9785,8 @@
         <customer>
             <customer_code>0000187</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>221</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9854,8 +9854,8 @@
         <customer>
             <customer_code>0000188</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>228</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9891,16 +9891,16 @@
         <customer>
             <customer_code>0000189</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>178</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>9065046699250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -9968,16 +9968,16 @@
         <customer>
             <customer_code>0000190</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>199</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>364217221250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10045,16 +10045,16 @@
         <customer>
             <customer_code>0000191</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>163</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>369057363250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10106,16 +10106,16 @@
         <customer>
             <customer_code>0000192</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>223</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>申請中</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10183,16 +10183,16 @@
         <customer>
             <customer_code>0000193</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>218</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>申請中</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10244,16 +10244,16 @@
         <customer>
             <customer_code>0000194</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>38</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998475250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10297,24 +10297,24 @@
         <customer>
             <customer_code>0000195</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>100</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>484307475250</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>482998213254</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10350,8 +10350,8 @@
         <customer>
             <customer_code>0000196</customer_code>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>358408172251</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10387,8 +10387,8 @@
         <customer>
             <customer_code>0000197</customer_code>
             <shipper>
-                <delivery_company_name>エコ配JP</delivery_company_name>
-                <delivery_company_code>EC</delivery_company_code>
+                <shipment_service_name>エコ配JP</shipment_service_name>
+                <shipment_service_code>EC</shipment_service_code>
                 <shipper_info>
                     <shipper_code>362650560250</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10424,8 +10424,8 @@
         <customer>
             <customer_code>0000198</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>41</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10548,8 +10548,8 @@
         <customer>
             <customer_code>0000202</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>105</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10593,8 +10593,8 @@
         <customer>
             <customer_code>0000203</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>148</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10650,8 +10650,8 @@
         <customer>
             <customer_code>0000204</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>151</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10707,8 +10707,8 @@
         <customer>
             <customer_code>0000205</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>173</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10756,16 +10756,16 @@
         <customer>
             <customer_code>0000206</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>227</shipper_code>
                     <shipment_class>0</shipment_class>
                 </shipper_info>
             </shipper>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>600</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10888,8 +10888,8 @@
         <customer>
             <customer_code>0000210</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>900</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -10925,8 +10925,8 @@
         <customer>
             <customer_code>0000211</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>224</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -11073,8 +11073,8 @@
         <customer>
             <customer_code>0000215</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>54</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -11142,8 +11142,8 @@
         <customer>
             <customer_code>0000216</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>113</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -11179,8 +11179,8 @@
         <customer>
             <customer_code>0000217</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>194</shipper_code>
                     <shipment_class>0</shipment_class>
@@ -11216,8 +11216,8 @@
         <customer>
             <customer_code>0000218</customer_code>
             <shipper>
-                <delivery_company_name>ヤマト運輸</delivery_company_name>
-                <delivery_company_code>YM</delivery_company_code>
+                <shipment_service_name>ヤマト運輸</shipment_service_name>
+                <shipment_service_code>YM</shipment_service_code>
                 <shipper_info>
                     <shipper_code>224</shipper_code>
                     <shipment_class>0</shipment_class>
