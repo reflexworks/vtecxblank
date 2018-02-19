@@ -18,8 +18,8 @@ billto
 customer
  customer_code
  shipper{}
-  delivery_company_name
-  delivery_company_code
+  shipment_service_name
+  shipment_service_code
   shipper_info{}
    shipper_code
    shipment_class
@@ -203,6 +203,7 @@ billing_data
  size
  quantity
  prefecture
+ city
  delivery_charge
 billing_summary
  content{}
