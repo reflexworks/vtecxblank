@@ -165,8 +165,8 @@ function getCustomer(csventry) {
 
 	if (csventry.customer.shipper_code_ymta.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YM',
-			'shipment_service_name': 'ヤマト運輸',
+			'delivery_company_code': 'YM',
+			'delivery_company_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymta,
@@ -178,8 +178,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtb.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YM',
-			'shipment_service_name': 'ヤマト運輸',
+			'delivery_company_code': 'YM',
+			'delivery_company_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymtb,
@@ -191,8 +191,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtc.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YM',
-			'shipment_service_name': 'ヤマト運輸',
+			'delivery_company_code': 'YM',
+			'delivery_company_name': 'ヤマト運輸',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ymtc,
@@ -204,8 +204,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs1.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'EC',
-			'shipment_service_name': 'エコ配JP',
+			'delivery_company_code': 'EC',
+			'delivery_company_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs1,
@@ -217,8 +217,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs2.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'EC',
-			'shipment_service_name': 'エコ配JP',
+			'delivery_company_code': 'EC',
+			'delivery_company_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs2,
@@ -230,8 +230,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs3.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'EC',
-			'shipment_service_name': 'エコ配JP',
+			'delivery_company_code': 'EC',
+			'delivery_company_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs3,
@@ -243,8 +243,8 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs4.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'EC',
-			'shipment_service_name': 'エコ配JP',
+			'delivery_company_code': 'EC',
+			'delivery_company_name': 'エコ配JP',
 			'shipper_info': [
 				{
 					'shipper_code': csventry.customer.shipper_code_ecs4,
