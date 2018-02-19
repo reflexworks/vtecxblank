@@ -18,8 +18,8 @@ billto
 customer
  customer_code
  shipper{}
-  shipment_service_name
-  shipment_service_code
+  delivery_company_name
+  delivery_company_code
   shipper_info{}
    shipper_code
    shipment_class
@@ -167,6 +167,7 @@ internal_work
  shipment_service_size
  shipment_service_weight
  period
+ is_completed
 shipment_service
  code 
  name  
