@@ -277,10 +277,9 @@ export default class QuotationForm extends React.Component {
 	}
 
 	//PDFダウンロード
-	printPDF() {
-		location.href = 's/quotationpdf2?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub		
+	printPDF() {		
+		location.href = 's/get-pdf-quotation?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
 	}
-
 
 	render() {
 
@@ -290,7 +289,7 @@ export default class QuotationForm extends React.Component {
 				<Form horizontal>
 
 					<Button className="total_amount" onClick={() => this.printPDF()}>
-						<Glyphicon glyph="print" />　見積書発行
+						<Glyphicon glyph="print" />　見積書ダウンロード
 					</Button>
 					
 					<CommonInputText
