@@ -43,7 +43,9 @@ export default class QuotationRegistration extends React.Component {
 			quotation: {},
 			packing_items: [],
 			billto: {},
-			basic_condition: []
+			basic_condition: [],
+			billfrom: {},
+			contact_information:{}
 		}
 
 		this.master = {
@@ -87,7 +89,8 @@ export default class QuotationRegistration extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/s/get-billto',
+			//url: '/s/get-billto',
+			url: '/d/billto?f',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -312,6 +315,36 @@ export default class QuotationRegistration extends React.Component {
 									field: 'item_code',title: '品番', width: '100px'
 								}]}
 							/>
+							<CommonInputText
+								name="billfrom.billfrom_name"
+								value={this.entry.billfrom.billfrom_name}
+							/>
+							<CommonInputText
+								name="contact_information.tel"
+								value={this.entry.contact_information.tel}
+							/>
+
+							<CommonTable
+								controlLabel="口座情報"
+								name="billfrom.payee"
+								data={this.entry.billfrom.payee}
+								header={[{
+									field: 'bank_info', title: '口座名', width: '30px',
+									convert: {
+										1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+										6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
+									}
+								}, {
+									field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
+									
+								}, {
+									field: 'account_number', title: '口座番号', width: '30px',
+									
+								}]}
+								noneScroll
+								fixed
+							/>
+
 						</div>
 						<CommonRegistrationBtn
 							controlLabel=" "

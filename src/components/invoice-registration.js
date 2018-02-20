@@ -65,7 +65,9 @@ export default class InvoiceRegistration extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry.billto = response.data.feed.entry[0].billto
+				this.entry.billfrom = response.data.feed.entry[0].billfrom
 				this.entry.invoice.quotation_code = response.data.feed.entry[0].quotation.quotation_code
+
 				this.forceUpdate()
 			}
 
