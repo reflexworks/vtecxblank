@@ -50,6 +50,7 @@ export default class QuotationForm extends React.Component {
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.selectItemDetails = null
 
+		this.address = ''
 		this.master = {
 			typeList: [],
 			packingItemTemplateList: [],
@@ -82,6 +83,7 @@ export default class QuotationForm extends React.Component {
 			this.status = '発行済み'
 			this.isDisabled = true
 		}
+
 
 	}
 
@@ -144,15 +146,14 @@ export default class QuotationForm extends React.Component {
 	changeBillfrom(_data) {
 		if (_data) {
 			this.entry.billfrom = _data.data.billfrom
+			this.entry.contact_information = _data.data.contact_information
 			this.billfrom = _data.data
-			this.entry.contact_information.address1 = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
-			this.entry.contact_information.zip_code = _data.data.contact_information.zip_code
-			this.entry.contact_information.tel = _data.data.contact_information.tel
-			
+			this.entry.contact_information.address1 = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2	
 		} else {
 			this.entry.billfrom = {}
-			this.billfrom = {}
 			this.entry.contact_information = {}
+			this.billfrom = {}
+			this.address = ''
 		}
 		this.forceUpdate()
 	}
@@ -635,6 +636,7 @@ export default class QuotationForm extends React.Component {
 						</Tab>
 
 						<Tab eventKey={5} title="請求元">
+							{this.entry.billfrom.billfrom_code && 
 							<CommonFilterBox
 								controlLabel="請求元"
 								name="billfrom.billfrom_code"
@@ -644,7 +646,21 @@ export default class QuotationForm extends React.Component {
 								edit={() => this.setState({ showBillfromEditModal: true })}
 								onChange={(data) => this.changeBillfrom(data)}
 							/>
-						
+								
+							}
+
+							{!this.entry.billfrom.billfrom_code &&
+								<CommonFilterBox
+									controlLabel="請求元"
+									name="billfrom.billfrom_code"
+									value={this.entry.billfrom.billfrom_code}
+									options={this.billfromList}
+									add={() => this.setState({ showBillfromAddModal: true })}
+									edit={() => this.setState({ showBillfromEditModal: true })}
+									onChange={(data) => this.changeBillfrom(data)}
+								/>
+							}
+					
 							{this.entry.billfrom.billfrom_code &&
 								<CommonInputText
 									controlLabel="　"
@@ -665,7 +681,6 @@ export default class QuotationForm extends React.Component {
 								/>
 							}
 							{this.entry.billfrom.billfrom_code &&
-							
 								<CommonInputText
 									controlLabel="住所"
 									name="contact_information.address1"
@@ -674,6 +689,8 @@ export default class QuotationForm extends React.Component {
 									readonly
 								/>
 							}
+							
+
 							{this.entry.billfrom.billfrom_code &&
 								<CommonInputText
 									controlLabel="電話番号"
