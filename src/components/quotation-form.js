@@ -636,7 +636,7 @@ export default class QuotationForm extends React.Component {
 						</Tab>
 
 						<Tab eventKey={5} title="請求元">
-							{this.entry.billfrom.billfrom_code && 
+							{this.entry.billfrom && this.entry.billfrom.billfrom_code &&
 							<CommonFilterBox
 								controlLabel="請求元"
 								name="billfrom.billfrom_code"
@@ -647,18 +647,6 @@ export default class QuotationForm extends React.Component {
 								onChange={(data) => this.changeBillfrom(data)}
 							/>
 								
-							}
-
-							{!this.entry.billfrom.billfrom_code &&
-								<CommonFilterBox
-									controlLabel="請求元"
-									name="billfrom.billfrom_code"
-									value={this.entry.billfrom.billfrom_code}
-									options={this.billfromList}
-									add={() => this.setState({ showBillfromAddModal: true })}
-									edit={() => this.setState({ showBillfromEditModal: true })}
-									onChange={(data) => this.changeBillfrom(data)}
-								/>
 							}
 					
 							{this.entry.billfrom.billfrom_code &&
