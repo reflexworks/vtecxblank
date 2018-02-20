@@ -636,7 +636,7 @@ export default class QuotationForm extends React.Component {
 						</Tab>
 
 						<Tab eventKey={5} title="請求元">
-							{this.entry.billfrom && this.entry.billfrom.billfrom_code &&
+							{this.entry.billfrom && 
 							<CommonFilterBox
 								controlLabel="請求元"
 								name="billfrom.billfrom_code"
