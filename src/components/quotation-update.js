@@ -66,7 +66,9 @@ export default class QuotationUpdate extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isError: response })
 			} else {
+
 				this.entry = response.data.feed.entry[0]
+				this.entry.billfrom = this.entry.billfrom ||  {}
 				this.entry.quotation = this.entry.quotation || {}
 				this.entry.basic_condition = this.entry.basic_condition || []
 				this.entry.item_details = this.entry.item_details || []
