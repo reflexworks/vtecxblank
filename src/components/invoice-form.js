@@ -20,7 +20,7 @@ import type {
 import {
 	BillfromAddModal,
 	BillfromEditModal,
-} from './invoice-modal'
+} from './billfrom-modal'
 import {
 	CommonInputText,
 	CommonTable,
