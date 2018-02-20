@@ -72,11 +72,11 @@ export default class InternalWorkForm extends React.Component {
 		// 月次作業（見積明細の一覧データキャッシュ）
 		this.monthlyWorksCash = {}
 
-		// 旬次作業
+		// 期作業
 		this.periodWorks1 = []
 		this.periodWorks2 = []
 		this.periodWorks3 = []
-		// 旬次作業（見積明細の一覧データキャッシュ）
+		// 期作業（見積明細の一覧データキャッシュ）
 		this.periodWorksCash1 = {}
 		this.periodWorksCash2 = {}
 		this.periodWorksCash3 = {}
@@ -418,7 +418,7 @@ export default class InternalWorkForm extends React.Component {
 							}
 						})
 						monthlyWorksIndex++
-					} else if (_value.unit_name && _value.unit_name.indexOf('旬次') !== -1) {
+					} else if (_value.unit_name && _value.unit_name.indexOf('期') !== -1) {
 						for (let i = 1, ii = 4; i < ii; ++i) {
 							if (periodWorksIndex === 0) {
 								this['periodWorks' + i] = []
@@ -759,13 +759,36 @@ export default class InternalWorkForm extends React.Component {
 	 * @param {*} _index 
 	 */
 	removeList(_key, _index) {
-		let array = []
-		const oldEntry = this[_key]
-		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
-			if (i !== _index) array.push(oldEntry[i])
+		const doDelete = () => {
+			const targetEntry = this[_key][_index].data
+			axios({
+				url: '/s/delete-internalwork?internal_work=' + this.entry.link[0].___href,
+				method: 'post',
+				data: {feed:{entry: [targetEntry]}},
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+
+				this.setState({ isDisabled: false })
+				if (response.data.feed.title) {
+					alert(response.data.feed.title)
+				} else {
+					let array = []
+					for (let i = 0, ii = this[_key].length; i < ii; ++i) {
+						if (i !== _index) array.push(this[_key][i])
+					}
+					this[_key] = array
+					this.forceUpdate()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
 		}
-		this[_key] = array
-		this.forceUpdate()
+		if (confirm('この作業を削除するためには以下の条件が必要です。\n\n　・全日の個数が0個または未入力である\n　・承認済みのデータである\n\n削除を実行してよろしいでしょうか？')) {
+			doDelete()
+		}
 	}
 
 	/**
@@ -817,7 +840,7 @@ export default class InternalWorkForm extends React.Component {
 
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
-					<Tab eventKey={1} title="月次入力 / 旬次入力">
+					<Tab eventKey={1} title="月次入力 / 期入力">
 
 						<PanelGroup defaultActiveKey="1">
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
@@ -835,9 +858,10 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '300px'
 									}]}
+									fixed
 								/>
 							</Panel>
-							<Panel collapsible header="旬次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+							<Panel collapsible header="期作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 								<h4>1期（1日〜10日）</h4>
 								<CommonTable
 									name="periodWorks1"
@@ -853,6 +877,7 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '300px'
 									}]}
+									fixed
 								/>
 								<h4>2期（11日〜20日）</h4>
 								<CommonTable
@@ -869,8 +894,9 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '300px'
 									}]}
+									fixed
 								/>
-								<h4>3期（21日以降）</h4>
+								<h4>3期（21日〜末日）</h4>
 								<CommonTable
 									name="periodWorks3"
 									data={this.periodWorks3}
@@ -885,6 +911,7 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '300px'
 									}]}
+									fixed
 								/>
 							</Panel>
 						</PanelGroup>
@@ -900,7 +927,7 @@ export default class InternalWorkForm extends React.Component {
 									bsSize="sm"
 									options={this.days()}
 									value={this.worksDay}
-									style={{ float: 'left', width: '50px' }}
+									style={{ float: 'left', width: '80px' }}
 									onChange={(data) => this.changeDays(data)}
 								/>
 								<div style={{ clear: 'both' }}></div>
@@ -926,7 +953,8 @@ export default class InternalWorkForm extends React.Component {
 							}, {
 								field: 'approval_status_btn', title: '', width: '200px'
 							}]}
-							remove={(data, i)=>this.removeList('quotationWorks', i)}
+							remove={(data, i) => this.removeList('quotationWorks', i)}
+							fixed
     					>
 							{this.isEdit &&
 								<CommonFilterBox
@@ -961,6 +989,7 @@ export default class InternalWorkForm extends React.Component {
 								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('deliveryWorks', i)}
+							fixed
     					>
 							{this.isEdit &&
 								<CommonFilterBox
@@ -995,6 +1024,7 @@ export default class InternalWorkForm extends React.Component {
 								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('pickupWorks', i)}
+							fixed
     					>
 							{this.isEdit &&
 								<CommonFilterBox
@@ -1031,6 +1061,7 @@ export default class InternalWorkForm extends React.Component {
 								field: 'approval_status_btn', title: '', width: '200px'
     						}]}
 							remove={(data, i)=>this.removeList('packingWorks', i)}
+							fixed
 						>
 							{this.isEdit && 
 								<CommonFilterBox
