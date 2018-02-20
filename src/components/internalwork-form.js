@@ -422,7 +422,7 @@ export default class InternalWorkForm extends React.Component {
 							}
 						})
 						monthlyWorksIndex++
-					} else if (_value.unit_name && _value.unit_name.indexOf('期次') !== -1) {
+					} else if (_value.unit_name && _value.unit_name.indexOf('期') !== -1) {
 						for (let i = 1, ii = 4; i < ii; ++i) {
 							if (periodWorksIndex === 0) {
 								this['periodWorks' + i] = []
@@ -933,7 +933,7 @@ export default class InternalWorkForm extends React.Component {
 						value={this.isCompleted ? '完了' : '未完了'}
 						readonly
 					/>
-				}				
+				}
 
 				{this.isApproval &&
 					<Alert bsStyle="warning">
