@@ -36,7 +36,7 @@ export default class InternalWorkList extends React.Component {
     constructor(props:Props) {
     	super(props)
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
-    	this.url = '/d/internal_work?f&l=' + this.maxDisplayRows
+    	this.url = '/s/get-internalwork-list?l=' + this.maxDisplayRows
     	this.state = {
     		feed: { entry: [] },
     		isDisabled: false,
@@ -163,9 +163,9 @@ export default class InternalWorkList extends React.Component {
     						header={[{
     							field: 'internal_work.working_yearmonth',title: '作業年月', width: '100px'
     						}, {
-    							field: 'customer.customer_name', title: '顧客', width: '200px'
+    							field: 'customer.customer_name', title: '顧客', width: '400px'
     						}, {
-    							field: 'quotation.quotation_code', title: '対象見積書No', width: '200px'
+    							field: 'quotation.quotation_code', title: '対象見積書No', width: '500px'
     						}]}
     					>
     						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>

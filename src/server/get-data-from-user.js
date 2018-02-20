@@ -1,59 +1,73 @@
 import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 
-export function getCustomer() {
-
+export function getUser() {
 	const uid = vtecxapi.uid()
 	const email = vtecxapi.getEntry('/' + uid).feed.entry[0].title
-	const staff_data = vtecxapi.getFeed('/staff?staff.staff_email=' + email)
+	return vtecxapi.getFeed('/staff?staff.staff_email=' + email)
+}
+
+let role
+export function getRole() {
+	return role
+}
+export function setRole(_role) {
+	role = _role
+}
+
+// 担当の顧客一覧を取得する
+export function getCustomerFromUser(_customer_data, _email) {
+
+	const role = getRole()
+
+	// 管理者と経理担当は全ての顧客が対象
+	if (role === '1' || role === '5') {
+		return _customer_data.feed.entry
+	}
+
+	let array = []
+	for (let i = 0, ii = _customer_data.feed.entry.length; i < ii; ++i) {
+		const entry = _customer_data.feed.entry[i]
+		let isPush = false
+		// 営業担当検索
+		if (entry.customer.sales_staff) {
+			entry.customer.sales_staff.map((_value) => {
+				if (_value.staff_email === _email) {
+					array.push(entry)
+					isPush = true
+				}
+			})
+		}
+		if (!isPush) {
+			// 作業担当検索
+			if (entry.customer.working_staff) {
+				entry.customer.working_staff.map((_value) => {
+					if (_value.staff_email === _email) {
+						array.push(entry)
+					}
+				})
+			}
+		}
+	}
+	return array.length ? array : false
+}
+
+export function getCustomer(_option) {
+
+	const staff_data = getUser()
 	const isStaff = CommonGetFlag(staff_data)
 
 	if (isStaff) {
 
-		const role = staff_data.feed.entry[0].staff.role
-
-		const customer_data = vtecxapi.getFeed('/customer', true)
+		setRole(staff_data.feed.entry[0].staff.role)
+		const option = _option ? _option : ''
+		const email = staff_data.feed.entry[0].staff.staff_email
+		const customer_data = vtecxapi.getFeed('/customer' + option, true)
 		const isCustomer = CommonGetFlag(customer_data)
 
 		if (isCustomer) {
 
-			// 担当の顧客一覧を取得する
-			const getCustomerFromUser = () => {
-				let array = []
-				for (let i = 0, ii = customer_data.feed.entry.length; i < ii; ++i) {
-					const entry = customer_data.feed.entry[i]
-					let isPush = false
-					// 営業担当検索
-					if (entry.customer.sales_staff) {
-						entry.customer.sales_staff.map((_value) => {
-							if (_value.staff_email === email) {
-								array.push(entry)
-								isPush = true
-							}
-						})
-					}
-					if (!isPush) {
-						// 作業担当検索
-						if (entry.customer.working_staff) {
-							entry.customer.working_staff.map((_value) => {
-								if (_value.staff_email === email) {
-									array.push(entry)
-								}
-							})
-						}
-					}
-				}
-				return array.length ? array : false
-			}
-			let customerFromUser
-			// 管理者と経理担当は全ての顧客が対象
-			if (role === '1' || role === '5') {
-				customerFromUser = customer_data.feed.entry
-			} else {
-				customerFromUser = getCustomerFromUser()
-			}
-
-			return customerFromUser
+			return getCustomerFromUser(customer_data, email)
 
 		} else {
 			return null
@@ -91,6 +105,7 @@ export function getData(_type) {
 	}
 
 	const customerFromUser = getCustomer()
+	const role = getRole()
 
 	if (customerFromUser) {
 
@@ -128,43 +143,24 @@ export function getData(_type) {
 			// 顧客の場合
 			total_array = customerFromUser
 
-		} else if (_type === 'inquiry') {
+		} else if (_type === 'inquiry' || _type === 'internal_work') {
 
-			// 問い合わせの場合
-			for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
-
-				const customer_code = customerFromUser[i].customer.customer_code
-
-				// 顧客単位で問い合わせ検索
-				const uri = '/'+ _type +'?customer.customer_code=' + customer_code + queryString
+			// 管理者と経理担当は全てのデータが対象
+			if (role === '1' || role === '5') {
+				const uri = '/'+ _type +'?f' + queryString
 				const data = vtecxapi.getFeed(uri, true)
-
 				const isData = CommonGetFlag(data)
 				if (isData) {
-					// 検索結果マージ
-					Array.prototype.push.apply(total_array, data.feed.entry)
+					total_array = data.feed.entry
 				}
+			} else {
+				// 問い合わせの場合
+				for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
 
-				// 検索の最大件数になったらループを中止
-				if (end_size && end_size < total_array) {
-					break
-				}
+					const customer_code = customerFromUser[i].customer.customer_code
 
-			}
-		} else {
-
-			// 見積書 or 請求先 or 請求書の場合
-			for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
-
-				const billto_code = customerFromUser[i].billto.billto_code
-
-				if (!cashBilltoCode[billto_code]) {
-
-					// すでに一度検索した請求先コードは再検索しない
-					cashBilltoCode[billto_code] = true
-
-					// 請求先単位で見積書検索
-					const uri = '/'+ _type +'?billto.billto_code=' + billto_code + queryString
+					// 顧客単位で問い合わせ検索
+					const uri = '/'+ _type +'?customer.customer_code=' + customer_code + queryString
 					const data = vtecxapi.getFeed(uri, true)
 
 					const isData = CommonGetFlag(data)
@@ -176,6 +172,45 @@ export function getData(_type) {
 					// 検索の最大件数になったらループを中止
 					if (end_size && end_size < total_array) {
 						break
+					}
+
+				}
+			}
+		} else {
+
+			// 管理者と経理担当は全てのデータが対象
+			if (role === '1' || role === '5') {
+				const uri = '/'+ _type +'?f' + queryString
+				const data = vtecxapi.getFeed(uri, true)
+				const isData = CommonGetFlag(data)
+				if (isData) {
+					total_array = data.feed.entry
+				}
+			} else {
+				// 見積書 or 請求先 or 請求書の場合
+				for (let i = 0, ii = customerFromUser.length; i < ii; ++i) {
+
+					const billto_code = customerFromUser[i].billto.billto_code
+
+					if (!cashBilltoCode[billto_code]) {
+
+						// すでに一度検索した請求先コードは再検索しない
+						cashBilltoCode[billto_code] = true
+
+						// 請求先単位で見積書検索
+						const uri = '/' + _type + '?billto.billto_code=' + billto_code + queryString
+						const data = vtecxapi.getFeed(uri, true)
+
+						const isData = CommonGetFlag(data)
+						if (isData) {
+							// 検索結果マージ
+							Array.prototype.push.apply(total_array, data.feed.entry)
+						}
+
+						// 検索の最大件数になったらループを中止
+						if (end_size && end_size < total_array) {
+							break
+						}
 					}
 				}
 			}

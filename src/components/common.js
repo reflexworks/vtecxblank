@@ -29,60 +29,15 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
-export function getAuthList(_role) {
-	let list = {
-		CustomerRegistration: false,
-		CustomerList: false,
-		CustomerUpdate: false,
-		StaffRegistration: false,
-		StaffList: false,
-		StaffUpdate: false,
-		WarehouseRegistration: false,
-		WarehouseList: false,
-		WarehouseUpdate: false,
-		PackingItemRegistration: false,
-		PackingItemList: false,
-		PackingItemUpdate: false,
-		PackingItemTemplateRegistration: false,
-		PackingItemTemplateList: false,
-		PackingItemTemplateUpdate: false,
-		InternalWorkRegistration: false,
-		InternalWorkUpdate: false,
-		InternalWorkList: false,
-		QuotationRegistration: false,
-		QuotationList: false,
-		QuotationUpdate: false,
-		InvoiceRegistration: false,
-		InvoiceList: false,
-		InvoiceUpdate: false,
-		ShipmentServiceRegistration: false,
-		ShipmentServiceUpdate: false,
-		ShipmentServiceList: false,
-		DeliveryChargeRegistration: false,
-		DeliveryChargeTemplateRegistration: false,
-		DeliveryChargeTemplateUpdate: false,
-		DeliveryChargeTemplateList: false,
-		BilltoRegistration: false,
-		BilltoList: false,
-		BilltoUpdate: false,
-		TypeAheadRegistration: false,
-		TypeAheadList: false,
-		TypeAheadUpdate: false,
-		BasicConditionRegistration: false,
-		BasicConditionList: false,
-		BasicConditionUpdate: false,
-		BillingDataUpload: false,
-		InquiryRegistration: false,
-		InquiryList: false,
-		InquiryUpdate: false,
-		BillfromRegistration: false,
-		BillfromList: false,
-		BillfromUpdate: false
-	}
-	if (!_role) {
-		return list
-	} else {
-		return list
+let CommonLoginUserValue
+export function CommonLoginUser() {
+	return {
+		set: (_login_user_data) => {
+			CommonLoginUserValue = _login_user_data
+		},
+		get: () => {
+			return CommonLoginUserValue
+		}
 	}
 }
 
@@ -1575,6 +1530,7 @@ export class CommonTable extends React.Component {
 		this.selected = []
 		this.isControlLabel = (this.props.controlLabel || this.props.controlLabel === '')
 		this.tableClass = this.props.fixed ? 'common-table' : 'common-table scroll'
+		this.tableHeight = window.innerHeight - 280
 	}
 
 	/**
@@ -1642,6 +1598,8 @@ export class CommonTable extends React.Component {
 		if (this.props.edit || (this.props.remove && this.props.remove !== false)) option.push({
 			field: 'edit', title: this.editName(), width: '30px'
 		})
+
+		let cashHeaderIndex = []
 		const thNode = (_obj, _index) => {
 			const field = _obj.field.replace(/\./g, '___')
 			cashInfo[field] = _obj
@@ -1649,6 +1607,7 @@ export class CommonTable extends React.Component {
 			cashInfo[field].style.width = _obj.width
 			cashInfo[field].index = _index
 			cashInfolength++
+			cashHeaderIndex[_index] = _obj.field
 			return (
 				<th key={_index} style={{ width: _obj.width }} data-field={field}>
 					<div style={{width: _obj.width}}>{_obj.title}</div>
@@ -1749,6 +1708,7 @@ export class CommonTable extends React.Component {
 
 				let tdCount = 0
 				let array = new Array(cashInfolength)
+				let noneDisplayIndex = parseInt(cashInfolength + '')
 
 				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div>{(_index + 1)}</div></td>
 				tdCount++
@@ -1812,7 +1772,7 @@ export class CommonTable extends React.Component {
 							if (cashInfo[field]) {
 								array[cashInfo[field].index] = (
 									<td
-										key={tdCount}
+										key={cashInfo[field].index}
 										style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
 										name={_key + __key}
 									>
@@ -1822,21 +1782,21 @@ export class CommonTable extends React.Component {
 							} else {
 								array.push(
 									<td
-										key={tdCount}
+										key={noneDisplayIndex}
 										style={{ 'display': 'none' }}
 										name={_key + __key}
 									>
 										{ convertValue(__obj[__key], {}) }
 									</td>
 								)
+								noneDisplayIndex++
 							}
-							tdCount++
 						}
 
 					})
 
 					for (let l = 0, ll = array.length; l < ll; ++l) {
-						array[l] = array[l] ? array[l] : <td key={l}></td>
+						array[l] = array[l] ? array[l] : <td key={l} name={cashHeaderIndex[l]}></td>
 					}
 
 					return array
@@ -1873,7 +1833,7 @@ export class CommonTable extends React.Component {
 						キャンセル
 					</Button>
 				}
-				<div className={this.tableClass}>
+				<div className={this.tableClass} style={this.props.fixed ? null : {'max-height': this.tableHeight + 'px'}}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>
 							<tr>{header}</tr>
@@ -1913,6 +1873,7 @@ export class CommonModal extends React.Component {
 			isShow: this.props.isShow
 		}
 		this.LogicCommonTable = new LogicCommonTable()
+		this.modalHeight = window.innerHeight - 200
 	}
 
 	componentWillMount() {
@@ -1968,20 +1929,6 @@ export class CommonModal extends React.Component {
 		this.props.selectBtn(selectData())
 	}
 
-	componentWillUpdate() {
-		let commonModal = document.getElementById('common_modal_body')
-		const windowheihgt = window.innerHeight
-		window.onresize = function () {
-			if (commonModal) {
-				if ((commonModal.style.height + 100) > windowheihgt) {
-					commonModal.style.height = windowheihgt - 100
-				}
-			} else {
-				commonModal = document.getElementById('common_modal_body')
-			}
-		}
-	}
-
 	render() {
 
 		const modal_size = () => {
@@ -2008,7 +1955,7 @@ export class CommonModal extends React.Component {
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body" id="common_modal_body" style={ this.props.height && {height: this.props.height}}>
+							<div class="modal-body" id="common_modal_body" style={{ height: this.modalHeight + 'px' }}>
 								{ this.props.children }
 							</div>
 							<div class="modal-footer">
