@@ -27,7 +27,8 @@ import {
 	CommonTable,
 	CommonSelectBox,
 	CommonDisplayCalendar,
-	CommonLoginUser
+	CommonLoginUser,
+	CommonCheckBox
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
@@ -106,6 +107,7 @@ export default class InternalWorkForm extends React.Component {
      */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.isCompleted = this.entry.internal_work.is_completed === '1' ? true : false
 		if (this.entry.id) {
 			this.getShipmentService()
 			this.getApprovalInternalWork()
@@ -420,7 +422,7 @@ export default class InternalWorkForm extends React.Component {
 							}
 						})
 						monthlyWorksIndex++
-					} else if (_value.unit_name && _value.unit_name.indexOf('期') !== -1) {
+					} else if (_value.unit_name && _value.unit_name.indexOf('期次') !== -1) {
 						for (let i = 1, ii = 4; i < ii; ++i) {
 							if (periodWorksIndex === 0) {
 								this['periodWorks' + i] = []
@@ -503,7 +505,7 @@ export default class InternalWorkForm extends React.Component {
 	}
 
 	selectTab(_activeKey) {
-		// _activeKey = 4 // 月次入力/期入力
+		// _activeKey = 4 // 月次入力/期次入力
 		// _activeKey = 6 // 日次作業入力
 		// _activeKey = 0 // 見積作業状況
 		// _activeKey = 1 // 発送作業状況
@@ -872,6 +874,34 @@ export default class InternalWorkForm extends React.Component {
 		this.getInternalWork()
 	}
 
+	/**
+	 * 庫内作業完了フラグ
+	 * @param {*} _value 
+	 */
+	onCompleted(_value) {
+
+		this.entry.internal_work.is_completed = _value ? '1' : '0'
+		this.isCompleted = this.entry.internal_work.is_completed === '1' ? true : false
+
+		axios({
+			url: '/d/',
+			method: 'put',
+			data: {feed:{entry: [this.entry]}},
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+
+			const revision = parseInt(this.entry.id.split(',')[1]) + 1
+			this.entry.id = this.entry.id.split(',')[0] + ',' + revision
+
+			this.setState({ isDisabled: false })
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
 	render() {
 
 		return (
@@ -886,6 +916,25 @@ export default class InternalWorkForm extends React.Component {
 					readonly
 				/>
 
+				{ this.isEdit &&
+					<CommonCheckBox
+						controlLabel="庫内作業入力完了"
+						label="完了"
+						value={this.isCompleted}
+						onChange={(value) => this.onCompleted(value)}
+					/>
+				}
+
+				{ !this.isEdit &&
+					<CommonInputText
+						controlLabel="庫内作業入力完了"
+						name=""
+						type="text"
+						value={this.isCompleted ? '完了' : '未完了'}
+						readonly
+					/>
+				}				
+
 				{this.isApproval &&
 					<Alert bsStyle="warning">
 						{this.approvalDays}
@@ -894,7 +943,7 @@ export default class InternalWorkForm extends React.Component {
 
 				<Tabs defaultActiveKey={4} id="uncontrolled-tab-example" onSelect={(activeKey)=>this.selectTab(activeKey)}>
 
-					<Tab eventKey={4} title="月次入力 / 期入力">
+					<Tab eventKey={4} title="月次入力 / 期次入力">
 
 						<PanelGroup defaultActiveKey="1">
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
@@ -915,7 +964,7 @@ export default class InternalWorkForm extends React.Component {
 									fixed
 								/>
 							</Panel>
-							<Panel collapsible header="期作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
+							<Panel collapsible header="期次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 								<h4>1期（1日〜10日）</h4>
 								<CommonTable
 									name="periodWorks1"

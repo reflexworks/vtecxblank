@@ -1080,6 +1080,56 @@ export class CommonRadioBtn extends React.Component {
 
 }
 
+
+/**
+ * チェックボックス
+ */
+export class CommonCheckBox extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			name: this.props.name,
+			checked: this.props.checked
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({checked: newProps.checked})
+	}
+
+	/**
+	 * 値の変更処理
+	 * @param {*} e 
+	 */
+	changed(e: InputEvent) {
+		const value = e.target.checked
+		this.setState({checked: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
+	}
+
+	render() {
+
+		return (
+			<CommonFormGroup controlLabel={this.props.controlLabel}>
+				<Checkbox
+					name={this.state.name}
+					checked={this.props.value}
+					onChange={(e) => this.changed(e)}
+				>{ this.props.label }
+				</Checkbox>
+			</CommonFormGroup>
+		)
+	}
+
+}
+
 /**
  * カレンダー
  */
