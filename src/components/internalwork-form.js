@@ -96,6 +96,8 @@ export default class InternalWorkForm extends React.Component {
 		// 承認権限者かどうか
 		this.isApprovalAuther = this.loginUser.role === '2' || this.loginUser.role === '1'
 
+		// 状況表示用配列
+		this.calendar = [[],[],[],[]]
 	}
 
 	/**
@@ -500,12 +502,64 @@ export default class InternalWorkForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	monthlyDeliveryTables = () => {
+	selectTab(_activeKey) {
+		// _activeKey = 4 // 月次入力/期入力
+		// _activeKey = 6 // 日次作業入力
+		// _activeKey = 0 // 見積作業状況
+		// _activeKey = 1 // 発送作業状況
+		// _activeKey = 2 // 集荷作業状況
+		// _activeKey = 3 // 資材梱包作業状況
+		if (_activeKey < 4) {
+			// 作業状況取得
+			this.getWorksCalendar(_activeKey)
+		}
+	}
+
+	getWorksCalendar(_activeKey) {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/get-internalwork-calendar?internal_work=' + this.entry.link[0].___href + '&work_type=' + _activeKey,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.setState({ isDisabled: false })
+			if (response.status !== 204) {
+				const getCalendar = (_entrys) => {
+					let array = []
+					for (let i = 0, ii = _entrys.length; i < ii; ++i) {
+						const entry = _entrys[i]
+						const data = JSON.parse(entry.summary)
+						array.push(
+							<div>
+								<CommonFormGroup controlLabel={entry.title} size="lg">
+									<CommonDisplayCalendar year={this.year} month={this.month} data={data} />
+								</CommonFormGroup>
+								<hr />
+							</div>
+						)
+					}
+					return array
+				}
+				this.calendar[_activeKey] = getCalendar(response.data.feed.entry)
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	monthlyDeliveryTables() {
 		let array = []
-		for (let i = 0, ii = this.deliveryList.length; i < ii; ++i) {
+		for (let i = 0, ii = this.deliveryWorks.length; i < ii; ++i) {
 			array.push(
 				<div>
-					<CommonFormGroup controlLabel={this.deliveryList[i].name} size="lg">
+					<CommonFormGroup controlLabel={this.deliveryWorks[i].name} size="lg">
 						<CommonDisplayCalendar year={this.year} month={this.month} />
 					</CommonFormGroup>
 					<hr />
@@ -838,9 +892,9 @@ export default class InternalWorkForm extends React.Component {
 					</Alert>
 				}
 
-				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+				<Tabs defaultActiveKey={4} id="uncontrolled-tab-example" onSelect={(activeKey)=>this.selectTab(activeKey)}>
 
-					<Tab eventKey={1} title="月次入力 / 期入力">
+					<Tab eventKey={4} title="月次入力 / 期入力">
 
 						<PanelGroup defaultActiveKey="1">
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
@@ -917,7 +971,7 @@ export default class InternalWorkForm extends React.Component {
 						</PanelGroup>
 					</Tab>
 
-					<Tab eventKey={2} title="日次作業入力">
+					<Tab eventKey={6} title="日次作業入力">
 
 						<ListGroup>
 							<ListGroupItem>
@@ -1090,69 +1144,21 @@ export default class InternalWorkForm extends React.Component {
 						<hr />
 
 					</Tab>
-					<Tab eventKey={3} title="見積作業状況">
-							
-						<CommonFormGroup controlLabel="日次作業1" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
 
-						<hr />
-
-						<CommonFormGroup controlLabel="日次作業2" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
-						<hr />
-
-						<CommonFormGroup controlLabel="日次作業3" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-						
-						<hr />
-
-						<CommonFormGroup controlLabel="日次作業4" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
+					<Tab eventKey={0} title="見積作業状況">
+						{this.calendar[0]}
 					</Tab>
 
-					<Tab eventKey={4} title="発送作業状況">
-						{this.monthlyDeliveryTables()}
+					<Tab eventKey={1} title="発送作業状況">
+						{this.calendar[1]}
 					</Tab>
 
-					<Tab eventKey={5} title="集荷作業状況">
-						{this.monthlyDeliveryTables()}
+					<Tab eventKey={2} title="集荷作業状況">
+						{this.calendar[2]}
 					</Tab>
 
-					<Tab eventKey={6} title="資材梱包作業状況">
-						
-						<CommonFormGroup controlLabel="資材1" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
-						<hr />
-
-						<CommonFormGroup controlLabel="資材2" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
-						<hr />
-
-						<CommonFormGroup controlLabel="資材3" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
-						<hr />
-
-						<CommonFormGroup controlLabel="資材4" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
-						<hr />
-
-						<CommonFormGroup controlLabel="資材5" size="lg">
-							<CommonDisplayCalendar year={this.year} month={this.month} />
-						</CommonFormGroup>
-
+					<Tab eventKey={3} title="資材梱包作業状況">
+						{this.calendar[3]}
 					</Tab>
 
 				</Tabs>	

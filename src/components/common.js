@@ -2493,10 +2493,14 @@ export class CommonDisplayCalendar extends React.Component {
 		this.date = new Date()
 		this.to = this.setDate(this.date, true)
 
-		this.visible = false
+		this.visible = true
 
 		this.year = parseInt(this.props.year) || this.date.getFullYear()
 		this.month = parseInt(this.props.month) || this.date.getMonth() + 1
+
+		this.data = this.props.data
+
+		this.setInit(this.year, this.month)
 
 	}
 
@@ -2526,6 +2530,7 @@ export class CommonDisplayCalendar extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.visible = true
+		this.data = newProps.data
 		this.setInit(newProps.year, newProps.month)
 		this.forceUpdate()
 	}
@@ -2576,9 +2581,9 @@ export class CommonDisplayCalendar extends React.Component {
 					value = <td className="disabled"><div className="day">{value}</div></td>
 				} else {
 					if (this.year === this.to.year && this.month === this.to.month && day === this.to.day) {
-						value = <td className="toDay"><div className="day">{value}</div><div className="value">{i}</div></td>
+						value = <td className="toDay"><div className="day">{value}</div><div className="value">{this.data[day]}</div></td>
 					} else {
-						value = <td><div className="day">{value}</div><div className="value">{i}</div></td>
+						value = <td><div className="day">{value}</div><div className="value">{this.data[day]}</div></td>
 					}
 				}
 				week.push(value)

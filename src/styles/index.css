@@ -861,12 +861,12 @@ h3.title {
 .common-table {
   width: 100%;
   height: auto;
-  border: 1px solid #DDDDDD;
   background: #fff;
   margin-top: 2px;
 }
 .common-table.scroll {
   overflow: scroll;
+  border: 1px solid #DDDDDD;
 }
 .common-table .table{
   margin-bottom: 0px;

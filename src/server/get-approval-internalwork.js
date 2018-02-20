@@ -13,7 +13,7 @@ if (isApproval) {
 		const cashname = 'no_' + entry.internal_work.working_day
 		if (!cash[cashname]) {
 			cash[cashname] = true
-			array.push(entry.internal_work.working_day)
+			array.push(parseInt(entry.internal_work.working_day))
 		}
 	}
 	array.sort((a,b)=>{
