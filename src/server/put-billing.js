@@ -11,43 +11,34 @@ const encoding = 'UTF-8'
 const result = vtecxapi.getCsv(header, items, parent, skip, encoding)
 vtecxapi.log(JSON.stringify(result))
 
-//const shipment_class = '0'  // 出荷
-//const shipment_service_code = 'YH' // ヤマト発払
+const shipment_class = '0'  // 出荷
+const delivery_company_code = 'YM' // ヤマト運輸
 //const shipment_service_type = 0 // 発払
-//const shipment_service_code_customer = 'YM' // customerのshipment_service_codeは[YM]か[EC]固定
+//const shipment_service_code = 'YH' // customerのshipment_service_codeは[YM]か[EC]固定
 
-//const customer_all = vtecxapi.getFeed('/customer',true)
+const customer_all = vtecxapi.getFeed('/customer',true)
 
-/*
-const customer = customer_all.feed.entry.filter((entry) => {
-	return entry.customer.shipper ? {
-		if(entry.customer.customer_code === '0000001') {
-			entry.customer.shipper.filter((shipper) => {
+const shipper_code = result.feed.entry[0].billing.shipper_code
+
+// 荷主コード(分類コード)からcustomerを検索
+let customer = customer_all.feed.entry.filter((entry) => {
+	if (entry.customer.shipper&&entry.customer.shipper.length>0) {
+		const result1 = entry.customer.shipper.filter((shipper) => {
+			if (shipper.delivery_company_code !== delivery_company_code) {
+				return false
 			}
-		}
-	} : false
+			const result2 = shipper.shipper_info.filter((shipper_info) => { 
+				if ((shipper_info.shipper_code === shipper_code)&&
+					(shipper_info.shipment_class === shipment_class))
+					return true				
+			})
+			return result2.length>0
+		})
+		return result1.length>0
+	}
+})
 
-/*
-	return entry.customer.shipper ? entry.customer.shipper.filter((shipper) => {
-		vtecxapi.log('len='+customer.length)		
-		return (shipper.shipment_service_code === shipment_service_code_customer)
-		//		&& (shipper.shipper_info.shipment_class == '0')
-		//		&& (shipper.shipper_info.shipper_code===result.billing[0].shipper_code)	
-		// && (shipper.shipper_info.shipper_code==='200')	
-	}).length>0 : false
-*/
-
-//vtecxapi.log('len='+customer.length)
-
-/*
-
-	entry.customer.shipper.filter((shipper) => {
-		(shipper.shipment_service_code === shipment_service_code_customer)
-			&& (shipper.shipper_info.shipment_class === shipment_class)
-			&& (shipper.shipper_info.shipper_code===result.billing.shipper_code)	
-	})
-
-*/
+vtecxapi.log('len='+JSON.stringify(customer))
 
 /*
  shipment_service_code
