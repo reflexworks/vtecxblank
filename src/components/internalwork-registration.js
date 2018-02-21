@@ -152,7 +152,8 @@ export default class InternalWorkRegistration extends React.Component {
 					customer_name: entry.customer.customer_name
 				}
 				obj.internal_work = {
-					working_yearmonth: this.monthly
+					working_yearmonth: this.monthly,
+					is_completed: '0'
 				}
 				const uri = '/internal_work/' + this.entry.quotation.quotation_code + '-' + this.monthly.replace('/', '') + '-' + entry.customer.customer_code
 				obj.link = [{

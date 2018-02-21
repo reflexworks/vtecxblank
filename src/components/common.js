@@ -1080,6 +1080,56 @@ export class CommonRadioBtn extends React.Component {
 
 }
 
+
+/**
+ * チェックボックス
+ */
+export class CommonCheckBox extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			name: this.props.name,
+			checked: this.props.checked
+		}
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({checked: newProps.checked})
+	}
+
+	/**
+	 * 値の変更処理
+	 * @param {*} e 
+	 */
+	changed(e: InputEvent) {
+		const value = e.target.checked
+		this.setState({checked: value})
+		if (this.props.onChange) {
+			this.props.onChange(value)
+		}
+	}
+
+	render() {
+
+		return (
+			<CommonFormGroup controlLabel={this.props.controlLabel}>
+				<Checkbox
+					name={this.state.name}
+					checked={this.props.value}
+					onChange={(e) => this.changed(e)}
+				>{ this.props.label }
+				</Checkbox>
+			</CommonFormGroup>
+		)
+	}
+
+}
+
 /**
  * カレンダー
  */
@@ -2493,10 +2543,14 @@ export class CommonDisplayCalendar extends React.Component {
 		this.date = new Date()
 		this.to = this.setDate(this.date, true)
 
-		this.visible = false
+		this.visible = true
 
 		this.year = parseInt(this.props.year) || this.date.getFullYear()
 		this.month = parseInt(this.props.month) || this.date.getMonth() + 1
+
+		this.data = this.props.data
+
+		this.setInit(this.year, this.month)
 
 	}
 
@@ -2526,6 +2580,7 @@ export class CommonDisplayCalendar extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.visible = true
+		this.data = newProps.data
 		this.setInit(newProps.year, newProps.month)
 		this.forceUpdate()
 	}
@@ -2576,9 +2631,9 @@ export class CommonDisplayCalendar extends React.Component {
 					value = <td className="disabled"><div className="day">{value}</div></td>
 				} else {
 					if (this.year === this.to.year && this.month === this.to.month && day === this.to.day) {
-						value = <td className="toDay"><div className="day">{value}</div><div className="value">{i}</div></td>
+						value = <td className="toDay"><div className="day">{value}</div><div className="value">{this.data[day]}</div></td>
 					} else {
-						value = <td><div className="day">{value}</div><div className="value">{i}</div></td>
+						value = <td><div className="day">{value}</div><div className="value">{this.data[day]}</div></td>
 					}
 				}
 				week.push(value)

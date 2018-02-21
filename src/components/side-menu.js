@@ -156,7 +156,7 @@ export default class SideMenu extends React.Component {
 			},
 			InternalWorkList: {
 				glyph: 'list',
-				title: '庫内作業一覧'	,
+				title: '庫内作業入力'	,
 				type: 'internal_work'
 			},
 			BillfromRegistration: {
