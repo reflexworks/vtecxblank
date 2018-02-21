@@ -7,7 +7,7 @@ const entry = req.feed.entry[0]
 const internal_work = entry.internal_work
 const work_type = parseInt(internal_work.work_type)
 const list = [
-	['item_details_name', 'item_details_unit'],
+	['item_details_name', 'item_details_unit_name'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_type','shipment_service_weight'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_type','shipment_service_weight'],
 	['packing_item_code']
@@ -31,14 +31,22 @@ const getOption = () => {
 const option = '?' + getOption()
 
 const doDelete = () => {
-	const delete_url = internal_work_code + '/list' + option
-	const deleteWorks = vtecxapi.getFeed(delete_url)
-
-	const href = deleteWorks.feed.entry[0].link[0].___href
-	//const revision = deleteWorks.feed.entry[0].id.split(',')[1]
-	//const res = vtecxapi.delete(href, revision)
-	vtecxapi.deleteFolder(href)
-	vtecxapi.doResponse(deleteWorks)
+	const urlList = [
+		internal_work_code + '/list' + option,
+		internal_work_code + '/data' + option
+	]
+	const getEntry = () => {
+		let array = []
+		urlList.map((_url) => {
+			const deleteWorks = vtecxapi.getFeed(_url)
+			const _entry = deleteWorks.feed.entry[0]
+			vtecxapi.deleteFolder(_entry.link[0].___href)
+			array.push(_entry)
+		})
+		return array
+	}
+	const deleteWorks = getEntry()
+	vtecxapi.doResponse({feed:{entry:deleteWorks}})
 }
 
 const url = internal_work_code + '/data'

@@ -2,7 +2,7 @@ import vtecxapi from 'vtecxapi'
 import { CommonGetFlag } from './common'
 
 const key_list = [
-	['item_details_name', 'item_details_unit'],
+	['item_details_name', 'item_details_unit_name'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_weight'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_weight'],
 	['packing_item_code', 'packing_item_name']
