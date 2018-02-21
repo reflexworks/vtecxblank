@@ -13,6 +13,11 @@ import type {
 } from 'demo3.types'
 
 import {
+	BillfromAddModal,
+	BillfromEditModal,
+} from './billfrom-modal'
+
+import {
 	CommonInputText,
 	CommonTable,
 	CommonFilterBox
@@ -28,7 +33,10 @@ export default class QuotationForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			showBillfromAddModal: false,
+			showBillfromEditModal: false,
+		}
 
 		this.entry = this.props.entry
 		this.entry.quotation = this.entry.quotation || {}
@@ -37,12 +45,16 @@ export default class QuotationForm extends React.Component {
 		this.entry.billto = this.entry.billto || {}
 		this.entry.item_details = this.entry.item_details || []
 		this.entry.remarks = this.entry.remarks || []
-
+		this.entry.billfrom = this.entry.billfrom || {}
+		this.entry.billfrom.payee = this.entry.billfrom.payee || []
+		this.entry.contact_information = this.entry.contact_information || {}
 		this.selectItemDetails = null
 
+		this.address = ''
 		this.master = {
 			typeList: [],
-			packingItemTemplateList: []
+			packingItemTemplateList: [],
+			billfromList: [],
 		}
 		this.originTypeList = [[],[],[],[],[]]
 		this.typeList = [[], [], [], [], []]
@@ -72,16 +84,86 @@ export default class QuotationForm extends React.Component {
 			this.isDisabled = true
 		}
 
+
 	}
 
 	/**
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
-
 		this.setTypeaheadMasterData()
 		this.setPackingItemTemplateData()
+		this.setBillfromMasterData()
+	}
 
+
+	/**
+	 *  請求元リストを作成する
+	 */
+	setBillfromMasterData(_billfrom) {
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/billfrom?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			if (response.status !== 204) {
+
+				this.master.billfromList = response.data.feed.entry
+				this.billfromList = this.master.billfromList.map((obj) => {
+					return {
+						label: obj.billfrom.billfrom_name,
+						value: obj.billfrom.billfrom_code,
+						data: obj
+					}
+				})
+
+				if (_billfrom) this.entry.billfrom = _billfrom
+				if (this.entry.billfrom.billfrom_code) {
+					for (let i = 0, ii = this.billfromList.length; i < ii; ++i) {
+						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
+							this.billfrom = this.billfromList[i].data
+							this.entry.contact_information.address1 = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
+							this.entry.contact_information.zip_code = this.billfromList[i].data.contact_information.zip_code
+							this.entry.contact_information.tel 		= this.billfromList[i].data.contact_information.tel
+							break
+						}
+					}
+				}
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+	/**
+	 * 請求元リストの変更
+	 */
+	changeBillfrom(_data) {
+		if (_data) {
+			this.entry.billfrom = _data.data.billfrom
+			this.entry.contact_information = _data.data.contact_information
+			this.billfrom = _data.data
+			this.entry.contact_information.address1 = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2	
+		} else {
+			this.entry.billfrom = {}
+			this.entry.contact_information = {}
+			this.billfrom = {}
+			this.address = ''
+		}
+		this.forceUpdate()
+	}
+	setBillfromData(_data, _modal) {
+		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
+		if (_modal === 'add') {
+			this.setState({ showBillfromAddModal: false })
+		} else {
+			this.setState({ showBillfromEditModal: false })
+		}
 	}
 
 	/**
@@ -553,9 +635,90 @@ export default class QuotationForm extends React.Component {
 							</CommonTable>
 						</Tab>
 
+						<Tab eventKey={5} title="請求元">
+							{this.entry.billfrom && 
+							<CommonFilterBox
+								controlLabel="請求元"
+								name="billfrom.billfrom_code"
+								value={this.entry.billfrom.billfrom_code}
+								options={this.billfromList}
+								add={() => this.setState({ showBillfromAddModal: true })}
+								edit={() => this.setState({ showBillfromEditModal: true })}
+								onChange={(data) => this.changeBillfrom(data)}
+							/>
+								
+							}
+					
+							{this.entry.billfrom.billfrom_code &&
+								<CommonInputText
+									controlLabel="　"
+									name="billfrom.billfrom_name"
+									type="text"
+									value={this.entry.billfrom.billfrom_name}
+									readonly
+								/>
+							}				
+							{this.entry.billfrom.billfrom_code &&
+								<CommonInputText
+									controlLabel="郵便番号"
+									name="contact_information.zip_code"
+									type="text"
+									placeholder="郵便番号"
+									value={this.entry.contact_information.zip_code}
+									readonly
+								/>
+							}
+							{this.entry.billfrom.billfrom_code &&
+								<CommonInputText
+									controlLabel="住所"
+									name="contact_information.address1"
+									type="text"
+									value={this.entry.contact_information.address1}
+									readonly
+								/>
+							}
+							
+
+							{this.entry.billfrom.billfrom_code &&
+								<CommonInputText
+									controlLabel="電話番号"
+									name="contact_information.tel"
+									type="text"
+									placeholder="電話番号"
+									value={this.entry.contact_information.tel}
+									readonly
+								/>
+							}
+							{this.entry.billfrom.billfrom_code &&
+								<CommonTable
+									controlLabel="口座情報"
+									name="billfrom.payee"
+									data={this.entry.billfrom.payee}
+									header={[{
+										field: 'bank_info', title: '口座名', width: '30px',
+										convert: {
+											1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+											6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
+										}
+									}, {
+										field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
+										
+									}, {
+										field: 'account_number', title: '口座番号', width: '30px',
+										
+									}]}
+									noneScroll
+									fixed
+								/>
+							}
+							
+						</Tab>	
 					</Tabs>
+					<BillfromAddModal isShow={this.state.showBillfromAddModal} close={() => this.setState({ showBillfromAddModal: false })} add={(data) => this.setBillfromData(data, 'add')} />
+					<BillfromEditModal isShow={this.state.showBillfromEditModal} close={() => this.setState({ showBillfromEditModal: false })} edit={(data) => this.setBillfromData(data, 'edit')} data={this.billfrom} />
 				</Form>
 			</div>
 		)
 	}
+
 }
