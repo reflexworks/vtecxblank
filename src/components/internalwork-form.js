@@ -209,6 +209,7 @@ export default class InternalWorkForm extends React.Component {
 						unit_name: internal_work.item_details_unit_name,
 						quantity: internal_work.quantity ? internal_work.quantity : '',
 						unit: internal_work.item_details_unit,
+						staff_name: internal_work.staff_name,
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
@@ -225,6 +226,7 @@ export default class InternalWorkForm extends React.Component {
 						unit_name: internal_work.item_details_unit_name,
 						quantity: internal_work.quantity ? internal_work.quantity : '',
 						unit: internal_work.item_details_unit,
+						staff_name: internal_work.staff_name,
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
@@ -250,6 +252,7 @@ export default class InternalWorkForm extends React.Component {
 							unit_name: internal_work.item_details_unit_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							unit: internal_work.item_details_unit,
+							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
 							approval_status_btn: approval_status_btn,
 							data: entry
@@ -266,6 +269,7 @@ export default class InternalWorkForm extends React.Component {
 								internal_work.shipment_service_size,
 								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
+							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
 							approval_status_btn: approval_status_btn,
 							data: entry
@@ -282,6 +286,7 @@ export default class InternalWorkForm extends React.Component {
 								internal_work.shipment_service_size,
 								internal_work.shipment_service_weight),
 							quantity: internal_work.quantity ? internal_work.quantity : '',
+							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
 							approval_status_btn: approval_status_btn,
 							data: entry
@@ -294,6 +299,7 @@ export default class InternalWorkForm extends React.Component {
 							item_code: internal_work.packing_item_code,
 							item_name: internal_work.packing_item_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
+							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
 							approval_status_btn: approval_status_btn,
 							data: entry
@@ -727,7 +733,9 @@ export default class InternalWorkForm extends React.Component {
 				}
 				this[_key][_index].data.internal_work.quantity = _data
 				this[_key][_index].data.internal_work.approval_status = _entry.internal_work.approval_status
+				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
+				this[_key][_index].staff_name = _entry.internal_work.staff_name
 				this.forceUpdate()
 
 			}).catch((error) => {
@@ -756,6 +764,7 @@ export default class InternalWorkForm extends React.Component {
 				obj.internal_work.working_day = this.worksDay + ''
 			}
 			obj.internal_work.quantity = _data
+			obj.internal_work.staff_name = this.loginUser.staff_name
 			updateInternalWork(obj, true)
 		} else {
 			// 入力値更新
@@ -765,6 +774,7 @@ export default class InternalWorkForm extends React.Component {
 				}
 			}
 			entry.internal_work.quantity = _data
+			entry.internal_work.staff_name = this.loginUser.staff_name
 			updateInternalWork(entry)
 		}
 	}
@@ -951,17 +961,19 @@ export default class InternalWorkForm extends React.Component {
 									name="monthlyWorks"
 									data={this.monthlyWorks}
 									header={[{
-										field: 'item_name',title: '作業内容', width: '400px'
+										field: 'item_name',title: '作業内容', width: '300px'
 									}, {
 										field: 'unit_name',title: '単位名称', width: '100px'
 									}, {
-										field: 'quantity', title: '入力値', width: '50px',
+										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
 										}
 									}, {
-										field: 'unit',title: '単位', width: '200px'
+										field: 'unit',title: '単位', width: '100px'
+									}, {
+										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
 								/>
@@ -972,17 +984,19 @@ export default class InternalWorkForm extends React.Component {
 									name="periodWorks1"
 									data={this.periodWorks1}
 									header={[{
-										field: 'item_name',title: '作業内容', width: '400px'
+										field: 'item_name',title: '作業内容', width: '300px'
 									}, {
 										field: 'unit_name',title: '単位名称', width: '100px'
 									}, {
-										field: 'quantity', title: '入力値', width: '50px',
+										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks1', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks1', data, rowindex) }
 										}
 									}, {
-										field: 'unit',title: '単位', width: '200px'
+										field: 'unit',title: '単位', width: '100px'
+									}, {
+										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
 								/>
@@ -991,17 +1005,19 @@ export default class InternalWorkForm extends React.Component {
 									name="periodWorks2"
 									data={this.periodWorks2}
 									header={[{
-										field: 'item_name',title: '作業内容', width: '400px'
+										field: 'item_name',title: '作業内容', width: '300px'
 									}, {
 										field: 'unit_name',title: '単位名称', width: '100px'
 									}, {
-										field: 'quantity', title: '入力値', width: '50px',
+										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks2', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks2', data, rowindex) }
 										}
 									}, {
-										field: 'unit',title: '単位', width: '200px'
+										field: 'unit',title: '単位', width: '100px'
+									}, {
+										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
 								/>
@@ -1010,17 +1026,19 @@ export default class InternalWorkForm extends React.Component {
 									name="periodWorks3"
 									data={this.periodWorks3}
 									header={[{
-										field: 'item_name',title: '作業内容', width: '400px'
+										field: 'item_name',title: '作業内容', width: '300px'
 									}, {
 										field: 'unit_name',title: '単位名称', width: '100px'
 									}, {
-										field: 'quantity', title: '入力値', width: '50px',
+										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks3', data, rowindex) },
 											onBlur: (data, rowindex) => { this.blurList('periodWorks3', data, rowindex) }
 										}
 									}, {
-										field: 'unit',title: '単位', width: '200px'
+										field: 'unit',title: '単位', width: '100px'
+									}, {
+										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
 								/>
