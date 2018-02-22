@@ -194,7 +194,7 @@ inquiry
 billing_data
  shipment_service_code
  shipment_service_type
- shipment_service_service_name
+ customer_code
  shipment_class
  shipper_code
  shipping_date
@@ -202,10 +202,11 @@ billing_data
  delivery_class1
  delivery_class2
  size
- quantity
+ zone_name
  prefecture
  city
  delivery_charge
+ delivery_charge_org_total
 billing_summary
  content{}
   size
