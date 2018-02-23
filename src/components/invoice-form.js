@@ -1604,46 +1604,56 @@ export default class InvoiceForm extends React.Component {
 							/>
 						}
 						
-						<FormGroup className="hide"	>	
-							<CommonInputText
-								name="contact_information.fax"
-								type="text"
-								value={this.entry.contact_information.fax}
-								readonly
-							/>
-						</FormGroup>
-						<FormGroup className="hide"	>	
-							<CommonInputText
-								name="contact_information.email"
-								type="text"
-								value={this.entry.contact_information.email}
-								readonly
-							/>
-						</FormGroup>
-						<FormGroup className="hide"	>
-							<CommonPrefecture
-								controlLabel="都道府県"
-								componentClass="select"
-								name="contact_information.prefecture"
-								value={this.entry.contact_information.prefecture}
-							/>
-						</FormGroup>
-						<FormGroup className="hide"	>	
-							<CommonInputText
-								name="contact_information.address1"
-								type="text"
-								value={this.entry.contact_information.address1}
-								readonly
-							/>
-						</FormGroup>
-						<FormGroup className="hide"	>	
-							<CommonInputText
-								name="contact_information.address2"
-								type="text"
-								value={this.entry.contact_information.address2}
-								readonly
-							/>
-						</FormGroup>
+						{this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonInputText
+									name="contact_information.fax"
+									type="text"
+									value={this.entry.contact_information.fax}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonInputText
+									name="contact_information.email"
+									type="text"
+									value={this.entry.contact_information.email}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonPrefecture
+									controlLabel="都道府県"
+									componentClass="select"
+									name="contact_information.prefecture"
+									value={this.entry.contact_information.prefecture}
+								/>
+							</FormGroup>
+						}
+						{this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonInputText
+									name="contact_information.address1"
+									type="text"
+									value={this.entry.contact_information.address1}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonInputText
+									name="contact_information.address2"
+									type="text"
+									value={this.entry.contact_information.address2}
+									readonly
+								/>
+							</FormGroup>
+						}
 				
 						{!this.entry.billfrom.billfrom_code &&
 							<FormGroup className="hide"	>
