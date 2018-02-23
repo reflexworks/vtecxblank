@@ -5,14 +5,7 @@ import type {
 } from 'demo3.types'
 
 import {
-//Form,
-} from 'react-bootstrap'
-
-import {
-	CommonModal,
-	//CommonInputText,
-	//CommonTable,
-	//CommonFilterBox
+	CommonModal,	
 } from './common'
 
 import BillfromForm from './billfrom-form'

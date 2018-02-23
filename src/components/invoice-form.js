@@ -26,6 +26,7 @@ import {
 	CommonTable,
 	CommonRadioBtn,
 	CommonFilterBox,
+	CommonPrefecture,
 	CommonMonthlySelect,
 } from './common'
 
@@ -57,6 +58,8 @@ export default class InvoiceForm extends React.Component {
 			billfromList: [],
 			internalWorkYearMonthList: [],
 		}
+
+		this.address = ''
 
 		this.taxationList=[{
 			label: '税込',
@@ -117,7 +120,7 @@ export default class InvoiceForm extends React.Component {
 	componentWillMount() {
 		this.sampleData()
 		this.getService()
-		this.setBillfromMasterData()
+		
 	}
 
 	/**
@@ -126,7 +129,9 @@ export default class InvoiceForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
 		this.setCustomerMasterData()
+		this.setBillfromMasterData()
 		this.setInternalWorkYearMonthList()
 		this.sortItemDetails()
 	}
@@ -698,9 +703,10 @@ export default class InvoiceForm extends React.Component {
 					for (let i = 0, ii = this.billfromList.length; i < ii; ++i) {
 						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
 							this.billfrom = this.billfromList[i].data
-							this.entry.contact_information.address1 = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
-							this.entry.contact_information.zip_code = this.billfromList[i].data.contact_information.zip_code
-							this.entry.contact_information.tel 		= this.billfromList[i].data.contact_information.tel
+							this.entry.contact_information = this.billfromList[i].data.contact_information
+							if(this.billfromList[i].data.contact_information.prefecture || this.billfromList[i].data.contact_information.address1 || this.billfromList[i].data.contact_information.address2){
+								this.address = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
+							}
 							break
 						}
 					}
@@ -718,17 +724,18 @@ export default class InvoiceForm extends React.Component {
 	changeBillfrom(_data) {
 		if (_data) {
 			this.entry.billfrom = _data.data.billfrom
+			this.entry.contact_information = _data.data.contact_information
 			this.billfrom = _data.data
-			this.entry.contact_information.address1 = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
-			this.entry.contact_information.zip_code = _data.data.contact_information.zip_code
-			this.entry.contact_information.tel = _data.data.contact_information.tel
+			this.address = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
 			
 		} else {
 			this.entry.billfrom = {}
-			this.billfrom = {}
 			this.entry.contact_information = {}
+			this.billfrom = {}
+			this.address=''
 		}
 		this.forceUpdate()
+		
 	}
 	setBillfromData(_data, _modal) {
 		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
@@ -1510,6 +1517,22 @@ export default class InvoiceForm extends React.Component {
 
 					<Tab eventKey={4} title="請求元"> 
 						
+						{/*
+						画面に表示
+						 名前
+						 郵便番号
+						 住所（都道府県 + 市区郡町村 + 番地）表示用
+						 電話番号
+						 口座情報
+						
+						画面非表示
+						 FAX
+						 メールアドレス
+						 都道府県
+						 市区郡町村
+						 番地
+						*/}
+
 						<CommonFilterBox
 							controlLabel="請求元"
 							name="billfrom.billfrom_code"
@@ -1519,16 +1542,15 @@ export default class InvoiceForm extends React.Component {
 							edit={() => this.setState({ showBillfromEditModal: true })}
 							onChange={(data) => this.changeBillfrom(data)}
 						/>
-						
 						{this.entry.billfrom.billfrom_code &&
 							<CommonInputText
-								controlLabel="　"
+								controlLabel=" "
 								name="billfrom.billfrom_name"
 								type="text"
 								value={this.entry.billfrom.billfrom_name}
 								readonly
 							/>
-						}				
+						}			
 						{this.entry.billfrom.billfrom_code &&
 							<CommonInputText
 								controlLabel="郵便番号"
@@ -1543,9 +1565,8 @@ export default class InvoiceForm extends React.Component {
 						
 							<CommonInputText
 								controlLabel="住所"
-								name="contact_information.address1"
 								type="text"
-								value={this.entry.contact_information.address1}
+								value={this.address}
 								readonly
 							/>
 						}
@@ -1582,14 +1603,53 @@ export default class InvoiceForm extends React.Component {
 								fixed
 							/>
 						}
-
+						
+						<FormGroup className="hide"	>	
+							<CommonInputText
+								name="contact_information.fax"
+								type="text"
+								value={this.entry.contact_information.fax}
+								readonly
+							/>
+						</FormGroup>
+						<FormGroup className="hide"	>	
+							<CommonInputText
+								name="contact_information.email"
+								type="text"
+								value={this.entry.contact_information.email}
+								readonly
+							/>
+						</FormGroup>
+						<FormGroup className="hide"	>
+							<CommonPrefecture
+								controlLabel="都道府県"
+								componentClass="select"
+								name="contact_information.prefecture"
+								value={this.entry.contact_information.prefecture}
+							/>
+						</FormGroup>
+						<FormGroup className="hide"	>	
+							<CommonInputText
+								name="contact_information.address1"
+								type="text"
+								value={this.entry.contact_information.address1}
+								readonly
+							/>
+						</FormGroup>
+						<FormGroup className="hide"	>	
+							<CommonInputText
+								name="contact_information.address2"
+								type="text"
+								value={this.entry.contact_information.address2}
+								readonly
+							/>
+						</FormGroup>
+				
 						{!this.entry.billfrom.billfrom_code &&
 							<FormGroup className="hide"	>
 								<CommonInputText
-									controlLabel="　"
 									name="billfrom.billfrom_name"
 									type="text"
-									//placeholder="請求元名"
 									value={this.entry.billfrom.billfrom_name}
 									readonly
 								/>
@@ -1598,7 +1658,6 @@ export default class InvoiceForm extends React.Component {
 						{!this.entry.billfrom.billfrom_code &&
 							<FormGroup className="hide"	>	
 								<CommonInputText
-									controlLabel=""
 									name="contact_information.zip_code"
 									type="text"
 									placeholder="郵便番号"
@@ -1607,10 +1666,72 @@ export default class InvoiceForm extends React.Component {
 								/>
 							</FormGroup>
 						}
+
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>
+								<CommonPrefecture
+									controlLabel="都道府県"
+									componentClass="select"
+									name="contact_information.prefecture"
+									value={this.entry.contact_information.prefecture}
+								/>
+							</FormGroup>
+						}
+						
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>	
+								<CommonInputText
+									name="contact_information.address1"
+									type="text"
+									value={this.entry.contact_information.address1}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>	
+								<CommonInputText
+									name="contact_information.address2"
+									type="text"
+									value={this.entry.contact_information.address2}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>	
+								<CommonInputText
+									name="contact_information.tel"
+									type="text"
+									value={this.entry.contact_information.tel}
+									readonly
+								/>
+							</FormGroup>
+						}
+
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>	
+								<CommonInputText
+									name="contact_information.fax"
+									type="text"
+									value={this.entry.contact_information.fax}
+									readonly
+								/>
+							</FormGroup>
+						}
+						{!this.entry.billfrom.billfrom_code &&
+							<FormGroup className="hide"	>	
+								<CommonInputText
+									name="contact_information.email"
+									type="text"
+									value={this.entry.contact_information.email}
+									readonly
+								/>
+							</FormGroup>
+						}
 						{!this.entry.billfrom.billfrom_code &&
 							<FormGroup className="hide"	>
 								<CommonTable
-									controlLabel="口座情報"
 									name="billfrom.payee"
 									data={this.entry.billfrom.payee}
 									header={[{
@@ -1631,7 +1752,7 @@ export default class InvoiceForm extends React.Component {
 								/>
 							</FormGroup>
 						}
-						
+
 					</Tab>
 					
 					<Tab eventKey={5} title="請求データ(発送)">
