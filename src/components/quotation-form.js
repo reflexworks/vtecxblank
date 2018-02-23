@@ -375,7 +375,7 @@ export default class QuotationForm extends React.Component {
 	printPDF() {		
 		location.href = 's/get-pdf-quotation?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
 	}
-
+	
 	render() {
 
 		return (
@@ -737,7 +737,7 @@ export default class QuotationForm extends React.Component {
 								/>
 							}
 
-							{this.entry.billfrom.billfrom_code &&
+							{this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonInputText
 										name="contact_information.fax"
@@ -747,7 +747,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{this.entry.billfrom.billfrom_code &&
+							{this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonInputText
 										name="contact_information.email"
@@ -757,7 +757,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{this.entry.billfrom.billfrom_code &&
+							{this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonPrefecture
 										controlLabel="都道府県"
@@ -767,7 +767,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{this.entry.billfrom.billfrom_code &&
+							{this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonInputText
 										name="contact_information.address1"
@@ -777,7 +777,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{this.entry.billfrom.billfrom_code &&
+							{this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonInputText
 										name="contact_information.address2"
@@ -797,7 +797,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.zip_code"
@@ -807,7 +807,7 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>
 									<CommonPrefecture
 										controlLabel="都道府県"
@@ -816,52 +816,47 @@ export default class QuotationForm extends React.Component {
 									/>
 								</FormGroup>
 							}		
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.address1"
 										type="text"
-										value={this.entry.contact_information.address1}
 										readonly
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.address2"
 										type="text"
-										value={this.entry.contact_information.address2}
 										readonly
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.tel"
 										type="text"
-										value={this.entry.contact_information.tel}
 										readonly
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.fax"
 										type="text"
-										value={this.entry.contact_information.fax}
 										readonly
 									/>
 								</FormGroup>
 							}
-							{!this.entry.billfrom.billfrom_code &&
+							{!this.entry.contact_information &&
 								<FormGroup className="hide"	>	
 									<CommonInputText
 										name="contact_information.email"
 										type="text"
-										value={this.entry.contact_information.email}
 										readonly
 									/>
 								</FormGroup>
