@@ -207,6 +207,7 @@ billing_data
  city
  delivery_charge
  delivery_charge_org_total
+ quantity
 billing_summary
  content{}
   size

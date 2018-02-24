@@ -11,10 +11,7 @@ const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 //vtecxapi.log(JSON.stringify(result))
 
 let shipment_class   		// 出荷(0)or集荷(1)、見つかった荷主コードによって
-let shipment_service_code   // 見つかった荷主コードによって
 let customer_code   		// 見つかった荷主コードによって
-const shipment_service_type = 0 // 発払
-
 let shipment_service = null
 const customer_all = vtecxapi.getFeed('/customer',true)
 
@@ -24,34 +21,14 @@ const result = { 'feed': { 'entry': [] } }
 billingcsv.feed.entry.map((entry) => {
 
 	try {
-		const charge_by_zone = getChargeByZone( entry.billing.size, entry.billing.prefecture, entry.billing.shipper_code)
-		if (charge_by_zone.length===0) throw 'charge_by_zone is not found.'
-
-		const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
-
-		const billing_data = {
-			billing_data: {
-				'shipment_service_code': shipment_service_code,
-				'shipment_service_type': shipment_service_type,
-				'customer_code': customer_code,
-				'shipment_class': shipment_class,
-				'shipper_code': entry.billing.shipper_code,
-				'shipping_date': getFullDate(entry.billing.shipping_date),
-				'tracking_number': tracking_number,
-				'delivery_class1': entry.billing.delivery_class1,
-				'delivery_class2': entry.billing.delivery_class2,
-				'size': entry.billing.size,
-				'prefecture': entry.billing.prefecture,
-				'zone_name': charge_by_zone[0].zone_name,
-				'city': entry.billing.city,
-				'delivery_charge_org_total': entry.billing.delivery_charge_org_total,
-				'delivery_charge': charge_by_zone[0].price,
-			},
-			'link': [
-				{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, tracking_number) }
-			]
+		let billing_data
+		if (entry.billing.delivery_class1 === '宅急便発払') {
+			billing_data = getBillingDataOfHatsu(entry,'YH')	// 発払		
+		} else if (entry.billing.delivery_class1 === 'クロネコＤＭ便'){
+			billing_data = getBillingDataOfMail(entry,'YH1')	// DM便
+		} else if (entry.billing.delivery_class1 === 'ネコポス') {
+			billing_data = getBillingDataOfMail(entry,'YH2')	// ネコポス
 		}
-
 		result.feed.entry.push(billing_data)
 
 	} catch (e) {
@@ -63,7 +40,73 @@ billingcsv.feed.entry.map((entry) => {
 // datastoreを更新
 vtecxapi.put(result,true)
 
-function getChargeByZone(size,prefecture,shipper_code) {
+function getBillingDataOfHatsu(entry,shipment_service_code) {
+
+	const charge_by_zone = getChargeByZone( entry.billing.size, entry.billing.prefecture, entry.billing.shipper_code,shipment_service_code)
+	if (charge_by_zone.length===0) throw 'charge_by_zone is not found.'
+
+	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
+
+	const billing_data = {
+		billing_data: {
+			'shipment_service_code': shipment_service_code,
+			'shipment_service_type': '1',					// 発払
+			'customer_code': customer_code,
+			'shipment_class': shipment_class,
+			'shipper_code': entry.billing.shipper_code,
+			'shipping_date': getFullDate(entry.billing.shipping_date),
+			'tracking_number': tracking_number,
+			'delivery_class1': entry.billing.delivery_class1,
+			'delivery_class2': entry.billing.delivery_class2,
+			'size': entry.billing.size,
+			'prefecture': entry.billing.prefecture,
+			'zone_name': charge_by_zone[0].zone_name,
+			'city': entry.billing.city,
+			'delivery_charge_org_total': entry.billing.delivery_charge_org_total,
+			'delivery_charge': charge_by_zone[0].price,
+			'quantity' : entry.billing.quantity
+		},
+		'link': [
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, tracking_number) }
+		]
+	}
+
+	return billing_data
+}
+
+function getBillingDataOfMail(entry,shipment_service_code) {
+
+	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
+
+	const billing_data = {
+		billing_data: {
+			'shipment_service_code': shipment_service_code,
+			'shipment_service_type': '2',		// メール便
+			'customer_code': customer_code,
+			'shipment_class': shipment_class,
+			'shipper_code': entry.billing.shipper_code,
+			'shipping_date': getFullDate(entry.billing.shipping_date),
+			'tracking_number': tracking_number,
+			'delivery_class1': entry.billing.delivery_class1,
+			'delivery_class2': entry.billing.delivery_class2,
+			'size': '',
+			'prefecture': '',
+			'zone_name': '',
+			'city': '',
+			'delivery_charge_org_total': entry.billing.delivery_charge_org_total,
+			'delivery_charge': getChargeOfMail(entry.billing.shipper_code,shipment_service_code),	// YM1 is DM便
+			'quantity' : entry.billing.quantity
+		},
+		'link': [
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, ('00'+tracking_number).slice(-12)) }
+		]
+	}
+
+	return billing_data
+}
+
+
+function getChargeByZone(size,prefecture,shipper_code,shipment_service_code) {
 
 	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code)
 
@@ -104,6 +147,22 @@ function getChargeByZone(size,prefecture,shipper_code) {
 	
 }
 
+function getChargeOfMail(shipper_code,shipment_service_code) {
+
+	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code)
+
+	// shipment_service_codeからdelivery_chargeを取得
+	const delivery_charge = delivery_charge_all.feed.entry[0].delivery_charge.filter((delivery_charge) => {
+		return delivery_charge.shipment_service_code === shipment_service_code
+	})
+
+	if (delivery_charge.length === 0) throw 'deliverycharge of '+shipment_service_code+' is not found.'
+
+	return delivery_charge[0].delivery_charge_details[0].price
+	
+}
+
+
 function getDeliverycharge(customer_all, shipper_code) {
 	// 荷主コード(分類コード)からcustomerを検索
 	const customer = customer_all.feed.entry.filter((entry) => {
@@ -113,7 +172,6 @@ function getDeliverycharge(customer_all, shipper_code) {
 					if (shipper_info.shipper_code === shipper_code)
 					{
 						shipment_class = shipper_info.shipment_class // グローバル変数にセット
-						shipment_service_code = shipper.shipment_service_code // グローバル変数にセット
 						return true				
 					}	
 				})
