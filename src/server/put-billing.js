@@ -13,6 +13,7 @@ const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 let shipment_class   		// 出荷(0)or集荷(1)、見つかった荷主コードによって
 let customer_code   		// 見つかった荷主コードによって
 let shipment_service = null
+let shipment_service_code   // 見つかった荷主コードによって
 const customer_all = vtecxapi.getFeed('/customer',true)
 
 //vtecxapi.log('size='+size)
@@ -23,11 +24,11 @@ billingcsv.feed.entry.map((entry) => {
 	try {
 		let billing_data
 		if (entry.billing.delivery_class1 === '宅急便発払') {
-			billing_data = getBillingDataOfHatsu(entry,'YH')	// 発払		
+			billing_data = getBillingDataOfHatsu(entry,entry.billing.delivery_class1)			
 		} else if (entry.billing.delivery_class1 === 'クロネコＤＭ便'){
-			billing_data = getBillingDataOfMail(entry,'YH1')	// DM便
+			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// DM便
 		} else if (entry.billing.delivery_class1 === 'ネコポス') {
-			billing_data = getBillingDataOfMail(entry,'YH2')	// ネコポス
+			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// ネコポス
 		}
 		result.feed.entry.push(billing_data)
 
@@ -40,9 +41,9 @@ billingcsv.feed.entry.map((entry) => {
 // datastoreを更新
 vtecxapi.put(result,true)
 
-function getBillingDataOfHatsu(entry,shipment_service_code) {
+function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 
-	const charge_by_zone = getChargeByZone( entry.billing.size, entry.billing.prefecture, entry.billing.shipper_code,shipment_service_code)
+	const charge_by_zone = getChargeByZone( entry.billing.size, entry.billing.prefecture, entry.billing.shipper_code,shipment_service_service_name)
 	if (charge_by_zone.length===0) throw 'charge_by_zone is not found.'
 
 	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
@@ -50,14 +51,14 @@ function getBillingDataOfHatsu(entry,shipment_service_code) {
 	const billing_data = {
 		billing_data: {
 			'shipment_service_code': shipment_service_code,
-			'shipment_service_type': '1',					// 発払
+			'shipment_service_type': '1',					// 宅配便
 			'customer_code': customer_code,
 			'shipment_class': shipment_class,
 			'shipper_code': entry.billing.shipper_code,
 			'shipping_date': getFullDate(entry.billing.shipping_date),
 			'tracking_number': tracking_number,
-			'delivery_class1': entry.billing.delivery_class1,
-			'delivery_class2': entry.billing.delivery_class2,
+			'shipment_service_service_name': entry.billing.delivery_class1,
+			'delivery_class': entry.billing.delivery_class2,
 			'size': entry.billing.size,
 			'prefecture': entry.billing.prefecture,
 			'zone_name': charge_by_zone[0].zone_name,
@@ -74,8 +75,9 @@ function getBillingDataOfHatsu(entry,shipment_service_code) {
 	return billing_data
 }
 
-function getBillingDataOfMail(entry,shipment_service_code) {
+function getBillingDataOfMail(entry,shipment_service_service_name) {
 
+	getDeliverycharge(customer_all, entry.billing.shipper_code,shipment_service_service_name)
 	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
 
 	const billing_data = {
@@ -87,8 +89,8 @@ function getBillingDataOfMail(entry,shipment_service_code) {
 			'shipper_code': entry.billing.shipper_code,
 			'shipping_date': getFullDate(entry.billing.shipping_date),
 			'tracking_number': tracking_number,
-			'delivery_class1': entry.billing.delivery_class1,
-			'delivery_class2': entry.billing.delivery_class2,
+			'shipment_service_service_name': entry.billing.delivery_class1,
+			'delivery_class': entry.billing.delivery_class2,
 			'size': '',
 			'prefecture': '',
 			'zone_name': '',
@@ -106,9 +108,9 @@ function getBillingDataOfMail(entry,shipment_service_code) {
 }
 
 
-function getChargeByZone(size,prefecture,shipper_code,shipment_service_code) {
+function getChargeByZone(size,prefecture,shipper_code,shipment_service_service_name) {
 
-	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code)
+	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code,shipment_service_service_name)
 
 	if (!shipment_service) {
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code)
@@ -147,9 +149,9 @@ function getChargeByZone(size,prefecture,shipper_code,shipment_service_code) {
 	
 }
 
-function getChargeOfMail(shipper_code,shipment_service_code) {
+function getChargeOfMail(shipper_code,shipment_service_code,shipment_service_service_name) {
 
-	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code)
+	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code,shipment_service_service_name)
 
 	// shipment_service_codeからdelivery_chargeを取得
 	const delivery_charge = delivery_charge_all.feed.entry[0].delivery_charge.filter((delivery_charge) => {
@@ -163,11 +165,14 @@ function getChargeOfMail(shipper_code,shipment_service_code) {
 }
 
 
-function getDeliverycharge(customer_all, shipper_code) {
+function getDeliverycharge(customer_all, shipper_code,shipment_service_service_name) {
 	// 荷主コード(分類コード)からcustomerを検索
 	const customer = customer_all.feed.entry.filter((entry) => {
 		if (entry.customer.shipper&&entry.customer.shipper.length>0) {
 			const result1 = entry.customer.shipper.filter((shipper) => {
+				if (shipper.shipment_service_service_name ===shipment_service_service_name) {
+					shipment_service_code = shipper.shipment_service_code
+				}
 				const result2 = shipper.shipper_info.filter((shipper_info) => { 
 					if (shipper_info.shipper_code === shipper_code)
 					{
@@ -211,5 +216,5 @@ function getKey(datestr, tracking_number) {
 	if (now.getMonth() + 1 < month) {
 		year = year - 1
 	}
-	return year + ('0' + month).slice(-2) + tracking_number
+	return year + ('0' + month).slice(-2) + shipment_service_code+'_'+tracking_number
 }

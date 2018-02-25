@@ -18,7 +18,7 @@ billto
 customer
  customer_code
  shipper{}
-  shipment_service_name
+  shipment_service_service_name
   shipment_service_code
   shipper_info{}
    shipper_code
@@ -199,8 +199,8 @@ billing_data
  shipper_code
  shipping_date
  tracking_number
- delivery_class1
- delivery_class2
+ shipment_service_service_name
+ delivery_class
  size
  zone_name
  prefecture
