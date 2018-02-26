@@ -165,7 +165,9 @@ export default class InternalWorkList extends React.Component {
     						}, {
     							field: 'customer.customer_name', title: '顧客', width: '400px'
     						}, {
-    							field: 'quotation.quotation_code', title: '対象見積書No', width: '500px'
+    							field: 'quotation.quotation_code', title: '対象見積書No', width: '100px'
+    						}, {
+    							field: 'internal_work.is_completed', title: '入力完了フラグ', width: '400px', convert: {'0': '未完了', '1': '完了'}
     						}]}
     					>
     						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
