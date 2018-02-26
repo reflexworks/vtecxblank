@@ -93,10 +93,19 @@ export default class QuotationUpdate extends React.Component {
 					<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} label={<span><Glyphicon glyph="ok" /> 一時保存</span>} />
 				}
 				{this.entry.quotation.status === '0' &&
+					<CommonGeneralBtn NavItem onClick={()=>this.doPrint(true)} label={<span><Glyphicon glyph="print" /> プレビュー(見積明細/基本条件/備考)</span>} />
+				}
+				{this.entry.quotation.status === '0' &&
+					<CommonGeneralBtn NavItem onClick={()=>this.doPrintOther(true)} label={<span><Glyphicon glyph="print" /> プレビュー(配送料/資材)</span>} />
+				}
+				{this.entry.quotation.status === '0' &&
 					<CommonGeneralBtn NavItem onClick={(e)=>this.doIssue(e)} label={<span><Glyphicon glyph="save-file" /> 発行</span>} />
 				}
 				{this.entry.quotation.status === '1' &&
-					<CommonGeneralBtn NavItem onClick={(e)=>this.doReIssue(e)} label={<span><Glyphicon glyph="paste" /> 再発行</span>} />
+					<CommonGeneralBtn NavItem onClick={()=>this.doPrint()} label={<span><Glyphicon glyph="print" /> ダウンロード(見積明細/基本条件/備考)</span>} />
+				}
+				{this.entry.quotation.status === '1' &&
+					<CommonGeneralBtn NavItem onClick={()=>this.doPrintOther()} label={<span><Glyphicon glyph="print" /> ダウンロード(配送料/資材)</span>} />
 				}
 				{this.entry.quotation.status === '1' &&
 					<CommonGeneralBtn NavItem onClick={(e)=>this.doAddIssue(e)} label={<span><Glyphicon glyph="copy" /> 追加発行</span>} />
@@ -107,6 +116,7 @@ export default class QuotationUpdate extends React.Component {
 			</Nav>
 		)
 	}
+
 	/**
 	 * 更新完了後の処理
 	 */
@@ -152,12 +162,37 @@ export default class QuotationUpdate extends React.Component {
 	}
 
 	/**
-	 * 再発行
+	 * 見積明細と基本条件と備考のプレビュー もしくは 再発行
 	 */
-	doReIssue() {
-		//console.log(CommonEntry().get())
+	doPrint(_isPreview) {
+		const print = () => {
+			location.href = 's/get-pdf-quotation?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+		}
+		if (_isPreview) {
+			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
+				print()
+			}
+		} else {
+			print()
+		}
 	}
 
+	/**
+	 * 配送料と資材のプレビュー もしくは 再発行
+	 */
+	doPrintOther(_isPreview) {
+		const print = () => {
+			location.href = 's/get-pdf-quotation-other?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+		}
+		if (_isPreview) {
+			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
+				print()
+			}
+		} else {
+			print()
+		}
+	}
+	
 	/**
 	 * 追加発行
 	 * 見積書コードはそのままに枝番を＋1して見積書を新規登録する
