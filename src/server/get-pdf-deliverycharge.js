@@ -1,31 +1,9 @@
 import vtecxapi from 'vtecxapi' 
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
+//import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/deliverychargestyles.js'
 import { CommonGetFlag } from './common'
-
-const pageTitle = () => {
-	return (
-		<table cols="1" style={pdfstyles.page_title_table}>
-			<tr>
-				<td style={pdfstyles.page_title_blank}><div></div></td>
-			</tr>
-			<tr>
-				<td style={pdfstyles.page_title}>配送料 御見積り</td>
-			</tr>
-			<tr>
-				<td style={pdfstyles.page_title_blank}><div></div></td>
-			</tr>
-		</table>
-	)
-}
-
-const getQuotation = () => {
-	const quotation_code = vtecxapi.getQueryString('quotation_code')
-	const data = vtecxapi.getEntry('/quotation/' + quotation_code)
-	const entry = data.feed.entry[0]
-	return entry
-}
+import { pageTitle } from './get-pdf-quotation'
 
 const getCustomerFromBillto = (_billto_code) => {
 	const data = vtecxapi.getFeed('/customer?billto.billto_code=' + _billto_code)
@@ -44,10 +22,14 @@ const header = (_customer, _quotationData) => {
 					<div>見積番号：{_quotationData.quotation.quotation_code}-{_quotationData.quotation.quotation_code_sub}</div>
 					<div>見積月：{_quotationData.quotation.quotation_date}</div>
 					<div>見積日より1ヶ月間有効</div>
-					<div>CONNECTロジスティクス　株式会社</div>
-					<div>〒332-0027</div>
-					<div>埼玉県川口市緑町9-35</div>
-					<div>電話：048-299-8213</div>
+					<div>{_quotationData.billfrom ? _quotationData.billfrom.billfrom_name : ''}</div>
+					<div>〒{_quotationData.contact_information.zip_code}</div>
+					<div>
+						{_quotationData.contact_information.prefecture}
+						{_quotationData.contact_information.address1}
+						{_quotationData.contact_information.address2}
+					</div>
+					<div>電話：{_quotationData.contact_information.tel}</div>
 				</td>
 				<td rowspan="2"></td>
 			</tr>
@@ -322,19 +304,19 @@ const deliverychargeTable = (_data) => {
 	return res
 }
 
-export const deliverycharge = (_start_page) => {
+export const DeliveryCharge = (_start_page, _quotationData) => {
 
-	const quotationData = getQuotation()
+	const quotationData = _quotationData
 	const customerData = getCustomerFromBillto(quotationData.billto.billto_code)
 
 	let res = {
 		html: [''],
-		endPage: _start_page
+		size: 0
 	}
 	let index = _start_page
 
 	const pageHeader = (_obj) => {
-		return [pageTitle(),header(_obj.customer, quotationData)]
+		return [pageTitle('配送料'),header(_obj.customer, quotationData)]
 	}
 
 	const pageHeaderSub = (_obj, _pageIndex, _maxPage) => {
@@ -360,8 +342,8 @@ export const deliverycharge = (_start_page) => {
 					{_content}
 				</div>
 			)
-			res.endPage = index
-			pageData.pageList.page.push({word: ''})
+			res.size++
+			//pageData.pageList.page.push({word: ''})
 			index++
 		}
 		const setTopPage = (_customer, _deliverychargeData) => {
@@ -393,7 +375,7 @@ export const deliverycharge = (_start_page) => {
 	}
 	return res
 }
-
+/*
 const pageData = {
 	pageList: {
 		page:[]
@@ -403,7 +385,7 @@ const pageData = {
 const element = (
 	<html>
 		<body>
-			{deliverycharge(1).html}
+			{DeliveryCharge(1).html}
 		</body>
 	</html>
 )
@@ -415,3 +397,4 @@ let html = ReactDOMServer.renderToStaticMarkup(element)
 
 // PDF出力
 vtecxapi.toPdf(pageData, html, null)
+*/
