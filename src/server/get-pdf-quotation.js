@@ -3,12 +3,31 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/quotationstyles.js'
 
+export const pageTitle = (_title) => {
+	return (
+		<table cols="1" style={pdfstyles.page_title_table}>
+			<tr>
+				<td style={pdfstyles.page_title_blank}><div></div></td>
+			</tr>
+			<tr>
+				<td style={pdfstyles.page_title}>{_title} 御見積り</td>
+			</tr>
+			<tr>
+				<td style={pdfstyles.page_title_blank}><div></div></td>
+			</tr>
+		</table>
+	)
+}
 
 const quotation_code = vtecxapi.getQueryString('quotation_code')
 const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
-let result = vtecxapi.getFeed('/quotation?f&quotation.quotation_code=' + quotation_code + '&quotation.quotation_code_sub=' + quotation_code_sub)
+const getQuotation = () => {
+	const data = vtecxapi.getEntry('/quotation/' + quotation_code + '-' + quotation_code_sub)
+	const entry = data.feed.entry[0]
+	return entry
+}
 
-let entry = result.feed.entry[0]
+let entry = getQuotation()
 
 const getBasicCondition = () => {
 	return(
@@ -727,209 +746,226 @@ const getRemarks = () => {
 	)
 }
 
+const quotationPage = () => {
+	const quotation_1 = (
+		<div className="_page" id="_page-1" style={pdfstyles._page}>
+		
+			<table cols="10" style={pdfstyles.widths}>
 
+				{/*タイトル*/}					
+				<tr>
+					<td style={pdfstyles.titleLeft}>
+					</td>
 
-const element = (
-	<html>
-		<body>
-			<div className="_page" id="_page-1" style={pdfstyles._page}>
+					<td colspan="8" style={pdfstyles.borderTop}>
+						<span style={pdfstyles.title}>御見積り</span>
+					</td>
+
+					<td style={pdfstyles.titleRight}>
+					</td>
+				</tr>
+				
+				{/*見積書情報*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+
+					<td colspan="8" style={pdfstyles.borderRight}>
+						<div>見積書コード : {entry.quotation.quotation_code}-{entry.quotation.quotation_code_sub}</div>
+						<div>見積月: {entry.quotation.quotation_date}</div>
+						<br />
+					</td>
+
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
+
+				
+				{/*請求先名 請求元*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+
+					<td colspan="3" style={pdfstyles.fontsize12UL}>
+						<div>{entry.billto.billto_name}　御中</div>
+					</td>
+
+					<td colspan="2" style={pdfstyles.fontsize12UL}>
+					</td>
+
+					<td colspan="3" style={pdfstyles.fontsize10R}>
+						<div style={pdfstyles.fontsize12}>{entry.billfrom.billfrom_name}</div>
 			
-				<table cols="10" style={pdfstyles.widths}>
-
-					{/*タイトル*/}					
-					<tr>
-						<td style={pdfstyles.titleLeft}>
-						</td>
-
-						<td colspan="8" style={pdfstyles.borderTop}>
-							<span style={pdfstyles.title}>御見積り</span>
-						</td>
-
-						<td style={pdfstyles.titleRight}>
-						</td>
-					</tr>
-					
-					{/*見積書情報*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-
-						<td colspan="8" style={pdfstyles.borderRight}>
-							<div>見積書コード : {entry.quotation.quotation_code}-{entry.quotation.quotation_code_sub}</div>
-							<div>見積月: {entry.quotation.quotation_date}</div>
+						<div>
+							<span>〒</span>
+							<span>{entry.contact_information.zip_code}</span>
 							<br />
-						</td>
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
-
+							<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
+						</div>
+						<div>
+							<span>TEL : </span>
+							<span>{entry.contact_information.tel}</span>
+						</div>
+					</td>
 					
-					{/*請求先名 請求元*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
 
-						<td colspan="3" style={pdfstyles.fontsize12UL}>
-							<div>{entry.billto.billto_name}御中</div>
-						</td>
+				{/*御見積申し上げます*/}					
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="6">
+						<br />
+						<div>御社、物流業務を下記の通りに御見積もり申し上げます。</div>
+						<br />
+					</td>
 
-						<td colspan="2" style={pdfstyles.fontsize12UL}>
-						</td>
+					<td colspan="2">
+					</td>
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
 
-						<td colspan="3" style={pdfstyles.fontsize10R}>
-							<div style={pdfstyles.fontsize12}>{entry.billfrom.billfrom_name}</div>
-                
-							<div>
-								<span>〒</span>
-								<span>{entry.contact_information.zip_code}</span>
-								<br />
-								<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
-							</div>
-							<div>
-								<span>TEL : </span>
-								<span>{entry.contact_information.tel}</span>
-							</div>
-						</td>
-						
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
+				{/*基本条件(ヘッダ)*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="8" style={pdfstyles.tableTd}>
+						<span>基本条件</span>
+					</td>
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
 
-					{/*御見積申し上げます*/}					
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="6">
-							<br />
-							<div>御社、物流業務を下記の通りに御見積もり申し上げます。</div>
-							<br />
-						</td>
+				{/*基本条件(セル)*/}										
+				{entry.basic_condition &&
+					getBasicCondition() 
+				}
+				
+				<tr>
+					<td colspan="10" style={pdfstyles.borderBottom}>
+					</td>
+				</tr>					
+			</table>
+		</div>
+	)
+	const quotation_2 = (
+		<div className="_page" id="_page-2" style={pdfstyles._page}>
+			<table cols="10" style={pdfstyles.widths}>
+				
+				{/*上部*/}
+				<tr>
+					<td style={pdfstyles.titleLeft}>
+					</td>
 
-						<td colspan="2">
-						</td>
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
+					<td colspan="8" style={pdfstyles.borderTopTwo}>
+					</td>
 
-					{/*基本条件(ヘッダ)*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="8" style={pdfstyles.tableTd}>
-							<span>基本条件</span>
-						</td>
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
+					<td style={pdfstyles.titleRight}>
+					</td>
+				</tr>
 
-					{/*基本条件(セル)*/}										
-					{entry.basic_condition &&
-						getBasicCondition() 
-					}
+				{/*テーブルヘッダ*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="8" style={pdfstyles.tableTd}>
+						<span>見積り明細</span>
+					</td>
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
+				
+				{/*項目一覧*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="2" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize10}>項目</span>
+					</td>
+
+					<td colspan="2" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize10}>単位</span>
+					</td>
 					
-					<tr>
-						<td colspan="10" style={pdfstyles.borderBottom}>
-						</td>
-					</tr>					
-				</table>
-			</div>
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize10}>単価</span>
+					</td>
+
+					<td colspan="3" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize10}>備考</span>
+					</td>
 					
-			<div className="_page" id="_page-2" style={pdfstyles._page}>
-				<table cols="10" style={pdfstyles.widths}>
-					
-					{/*上部*/}
-					<tr>
-						<td style={pdfstyles.titleLeft}>
-						</td>
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
+				
+				{/*項目*/}
+				{entry.item_details &&
+					getItemDetails()
+				}
 
-						<td colspan="8" style={pdfstyles.borderTopTwo}>
-						</td>
+				{/*備考*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
 
-						<td style={pdfstyles.titleRight}>
-						</td>
-					</tr>
+					<td colspan="8" style={pdfstyles.fontsize12}>
+						<br/>
+						<div>備考</div>
+					</td>
+										
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>		
+				{entry.remarks &&
+					getRemarks()
+				}
+							
+				<tr>
+					<td colspan="10" style={pdfstyles.borderBottom}>
+					</td>
+				</tr>
+			</table>
+		</div>
+	)
+	const tables = [quotation_1, quotation_2]
+	let res = {
+		html: tables,
+		size: tables.length
+	}
+	return res
+}
 
-					{/*テーブルヘッダ*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="8" style={pdfstyles.tableTd}>
-							<span>見積り明細</span>
-						</td>
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
-					
-					{/*項目一覧*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="2" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize10}>項目</span>
-						</td>
+let pageData = {
+	pageList: {
+		page:[]
+	}
+}
+const element = () => {
 
-						<td colspan="2" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize10}>単位</span>
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize10}>単価</span>
-						</td>
+	const quotation = quotationPage()
+	const quotation_size = quotation.size
 
-						<td colspan="3" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize10}>備考</span>
-						</td>
-						
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
-					
-					{/*項目*/}
-					{entry.item_details &&
-						getItemDetails()
-					}
+	const total_size = quotation_size
+	for (let i = 0, ii = total_size; i < ii; ++i) {
+		pageData.pageList.page.push({word: ''})
+	}
 
-					{/*備考*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
+	return (
+		<html>
+			<body>
+				{quotation.html}
+			</body>
+		</html>
+	)	
+}
 
-						<td colspan="8" style={pdfstyles.fontsize12}>
-							<br/>
-							<div>備考</div>
-						</td>
-											
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>		
-					{entry.remarks &&
-						getRemarks()
-					}
-								
-					<tr>
-						<td colspan="10" style={pdfstyles.borderBottom}>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</body>
-	</html>
+let html = ReactDOMServer.renderToStaticMarkup(element())
 
-)
-
-let html = ReactDOMServer.renderToStaticMarkup(element)
-
-// HTML出力
-//vtecxapi.doResponseHtml(html)
+const file_name = 'quotation-' + quotation_code + '-' + quotation_code_sub + '.pdf'
 
 // PDF出力
-vtecxapi.toPdf({'pageList' :
-    {'page' :
-		[
-			{'word': ''},
-			{ 'word': '' },
-			//{'word' : ''},
-		]
-    }
-}, html, 'Quotation.pdf')
+vtecxapi.toPdf(pageData, html, file_name)
