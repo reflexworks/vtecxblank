@@ -1,16 +1,9 @@
-import vtecxapi from 'vtecxapi' 
+//import vtecxapi from 'vtecxapi' 
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
+//import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/packingitemstyles.js'
 
-const quotation_code = vtecxapi.getQueryString('quotation_code')
-const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
-let result = vtecxapi.getFeed('/quotation?f&quotation.quotation_code=' + quotation_code + '&quotation.quotation_code_sub=' + quotation_code_sub)
-
-const entry = result.feed.entry[0]
-vtecxapi.log(entry)
-
-const getPackingItems = () =>{
+const getPackingItems = (entry) =>{
 	return (
 		entry.packing_items.map((packing_items,idx) => {				
 			return (
@@ -102,184 +95,169 @@ const getPackingItems = () =>{
 	
 }
 
+export const PackingItems = (_start_page, _quotationData) => {
+	const page = '_page-' + _start_page
+	const tables = (
+		<div className="_page" id={page} style={pdfstyles._page}>
+		
+			<table cols="17" style={pdfstyles.widths}>
 
-const element = (
-	<html>
-		<body>
-			<div className="_page" id="_page-1" style={pdfstyles._page}>
-			
-				<table cols="17" style={pdfstyles.widths}>
+				{/*タイトル*/}					
+				<tr>
+					<td ></td>
 
-					{/*タイトル*/}					
-					<tr>
-						<td ></td>
+					<td colspan="15" ></td>
 
-					g	<td colspan="15" ></td>
+					<td ></td>
+				</tr>	
 
-						<td ></td>
-					</tr>	
+				{/*項目一覧*/}
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="1" style={pdfstyles.tableTdNoBottom}>
+					</td>
 
-					{/*項目一覧*/}
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-						</td>
-
-						<td colspan="8" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>製品寸法</span>
-						</td>
-
-						<td colspan="2" style={pdfstyles.tableTdNoBottom}>
-							<span style={pdfstyles.fontsize6}>通常</span>
-						</td>
-
-						<td colspan="2" style={pdfstyles.tableTdNoBottom}>
-							<span style={pdfstyles.fontsize6}>特別</span>
-						</td>
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
+					<td colspan="1" style={pdfstyles.tableTdNoBottom}>
+					</td>
 					
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-							<span style={pdfstyles.fontsize6}>品番</span>
-						</td>
+					<td colspan="1" style={pdfstyles.tableTdNoBottom}>
+					</td>
 
-						<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-							<span style={pdfstyles.fontsize6}>商品名称</span>
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-							<span style={pdfstyles.fontsize6}>材質</span>
-						</td>
+					<td colspan="8" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>製品寸法</span>
+					</td>
 
-						<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-							<span style={pdfstyles.fontsize6}>厚み</span>
-						</td>
+					<td colspan="2" style={pdfstyles.tableTdNoBottom}>
+						<span style={pdfstyles.fontsize6}>通常</span>
+					</td>
 
-						<td colspan="3" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>内寸</span>
-						</td>
+					<td colspan="2" style={pdfstyles.tableTdNoBottom}>
+						<span style={pdfstyles.fontsize6}>特別</span>
+					</td>
 
-						<td colspan="3" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>外寸</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-							<span style={pdfstyles.fontsize6}>三辺</span>
-						</td>
-
-						<td colspan="2" style={pdfstyles.tableTdNoTopBottom}>
-							<span style={pdfstyles.fontsize6}>販売価格</span>	
-						</td>
-
-						<td colspan="2" style={pdfstyles.tableTdNoTopBottom}>
-							<span style={pdfstyles.fontsize6}>販売価格</span>	
-						</td>
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
-					
-					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-							<span style={pdfstyles.fontsize6}>(mm)</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>幅</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>奥行</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>高さ</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>幅</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>奥行</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>高さ</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-							<span style={pdfstyles.fontsize6}>合計</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>単価</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTdNoTop}>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>単価</span>
-						</td>						
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
-					</tr>
-
-					{entry.packing_items &&
-						getPackingItems()
-					
-					}
-
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
 				
-				</table>
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
+						<span style={pdfstyles.fontsize6}>品番</span>
+					</td>
 
-			</div>
+					<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
+						<span style={pdfstyles.fontsize6}>商品名称</span>
+					</td>
 					
-		</body>
-	</html>
+					<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
+						<span style={pdfstyles.fontsize6}>材質</span>
+					</td>
 
-)
+					<td colspan="1" style={pdfstyles.tableTdNoBottom}>
+						<span style={pdfstyles.fontsize6}>厚み</span>
+					</td>
 
+					<td colspan="3" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>内寸</span>
+					</td>
 
-let html = ReactDOMServer.renderToStaticMarkup(element)
+					<td colspan="3" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>外寸</span>
+					</td>
 
-// HTML出力
-//vtecxapi.doResponseHtml(html)
+					<td colspan="1" style={pdfstyles.tableTdNoBottom}>
+						<span style={pdfstyles.fontsize6}>三辺</span>
+					</td>
 
-// PDF出力
-vtecxapi.toPdf({'pageList' :
-    {'page' :
-		[
-			{'word': ''},
-        	//{'word' : ''}
-		]
-    }
-}, html, 'PackingItem.pdf')
+					<td colspan="2" style={pdfstyles.tableTdNoTopBottom}>
+						<span style={pdfstyles.fontsize6}>販売価格</span>	
+					</td>
+
+					<td colspan="2" style={pdfstyles.tableTdNoTopBottom}>
+						<span style={pdfstyles.fontsize6}>販売価格</span>	
+					</td>
+
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
+				
+				<tr>
+					<td style={pdfstyles.spaceLeft}>
+					</td>
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+					</td>
+					
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+						<span style={pdfstyles.fontsize6}>(mm)</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>幅</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>奥行</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>高さ</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>幅</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>奥行</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>高さ</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+						<span style={pdfstyles.fontsize6}>合計</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>単価</span>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTdNoTop}>
+					</td>
+
+					<td colspan="1" style={pdfstyles.tableTd}>
+						<span style={pdfstyles.fontsize6}>単価</span>
+					</td>						
+
+					<td style={pdfstyles.spaceRight}>
+					</td>
+				</tr>
+
+				{_quotationData.packing_items &&
+					getPackingItems(_quotationData)
+				
+				}
+
+			
+			</table>
+
+		</div>
+	)
+	let res = {
+		html: tables,
+		size: 1
+	}
+	return res
+}
