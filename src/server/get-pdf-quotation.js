@@ -2,8 +2,6 @@ import vtecxapi from 'vtecxapi'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/quotationstyles.js'
-import { DeliveryCharge } from './get-pdf-deliverycharge'
-import { PackingItems } from './get-pdf-packingitem'
 
 export const pageTitle = (_title) => {
 	return (
@@ -948,17 +946,10 @@ let pageData = {
 }
 const element = () => {
 
-	const getStartPage = (_end_page) => {
-		return _end_page + 1
-	}
 	const quotation = quotationPage()
 	const quotation_size = quotation.size
-	const deliverycharge = DeliveryCharge(getStartPage(quotation_size), entry)
-	const deliverycharge_size = deliverycharge.size
-	const packingitems = PackingItems(getStartPage(quotation_size + deliverycharge_size), entry)
-	const packingitem_size = packingitems.size
 
-	const total_size = quotation_size + deliverycharge_size + packingitem_size
+	const total_size = quotation_size
 	for (let i = 0, ii = total_size; i < ii; ++i) {
 		pageData.pageList.page.push({word: ''})
 	}
@@ -967,8 +958,6 @@ const element = () => {
 		<html>
 			<body>
 				{quotation.html}
-				{deliverycharge.html}
-				{packingitems.html}
 			</body>
 		</html>
 	)	
@@ -976,8 +965,7 @@ const element = () => {
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
 
-// HTML出力
-//vtecxapi.doResponseHtml(html)
+const file_name = 'quotation-' + quotation_code + '-' + quotation_code_sub + '.pdf'
 
 // PDF出力
-vtecxapi.toPdf(pageData, html, 'quotation-' + quotation_code + '-' + quotation_code_sub + '.pdf')
+vtecxapi.toPdf(pageData, html, file_name)

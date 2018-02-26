@@ -3,7 +3,22 @@ import React from 'react'
 //import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/deliverychargestyles.js'
 import { CommonGetFlag } from './common'
-import { pageTitle } from './get-pdf-quotation'
+
+export const pageTitle = (_title) => {
+	return (
+		<table cols="1" style={pdfstyles.page_title_table}>
+			<tr>
+				<td style={pdfstyles.page_title_blank}><div></div></td>
+			</tr>
+			<tr>
+				<td style={pdfstyles.page_title}>{_title} 御見積り</td>
+			</tr>
+			<tr>
+				<td style={pdfstyles.page_title_blank}><div></div></td>
+			</tr>
+		</table>
+	)
+}
 
 const getCustomerFromBillto = (_billto_code) => {
 	const data = vtecxapi.getFeed('/customer?billto.billto_code=' + _billto_code)
