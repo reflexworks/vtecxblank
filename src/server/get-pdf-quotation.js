@@ -3,24 +3,14 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/quotationstyles.js'
 
-const billfrom = {
-	billfrom_name: 'CONNECTロジスティクス 株式会社',
-}
-const contact_information = {
-	zip_code:'332-0027',
-	prefecture:'埼玉県',
-	address1:'川口市',
-	address2:'緑町9-35',
-	tel:'048-299-8213',
-}
 
 const quotation_code = vtecxapi.getQueryString('quotation_code')
 const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
 let result = vtecxapi.getFeed('/quotation?f&quotation.quotation_code=' + quotation_code + '&quotation.quotation_code_sub=' + quotation_code_sub)
 
-const entry = result.feed.entry[0]
+let entry = result.feed.entry[0]
 
-const getBasic_condition = () => {
+const getBasicCondition = () => {
 	return(
 		entry.basic_condition.map((basic_condition) => {
 			if (basic_condition.condition) {
@@ -29,12 +19,12 @@ const getBasic_condition = () => {
 										
 						const length = basic_condition.condition.length
 						const half = Math.floor(length / 2)
-													
+
 						//length > 1 && (length % 2) conditionの数が３つ以上で奇数
 						//length > 1 && !(length % 2) conditionの数が３つ以上で偶数
 						//length===2 conditionが２つ
 						//else conditionが１つだけ
-										
+
 						if (length > 2 && (length % 2)) {
 							switch (idx) {
 							case 0:
@@ -285,7 +275,8 @@ const getBasic_condition = () => {
 
 }
 
-const getItem_details = () => {
+
+const getItemDetails = () => {
 
 	let item_nameList = entry.item_details.map((item_details) => {
 		return item_details.item_name
@@ -314,7 +305,7 @@ const getItem_details = () => {
 					if (length > 2 && (length % 2)) {
 						switch (idx) {
 						case 0:
-							return (
+							return (						
 								<tr key={idx} style={pdfstyles.fontsize8}>
 									<td style={pdfstyles.spaceLeft}>
 									</td>
@@ -736,6 +727,8 @@ const getRemarks = () => {
 	)
 }
 
+
+
 const element = (
 	<html>
 		<body>
@@ -762,7 +755,7 @@ const element = (
 						</td>
 
 						<td colspan="8" style={pdfstyles.borderRight}>
-							<div>見積書コード : {entry.quotation.quotation_code}{entry.quotation.quotation_code_sub}</div>
+							<div>見積書コード : {entry.quotation.quotation_code}-{entry.quotation.quotation_code_sub}</div>
 							<div>見積月: {entry.quotation.quotation_date}</div>
 							<br />
 						</td>
@@ -771,6 +764,7 @@ const element = (
 						</td>
 					</tr>
 
+					
 					{/*請求先名 請求元*/}
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
@@ -784,17 +778,17 @@ const element = (
 						</td>
 
 						<td colspan="3" style={pdfstyles.fontsize10R}>
-							<div>{billfrom.billfrom_name}</div>
+							<div style={pdfstyles.fontsize12}>{entry.billfrom.billfrom_name}</div>
                 
 							<div>
 								<span>〒</span>
-								<span>{contact_information.zip_code}</span>
+								<span>{entry.contact_information.zip_code}</span>
 								<br />
-								<span>{contact_information.prefecture}{contact_information.address1}{contact_information.address2}</span>
+								<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
 							</div>
 							<div>
 								<span>TEL : </span>
-								<span>{contact_information.tel}</span>
+								<span>{entry.contact_information.tel}</span>
 							</div>
 						</td>
 						
@@ -831,7 +825,7 @@ const element = (
 
 					{/*基本条件(セル)*/}										
 					{entry.basic_condition &&
-						getBasic_condition() 
+						getBasicCondition() 
 					}
 					
 					<tr>
@@ -893,7 +887,7 @@ const element = (
 					
 					{/*項目*/}
 					{entry.item_details &&
-						getItem_details()
+						getItemDetails()
 					}
 
 					{/*備考*/}
@@ -934,7 +928,8 @@ vtecxapi.toPdf({'pageList' :
     {'page' :
 		[
 			{'word': ''},
-        	{'word' : ''}
+			{ 'word': '' },
+			//{'word' : ''},
 		]
     }
-}, html, 'test.pdf')
+}, html, 'Quotation.pdf')

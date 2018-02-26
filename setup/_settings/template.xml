@@ -18,7 +18,7 @@ billto
 customer
  customer_code
  shipper{}
-  shipment_service_name
+  shipment_service_service_name
   shipment_service_code
   shipper_info{}
    shipper_code
@@ -194,18 +194,20 @@ inquiry
 billing_data
  shipment_service_code
  shipment_service_type
- shipment_service_service_name
+ customer_code
  shipment_class
  shipper_code
  shipping_date
  tracking_number
- delivery_class1
- delivery_class2
+ shipment_service_service_name
+ delivery_class
  size
- quantity
+ zone_name
  prefecture
  city
  delivery_charge
+ delivery_charge_org_total
+ quantity
 billing_summary
  content{}
   size
