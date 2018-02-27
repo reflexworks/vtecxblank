@@ -52,37 +52,78 @@ export default class QuotationUpdate extends React.Component {
 		this.setState({ isDisabled: true })
 
 		this.entrykey = location.hash.substring(location.hash.indexOf('?')+1)
+
+		const getQuotation = () => {
+			axios({
+				url: this.url + '/' + this.entrykey + '?e',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
 		
-		axios({
-			url: this.url + '/' + this.entrykey+'?e',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			this.setState({ isDisabled: false })
+				this.setState({ isDisabled: false })
 
-			if (response.status === 204) {
-				this.setState({ isError: response })
-			} else {
+				if (response.status === 204) {
+					this.setState({ isError: response })
+				} else {
 
-				this.entry = response.data.feed.entry[0]
-				this.entry.billfrom = this.entry.billfrom ||  {}
-				this.entry.quotation = this.entry.quotation || {}
-				this.entry.basic_condition = this.entry.basic_condition || []
-				this.entry.item_details = this.entry.item_details || []
-				this.entry.remarks = this.entry.remarks || []
-				this.entry.packing_items = this.entry.packing_items || []
+					this.entry = response.data.feed.entry[0]
+					this.entry.billfrom = this.entry.billfrom ||  {}
+					this.entry.quotation = this.entry.quotation || {}
+					this.entry.basic_condition = this.entry.basic_condition || []
+					this.entry.item_details = this.entry.item_details || []
+					this.entry.remarks = this.entry.remarks || []
+					this.entry.packing_items = this.entry.packing_items || []
 
-				CommonEntry().init(this.entry)
-				this.setButton()
-				this.forceUpdate()
-			}
+					if (this.entry.quotation.status === '1') {
+						this.befor = null
+					}
+					CommonEntry().init(this.entry)
+					this.setButton()
+					this.forceUpdate()
+				}
 
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})   
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+		const getBeforQuotation = (_befor_sub) => {
+			const quotation_code = this.entrykey.split('-')[0]
+			_befor_sub = _befor_sub < 10 ? '0' + _befor_sub : _befor_sub
+			axios({
+				url: this.url + '/' + quotation_code + '-' + _befor_sub + '?e',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+		
+				this.setState({ isDisabled: false })
+
+				if (response.status === 204) {
+					getQuotation()
+				} else {
+					this.befor = response.data.feed.entry[0]
+					this.befor.billfrom = this.befor.billfrom ||  {}
+					this.befor.quotation = this.befor.quotation || {}
+					this.befor.basic_condition = this.befor.basic_condition || []
+					this.befor.item_details = this.befor.item_details || []
+					this.befor.remarks = this.befor.remarks || []
+					this.befor.packing_items = this.befor.packing_items || []
+					getQuotation()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+		let befor_sub = parseInt(this.entrykey.split('-')[1]) - 1
+		if (befor_sub > 0) {
+			getBeforQuotation(befor_sub)
+		} else {
+			getQuotation()
+		}
 	}
 
 	setButton() {
@@ -137,6 +178,7 @@ export default class QuotationUpdate extends React.Component {
 	 * ステータスを発行済にする
 	 */
 	doIssue() {
+
 		const update = (_data) => {
 			axios({
 				url: '/d',
@@ -151,12 +193,59 @@ export default class QuotationUpdate extends React.Component {
 				this.setState({ isDisabled: false, isError: error })
 			})
 		}
+
 		if (confirm('' +
 			'見積書を発行します。\n' +
 			'発行された見積内容は確定され、編集不可となります。\n' +
 			'\nよろしいでしょうか？')) {
-			const res = CommonEntry().get()
+			const res = JSON.parse(JSON.stringify(CommonEntry().get()))
+			/**
+			 * Reactオブジェクトかどうかの判定
+			 * @param {*} _value 
+			 */
+			const checkDom = (_value) => {
+				let flg = false
+				if (Object.prototype.toString.call(_value) === '[object Object]') {
+					flg = true
+				}
+				return flg
+			}
 			res.feed.entry[0].quotation.status = '1'
+			res.feed.entry[0].item_details = res.feed.entry[0].item_details.map((_obj) => {
+				if (checkDom(_obj.item_name)) {
+					_obj.item_name = _obj.item_name.props.children
+				}
+				if (checkDom(_obj.unit_name)) {
+					_obj.unit_name = _obj.unit_name.props.children
+				}
+				let item_detail = {}
+				Object.keys(_obj).forEach((_key) => {
+					if (_key !== 'is_remove') {
+						item_detail[_key] = _obj[_key]
+					}
+				})
+				return item_detail
+			})
+			res.feed.entry[0].packing_items = res.feed.entry[0].packing_items.map((_obj) => {
+				let packing_item = {}
+				Object.keys(_obj).forEach((_key) => {
+					if (_key !== 'is_remove') {
+						packing_item[_key] = _obj[_key]
+					}
+				})
+				return packing_item
+			})
+			let newObj = {}
+			Object.keys(res.feed.entry[0]).forEach((_key) => {
+				if (typeof res.feed.entry[0][_key] === 'string') {
+					if (_key === 'id') {
+						newObj[_key] = res.feed.entry[0][_key]
+					}
+				} else {
+					newObj[_key] = res.feed.entry[0][_key]
+				}
+			})
+			res.feed.entry[0] = newObj
 			update(res)
 		}
 	}
@@ -290,7 +379,7 @@ export default class QuotationUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<QuotationForm name="mainForm" entry={this.entry} />
+						<QuotationForm name="mainForm" entry={this.entry} befor={this.befor} />
 					</Col>
 				</Row>
 				<Row>

@@ -85,6 +85,12 @@ export default class QuotationForm extends React.Component {
 			this.status = '発行済み'
 			this.isDisabled = true
 		}
+
+		// 前の枝番情報
+		this.befor = newProps.befor
+		if (this.befor) {
+			this.setBeforQuotation()
+		}
 		
 		this.setBillfromMasterData()
 	}
@@ -97,6 +103,40 @@ export default class QuotationForm extends React.Component {
 		this.setPackingItemTemplateData()
 	}
 
+	/**
+	 * 前の枝番情報は変更・削除できない処理
+	 * 基本条件と備考は庫内作業に影響がないため変更できるものとする
+	 */
+	setBeforQuotation() {
+		if (this.befor.item_details) {
+			const cash_item_details = {}
+			this.befor.item_details.map((_obj) => {
+				const key = _obj.item_name + _obj.unit_name
+				cash_item_details[key] = true
+			})
+			this.entry.item_details = this.entry.item_details.map((_obj) => {
+				const key = _obj.item_name + _obj.unit_name
+				if (cash_item_details[key]) {
+					_obj.item_name = <div className="__is_readonly">{_obj.item_name}</div>
+					_obj.unit_name = <div className="__is_readonly">{_obj.unit_name}</div>
+					_obj.is_remove = false
+				}
+				return _obj
+			})
+		}
+		if (this.befor.packing_items) {
+			const cash_packing_items = {}
+			this.befor.packing_items.map((_obj) => {
+				cash_packing_items[_obj.item_code] = true
+			})
+			this.entry.packing_items = this.entry.packing_items.map((_obj) => {
+				if (cash_packing_items[_obj.item_code]) {
+					_obj.is_remove = false
+				}
+				return _obj
+			})
+		}
+	}
 
 	/**
 	 *  請求元リストを作成する
