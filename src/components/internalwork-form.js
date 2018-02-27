@@ -1068,9 +1068,9 @@ export default class InternalWorkForm extends React.Component {
     						name="quotationWorks"
     						data={this.quotationWorks}
     						header={[{
-    							field: 'item_name',title: '作業内容', width: '250px'
+    							field: 'item_name',title: '作業内容', width: '200px'
 							}, {
-								field: 'unit_name',title: '単位名称', width: '70px'
+								field: 'unit_name',title: '単位名称', width: '130px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
 								input: !this.isEdit ? false : {
@@ -1082,7 +1082,7 @@ export default class InternalWorkForm extends React.Component {
     						}, {
     							field: 'staff_name', title: '入力者', width: '100px'
     						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '100px', convert: this.convert_approval_status
+    							field: 'approval_status', title: '承認ステータス', width: '90px', convert: this.convert_approval_status
 							}, {
 								field: 'approval_status_btn', title: '', width: '100px'
 							}]}

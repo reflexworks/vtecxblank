@@ -1723,36 +1723,77 @@ export class CommonTable extends React.Component {
 				if (_cashData.entitiykey) {
 					entitiykey = _cashData.entitiykey.replace('{}', '[' + _index + ']')
 				}
-				if (filter) {
-					return (
-						<CommonFilterBox
-							name="__tableFilter"
-							value={value}
-							options={filter.options}
-							onChange={(data) => filter.onChange(data, _index)}
-							creatable
-							entitiykey={entitiykey}
-							table
-						/>
-					)
-				} else if (input) {
-					return (
-						<CommonInputText
-							name="__tableInput"
-							type="text"
-							value={value}
-							onChange={(data) => input.onChange(data, _index)}
-							onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
-							entitiykey={entitiykey}
-							table
-						/>
-					)
+
+				/**
+				 * Reactオブジェクトかどうかの判定
+				 * @param {*} _value 
+				 */
+				const checkDom = (_value) => {
+					let flg = false
+					if (Object.prototype.toString.call(_value) === '[object Object]') {
+						if (_value['$$typeof']) {
+							flg = true
+						}
+					}
+					return flg
+				}
+				const isDom = checkDom(value)
+
+				if (!isDom) {
+					if (filter) {
+						return (
+							<CommonFilterBox
+								name="__tableFilter"
+								value={value}
+								options={filter.options}
+								onChange={(data) => filter.onChange(data, _index)}
+								creatable
+								entitiykey={entitiykey}
+								table
+							/>
+						)
+					} else if (input) {
+						return (
+							<CommonInputText
+								name="__tableInput"
+								type="text"
+								value={value}
+								onChange={(data) => input.onChange(data, _index)}
+								onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
+								entitiykey={entitiykey}
+								table
+							/>
+						)
+					} else {
+						return <div style={style} className="ellipsis" data-value={value}>{getConvertValue(value)}</div>
+					}
 				} else {
-					return <div style={style} className="ellipsis" data-value={value}>{getConvertValue(value)}</div>
+					const innerValue = value.props.children
+					if (value.props.className === '__is_readonly') {
+						return <div style={style} className="ellipsis" data-value={innerValue}>{getConvertValue(innerValue)}</div>
+					} else {
+						return <div style={style} className="ellipsis" data-value={innerValue}>{getConvertValue(value)}</div>
+					}
 				}
 			}
 		}
 		const body = (this.state.data && this.state.data.length > 0) && this.state.data.map((obj, i) => {
+
+			/**
+			 * ReactオブジェクトはObject型と判断しない
+			 * @param {*} _value 
+			 */
+			const checkObj = (_value) => {
+				let flg = false
+				if (Object.prototype.toString.call(_value) === '[object Object]') {
+					if (_value['$$typeof']) {
+						flg = false
+					} else {
+						flg = true
+					}
+				}
+				return flg
+			}
 
 			const td = (_obj, _index) => {
 
@@ -1760,7 +1801,7 @@ export class CommonTable extends React.Component {
 				let array = new Array(cashInfolength)
 				let noneDisplayIndex = parseInt(cashInfolength + '')
 
-				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div>{(_index + 1)}</div></td>
+				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div className="ellipsis">{(_index + 1)}</div></td>
 				tdCount++
 				if (this.props.select) {
 					array[cashInfo.select.index] = (
@@ -1775,7 +1816,11 @@ export class CommonTable extends React.Component {
 					tdCount++
 				}
 				if (this.props.edit || this.props.remove) {
-					array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
+					if (_obj && _obj.is_remove === false) {
+						array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}></td>
+					} else {
+						array[cashInfo.edit.index] = <td key={tdCount} style={cashInfo.no.style}>{this.actionBtn(_index)}</td>
+					}
 					tdCount++
 				}
 
@@ -1792,54 +1837,42 @@ export class CommonTable extends React.Component {
 					tdCount++
 				}
 
-				/**
-				 * ReactオブジェクトはObject型と判断しない
-				 * @param {*} _value 
-				 */
-				const checkObj = (_value) => {
-					let flg = false
-					if (Object.prototype.toString.call(_value) === '[object Object]') {
-						if (_value['$$typeof']) {
-							flg = false
-						} else {
-							flg = true
-						}
-					}
-					return flg
-				}
 				const setCel = (__obj, _key) => {
 
 					Object.keys(__obj).forEach(function (__key) {
 
-						if (checkObj(__obj[__key]) === true) {
+						if (__key !== 'is_remove') {
 
-							setCel(__obj[__key], _key + __key + '.')
+							if (checkObj(__obj[__key]) === true) {
 
-						} else if (!disabledList[__key]) {
+								setCel(__obj[__key], _key + __key + '.')
 
-							const field = _key.replace(/\./g, '___') + __key.replace(/\./g, '___')
+							} else if (!disabledList[__key]) {
 
-							if (cashInfo[field]) {
-								array[cashInfo[field].index] = (
-									<td
-										key={cashInfo[field].index}
-										style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
-										name={_key + __key}
-									>
-										{ convertValue(__obj[__key], cashInfo[field], _index) }
-									</td>
-								)
-							} else {
-								array.push(
-									<td
-										key={noneDisplayIndex}
-										style={{ 'display': 'none' }}
-										name={_key + __key}
-									>
-										{ convertValue(__obj[__key], {}) }
-									</td>
-								)
-								noneDisplayIndex++
+								const field = _key.replace(/\./g, '___') + __key.replace(/\./g, '___')
+
+								if (cashInfo[field]) {
+									array[cashInfo[field].index] = (
+										<td
+											key={cashInfo[field].index}
+											style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
+											name={_key + __key}
+										>
+											{ convertValue(__obj[__key], cashInfo[field], _index) }
+										</td>
+									)
+								} else {
+									array.push(
+										<td
+											key={noneDisplayIndex}
+											style={{ 'display': 'none' }}
+											name={_key + __key}
+										>
+											{ convertValue(__obj[__key], {}) }
+										</td>
+									)
+									noneDisplayIndex++
+								}
 							}
 						}
 
