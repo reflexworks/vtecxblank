@@ -1769,7 +1769,11 @@ export class CommonTable extends React.Component {
 					}
 				} else {
 					const innerValue = value.props.children
-					return <div style={style} className="ellipsis" data-value={innerValue}>{getConvertValue(innerValue)}</div>
+					if (value.props.className === '__is_readonly') {
+						return <div style={style} className="ellipsis" data-value={innerValue}>{getConvertValue(innerValue)}</div>
+					} else {
+						return <div style={style} className="ellipsis" data-value={innerValue}>{getConvertValue(value)}</div>
+					}
 				}
 			}
 		}
