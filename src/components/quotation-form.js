@@ -559,31 +559,31 @@ export default class QuotationForm extends React.Component {
 								name="item_details"
 								data={this.entry.item_details}
 								header={[{
-									field: 'item_name', title: '項目', width: '200px',
+									field: 'item_name', title: '項目', width: '250px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 0, rowindex)}
 									}
 								}, {
-									field: 'unit_name',title: '単位名称', width: '20px',
+									field: 'unit_name',title: '単位名称', width: '250px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[1],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)}
 									}
 								}, {
-									field: 'unit',title: '単位', width: '50px',
+									field: 'unit',title: '単位', width: '100px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[2],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)}
 									}
 								}, {
-									field: 'unit_price',title: '単価', width: '100px',
+									field: 'unit_price',title: '単価', width: '100px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[3],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 3, rowindex)}
 									}
 								}, {
-									field: 'remarks',title: '備考', width: '400px',
+									field: 'remarks',title: '備考', width: '200px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[4],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)}
@@ -602,7 +602,7 @@ export default class QuotationForm extends React.Component {
 								name="basic_condition"
 								data={this.entry.basic_condition}
 								header={[{
-									field: 'title',title: '条件名', width: '300px'
+									field: 'title',title: '条件名', width: '300px'
 								}, {
 									field: 'condition', title: '条件内容', width: '800px'
 								}]}

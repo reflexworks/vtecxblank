@@ -1862,7 +1862,7 @@ export class CommonTable extends React.Component {
 									array[cashInfo[field].index] = (
 										<td
 											key={cashInfo[field].index}
-											style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
+											style={cashInfo[field].style}
 											name={_key + __key}
 										>
 											{ convertValue(__obj[__key], cashInfo[field], _index) }
