@@ -322,7 +322,47 @@ export default class QuotationForm extends React.Component {
 		if (_celIndex === 2) itemName = 'unit'
 		if (_celIndex === 3) itemName = 'unit_price'
 		if (_celIndex === 4) itemName = 'remarks'
-		if (itemName) this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+		if (itemName) {
+			if (itemName === 'item_name' || itemName === 'unit_name') {
+
+				// 明細項目の項目名と単位名称が一致しているものは登録させない処理
+				const target = this.entry.item_details[_rowindex]
+				const item_name = itemName === 'item_name' ? _data.value : target.item_name
+				const unit_name = itemName === 'unit_name' ? _data.value : target.unit_name
+				if (item_name && unit_name) {
+					const check = () => {
+						const getValue = (_value) => {
+							if (Object.prototype.toString.call(_value) === '[object Object]') {
+								if (_value['$$typeof']) {
+									return _value.props.children
+								} else {
+									return _value
+								}
+							}
+							return _value
+						}
+						let flg = true
+						this.entry.item_details.map((_obj) => {
+							if (_obj.item_name && _obj.unit_name) {
+								const _item_name = getValue(_obj.item_name)
+								const _unit_name = getValue(_obj.unit_name)
+								if (item_name + unit_name === _item_name + _unit_name) {
+									flg = false
+								}
+							}
+						})
+						return  flg
+					}
+					if (check()) {
+						this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+					} else {
+						this.entry.item_details[_rowindex][itemName] = null
+					}
+				} else {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+				}
+			}
+		}
 		this.forceUpdate()
 	}
 
@@ -519,13 +559,13 @@ export default class QuotationForm extends React.Component {
 								name="item_details"
 								data={this.entry.item_details}
 								header={[{
-									field: 'item_name', title: '項目', style: { width: '300px' },
+									field: 'item_name', title: '項目', width: '200px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 0, rowindex)}
 									}
 								}, {
-									field: 'unit_name',title: '単位名称', width: '50px',
+									field: 'unit_name',title: '単位名称', width: '20px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[1],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)}
@@ -543,7 +583,7 @@ export default class QuotationForm extends React.Component {
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 3, rowindex)}
 									}
 								}, {
-									field: 'remarks',title: '備考', width: '300px',
+									field: 'remarks',title: '備考', width: '400px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[4],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)}
