@@ -13,8 +13,6 @@ let shipment_service_code
 
 // CSV取得
 const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
-vtecxapi.log(JSON.stringify(billingcsv))
-
 const customer_all = vtecxapi.getFeed('/customer',true)
 
 //vtecxapi.log('size='+size)
@@ -27,19 +25,18 @@ billingcsv.feed.entry.map((entry) => {
 		result.feed.entry.push(billing_data)
 
 	} catch (e) {
-		vtecxapi.sendError(400, e)
+		vtecxapi.sendMessage(400, e)
 	}
-
 })	
 
 // datastoreを更新
 vtecxapi.put(result,true)
 
+
 function getBillingData(entry) {
 
 	const prefecture = getPrefecture(entry.billing.shipping_address1)
 	const charge_by_zone = getChargeByZone( prefecture,entry.billing.delivery_area, entry.billing.shipper_code,entry.billing.billing_item)
-	if (charge_by_zone.length===0) throw 'charge_by_zone is not found.'
 
 	const billing_data = {
 		billing_data: {
@@ -74,7 +71,7 @@ function getChargeByZone(prefecture,delivery_area,shipper_code,shipment_service_
 
 	if (!shipment_service) {
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code)
-		if (!shipment_service.feed.entry) throw 'shipment_service is not found.(shipment_service_code='+shipment_service_code+')'
+		if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません(サービスコード='+shipment_service_code+')'
 	} 
 
 	// shipment_service_codeからdelivery_chargeを取得
@@ -82,7 +79,7 @@ function getChargeByZone(prefecture,delivery_area,shipper_code,shipment_service_
 		return delivery_charge.shipment_service_code === shipment_service_code
 	})
 	//	vtecxapi.log('zone_name=' + zone[0].zone_name)			
-	if (delivery_charge[0].delivery_charge_details.length === 0) throw 'delivery_charge_details is not found.'
+	if (delivery_charge[0].delivery_charge_details.length === 0) throw '配送料マスタが登録されていません。(サービスコード='+shipment_service_code+')'
 
 	// 県からzoneを検索
 	const zone = shipment_service.feed.entry[0].zone.filter((zone) => {
@@ -91,19 +88,19 @@ function getChargeByZone(prefecture,delivery_area,shipper_code,shipment_service_
 		})
 		return pref_codes.length>0
 	 })
-	if (zone.length===0) throw 'zone of '+prefecture+' is not defined.'
+	if (zone.length===0) throw prefecture+' の配送エリアが登録されていません。'
 
 	// deliveryareaからzoneを検索
 	const invoice_zones = zone[0].invoice_zones.filter((invoice_zones) => {
 		return invoice_zones.invoice_zone === delivery_area
 	})
-	if (invoice_zones.length===0) throw 'zone of '+delivery_area+' is not defined.'
+	if (invoice_zones.length===0) throw delivery_area+' の配送エリアが登録されていません。'
 	
-	if (zone.length===0) throw 'zone of '+delivery_area+' is not defined.'
 	// zone_nameからcharge_by_zoneを取得
 	const charge_by_zone = delivery_charge[0].delivery_charge_details[0].charge_by_zone.filter((charge_by_zone) => {
 		return charge_by_zone.zone_name === zone[0].zone_name
 	})
+	if (charge_by_zone.length===0) throw zone[0].zone_name+' の配送料が登録されていません。'
 
 	return charge_by_zone
 	
@@ -129,10 +126,10 @@ function getDeliverycharge(customer_all, shipper_code,shipment_service_service_n
 			return result1.length>0
 		}
 	})
-	if (customer.length === 0) throw 'customer code of shipper_code "' + shipper_code + '" is not found.'
+	if (customer.length === 0) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
 	customer_code = customer[0].customer.customer_code
 	const deliverycharge = vtecxapi.getEntry('/customer/' + customer[0].customer.customer_code + '/deliverycharge')	
-	if (!deliverycharge.feed.entry) throw 'deliverycharge is not found. (customer code=' + customer[0].customer.customer_code +')'
+	if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer[0].customer.customer_code +')'
 	return deliverycharge
 }
 

@@ -24,63 +24,16 @@ type InputEvent = {
 export default class BillingDataUpload extends React.Component {  
 	constructor() {
 		super()
-		this.state = {}
-		this.entry = {
-			customer: {}
-		}
-		this.master = {
-			customerList: []
-		}
-		this.customerList = []
-		this.exList = []
 	}
  
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
-		this.setCustomerMasterData()
-	}
 
-	setCustomerMasterData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/customer?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.customerList = response.data.feed.entry
-				this.customerList = this.master.customerList.map((obj) => {
-					return {
-						label: obj.customer.customer_name,
-						value: obj.customer.customer_code,
-						data: obj
-					}
-				})
-
-				this.forceUpdate()
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
-	}
-
-	handleSubmit(e: InputEvent) {
+	handleSubmitYmt(e: InputEvent) {
 		e.preventDefault()
 
 		const formData = new FormData(e.currentTarget)
 
-		// 画像は、/d/registration/{key} としてサーバに保存されます
 		axios({
-			url: '/s/getcsv',
+			url: '/s/put-billing-ymt',
 			method: 'post',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -88,19 +41,47 @@ export default class BillingDataUpload extends React.Component {
 			data : formData
 
 		}).then(() => {
-			alert('success')
+			alert('アップロードに成功しました')
 		}).catch((error) => {
 			if (error.response) {
-				alert('error='+JSON.stringify(error.response))
+				if (error.response.data.feed.title.indexOf('undefined')>=0) {
+					alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+				} else {
+					alert(error.response.data.feed.title)				
+				}
 			} else {
-				alert('error')
+				alert('アップロードに失敗しました')
+			}
+		})
+	}
+
+	handleSubmitEco(e: InputEvent) {
+		e.preventDefault()
+
+		const formData = new FormData(e.currentTarget)
+
+		axios({
+			url: '/s/put-billing-eco',
+			method: 'post',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			data : formData
+
+		}).then(() => {
+			alert('アップロードに成功しました')
+		}).catch((error) => {
+			if (error.response) {
+				if (error.response.data.feed.title.indexOf('undefined')>=0) {
+					alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+				} else {
+					alert(error.response.data.feed.title)				
+				}
+			} else {
+				alert('アップロードに失敗しました')
 			}
 		})
 
-	}
-
-	changed() {
-		
 	}
 
 	render() {
@@ -117,16 +98,14 @@ export default class BillingDataUpload extends React.Component {
 							<thead>
 								<tr>
 									<th width="100px">配送業者</th>
-									<th width="70px">種類</th>
 									<th width="500px">ファイル選択</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>エコ配JP</td>
-									<td>-</td>
 									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+										<Form horizontal onChange={(e) => this.handleSubmitEco(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
 											</FormGroup>
@@ -135,19 +114,8 @@ export default class BillingDataUpload extends React.Component {
 								</tr>
 								<tr>
 									<td rowspan="3">ヤマト運輸</td>
-									<td>発払/コレクト</td>
 									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>DM便/ネコポス</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+										<Form horizontal onChange={(e) => this.handleSubmitYmt(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
 											</FormGroup>
