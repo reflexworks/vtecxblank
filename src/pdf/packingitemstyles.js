@@ -1,15 +1,16 @@
 export const _page = {
 	pagesize: 'A4',
 	orientation: 'landscape',
-	left: -120,
-	right: -120,
-	top: 0,
+	left: 0,
+	right: 0,
+	top: 20,
 	bottom: 0,
 	linecolor: '#000000'
 }
 
 export const widths = {
-	widths: '3,4,25,19,4,4,4,4,4,4,4,4,4,4,4,4,3'
+	widths: '5,6,19,19,4,4,4,4,4,4,4,4,4,4,4,4,5',
+	width: '100%',
 }
 
 export const borderTop = {
@@ -41,7 +42,7 @@ export const titleLeft = {
 	left: 'true',
 	right: 'false',
 	top: 'true',
-	bottom: 'false'
+	bottom: 'false',
 }
 
 export const titleRight = {
@@ -56,7 +57,7 @@ export const title = {
 }
 
 export const spaceLeft = {
-	left: 'true',
+	left: 'false',
 	right: 'false',
 	top: 'false',
 	bottom: 'false'
@@ -64,7 +65,7 @@ export const spaceLeft = {
 
 export const spaceRight = {
 	left: 'false',
-	right: 'true',
+	right: 'false',
 	top: 'false',
 	bottom: 'false'
 }
@@ -127,7 +128,7 @@ export const tableTd = {
 	bottom:'true',
 	bgcolor:'#CCCCCC',	
 	align:'center',
-	color:'#000000',	
+	//color:'#000000',	
 	offsety:3
 }
 
@@ -138,7 +139,7 @@ export const tableTdNoBottom = {
 	bottom:'false',
 	bgcolor:'#CCCCCC',	
 	align:'center',
-	color:'#000000',	
+	//color:'#000000',	
 	offsety:3
 }
 
@@ -149,7 +150,7 @@ export const tableTdNoTopBottom = {
 	bottom:'false',
 	bgcolor:'#CCCCCC',	
 	align:'center',
-	color:'#000000',	
+	//color:'#000000',	
 	offsety:3
 }
 
@@ -160,7 +161,7 @@ export const tableTdNoTop = {
 	bottom:'true',
 	bgcolor:'#CCCCCC',	
 	align:'center',
-	color:'#000000',	
+	//color:'#000000',	
 	offsety:3
 }
 
@@ -324,5 +325,3 @@ export const tdRemarks3Line = {
 	offsetx:5,
 	offsety:-15,
 }
-
-
