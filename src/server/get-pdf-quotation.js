@@ -965,7 +965,14 @@ const element = () => {
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
 
-const file_name = 'quotation-' + quotation_code + '-' + quotation_code_sub + '.pdf'
+const file_name = () => {
+	const preview = vtecxapi.getQueryString('preview')
+	if (preview === '') {
+		return 'preview-' + quotation_code + '-' + quotation_code_sub + '.pdf'
+	} else {
+		return 'quotation-' + quotation_code + '-' + quotation_code_sub + '.pdf'
+	}
+}
 
 // PDF出力
-vtecxapi.toPdf(pageData, html, file_name)
+vtecxapi.toPdf(pageData, html, file_name())
