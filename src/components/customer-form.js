@@ -663,8 +663,15 @@ export default class CustomerForm extends React.Component {
 							data={this.entry.customer.shipper}
 							header={[{
 								field: 'shipment_service_code', title: '配送業者コード', width: '100px',
-								convert: { EC: 'エコ配JP', YM: 'ヤマト運輸'}
+								convert: {
+									ECO: 'エコ配ALLJP', ECO1: 'エコ配JP', ECO2: 'エコ配',
+									JP:'日本郵便',JP1:'日本郵便',JP2:'日本郵便',JP3:'日本郵便',
+									SG: '佐川急便', SN: '西濃運輸',
+									YH: 'ヤマト運輸',YH1: 'ヤマト運輸',YH2: 'ヤマト運輸'
+								}
 							}, {
+								field: 'shipment_service_service_name', title: 'サービス名', width: '100px',
+							}, {	
 								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',
 								convert: { 0: '集荷', 1: '出荷' }
 							}]}

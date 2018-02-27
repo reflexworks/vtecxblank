@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Form
 } from 'react-bootstrap'
@@ -10,6 +11,7 @@ import {
 	CommonTable,
 	CommonModal,
 	CommonFilterBox,
+	CommonInputText,
 } from './common'
 
 export class CustomerShipperModal extends React.Component {
@@ -26,6 +28,11 @@ export class CustomerShipperModal extends React.Component {
 			label: '出荷',
 			value: '1'
 		}]
+		
+		this.master = {
+			shipmentServiceList: [],
+		}
+
 		this.shipper = this.props.data || {}
 		this.shipper.shipper_info = this.shipper.shipper_info || []
 	}
@@ -41,6 +48,7 @@ export class CustomerShipperModal extends React.Component {
 			isShow: newProps.isShow,
 			type: newProps.type
 		})
+		this.setMasterShipmentServiceList()
 		this.forceUpdate()
 	}
 
@@ -74,11 +82,6 @@ export class CustomerShipperModal extends React.Component {
 		this.forceUpdate()
 	}
 
-	changeDeliveryCompany(_data) {
-		this.shipper.shipment_service_code = _data ? _data.value : ''
-		this.forceUpdate()
-	}
-
 	changeShipperCode(_data, _rowindex) {
 		this.shipper.shipper_info[_rowindex].shipper_code = _data
 		this.forceUpdate()
@@ -86,6 +89,36 @@ export class CustomerShipperModal extends React.Component {
 
 	changeShipmentClass(_data, _rowindex) {
 		this.shipper.shipper_info[_rowindex].shipment_class = _data ? _data.value : ''
+		this.forceUpdate()
+	}
+
+	setMasterShipmentServiceList() {
+		axios({
+			url: '/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.master.shipmentServiceList = response.data.feed.entry
+				this.shipmentServiceList = this.master.shipmentServiceList.map((obj) => {
+					return {
+						label: obj.shipment_service.name + '/' + obj.shipment_service.service_name,
+						value: obj.shipment_service.code,
+						data: obj
+					}
+				})
+			}
+		})
+	}
+	
+	changeDeliveryCompany(_data) {
+		console.log(_data)
+		this.shipper.shipment_service_code = _data ? _data.value : ''
+		this.shipper.shipment_service_service_name = _data ? _data.data.shipment_service.service_name : ''
 		this.forceUpdate()
 	}
 
@@ -103,16 +136,20 @@ export class CustomerShipperModal extends React.Component {
 						controlLabel="配送業者"
 						name="shipment_service_code"
 						value={this.shipper.shipment_service_code}
-						options={[{
-							label: 'エコ配JP',
-							value: 'EC'
-						}, {	
-							label: 'ヤマト運輸',
-							value: 'YM'
-						}]}
+						options={this.shipmentServiceList}
 						onChange={(data)=>this.changeDeliveryCompany(data)}
 					/>
 
+					{this.shipper.shipment_service_code &&
+						<CommonInputText
+							controlLabel="サービズ名"
+							name="shipment_service_service_name"
+							type="text"
+							value={this.shipper.shipment_service_service_name}
+							readonly
+						/>
+					}	
+					
 					<CommonTable
 						controlLabel="荷主情報"
 						name="shipper_info"
