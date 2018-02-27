@@ -106,7 +106,7 @@ export const PackingItems = (_start_page, _quotationData) => {
 				{/*タイトル*/}					
 				<tr>
 					<td ></td>
-					<td colspan="15" ></td>
+					<td colspan="15" style={pdfstyles.packingitems_table_blank}><div></div></td>
 					<td ></td>
 				</tr>	
 				
