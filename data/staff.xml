@@ -19,15 +19,6 @@
     </entry>
     <entry>
         <staff>
-            <staff_name>永瀬　雅久</staff_name>
-            <role>2</role>
-            <staff_email>nagase@connect-logi.jp</staff_email>
-            <uid>${_addids}</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-10-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
             <staff_name>角 江里奈</staff_name>
             <role>3</role>
             <staff_email>kado@connect-logi.co.jp</staff_email>
@@ -250,6 +241,27 @@
     </entry>
     <entry>
         <staff>
+            <staff_name>石澤 隼平</staff_name>
+            <role>4</role>
+            <staff_email>ishizawa@connect-logi.co.jp</staff_email>
+            <uid>0000012</uid>
+            <password>logioffice2017!</password>
+        </staff>
+        <link href="/staff/ishizawa@connect-logi.co.jp" rel="self"/>
+    </entry>
+    <entry>
+        <staff>
+            <staff_name>荒畑 敬吾</staff_name>
+            <role>3</role>
+            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+            <staff_email>k.arahata@connect-logi.co.jp</staff_email>
+            <uid>0000011</uid>
+            <password>logioffice2017!</password>
+        </staff>
+        <link href="/staff/k.arahata@connect-logi.co.jp" rel="self"/>
+    </entry>
+    <entry>
+        <staff>
             <staff_name>システム管理者</staff_name>
             <role>1</role>
             <staff_email>logioffice.test@gmail.com</staff_email>
@@ -290,6 +302,15 @@
             <password>logioffice2017!</password>
         </staff>
         <link href="/staff/n.takemasa@connect-logi.co.jp" rel="self"/>
+    </entry>
+    <entry>
+        <staff>
+            <staff_name>永瀬 雅久</staff_name>
+            <role>2</role>
+            <staff_email>nagase@connect-logi.jp</staff_email>
+            <uid>${_addids}</uid>
+        </staff>
+        <link href="/staff/nagase@connect-logi.jp" rel="self"/>
     </entry>
     <entry>
         <staff>

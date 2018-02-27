@@ -95,22 +95,21 @@ const getPackingItems = (entry) =>{
 	
 }
 
+
 export const PackingItems = (_start_page, _quotationData) => {
 	const page = '_page-' + _start_page
 	const tables = (
 		<div className="_page" id={page} style={pdfstyles._page}>
 		
 			<table cols="17" style={pdfstyles.widths}>
-
+	
 				{/*タイトル*/}					
 				<tr>
 					<td ></td>
-
 					<td colspan="15" ></td>
-
 					<td ></td>
 				</tr>	
-
+				
 				{/*項目一覧*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
