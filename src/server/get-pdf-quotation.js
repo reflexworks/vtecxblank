@@ -49,7 +49,7 @@ const getBasicCondition = () => {
 							case 0:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx}>
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -70,7 +70,7 @@ const getBasicCondition = () => {
 							case half:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -91,7 +91,7 @@ const getBasicCondition = () => {
 							case length - 1:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -112,7 +112,7 @@ const getBasicCondition = () => {
 							default:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -136,7 +136,7 @@ const getBasicCondition = () => {
 							case 0:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -157,7 +157,7 @@ const getBasicCondition = () => {
 							case half:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -178,7 +178,7 @@ const getBasicCondition = () => {
 							case length - 1:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -199,7 +199,7 @@ const getBasicCondition = () => {
 							default:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -222,7 +222,7 @@ const getBasicCondition = () => {
 							switch (idx) {
 							case 0:
 								return (
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -245,7 +245,7 @@ const getBasicCondition = () => {
 							case length - 1:
 								return (
 													
-									<tr key={idx} style={pdfstyles.fontsize10}>
+									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
 													
@@ -266,7 +266,7 @@ const getBasicCondition = () => {
 							}
 						} else {
 							return (
-								<tr key={idx} style={pdfstyles.fontsize10}>
+								<tr key={idx} >
 									<td style={pdfstyles.spaceLeft}>
 									</td>
 												
@@ -293,7 +293,6 @@ const getBasicCondition = () => {
 	)
 
 }
-
 
 const getItemDetails = () => {
 
@@ -754,14 +753,14 @@ const quotationPage = () => {
 
 				{/*タイトル*/}					
 				<tr>
-					<td style={pdfstyles.titleLeft}>
+					<td>
 					</td>
 
 					<td colspan="8" style={pdfstyles.borderTop}>
-						<span style={pdfstyles.title}>御見積り</span>
+						<span style={pdfstyles.title}>御見積書</span>
 					</td>
 
-					<td style={pdfstyles.titleRight}>
+					<td>
 					</td>
 				</tr>
 				
@@ -780,21 +779,17 @@ const quotationPage = () => {
 					</td>
 				</tr>
 
-				
 				{/*請求先名 請求元*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 
-					<td colspan="3" style={pdfstyles.fontsize12UL}>
+					<td colspan="5" style={pdfstyles.fontsize10UL}>
 						<div>{entry.billto.billto_name}　御中</div>
 					</td>
 
-					<td colspan="2" style={pdfstyles.fontsize12UL}>
-					</td>
-
 					<td colspan="3" style={pdfstyles.fontsize10R}>
-						<div style={pdfstyles.fontsize12}>{entry.billfrom.billfrom_name}</div>
+						<div>{entry.billfrom.billfrom_name}</div>
 			
 						<div>
 							<span>〒</span>
@@ -812,13 +807,14 @@ const quotationPage = () => {
 					</td>
 				</tr>
 
-				{/*御見積申し上げます*/}					
+				
+				{/*御見積申し上げます*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 					<td colspan="6">
 						<br />
-						<div>御社、物流業務を下記の通りに御見積もり申し上げます。</div>
+						<div style={pdfstyles.fontsize10}>御社、物流業務を下記の通りに御見積り申し上げます。</div>
 						<br />
 					</td>
 
@@ -833,7 +829,7 @@ const quotationPage = () => {
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 					<td colspan="8" style={pdfstyles.tableTd}>
-						<span>基本条件</span>
+						<span style={pdfstyles.fontsize8}>基本条件</span>
 					</td>
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -845,7 +841,7 @@ const quotationPage = () => {
 				}
 				
 				<tr>
-					<td colspan="10" style={pdfstyles.borderBottom}>
+					<td colspan="10">
 					</td>
 				</tr>					
 			</table>
@@ -855,24 +851,12 @@ const quotationPage = () => {
 		<div className="_page" id="_page-2" style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.widths}>
 				
-				{/*上部*/}
-				<tr>
-					<td style={pdfstyles.titleLeft}>
-					</td>
-
-					<td colspan="8" style={pdfstyles.borderTopTwo}>
-					</td>
-
-					<td style={pdfstyles.titleRight}>
-					</td>
-				</tr>
-
 				{/*テーブルヘッダ*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 					<td colspan="8" style={pdfstyles.tableTd}>
-						<span>見積り明細</span>
+						<span style={pdfstyles.fontsize8}>見積明細</span>
 					</td>
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -883,19 +867,19 @@ const quotationPage = () => {
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 					<td colspan="2" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize10}>項目</span>
+						<span style={pdfstyles.fontsize8}>項目</span>
 					</td>
 
 					<td colspan="2" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize10}>単位</span>
+						<span style={pdfstyles.fontsize8}>単位</span>
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize10}>単価</span>
+						<span style={pdfstyles.fontsize8}>単価</span>
 					</td>
 
 					<td colspan="3" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize10}>備考</span>
+						<span style={pdfstyles.fontsize8}>備考</span>
 					</td>
 					
 					<td style={pdfstyles.spaceRight}>
@@ -912,9 +896,9 @@ const quotationPage = () => {
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 
-					<td colspan="8" style={pdfstyles.fontsize12}>
+					<td colspan="8">
 						<br/>
-						<div>備考</div>
+						<div style={pdfstyles.fontsize8}>備考</div>
 					</td>
 										
 					<td style={pdfstyles.spaceRight}>
@@ -923,11 +907,7 @@ const quotationPage = () => {
 				{entry.remarks &&
 					getRemarks()
 				}
-							
-				<tr>
-					<td colspan="10" style={pdfstyles.borderBottom}>
-					</td>
-				</tr>
+			
 			</table>
 		</div>
 	)
@@ -938,6 +918,7 @@ const quotationPage = () => {
 	}
 	return res
 }
+
 
 let pageData = {
 	pageList: {

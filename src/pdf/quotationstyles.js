@@ -5,28 +5,28 @@ export const _page = {
 	right: -30,
 	top: 30,
 	bottom: 30,
-	linecolor: '#A9C3E3'
+	linecolor: '#000000'
 }
 
 export const widths = {
-	//widths: '5,5,46,8,13,18,5'
 	widths:'5,10,4,14,6,7,12,6,16,5'
 }
+
 
 export const borderTop = {
 	left: 'false',
 	right: 'false',
-	top: 'true',
+	top: 'false',
 	bottom: 'false',
 	align:'center',
-	height:50,
+	height:30,
 	space:5
 }
 
 export const borderTopTwo = {
 	left: 'false',
 	right: 'false',
-	top: 'true',
+	top: 'false',
 	bottom: 'false',
 	align:'center',
 	height:10,
@@ -57,7 +57,7 @@ export const title = {
 }
 
 export const spaceLeft = {
-	left: 'true',
+	left: 'false',
 	right: 'false',
 	top: 'false',
 	bottom: 'false'
@@ -65,7 +65,7 @@ export const spaceLeft = {
 
 export const spaceRight = {
 	left: 'false',
-	right: 'true',
+	right: 'false',
 	top: 'false',
 	bottom: 'false'
 }
@@ -101,7 +101,17 @@ export const fontsize10 = {
 
 export const fontsize10R = {
 	align: 'right', 
-	size:10
+	size: 10,
+}
+
+export const fontsize10UL = {
+	size: 10,
+	style: 'underline',
+	//nowrap:'true',
+}
+
+export const fontsize8 = {
+	size:8
 }
 
 export const fontsize8UL = {
@@ -109,12 +119,17 @@ export const fontsize8UL = {
 	style:'underline'	
 }
 
-export const fontsize8 = {
-	size:8
-}
-
 export const fontsize7 = {
 	size:7
+}
+
+export const fontsize6 = {
+	size: 6
+}
+
+export const fontsize6UL = {
+	size: 6,
+	style:'underline'	
 }
 
 export const tableTd = {
@@ -122,9 +137,9 @@ export const tableTd = {
 	right:'true',
 	top:'true',
 	bottom:'true',
-	bgcolor:'#B5D0F1',	
+	bgcolor:'#CCCCCC',
 	align:'center',
-	color:'#00408F',	
+	color:'#000000',	
 	offsety:3
 }
 
@@ -158,8 +173,8 @@ export const tdLeftb = {
 	height:'25',
 	offsetx:5,
 	offsety:9,
-	color:'#00408F',	
-	bgcolor:'#B5D0F1'
+	color:'#000000',	
+	bgcolor:'#CCCCCC'
 }
 
 export const tdRight = {
