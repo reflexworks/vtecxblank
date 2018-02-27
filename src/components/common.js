@@ -1797,7 +1797,7 @@ export class CommonTable extends React.Component {
 				let array = new Array(cashInfolength)
 				let noneDisplayIndex = parseInt(cashInfolength + '')
 
-				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div>{(_index + 1)}</div></td>
+				array[cashInfo.no.index] = <td key={tdCount} style={cashInfo.no.style}><div className="ellipsis">{(_index + 1)}</div></td>
 				tdCount++
 				if (this.props.select) {
 					array[cashInfo.select.index] = (
