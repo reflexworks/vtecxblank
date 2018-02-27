@@ -887,7 +887,7 @@ h3.title {
 .common-table>.table>tbody>tr>td {
   padding: 0px;
   vertical-align: middle;
-  white-space: nowrap;
+  word-break: break-all;
 }
 .common-table>.table>tbody>tr>td>div {
   padding: 5px;
@@ -897,8 +897,6 @@ h3.title {
   background: #337ab7;
 }
 .common-table .table td div.ellipsis{
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .common-table.Select{
   position: absolute;
