@@ -43,8 +43,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 	 * 登録完了後の処理
 	 */
 	callbackRegistrationButton() {
-		alert('登録が完了しました。')
-		//location.href = '/#/DeliveryChargeTemplateList'
+		location.href = '/#/DeliveryChargeTemplateList'
 	}
 
 	render() {
