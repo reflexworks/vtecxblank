@@ -255,7 +255,9 @@ export default class QuotationUpdate extends React.Component {
 	 */
 	doPrint(_isPreview) {
 		const print = () => {
-			location.href = 's/get-pdf-quotation?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+			let url = '/s/get-pdf-quotation?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+			url = _isPreview ? url + '&preview' : url
+			location.href = url
 		}
 		if (_isPreview) {
 			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
@@ -271,7 +273,9 @@ export default class QuotationUpdate extends React.Component {
 	 */
 	doPrintOther(_isPreview) {
 		const print = () => {
-			location.href = 's/get-pdf-quotation-other?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+			let url = '/s/get-pdf-quotation-other?quotation_code=' + this.entry.quotation.quotation_code + '&quotation_code_sub=' + this.entry.quotation.quotation_code_sub
+			url = _isPreview ? url + '&preview' : url
+			location.href = url
 		}
 		if (_isPreview) {
 			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {

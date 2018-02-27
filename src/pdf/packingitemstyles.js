@@ -3,7 +3,7 @@ export const _page = {
 	orientation: 'landscape',
 	left: 0,
 	right: 0,
-	top: 20,
+	top: 0,
 	bottom: 0,
 	linecolor: '#000000'
 }
@@ -12,7 +12,13 @@ export const widths = {
 	widths: '5,6,19,19,4,4,4,4,4,4,4,4,4,4,4,4,5',
 	width: '100%',
 }
-
+export const packingitems_table_blank = {
+	height: 20,
+	left: 'false',
+	right: 'false',
+	top: 'false',
+	bottom: 'false',
+}
 export const borderTop = {
 	left: 'false',
 	right: 'false',
@@ -118,7 +124,7 @@ export const fontsize7 = {
 }
 
 export const fontsize6 = {
-	size:6
+	size: 6
 }
 
 export const tableTd = {
