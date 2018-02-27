@@ -44,10 +44,12 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
-		this.entry = newProps.entry
-		this.entry.title = this.entry.title || ''
-		this.isCreate = false
-		this.setTable()
+		this.entry = newProps.entry || {}
+		if (newProps.entry) {
+			this.entry.title = this.entry.title || ''
+			this.isCreate = false
+			this.setTable()
+		}
 	}
 
 	/**

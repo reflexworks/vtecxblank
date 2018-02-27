@@ -89,6 +89,7 @@ export default class ShipmentServiceUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
+		location.reload()
 	}
 
 	/**
