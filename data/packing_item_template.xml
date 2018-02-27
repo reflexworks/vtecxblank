@@ -1,6 +1,58 @@
 <feed>
     <entry>
         <packing_items>
+            <item_code>dbox_002</item_code>
+            <item_name>ダンボール箱 SSサイズ② 底面 A4</item_name>
+            <material>K5×S160g×K5</material>
+            <category>ダンボール箱</category>
+            <size1>SSサイズ</size1>
+            <size2>底面A4</size2>
+            <notices>1枚価格</notices>
+            <thickness>5.00</thickness>
+            <inside_width>330</inside_width>
+            <inside_depth>240</inside_depth>
+            <inside_height>170</inside_height>
+            <outer_width>340</outer_width>
+            <outer_depth>250</outer_depth>
+            <outer_height>190</outer_height>
+            <outer_total>780</outer_total>
+            <purchase_price>48.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_items>
+        <link href="/packing_item_template/0-6-35-9-5-1-1" rel="self"/>
+        <title>dbox002</title>
+    </entry>
+    <entry>
+        <packing_items>
+            <item_code>dbox_003</item_code>
+            <item_name>ダンボール箱 SSサイズ② 底面 A4</item_name>
+            <material>K5×S160g×K5</material>
+            <category>ダンボール箱</category>
+            <size1>SSサイズ</size1>
+            <size2>底面A4</size2>
+            <notices>1枚価格</notices>
+            <thickness>5.00</thickness>
+            <inside_width>330</inside_width>
+            <inside_depth>240</inside_depth>
+            <inside_height>235</inside_height>
+            <outer_width>340</outer_width>
+            <outer_depth>250</outer_depth>
+            <outer_height>255</outer_height>
+            <outer_total>845</outer_total>
+            <purchase_price>51.00</purchase_price>
+            <regular_price></regular_price>
+            <regular_unit_price></regular_unit_price>
+            <special_price></special_price>
+            <special_unit_price></special_unit_price>
+        </packing_items>
+        <link href="/packing_item_template/0-6-35-9-5-1-2" rel="self"/>
+        <title>dbox003</title>
+    </entry>
+    <entry>
+        <packing_items>
             <item_code>dbox_016</item_code>
             <item_name>ダンボール箱 60サイズ 底面 A5</item_name>
             <material>K5×S120g×K5</material>
@@ -354,6 +406,32 @@
         </packing_items>
         <link href="/packing_item_template/0-6-35-9-5-10-1" rel="self"/>
         <title>dbox60_80_100_120_140_160サイズ</title>
+    </entry>
+    <entry>
+        <packing_items>
+            <item_code>dbox_001</item_code>
+            <item_name>ダンボール箱 SSサイズ① 底面 A4</item_name>
+            <material>K5×S160g×K5</material>
+            <category>ダンボール箱</category>
+            <size1>SSサイズ</size1>
+            <size2>底面A4</size2>
+            <notices>1枚価格</notices>
+            <thickness>5.00</thickness>
+            <inside_width>330</inside_width>
+            <inside_depth>240</inside_depth>
+            <inside_height>105</inside_height>
+            <outer_width>340</outer_width>
+            <outer_depth>250</outer_depth>
+            <outer_height>125</outer_height>
+            <outer_total>715</outer_total>
+            <purchase_price>44.00</purchase_price>
+            <regular_price>0</regular_price>
+            <regular_unit_price>0</regular_unit_price>
+            <special_price>0</special_price>
+            <special_unit_price>0</special_unit_price>
+        </packing_items>
+        <link href="/packing_item_template/0-6-35-9-5-2-1" rel="self"/>
+        <title>dbox001</title>
     </entry>
     <entry>
         <packing_items>
