@@ -55,76 +55,137 @@ export function getAuthList(_role) {
 	if (!_role) {
 		return list
 	} else {
-		if (_role === '1') {
-			// システム管理者は全ての権限がある
-			Object.keys(list).forEach((_key) => {
-				list[_key] = true
-			})
-		}
 
+		let authList
 		// 上長
 		if (_role === '2') {
 
-			list.CustomerRegistration = true
-			list.CustomerUpdate = true
-			list.CustomerList = true
+			authList = {
+				CustomerRegistration: true,
+				CustomerUpdate: true,
+				CustomerList: true,
+				DeliveryChargeRegistration: true,
 
-			list.QuotationRegistration = true
-			list.QuotationList = true
-			list.QuotationUpdate = true
+				InquiryRegistration: true,
+				InquiryList: true,
+				InquiryUpdate: true,
 
-			list.InternalWorkRegistration = true
-			list.InternalWorkUpdate = true
-			list.InternalWorkList = true
+				QuotationRegistration: true,
+				QuotationList: true,
+				QuotationUpdate: true,
+
+				InternalWorkRegistration: true,
+				InternalWorkUpdate: true,
+				InternalWorkList: true
+			}
 
 		}
 
 		// 作業員
 		if (_role === '3') {
-			list.CustomerList = true
+			authList = {
+				CustomerList: true,
+				DeliveryChargeRegistration: true,
 
-			list.InternalWorkRegistration = true
-			list.InternalWorkUpdate = true
-			list.InternalWorkList = true
+				InquiryRegistration: true,
+				InquiryList: true,
+				InquiryUpdate: true,
+
+				InternalWorkRegistration: true,
+				InternalWorkUpdate: true,
+				InternalWorkList: true,
+			}
 
 		}
 
 		// 営業
 		if (_role === '4') {
+			authList = {
+				CustomerRegistration: true,
+				CustomerUpdate: true,
+				CustomerList: true,
+				DeliveryChargeRegistration: true,
 
-			list.CustomerRegistration = true
-			list.CustomerUpdate = true
-			list.CustomerList = true
+				StaffRegistration: true,
+				StaffList: true,
+				StaffUpdate: true,
 
-			list.StaffRegistration = true
-			list.StaffList = true
-			list.StaffUpdate = true
+				PackingItemRegistration: true,
+				PackingItemList: true,
+				PackingItemUpdate: true,
+				PackingItemTemplateRegistration: true,
+				PackingItemTemplateList: true,
+				PackingItemTemplateUpdate: true,
 
-			list.WarehouseRegistration = true
-			list.WarehouseList = true
-			list.WarehouseUpdate = true
+				ShipmentServiceRegistration: true,
+				ShipmentServiceUpdate: true,
+				ShipmentServiceList: true,
+				DeliveryChargeTemplateRegistration: true,
+				DeliveryChargeTemplateUpdate: true,
+				DeliveryChargeTemplateList: true,
 
-			list.QuotationRegistration = true
-			list.QuotationList = true
-			list.QuotationUpdate = true
+				QuotationRegistration: true,
+				QuotationList: true,
+				QuotationUpdate: true,
 
-			list.InvoiceList = true
-			list.InvoiceUpdate = true
+				InvoiceList: true,
+				InvoiceUpdate: true,
+			}
 		}
 
 		// 経理
 		if (_role === '5') {
 
-			list.QuotationList = true
-			list.QuotationUpdate = true
+			authList = {
+				BilltoRegistration: true,
+				BilltoList: true,
+				BilltoUpdate: true,
 
-			list.InternalWorkRegistration = true
-			list.InternalWorkUpdate = true
-			list.InternalWorkList = true
+				StaffRegistration: true,
+				StaffList: true,
+				StaffUpdate: true,
 
-			list.InvoiceRegistration = true
-			list.InvoiceList = true
-			list.InvoiceUpdate = true
+				WarehouseRegistration: true,
+				WarehouseList: true,
+				WarehouseUpdate: true,
+
+				PackingItemRegistration: true,
+				PackingItemList: true,
+				PackingItemUpdate: true,
+				PackingItemTemplateRegistration: true,
+				PackingItemTemplateList: true,
+				PackingItemTemplateUpdate: true,
+
+				ShipmentServiceRegistration: true,
+				ShipmentServiceUpdate: true,
+				ShipmentServiceList: true,
+				DeliveryChargeTemplateRegistration: true,
+				DeliveryChargeTemplateUpdate: true,
+				DeliveryChargeTemplateList: true,
+
+				QuotationList: true,
+				QuotationUpdate: true,
+
+				InternalWorkRegistration: true,
+				InternalWorkUpdate: true,
+				InternalWorkList: true,
+
+				InvoiceRegistration: true,
+				InvoiceList: true,
+				InvoiceUpdate: true,
+			}
+
+		}
+
+		if (_role === '1') {
+			// システム管理者は全ての権限がある
+			Object.keys(list).forEach((_key) => {
+				list[_key] = true
+			})
+		} else {
+			Object.keys(authList).forEach((_key) => {
+				list[_key] = true
+			})
 		}
 
 		return list

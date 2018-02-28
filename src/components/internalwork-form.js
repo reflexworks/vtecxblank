@@ -354,7 +354,7 @@ export default class InternalWorkForm extends React.Component {
 		if (_service_name) {
 			array.push(_service_name)
 		} else {
-			array.push((_type === '1') ? '発払' : 'メール便')
+			array.push((_type === '1') ? '宅急便' : 'メール便')
 		}
 		if (_size) array.push(_size)
 		if (_weight) array.push(_weight)
@@ -398,8 +398,11 @@ export default class InternalWorkForm extends React.Component {
 	}
 
 	days = () => {
+		const getMonthDays = () => {  
+			return new Date(this.year, this.month, 0).getDate() + 1
+		}
 		let array = []
-		for (let i = 1, ii = 32; i < ii; ++i) {
+		for (let i = 1, ii = getMonthDays(); i < ii; ++i) {
 			array.push({ label: (i < 10 ? '0' + i : i), value: i })
 		}
 		return array
@@ -736,6 +739,11 @@ export default class InternalWorkForm extends React.Component {
 				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
+
+				if (_entry.internal_work.approval_status === '1' && this.isApprovalAuther) {
+					this[_key][_index].approval_status_btn = this.setApprovalStatusBtn(_key, _index, _entry)
+				}
+
 				this.forceUpdate()
 
 			}).catch((error) => {

@@ -33,7 +33,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	init() {
 		// データキャッシュ
 		this.shipment_service = {}
-		// 発払
+		// 宅急便
 		this.shipmentServiceListType1 = []
 		// メール便
 		this.shipmentServiceListType2 = []
@@ -90,7 +90,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				response.data.feed.entry.map((_value) => {
 					this.shipmentServiceList.push({
 						label: getName(_value.shipment_service),
-						value: _value.shipment_service.name,
+						value: _value.shipment_service.code,
 						data: _value
 					})
 				})
@@ -210,7 +210,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					)
 				}
 				if (s_type === '1') {
-					// 発払
+					// 宅急便
 					this.shipmentServiceListType1.push(
 						<CommonTable
 							name=""
@@ -300,7 +300,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				
 				{(this.shipmentServiceListType1.length ? true : false) && 
 					<div>
-						<PageHeader>発払</PageHeader>
+						<PageHeader>宅急便</PageHeader>
 						<div>
 							{this.shipmentServiceListType1}
 						</div>
