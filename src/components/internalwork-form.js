@@ -398,8 +398,11 @@ export default class InternalWorkForm extends React.Component {
 	}
 
 	days = () => {
+		const getMonthDays = () => {  
+			return new Date(this.year, this.month, 0).getDate() + 1
+		}
 		let array = []
-		for (let i = 1, ii = 32; i < ii; ++i) {
+		for (let i = 1, ii = getMonthDays(); i < ii; ++i) {
 			array.push({ label: (i < 10 ? '0' + i : i), value: i })
 		}
 		return array
