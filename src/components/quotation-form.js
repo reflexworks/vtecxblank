@@ -82,7 +82,7 @@ export default class QuotationForm extends React.Component {
 			this.status = '未発行'
 			this.isDisabled = false
 		} else if (this.entry.quotation.status === '1'){
-			this.status = '発行済み'
+			this.status = '発行済'
 			this.isDisabled = true
 		}
 
