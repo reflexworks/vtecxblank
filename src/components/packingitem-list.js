@@ -102,11 +102,9 @@ export default class PackingItemList extends React.Component {
 
 		if (confirm('資材コード:' + data.packing_item.item_code + '\n' +
 					'資材名:' + data.packing_item.item_name + '\n' +
-					'この情報を削除します。よろしいですか？')) {
-			const id = data.packing_item.item_code
-		
+					'この情報を削除します。よろしいですか？')) {		
 			axios({
-				url: '/d/packing_item/' + id,
+				url: '/d' + data.link[0].___href,
 				method: 'delete',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
