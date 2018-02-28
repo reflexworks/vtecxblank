@@ -26,7 +26,7 @@ class UploadBillingDataForm extends React.Component {
 		const formData = new FormData(e.currentTarget)
 
 		axios({
-			url: '/s/put-billing',
+			url: '/s/put-billing-ymt',
 			method: 'post',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
