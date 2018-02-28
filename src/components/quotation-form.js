@@ -194,15 +194,6 @@ export default class QuotationForm extends React.Component {
 		} else {
 			this.entry.billfrom = {}
 			this.entry.contact_information = {}
-			this.entry.billfrom = {}
-			this.entry.contact_information = {}
-			this.entry.contact_information.zip_code = ''
-			this.entry.contact_information.prefecture = ''
-			this.entry.contact_information.address1 = ''
-			this.entry.contact_information.address2 = ''
-			this.entry.contact_information.tel = ''
-			this.entry.contact_information.email = ''
-			this.entry.contact_information.fax = ''
 			this.billfrom = {}
 			this.address=''
 		}
@@ -738,203 +729,63 @@ export default class QuotationForm extends React.Component {
 							 番地
 							*/}
 
-							<CommonFilterBox
-								controlLabel="請求元"
-								name="billfrom.billfrom_code"
-								value={this.entry.billfrom.billfrom_code}
-								options={this.billfromList}
-								add={() => this.setState({ showBillfromAddModal: true })}
-								edit={() => this.setState({ showBillfromEditModal: true })}
-								onChange={(data) => this.changeBillfrom(data)}
-							/>		
-							{this.entry.billfrom.billfrom_code &&
-								<CommonInputText
-									controlLabel=" "
-									name="billfrom.billfrom_name"
-									type="text"
-									value={this.entry.billfrom.billfrom_name}
-									readonly
-								/>
-							}						
-							{this.entry.billfrom.billfrom_code &&
-								<CommonInputText
-									controlLabel="郵便番号"
-									name="contact_information.zip_code"
-									type="text"
-									placeholder="郵便番号"
-									value={this.entry.contact_information.zip_code}
-									readonly
+							{ !this.isDisabled &&
+								<CommonFilterBox
+									controlLabel="請求元選択"
+									name="billfrom.billfrom_code"
+									value={this.entry.billfrom.billfrom_code}
+									options={this.billfromList}
+									add={() => this.setState({ showBillfromAddModal: true })}
+									edit={() => this.setState({ showBillfromEditModal: true })}
+									onChange={(data) => this.changeBillfrom(data)}
 								/>
 							}
-							{this.entry.billfrom.billfrom_code &&
-								<CommonInputText
-									controlLabel="住所"
-									type="text"
-									value={this.address}
-									readonly
-								/>
-							}
-							{this.entry.billfrom.billfrom_code &&
-								<CommonInputText
-									controlLabel="電話番号"
-									name="contact_information.tel"
-									type="text"
-									placeholder="電話番号"
-									value={this.entry.contact_information.tel}
-									readonly
-								/>
-							}
-							{this.entry.billfrom.billfrom_code &&
-								<CommonTable
-									controlLabel="口座情報"
-									name="billfrom.payee"
-									data={this.entry.billfrom.payee}
-									header={[{
-										field: 'bank_info', title: '口座名', width: '30px',
-										convert: {
-											1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
-											6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
-										}
-										
-									}, {
-										field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-										
-									}, {
-										field: 'account_number', title: '口座番号', width: '30px',
-										
-									}]}
-									noneScroll
-									fixed
-								/>
+							{(this.isDisabled && !this.entry.billfrom.billfrom_code) &&
+								<div>
+									<CommonInputText
+										controlLabel=" "
+										name=""
+										type="text"
+										value="請求元を指定せずに発行された見積書です。追加発行から請求元を選択してください。"
+										size="lg"
+										readonly
+									/>
+								</div>
 							}
 
-							{this.entry.contact_information &&
-								<FormGroup className="hide"	>
+							{this.entry.billfrom.billfrom_code &&
+								<div>
 									<CommonInputText
-										name="contact_information.fax"
-										type="text"
-										value={this.entry.contact_information.fax}
-										readonly
-									/>
-								</FormGroup>
-							}
-							{this.entry.contact_information &&
-								<FormGroup className="hide"	>
-									<CommonInputText
-										name="contact_information.email"
-										type="text"
-										value={this.entry.contact_information.email}
-										readonly
-									/>
-								</FormGroup>
-							}
-							{this.entry.contact_information &&
-								<FormGroup className="hide"	>
-									<CommonPrefecture
-										controlLabel="都道府県"
-										componentClass="select"
-										name="contact_information.prefecture"
-										value={this.entry.contact_information.prefecture}
-									/>
-								</FormGroup>
-							}
-							{this.entry.contact_information &&
-								<FormGroup className="hide"	>
-									<CommonInputText
-										name="contact_information.address1"
-										type="text"
-										value={this.entry.contact_information.address1}
-										readonly
-									/>
-								</FormGroup>
-							}
-							{this.entry.contact_information &&
-								<FormGroup className="hide"	>
-									<CommonInputText
-										name="contact_information.address2"
-										type="text"
-										value={this.entry.contact_information.address2}
-										readonly
-									/>
-								</FormGroup>
-							}
-										
-							{!this.entry.billfrom.billfrom_code &&
-								<FormGroup className="hide"	>
-									<CommonInputText
+										controlLabel="請求元名"
 										name="billfrom.billfrom_name"
 										type="text"
+										value={this.entry.billfrom.billfrom_name}
 										readonly
 									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
 									<CommonInputText
+										controlLabel="郵便番号"
 										name="contact_information.zip_code"
 										type="text"
 										placeholder="郵便番号"
+										value={this.entry.contact_information.zip_code}
 										readonly
 									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>
-									<CommonPrefecture
-										controlLabel="都道府県"
-										componentClass="select"
-										name="contact_information.prefecture"
-									/>
-								</FormGroup>
-							}		
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
 									<CommonInputText
-										name="contact_information.address1"
+										controlLabel="住所"
 										type="text"
+										value={this.address}
 										readonly
 									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
 									<CommonInputText
-										name="contact_information.address2"
-										type="text"
-										readonly
-									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
-									<CommonInputText
+										controlLabel="電話番号"
 										name="contact_information.tel"
 										type="text"
+										placeholder="電話番号"
+										value={this.entry.contact_information.tel}
 										readonly
 									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
-									<CommonInputText
-										name="contact_information.fax"
-										type="text"
-										readonly
-									/>
-								</FormGroup>
-							}
-							{!this.entry.contact_information &&
-								<FormGroup className="hide"	>	
-									<CommonInputText
-										name="contact_information.email"
-										type="text"
-										readonly
-									/>
-								</FormGroup>
-							}		
-							{!this.entry.billfrom.billfrom_code &&
-								<FormGroup className="hide"	>
 									<CommonTable
+										controlLabel="口座情報"
 										name="billfrom.payee"
 										data={this.entry.billfrom.payee}
 										header={[{
@@ -943,19 +794,64 @@ export default class QuotationForm extends React.Component {
 												1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 												6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 											}
+											
 										}, {
 											field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-										
+											
 										}, {
 											field: 'account_number', title: '口座番号', width: '30px',
-										
+											
 										}]}
-										noneScroll
 										fixed
+									/>
+								</div>
+							}
+
+							{!this.entry.billfrom.billfrom_code &&
+								<FormGroup className="hide"	>
+									<CommonInputText
+										name="billfrom.billfrom_name"
+										type="text"
+										value=""
+										readonly
 									/>
 								</FormGroup>
 							}
-	
+							{this.entry.contact_information.fax &&
+								<FormGroup className="hide"	>
+									<CommonInputText
+										name="contact_information.fax"
+										type="text"
+										value={this.entry.contact_information.fax}
+										readonly
+									/>
+									<CommonInputText
+										name="contact_information.email"
+										type="text"
+										value={this.entry.contact_information.email}
+										readonly
+									/>
+									<CommonPrefecture
+										controlLabel="都道府県"
+										componentClass="select"
+										name="contact_information.prefecture"
+										value={this.entry.contact_information.prefecture}
+									/>
+									<CommonInputText
+										name="contact_information.address1"
+										type="text"
+										value={this.entry.contact_information.address1}
+										readonly
+									/>
+									<CommonInputText
+										name="contact_information.address2"
+										type="text"
+										value={this.entry.contact_information.address2}
+										readonly
+									/>
+								</FormGroup>
+							}
+
 						</Tab>
 						
 					</Tabs>
