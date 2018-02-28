@@ -102,28 +102,33 @@ export default class QuotationList extends React.Component {
 	 */
 	onDelete(data) {
 
-		if (confirm('見積書No:' + data.quotation.quotation_code + '\n' +
-					'この情報を削除します。よろしいですか？')) {
-			const id = data.link[0].___href.slice(11)
-		
-			axios({
-				url: '/d/quotation/' + id,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(this.activePage)
-			}).catch((error) => {
-				if (this.props.error) {
-					this.setState({ isDisabled: false })
-					this.props.error(error)
-				} else {
-					this.setState({ isDisabled: false, isError: error })
-				}
-			})
-			this.forceUpdate()
+		const _delete = () => {
+			if (confirm('見積書No:' + data.quotation.quotation_code + '-' + data.quotation.quotation_code_sub + '\n' +
+						'この情報を削除します。よろしいですか？')) {		
+				axios({
+					url: '/d' + data.link[0].___href,
+					method: 'delete',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+					this.getFeed(this.activePage)
+				}).catch((error) => {
+					if (this.props.error) {
+						this.setState({ isDisabled: false })
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				})
+				this.forceUpdate()
+			}
+		}
+		if (data.quotation.status === '1') {
+			alert('発行済なため削除できません。')
+		} else {
+			_delete()
 		}
 	}
 
