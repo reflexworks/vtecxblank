@@ -190,7 +190,7 @@ export default class QuotationList extends React.Component {
 									label: '未発行',
 									value: '0'
 								},{
-									label: '発行済み',
+									label: '発行済',
 									value: '1'
 								}]}
 							/>
@@ -226,7 +226,7 @@ export default class QuotationList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '250px'
 							}, {
-								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済み'}
+								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済'}
 							}]}
 						>
 							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
