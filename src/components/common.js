@@ -1852,10 +1852,17 @@ export class CommonTable extends React.Component {
 								const field = _key.replace(/\./g, '___') + __key.replace(/\./g, '___')
 
 								if (cashInfo[field]) {
+
+									// 日時をフォーマット化
+									if (field === 'published' || field === 'updated') {
+										let date_value = __obj[__key].replace(/-/g, '/').split('T')
+										date_value = date_value[0] + ' ' + date_value[1].split('.')[0]
+										__obj[__key] = date_value
+									}
 									array[cashInfo[field].index] = (
 										<td
 											key={cashInfo[field].index}
-											style={cashInfo[field].colStyle ? cashInfo[field].colStyle : null}
+											style={cashInfo[field].style}
 											name={_key + __key}
 										>
 											{ convertValue(__obj[__key], cashInfo[field], _index) }
