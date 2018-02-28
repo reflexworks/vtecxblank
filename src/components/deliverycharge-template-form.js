@@ -90,7 +90,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				response.data.feed.entry.map((_value) => {
 					this.shipmentServiceList.push({
 						label: getName(_value.shipment_service),
-						value: _value.shipment_service.name,
+						value: _value.shipment_service.code,
 						data: _value
 					})
 				})
