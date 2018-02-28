@@ -107,6 +107,35 @@ export default class InternalWorkList extends React.Component {
     	this.getFeed(1)
     }
 
+
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+    onDelete(data) {
+
+    	if (confirm('この情報を削除します。よろしいですか？')) {
+
+    		axios({
+    			url: '/d' + data.link[0].___href + '?_rf',
+    			method: 'delete',
+    			headers: {
+    				'X-Requested-With': 'XMLHttpRequest'
+    			}
+    		}).then(() => {
+    			this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+    			this.getFeed(this.activePage)
+    		}).catch((error) => {
+    			if (this.props.error) {
+    				this.setState({ isDisabled: false })
+    				this.props.error(error)
+    			} else {
+    				this.setState({ isDisabled: false, isError: error })
+    			}
+    		})
+    	}
+    }
+
     render() {
     	return (
     		<Grid>
@@ -159,7 +188,8 @@ export default class InternalWorkList extends React.Component {
     					<CommonTable
     						name="entry"
     						data={this.state.feed.entry}
-    						edit={(data) => this.onSelect(data) }
+    						edit={(data) => this.onSelect(data)}
+    						remove={(data) => this.onDelete(data)}
     						header={[{
     							field: 'internal_work.working_yearmonth',title: '作業年月', width: '100px'
     						}, {
