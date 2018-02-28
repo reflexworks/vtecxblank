@@ -739,6 +739,11 @@ export default class InternalWorkForm extends React.Component {
 				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
+
+				if (_entry.internal_work.approval_status === '1' && this.isApprovalAuther) {
+					this[_key][_index].approval_status_btn = this.setApprovalStatusBtn(_key, _index, _entry)
+				}
+
 				this.forceUpdate()
 
 			}).catch((error) => {

@@ -51,7 +51,7 @@ export function getAuthList(_role) {
 		BillfromUpdate: false
 	}
 
-	_role = '1'
+	//_role = '1'
 	if (!_role) {
 		return list
 	} else {
