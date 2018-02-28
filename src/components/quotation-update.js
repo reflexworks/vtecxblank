@@ -42,6 +42,9 @@ export default class QuotationUpdate extends React.Component {
 
 		// 初期値の設定
 		this.entry = {}
+
+		// 請求元があるかどうかでプレビューまたはダウンロード実行の判定を行う
+		this.isBillfrom = false
 	}
  
 	/**
@@ -75,7 +78,12 @@ export default class QuotationUpdate extends React.Component {
 					this.entry.item_details = this.entry.item_details || []
 					this.entry.remarks = this.entry.remarks || []
 					this.entry.packing_items = this.entry.packing_items || []
+					this.entry.billfrom = this.entry.billfrom || {}
+					this.entry.contact_information = this.entry.contact_information || {}
 
+					if (this.entry.billfrom.billfrom_code) {
+						this.isBillfrom = true
+					}
 					if (this.entry.quotation.status === '1') {
 						this.befor = null
 					}
@@ -162,7 +170,7 @@ export default class QuotationUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
-		location.reload()
+		//location.reload()
 	}
 
 	/**
@@ -193,65 +201,71 @@ export default class QuotationUpdate extends React.Component {
 				this.setState({ isDisabled: false, isError: error })
 			})
 		}
+		const res = JSON.parse(JSON.stringify(CommonEntry().get()))
 
-		if (confirm('' +
-			'見積書を発行します。\n' +
-			'発行された見積内容は確定され、編集不可となります。\n' +
-			'\nよろしいでしょうか？')) {
-			const res = JSON.parse(JSON.stringify(CommonEntry().get()))
-			/**
-			 * Reactオブジェクトかどうかの判定
-			 * @param {*} _value 
-			 */
-			const checkDom = (_value) => {
-				let flg = false
-				if (Object.prototype.toString.call(_value) === '[object Object]') {
-					flg = true
-				}
-				return flg
-			}
-			res.feed.entry[0].quotation.status = '1'
-			res.feed.entry[0].item_details = res.feed.entry[0].item_details.map((_obj) => {
-				if (checkDom(_obj.item_name)) {
-					_obj.item_name = _obj.item_name.props.children
-				}
-				if (checkDom(_obj.unit_name)) {
-					_obj.unit_name = _obj.unit_name.props.children
-				}
-				let item_detail = {}
-				Object.keys(_obj).forEach((_key) => {
-					if (_key !== 'is_remove') {
-						item_detail[_key] = _obj[_key]
+		if (res.feed.entry[0].billfrom && res.feed.entry[0].billfrom.billfrom_code) {
+
+			if (confirm('' +
+				'見積書を発行します。\n' +
+				'発行された見積内容は確定され、編集不可となります。\n' +
+				'\nよろしいでしょうか？')) {
+
+				/**
+				 * Reactオブジェクトかどうかの判定
+				 * @param {*} _value 
+				 */
+				const checkDom = (_value) => {
+					let flg = false
+					if (Object.prototype.toString.call(_value) === '[object Object]') {
+						flg = true
 					}
-				})
-				return item_detail
-			})
-			res.feed.entry[0].packing_items = res.feed.entry[0].packing_items.map((_obj) => {
-				let packing_item = {}
-				Object.keys(_obj).forEach((_key) => {
-					if (_key !== 'is_remove') {
-						packing_item[_key] = _obj[_key]
+					return flg
+				}
+				res.feed.entry[0].quotation.status = '1'
+				res.feed.entry[0].item_details = res.feed.entry[0].item_details.map((_obj) => {
+					if (checkDom(_obj.item_name)) {
+						_obj.item_name = _obj.item_name.props.children
 					}
+					if (checkDom(_obj.unit_name)) {
+						_obj.unit_name = _obj.unit_name.props.children
+					}
+					let item_detail = {}
+					Object.keys(_obj).forEach((_key) => {
+						if (_key !== 'is_remove') {
+							item_detail[_key] = _obj[_key]
+						}
+					})
+					return item_detail
 				})
-				return packing_item
-			})
-			let newObj = {}
-			Object.keys(res.feed.entry[0]).forEach((_key) => {
-				if (typeof res.feed.entry[0][_key] === 'string') {
-					if (_key === 'id') {
+				res.feed.entry[0].packing_items = res.feed.entry[0].packing_items.map((_obj) => {
+					let packing_item = {}
+					Object.keys(_obj).forEach((_key) => {
+						if (_key !== 'is_remove') {
+							packing_item[_key] = _obj[_key]
+						}
+					})
+					return packing_item
+				})
+				let newObj = {}
+				Object.keys(res.feed.entry[0]).forEach((_key) => {
+					if (typeof res.feed.entry[0][_key] === 'string') {
+						if (_key === 'id') {
+							newObj[_key] = res.feed.entry[0][_key]
+						}
+					} else {
 						newObj[_key] = res.feed.entry[0][_key]
 					}
-				} else {
-					newObj[_key] = res.feed.entry[0][_key]
-				}
-			})
-			res.feed.entry[0] = newObj
-			update(res)
+				})
+				res.feed.entry[0] = newObj
+				update(res)
+			}
+		} else {
+			alert('請求元が選択されていません。\n\n請求元を選択しもう一度実行してください。')
 		}
 	}
 
 	/**
-	 * 見積明細と基本条件と備考のプレビュー もしくは 再発行
+	 * 見積明細と基本条件と備考のプレビュー もしくは ダウンロード
 	 */
 	doPrint(_isPreview) {
 		const print = () => {
@@ -260,16 +274,24 @@ export default class QuotationUpdate extends React.Component {
 			location.href = url
 		}
 		if (_isPreview) {
-			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
-				print()
+			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\n\nよろしいでしょうか？')) {
+				if (this.isBillfrom) {
+					print()
+				} else {
+					alert('請求元が選択されていません。\nもしくは請求元を選択してから一時保存がされていません。\n\n請求元を選択後に一時保存してもう一度実行してください。')
+				}
 			}
 		} else {
-			print()
+			if (this.isBillfrom) {
+				print()
+			} else {
+				alert('請求元が選択されていません。\n\n追加発行から請求元を選択し直してください。')
+			}
 		}
 	}
 
 	/**
-	 * 配送料と資材のプレビュー もしくは 再発行
+	 * 配送料と資材のプレビュー もしくは ダウンロード
 	 */
 	doPrintOther(_isPreview) {
 		const print = () => {
@@ -278,11 +300,19 @@ export default class QuotationUpdate extends React.Component {
 			location.href = url
 		}
 		if (_isPreview) {
-			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
-				print()
+			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\n\nよろしいでしょうか？')) {
+				if (this.isBillfrom) {
+					print()
+				} else {
+					alert('請求元が選択されていません。\nもしくは請求元を選択してから一時保存がされていません。\n\n請求元を選択後に一時保存してもう一度実行してください。')
+				}
 			}
 		} else {
-			print()
+			if (this.isBillfrom) {
+				print()
+			} else {
+				alert('請求元が選択されていません。\n\n追加発行から請求元を選択し直してください。')
+			}
 		}
 	}
 	
@@ -305,6 +335,8 @@ export default class QuotationUpdate extends React.Component {
 			const item_details = entry.item_details || []
 			const remarks = entry.remarks || []
 			const packing_items = entry.packing_items || []
+			const billfrom = entry.billfrom || {}
+			const contact_information = entry.contact_information || {}
 
 			const setObj = (_obj) => {
 				return JSON.parse(JSON.stringify(_obj))
@@ -318,6 +350,8 @@ export default class QuotationUpdate extends React.Component {
 						item_details: item_details,
 						remarks: remarks,
 						packing_items: packing_items,
+						billfrom: billfrom,
+						contact_information: contact_information,
 						link: [{
 							___href: '/quotation/' + quotation.quotation_code + '-' + sub_code,
 							___rel: 'self'
