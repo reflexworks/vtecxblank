@@ -58,7 +58,7 @@ function getBillingData(entry) {
 			'quantity' : entry.billing.quantity
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + entry.billing.shipping_date.replace(/\//g,'').slice(0,6)+shipment_service_code+'_'+entry.billing.tracking_number }
+			{ '___rel': 'self' , '___href': '/billing_data/' + entry.billing.shipping_date.replace(/\//g,'').slice(0,6)+ customer_code+'_'+shipment_service_code+'_'+entry.billing.tracking_number }
 		]
 	}
 

@@ -86,6 +86,10 @@ export default class PackingItemForm extends React.Component {
 		this.entry = newProps.entry
 	}
 
+	changedValue(_key, _value) {
+		this.entry.packing_item[_key] = _value
+	}
+
 	render() {
 
 		return (
@@ -109,6 +113,7 @@ export default class PackingItemForm extends React.Component {
 								type="text"
 								placeholder="品番"
 								value={this.entry.packing_item.item_code}
+								onChange={(data)=>this.changedValue('item_code', data)}
 							/>
 						}
 
@@ -120,7 +125,7 @@ export default class PackingItemForm extends React.Component {
 								type="text"
 								placeholder="品番"
 								value={this.entry.packing_item.item_code}
-								readonly="true"
+								readonly
 							/>
 						}
 
@@ -130,8 +135,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="商品名称"
 							value={this.entry.packing_item.item_name}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('item_name', data)}
 						/>
 
 						<CommonInputText
@@ -140,8 +144,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="材質"
 							value={this.entry.packing_item.material}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('material', data)}
 						/>
 
 						<CommonInputText
@@ -150,8 +153,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="カテゴリ"
 							value={this.entry.packing_item.category}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('category', data)}
 						/>
 
 						<CommonInputText
@@ -160,8 +162,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="サイズ１"
 							value={this.entry.packing_item.size1}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('size1', data)}
 						/>
 
 						<CommonInputText
@@ -170,8 +171,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="サイズ２"
 							value={this.entry.packing_item.size2}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('size2', data)}
 						/>
 
 						<CommonInputText
@@ -180,13 +180,13 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="特記"
 							value={this.entry.packing_item.notices}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('notices', data)}
 						/>
 
 					</Panel>
 
 					<Panel collapsible header="製品寸法" eventKey="2" bsStyle="info" defaultExpanded="true">						
+
 						<CommonInputText
 							controlLabel="厚み"
 							name="packing_item.thickness"
@@ -194,8 +194,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="厚み"
 							size='sm'
 							value={this.entry.packing_item.thickness}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('thickness', data)}
 						/>
 
 						<CommonInputText
@@ -205,8 +204,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="内寸幅"
 							size='sm'
 							value={this.entry.packing_item.inside_width}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('inside_width', data)}
 						/>
 
 						<CommonInputText
@@ -216,8 +214,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="内寸奥行"
 							size='sm'
 							value={this.entry.packing_item.inside_depth}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('inside_depth', data)}
 						/>
 
 						<CommonInputText
@@ -227,8 +224,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="内寸高さ"
 							size='sm'
 							value={this.entry.packing_item.inside_height}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('inside_height', data)}
 						/>
 
 						<CommonInputText
@@ -287,8 +283,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="仕入れ単価"
 							value={this.entry.packing_item.purchase_price}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('purchase_price', data)}
 						/>
 
 						<CommonInputText
@@ -297,8 +292,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="通常販売価格"
 							value={this.entry.packing_item.regular_price}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('regular_price', data)}
 						/>
 
 						<CommonInputText
@@ -307,8 +301,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="通常販売価格・単価"
 							value={this.entry.packing_item.regular_unit_price}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('regular_unit_price', data)}
 						/>
 						
 						<CommonInputText
@@ -317,8 +310,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="特別販売価格"
 							value={this.entry.packing_item.special_price}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('special_price', data)}
 						/>
 
 						<CommonInputText
@@ -327,8 +319,7 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="特別販売価格・単価"
 							value={this.entry.packing_item.special_unit_price}
-							validate="string"
-							required
+							onChange={(data)=>this.changedValue('special_unit_price', data)}
 						/>
 				
 					</Panel>	

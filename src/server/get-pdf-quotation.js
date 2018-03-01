@@ -10,14 +10,15 @@ export const pageTitle = (_title) => {
 				<td style={pdfstyles.page_title_blank}><div></div></td>
 			</tr>
 			<tr>
-				<td style={pdfstyles.page_title}>{_title} 御見積り</td>
+				<td style={pdfstyles.page_title}>{_title} 御見積</td>
 			</tr>
 			<tr>
-				<td style={pdfstyles.page_title_blank}><div></div></td>
+				<td style={pdfstyles.page_title_blank}><div></div></td>				
 			</tr>
 		</table>
 	)
 }
+
 
 const quotation_code = vtecxapi.getQueryString('quotation_code')
 const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
@@ -794,20 +795,26 @@ const quotationPage = () => {
 						<div>
 							<span>〒</span>
 							<span>{entry.contact_information.zip_code}</span>
-							<br />
+							<span>　</span>
 							<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
-						</div>
-						<div>
+							<br />
 							<span>TEL : </span>
 							<span>{entry.contact_information.tel}</span>
+							<br />
+							<span>　</span>
 						</div>
+						<div>
+							<div>
+								<img src="/img/connectlogi.png" width="65.0" height="65.0" />
+							</div>
+						</div>						
 					</td>
 					
 					<td style={pdfstyles.spaceRight}>
 					</td>
 				</tr>
-
 				
+
 				{/*御見積申し上げます*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>

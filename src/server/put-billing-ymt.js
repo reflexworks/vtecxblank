@@ -214,5 +214,5 @@ function getKey(datestr, tracking_number) {
 	if (now.getMonth() + 1 < month) {
 		year = year - 1
 	}
-	return year + ('0' + month).slice(-2) + shipment_service_code+'_'+tracking_number
+	return year + ('0' + month).slice(-2) + customer_code+'_'+shipment_service_code+'_'+tracking_number
 }
