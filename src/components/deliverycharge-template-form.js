@@ -211,15 +211,19 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				}
 				if (s_type === '1') {
 					// 宅急便
-					this.shipmentServiceListType1.push(
-						<CommonTable
-							name=""
-							data={this.shipment_service[s_code]}
-							header={header[s_code]}
-						>
-							{menu()}
-						</CommonTable>
-					)
+					if (header[s_code]) {
+						this.shipmentServiceListType1.push(
+							<CommonTable
+								name=""
+								data={this.shipment_service[s_code]}
+								header={header[s_code]}
+							>
+								{menu()}
+							</CommonTable>
+						)
+					} else {
+						this.shipmentServiceListType1.push(<div>地域帯が設定されていません。</div>)
+					}
 				} else {
 					// メール便
 					let _header = initHeader()

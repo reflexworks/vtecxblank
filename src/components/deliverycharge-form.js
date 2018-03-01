@@ -220,15 +220,30 @@ export default class DeliveryChargeForm extends React.Component {
 				}
 				if (s_type === '1') {
 					// 宅急便
-					this.shipmentServiceListType1.push(
-						<CommonTable
-							name=""
-							data={this.shipment_service[s_code]}
-							header={header[s_code]}
-						>
-							{menu()}
-						</CommonTable>
-					)
+					if (header[s_code]) {
+						this.shipmentServiceListType1.push(
+							<CommonTable
+								name=""
+								data={this.shipment_service[s_code]}
+								header={header[s_code]}
+							>
+								{menu()}
+							</CommonTable>
+						)
+					} else {
+						this.shipmentServiceListType1.push(
+							<div>
+								<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+								<Button
+									bsSize="small"
+									bsStyle="danger"
+									style={{ float: 'left', 'margin-right': '10px' }}
+									onClick={()=>this.removeDeliveryCharge(s_code)}
+								><Glyphicon glyph="remove" /></Button>
+								<div style={{clear: 'both'}}>地域帯が設定されていません。</div>
+							</div>
+						)
+					}
 					this.shipmentServiceListType1.push(<hr />)
 				} else {
 					// メール便
