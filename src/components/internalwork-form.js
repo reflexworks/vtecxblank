@@ -354,7 +354,7 @@ export default class InternalWorkForm extends React.Component {
 		if (_service_name) {
 			array.push(_service_name)
 		} else {
-			array.push((_type === '1') ? '宅急便' : 'メール便')
+			array.push((_type === '1') ? '宅配便' : 'メール便')
 		}
 		if (_size) array.push(_size)
 		if (_weight) array.push(_weight)

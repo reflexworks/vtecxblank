@@ -369,7 +369,7 @@ export default class ShipmentServiceForm extends React.Component {
 							name="shipment_service.type"
 							value={this.entry.shipment_service.type}
 							options={[{
-								label: '宅急便',
+								label: '宅配便',
 								value: '1'
 							}, {
 								label: 'メール便',
