@@ -247,10 +247,16 @@ const deliverychargeTable = (_data) => {
 						td.push((
 							<td
 								style={pdfstyles.deliverycharge_table_td_note}>
-								<div>{_delivery_charge_details.note ? _delivery_charge_details.note : '全国一律'}</div>
+								<div>{_delivery_charge_details.note ? _delivery_charge_details.note : ''}</div>
 							</td>
 						))
 						td.push(getTd('', true))
+					} else {
+						td = (
+							<td style={pdfstyles.deliverycharge_table_td} colspan="5">
+								<div>地域帯が設定されていません。</div>
+							</td>
+						)
 					}
 				}
 				return (

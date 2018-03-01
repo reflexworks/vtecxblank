@@ -1,10 +1,12 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	PageHeader,
 	Form,
 	Button,
-	Glyphicon
+	Glyphicon,
+	Alert
 } from 'react-bootstrap'
 import type {
 	Props
@@ -28,6 +30,8 @@ export default class DeliveryChargeForm extends React.Component {
 		this.template = {}
 		this.templateList = {}
 
+		this.masterShipmentService = null
+
 		this.init()
 	}
 
@@ -46,8 +50,64 @@ export default class DeliveryChargeForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		this.setTemplateList(newProps.templateList)
-		this.setTable()
+		if (this.entry.customer.customer_code) {
+			this.setTemplateList(newProps.templateList)
+			this.setTable()
+			this.setMasterList()
+		}
+	}
+
+	setMasterList() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/get-shipment-service-to-deliverycharge',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.masterShipmentService = []
+			response.data.feed.entry[0].delivery_charge.map((_obj) => {
+				const type = _obj.shipment_service_type === '1' ? '宅急便' : 'メール便'
+				let name = _obj.shipment_service_name
+				if (_obj.shipment_service_service_name) {
+					name = name + ' / ' + _obj.shipment_service_service_name
+				}
+				const option = {
+					label: '【 ' + type + ' 】' + name,
+					value: _obj.shipment_service_code,
+					data: _obj
+				}
+				this.masterShipmentService.push(option)
+			})
+			this.setState({ isDisabled: false })
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	addTemplate(_data) {
+		if (_data) {
+			const code = _data.value
+			this.isAdd = true
+			if (!this.shipment_service[code]) {
+				this.entry.delivery_charge.push(_data.data)
+				this.addStatus = 'info'
+				this.addMesseage = _data.label + 'を追加しました。'
+				this.setTable()
+			} else {
+				this.addStatus = 'danger'
+				this.addMesseage = _data.label + 'は存在します。'
+				this.forceUpdate()
+			}
+		} else {
+			this.isAdd = false
+			this.forceUpdate()
+		}
 	}
 
 	setTemplateList(_templateList) {
@@ -199,7 +259,7 @@ export default class DeliveryChargeForm extends React.Component {
 				const menu = () => {
 					return (
 						<div>
-							<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+							<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px', width: '30%' }}>{s_name}</h4>
 							<Button
 								bsSize="small"
 								bsStyle="danger"
@@ -316,6 +376,21 @@ export default class DeliveryChargeForm extends React.Component {
 
 		return (
 			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
+
+				<CommonFilterBox
+					controlLabel="配送業者追加"
+					name=""
+					value=""
+					options={this.masterShipmentService}
+					onChange={(data) => this.addTemplate(data)}
+				/>
+				{this.isAdd &&
+					<Alert bsStyle={this.addStatus}>
+						{this.addMesseage}
+					</Alert>
+				}
+
+				<hr />
 
 				<PageHeader>宅急便</PageHeader>
 				<div>
