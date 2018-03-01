@@ -471,7 +471,7 @@ export default class InternalWorkForm extends React.Component {
 							item_details_unit_name: _value.unit_name,
 							item_details_unit: _value.unit
 						}
-						const key_name = obj.item_name + ' / ' + obj.unit_name
+						const key_name = obj.item_name + ' / ' + obj.unit_name + ' / ' + obj.unit
 						array.push(setOptions(key_name, key_name, obj))
 					}
 				})
@@ -592,6 +592,7 @@ export default class InternalWorkForm extends React.Component {
 			if (type === '0' || type === '4' || type === '5') {
 				key += _internal_work.item_details_name
 				key += _internal_work.item_details_unit_name
+				key += _internal_work.item_details_unit
 			}
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code

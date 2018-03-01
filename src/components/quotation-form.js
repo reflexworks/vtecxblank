@@ -314,13 +314,14 @@ export default class QuotationForm extends React.Component {
 		if (_celIndex === 3) itemName = 'unit_price'
 		if (_celIndex === 4) itemName = 'remarks'
 		if (itemName) {
-			if (itemName === 'item_name' || itemName === 'unit_name') {
+			if (itemName === 'item_name' || itemName === 'unit_name' || itemName === 'unit') {
 
 				// 明細項目の項目名と単位名称が一致しているものは登録させない処理
 				const target = this.entry.item_details[_rowindex]
 				const item_name = itemName === 'item_name' ? _data.value : target.item_name
 				const unit_name = itemName === 'unit_name' ? _data.value : target.unit_name
-				if (item_name && unit_name) {
+				const unit = itemName === 'unit' ? _data.value : target.unit
+				if (item_name && unit_name && unit) {
 					const check = () => {
 						const getValue = (_value) => {
 							if (Object.prototype.toString.call(_value) === '[object Object]') {
@@ -334,10 +335,11 @@ export default class QuotationForm extends React.Component {
 						}
 						let flg = true
 						this.entry.item_details.map((_obj) => {
-							if (_obj.item_name && _obj.unit_name) {
+							if (_obj.item_name && _obj.unit_name && _obj.unit) {
 								const _item_name = getValue(_obj.item_name)
 								const _unit_name = getValue(_obj.unit_name)
-								if (item_name + unit_name === _item_name + _unit_name) {
+								const _unit = getValue(_obj.unit)
+								if (item_name + unit_name + unit === _item_name + _unit_name + _unit) {
 									flg = false
 								}
 							}
@@ -352,6 +354,8 @@ export default class QuotationForm extends React.Component {
 				} else {
 					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 				}
+			} else {
+				this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 			}
 		}
 		this.forceUpdate()

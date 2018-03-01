@@ -7,7 +7,7 @@ const entry = req.feed.entry[0]
 const internal_work = entry.internal_work
 const work_type = parseInt(internal_work.work_type)
 const list = [
-	['item_details_name', 'item_details_unit_name'],
+	['item_details_name', 'item_details_unit_name', 'item_details_unit'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_type','shipment_service_weight'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_type','shipment_service_weight'],
 	['packing_item_code']
