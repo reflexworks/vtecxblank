@@ -40,6 +40,7 @@ if (isList) {
 			if (type === '0' || type === '4' || type === '5') {
 				key += _internal_work.item_details_name
 				key += _internal_work.item_details_unit_name
+				key += _internal_work.item_details_unit
 			}
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code
