@@ -217,7 +217,8 @@ export default class DeliveryChargeForm extends React.Component {
 						field: key, title: zone_name, width: '60px',
 						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.charge_by_zone['+ i +'].price',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(_code, key, data, rowindex)}
+							onChange: (data, rowindex) => { this.changeShipmentServiceListType(_code, key, data, rowindex) },
+							price: true
 						}
 					})
 				}
@@ -312,7 +313,8 @@ export default class DeliveryChargeForm extends React.Component {
 						field: 'price', title: '配送料', width: '60px',
 						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.price',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'price', data, rowindex)},
+							price: true
 						}
 					})
 					_header.push({
