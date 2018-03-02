@@ -282,29 +282,31 @@ export default class QuotationForm extends React.Component {
 	}
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
-		if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
-			this.originTypeList[_celIndex].push(_data)
-			const feed = {
-				feed: {
-					entry: [{
-						type_ahead: {
-							type: '' + _celIndex,
-							value: _data.value
-						}
-					}]
+		if (_celIndex !== 3) {
+			if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
+				this.originTypeList[_celIndex].push(_data)
+				const feed = {
+					feed: {
+						entry: [{
+							type_ahead: {
+								type: '' + _celIndex,
+								value: _data.value
+							}
+						}]
+					}
 				}
+				axios({
+					url: '/d/type_ahead',
+					method: 'post',
+					data: feed,
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+				}).catch((error) => {
+					this.setState({ isDisabled: false, isError: error })
+				})
 			}
-			axios({
-				url: '/d/type_ahead',
-				method: 'post',
-				data: feed,
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
 		}
 
 		let itemName
@@ -355,7 +357,11 @@ export default class QuotationForm extends React.Component {
 					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 				}
 			} else {
-				this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+				if (_celIndex === 3) {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data : null
+				} else {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+				}
 			}
 		}
 		this.forceUpdate()
@@ -573,9 +579,9 @@ export default class QuotationForm extends React.Component {
 									}
 								}, {
 									field: 'unit_price',title: '単価', width: '100px',
-									filter: this.isDisabled ? false : {
-										options: this.typeList[3],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 3, rowindex)}
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex) => { this.changeTypeahead(data, 3, rowindex) },
+										price: true
 									}
 								}, {
 									field: 'remarks',title: '備考', width: '200px',
@@ -636,22 +642,26 @@ export default class QuotationForm extends React.Component {
 								}, {
 									field: 'regular_price', title: '通常販売価格', width: '100px',
 									input: this.isDisabled ? false : {
-										onChange: (data, rowindex)=>{this.changePackingItem('regular_price', data, rowindex)}
+										onChange: (data, rowindex) => { this.changePackingItem('regular_price', data, rowindex) },
+										price: true
 									}
 								}, {
 									field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
 									input: this.isDisabled ? false : {
-										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)}
+										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)},
+										price: true
 									}
 								}, {
 									field: 'special_price', title: '特別販売価格', width: '100px',
 									input: this.isDisabled ? false : {
-										onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)}
+										onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)},
+										price: true
 									}
 								}, {
 									field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
 									input: this.isDisabled ? false : {
-										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)}
+										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)},
+										price: true
 									}
 								}, {
 									field: 'item_name', title: '商品名称', width: '200px'
