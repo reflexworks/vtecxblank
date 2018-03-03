@@ -1389,6 +1389,7 @@ export class CommonInputText extends React.Component {
 			size: this.props.comparison ? 'lg' : this.props.size,
 			entitiykey: this.props.entitiykey
 		}
+		this.isPrice = this.props.isPrice
 	}
 
 	/**
@@ -1402,6 +1403,10 @@ export class CommonInputText extends React.Component {
 			placeholder: newProps.placeholder,
 			size: newProps.size
 		})
+	}
+
+	getValue(_value) {
+		return this.isPrice ? addFigure(_value) : _value
 	}
 
 	/**
@@ -1419,13 +1424,32 @@ export class CommonInputText extends React.Component {
 	}
 
 	/**
+	 * フォーカスイン時
+	 * @param {*} e 
+	 */
+	focused(e: InputEvent) {
+		const value = this.isPrice ? delFigure(e.target.value) : e.target.value
+		this.setState({ value: value })
+		if (this.props.onForcus) {
+			this.props.onForcus(value)
+		}
+	}
+
+	/**
 	 * フォーカスアウト時
 	 * @param {*} e 
 	 */
 	blured(e: InputEvent) {
-		const value = e.target.value
+		const value = this.getValue(e.target.value)
+		const entitiykey = this.state.entitiykey || this.state.name
+		CommonEntry().setValue(entitiykey, value)
+		this.setState({ value: value ? value : '' })
 		if (this.props.onBlur) {
 			this.props.onBlur(value)
+		} else {
+			if (this.props.onChange) {
+				this.props.onChange(value)
+			}
 		}
 	}
 
@@ -1444,6 +1468,7 @@ export class CommonInputText extends React.Component {
 						placeholder={this.state.placeholder}
 						value={this.state.value}
 						onChange={(e) => this.changed(e)}
+						onFocus={(e) => this.focused(e)}
 						onBlur={(e) => this.blured(e)}
 						data-validate={this.props.validate}
 						data-required={this.props.required}
@@ -1494,6 +1519,56 @@ export class CommonInputText extends React.Component {
 		)
 	}
 
+}
+
+/**
+ * 数値の3桁カンマ区切り
+ * 入力値をカンマ区切りにして返却
+ */
+export function addFigure(numVal) {
+
+	// 空の場合そのまま返却
+	if (numVal === ''){
+		return ''
+	}
+
+	/**
+	 * 全角から半角への変革関数
+	 * 入力値の英数記号を半角変換して返却
+	 */
+	const toHalfWidth = (strVal) => {
+		// 半角変換
+		const halfVal = strVal.replace(/[！-～]/g, (tmpStr) => {
+			// 文字コードをシフト
+			return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 )
+		})
+		return halfVal
+	}
+
+	// 全角から半角へ変換し、既にカンマが入力されていたら事前に削除
+	numVal = toHalfWidth(numVal).replace(/,/g, '').trim()
+
+	// 数値でなければnullを返却
+	if ( !/^[+|-]?(\d*)(\.\d+)?$/.test(numVal) ){
+		return null
+	}
+
+	// 整数部分と小数部分に分割
+	let numData = numVal.toString().split('.')
+
+	// 整数部分を3桁カンマ区切りへ
+	numData[0] = Number(numData[0]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+	// 小数部分と結合して返却
+	return numData.join('.')
+}
+
+/**
+ * カンマ外し
+ * 入力値のカンマを取り除いて返却
+ */
+export function delFigure(strVal){
+	return strVal.replace( /,/g , '' )
 }
 
 /**
@@ -1760,8 +1835,10 @@ export class CommonTable extends React.Component {
 								value={value}
 								onChange={(data) => input.onChange(data, _index)}
 								onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
+								onForcus={input.onForcus ? (data) => input.onForcus(data, _index) : null }
 								entitiykey={entitiykey}
 								table
+								isPrice={input.price}
 							/>
 						)
 					} else {

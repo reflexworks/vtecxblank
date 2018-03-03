@@ -28,7 +28,9 @@ import {
 	CommonSelectBox,
 	CommonDisplayCalendar,
 	CommonLoginUser,
-	CommonCheckBox
+	CommonCheckBox,
+	addFigure,
+	delFigure
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
@@ -354,7 +356,7 @@ export default class InternalWorkForm extends React.Component {
 		if (_service_name) {
 			array.push(_service_name)
 		} else {
-			array.push((_type === '1') ? '宅急便' : 'メール便')
+			array.push((_type === '1') ? '宅配便' : 'メール便')
 		}
 		if (_size) array.push(_size)
 		if (_weight) array.push(_weight)
@@ -471,7 +473,7 @@ export default class InternalWorkForm extends React.Component {
 							item_details_unit_name: _value.unit_name,
 							item_details_unit: _value.unit
 						}
-						const key_name = obj.item_name + ' / ' + obj.unit_name
+						const key_name = obj.item_name + ' / ' + obj.unit_name + ' / ' + obj.unit
 						array.push(setOptions(key_name, key_name, obj))
 					}
 				})
@@ -592,6 +594,7 @@ export default class InternalWorkForm extends React.Component {
 			if (type === '0' || type === '4' || type === '5') {
 				key += _internal_work.item_details_name
 				key += _internal_work.item_details_unit_name
+				key += _internal_work.item_details_unit
 			}
 			if (type === '1' || type === '2') {
 				key += _internal_work.shipment_service_code
@@ -707,6 +710,17 @@ export default class InternalWorkForm extends React.Component {
 		this.forceUpdate()
 	}
 
+	forcusList(_key, _data, _index) {
+		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
+			const entry = this[_key][_index].data
+			if (entry.internal_work.item_details_unit === '円') {
+				_data = delFigure(_data)
+				this[_key][_index].quantity = _data
+				this.forceUpdate()
+			}
+		}
+	}
+
 	blurList(_key, _data, _index) {
 		const updateInternalWork = (_entry, _isCreate) => {
 			const obj = {feed: {entry: [_entry]}}
@@ -734,9 +748,11 @@ export default class InternalWorkForm extends React.Component {
 					const revision = parseInt(ids[1]) + 1
 					this[_key][_index].data.id = id + ',' + revision
 				}
-				this[_key][_index].data.internal_work.quantity = _data
+				this[_key][_index].data.internal_work.quantity = _entry.internal_work.quantity
 				this[_key][_index].data.internal_work.approval_status = _entry.internal_work.approval_status
 				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
+
+				this[_key][_index].quantity = _entry.internal_work.quantity
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
 
@@ -751,6 +767,11 @@ export default class InternalWorkForm extends React.Component {
 			})
 		}
 		const entry = this[_key][_index].data
+		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
+			if (entry.internal_work.item_details_unit === '円') {
+				_data = addFigure(_data)
+			}
+		}
 		if (!_data && entry.internal_work.quantity) {
 			// 個数が元々入力されていて、かつ変更値が空の場合
 			// 空白を元の値に戻す
@@ -758,6 +779,8 @@ export default class InternalWorkForm extends React.Component {
 			this.forceUpdate()
 		} else if (!_data || _data && entry.internal_work.quantity === _data) {
 			// 入力値に変更なし
+			this[_key][_index].quantity = _data
+			this.forceUpdate()
 		} else if (_data && !entry.internal_work.quantity){
 			// 新規入力
 			let obj = {
@@ -976,7 +999,8 @@ export default class InternalWorkForm extends React.Component {
 										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('monthlyWorks', data, rowindex) },
-											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) }
+											onBlur: (data, rowindex) => { this.blurList('monthlyWorks', data, rowindex) },
+											onForcus: (data, rowindex) => { this.forcusList('monthlyWorks', data, rowindex) }
 										}
 									}, {
 										field: 'unit',title: '単位', width: '100px'
@@ -999,7 +1023,8 @@ export default class InternalWorkForm extends React.Component {
 										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks1', data, rowindex) },
-											onBlur: (data, rowindex) => { this.blurList('periodWorks1', data, rowindex) }
+											onBlur: (data, rowindex) => { this.blurList('periodWorks1', data, rowindex) },
+											onForcus: (data, rowindex) => { this.forcusList('periodWorks1', data, rowindex) }
 										}
 									}, {
 										field: 'unit',title: '単位', width: '100px'
@@ -1020,7 +1045,8 @@ export default class InternalWorkForm extends React.Component {
 										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks2', data, rowindex) },
-											onBlur: (data, rowindex) => { this.blurList('periodWorks2', data, rowindex) }
+											onBlur: (data, rowindex) => { this.blurList('periodWorks2', data, rowindex) },
+											onForcus: (data, rowindex) => { this.forcusList('periodWorks2', data, rowindex) }
 										}
 									}, {
 										field: 'unit',title: '単位', width: '100px'
@@ -1041,7 +1067,8 @@ export default class InternalWorkForm extends React.Component {
 										field: 'quantity', title: '入力値', width: '100px',
 										input: !this.isEdit ? false : {
 											onChange: (data, rowindex) => { this.editList('periodWorks3', data, rowindex) },
-											onBlur: (data, rowindex) => { this.blurList('periodWorks3', data, rowindex) }
+											onBlur: (data, rowindex) => { this.blurList('periodWorks3', data, rowindex) },
+											onForcus: (data, rowindex) => { this.forcusList('periodWorks3', data, rowindex) }
 										}
 									}, {
 										field: 'unit',title: '単位', width: '100px'

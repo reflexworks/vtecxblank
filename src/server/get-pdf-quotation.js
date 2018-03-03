@@ -800,8 +800,6 @@ const quotationPage = () => {
 							<br />
 							<span>TEL : </span>
 							<span>{entry.contact_information.tel}</span>
-							<br />
-							<span>　</span>
 						</div>
 						<div>
 							<div>
@@ -813,7 +811,6 @@ const quotationPage = () => {
 					<td style={pdfstyles.spaceRight}>
 					</td>
 				</tr>
-				
 
 				{/*御見積申し上げます*/}
 				<tr>

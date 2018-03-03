@@ -157,22 +157,26 @@ export default class PackingitemTemplateForm extends React.Component {
 					}, {
 						field: 'regular_price', title: '通常販売価格', width: '100px',
 						input: {
-							onChange: (data, rowindex)=>{this.changePackingItem('regular_price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changePackingItem('regular_price', data, rowindex)},
+							price: true
 						}
 					}, {
 						field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
 						input: {
-							onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)},
+							price: true
 						}
 					}, {
 						field: 'special_price', title: '特別販売価格', width: '100px',
 						input: {
-							onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)},
+							price: true
 						}
 					}, {
 						field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
 						input: {
-							onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)},
+							price: true
 						}
 					}, {
 						field: 'item_name', title: '商品名称', width: '200px'

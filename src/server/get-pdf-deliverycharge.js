@@ -118,6 +118,7 @@ const deliverychargeTable = (_data) => {
 	}
 	const table = (_obj) => {
 
+		const type = _obj.shipment_service_type
 		const code = _obj.shipment_service_code
 		const name = () => {
 			if (_obj.shipment_service_service_name) {
@@ -205,18 +206,20 @@ const deliverychargeTable = (_data) => {
 					</tr>
 				]
 			} else {
-				array.push(getTd('サイズ'))
-				array.push(getTd('重量'))
-				array.push(getTd('配送料'))
-				array.push(getTd('記事'))
-				array.push(getTd('', null, null, true))
-				return (
-					<tr>
-						<td></td>
-						{array}
-						<td></td>
-					</tr>
-				)
+				if (type === '2') {
+					array.push(getTd('サイズ'))
+					array.push(getTd('重量'))
+					array.push(getTd('配送料'))
+					array.push(getTd('記事'))
+					array.push(getTd('', null, null, true))
+					return (
+						<tr>
+							<td></td>
+							{array}
+							<td></td>
+						</tr>
+					)
+				}
 			}
 		}
 
@@ -239,14 +242,22 @@ const deliverychargeTable = (_data) => {
 						td.push(getTd(_charge_by_zone.price))
 					})
 				} else {
-					td.push(getTd(_delivery_charge_details.price))
-					td.push((
-						<td
-							style={pdfstyles.deliverycharge_table_td_note}>
-							<div>{_delivery_charge_details.note ? _delivery_charge_details.note : '全国一律'}</div>
-						</td>
-					))
-					td.push(getTd('', true))
+					if (type === '2') {
+						td.push(getTd(_delivery_charge_details.price))
+						td.push((
+							<td
+								style={pdfstyles.deliverycharge_table_td_note}>
+								<div>{_delivery_charge_details.note ? _delivery_charge_details.note : ''}</div>
+							</td>
+						))
+						td.push(getTd('', true))
+					} else {
+						td = (
+							<td style={pdfstyles.deliverycharge_table_td} colspan="5">
+								<div>地域帯が設定されていません。</div>
+							</td>
+						)
+					}
 				}
 				return (
 					<tr>

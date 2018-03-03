@@ -33,7 +33,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	init() {
 		// データキャッシュ
 		this.shipment_service = {}
-		// 宅急便
+		// 宅配便
 		this.shipmentServiceListType1 = []
 		// メール便
 		this.shipmentServiceListType2 = []
@@ -173,7 +173,8 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 						field: key, title: _entry[i].zone_name, width: '60px',
 						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.charge_by_zone['+ i +'].price',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(_code, key, data, rowindex)}
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(_code, key, data, rowindex)},
+							price: true
 						}
 					})
 				}
@@ -210,16 +211,20 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 					)
 				}
 				if (s_type === '1') {
-					// 宅急便
-					this.shipmentServiceListType1.push(
-						<CommonTable
-							name=""
-							data={this.shipment_service[s_code]}
-							header={header[s_code]}
-						>
-							{menu()}
-						</CommonTable>
-					)
+					// 宅配便
+					if (header[s_code]) {
+						this.shipmentServiceListType1.push(
+							<CommonTable
+								name=""
+								data={this.shipment_service[s_code]}
+								header={header[s_code]}
+							>
+								{menu()}
+							</CommonTable>
+						)
+					} else {
+						this.shipmentServiceListType1.push(<div>地域帯が設定されていません。</div>)
+					}
 				} else {
 					// メール便
 					let _header = initHeader()
@@ -227,7 +232,8 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 						field: 'price', title: '配送料', width: '60px',
 						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.price',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'price', data, rowindex)}
+							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'price', data, rowindex)},
+							price: true
 						}
 					})
 					_header.push({
@@ -300,7 +306,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 				
 				{(this.shipmentServiceListType1.length ? true : false) && 
 					<div>
-						<PageHeader>宅急便</PageHeader>
+						<PageHeader>宅配便</PageHeader>
 						<div>
 							{this.shipmentServiceListType1}
 						</div>

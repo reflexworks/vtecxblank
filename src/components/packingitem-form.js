@@ -283,7 +283,8 @@ export default class PackingItemForm extends React.Component {
 							type="text"
 							placeholder="仕入れ単価"
 							value={this.entry.packing_item.purchase_price}
-							onChange={(data)=>this.changedValue('purchase_price', data)}
+							onChange={(data) => this.changedValue('purchase_price', data)}
+							isPrice
 						/>
 
 						<CommonInputText
@@ -293,6 +294,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="通常販売価格"
 							value={this.entry.packing_item.regular_price}
 							onChange={(data)=>this.changedValue('regular_price', data)}
+							isPrice
 						/>
 
 						<CommonInputText
@@ -302,6 +304,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="通常販売価格・単価"
 							value={this.entry.packing_item.regular_unit_price}
 							onChange={(data)=>this.changedValue('regular_unit_price', data)}
+							isPrice
 						/>
 						
 						<CommonInputText
@@ -311,6 +314,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="特別販売価格"
 							value={this.entry.packing_item.special_price}
 							onChange={(data)=>this.changedValue('special_price', data)}
+							isPrice
 						/>
 
 						<CommonInputText
@@ -320,6 +324,7 @@ export default class PackingItemForm extends React.Component {
 							placeholder="特別販売価格・単価"
 							value={this.entry.packing_item.special_unit_price}
 							onChange={(data)=>this.changedValue('special_unit_price', data)}
+							isPrice
 						/>
 				
 					</Panel>	
