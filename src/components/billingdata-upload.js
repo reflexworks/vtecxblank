@@ -26,33 +26,34 @@ export default class BillingDataUpload extends React.Component {
 		super()
 	}
  
-
 	handleSubmitYmt(e: InputEvent) {
 		e.preventDefault()
 
 		const formData = new FormData(e.currentTarget)
+		if (confirm('アップロードを実行します。よろしいですか？')) {
+			axios({
+				url: '/s/put-billing-ymt',
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data : formData
 
-		axios({
-			url: '/s/put-billing-ymt',
-			method: 'post',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			data : formData
-
-		}).then(() => {
-			alert('アップロードに成功しました')
-		}).catch((error) => {
-			if (error.response) {
-				if (error.response.data.feed.title.indexOf('undefined')>=0) {
-					alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+			}).then(() => {
+				alert('アップロードに成功しました')
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('undefined')>=0) {
+						alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+					} else {
+						alert(error.response.data.feed.title)				
+					}
 				} else {
-					alert(error.response.data.feed.title)				
+					alert('アップロードに失敗しました')
 				}
-			} else {
-				alert('アップロードに失敗しました')
-			}
-		})
+			})
+		}
+	
 	}
 
 	handleSubmitEco(e: InputEvent) {
@@ -60,28 +61,29 @@ export default class BillingDataUpload extends React.Component {
 
 		const formData = new FormData(e.currentTarget)
 
-		axios({
-			url: '/s/put-billing-eco',
-			method: 'post',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			data : formData
+		if (confirm('アップロードを実行します。よろしいですか？')) {
+			axios({
+				url: '/s/put-billing-eco',
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data: formData
 
-		}).then(() => {
-			alert('アップロードに成功しました')
-		}).catch((error) => {
-			if (error.response) {
-				if (error.response.data.feed.title.indexOf('undefined')>=0) {
-					alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+			}).then(() => {
+				alert('アップロードに成功しました')
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('undefined') >= 0) {
+						alert('CSVデータが正しくありません。:' + error.response.data.feed.title)
+					} else {
+						alert(error.response.data.feed.title)
+					}
 				} else {
-					alert(error.response.data.feed.title)				
+					alert('アップロードに失敗しました')
 				}
-			} else {
-				alert('アップロードに失敗しました')
-			}
-		})
-
+			})
+		}
 	}
 
 	render() {
