@@ -124,6 +124,19 @@ export default class BillfromForm extends React.Component {
 	
 
 	/**
+	 *  請求元情報の更新
+	 */
+	changeBillfrom(_data,_key) {
+		this.entry.billfrom[_key] = _data
+		this.forceUpdate()
+	}
+
+	changeContactInformation(_data,_key) {
+		this.entry.contact_information[_key] = _data
+		this.forceUpdate()
+	}
+
+	/**
 	 * 	請求元の振込情報リスト変更
 	 */
 	changePayee(_data, _rowindex, _celindex) {
@@ -137,9 +150,7 @@ export default class BillfromForm extends React.Component {
 	}
 
 	render() {
-
 		return (
-
 			<Form name={this.props.name} horizontal data-submit-form>
 
 				<PanelGroup defaultActiveKey="1">
@@ -174,6 +185,7 @@ export default class BillfromForm extends React.Component {
 							value={this.entry.billfrom.billfrom_name}
 							validate="string"
 							required
+							onChange={(data)=>this.changeBillfrom(data,'billfrom_name')}
 						/>
 						
 						<CommonInputText
@@ -183,6 +195,7 @@ export default class BillfromForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.tel}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'tel')}
 						/>
 
 						<CommonInputText
@@ -192,6 +205,7 @@ export default class BillfromForm extends React.Component {
 							placeholder="090-1234-5678"
 							value={this.entry.contact_information.fax}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'fax')}
 						/>
 						
 						<CommonInputText
@@ -200,6 +214,7 @@ export default class BillfromForm extends React.Component {
 							type="email"
 							placeholder="logioffice@gmail.com"
 							value={this.entry.contact_information.email}
+							onChange={(data) => this.changeContactInformation(data,'email')}
 						/>
 
 						<CommonInputText
@@ -209,6 +224,7 @@ export default class BillfromForm extends React.Component {
 							placeholder="123-4567"
 							value={this.entry.contact_information.zip_code}
 							size="sm"
+							onChange={(data) => this.changeContactInformation(data,'zip_code')}
 						/>
 
 						<CommonPrefecture
@@ -216,6 +232,7 @@ export default class BillfromForm extends React.Component {
 							componentClass="select"
 							name="contact_information.prefecture"
 							value={this.entry.contact_information.prefecture}
+							onChange={(data) => this.changeContactInformation(data,'prefecture')}
 						/>
 
 						<CommonInputText
@@ -224,6 +241,7 @@ export default class BillfromForm extends React.Component {
 							type="text"
 							placeholder="◯◯市××町"
 							value={this.entry.contact_information.address1}
+							onChange={(data) => this.changeContactInformation(data,'address1')}
 						/>
 
 						<CommonInputText
@@ -233,6 +251,7 @@ export default class BillfromForm extends React.Component {
 							placeholder="1丁目2番地 ◯◯ビル1階"
 							value={this.entry.contact_information.address2}
 							size="lg"
+							onChange={(data) => this.changeContactInformation(data,'address2')}
 						/>
 					
 					</Panel>
