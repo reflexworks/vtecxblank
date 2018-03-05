@@ -42,6 +42,8 @@ billfrom
   bank_info
   account_type
   account_number
+  branch_office
+  account_name
 contact_information
  tel
  fax 
@@ -169,6 +171,8 @@ internal_work
  period
  is_completed
  item_details_unit_name
+ unit_price
+ remarks
 shipment_service
  code 
  name  

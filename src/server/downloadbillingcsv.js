@@ -24,7 +24,6 @@ customer_code.map((customer_code) => {
 	if (billing_data.feed.entry) {
 		if (billing_closing_date === '1') {
 			const lastyearmonth = getLastMonth(shipping_yearmonth)
-			vtecxapi.log(lastyearmonth)
 			const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '*', true)
 			const d0 = new Date(lastyearmonth.slice(0,4),parseInt(lastyearmonth.slice(-2))-1,'21').getTime()
 			const d1 = new Date(shipping_yearmonth.slice(0,4),parseInt(shipping_yearmonth.slice(-2))-1,'20').getTime()
