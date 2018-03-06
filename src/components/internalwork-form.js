@@ -1037,6 +1037,14 @@ export default class InternalWorkForm extends React.Component {
 					readonly
 				/>
 
+				<CommonInputText
+					controlLabel="作成者"
+					name=""
+					type="text"
+					value={this.entry.creator}
+					readonly
+				/>
+
 				{ this.isEdit &&
 					<CommonCheckBox
 						controlLabel="庫内作業入力完了"

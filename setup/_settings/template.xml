@@ -229,6 +229,7 @@ billing_details
   working_quantity
   billing_quantity
   billing_amount
+creator
 </content>
 <rights>
 </rights>
