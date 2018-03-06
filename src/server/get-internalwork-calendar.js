@@ -1,13 +1,21 @@
 import vtecxapi from 'vtecxapi'
 import { CommonGetFlag } from './common'
-
+/*
 const key_list = [
 	['item_details_name', 'item_details_unit_name', 'item_details_unit'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_weight'],
 	['shipment_service_code','shipment_service_name','shipment_service_service_name','shipment_service_size','shipment_service_weight'],
 	['packing_item_code', 'packing_item_name']
 ]
+*/
 const getKey = (_internal_work) => {
+	let key = _internal_work.work_type
+	if (key === '0') key = '見積作業'
+	if (key === '1') key = '発送作業'
+	if (key === '2') key = '集荷作業'
+	if (key === '3') key = '資材梱包作業'
+	return key
+/*
 	const key = parseInt(_internal_work.work_type)
 	let array = []
 	key_list[key].map((_key) => {
@@ -16,6 +24,7 @@ const getKey = (_internal_work) => {
 		}
 	})
 	return array.join(' / ')
+*/
 }
 const internal_work_url = vtecxapi.getQueryString('internal_work')
 const work_type = vtecxapi.getQueryString('work_type')

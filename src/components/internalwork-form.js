@@ -570,47 +570,53 @@ export default class InternalWorkForm extends React.Component {
 		// _activeKey = 3 // 資材梱包作業状況
 		if (_activeKey < 4) {
 			// 作業状況取得
-			this.getWorksCalendar(_activeKey)
+			this.getWorksCalendar()
 		}
 	}
 
-	getWorksCalendar(_activeKey) {
+	getWorksCalendar() {
 
-		this.setState({ isDisabled: true })
+		const get = (_activeKey) => {
+			this.setState({ isDisabled: true })
 
-		axios({
-			url: '/s/get-internalwork-calendar?internal_work=' + this.entry.link[0].___href + '&work_type=' + _activeKey,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-
-			this.setState({ isDisabled: false })
-			if (response.status !== 204) {
-				const getCalendar = (_entrys) => {
-					let array = []
-					for (let i = 0, ii = _entrys.length; i < ii; ++i) {
-						const entry = _entrys[i]
-						const data = JSON.parse(entry.summary)
-						array.push(
-							<div>
-								<CommonFormGroup controlLabel={entry.title} size="lg">
-									<CommonDisplayCalendar year={this.year} month={this.month} data={data} />
-								</CommonFormGroup>
-								<hr />
-							</div>
-						)
-					}
-					return array
+			axios({
+				url: '/s/get-internalwork-calendar?internal_work=' + this.entry.link[0].___href + '&work_type=' + _activeKey,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
 				}
-				this.calendar[_activeKey] = getCalendar(response.data.feed.entry)
-				this.forceUpdate()
-			}
+			}).then((response) => {
 
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
+				this.setState({ isDisabled: false })
+				if (response.status !== 204) {
+					const getCalendar = (_entrys) => {
+						let array = []
+						for (let i = 0, ii = _entrys.length; i < ii; ++i) {
+							const entry = _entrys[i]
+							const data = JSON.parse(entry.summary)
+							array.push(
+								<div>
+									<CommonFormGroup controlLabel={entry.title} size="lg">
+										<CommonDisplayCalendar year={this.year} month={this.month} data={data} />
+									</CommonFormGroup>
+									<hr />
+								</div>
+							)
+						}
+						return array
+					}
+					this.calendar[_activeKey] = getCalendar(response.data.feed.entry)
+					this.forceUpdate()
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+		get(0)
+		get(1)
+		get(2)
+		get(3)
 	}
 
 	/**
@@ -1360,19 +1366,10 @@ export default class InternalWorkForm extends React.Component {
 
 					</Tab>
 
-					<Tab eventKey={0} title="見積作業状況">
+					<Tab eventKey={0} title="作業状況">
 						{this.calendar[0]}
-					</Tab>
-
-					<Tab eventKey={1} title="発送作業状況">
 						{this.calendar[1]}
-					</Tab>
-
-					<Tab eventKey={2} title="集荷作業状況">
 						{this.calendar[2]}
-					</Tab>
-
-					<Tab eventKey={3} title="資材梱包作業状況">
 						{this.calendar[3]}
 					</Tab>
 
