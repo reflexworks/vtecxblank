@@ -85,6 +85,7 @@ export function getAuthList(_role) {
 		if (_role === '3') {
 			authList = {
 				CustomerList: true,
+				CustomerUpdate: true,
 				DeliveryChargeRegistration: true,
 
 				InquiryRegistration: true,
@@ -137,6 +138,7 @@ export function getAuthList(_role) {
 		if (_role === '5') {
 
 			authList = {
+				CustomerList: true,
 				BilltoRegistration: true,
 				BilltoList: true,
 				BilltoUpdate: true,
