@@ -488,6 +488,13 @@ export default class QuotationForm extends React.Component {
 						value={this.entry.billto.billto_name}
 						readonly
 					/>
+					<CommonInputText
+						controlLabel="作成者"
+						name="creator"
+						type="text"
+						value={this.entry.creator}
+						readonly
+					/>
 				</Form>
 
 				<Form name={this.props.name} horizontal data-submit-form>
