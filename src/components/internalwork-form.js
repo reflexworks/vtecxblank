@@ -594,9 +594,26 @@ export default class InternalWorkForm extends React.Component {
 						for (let i = 0, ii = _entrys.length; i < ii; ++i) {
 							const entry = _entrys[i]
 							const data = JSON.parse(entry.summary)
+							let total = 0
+							data.map((_value) => {
+								if (_value !== null) total = total + _value
+							})
+							const title = (
+								<div>
+									<div>{entry.title}</div>
+									<div
+										style={{
+											'padding-top': '15px',
+											'text-decoration': 'underline'
+										}}
+									>
+										月合計：{total}
+									</div>
+								</div>
+							)
 							array.push(
 								<div>
-									<CommonFormGroup controlLabel={entry.title} size="lg">
+									<CommonFormGroup controlLabel={title} size="lg">
 										<CommonDisplayCalendar year={this.year} month={this.month} data={data} />
 									</CommonFormGroup>
 									<hr />
