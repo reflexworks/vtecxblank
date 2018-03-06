@@ -211,11 +211,13 @@ export default class InternalWorkForm extends React.Component {
 						unit_name: internal_work.item_details_unit_name,
 						quantity: internal_work.quantity ? internal_work.quantity : '',
 						unit: internal_work.item_details_unit,
+						unit_price: internal_work.unit_price,
+						remarks: internal_work.remarks,
 						staff_name: internal_work.staff_name,
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
-					const index = this.monthlyWorksCash[obj.item_name]
+					const index = this.monthlyWorksCash[this.getCashKey(internal_work.work_type, obj)]
 					if (index || index === 0) {
 						this[key][index] = obj
 					} else {
@@ -228,11 +230,13 @@ export default class InternalWorkForm extends React.Component {
 						unit_name: internal_work.item_details_unit_name,
 						quantity: internal_work.quantity ? internal_work.quantity : '',
 						unit: internal_work.item_details_unit,
+						unit_price: internal_work.unit_price,
+						remarks: internal_work.remarks,
 						staff_name: internal_work.staff_name,
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
-					const index = this['periodWorksCash' + internal_work.period][obj.item_name]
+					const index = this['periodWorksCash' + internal_work.period][this.getCashKey(internal_work.work_type, obj, internal_work.period)]
 					if (index || index === 0) {
 						this[key][index] = obj
 					} else {
@@ -254,6 +258,8 @@ export default class InternalWorkForm extends React.Component {
 							unit_name: internal_work.item_details_unit_name,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							unit: internal_work.item_details_unit,
+							unit_price: internal_work.unit_price,
+							remarks: internal_work.remarks,
 							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
 							approval_status_btn: approval_status_btn,
@@ -410,6 +416,17 @@ export default class InternalWorkForm extends React.Component {
 		return array
 	}
 
+	getCashKey = (_type, _value, _period) => {
+		let key = _type
+		key += _value.item_name
+		key += _value.unit_name
+		key += _value.unit
+		if (_period) {
+			key += _period
+		}
+		return key
+	}
+
 	setMasterList(_item_details, _packing_item) {
 		const setOptions = (_label, _value, _data) => {
 			return { label: _label, value: _value, data: _data }
@@ -419,47 +436,60 @@ export default class InternalWorkForm extends React.Component {
 			this.monthlyWorks = []
 			let monthlyWorksIndex = 0
 			let periodWorksIndex = 0
+			this.quotationCash = []
 			if (_item_details) {
 				_item_details.map((_value) => {
 					if (_value.unit_name && _value.unit_name.indexOf('月') !== -1) {
-						this.monthlyWorksCash[_value.item_name] = monthlyWorksIndex
+						const cashkey = this.getCashKey('4', _value)
+						this.monthlyWorksCash[cashkey] = monthlyWorksIndex
 						this.monthlyWorks.push({
 							item_name: _value.item_name,
 							unit_name: _value.unit_name,
 							quantity: '',
 							unit: _value.unit,
+							unit_price: _value.unit_price,
+							remarks: _value.remarks,
 							data: {
 								internal_work: {
 									work_type: '4',
 									item_details_name: _value.item_name,
 									item_details_unit_name: _value.unit_name,
-									item_details_unit: _value.unit
+									item_details_unit: _value.unit,
+									unit_price: _value.unit_price,
+									remarks: _value.remarks,
 								}
 							}
 						})
 						monthlyWorksIndex++
+						this.quotationCash[cashkey] = _value
 					} else if (_value.unit_name && _value.unit_name.indexOf('期') !== -1) {
 						for (let i = 1, ii = 4; i < ii; ++i) {
+							const cashkey = this.getCashKey('5', _value, i)
 							if (periodWorksIndex === 0) {
 								this['periodWorks' + i] = []
 								this['periodWorksCash' + i] = {}
 							}
-							this['periodWorksCash' + i][_value.item_name] = periodWorksIndex
+							this['periodWorksCash' + i][cashkey] = periodWorksIndex
 							this['periodWorks' + i].push({
 								item_name: _value.item_name,
 								unit_name: _value.unit_name,
 								quantity: '',
 								unit: _value.unit,
+								unit_price: _value.unit_price,
+								remarks: _value.remarks,
 								data: {
 									internal_work: {
 										work_type: '5',
 										item_details_name: _value.item_name,
 										item_details_unit_name: _value.unit_name,
 										item_details_unit: _value.unit,
+										unit_price: _value.unit_price,
+										remarks: _value.remarks,
 										period: i + ''
 									}
 								}
 							})
+							this.quotationCash[cashkey] = _value
 						}
 						periodWorksIndex++
 					} else {
@@ -467,14 +497,19 @@ export default class InternalWorkForm extends React.Component {
 						obj.item_name = _value.item_name
 						obj.unit_name = _value.unit_name
 						obj.unit = _value.unit
+						obj.unit_price = _value.unit_price,
+						obj.remarks = _value.remarks,
 						obj.internal_work = {
 							work_type: '0',
 							item_details_name: _value.item_name,
 							item_details_unit_name: _value.unit_name,
-							item_details_unit: _value.unit
+							item_details_unit: _value.unit,
+							unit_price: _value.unit_price,
+							remarks: _value.remarks,
 						}
 						const key_name = obj.item_name + ' / ' + obj.unit_name + ' / ' + obj.unit
 						array.push(setOptions(key_name, key_name, obj))
+						this.quotationCash[this.getCashKey('0', _value)] = _value
 					}
 				})
 			}
@@ -640,7 +675,9 @@ export default class InternalWorkForm extends React.Component {
 				work_type: '0',
 				item_details_name: iw.item_details_name,
 				item_details_unit_name: iw.item_details_unit_name,
-				item_details_unit: iw.item_details_unit
+				item_details_unit: iw.item_details_unit,
+				unit_price: iw.unit_price,
+				remarks: iw.remarks
 			}
 		}
 		// 発送作業の場合
@@ -748,10 +785,14 @@ export default class InternalWorkForm extends React.Component {
 					const revision = parseInt(ids[1]) + 1
 					this[_key][_index].data.id = id + ',' + revision
 				}
-				this[_key][_index].data.internal_work.quantity = _entry.internal_work.quantity
-				this[_key][_index].data.internal_work.approval_status = _entry.internal_work.approval_status
-				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
+				this[_key][_index].data.internal_work = _entry.internal_work
 
+				if (_entry.internal_work.unit_price) {
+					this[_key][_index].unit_price = _entry.internal_work.unit_price
+				}
+				if (_entry.internal_work.remarks) {
+					this[_key][_index].remarks = _entry.internal_work.remarks
+				}
 				this[_key][_index].quantity = _entry.internal_work.quantity
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
@@ -765,6 +806,16 @@ export default class InternalWorkForm extends React.Component {
 			}).catch((error) => {
 				this.setState({ isDisabled: false, isError: error })
 			})
+		}
+		const getKey = (_internal_work) => {
+			let key = _internal_work.work_type
+			key += _internal_work.item_details_name
+			key += _internal_work.item_details_unit_name
+			key += _internal_work.item_details_unit
+			if (_internal_work.period) {
+				key += _internal_work.period
+			}
+			return key
 		}
 		const entry = this[_key][_index].data
 		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
@@ -786,6 +837,17 @@ export default class InternalWorkForm extends React.Component {
 			let obj = {
 				internal_work: entry.internal_work
 			}
+			if (obj.internal_work.work_type === '0'
+				|| obj.internal_work.work_type === '4'
+				|| obj.internal_work.work_type === '5') {
+				const cashData = this.quotationCash[getKey(obj.internal_work)]
+				if (!obj.internal_work.unit_price && cashData.unit_price) {
+					obj.internal_work.unit_price = cashData.unit_price
+				}
+				if (!obj.internal_work.remarks && cashData.remarks) {
+					obj.internal_work.remarks = cashData.remarks
+				}
+			}
 			if (obj.internal_work.work_type !== '4' && obj.internal_work.work_type !== '5') {
 				if (this.isToDay) {
 					obj.internal_work.approval_status = '0'
@@ -799,6 +861,18 @@ export default class InternalWorkForm extends React.Component {
 			updateInternalWork(obj, true)
 		} else {
 			// 入力値更新
+			if (entry.internal_work.work_type === '0'
+				|| entry.internal_work.work_type === '4'
+				|| entry.internal_work.work_type === '5') {
+				const cashData = this.quotationCash[getKey(entry.internal_work)]
+
+				if (!entry.internal_work.unit_price && cashData.unit_price) {
+					entry.internal_work.unit_price = cashData.unit_price
+				}
+				if (!entry.internal_work.remarks && cashData.remarks) {
+					entry.internal_work.remarks = cashData.remarks
+				}
+			}
 			if (entry.internal_work.work_type !== '4' && entry.internal_work.work_type !== '5') {
 				if (!this.isToDay) {
 					entry.internal_work.approval_status = '1'
@@ -1005,6 +1079,10 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '100px'
 									}, {
+										field: 'unit_price',title: '単価', width: '70px'
+									}, {
+										field: 'remarks',title: '備考', width: '200px'
+									}, {
 										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
@@ -1029,6 +1107,10 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '100px'
 									}, {
+										field: 'unit_price',title: '単価', width: '70px'
+									}, {
+										field: 'remarks',title: '備考', width: '200px'
+									}, {
 										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
@@ -1051,6 +1133,10 @@ export default class InternalWorkForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '100px'
 									}, {
+										field: 'unit_price',title: '単価', width: '70px'
+									}, {
+										field: 'remarks',title: '備考', width: '200px'
+									}, {
 										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
 									fixed
@@ -1072,6 +1158,10 @@ export default class InternalWorkForm extends React.Component {
 										}
 									}, {
 										field: 'unit',title: '単位', width: '100px'
+									}, {
+										field: 'unit_price',title: '単価', width: '70px'
+									}, {
+										field: 'remarks',title: '備考', width: '200px'
 									}, {
 										field: 'staff_name',title: '入力者', width: '100px'
 									}]}
@@ -1097,34 +1187,38 @@ export default class InternalWorkForm extends React.Component {
 								<div style={{ clear: 'both' }}></div>
 							</ListGroupItem>
 						</ListGroup>
-
-						<CommonTable
-							controlLabel="見積作業"
-    						name="quotationWorks"
-    						data={this.quotationWorks}
-    						header={[{
-    							field: 'item_name',title: '作業内容', width: '200px'
-							}, {
-								field: 'unit_name',title: '単位名称', width: '130px'
-    						}, {
-    							field: 'quantity', title: '個数', width: '50px',
-								input: !this.isEdit ? false : {
-									onChange: (data, rowindex) => { this.editList('quotationWorks', data, rowindex) },
-									onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) }
-								}
-    						}, {
-    							field: 'unit',title: '単位', width: '50px'
-    						}, {
-    							field: 'staff_name', title: '入力者', width: '100px'
-    						}, {
-    							field: 'approval_status', title: '承認ステータス', width: '90px', convert: this.convert_approval_status
-							}, {
-								field: 'approval_status_btn', title: '', width: '100px'
-							}]}
-							remove={(data, i) => this.removeList('quotationWorks', i)}
-							fixed
-    					>
-							{this.isEdit &&
+						<div style={{'padding-left': '20px', 'padding-right': '20px'}}>
+							<CommonTable
+								controlLabel=""
+								name="quotationWorks"
+								data={this.quotationWorks}
+								header={[{
+									field: 'item_name',title: '作業内容', width: '200px'
+								}, {
+									field: 'unit_name',title: '単位名称', width: '130px'
+								}, {
+									field: 'quantity', title: '個数', width: '50px',
+									input: !this.isEdit ? false : {
+										onChange: (data, rowindex) => { this.editList('quotationWorks', data, rowindex) },
+										onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) }
+									}
+								}, {
+									field: 'unit',title: '単位', width: '50px'
+								}, {
+									field: 'unit_price',title: '単価', width: '70px'
+	    						}, {
+	    							field: 'remarks',title: '備考', width: '200px'
+								}, {
+									field: 'staff_name', title: '入力者', width: '100px'
+								}, {
+    								field: 'approval_status', title: '承認ステータス', width: '90px', convert: this.convert_approval_status
+								}, {
+									field: 'approval_status_btn', title: '', width: '100px'
+								}]}
+								remove={(data, i) => this.removeList('quotationWorks', i)}
+								fixed
+    						>
+								{this.isEdit &&
 								<CommonFilterBox
 									placeholder="見積作業選択"
 									name=""
@@ -1134,8 +1228,9 @@ export default class InternalWorkForm extends React.Component {
 									style={{ float: 'left', width: '400px' }}
 									table
 								/>
-							}
-						</CommonTable>
+								}
+							</CommonTable>
+						</div>
 
 						<hr />
 
