@@ -187,7 +187,7 @@ export default class InternalWorkForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/s/get-internalwork?code='+ this.entry.id.split(',')[0] + '&day=' + this.worksDay,
+			url: '/s/get-internalwork?code='+ this.entry.id.split(',')[0] + '&day=' + this.worksDay + '&quotation_code=' + this.quotation_code,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
