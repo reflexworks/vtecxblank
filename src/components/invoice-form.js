@@ -119,8 +119,7 @@ export default class InvoiceForm extends React.Component {
 	
 	componentWillMount() {
 		this.sampleData()
-		this.getService()
-		
+		this.getService()		
 	}
 
 	/**
@@ -130,6 +129,24 @@ export default class InvoiceForm extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
 		this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
+		if(this.entry.billfrom.payee){
+			this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
+				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+				
+					let newPayee = {
+						'bank_info': oldPayee.bank_info,
+						'account_type': oldPayee.account_type,
+						'account_number': oldPayee.account_number,
+						'branch_office': '',
+						'account_name': '',
+					}
+					return (newPayee)
+				} else {
+					return (oldPayee)
+				}
+			})
+		}
+
 		this.setCustomerMasterData()
 		this.setBillfromMasterData()
 		this.setInternalWorkYearMonthList()
@@ -333,13 +350,12 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	sampleData() {
-
 		this.ehead = this.getHead()
 		this.ebody = this.getBody()
 		this.etr = this.getEtrTotal()
 
-		this.entry.invoice.consumption_tax = '¥39,022'
-		this.entry.invoice.total_amount = '¥1,025,142'
+		this.entry.invoice.consumption_tax = '39022'
+		this.entry.invoice.total_amount = '1025142'
 		this.ecoJP = [{
 			day: '12/1',
 			work: '10',
@@ -707,6 +723,7 @@ export default class InvoiceForm extends React.Component {
 							if(this.billfromList[i].data.contact_information.prefecture || this.billfromList[i].data.contact_information.address1 || this.billfromList[i].data.contact_information.address2){
 								this.address = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
 							}
+							
 							break
 						}
 					}
@@ -805,7 +822,7 @@ export default class InvoiceForm extends React.Component {
 		}).then((response) => {
 			if (response.status === 204) {
 				this.setState({ isDisabled: false })
-				//alert('庫内作業データがありません')
+				alert('庫内作業データがありません')
 			}else if (response.status !== 204) {
 				this.master.internalWorkYearMonthList = response.data.feed.entry
 				
@@ -860,7 +877,7 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 	/*
-	 * 請求書内の月次作業、日時作業、資材などに項目を追加する
+	 * 請求書内の月時作業、日時作業、資材などに項目を追加する
 	 */
 	addInvoiceList(list, _data) {
 		if (!this.item_details[list]) {
@@ -937,16 +954,12 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	//onSelect() {}
-
 	render() {
 
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
-				
-				<Button className="total_amount"><Glyphicon glyph="print" />　請求書発行</Button>	
-								
+												
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
 					<FormGroup className="hide">
@@ -1030,7 +1043,7 @@ export default class InvoiceForm extends React.Component {
 					value={this.state.selectCustomer.customer_code}
 					options={this.customerList}
 					onChange={(data) => this.changeCustomer(data)}
-					size='sm'
+					//size=''
 				/>
 						
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
@@ -1044,7 +1057,7 @@ export default class InvoiceForm extends React.Component {
 
 							<br />
 							<br />
-							<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="月時情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
 									data={this.monthly}
@@ -1531,7 +1544,7 @@ export default class InvoiceForm extends React.Component {
 							 都道府県
 							 市区郡町村
 							 番地
-							*/}
+						*/}
 
 						<CommonFilterBox
 							controlLabel="請求元"
@@ -1585,18 +1598,19 @@ export default class InvoiceForm extends React.Component {
 									name="billfrom.payee"
 									data={this.entry.billfrom.payee}
 									header={[{
-										field: 'bank_info', title: '口座名', width: '30px',
+										field: 'bank_info', title: '銀行名', width: '30px',
 										convert: {
 											1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 											6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 										}
-										
+									}, {
+										field: 'branch_office', title: '支店名', width: '30px',
 									}, {
 										field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-										
 									}, {
 										field: 'account_number', title: '口座番号', width: '30px',
-										
+									}, {
+										field: 'account_name', title: '口座名義', width: '30px',
 									}]}
 									noneScroll
 									fixed
