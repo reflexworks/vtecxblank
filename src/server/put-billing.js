@@ -7,10 +7,12 @@ export let shipment_service_code   // 見つかった荷主コードによって
 
 let shipment_service = null
 
-export function getChargeByZone(customer_all,size, prefecture, shipper_code, shipment_service_service_name,delivery_area) {
+export function getChargeByZone(customer_all, size, prefecture, shipper_code, shipment_service_service_name, delivery_area) {
+	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code, shipment_service_service_name)
+	return getChargeByZoneImpl(delivery_charge_all,customer_all, size, prefecture, shipment_service_service_name, delivery_area)
+}
 
-	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code,shipment_service_service_name)
-
+function getChargeByZoneImpl(delivery_charge_all,customer_all, size, prefecture, shipment_service_service_name, delivery_area) {
 	if (!shipment_service) {
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code)
 		if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません(サービスコード=' + shipment_service_code + ')'
@@ -55,6 +57,33 @@ export function getChargeByZone(customer_all,size, prefecture, shipper_code, shi
 		return charge_by_zone.zone_name === zone[0].zone_name
 	})
 	if (charge_by_zone.length===0) throw zone[0].zone_name+' の配送料が登録されていません。'
+
+	return charge_by_zone
+}
+
+export function getChargeBySizeAndZone(customer_code,shipment_service_code, size, zone_name, delivery_area) {
+
+	const delivery_charge_all = vtecxapi.getEntry('/customer/' + customer_code + '/deliverycharge')	
+	if (!delivery_charge_all.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +')'
+
+	// shipment_service_codeからdelivery_chargeを取得
+	const delivery_charge = delivery_charge_all.feed.entry[0].delivery_charge.filter((delivery_charge) => {
+		return delivery_charge.shipment_service_code === shipment_service_code
+	})
+
+	if (delivery_charge.length === 0||delivery_charge[0].delivery_charge_details.length === 0) throw '配送料マスタが登録されていません。(サービスコード='+shipment_service_code+')'
+
+	// sizeからdelivery_charge_detailsを取得
+	const delivery_charge_details = delivery_area ? delivery_charge[0].delivery_charge_details :
+		delivery_charge[0].delivery_charge_details.filter((delivery_charge_details) => {
+			return delivery_charge_details.size.match(/\d+/)[0] === size
+		})
+
+	// zone_nameからcharge_by_zoneを取得
+	const charge_by_zone = delivery_charge_details[0].charge_by_zone.filter((charge_by_zone) => {
+		return charge_by_zone.zone_name === zone_name
+	})
+	if (charge_by_zone.length===0) throw zone_name+' の配送料が登録されていません。'
 
 	return charge_by_zone
 }

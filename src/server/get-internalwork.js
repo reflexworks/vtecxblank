@@ -2,7 +2,7 @@ import vtecxapi from 'vtecxapi'
 import { CommonGetFlag } from './common'
 
 const uri = vtecxapi.getQueryString('code')
-const list = vtecxapi.getFeed(uri + '/list')
+let list = vtecxapi.getFeed(uri + '/list')
 const isList = CommonGetFlag(list)
 
 let monthly_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=4')
@@ -23,9 +23,13 @@ if (isMonthly && isPeriod) {
 }
 
 if (isList) {
+
 	const day = vtecxapi.getQueryString('day')
 	const data = vtecxapi.getFeed(uri + '/data?internal_work.working_day=' + day)
 	const isData = CommonGetFlag(data)
+
+	const quotation_code = vtecxapi.getQueryString('quotation_code')
+	const quotation = vtecxapi.getEntry('/quotation/' + quotation_code).feed.entry[0]
 
 	// 月次と旬次データセット
 	if (isMonthly) {
@@ -33,25 +37,94 @@ if (isList) {
 			list.feed.entry.push(monthly_data.feed.entry[i])
 		}
 	}
-	if (isData) {
-		const getKey = (_internal_work) => {
-			const type = _internal_work.work_type
-			let key = _internal_work.work_type
-			if (type === '0' || type === '4' || type === '5') {
-				key += _internal_work.item_details_name
-				key += _internal_work.item_details_unit_name
-				key += _internal_work.item_details_unit
+
+	const getKey = (_internal_work) => {
+		const type = _internal_work.work_type
+		let key = _internal_work.work_type
+		if (type === '0' || type === '4' || type === '5') {
+			key += _internal_work.item_details_name
+			key += _internal_work.item_details_unit_name
+			key += _internal_work.item_details_unit
+		}
+		if (type === '1' || type === '2') {
+			key += _internal_work.shipment_service_code
+			key += _internal_work.shipment_service_name
+			key += _internal_work.shipment_service_name_service_name || ''
+			key += _internal_work.shipment_service_size || ''
+			key += _internal_work.shipment_service_weight || ''
+		}
+		if (type === '3') key += _internal_work.packing_item_code
+		return key
+	}
+
+	// 作業内容を見積書の順番に整列する
+	const arrangementList = () => {
+		const getQuotationKey = (_obj) => {
+			let key = ''
+			if (_obj.item_code) {
+				key += '3'
+				key += _obj.item_code
+			} else if (_obj.item_name) {
+				if (_obj.unit_name && _obj.unit_name.indexOf('月') !== -1) {
+					key += '4'
+				} else if (_obj.unit_name && _obj.unit_name.indexOf('期') !== -1) {
+					key += '5'
+				} else {
+					key += '0'
+				}
+				key += _obj.item_name
+				key += _obj.unit_name
+				key += _obj.unit
 			}
-			if (type === '1' || type === '2') {
-				key += _internal_work.shipment_service_code
-				key += _internal_work.shipment_service_name
-				key += _internal_work.shipment_service_name_service_name || ''
-				key += _internal_work.shipment_service_size || ''
-				key += _internal_work.shipment_service_weight || ''
-			}
-			if (type === '3') key += _internal_work.packing_item_code
 			return key
 		}
+		let cash = {}
+		let cashIndex = 0
+		quotation.item_details.map((_item_details) => {
+			const key = getQuotationKey(_item_details)
+			cash[key] = JSON.parse(JSON.stringify(cashIndex))
+			cashIndex++
+		})
+		quotation.packing_items.map((_packing_items) => {
+			const key = getQuotationKey(_packing_items)
+			cash[key] = JSON.parse(JSON.stringify(cashIndex))
+			cashIndex++
+		})
+
+		let array = new Array(cashIndex)
+		let array_other = []
+		list.feed.entry.map((_entry) => {
+			const key = getKey(_entry.internal_work)
+			const index = cash[key]
+			if (index === 0 || index) {
+				array[index] = _entry
+			} else {
+				array_other.push(_entry)
+			}
+		})
+
+		array_other.sort((a, b) => {
+			const a_index = a.internal_work.shipment_service_code.toString().toLowerCase()
+		    const b_index = b.internal_work.shipment_service_code.toString().toLowerCase()
+			if( a_index < b_index ) return -1
+			if( a_index > b_index ) return 1
+			return 0
+		})
+
+		let new_array = []
+		array.map((_array) => {
+			if (_array !== null) {
+				new_array.push(_array)
+			}
+		})
+		new_array = new_array.concat(array_other)
+		return new_array
+	}
+
+	list.feed.entry = arrangementList()
+
+	if (isData) {
+
 		const setCash = () => {
 			let obj = {}
 			for (let i = 0, ii = data.feed.entry.length; i < ii; ++i) {

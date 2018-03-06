@@ -19,6 +19,7 @@ import {
 	CommonInputText,
 	CommonTable,
 	CommonFormGroup,
+	CommonLoginUser
 } from './common'
 
 export default class InternalWorkRegistration extends React.Component {
@@ -160,6 +161,7 @@ export default class InternalWorkRegistration extends React.Component {
 					___href: uri,
 					___rel: 'self'
 				}]
+				obj.creator = CommonLoginUser().get().staff_name
 				this.postData.feed.entry.push(obj)
 				this.postData.feed.entry.push({
 					link : [{
@@ -193,8 +195,18 @@ export default class InternalWorkRegistration extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then(() => {
-			alert('登録が完了しました。')
-			location.href = '#/InternalWorkList'
+			axios({
+				url: '/s/post-befor-internalwork-list',
+				method: 'post',
+				data: this.postData,
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				alert('登録が完了しました。')
+				location.href = '#/InternalWorkList'
+			}).then(() => {
+			})
 		}).then(() => {
 		})
 
