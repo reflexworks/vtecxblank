@@ -219,16 +219,6 @@ billing_summary
   quantity
   delivery_charge
   subtotal  
-billing_details
- shipment_service_name
- shipment_service_type
- shipment_service_service_name
- shipment_class
- content{}
-  shipping_date
-  working_quantity
-  billing_quantity
-  billing_amount
 creator
 </content>
 <rights>
