@@ -217,14 +217,8 @@ export default class InternalWorkForm extends React.Component {
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
-					const index = this.monthlyWorksCash[this.getCashKey(obj)]
+					const index = this.monthlyWorksCash[this.getCashKey(internal_work.work_type, obj)]
 					if (index || index === 0) {
-						if (!obj.unit_price && this[key][index].unit_price) {
-							obj.unit_price = this[key][index].unit_price
-						}
-						if (!obj.remarks && this[key][index].remarks) {
-							obj.remarks = this[key][index].remarks
-						}
 						this[key][index] = obj
 					} else {
 						this[key].push(obj)
@@ -242,14 +236,8 @@ export default class InternalWorkForm extends React.Component {
 						approval_status: internal_work.approval_status,
 						data: entry
 					}
-					const index = this['periodWorksCash' + internal_work.period][this.getCashKey(obj)]
+					const index = this['periodWorksCash' + internal_work.period][this.getCashKey(internal_work.work_type, obj, internal_work.period)]
 					if (index || index === 0) {
-						if (!obj.unit_price && this[key][index].unit_price) {
-							obj.unit_price = this[key][index].unit_price
-						}
-						if (!obj.remarks && this[key][index].remarks) {
-							obj.remarks = this[key][index].remarks
-						}
 						this[key][index] = obj
 					} else {
 						this[key].push(obj)
@@ -428,11 +416,14 @@ export default class InternalWorkForm extends React.Component {
 		return array
 	}
 
-	getCashKey = (_value) => {
-		let key = ''
+	getCashKey = (_type, _value, _period) => {
+		let key = _type
 		key += _value.item_name
 		key += _value.unit_name
 		key += _value.unit
+		if (_period) {
+			key += _period
+		}
 		return key
 	}
 
@@ -445,10 +436,12 @@ export default class InternalWorkForm extends React.Component {
 			this.monthlyWorks = []
 			let monthlyWorksIndex = 0
 			let periodWorksIndex = 0
+			this.quotationCash = []
 			if (_item_details) {
 				_item_details.map((_value) => {
 					if (_value.unit_name && _value.unit_name.indexOf('月') !== -1) {
-						this.monthlyWorksCash[this.getCashKey(_value)] = monthlyWorksIndex
+						const cashkey = this.getCashKey('4', _value)
+						this.monthlyWorksCash[cashkey] = monthlyWorksIndex
 						this.monthlyWorks.push({
 							item_name: _value.item_name,
 							unit_name: _value.unit_name,
@@ -468,13 +461,15 @@ export default class InternalWorkForm extends React.Component {
 							}
 						})
 						monthlyWorksIndex++
+						this.quotationCash[cashkey] = _value
 					} else if (_value.unit_name && _value.unit_name.indexOf('期') !== -1) {
 						for (let i = 1, ii = 4; i < ii; ++i) {
+							const cashkey = this.getCashKey('5', _value, i)
 							if (periodWorksIndex === 0) {
 								this['periodWorks' + i] = []
 								this['periodWorksCash' + i] = {}
 							}
-							this['periodWorksCash' + i][this.getCashKey(_value)] = periodWorksIndex
+							this['periodWorksCash' + i][cashkey] = periodWorksIndex
 							this['periodWorks' + i].push({
 								item_name: _value.item_name,
 								unit_name: _value.unit_name,
@@ -494,6 +489,7 @@ export default class InternalWorkForm extends React.Component {
 									}
 								}
 							})
+							this.quotationCash[cashkey] = _value
 						}
 						periodWorksIndex++
 					} else {
@@ -513,6 +509,7 @@ export default class InternalWorkForm extends React.Component {
 						}
 						const key_name = obj.item_name + ' / ' + obj.unit_name + ' / ' + obj.unit
 						array.push(setOptions(key_name, key_name, obj))
+						this.quotationCash[this.getCashKey('0', _value)] = _value
 					}
 				})
 			}
@@ -788,10 +785,14 @@ export default class InternalWorkForm extends React.Component {
 					const revision = parseInt(ids[1]) + 1
 					this[_key][_index].data.id = id + ',' + revision
 				}
-				this[_key][_index].data.internal_work.quantity = _entry.internal_work.quantity
-				this[_key][_index].data.internal_work.approval_status = _entry.internal_work.approval_status
-				this[_key][_index].data.internal_work.staff_name = _entry.internal_work.staff_name
+				this[_key][_index].data.internal_work = _entry.internal_work
 
+				if (_entry.internal_work.unit_price) {
+					this[_key][_index].unit_price = _entry.internal_work.unit_price
+				}
+				if (_entry.internal_work.remarks) {
+					this[_key][_index].remarks = _entry.internal_work.remarks
+				}
 				this[_key][_index].quantity = _entry.internal_work.quantity
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
@@ -805,6 +806,16 @@ export default class InternalWorkForm extends React.Component {
 			}).catch((error) => {
 				this.setState({ isDisabled: false, isError: error })
 			})
+		}
+		const getKey = (_internal_work) => {
+			let key = _internal_work.work_type
+			key += _internal_work.item_details_name
+			key += _internal_work.item_details_unit_name
+			key += _internal_work.item_details_unit
+			if (_internal_work.period) {
+				key += _internal_work.period
+			}
+			return key
 		}
 		const entry = this[_key][_index].data
 		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
@@ -826,6 +837,17 @@ export default class InternalWorkForm extends React.Component {
 			let obj = {
 				internal_work: entry.internal_work
 			}
+			if (obj.internal_work.work_type === '0'
+				|| obj.internal_work.work_type === '4'
+				|| obj.internal_work.work_type === '5') {
+				const cashData = this.quotationCash[getKey(obj.internal_work)]
+				if (!obj.internal_work.unit_price && cashData.unit_price) {
+					obj.internal_work.unit_price = cashData.unit_price
+				}
+				if (!obj.internal_work.remarks && cashData.remarks) {
+					obj.internal_work.remarks = cashData.remarks
+				}
+			}
 			if (obj.internal_work.work_type !== '4' && obj.internal_work.work_type !== '5') {
 				if (this.isToDay) {
 					obj.internal_work.approval_status = '0'
@@ -839,6 +861,18 @@ export default class InternalWorkForm extends React.Component {
 			updateInternalWork(obj, true)
 		} else {
 			// 入力値更新
+			if (entry.internal_work.work_type === '0'
+				|| entry.internal_work.work_type === '4'
+				|| entry.internal_work.work_type === '5') {
+				const cashData = this.quotationCash[getKey(entry.internal_work)]
+
+				if (!entry.internal_work.unit_price && cashData.unit_price) {
+					entry.internal_work.unit_price = cashData.unit_price
+				}
+				if (!entry.internal_work.remarks && cashData.remarks) {
+					entry.internal_work.remarks = cashData.remarks
+				}
+			}
 			if (entry.internal_work.work_type !== '4' && entry.internal_work.work_type !== '5') {
 				if (!this.isToDay) {
 					entry.internal_work.approval_status = '1'
