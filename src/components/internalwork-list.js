@@ -191,13 +191,15 @@ export default class InternalWorkList extends React.Component {
     						edit={(data) => this.onSelect(data)}
     						remove={(data) => this.onDelete(data)}
     						header={[{
-    							field: 'internal_work.working_yearmonth',title: '作業年月', width: '100px'
+    							field: 'internal_work.working_yearmonth',title: '作業年月', width: '70px'
     						}, {
-    							field: 'customer.customer_name', title: '顧客', width: '400px'
+    							field: 'customer.customer_name', title: '顧客', width: '530px'
     						}, {
     							field: 'quotation.quotation_code', title: '対象見積書No', width: '100px'
     						}, {
-    							field: 'internal_work.is_completed', title: '入力完了フラグ', width: '400px', convert: {'0': '未完了', '1': '完了'}
+    							field: 'internal_work.is_completed', title: '入力完了フラグ', width: '100px', convert: {'0': '未完了', '1': '完了'}
+    						}, {
+    							field: 'creator', title: '作成者', width: '200px'
     						}]}
     					>
     						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
