@@ -1,17 +1,21 @@
 import vtecxapi from 'vtecxapi' 
-
+import { getChargeBySizeAndZone } from './put-billing'
 
 const shipping_yearmonth = vtecxapi.getQueryString('shipping_yearmonth')  //201801
 const billto_code = vtecxapi.getQueryString('billto_code')  // 0000124
 const delivery_company = vtecxapi.getQueryString('delivery_company')  //YH or ECO
 
 try {
-	const summary = getSummary(shipping_yearmonth, billto_code, delivery_company)
-	console.log(JSON.stringify(summary))
+	const result = {
+		'feed': { 'entry': [] }
+	}
+
+	result.feed.entry.push(getSummary(shipping_yearmonth, billto_code, delivery_company))
+	vtecxapi.doResponse(result)
+	
 } catch (e) {
 	vtecxapi.sendMessage(400, e)
 }
-
 
 function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 	const billto = vtecxapi.getEntry('/billto/' + billto_code)
@@ -63,7 +67,12 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 						const record = { 'size' : size,'zone_name':zone,'quantity':entry.length,'delivery_charge':entry[0].billing_data.delivery_charge,'subtotal':subtotal}
 						result.billing_summary.content.push(record)						
 					} else {
-						const record = { 'size' : size,'zone_name':zone,'quantity':0,'delivery_charge':'-','subtotal':0}
+						let delivery_area = null
+						if (delivery_company === 'ECO') {
+							delivery_area = billing_data.feed.entry[0].billing_data.delivery_class
+						}
+						const charge_by_zone = getChargeBySizeAndZone(customer_code,billing_data.feed.entry[0].billing_data.shipment_service_code, size, zone, delivery_area)
+						const record = { 'size' : size,'zone_name':zone,'quantity':0,'delivery_charge':charge_by_zone[0].price,'subtotal':0}
 						result.billing_summary.content.push(record)												
 					}
 				})
