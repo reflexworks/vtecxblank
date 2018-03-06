@@ -195,8 +195,18 @@ export default class InternalWorkRegistration extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then(() => {
-			alert('登録が完了しました。')
-			location.href = '#/InternalWorkList'
+			axios({
+				url: '/s/post-befor-internalwork-list',
+				method: 'post',
+				data: this.postData,
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				alert('登録が完了しました。')
+				location.href = '#/InternalWorkList'
+			}).then(() => {
+			})
 		}).then(() => {
 		})
 

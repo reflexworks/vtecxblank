@@ -19,7 +19,8 @@ import {
 	CommonMonthlySelect,
 	CommonInputText,
 	CommonRegistrationBtn,
-	CommonTable
+	CommonTable,
+	CommonLoginUser
 } from './common'
 
 import {
@@ -60,6 +61,8 @@ export default class QuotationRegistration extends React.Component {
 			packing_items: [],
 			basic_condition: []
 		}
+
+		this.login_user = CommonLoginUser().get().staff_name
 
 	}
 
@@ -264,6 +267,8 @@ export default class QuotationRegistration extends React.Component {
 								<FormControl name="quotation.quotation_code_sub" type="text" value="01" />
 								<FormControl name="quotation.status" type="text" value="0" />
 								<FormControl name="link" data-rel="self" type="text" value="/quotation/,${_addids},-,${quotation.quotation_code_sub}" />
+								<FormControl name="creator" type="text" value={this.login_user} />
+							
 							</FormGroup>
 						}
 						{ !this.entry.billto.billto_code && 

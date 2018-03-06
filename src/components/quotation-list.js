@@ -223,15 +223,17 @@ export default class QuotationList extends React.Component {
 								label: <Glyphicon glyph="open-file" />,
 								onClick: (_data) => this.moveInvoiceRegistration(_data)
 							},{
-								field: 'quotation.quotation_code',title: '見積書No', width: '250px'
+								field: 'quotation.quotation_code',title: '見積書No', width: '70px'
 							}, {
-								field: 'quotation.quotation_code_sub',title: '枝番', width: '100px'
+								field: 'quotation.quotation_code_sub',title: '枝番', width: '50px'
 							}, {
-								field: 'quotation.quotation_date',title: '見積年月', width: '100px'
+								field: 'quotation.quotation_date',title: '見積年月', width: '70px'
 							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '250px'
+								field: 'billto.billto_name', title: '請求先名', width: '500px'
 							}, {
-								field: 'quotation.status', title: '発行ステータス', width: '200px', convert: {0: '未発行', 1: '発行済'}
+								field: 'quotation.status', title: '発行ステータス', width: '80px', convert: {0: '未発行', 1: '発行済'}
+							}, {
+								field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}
 							}]}
 						>
 							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
