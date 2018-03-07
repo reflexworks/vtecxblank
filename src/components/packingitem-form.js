@@ -5,7 +5,7 @@ import {
 	FormGroup,
 	FormControl,
 	PanelGroup,
-	Panel,
+	Panel
 } from 'react-bootstrap'
 import type {
 	Props
@@ -13,6 +13,8 @@ import type {
 
 import {
 	CommonInputText,
+	CommonComment,
+	CommonValidate
 } from './common'
 
 export default class PackingItemForm extends React.Component {
@@ -23,6 +25,7 @@ export default class PackingItemForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.packing_item = this.entry.packing_item || {}
+		this.isCreate = this.props.isCreate
 
 		this.forceUpdate()		
 	}
@@ -78,6 +81,7 @@ export default class PackingItemForm extends React.Component {
 		this.entry.packing_item.outer_height = value
 		this.forceUpdate()
 	}
+
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -88,6 +92,15 @@ export default class PackingItemForm extends React.Component {
 
 	changedValue(_key, _value) {
 		this.entry.packing_item[_key] = _value
+	}
+
+	checkValue(_key, _value) {
+		if (this.props.onCheck) {
+			if (_key === 'item_code') {
+				const isHankaku = CommonValidate().hankaku(_value)
+				this.props.onCheck(isHankaku)
+			}
+		}
 	}
 
 	render() {
@@ -101,24 +114,32 @@ export default class PackingItemForm extends React.Component {
 					<Panel collapsible header="資材情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
 						{/* 登録の場合 */}
-						{!this.entry.packing_item.item_code &&
+						{this.isCreate &&
 							<FormGroup className="hide">
 								<FormControl name="link" data-rel="self" type="text" value="/packing_item/${packing_item.item_code}" />
 							</FormGroup>
 						}
-						{!this.entry.packing_item.item_code &&
-							<CommonInputText
-								controlLabel="品番"
-								name="packing_item.item_code"
-								type="text"
-								placeholder="品番"
-								value={this.entry.packing_item.item_code}
-								onChange={(data)=>this.changedValue('item_code', data)}
-							/>
+						{this.isCreate &&
+							<div>
+								<CommonInputText
+									controlLabel="品番"
+									name="packing_item.item_code"
+									type="text"
+									placeholder="品番"
+									value={this.entry.packing_item.item_code}
+									onChange={(data) => this.changedValue('item_code', data)}
+									onBlur={(data) => this.checkValue('item_code', data)}
+								/>
+								<CommonComment
+									controlLabel=" "
+									value="品番には半角英数と半角数字とハイフン（-）、アンダーバー（_）が使用できます。"
+									size="lg"
+								/>
+							</div>
 						}
 
 						{/* 更新の場合 */}
-						{this.entry.packing_item.item_code &&
+						{(!this.isCreate && this.entry.packing_item.item_code) &&
 							<CommonInputText
 								controlLabel="品番"
 								name="packing_item.item_code"

@@ -857,6 +857,10 @@ h3.title {
 .common-action-btn-span.delete{
   color: #DD2E17;
 }
+.common-action-btn-span.disabled{
+  color: #cccccc;
+  cursor: not-allowed;
+}
 
 .common-table {
   width: 100%;
@@ -1212,4 +1216,7 @@ h3.title {
 .test{
   color:red;
   padding: 100px 100px
+}
+.comment {
+  color: #999;
 }

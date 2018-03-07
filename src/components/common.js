@@ -1,6 +1,6 @@
 /* @flow */
 import axios from 'axios'
-import React, { Children } from 'react'
+import React from 'react'
 import {
 	FormGroup,
 	Radio,
@@ -301,6 +301,11 @@ export class CommonRegistrationBtn extends React.Component {
 		this.LogicCommonTable = new LogicCommonTable()
 		this.label = this.props.label || <span><Glyphicon glyph="plus" /> 新規登録</span>
 
+		this.navClassOrigin = 'common-action-btn-span'
+		this.navClass = this.navClassOrigin + ' create'
+		if (this.props.disabled) {
+			this.navClass = this.navClassOrigin + ' disabled'
+		}
 	}
 
 	/**
@@ -308,6 +313,11 @@ export class CommonRegistrationBtn extends React.Component {
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
+		if (newProps.disabled === true) {
+			this.navClass = this.navClassOrigin + ' disabled'
+		} else {
+			this.navClass = this.navClassOrigin + ' create'
+		}
 		this.setState(newProps)
 	}
 
@@ -461,7 +471,7 @@ export class CommonRegistrationBtn extends React.Component {
 
 		e.preventDefault()
 
-		if (!this.state.isDisabled) {
+		if (!this.state.isDisabled && !this.state.disabled) {
             
 			if (!this.props.pure) {
 				if (confirm('この情報を登録します。よろしいですか？')) this.doPost()
@@ -477,7 +487,7 @@ export class CommonRegistrationBtn extends React.Component {
 			if (this.props.NavItem) {
 				return (
 					<NavItem href="#" className="common-action-btn">
-						<span className="common-action-btn-span create" onClick={(e) => this.submit(e)}>
+						<span className={this.navClass} onClick={(e) => this.submit(e)}>
 							<Glyphicon glyph="plus" /> 新規登録
 						</span>
 						<CommonIndicator visible={this.state.isDisabled} />
@@ -1572,6 +1582,58 @@ export function delFigure(strVal){
 }
 
 /**
+ * コメント
+ */
+export class CommonComment extends React.Component {
+
+	constructor(props: Props) {
+		super(props)
+		this.state = {
+			value: this.props.value,
+			size: this.props.comparison ? 'lg' : this.props.size
+		}
+		this.style = this.props.style || {}
+		this.style['margin-top'] = '-10px'
+	}
+
+	/**
+	 * 親コンポーネントがpropsの値を更新した時に呼び出される
+	 * @param {*} newProps 
+	 */
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			value: newProps.value,
+			size: newProps.size
+		})
+	}
+
+	render() {
+
+		const InputTextNode = () => {
+			return (
+				<FormControl.Static>
+					<div className="comment">{ this.state.value }</div>
+				</FormControl.Static>
+			)
+		}
+
+		return (
+			<div style={this.style} className={this.props.className}>
+				{ !this.props.table && 
+					<CommonFormGroup controlLabel={this.props.controlLabel} size={this.state.size}>
+						{InputTextNode()}
+					</CommonFormGroup>
+				}
+				{ this.props.table && 
+					InputTextNode()
+				}
+			</div>
+		)
+	}
+
+}
+
+/**
  * テキストエリア
  */
 export class CommonTextArea extends React.Component {
@@ -2164,85 +2226,14 @@ export class CommonModal extends React.Component {
 }
 
 /**
- * バリデーション処理(実装中)
+ * バリデーションタイプ
  */
-export function CommonValidate(_target, _validate) {
-	let obj = {
-		validate: _validate
-	}
-	const target_names = _target.name.split('.')
-	if (target_names.length > 1) {
-		//		obj.entry[target_names[0]][target_names[1]] = _target.value
-		obj.validate[target_names[0]][target_names[1]] = 'error'
-	} else {
-		//		obj.entry[target_names[0]] = _target.value
-		obj.validate[target_names[0]] = 'error'
-	}
-	obj.validate[_target.name] = 'error'
-	return obj
-}
-
-/**
- * バリデーション要フォーム(実装中)
- */
-export class CommonValidateForm extends React.Component {
-
-	constructor(props: Props) {
-		super(props)
-		this.state = {}
-		this.validate = {}
-		this.forceUpdate()
-	}
-
-	onValidate(e) {
-		this.validate[e.target.name] = 'error'
-		this.forceUpdate()
-	}
-
-	/**
-	 * 親コンポーネントがpropsの値を更新した時に呼び出される
-	 * @param {*} newProps 
-	 */
-	componentWillReceiveProps(newProps) {
-		console.log(newProps)
-	}
-
-	render() {
-
-		const childrenWithProps = (_children) => { 
-			return Children.map(
-				_children,
-				(child) => {
-
-					switch (typeof child) {
-					case 'string':
-						return child
-
-					case 'object':
-						if (child && child.props && child.props.children) {
-							child.props.children = childrenWithProps(child.props.children)
-						}
-						if (child && child.props) {
-							if (child.props.validate) {
-								return React.cloneElement(child, {
-									validationState: this.validate[child.props.name]
-								})
-							}
-						}
-						return child
-					default:
-						return null
-					}
-				}
-			)
+export function CommonValidate() {
+	return {
+		hankaku: (_value) => {
+			return (_value.match(/^[0-9a-zA-Z-_]+$/)) ? true : false
 		}
-		return (
-			<Form name={this.props.name} horizontal data-submit-form onChange={(e) => this.onValidate(e)}>
-				{ childrenWithProps(this.props.children) }
-			</Form>
-		)
 	}
-
 }
 
 /**
