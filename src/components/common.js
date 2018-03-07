@@ -1555,8 +1555,8 @@ export function addFigure(numVal) {
 		return halfVal
 	}
 
-	// 全角から半角へ変換し、既にカンマが入力されていたら事前に削除
-	numVal = toHalfWidth(numVal).replace(/,/g, '').trim()
+	// 全角から半角へ変換し、数値のみ抽出
+	numVal = toHalfWidth(numVal).replace(/[^0-9^\\.]/g,'').trim()
 
 	// 数値でなければnullを返却
 	if ( !/^[+|-]?(\d*)(\.\d+)?$/.test(numVal) ){
@@ -1578,7 +1578,7 @@ export function addFigure(numVal) {
  * 入力値のカンマを取り除いて返却
  */
 export function delFigure(strVal){
-	return strVal.replace( /,/g , '' )
+	return strVal.replace(/[^0-9^\\.]/g,'')
 }
 
 /**
