@@ -83,6 +83,23 @@ export default class BillfromForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+	
+		this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
+			if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+				
+				let newPayee = {
+					'bank_info': oldPayee.bank_info,
+					'account_type': oldPayee.account_type,
+					'account_number': oldPayee.account_number,
+					'branch_office': '',
+					'account_name': '' ,
+				}
+				return(newPayee)
+			} else {
+				return(oldPayee)
+			}
+		})
+		this.forceUpdate()
 	}
 
 	/**
@@ -255,34 +272,89 @@ export default class BillfromForm extends React.Component {
 						/>
 					
 					</Panel>
+
 					<Panel collapsible header="口座情報" eventKey="2" bsStyle="info" defaultExpanded="true">
 						<CommonTable
 							//controlLabel="口座情報"
 							name="billfrom.payee"
 							data={this.entry.billfrom.payee}
 							header={[{
-								field: 'bank_info', title: '口座名', width: '30px',
+								field: 'bank_info', title: '銀行名', width: '30px',
 								filter: {
 									options: this.bankList,
 									onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'bank_info') }
 								}
 							}, {
-								field: 'account_type', title: '口座種類', width: '30px',
+								field: 'branch_office', title: '支店名', width: '30px',
+								input: {
+									onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'branch_office') }
+								}
+							}, {
+								field: 'account_type', title: '口座種類', width: '20px',
 								filter: {
 									options: this.bankTypeList,
 									onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_type') }
 								}
 							}, {
-								field: 'account_number', title: '口座番号', width: '30px',
+								field: 'account_number', title: '口座番号', width: '20px',
 								input: {
 									onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_number') }
 								}
+								
+							}, {
+								field: 'account_name', title: '口座名義', width: '30px',
+								input: {
+									onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_name') }
+								}
 							}]}
-							add={() => this.addList('payee',{ 'bank_info': '0', 'account_type': '0', 'account_number': '', })}
+							add={() => this.addList('payee',{ 'bank_info': '0','branch_office':'', 'account_type': '0', 'account_number': '','account_name': '', })}
 							remove={(data, index) => this.removeList('payee',index)}
 							noneScroll
 							fixed
 						/>
+
+						{!this.entry.billfrom.payee && 
+							<FormGroup className="hide"	>	
+								<CommonTable
+									//controlLabel="口座情報"
+									name="billfrom.payee"
+									data={this.entry.billfrom.payee}
+									header={[{
+										field: 'bank_info', title: '銀行名', width: '30px',
+										filter: {
+											options: this.bankList,
+											onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'bank_info') }
+										}
+									}, {
+										field: 'branch_office', title: '支店名', width: '30px',
+										input: {
+											onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'branch_office') }
+										}
+									}, {
+										field: 'account_type', title: '口座種類', width: '20px',
+										filter: {
+											options: this.bankTypeList,
+											onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_type') }
+										}
+									}, {
+										field: 'account_number', title: '口座番号', width: '20px',
+										input: {
+											onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_number') }
+										}
+								
+									}, {
+										field: 'account_name', title: '口座名義', width: '30px',
+										input: {
+											onChange: (data, rowindex) => { this.changePayee(data, rowindex, 'account_name') }
+										}
+									}]}
+									add={() => this.addList('payee',{ 'bank_info': '0','branch_office':'', 'account_type': '0', 'account_number': '','account_name': '', })}
+									remove={(data, index) => this.removeList('payee',index)}
+									noneScroll
+									fixed
+								/>	
+							</FormGroup>	
+						}
 					</Panel>
 				</PanelGroup>		
 			</Form>
