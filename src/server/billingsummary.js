@@ -38,7 +38,7 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 	const customer_code = customer.feed.entry.map((entry) => { return entry.customer.customer_code })
 
 	const result = {
-		'billing_summary': { 'content': [] }
+		'billing_summary': { 'record': [] }
 	}
 	customer_code.map((customer_code) => {
 
@@ -65,7 +65,7 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 					if (entry.length > 0) {
 						const subtotal = entry.length * parseInt(entry[0].billing_data.delivery_charge)
 						const record = { 'size' : size,'zone_name':zone,'quantity':entry.length,'delivery_charge':entry[0].billing_data.delivery_charge,'subtotal':subtotal}
-						result.billing_summary.content.push(record)						
+						result.billing_summary.record.push(record)						
 					} else {
 						let delivery_area = null
 						if (delivery_company === 'ECO') {
@@ -73,7 +73,7 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 						}
 						const charge_by_zone = getChargeBySizeAndZone(customer_code,billing_data.feed.entry[0].billing_data.shipment_service_code, size, zone, delivery_area)
 						const record = { 'size' : size,'zone_name':zone,'quantity':0,'delivery_charge':charge_by_zone[0].price,'subtotal':0}
-						result.billing_summary.content.push(record)												
+						result.billing_summary.record.push(record)												
 					}
 				})
 			})
