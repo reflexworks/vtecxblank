@@ -14,7 +14,8 @@ import {
 	CommonInputText,
 	CommonFilterBox,
 	CommonTable,
-	CommonComment
+	CommonComment,
+	CommonValidate
 } from './common'
 
 import {
@@ -307,7 +308,7 @@ export default class ShipmentServiceForm extends React.Component {
 	checkValue(_key, _value) {
 		if (this.props.onCheck) {
 			if (_key === 'code') {
-				const isHankaku = (_value.match(/^[0-9a-zA-Z-_]+$/)) ? true : false
+				const isHankaku = CommonValidate().hankaku(_value)
 				this.props.onCheck(isHankaku)
 			}
 		}
