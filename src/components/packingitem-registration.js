@@ -31,6 +31,7 @@ export default class PackingItemRegistration extends React.Component {
 		this.entry = {
 			packing_item: {},
 		}
+		this.disabled = true
 	}
  
 	/**
@@ -39,6 +40,15 @@ export default class PackingItemRegistration extends React.Component {
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
 		location.href = '#/PackingItemList'
+	}
+
+	/**
+	 * 入力チェック
+	 * @param {*} _data 
+	 */
+	onCheck(_data) {
+		this.disabled = !_data
+		this.forceUpdate()
 	}
 
 	render() {
@@ -54,7 +64,7 @@ export default class PackingItemRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
@@ -63,7 +73,7 @@ export default class PackingItemRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PackingItemForm name="mainForm" entry={this.entry} />
+						<PackingItemForm name="mainForm" entry={this.entry} onCheck={(data)=>this.onCheck(data)} isCreate={true} />
 					</Col>
 				</Row>
 				<Row>
@@ -71,7 +81,7 @@ export default class PackingItemRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>

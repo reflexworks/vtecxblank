@@ -306,6 +306,7 @@ export default class InternalWorkForm extends React.Component {
 						obj = {
 							item_code: internal_work.packing_item_code,
 							item_name: internal_work.packing_item_name,
+							special_unit_price: internal_work.special_unit_price,
 							quantity: internal_work.quantity ? internal_work.quantity : '',
 							staff_name: internal_work.staff_name,
 							approval_status: internal_work.approval_status,
@@ -529,18 +530,22 @@ export default class InternalWorkForm extends React.Component {
 			return array
 		}
 		const setPackingWorks = (_key)=>{
+			this.packingCash = []
 			let array = []
 			if (_packing_item) {
 				_packing_item.map((_value) => {
 					let obj = {}
 					obj.item_code = _value.item_code
 					obj.item_name = _value.item_name
+					obj.special_unit_price = _value.special_unit_price
 					obj.internal_work = {
 						work_type: '3',
 						packing_item_code: _value.item_code,
-						packing_item_name: _value.item_name
+						packing_item_name: _value.item_name,
+						special_unit_price: _value.special_unit_price
 					}
 					array.push(setOptions(obj[_key], obj[_key], obj))
+					this.packingCash[_value.item_code] = _value
 				})
 			}
 			return array
@@ -733,7 +738,8 @@ export default class InternalWorkForm extends React.Component {
 			obj.feed.entry[0].internal_work = {
 				work_type: '3',
 				packing_item_code: iw.packing_item_code,
-				packing_item_name: iw.packing_item_name
+				packing_item_name: iw.packing_item_name,
+				special_unit_price: iw.special_unit_price
 			}
 		}
 		axios({
@@ -816,6 +822,9 @@ export default class InternalWorkForm extends React.Component {
 				if (_entry.internal_work.remarks) {
 					this[_key][_index].remarks = _entry.internal_work.remarks
 				}
+				if (_entry.internal_work.special_unit_price) {
+					this[_key][_index].special_unit_price = _entry.internal_work.special_unit_price
+				}
 				this[_key][_index].quantity = _entry.internal_work.quantity
 				this[_key][_index].approval_status = _entry.internal_work.approval_status
 				this[_key][_index].staff_name = _entry.internal_work.staff_name
@@ -870,6 +879,11 @@ export default class InternalWorkForm extends React.Component {
 				if (!obj.internal_work.remarks && cashData.remarks) {
 					obj.internal_work.remarks = cashData.remarks
 				}
+			} else if (obj.internal_work.work_type === '3') {
+				const cashData = this.packingCash[obj.internal_work.packing_item_code]
+				if (!obj.internal_work.special_unit_price && cashData.special_unit_price) {
+					obj.internal_work.special_unit_price = cashData.special_unit_price
+				}
 			}
 			if (obj.internal_work.work_type !== '4' && obj.internal_work.work_type !== '5') {
 				if (this.isToDay) {
@@ -894,6 +908,11 @@ export default class InternalWorkForm extends React.Component {
 				}
 				if (!entry.internal_work.remarks && cashData.remarks) {
 					entry.internal_work.remarks = cashData.remarks
+				}
+			} else if (entry.internal_work.work_type === '3') {
+				const cashData = this.packingCash[entry.internal_work.packing_item_code]
+				if (!entry.internal_work.special_unit_price && cashData.special_unit_price) {
+					entry.internal_work.special_unit_price = cashData.special_unit_price
 				}
 			}
 			if (entry.internal_work.work_type !== '4' && entry.internal_work.work_type !== '5') {
@@ -1270,7 +1289,7 @@ export default class InternalWorkForm extends React.Component {
     						name="deliveryWorks"
     						data={this.deliveryWorks}
     						header={[{
-    							field: 'name',title: '配送業者', width: '400px'
+    							field: 'name',title: '配送業者', width: '490px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
 								input: !this.isEdit ? false : {
@@ -1307,7 +1326,7 @@ export default class InternalWorkForm extends React.Component {
     						name="pickupWorks"
     						data={this.pickupWorks}
     						header={[{
-    							field: 'name',title: '配送業者', width: '400px'
+    							field: 'name',title: '配送業者', width: '490px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
 								input: !this.isEdit ? false : {
@@ -1346,7 +1365,9 @@ export default class InternalWorkForm extends React.Component {
     						header={[{
 								field: 'item_code',title: '品番', width: '100px'
 							}, {
-								field: 'item_name', title: '商品名称', width: '300px'
+								field: 'item_name', title: '商品名称', width: '250px'
+							}, {
+								field: 'special_unit_price', title: '特別販売価格・特別', width: '120px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
 								input: !this.isEdit ? false : {
