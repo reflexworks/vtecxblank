@@ -218,7 +218,7 @@ gulp.task('upload:entry', function (done) {
 
 gulp.task('upload:data', function (done) {
 	recursive('data', [], function (err, files) {
-		files.map((file) => sendfile(file, ''))		
+		files.map((file) => sendfile(file, ''))				
 		done()
 	})
 })
@@ -233,6 +233,24 @@ gulp.task('upload:template', function (done) {
 
 gulp.task('upload:folderacls', function (done) {
 	sendfile('setup/_settings/folderacls.xml', '',done)
+})
+
+gulp.task('upload:counts', function (done) {
+	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	var options = {
+		method: 'GET',
+		url: path+'/s/adjustallocids',
+		headers: {
+			'Content-Type': 'text/html',
+			'X-Requested-With': 'XMLHttpRequest',
+			'Authorization': 'Token ' + argv.k,
+		}
+	}
+	request(options, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			console.log(body)
+		} 
+	})
 })
 
 
