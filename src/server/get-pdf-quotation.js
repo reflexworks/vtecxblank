@@ -30,6 +30,57 @@ const getQuotation = () => {
 
 let entry = getQuotation()
 
+const getBilltoAndBillfrom = () => {
+	let stamp = ''
+	
+	if (entry.billfrom.billfrom_name.match('コネクトロジスティクス')) {
+		stamp = '/img/connectlogi.png'
+	} else if (entry.billfrom.billfrom_name.match('コネクトコーポレーション')) {
+		stamp = '/img/connectcorp.png'
+	} else if (entry.billfrom.billfrom_name.match('CONNECT・EC')) {
+		stamp = '/img/connectec.png'
+	} else if (entry.billfrom.billfrom_name.match('ネクストジェネレーション')) {
+		stamp = '/img/nextgen.png'
+	} else if (entry.billfrom.billfrom_name.match('コネクトエクスプレス')) {
+		stamp = '/img/express.png'		
+	}
+
+	return (
+		<tr>
+			<td style={pdfstyles.spaceLeft}>
+			</td>
+
+			<td colspan="5" style={pdfstyles.fontsize10UL}>
+				<div>{entry.billto.billto_name}　御中</div>
+			</td>
+
+			<td colspan="3" style={pdfstyles.fontsize10R}>
+				<div>{entry.billfrom.billfrom_name}</div>
+			
+				<div>
+					<span>〒</span>
+					<span>{entry.contact_information.zip_code}</span>
+					<span>　</span>
+					<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
+					<br />
+					<span>TEL : </span>
+					<span>{entry.contact_information.tel}</span>
+					<div>
+						{stamp && <img src={stamp} width="65.0" height="65.0" />}
+						{ entry.creator && <span>担当者:{entry.creator}</span> }
+								
+					</div>	
+					<br/>
+				</div>
+			</td>
+					
+			<td style={pdfstyles.spaceRight}>
+			</td>
+		</tr>
+		
+	)
+}
+
 const getBasicCondition = () => {
 	return(
 		entry.basic_condition.map((basic_condition) => {
@@ -44,7 +95,7 @@ const getBasicCondition = () => {
 						//length > 1 && !(length % 2) conditionの数が３つ以上で偶数
 						//length===2 conditionが２つ
 						//else conditionが１つだけ
-
+						
 						if (length > 2 && (length % 2)) {
 							switch (idx) {
 							case 0:
@@ -135,8 +186,7 @@ const getBasicCondition = () => {
 						} else if (length > 2 && !(length % 2)) {
 							switch (idx) {
 							case 0:
-								return (
-													
+								return (		
 									<tr key={idx} >
 										<td style={pdfstyles.spaceLeft}>
 										</td>
@@ -781,36 +831,10 @@ const quotationPage = () => {
 				</tr>
 
 				{/*請求先名 請求元*/}
-				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
-
-					<td colspan="5" style={pdfstyles.fontsize10UL}>
-						<div>{entry.billto.billto_name}　御中</div>
-					</td>
-
-					<td colspan="3" style={pdfstyles.fontsize10R}>
-						<div>{entry.billfrom.billfrom_name}</div>
-			
-						<div>
-							<span>〒</span>
-							<span>{entry.contact_information.zip_code}</span>
-							<span>　</span>
-							<span>{entry.contact_information.prefecture}{entry.contact_information.address1}{entry.contact_information.address2}</span>
-							<br />
-							<span>TEL : </span>
-							<span>{entry.contact_information.tel}</span>
-						</div>
-						<div>
-							<div>
-								<img src="/img/connectlogi.png" width="65.0" height="65.0" />
-							</div>
-						</div>						
-					</td>
-					
-					<td style={pdfstyles.spaceRight}>
-					</td>
-				</tr>
+				{
+					getBilltoAndBillfrom() 
+				}
+				
 
 				{/*御見積申し上げます*/}
 				<tr>
