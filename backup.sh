@@ -1,7 +1,7 @@
  #!/bin/bash
 
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=customer&x" -o data/customer.xml
-curl -H "Authorization: Token "$1 "$2/s/getfeedofdeliverycharge?x" >> data/customer.xml
+curl -H "Authorization: Token "$1 "$2/s/getfeedofdeliverycharge?x" -o data/deliverycharge.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=billfrom&x" -o data/billfrom.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=billto&x" -o data/billto.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=deliverycharge_template&x" -o data/deliverycharge_template.xml
