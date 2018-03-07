@@ -209,7 +209,6 @@ export default class InvoiceForm extends React.Component {
 	getService() {
 		this.setState({ isDisabled: true })
 
-		//item_details
 		axios({
 			url: '/s/invoice',
 			method: 'get',
@@ -354,43 +353,43 @@ export default class InvoiceForm extends React.Component {
 		this.ebody = this.getBody()
 		this.etr = this.getEtrTotal()
 
-		this.entry.invoice.consumption_tax = '39022'
-		this.entry.invoice.total_amount = '1025142'
+		this.entry.invoice.consumption_tax = 39022
+		this.entry.invoice.total_amount = 1025142
 		this.ecoJP = [{
 			day: '12/1',
 			work: '10',
 			invoices: '10',
-			amount: '¥3,900',
+			amount: '3900',
 		}, {
 			day: '12/2',
 			work: '60',
 			invoices: '60',
-			amount: '¥23,400',
+			amount: '23400',
 		}, {
 			day: '12/3',
 			work: '7',
 			invoices: '7',
-			amount: '¥2,730',
+			amount: '2730',
 		}, {
 			day: '12/4',
 			work: '25',
 			invoices: '25',
-			amount: '¥9,750',
+			amount: '9750',
 		}, {
 			day: '12/5',
 			work: '14',
 			invoices: '14',
-			amount: '¥5,460',			
+			amount: '5460',			
 		}, {
 			day: '12/6',
 			work: '45',
 			invoices: '45',
-			amount: '¥17,750',
+			amount: '17750',
 		}, {
 			day: '合計',
 			work: '161',
 			invoices: '161',
-			amount: '¥62,790',
+			amount: '62790',
 			is_total:true,
 		}]
 		
@@ -398,37 +397,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '4',
 			invoices: '4',
-			amount: '¥2,000',
+			amount: '2,000',
 		}, {
 			day: '12/2',
 			work: '6',
 			invoices: '6',
-			amount: '¥3,000',
+			amount: '3000',
 		}, {
 			day: '12/3',
 			work: '10',
 			invoices: '10',
-			amount: '¥5,000',
+			amount: '5000',
 		}, {
 			day: '12/4',
 			work: '30',
 			invoices: '30',
-			amount: '¥15,000',
+			amount: '15000',
 		}, {
 			day: '12/5',
 			work: '25',
 			invoices: '25',
-			amount: '¥12,500',
+			amount: '12500',
 		}, {
 			day: '12/6',
 			work: '22',
 			invoices: '22',
-			amount: '¥11,000',
+			amount: '11000',
 		}, {
 			day: '合計',
 			work: '97',
 			invoices: '97',
-			amount: '¥48,500',
+			amount: '48500',
 			is_total:true,
 		}]
 		
@@ -436,37 +435,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '3',
 			invoices: '3',
-			amount: '¥1,200',
+			amount: '1200',
 		}, {
 			day: '12/2',
 			work: '4',
 			invoices: '4',
-			amount: '¥1,600',
+			amount: '1600',
 		}, {
 			day: '12/3',
 			work: '1',
 			invoices: '1',
-			amount: '¥400',
+			amount: '400',
 		}, {
 			day: '12/4',
 			work: '8',
 			invoices: '8',
-			amount: '¥3,200',
+			amount: '3200',
 		}, {
 			day: '12/5',
 			work: '10',
 			invoices: '10',
-			amount: '¥4,000',
+			amount: '4000',
 		}, {
 			day: '12/6',
 			work: '6',
 			invoices: '6',
-			amount: '¥2,400',
+			amount: '2400',
 		}, {
 			day: '合計',
 			work: '32',
 			invoices: '32',
-			amount: '¥12,800',
+			amount: '12800',
 			is_total:true,
 		}]
 		
@@ -474,39 +473,39 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '41',
 			invoices: '40',
-			amount: '¥40,000',
+			amount: '40000',
 			is_error: true,
 		}, {
 			day: '12/2',
 			work: '5',
 			invoices: '4',
-			amount: '¥4,000',
+			amount: '4000',
 			is_error: true,
 		}, {
 			day: '12/3',
 			work: '36',
 			invoices: '36',
-			amount: '¥36,000',
+			amount: '36000',
 		}, {
 			day: '12/4',
 			work: '8',
 			invoices: '8',
-			amount: '¥8,000',
+			amount: '8000',
 		}, {
 			day: '12/5',
 			work: '10',
 			invoices: '10',
-			amount: '¥10,000',
+			amount: '10000',
 		}, {
 			day: '12/6',
 			work: '50',
 			invoices: '50',
-			amount: '¥50,000',
+			amount: '50000',
 		}, {
 			day: '合計',
 			work: '150',
 			invoices: '148',
-			amount: '¥148,000',
+			amount: '148000',
 			is_total:true,
 		}]
 		
@@ -514,37 +513,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '40',
 			invoices: '40',
-			amount: '¥42,800',
+			amount: '42800',
 		}, {
 			day: '12/2',
 			work: '10',
 			invoices: '10',
-			amount: '¥10,700',
+			amount: '10700',
 		}, {
 			day: '12/3',
 			work: '21',
 			invoices: '21',
-			amount: '¥22,470',
+			amount: '22470',
 		}, {
 			day: '12/4',
 			work: '25',
 			invoices: '25',
-			amount: '¥26,750',
+			amount: '26750',
 		}, {
 			day: '12/5',
 			work: '35',
 			invoices: '35',
-			amount: '¥37,450',			
+			amount: '37450',			
 		}, {
 			day: '12/6',
 			work: '13',
 			invoices: '13',
-			amount: '¥13,910',
+			amount: '13910',
 		}, {
 			day: '合計',
 			work: '144',
 			invoices: '144',
-			amount: '¥154,080',
+			amount: '154080',
 			is_total:true,
 		}]
 			
@@ -552,37 +551,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '8',
 			invoices: '8',
-			amount: '¥1,200',
+			amount: '1200',
 		}, {
 			day: '12/2',
 			work: '10',
 			invoices: '10',
-			amount: '¥1,500',
+			amount: '1500',
 		}, {
 			day: '12/3',
 			work: '5',
 			invoices: '5',
-			amount: '¥750',
+			amount: '750',
 		}, {
 			day: '12/4',
 			work: '30',
 			invoices: '30',
-			amount: '¥4,500',
+			amount: '4500',
 		}, {
 			day: '12/5',
 			work: '28',
 			invoices: '28',
-			amount: '¥4,200',			
+			amount: '4200',			
 		}, {
 			day: '12/6',
 			work: '17',
 			invoices: '17',
-			amount: '¥2,550',
+			amount: '2550',
 		}, {
 			day: '合計',
 			work: '98',
 			invoices: '98',
-			amount: '¥14,700',
+			amount: '14700',
 			is_total:true,
 		}]
 
@@ -590,37 +589,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '30',
 			invoices: '30',
-			amount: '¥9,000',
+			amount: '9000',
 		}, {
 			day: '12/2',
 			work: '10',
 			invoices: '10',
-			amount: '¥3,000',
+			amount: '3000',
 		}, {
 			day: '12/3',
 			work: '11',
 			invoices: '11',
-			amount: '¥3,300',
+			amount: '3300',
 		}, {
 			day: '12/4',
 			work: '50',
 			invoices: '50',
-			amount: '¥15,000',
+			amount: '15000',
 		}, {
 			day: '12/5',
 			work: '35',
 			invoices: '35',
-			amount: '¥10,500',			
+			amount: '10500',			
 		}, {
 			day: '12/6',
 			work: '44',
 			invoices: '44',
-			amount: '¥13.500',
+			amount: '13500',
 		}, {
 			day: '合計',
 			work: '180',
 			invoices: '180',
-			amount: '¥54,000',
+			amount: '54000',
 			is_total:true,
 		}]
 
@@ -628,37 +627,37 @@ export default class InvoiceForm extends React.Component {
 			day: '12/1',
 			work: '30',
 			invoices: '30',
-			amount: '¥9,000',
+			amount: '9000',
 		}, {
 			day: '12/2',
 			work: '10',
 			invoices: '10',
-			amount: '¥3,000',
+			amount: '3000',
 		}, {
 			day: '12/3',
 			work: '11',
 			invoices: '11',
-			amount: '¥3,300',
+			amount: '3300',
 		}, {
 			day: '12/4',
 			work: '50',
 			invoices: '50',
-			amount: '¥15,000',
+			amount: '15000',
 		}, {
 			day: '12/5',
 			work: '35',
 			invoices: '35',
-			amount: '¥10,500',			
+			amount: '10500',			
 		}, {
 			day: '12/6',
 			work: '44',
 			invoices: '44',
-			amount: '¥13.500',
+			amount: '13500',
 		}, {
 			day: '合計',
 			work: '180',
 			invoices: '180',
-			amount: '¥54,000',
+			amount: '54000',
 			is_total:true,
 		}]
 		
@@ -714,16 +713,36 @@ export default class InvoiceForm extends React.Component {
 					}
 				})
 
+				//全てのbillfrom.payeeを見て、支店名と口座名義が無かったら登録や更新は行わずに追加。
+				this.billfromList.map((billfromList) => {
+					billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
+						if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+							let newPayee = {
+								'bank_info': oldPayee.bank_info,
+								'account_type': oldPayee.account_type,
+								'account_number': oldPayee.account_number,
+								'branch_office': '',
+								'account_name': '',
+							}
+							return(newPayee)
+						} else {
+							return(oldPayee)
+						}
+					})	
+				})
+				
 				if (_billfrom) this.entry.billfrom = _billfrom
 				if (this.entry.billfrom.billfrom_code) {
 					for (let i = 0, ii = this.billfromList.length; i < ii; ++i) {
 						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
 							this.billfrom = this.billfromList[i].data
-							this.entry.contact_information = this.billfromList[i].data.contact_information
-							if(this.billfromList[i].data.contact_information.prefecture || this.billfromList[i].data.contact_information.address1 || this.billfromList[i].data.contact_information.address2){
-								this.address = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
-							}
-							
+							this.entry.billfrom = this.billfrom.billfrom
+							this.entry.contact_information = this.billfrom.contact_information
+							if (this.entry.contact_information.prefecture ||
+								this.entry.contact_information.address1 ||
+								this.entry.contact_information.address2) {
+								this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
+							}							
 							break
 						}
 					}
@@ -735,6 +754,7 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})   
 	}
+
 	/**
 	 * 請求元リストの変更
 	 */
@@ -744,7 +764,6 @@ export default class InvoiceForm extends React.Component {
 			this.entry.contact_information = _data.data.contact_information
 			this.billfrom = _data.data
 			this.address = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
-			
 		} else {
 			this.entry.billfrom = {}
 			this.entry.contact_information = {}
@@ -812,36 +831,37 @@ export default class InvoiceForm extends React.Component {
 	 */
 	setInternalWorkYearMonthList() {
 		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/internal_work?f&quotation.quotation_code='+this.entry.invoice.quotation_code,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-			if (response.status === 204) {
-				this.setState({ isDisabled: false })
-				alert('庫内作業データがありません')
-			}else if (response.status !== 204) {
-				this.master.internalWorkYearMonthList = response.data.feed.entry
+		if (this.entry.invoice.quotation_code) {
+			axios({
+				url: '/d/internal_work?f&quotation.quotation_code=' + this.entry.invoice.quotation_code,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+				if (response.status === 204) {
+					this.setState({ isDisabled: false })
+					alert('庫内作業データがありません')
+				} else if (response.status !== 204) {
+					this.master.internalWorkYearMonthList = response.data.feed.entry
 				
-				//重複したものを削除する
-				this.internalWorkYearMonthList = this.master.internalWorkYearMonthList.map((obj) => {
-					return obj.internal_work.working_yearmonth
-				}).filter((x, i, self) => {
-					return self.indexOf(x) === i
-				}).map((obj) => {
-					return {
-						label: obj,
-						value: obj,
-					}
-				})
-				this.forceUpdate()
-			}
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
+					//重複したものを削除する
+					this.internalWorkYearMonthList = this.master.internalWorkYearMonthList.map((obj) => {
+						return obj.internal_work.working_yearmonth
+					}).filter((x, i, self) => {
+						return self.indexOf(x) === i
+					}).map((obj) => {
+						return {
+							label: obj,
+							value: obj,
+						}
+					})
+					this.forceUpdate()
+				}
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}	
 	}
 
 	/**
@@ -937,6 +957,11 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.entry[list] = array
 
+		this.forceUpdate()
+	}
+
+	changeInvoice(_data, _index) {
+		this.entry.invoice[_index] = _data
 		this.forceUpdate()
 	}
 	/**
@@ -1066,14 +1091,15 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'quantity',title: '数量', width: '50px',
 									}, {
-										field: 'unit',title: '単位', width: '50px'
+										field: 'unit',title: '単位', width: '50px',
 									}, {
-										field: 'unit_price',title: '単価', width: '100px'
+										field: 'unit_price',title: '単価', width: '100px',
 									}, {
-										field: 'remarks',title: '備考', width: '500px'	
+										field: 'remarks',title: '備考', width: '500px',	
 									}]}	
 								/>
 
+								
 								<br />
 								<br />
 								<CommonTable	
@@ -1088,6 +1114,7 @@ export default class InvoiceForm extends React.Component {
 										field: 'quantity',title: '数量', width: '30px',
 										input: {
 											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')}
+											
 										}
 									}, {
 										field: 'unit',title: '単位', width: '30px',
@@ -1097,8 +1124,9 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
+											price:true,
+										},
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
@@ -1159,8 +1187,10 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')},
+											price:true,
+										},
+
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
@@ -1179,7 +1209,7 @@ export default class InvoiceForm extends React.Component {
 									noneScroll
 								/>
 							</Panel>
-
+							
 							<Panel collapsible header="資材情報" eventKey="3" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
@@ -1220,8 +1250,9 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')},
+											price:true,
+										},
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
@@ -1280,8 +1311,9 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_shipping',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_shipping',data,rowindex,'unit_price')},
+											price:true,
+										},
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
@@ -1311,7 +1343,7 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit',title: '単位', width: '50px'
 									}, {
-										field: 'unit_price',title: '単価', width: '100px'
+										field: 'unit_price',title: '単価', width: '100px',
 									}, {
 										field: 'remarks',title: '備考', width: '500px'	
 									}]}
@@ -1340,13 +1372,14 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_collecting',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_collecting',data,rowindex,'unit_price')},
+											price:true,
+										},
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
 											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_collecting',data,rowindex,'is_taxation')}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('delivery_charge_collecting',data,rowindex,'is_taxation')},
 											
 										}
 									}, {
@@ -1383,8 +1416,9 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'unit_price',title: '単価', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')}
-										}
+											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')},
+											price:true,
+										},
 									}, {
 										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
 										filter: {
