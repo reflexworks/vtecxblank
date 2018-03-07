@@ -2200,6 +2200,7 @@ export class CommonModal extends React.Component {
 											url={this.props.addAxiosBtn.url}
 											callback={(data) => this.props.addAxiosBtn.callback(data)}
 											targetFrom={this.props.fromName}
+											disabled={this.props.addAxiosBtn.disabled}
 										/>
 									}
 									{ this.props.editBtn && 

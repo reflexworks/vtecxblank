@@ -153,6 +153,17 @@ export class PackingItemModal extends React.Component {
 		})
 		this.url = '/d/packing_item'
 		this.formName = 'PackingItemModal'
+
+		this.disabled = true
+	}
+
+	/**
+	 * 入力チェック
+	 * @param {*} _data 
+	 */
+	onCheck(_data) {
+		this.disabled = !_data
+		this.forceUpdate()
 	}
 
 	/**
@@ -184,7 +195,8 @@ export class PackingItemModal extends React.Component {
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addAxiosBtn={this.state.type === 'add' ? {
 					url: this.url,
-					callback: (data) => this.add(data)
+					callback: (data) => this.add(data),
+					disabled: this.disabled
 				} : false}
 				fromName={this.formName}
 				selectBtn={this.state.type === 'edit' ? (obj) => this.select(obj) : false}
@@ -192,7 +204,7 @@ export class PackingItemModal extends React.Component {
 				height="500px"
 			>
 				{ this.state.type === 'add' &&
-					<PackingItemForm name={this.formName} entry={this.state.data} />	
+					<PackingItemForm name={this.formName} entry={this.state.data} isCreate={true} onCheck={(data)=>this.onCheck(data)} />	
 				}	
 				{ this.state.type === 'edit' &&
 					<PackingItemList name={this.formName} entry={this.state.data} selectTable />
