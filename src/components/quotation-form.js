@@ -162,15 +162,36 @@ export default class QuotationForm extends React.Component {
 					}
 				})
 
+				//全てのbillfrom.payeeを見て、支店名と口座名義が無かったら登録や更新は行わずに追加。
+				this.billfromList.map((billfromList) => {
+					billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
+						if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+							let newPayee = {
+								'bank_info': oldPayee.bank_info,
+								'account_type': oldPayee.account_type,
+								'account_number': oldPayee.account_number,
+								'branch_office': '',
+								'account_name': '' ,
+							}
+							return(newPayee)
+						} else {
+							return(oldPayee)
+						}
+					})	
+				})
+				
 				if (_billfrom) this.entry.billfrom = _billfrom
 				if (this.entry.billfrom.billfrom_code) {
 					for (let i = 0, ii = this.billfromList.length; i < ii; ++i) {
 						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
 							this.billfrom = this.billfromList[i].data
-							this.entry.contact_information = this.billfromList[i].data.contact_information
-							if(this.billfromList[i].data.contact_information.prefecture || this.billfromList[i].data.contact_information.address1 ||this.billfromList[i].data.contact_information.address2){
-								this.address = this.billfromList[i].data.contact_information.prefecture + this.billfromList[i].data.contact_information.address1 + this.billfromList[i].data.contact_information.address2
-							}
+							this.entry.billfrom = this.billfrom.billfrom
+							this.entry.contact_information = this.billfrom.contact_information
+							if (this.entry.contact_information.prefecture ||
+								this.entry.contact_information.address1 ||
+								this.entry.contact_information.address2) {
+								this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
+							}							
 							break
 						}
 					}
@@ -198,7 +219,6 @@ export default class QuotationForm extends React.Component {
 			this.address=''
 		}
 		this.forceUpdate()
-		
 	}
 	setBillfromData(_data, _modal) {
 		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
@@ -208,7 +228,6 @@ export default class QuotationForm extends React.Component {
 			this.setState({ showBillfromEditModal: false })
 		}
 	}
-
 
 	/**
 	 * 資材テンプレート取得処理
@@ -810,23 +829,26 @@ export default class QuotationForm extends React.Component {
 										name="billfrom.payee"
 										data={this.entry.billfrom.payee}
 										header={[{
-											field: 'bank_info', title: '口座名', width: '30px',
+											field: 'bank_info', title: '銀行名', width: '30px',
 											convert: {
 												1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 												6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 											}
-											
+										}, {
+											field: 'branch_office', title: '支店名', width: '30px',
 										}, {
 											field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-											
 										}, {
 											field: 'account_number', title: '口座番号', width: '30px',
-											
+										}, {
+											field: 'account_name', title: '口座名義', width: '30px',
 										}]}
+										noneScroll
 										fixed
 									/>
 								</div>
 							}
+
 
 							{!this.entry.billfrom.billfrom_code &&
 								<FormGroup className="hide"	>
@@ -882,5 +904,4 @@ export default class QuotationForm extends React.Component {
 			</div>
 		)
 	}
-
 }

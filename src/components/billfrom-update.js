@@ -19,7 +19,7 @@ import {
 	CommonNetworkMessage,
 	CommonUpdateBtn,
 	CommonDeleteBtn,
-	CommonBackBtn
+	CommonBackBtn,
 } from './common'
 
 export default class BillfromUpdate extends React.Component {
@@ -64,7 +64,7 @@ export default class BillfromUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				
+				this.entry.billfrom.payee = this.entry.billfrom.payee || []
 				this.forceUpdate()
 			}
 
