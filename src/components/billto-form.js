@@ -18,6 +18,7 @@ import {
 	CommonRadioBtn,
 } from './common'
 
+import moment from 'moment'
 export default class BilltoForm extends React.Component {
 
 	constructor(props: Props) {
@@ -37,7 +38,7 @@ export default class BilltoForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		//this.entry.billto.payment_date = this.entry.billto.payment_date ? moment(Date.parse(this.entry.billto.payment_date)) : moment()
+		this.entry.billto.payment_date = this.entry.billto.payment_date ? moment(Date.parse(this.entry.billto.payment_date)) : moment()
 		console.log(this.entry)
 		this.forceUpdate()
 	}
