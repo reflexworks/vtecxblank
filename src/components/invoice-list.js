@@ -255,9 +255,9 @@ export default class InvoiceList extends React.Component {
 							edit={(data)=>this.onSelect(data)}
 							remove={(data) => this.onDelete(data)}
 							header={[{
-								field: 'invoice.invoice_code',title: '請求番号', width: '100px'
+								field: 'invoice.invoice_code', title: '請求番号', width: '100px'
 							}, {
-								field: 'invoice.invoice_yearmonth',title: '請求年月', width: '200px'
+								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '200px'
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
@@ -265,10 +265,11 @@ export default class InvoiceList extends React.Component {
 							}, {
 								field: 'invoice.consumption_tax', title: '消費税', width: '200px'
 							}, {
-								field: 'invoice.issue_status', title: '発行ステータス', width: '150px',convert: {0:'未発行',1:'発行済'}
+								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {
-								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px',convert: {0:'未入金',1:'入金済'}
-					
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
+							}, {
+								field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}							
 							}]}
 						>
 							

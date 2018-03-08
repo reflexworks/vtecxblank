@@ -30,6 +30,8 @@ import {
 	CommonMonthlySelect,
 } from './common'
 
+import moment from 'moment'
+
 export default class InvoiceForm extends React.Component {
 
 	constructor(props: Props) {
@@ -46,6 +48,7 @@ export default class InvoiceForm extends React.Component {
 
 		this.entry = this.props.entry
 		this.entry.invoice = this.entry.invoice || {}
+		this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
 		this.entry.billto = this.entry.billto || {}
 		this.entry.billfrom = this.entry.billfrom || {}
 		this.entry.billfrom.payee = this.entry.billfrom.payee || []
@@ -58,8 +61,6 @@ export default class InvoiceForm extends React.Component {
 			billfromList: [],
 			internalWorkYearMonthList: [],
 		}
-
-		this.address = ''
 
 		this.taxationList=[{
 			label: '税込',
@@ -114,7 +115,6 @@ export default class InvoiceForm extends React.Component {
 
 		this.zoneArray = ['南九州', '北九州', '四国', '中国', '関西', '北陸', '東海', '信越', '関東', '南東北', '北東北', '北海道', '沖縄']
 		this.deliverySize = ['60', '80', '100', '120', '140', '160']
-
 	}
 	
 	componentWillMount() {
@@ -128,11 +128,9 @@ export default class InvoiceForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
 		if(this.entry.billfrom.payee){
 			this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
-				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
-				
+				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {	
 					let newPayee = {
 						'bank_info': oldPayee.bank_info,
 						'account_type': oldPayee.account_type,
@@ -715,20 +713,22 @@ export default class InvoiceForm extends React.Component {
 
 				//全てのbillfrom.payeeを見て、支店名と口座名義が無かったら登録や更新は行わずに追加。
 				this.billfromList.map((billfromList) => {
-					billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
-						if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
-							let newPayee = {
-								'bank_info': oldPayee.bank_info,
-								'account_type': oldPayee.account_type,
-								'account_number': oldPayee.account_number,
-								'branch_office': '',
-								'account_name': '',
+					if (billfromList.data.billfrom.payee) {
+						billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
+							if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+								let newPayee = {
+									'bank_info': oldPayee.bank_info,
+									'account_type': oldPayee.account_type,
+									'account_number': oldPayee.account_number,
+									'branch_office': '',
+									'account_name': '',
+								}
+								return (newPayee)
+							} else {
+								return (oldPayee)
 							}
-							return(newPayee)
-						} else {
-							return(oldPayee)
-						}
-					})	
+						})
+					}	
 				})
 				
 				if (_billfrom) this.entry.billfrom = _billfrom
@@ -737,12 +737,7 @@ export default class InvoiceForm extends React.Component {
 						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
 							this.billfrom = this.billfromList[i].data
 							this.entry.billfrom = this.billfrom.billfrom
-							this.entry.contact_information = this.billfrom.contact_information
-							if (this.entry.contact_information.prefecture ||
-								this.entry.contact_information.address1 ||
-								this.entry.contact_information.address2) {
-								this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
-							}							
+							this.entry.contact_information = this.billfrom.contact_information							
 							break
 						}
 					}
@@ -754,7 +749,6 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})   
 	}
-
 	/**
 	 * 請求元リストの変更
 	 */
@@ -763,12 +757,10 @@ export default class InvoiceForm extends React.Component {
 			this.entry.billfrom = _data.data.billfrom
 			this.entry.contact_information = _data.data.contact_information
 			this.billfrom = _data.data
-			this.address = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
 		} else {
 			this.entry.billfrom = {}
 			this.entry.contact_information = {}
 			this.billfrom = {}
-			this.address=''
 		}
 		this.forceUpdate()
 		
@@ -959,26 +951,28 @@ export default class InvoiceForm extends React.Component {
 
 		this.forceUpdate()
 	}
-
-	changeInvoice(_data, _index) {
-		this.entry.invoice[_index] = _data
-		this.forceUpdate()
-	}
 	/**
-	 *  備考タブの内容変更
+	 *  備考リストの内容変更
 	 */
 	changeRemarks(_data, _rowindex) {
 		this.entry.remarks[_rowindex].content = _data
 		this.forceUpdate()
 	}
-	/**
-	 * 	入金ステータス変更 
-	 */
-	changeDepositStatus(_data) {
-		this.entry.invoice.deposit_status = _data
+
+	changeInvoice(_data, _index) {
+		if (_index === 'invoice_yearmonth') {
+			this.entry.invoice[_index] = _data.value
+		} else {
+			this.entry.invoice[_index] = _data
+		}	
 		this.forceUpdate()
 	}
 
+	billingDetailsCSVDownLoad(_data) {
+		let searchYearmonth = this.entry.invoice.invoice_yearmonth.replace(/\//,'')
+		let delivery = _data.delivery === 'ヤマト運輸' ? 'YH' : 'ECO'
+		location.href = '/s/downloadbillingcsv?shipping_yearmonth=' + searchYearmonth + '&billto_code=' + this.entry.billto.billto_code +'&delivery_company=' + delivery	
+	}
 	render() {
 
 		return (
@@ -1004,11 +998,12 @@ export default class InvoiceForm extends React.Component {
 						readonly="true"
 					/>
 				}
-
+				
 				<CommonMonthlySelect
 					controlLabel="請求年月"  
 					name="invoice.invoice_yearmonth"
 					value={this.entry.invoice.invoice_yearmonth}
+					onChange={(data)=>this.changeInvoice(data,'invoice_yearmonth')}
 				/>
 				
 				<CommonInputText
@@ -1019,7 +1014,7 @@ export default class InvoiceForm extends React.Component {
 					value={this.entry.billto.billto_name}
 					readonly='true'
 				/>
-
+					
 				<FormGroup className="hide">
 					<CommonInputText
 						controlLabel="請求先コード"	
@@ -1051,9 +1046,17 @@ export default class InvoiceForm extends React.Component {
 						label: '入金済',
 						value: '1',
 					}]}
-					onChange={(data) => this.changeDepositStatus(data)}
+					onChange={(data) => this.changeInvoice(data,'deposit_status')}
 				/>
-
+				
+				<CommonInputText
+					controlLabel="作成者"	
+					name='creator'							
+					type="text"
+					placeholder="作成者"
+					value={this.entry.creator}
+					readonly='true'
+				/>
 				<CommonFilterBox
 					controlLabel="庫内作業年月"
 					value={this.state.selectInternalWorkYearMonth}
@@ -1068,7 +1071,6 @@ export default class InvoiceForm extends React.Component {
 					value={this.state.selectCustomer.customer_code}
 					options={this.customerList}
 					onChange={(data) => this.changeCustomer(data)}
-					//size=''
 				/>
 						
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
@@ -1082,7 +1084,7 @@ export default class InvoiceForm extends React.Component {
 
 							<br />
 							<br />
-							<Panel collapsible header="月時情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+							<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 								<CommonTable
 									//name="item_details"
 									data={this.monthly}
@@ -1099,7 +1101,6 @@ export default class InvoiceForm extends React.Component {
 									}]}	
 								/>
 
-								
 								<br />
 								<br />
 								<CommonTable	
@@ -1113,8 +1114,7 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'quantity',title: '数量', width: '30px',
 										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')}
-											
+											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')}	
 										}
 									}, {
 										field: 'unit',title: '単位', width: '30px',
@@ -1478,6 +1478,7 @@ export default class InvoiceForm extends React.Component {
 							value={this.entry.invoice.total_amount}
 							readonly='true'
 							className="total_amount"
+							//onchange={(data)=>this.changeInvoice(data)}
 						/>
 
 						<br />
@@ -1552,7 +1553,7 @@ export default class InvoiceForm extends React.Component {
 								header={[{
 									field: 'btn1', title: 'CSV', width: '10px',
 									label: <Glyphicon glyph="download" />,
-									//onClick:
+									onClick: (data) => this.billingDetailsCSVDownLoad(data)
 								}, {
 									field:'delivery', title:'配送業者',width:'1000px',
 								}]}
@@ -1612,7 +1613,7 @@ export default class InvoiceForm extends React.Component {
 								<CommonInputText
 									controlLabel="住所"
 									type="text"
-									value={this.address}
+									value={this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2}
 									readonly
 								/>
 						}
@@ -1781,17 +1782,19 @@ export default class InvoiceForm extends React.Component {
 										name="billfrom.payee"
 										data={this.entry.billfrom.payee}
 										header={[{
-											field: 'bank_info', title: '口座名', width: '30px',
+											field: 'bank_info', title: '銀行名', width: '30px',
 											convert: {
 												1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 												6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 											}
 										}, {
+											field: 'branch_office', title: '支店名', width: '30px',
+										}, {
 											field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-										
 										}, {
 											field: 'account_number', title: '口座番号', width: '30px',
-										
+										}, {
+											field: 'account_name', title: '口座名義', width: '30px',
 										}]}
 										noneScroll
 										fixed
