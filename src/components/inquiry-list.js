@@ -121,7 +121,7 @@ export default class InquiryList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>問い合わせ一覧</PageHeader>
+						<PageHeader>特記事項</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
 							
