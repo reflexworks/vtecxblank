@@ -74,6 +74,8 @@ export default class ShipmentServiceRegistration extends React.Component {
 			}
 		})
 
+		this.disabled = true
+
 	}
 
 	setInitPref(_index) {
@@ -179,6 +181,15 @@ export default class ShipmentServiceRegistration extends React.Component {
 		location.href = '#/ShipmentServiceList'
 	}
 
+	/**
+	 * 入力チェック
+	 * @param {*} _data 
+	 */
+	onCheck(_data) {
+		this.disabled = !_data
+		this.forceUpdate()
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -192,7 +203,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
@@ -201,7 +212,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<ShipmentServiceForm name="mainForm" entry={this.entry} />
+						<ShipmentServiceForm name="mainForm" entry={this.entry} onCheck={(data)=>this.onCheck(data)} isCreate={true} />
 					</Col>
 				</Row>
 				<Row>
@@ -209,7 +220,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>

@@ -1,357 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <feed>
-    <entry>
-        <staff>
-            <staff_name>大友 康子</staff_name>
-            <role>3</role>
-            <staff_email>ootomo@connect-logi.co.jp</staff_email>
-            <uid>622</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-1-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>楠本 真也</staff_name>
-            <role>2</role>
-            <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-            <uid>623</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-10-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>角 江里奈</staff_name>
-            <role>3</role>
-            <staff_email>kado@connect-logi.co.jp</staff_email>
-            <uid>628</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-10-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>坂間 直緒</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>sakama@connect-logi.co.jp</staff_email>
-            <uid>627</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-2-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>森 光正</staff_name>
-            <role>2</role>
-            <staff_email>mori@connect-logi.co.jp</staff_email>
-            <uid>626</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-2-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>飯島 真紀</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>iijima@connect-logi.co.jp</staff_email>
-            <uid>625</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-2-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>今井　亮介</staff_name>
-            <role>3</role>
-            <staff_email>imai@connect-logi.jp</staff_email>
-            <uid>629</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-2-4" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>木幡 昭宏</staff_name>
-            <role>3</role>
-            <staff_email>kibata@connect-logi.co.jp</staff_email>
-            <uid>630</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-2-5" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>高野 潤一</staff_name>
-            <role>4</role>
-            <staff_email>takano@connect-logi.jp</staff_email>
-            <uid>632</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-3-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>小島 忠</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>t.kojima@connect-logi.co.jp</staff_email>
-            <uid>633</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-3-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>織田 一宏</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>k.oda@connect-logi.co.jp</staff_email>
-            <uid>631</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-3-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>皆見 圭一郎</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>minami@connect-logi.co.jp</staff_email>
-            <uid>634</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-4-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>森 雅史</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>m.mori@connect-logi.co.jp</staff_email>
-            <uid>635</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-4-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>山本 浩</staff_name>
-            <role>3</role>
-            <staff_email>h.yamamoto@connect-logi.co.jp</staff_email>
-            <uid>636</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-4-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>境 智成</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>sakai@connect-logi.co.jp</staff_email>
-            <uid>638</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-5-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>長濱 康文</staff_name>
-            <role>3</role>
-            <staff_email>nagahama@connect-logi.co.jp</staff_email>
-            <uid>637</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-5-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>武田 夏琳</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>k.takeda@connect-logi.co.jp</staff_email>
-            <uid>639</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-5-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>齊藤 雄二</staff_name>
-            <role>3</role>
-            <superior_email>c.taniguchi@connect-logi.co.jp</superior_email>
-            <staff_email>asaka.data@connect-logi.co.jp</staff_email>
-            <uid>640</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-5-4" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>森 奈津子</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
-            <uid>641</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-6-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>石井 香瑞紀</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>ishii@connect-logi.co.jp</staff_email>
-            <uid>642</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-6-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>崔 正権</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>sai@connect-logi.co.jp</staff_email>
-            <uid>643</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-6-3" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>林 直人</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>hayashi@connect-logi.co.jp</staff_email>
-            <uid>644</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-7-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>風間 輝明</staff_name>
-            <role>3</role>
-            <superior_email>mori@connect-logi.co.jp</superior_email>
-            <staff_email>kazama@connect-logi.co.jp</staff_email>
-            <uid>645</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-7-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>佐藤 昭彦</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>a.sato@connect-logi.co.jp</staff_email>
-            <uid>646</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-9-1" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>谷口 千晶</staff_name>
-            <role>2</role>
-            <staff_email>c.taniguchi@connect-logi.co.jp</staff_email>
-            <uid>647</uid>
-        </staff>
-        <link href="/staff/0-6-35-9-2-9-2" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>石澤 隼平</staff_name>
-            <role>4</role>
-            <staff_email>ishizawa@connect-logi.co.jp</staff_email>
-            <uid>0000012</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/ishizawa@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>荒畑 敬吾</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>k.arahata@connect-logi.co.jp</staff_email>
-            <uid>0000011</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/k.arahata@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>システム管理者</staff_name>
-            <role>1</role>
-            <staff_email>logioffice.test@gmail.com</staff_email>
-            <uid>0000001</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/logioffice.test@gmail.com" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>橋本 みずき</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>m.hashimoto@connect-logi.co.jp</staff_email>
-            <uid>0000004</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/m.hashimoto@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>中村 穣</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>m.nakamura@connect-logi.co.jp</staff_email>
-            <uid>0000007</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/m.nakamura@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>武政 夏実</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>n.takemasa@connect-logi.co.jp</staff_email>
-            <uid>0000003</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/n.takemasa@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>永瀬 雅久</staff_name>
-            <role>2</role>
-            <staff_email>nagase@connect-logi.jp</staff_email>
-            <uid>${_addids}</uid>
-        </staff>
-        <link href="/staff/nagase@connect-logi.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>浅香 茂伸</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>s.asaka@connect-logi.co.jp</staff_email>
-            <uid>0000005</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/s.asaka@connect-logi.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>経理</staff_name>
-            <role>5</role>
-            <staff_email>takezaki@virtual-tech.net</staff_email>
-            <uid>0000008</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/takezaki@virtual-tech.net" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>円谷 沙織</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>s.tsumuraya@connect-logi.co.jp</staff_email>
-            <uid>${_addids}</uid>
-        </staff>
-        <link href="/staff/tsuburaya@connect-corporation.co.jp" rel="self"/>
-    </entry>
-    <entry>
-        <staff>
-            <staff_name>原田 弥生</staff_name>
-            <role>3</role>
-            <superior_email>kusumoto@connect-logi.co.jp</superior_email>
-            <staff_email>y.harada@connect-logi.co.jp</staff_email>
-            <uid>0000006</uid>
-            <password>logioffice2017!</password>
-        </staff>
-        <link href="/staff/y.harada@connect-logi.co.jp" rel="self"/>
-    </entry>
+  <entry>
+    <staff>
+      <staff_name>大友 康子</staff_name>
+      <role>3</role>
+      <staff_email>ootomo@connect-logi.co.jp</staff_email>
+      <uid>622</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>楠本 真也</staff_name>
+      <role>2</role>
+      <staff_email>kusumoto@connect-logi.co.jp</staff_email>
+      <uid>623</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>角 江里奈</staff_name>
+      <role>3</role>
+      <staff_email>kado@connect-logi.co.jp</staff_email>
+      <uid>628</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-10-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>坂間 直緒</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>sakama@connect-logi.co.jp</staff_email>
+      <uid>627</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>森 光正</staff_name>
+      <role>2</role>
+      <staff_email>mori@connect-logi.co.jp</staff_email>
+      <uid>626</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-2-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>飯島 真紀</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>iijima@connect-logi.co.jp</staff_email>
+      <uid>625</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-2-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>今井　亮介</staff_name>
+      <role>3</role>
+      <superior_email>nagase@connect-logi.jp</superior_email>
+      <staff_email>imai@connect-logi.jp</staff_email>
+      <uid>${_addids}</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-2-4" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>木幡 昭宏</staff_name>
+      <role>3</role>
+      <superior_email>nagase@connect-logi.jp</superior_email>
+      <staff_email>kibata@connect-logi.co.jp</staff_email>
+      <uid>${_addids}</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-2-5" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>高野 潤一</staff_name>
+      <role>4</role>
+      <staff_email>takano@connect-logi.jp</staff_email>
+      <uid>632</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>小島 忠</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>t.kojima@connect-logi.co.jp</staff_email>
+      <uid>633</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-3-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>織田 一宏</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>k.oda@connect-logi.co.jp</staff_email>
+      <uid>631</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-3-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>皆見 圭一郎</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>minami@connect-logi.co.jp</staff_email>
+      <uid>634</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>森 雅史</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>m.mori@connect-logi.co.jp</staff_email>
+      <uid>635</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>山本 浩</staff_name>
+      <role>3</role>
+      <staff_email>h.yamamoto@connect-logi.co.jp</staff_email>
+      <uid>636</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-4-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>境 智成</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>sakai@connect-logi.co.jp</staff_email>
+      <uid>638</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>長濱 康文</staff_name>
+      <role>3</role>
+      <staff_email>nagahama@connect-logi.co.jp</staff_email>
+      <uid>637</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>武田 夏琳</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>k.takeda@connect-logi.co.jp</staff_email>
+      <uid>639</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>齊藤 雄二</staff_name>
+      <role>3</role>
+      <superior_email>c.taniguchi@connect-logi.co.jp</superior_email>
+      <staff_email>asaka.data@connect-logi.co.jp</staff_email>
+      <uid>640</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-5-4" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>森 奈津子</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
+      <uid>641</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>石井 香瑞紀</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>ishii@connect-logi.co.jp</staff_email>
+      <uid>642</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>崔 正権</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>sai@connect-logi.co.jp</staff_email>
+      <uid>643</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-6-3" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>林 直人</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>hayashi@connect-logi.co.jp</staff_email>
+      <uid>644</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>風間 輝明</staff_name>
+      <role>3</role>
+      <superior_email>mori@connect-logi.co.jp</superior_email>
+      <staff_email>kazama@connect-logi.co.jp</staff_email>
+      <uid>645</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-7-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>佐藤 昭彦</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>a.sato@connect-logi.co.jp</staff_email>
+      <uid>646</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>谷口 千晶</staff_name>
+      <role>2</role>
+      <staff_email>c.taniguchi@connect-logi.co.jp</staff_email>
+      <uid>647</uid>
+    </staff>
+    <link href="/staff/0-6-35-9-2-9-2" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>（テスト）服部半蔵</staff_name>
+      <role>3</role>
+      <staff_email>info-connectcorporasion@xxx.com</staff_email>
+      <uid>${_addids}</uid>
+    </staff>
+    <link href="/staff/info-connectcorporasion@xxx.com" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>石澤 隼平</staff_name>
+      <role>4</role>
+      <staff_email>ishizawa@connect-logi.co.jp</staff_email>
+      <uid>0000012</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/ishizawa@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>荒畑 敬吾</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>k.arahata@connect-logi.co.jp</staff_email>
+      <uid>0000011</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/k.arahata@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>システム管理者</staff_name>
+      <role>1</role>
+      <staff_email>logioffice.test@gmail.com</staff_email>
+      <uid>0000001</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/logioffice.test@gmail.com" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>橋本 みずき</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>m.hashimoto@connect-logi.co.jp</staff_email>
+      <uid>0000004</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/m.hashimoto@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>中村 穣</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>m.nakamura@connect-logi.co.jp</staff_email>
+      <uid>0000007</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/m.nakamura@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>武政 夏実</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>n.takemasa@connect-logi.co.jp</staff_email>
+      <uid>0000003</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/n.takemasa@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>永瀬 雅久</staff_name>
+      <role>2</role>
+      <staff_email>nagase@connect-logi.jp</staff_email>
+      <uid>${_addids}</uid>
+    </staff>
+    <link href="/staff/nagase@connect-logi.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>浅香 茂伸</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>s.asaka@connect-logi.co.jp</staff_email>
+      <uid>0000005</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/s.asaka@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>経理</staff_name>
+      <role>5</role>
+      <staff_email>takezaki@virtual-tech.net</staff_email>
+      <uid>0000008</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/takezaki@virtual-tech.net" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>円谷 沙織</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>s.tsumuraya@connect-logi.co.jp</staff_email>
+      <uid>${_addids}</uid>
+    </staff>
+    <link href="/staff/tsuburaya@connect-corporation.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
+      <staff_name>原田 弥生</staff_name>
+      <role>3</role>
+      <superior_email>kusumoto@connect-logi.co.jp</superior_email>
+      <staff_email>y.harada@connect-logi.co.jp</staff_email>
+      <uid>0000006</uid>
+      <password>logioffice2017!</password>
+    </staff>
+    <link href="/staff/y.harada@connect-logi.co.jp" rel="self"/>
+  </entry>
 </feed>

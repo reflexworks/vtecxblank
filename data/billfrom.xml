@@ -1,23 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <feed>
-    <entry>
-        <billfrom>
-            <billfrom_code>0000001</billfrom_code>
-            <billfrom_name>CONNECT・EC</billfrom_name>
-            <payee>
-                <bank_info>5</bank_info>
-                <account_type>0</account_type>
-                <account_number>000000000000</account_number>
-            </payee>
-        </billfrom>
-        <contact_information>
-            <tel>0482998475</tel>
-            <fax>0482998476</fax>
-            <email>info@connect-ec.co.jp</email>
-            <zip_code>3320027</zip_code>
-            <prefecture>埼玉県</prefecture>
-            <address1>川口市緑町</address1>
-            <address2>9-35</address2>
-        </contact_information>
-        <link href="/billfrom/0000001" rel="self"/>
-    </entry>
+  <entry>
+    <billfrom>
+      <billfrom_code>0000001</billfrom_code>
+      <billfrom_name>株式会社CONNECT・EC</billfrom_name>
+      <payee>
+        <bank_info>5</bank_info>
+        <account_type>0</account_type>
+        <account_number>000000000000</account_number>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>03-6161-0058</tel>
+      <fax>048-299-8476</fax>
+      <email>info@connect-ec.co.jp</email>
+      <zip_code>107-0052</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>港区</address1>
+      <address2>2丁目21番5号</address2>
+    </contact_information>
+    <link href="/billfrom/0000001" rel="self"/>
+  </entry>
+  <entry>
+    <billfrom>
+      <billfrom_code>0000002</billfrom_code>
+      <billfrom_name>株式会社ネクストジェネレーション</billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel>03-6904-1014</tel>
+      <fax>03-6869-5246</fax>
+      <email></email>
+      <zip_code>108-0014</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>港区</address1>
+      <address2>5丁目27番3号(TEST)</address2>
+    </contact_information>
+    <link href="/billfrom/0000002" rel="self"/>
+  </entry>
+  <entry>
+    <billfrom>
+      <billfrom_code>0000003</billfrom_code>
+      <billfrom_name>株式会社CONNECTコーポレーション</billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8695</tel>
+      <fax>048-299-8476</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <link href="/billfrom/0000003" rel="self"/>
+  </entry>
+  <entry>
+    <billfrom>
+      <billfrom_code>0000004</billfrom_code>
+      <billfrom_name>CONNECT　EXPRESS株式会社</billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-5987</tel>
+      <fax>048-299-5988</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <link href="/billfrom/0000004" rel="self"/>
+  </entry>
+  <entry>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <link href="/billfrom/0000005" rel="self"/>
+  </entry>
 </feed>
