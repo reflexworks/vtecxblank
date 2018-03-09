@@ -62,12 +62,12 @@ export default class SideMenu extends React.Component {
 			InquiryRegistration: {
 				glyph: 'edit',
 				title: '問い合わせ記録',
-				type: 'customer'
+				type: 'internal_work'
 			},
 			InquiryList: {
 				glyph: 'list',
-				title: '問い合わせ一覧',
-				type: 'customer'
+				title: '特記事項',
+				type: 'internal_work'
 			},
 			StaffRegistration: {
 				glyph: 'edit',

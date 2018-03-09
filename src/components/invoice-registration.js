@@ -18,6 +18,7 @@ import InvoiceForm from './invoice-form'
 import {
 	CommonRegistrationBtn,
 	CommonClearBtn,
+	CommonLoginUser,
 } from './common'
 
 import moment from 'moment'
@@ -43,6 +44,7 @@ export default class InvoiceRegistration extends React.Component {
 			billfrom: {},
 			contact_information: {},
 			remarks: [],
+			creator:CommonLoginUser().get().staff_name
 		}
 	}
  
@@ -64,10 +66,11 @@ export default class InvoiceRegistration extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isError: response })
 			} else {
-				this.entry.billto = response.data.feed.entry[0].billto
-				this.entry.billfrom = response.data.feed.entry[0].billfrom
 				this.entry.invoice.quotation_code = response.data.feed.entry[0].quotation.quotation_code
-
+				this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
+				this.entry.billto = response.data.feed.entry[0].billto
+				this.entry.billfrom = response.data.feed.entry[0].billfrom || {}
+				this.entry.remarks = response.data.feed.entry[0].remarks || []
 				this.forceUpdate()
 			}
 

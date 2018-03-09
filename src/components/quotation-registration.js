@@ -92,8 +92,7 @@ export default class QuotationRegistration extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			//url: '/s/get-billto',
-			url: '/d/billto?f',
+			url: '/s/get-billto',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -334,17 +333,19 @@ export default class QuotationRegistration extends React.Component {
 								name="billfrom.payee"
 								data={this.entry.billfrom.payee}
 								header={[{
-									field: 'bank_info', title: '口座名', width: '30px',
+									field: 'bank_info', title: '銀行名', width: '30px',
 									convert: {
 										1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 										6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 									}
 								}, {
+									field: 'branch_office', title: '支店名', width: '30px',
+								}, {
 									field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
-									
 								}, {
 									field: 'account_number', title: '口座番号', width: '30px',
-									
+								}, {
+									field: 'account_name', title: '口座名義', width: '30px',
 								}]}
 								noneScroll
 								fixed

@@ -52,7 +52,6 @@ export default class QuotationForm extends React.Component {
 		this.entry.contact_information = this.entry.contact_information || {}
 		this.selectItemDetails = null
 
-		this.address = ''
 		this.master = {
 			typeList: [],
 			packingItemTemplateList: [],
@@ -164,20 +163,22 @@ export default class QuotationForm extends React.Component {
 
 				//全てのbillfrom.payeeを見て、支店名と口座名義が無かったら登録や更新は行わずに追加。
 				this.billfromList.map((billfromList) => {
-					billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
-						if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
-							let newPayee = {
-								'bank_info': oldPayee.bank_info,
-								'account_type': oldPayee.account_type,
-								'account_number': oldPayee.account_number,
-								'branch_office': '',
-								'account_name': '' ,
+					if (billfromList.data.billfrom.payee) {
+						billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
+							if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+								let newPayee = {
+									'bank_info': oldPayee.bank_info,
+									'account_type': oldPayee.account_type,
+									'account_number': oldPayee.account_number,
+									'branch_office': '',
+									'account_name': '',
+								}
+								return (newPayee)
+							} else {
+								return (oldPayee)
 							}
-							return(newPayee)
-						} else {
-							return(oldPayee)
-						}
-					})	
+						})
+					}	
 				})
 				
 				if (_billfrom) this.entry.billfrom = _billfrom
@@ -186,12 +187,7 @@ export default class QuotationForm extends React.Component {
 						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
 							this.billfrom = this.billfromList[i].data
 							this.entry.billfrom = this.billfrom.billfrom
-							this.entry.contact_information = this.billfrom.contact_information
-							if (this.entry.contact_information.prefecture ||
-								this.entry.contact_information.address1 ||
-								this.entry.contact_information.address2) {
-								this.address = this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2
-							}							
+							this.entry.contact_information = this.billfrom.contact_information							
 							break
 						}
 					}
@@ -211,12 +207,10 @@ export default class QuotationForm extends React.Component {
 			this.entry.billfrom = _data.data.billfrom
 			this.entry.contact_information = _data.data.contact_information
 			this.billfrom = _data.data
-			this.address = _data.data.contact_information.prefecture + _data.data.contact_information.address1 + _data.data.contact_information.address2
 		} else {
 			this.entry.billfrom = {}
 			this.entry.contact_information = {}
 			this.billfrom = {}
-			this.address=''
 		}
 		this.forceUpdate()
 	}
@@ -813,7 +807,7 @@ export default class QuotationForm extends React.Component {
 									<CommonInputText
 										controlLabel="住所"
 										type="text"
-										value={this.address}
+										value={this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2}
 										readonly
 									/>
 									<CommonInputText
