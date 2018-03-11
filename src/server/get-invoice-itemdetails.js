@@ -1,7 +1,8 @@
 import vtecxapi from 'vtecxapi' 
+import { getBillingdata } from './get-billingdata'
 
-const customer_code = '0000163'
-const quotation_code = '0000102'
+const customer_code = '0000182' // 0000163
+const quotation_code = '0000107'
 const working_yearmonth = '2018/01'
 
 try {
@@ -31,12 +32,51 @@ function getItemDetails(customer_code, quotation_code, working_yearmonth) {
 			result = result.concat(getMonthly(internal_work_all))
 			// period
 			result = result.concat(getPeriod(internal_work_all))
+			// shipping
+			result = result.concat(getShipping(customer_code,working_yearmonth,'YH','0','ヤマト運輸/発払'))    // ヤマト発払・出荷
+			result = result.concat(getShipping(customer_code,working_yearmonth,'YH1','0','ヤマト運輸/DM便'))    // ヤマト発払・出荷
+			result = result.concat(getShipping(customer_code,working_yearmonth,'YH2','0','ヤマト運輸/ネコポス'))    // ヤマト発払・出荷
             
 		}
 	}
 	return result
-
 }
+
+
+function getShipping(customer_code, working_yearmonth,shipment_service_code,shipment_class,shipment_service_name) {
+	const result = []
+	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code)
+	if (billing_data.feed.entry) {
+
+		const summary = billing_data.feed.entry.filter((entry) => {
+			return ((entry.billing_data.shipment_class===shipment_class)&&(entry.billing_data.shipment_service_code===shipment_service_code))  
+		}).reduce((prev, current) => { 
+			const entry = {
+				'billing_data': {
+					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
+					'quantity': ''+(Number(prev.billing_data.quantity)+Number(current.billing_data.quantity))
+				}
+			}
+			return entry       
+		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0' } })
+    
+		const record = {
+			'category': shipment_class==='0' ? 'shipping':'collecting',
+			'item_name': shipment_service_name,
+			'unit_name': '',
+			'unit': '個',
+			'quantity': summary.billing_data.quantity,
+			'unit_price': '個別',
+			'remarks': '別紙明細',
+			'is_taxation': '0',
+			'amount': summary.billing_data.delivery_charge 
+		}
+		result.push(record)
+	}
+
+	return result
+}
+
 
 function getDaily(internal_work_all) {
 	const result = []
@@ -76,16 +116,22 @@ function getMonthly(internal_work_all) {
 	const internal_work_monthly = internal_work_all.feed.entry.filter((entry) => {
 		return entry.internal_work.work_type === '4'
 	})
+
 	internal_work_monthly.map((entry) => {
+
+		const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
+		const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+
 		const record = {
 			'category': 'monthly',
 			'item_name': entry.internal_work.item_details_name,
 			'unit_name': entry.internal_work.item_details_unit_name,
 			'unit': entry.internal_work.item_details_unit,
-			'quantity': entry.internal_work.quantity,
-			'unit_price': entry.internal_work.unit_price,
+			'quantity': quantity,
+			'unit_price': unit_price,
 			'remarks': entry.internal_work.remarks,
-			'is_taxation': '0'            
+			'is_taxation': '0',
+			'amount': ''+(Number(quantity)*Number(unit_price))
 		}
     	result.push(record)
 	})
@@ -133,15 +179,19 @@ function getRecordPeriod(internal_work_daily,item_details_name,item_details_unit
 		return ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name)&&(entry.internal_work.item_details_unit===item_details_unit)&&(entry.internal_work.period===period))
 	})
     
+	const quantity = period_record[0].internal_work ? period_record[0].internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
+	const unit_price = period_record[0].internal_work ? period_record[0].internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+    
 	return {
 		'category': 'period',
 		'item_name': item_details_name,
 		'unit_name': period+'期',
 		'unit': item_details_unit,
-		'quantity': period_record[0].internal_work.quantity,
-		'unit_price': period_record[0].internal_work.unit_price,
+		'quantity': quantity,
+		'unit_price': unit_price,
 		'remarks': period_record[0].internal_work.remarks,
-		'is_taxation': '0'
+		'is_taxation': '0',
+		'amount': ''+(Number(quantity)*Number(unit_price))
 	}
 }
 
@@ -162,7 +212,7 @@ function getPacking_item(internal_work_all) {
 
 function getSumRecordPacking_item(internal_work_packing_item, packing_item_code) {
     
-	const quantity = internal_work_packing_item.filter((entry) => {
+	const entry = internal_work_packing_item.filter((entry) => {
 		return (entry.internal_work.packing_item_code===packing_item_code)
 	}).reduce((prev,current) => {
 		return {
@@ -175,22 +225,26 @@ function getSumRecordPacking_item(internal_work_packing_item, packing_item_code)
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
 
+	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+
 	return {
 		'category': 'packing_item',
-		'item_name': quantity.internal_work ? quantity.internal_work.item_name : '',
+		'item_name': entry.internal_work ? entry.internal_work.item_name : '',
 		'unit_name': '',
 		'unit': '個',
-		'quantity': quantity.internal_work ? quantity.internal_work.quantity : '0',
-		'unit_price': quantity.internal_work ? quantity.internal_work.unit_price : '0',
-		'remarks': quantity.internal_work ? quantity.internal_work.remarks : '',
-		'is_taxation': '0'
+		'quantity': quantity,
+		'unit_price': unit_price,
+		'remarks': entry.internal_work ? entry.internal_work.remarks : '',
+		'is_taxation': '0',
+		'amount': ''+(Number(quantity)*Number(unit_price))
 	}
 
 }
 
 function getSumRecordDaily(internal_work_daily,item_details_name,item_details_unit_name,item_details_unit){
 
-	const quantity = internal_work_daily.filter((entry) => {
+	const entry = internal_work_daily.filter((entry) => {
 		return ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name)&&(entry.internal_work.item_details_unit===item_details_unit))
 	}).reduce((prev,current) => {
 		return {
@@ -202,14 +256,18 @@ function getSumRecordDaily(internal_work_daily,item_details_name,item_details_un
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
     
+	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+    
 	return {
 		'category': 'daily',
 		'item_name': item_details_name,
 		'unit_name': item_details_unit_name,
 		'unit': item_details_unit,
-		'quantity': quantity.internal_work ? quantity.internal_work.quantity : '0',
-		'unit_price': quantity.internal_work ? quantity.internal_work.unit_price : '0',
-		'remarks': quantity.internal_work ? quantity.internal_work.remarks : '',
-		'is_taxation': '0'
+		'quantity': quantity,
+		'unit_price': unit_price,
+		'remarks': entry.internal_work ? entry.internal_work.remarks : '',
+		'is_taxation': '0',
+		'amount': ''+(Number(quantity)*Number(unit_price))
 	}
 }
