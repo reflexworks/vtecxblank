@@ -149,7 +149,6 @@ export function getKey(datestr, shipment_service_code,tracking_number) {
 	if (now.getMonth() + 1 < month) {
 		year = year - 1
 	}
-	console.log('shipment_service_code='+shipment_service_code)
 	return year + ('0' + month).slice(-2) + customer_code+'_'+shipment_service_code+'_'+tracking_number
 }
 

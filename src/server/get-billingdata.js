@@ -17,7 +17,6 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 	}
 
 	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '*', true)
-	console.log('shipping_yearmonth='+shipping_yearmonth+' customer_code='+customer_code+' shipment_service_code='+shipment_service_code+' billing_data='+JSON.stringify(billing_data))
 	if (billing_data.feed.entry) {
 		if (billing_closing_date === '1') {
 			const lastyearmonth = getLastMonth(shipping_yearmonth)
