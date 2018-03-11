@@ -478,6 +478,34 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>シール印刷、貼り作業(ペーパー代別)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-72" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>１SKU</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-73" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>相談　※エコ配JPは土日祝日不可となります。</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-74" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>返却品確認作業料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-75" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>3</type>
       <value>360.00</value>
     </type_ahead>
@@ -979,6 +1007,13 @@
       <value>￥</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-10-72" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>1パレット追加\\\\+4000</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-10-73" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -1493,6 +1528,13 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>JAN</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-74" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>宅急便</value>
     </type_ahead>
@@ -1980,6 +2022,13 @@
       <value>1パレット追加\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-3-70" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>15：00迄</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-3-71" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -2537,6 +2586,27 @@
   <entry>
     <type_ahead>
       <type>4</type>
+      <value>パレットラック、ネステナーによる縦積み</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-4-82" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>JAN登録は行いません</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-4-83" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>端末(フル充電・ＡＣアダプタ・ケーブル×2・用紙×３・納品書・返送用レターパック</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-4-84" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
       <value>住所不明、長期不在等で返品になった商品の在庫戻し、貴社報告</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-4-9" rel="self"/>
@@ -3030,6 +3100,34 @@
       <value>1パレット追加\\\\+5000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-5-73" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ダンボール</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-74" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>返却品確認</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-75" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>端末・ACアダプタ・ケーブル×２・用紙×３</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-76" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>1H</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-77" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -3625,6 +3723,20 @@
       <value>1パレット追加\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-6-84" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>緩衝材</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-85" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ポケットwifi</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-86" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -4664,6 +4776,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>バーコード作成</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-8-76" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>外装検品、品番確認、数量検品、格納</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-8-77" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>0</type>
       <value>ヤマト運輸代引き手数料(十万円未満）</value>
     </type_ahead>
@@ -5046,6 +5172,13 @@
       <value>梱包</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-9-57" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>御相談</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-58" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
