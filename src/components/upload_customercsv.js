@@ -104,7 +104,7 @@ class UploadCsvForm extends React.Component {
 
 			}).then((result) => {
 				const uid = result.data.feed.title
-				updatestaff(entry,uid)
+				updatestaff(entry, uid)
 
 			}).catch((error) => {
 				if (error.response) {
@@ -119,7 +119,6 @@ class UploadCsvForm extends React.Component {
 				}
 			})
 		}
-
 		axios({
 			url: '/d/staff?f',
 			method: 'get',
@@ -128,10 +127,9 @@ class UploadCsvForm extends React.Component {
 			}
 		}).then((result) => {
 			result.data.feed.entry.map(entry => {
-				if (!entry.staff.uid) {
-					adduser(entry)
-				}
+				adduser(entry)
 			}) 
+			alert('all users are registered!')
 		}).catch((error) => {
 			if (error.response) {
 				alert('error='+JSON.stringify(error.response))

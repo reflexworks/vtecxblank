@@ -166,7 +166,7 @@ function getCustomer(csventry) {
 
 	if (csventry.customer.shipper_code_ymta.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YH',
+			'shipment_service_code': 'YH1',
 			'shipment_service_service_name': '宅急便発払',
 			'shipper_info': [
 				{
@@ -177,7 +177,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH1',
+			'shipment_service_code': 'YH2',
 			'shipment_service_service_name': 'クロネコＤＭ便',
 			'shipper_info': [
 				{
@@ -188,7 +188,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH2',
+			'shipment_service_code': 'YH3',
 			'shipment_service_service_name': 'ネコポス',
 			'shipper_info': [
 				{
@@ -201,7 +201,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtb.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YH',
+			'shipment_service_code': 'YH1',
 			'shipment_service_service_name': '宅急便発払',
 			'shipper_info': [
 				{
@@ -212,7 +212,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH1',
+			'shipment_service_code': 'YH2',
 			'shipment_service_service_name': 'クロネコＤＭ便',
 			'shipper_info': [
 				{
@@ -223,7 +223,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH2',
+			'shipment_service_code': 'YH3',
 			'shipment_service_service_name': 'ネコポス',
 			'shipper_info': [
 				{
@@ -236,7 +236,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ymtc.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'YH',
+			'shipment_service_code': 'YH1',
 			'shipment_service_service_name': '宅急便発払',
 			'shipper_info': [
 				{
@@ -247,7 +247,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH1',
+			'shipment_service_code': 'YH2',
 			'shipment_service_service_name': 'クロネコＤＭ便',
 			'shipper_info': [
 				{
@@ -258,7 +258,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'YH2',
+			'shipment_service_code': 'YH3',
 			'shipment_service_service_name': 'ネコポス',
 			'shipper_info': [
 				{
@@ -271,7 +271,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs1.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'ECO',
+			'shipment_service_code': 'ECO1',
 			'shipment_service_service_name': 'エコプラス便',
 			'shipper_info': [
 				{
@@ -282,7 +282,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'ECO1',
+			'shipment_service_code': 'ECO2',
 			'shipment_service_service_name': 'コレクト便',
 			'shipper_info': [
 				{
@@ -295,7 +295,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs2.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'ECO',
+			'shipment_service_code': 'ECO1',
 			'shipment_service_service_name': 'エコプラス便',
 			'shipper_info': [
 				{
@@ -306,7 +306,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'ECO1',
+			'shipment_service_code': 'ECO2',
 			'shipment_service_service_name': 'コレクト便',
 			'shipper_info': [
 				{
@@ -319,7 +319,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs3.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'ECO',
+			'shipment_service_code': 'ECO1',
 			'shipment_service_service_name': 'エコプラス便',
 			'shipper_info': [
 				{
@@ -330,7 +330,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'ECO1',
+			'shipment_service_code': 'ECO2',
 			'shipment_service_service_name': 'コレクト便',
 			'shipper_info': [
 				{
@@ -343,7 +343,7 @@ function getCustomer(csventry) {
 	}    
 	if (csventry.customer.shipper_code_ecs4.trim().length>0) {
 		let shipper = {
-			'shipment_service_code': 'ECO',
+			'shipment_service_code': 'ECO1',
 			'shipment_service_service_name': 'エコプラス便',
 			'shipper_info': [
 				{
@@ -354,7 +354,7 @@ function getCustomer(csventry) {
 		}
 		customer.shipper.push(shipper)
 		shipper = {
-			'shipment_service_code': 'ECO1',
+			'shipment_service_code': 'ECO2',
 			'shipment_service_service_name': 'コレクト便',
 			'shipper_info': [
 				{

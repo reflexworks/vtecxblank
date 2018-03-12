@@ -2,7 +2,7 @@
 <feed>
   <entry>
     <shipment_service>
-      <code>CN</code>
+      <code>CN1</code>
       <name>CONNECT便(TEST)</name>
       <type>2</type>
       <service_name>CONNECT配送便</service_name>
@@ -212,11 +212,11 @@
         <pref_code>沖縄県</pref_code>
       </pref_codes>
     </zone>
-    <link href="/shipment_service/CN" rel="self"/>
+    <link href="/shipment_service/CN1" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>ECO</code>
+      <code>ECO1</code>
       <name>エコ配ALLJP</name>
       <type>1</type>
       <service_name>エコプラス便</service_name>
@@ -466,11 +466,11 @@
         <invoice_zone>Cエリア</invoice_zone>
       </invoice_zones>
     </zone>
-    <link href="/shipment_service/ECO" rel="self"/>
+    <link href="/shipment_service/ECO1" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>ECO1</code>
+      <code>ECO2</code>
       <name>エコ配JP</name>
       <type>1</type>
       <service_name>コレクト便</service_name>
@@ -711,11 +711,11 @@
         <invoice_zone>Cエリア</invoice_zone>
       </invoice_zones>
     </zone>
-    <link href="/shipment_service/ECO1" rel="self"/>
+    <link href="/shipment_service/ECO2" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>ECO2</code>
+      <code>ECO3</code>
       <name>エコ配</name>
       <type>1</type>
       <service_name>エコ配便併用</service_name>
@@ -799,268 +799,14 @@
         <invoice_zone>エコエリア</invoice_zone>
       </invoice_zones>
     </zone>
-    <link href="/shipment_service/ECO2" rel="self"/>
-  </entry>
-  <entry>
-    <shipment_service>
-      <code>ECO3</code>
-      <name>エコ配ALLJP1</name>
-      <type>1</type>
-      <service_name>エコ配便ALLJP1</service_name>
-      <sizes>
-        <size>〜80cm</size>
-        <weight>15kg迄</weight>
-      </sizes>
-    </shipment_service>
-    <zone>
-      <zone_name>南九州</zone_name>
-      <zone_code>zone_0</zone_code>
-      <pref_codes>
-        <pref_code>熊本県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>宮崎県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>鹿児島県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>B(九州)</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>北九州</zone_name>
-      <zone_code>zone_1</zone_code>
-      <pref_codes>
-        <pref_code>福岡県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>佐賀県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>長崎県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>大分県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>B(九州)</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>四国</zone_name>
-      <zone_code>zone_2</zone_code>
-      <pref_codes>
-        <pref_code>徳島県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>香川県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>愛媛県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>高知県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>B(四国)</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>中国</zone_name>
-      <zone_code>zone_3</zone_code>
-      <pref_codes>
-        <pref_code>鳥取県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>島根県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>岡山県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>広島県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>山口県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>関西</zone_name>
-      <zone_code>zone_4</zone_code>
-      <pref_codes>
-        <pref_code>滋賀県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>京都府</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>大阪府</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>兵庫県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>奈良県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>和歌山県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-      <invoice_zones>
-        <invoice_zone>エコエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>北陸</zone_name>
-      <zone_code>zone_5</zone_code>
-      <pref_codes>
-        <pref_code>富山県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>石川県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>福井県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>東海</zone_name>
-      <zone_code>zone_6</zone_code>
-      <pref_codes>
-        <pref_code>岐阜県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>静岡県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>愛知県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>三重県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-      <invoice_zones>
-        <invoice_zone>エコエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>信越</zone_name>
-      <zone_code>zone_7</zone_code>
-      <pref_codes>
-        <pref_code>新潟県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>長野県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>関東</zone_name>
-      <zone_code>zone_8</zone_code>
-      <pref_codes>
-        <pref_code>茨城県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>栃木県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>群馬県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>埼玉県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>千葉県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>東京都</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>神奈川県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>山梨県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-      <invoice_zones>
-        <invoice_zone>エコエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>南東北</zone_name>
-      <zone_code>zone_9</zone_code>
-      <pref_codes>
-        <pref_code>宮城県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>山形県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>福島県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>北東北</zone_name>
-      <zone_code>zone_10</zone_code>
-      <pref_codes>
-        <pref_code>青森県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>岩手県</pref_code>
-      </pref_codes>
-      <pref_codes>
-        <pref_code>秋田県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Aエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>北海道</zone_name>
-      <zone_code>zone_11</zone_code>
-      <pref_codes>
-        <pref_code>北海道</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>B(北海道)</invoice_zone>
-      </invoice_zones>
-    </zone>
-    <zone>
-      <zone_name>沖縄</zone_name>
-      <zone_code>zone_12</zone_code>
-      <pref_codes>
-        <pref_code>沖縄県</pref_code>
-      </pref_codes>
-      <invoice_zones>
-        <invoice_zone>Cエリア</invoice_zone>
-      </invoice_zones>
-    </zone>
     <link href="/shipment_service/ECO3" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
       <code>ECO4</code>
-      <name>エコ配ALLJP2</name>
+      <name>エコ配ALLJP1</name>
       <type>1</type>
-      <service_name>エコ配便ALLJP2</service_name>
+      <service_name>エコ配便ALLJP1</service_name>
       <sizes>
         <size>〜80cm</size>
         <weight>15kg迄</weight>
@@ -1311,7 +1057,261 @@
   </entry>
   <entry>
     <shipment_service>
-      <code>JP</code>
+      <code>ECO5</code>
+      <name>エコ配ALLJP2</name>
+      <type>1</type>
+      <service_name>エコ配便ALLJP2</service_name>
+      <sizes>
+        <size>〜80cm</size>
+        <weight>15kg迄</weight>
+      </sizes>
+    </shipment_service>
+    <zone>
+      <zone_name>南九州</zone_name>
+      <zone_code>zone_0</zone_code>
+      <pref_codes>
+        <pref_code>熊本県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>宮崎県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>鹿児島県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>B(九州)</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>北九州</zone_name>
+      <zone_code>zone_1</zone_code>
+      <pref_codes>
+        <pref_code>福岡県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>佐賀県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>長崎県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>大分県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>B(九州)</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>四国</zone_name>
+      <zone_code>zone_2</zone_code>
+      <pref_codes>
+        <pref_code>徳島県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>香川県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>愛媛県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>高知県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>B(四国)</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>中国</zone_name>
+      <zone_code>zone_3</zone_code>
+      <pref_codes>
+        <pref_code>鳥取県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>島根県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>岡山県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>広島県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>山口県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>関西</zone_name>
+      <zone_code>zone_4</zone_code>
+      <pref_codes>
+        <pref_code>滋賀県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>京都府</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>大阪府</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>兵庫県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>奈良県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>和歌山県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+      <invoice_zones>
+        <invoice_zone>エコエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>北陸</zone_name>
+      <zone_code>zone_5</zone_code>
+      <pref_codes>
+        <pref_code>富山県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>石川県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>福井県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>東海</zone_name>
+      <zone_code>zone_6</zone_code>
+      <pref_codes>
+        <pref_code>岐阜県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>静岡県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>愛知県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>三重県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+      <invoice_zones>
+        <invoice_zone>エコエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>信越</zone_name>
+      <zone_code>zone_7</zone_code>
+      <pref_codes>
+        <pref_code>新潟県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>長野県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>関東</zone_name>
+      <zone_code>zone_8</zone_code>
+      <pref_codes>
+        <pref_code>茨城県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>栃木県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>群馬県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>埼玉県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>千葉県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>東京都</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>神奈川県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>山梨県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+      <invoice_zones>
+        <invoice_zone>エコエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>南東北</zone_name>
+      <zone_code>zone_9</zone_code>
+      <pref_codes>
+        <pref_code>宮城県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>山形県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>福島県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>北東北</zone_name>
+      <zone_code>zone_10</zone_code>
+      <pref_codes>
+        <pref_code>青森県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>岩手県</pref_code>
+      </pref_codes>
+      <pref_codes>
+        <pref_code>秋田県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Aエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>北海道</zone_name>
+      <zone_code>zone_11</zone_code>
+      <pref_codes>
+        <pref_code>北海道</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>B(北海道)</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <zone>
+      <zone_name>沖縄</zone_name>
+      <zone_code>zone_12</zone_code>
+      <pref_codes>
+        <pref_code>沖縄県</pref_code>
+      </pref_codes>
+      <invoice_zones>
+        <invoice_zone>Cエリア</invoice_zone>
+      </invoice_zones>
+    </zone>
+    <link href="/shipment_service/ECO5" rel="self"/>
+  </entry>
+  <entry>
+    <shipment_service>
+      <code>JP1</code>
       <name>日本郵便</name>
       <type>2</type>
       <service_name>ゆうパケット</service_name>
@@ -1322,11 +1322,11 @@
         <size>3cm以内</size>
       </sizes>
     </shipment_service>
-    <link href="/shipment_service/JP" rel="self"/>
+    <link href="/shipment_service/JP1" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>JP1</code>
+      <code>JP2</code>
       <name>日本郵便</name>
       <type>2</type>
       <service_name>ゆうメール</service_name>
@@ -1343,11 +1343,11 @@
         <weight>1kg以内</weight>
       </sizes>
     </shipment_service>
-    <link href="/shipment_service/JP1" rel="self"/>
+    <link href="/shipment_service/JP2" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>JP2</code>
+      <code>JP3</code>
       <name>日本郵便</name>
       <type>2</type>
       <service_name>定形外（規格内）</service_name>
@@ -1370,11 +1370,11 @@
         <weight>1000g</weight>
       </sizes>
     </shipment_service>
-    <link href="/shipment_service/JP2" rel="self"/>
+    <link href="/shipment_service/JP3" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>JP3</code>
+      <code>JP4</code>
       <name>日本郵便</name>
       <type>2</type>
       <service_name>定形外（規格外）</service_name>
@@ -1403,11 +1403,11 @@
         <weight>4000g</weight>
       </sizes>
     </shipment_service>
-    <link href="/shipment_service/JP3" rel="self"/>
+    <link href="/shipment_service/JP4" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>SG</code>
+      <code>SG1</code>
       <name>佐川急便</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -1609,11 +1609,11 @@
         <pref_code>沖縄県</pref_code>
       </pref_codes>
     </zone>
-    <link href="/shipment_service/SG" rel="self"/>
+    <link href="/shipment_service/SG1" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>SN</code>
+      <code>SN1</code>
       <name>西濃運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -1811,11 +1811,11 @@
         <pref_code>沖縄県</pref_code>
       </pref_codes>
     </zone>
-    <link href="/shipment_service/SN" rel="self"/>
+    <link href="/shipment_service/SN1" rel="self"/>
   </entry>
   <entry>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>宅急便発払</service_name>
@@ -2037,15 +2037,6 @@
         <pref_code>沖縄県</pref_code>
       </pref_codes>
     </zone>
-    <link href="/shipment_service/YH" rel="self"/>
-  </entry>
-  <entry>
-    <shipment_service>
-      <code>YH1</code>
-      <name>ヤマト運輸</name>
-      <type>2</type>
-      <service_name>クロネコＤＭ便</service_name>
-    </shipment_service>
     <link href="/shipment_service/YH1" rel="self"/>
   </entry>
   <entry>
@@ -2053,8 +2044,17 @@
       <code>YH2</code>
       <name>ヤマト運輸</name>
       <type>2</type>
-      <service_name>ネコポス</service_name>
+      <service_name>クロネコＤＭ便</service_name>
     </shipment_service>
     <link href="/shipment_service/YH2" rel="self"/>
+  </entry>
+  <entry>
+    <shipment_service>
+      <code>YH3</code>
+      <name>ヤマト運輸</name>
+      <type>2</type>
+      <service_name>ネコポス</service_name>
+    </shipment_service>
+    <link href="/shipment_service/YH3" rel="self"/>
   </entry>
 </feed>
