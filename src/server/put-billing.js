@@ -1,6 +1,5 @@
 
 import vtecxapi from 'vtecxapi' 
-
 export let shipment_class   		// 出荷(0)or集荷(1)、見つかった荷主コードによって
 export let customer_code   		// 見つかった荷主コードによって
 export let shipment_service_code   // 見つかった荷主コードによって
@@ -88,9 +87,7 @@ export function getChargeBySizeAndZone(customer_code,shipment_service_code, size
 	return charge_by_zone
 }
 
-export function getChargeOfMail(customer_all,shipper_code,shipment_service_code,shipment_service_service_name) {
-
-	const delivery_charge_all = getDeliverycharge(customer_all, shipper_code,shipment_service_service_name)
+export function getChargeOfMail(delivery_charge_all,customer_all,shipper_code,shipment_service_code) {
 
 	// shipment_service_codeからdelivery_chargeを取得
 	const delivery_charge = delivery_charge_all.feed.entry[0].delivery_charge.filter((delivery_charge) => {
@@ -142,7 +139,7 @@ export function getFullDate(datestr) {
 	return year+'-'+month+'-'+day
 }
 
-export function getKey(datestr, tracking_number) {
+export function getKey(datestr, shipment_service_code,tracking_number) {
 
 	const matches = /^(\d+)月(\d+)日$/.exec(datestr)
 	const now = new Date()

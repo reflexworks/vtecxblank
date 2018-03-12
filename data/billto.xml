@@ -2486,26 +2486,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000156</billto_code>
-      <billto_name>テスト株式会社</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/02/28</payment_date>
-      <post_has_sizeweight>1</post_has_sizeweight>
-      <yamato_has_details>1</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>3320027</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>川口市緑町</address1>
-      <address2>9-35</address2>
-    </contact_information>
-    <link href="/billto/0000156" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000157</billto_code>
       <billto_name>L&amp;Lライブリーライフ 株式会社</billto_name>
     </billto>
@@ -2564,33 +2544,13 @@
     <contact_information>
       <tel>0123456789</tel>
       <fax>0123456789</fax>
-      <email>xxx@xxx.xxx</email>
-      <zip_code>1234567</zip_code>
-      <prefecture>北海道</prefecture>
+      <email>test@xxx.xxx</email>
+      <zip_code>123-4567</zip_code>
+      <prefecture>栃木県</prefecture>
       <address1>XXX市XXX町</address1>
       <address2>1-2-3</address2>
     </contact_information>
     <link href="/billto/0000160" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000161</billto_code>
-      <billto_name>テスト</billto_name>
-      <billing_closing_date>1</billing_closing_date>
-      <payment_date>2018/02/28</payment_date>
-      <post_has_sizeweight>1</post_has_sizeweight>
-      <yamato_has_details>1</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel>0123456789</tel>
-      <fax>0123456879</fax>
-      <email>xxx@xxx.xxx</email>
-      <zip_code>1234567</zip_code>
-      <prefecture>山形県</prefecture>
-      <address1>XXX市XXX町</address1>
-      <address2>1-2-3</address2>
-    </contact_information>
-    <link href="/billto/0000161" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -2637,7 +2597,7 @@
       <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/31</payment_date>
       <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel>0482998475</tel>
@@ -2649,5 +2609,25 @@
       <address2>9番35号</address2>
     </contact_information>
     <link href="/billto/0000164" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000167</billto_code>
+      <billto_name>株式会社正洸堂</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/31</payment_date>
+      <post_has_sizeweight>0</post_has_sizeweight>
+      <yamato_has_details>0</yamato_has_details>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>330-0846</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>さいたま市大宮区大門町</address1>
+      <address2>2丁目109　大越ビル６階</address2>
+    </contact_information>
+    <link href="/billto/0000167" rel="self"/>
   </entry>
 </feed>

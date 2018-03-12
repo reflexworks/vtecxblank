@@ -244,15 +244,6 @@
   </entry>
   <entry>
     <staff>
-      <staff_name>（テスト）服部半蔵</staff_name>
-      <role>3</role>
-      <staff_email>info-connectcorporasion@xxx.com</staff_email>
-      <uid>${_addids}</uid>
-    </staff>
-    <link href="/staff/info-connectcorporasion@xxx.com" rel="self"/>
-  </entry>
-  <entry>
-    <staff>
       <staff_name>石澤 隼平</staff_name>
       <role>4</role>
       <staff_email>ishizawa@connect-logi.co.jp</staff_email>

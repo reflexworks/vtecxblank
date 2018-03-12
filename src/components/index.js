@@ -842,4 +842,3 @@ class MainContainer extends React.Component {
 }
 
 ReactDOM.render(<MainContainer />, document.getElementById('container'))
-

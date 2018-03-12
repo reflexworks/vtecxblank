@@ -3,7 +3,7 @@
   <entry>
     <shipment_service>
       <code>CN</code>
-      <name>CONNECT便</name>
+      <name>CONNECT便(TEST)</name>
       <type>2</type>
       <service_name>CONNECT配送便</service_name>
       <sizes>

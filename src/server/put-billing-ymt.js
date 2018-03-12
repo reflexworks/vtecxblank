@@ -12,7 +12,6 @@ const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 //vtecxapi.log(JSON.stringify(result))
 
 const customer_all = vtecxapi.getFeed('/customer',true)
-
 const result = { 'feed': { 'entry': [] } }
 
 billingcsv.feed.entry.map((entry) => {
@@ -62,7 +61,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 			'quantity' : entry.billing.quantity
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, tracking_number) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, shipment_service_code,tracking_number) }
 		]
 	}
 
@@ -71,7 +70,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 
 function getBillingDataOfMail(entry,shipment_service_service_name) {
 
-	getDeliverycharge(customer_all, entry.billing.shipper_code,shipment_service_service_name)
+	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code,shipment_service_service_name)
 	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
 
 	const billing_data = {
@@ -90,15 +89,13 @@ function getBillingDataOfMail(entry,shipment_service_service_name) {
 			'zone_name': '',
 			'city': '',
 			'delivery_charge_org_total': entry.billing.delivery_charge_org_total,
-			'delivery_charge': getChargeOfMail(customer_all,entry.billing.shipper_code,shipment_service_code),	// YM1 is DM便
+			'delivery_charge': getChargeOfMail(delivery_charge_all,customer_all,entry.billing.shipper_code,shipment_service_code),	// YM1 is DM便
 			'quantity' : entry.billing.quantity
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, ('00'+tracking_number).slice(-12)) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(entry.billing.shipping_date, shipment_service_code,('00'+tracking_number).slice(-12)) }
 		]
 	}
-
 	return billing_data
 }
-
 
