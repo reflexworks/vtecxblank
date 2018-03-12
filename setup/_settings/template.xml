@@ -123,6 +123,7 @@ item_details{}
  unit_price
  remarks
  is_taxation
+ amount
 quotation
  quotation_code
  quotation_code_sub

@@ -3,6 +3,48 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/invoicestyles.js'
 
+/**
+ * 数値の3桁カンマ区切り
+ * 入力値をカンマ区切りにして返却
+ */
+export function addFigure(numVal) {
+
+	// 空の場合そのまま返却
+	if (numVal === ''){
+		return ''
+	}
+
+	/**
+	 * 全角から半角への変革関数
+	 * 入力値の英数記号を半角変換して返却
+	 */
+	const toHalfWidth = (strVal) => {
+		// 半角変換
+		const halfVal = strVal.replace(/[！-～]/g, (tmpStr) => {
+			// 文字コードをシフト
+			return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 )
+		})
+		return halfVal
+	}
+
+	// 全角から半角へ変換し、既にカンマが入力されていたら事前に削除
+	numVal = toHalfWidth(numVal).replace(/,/g, '').trim()
+
+	// 数値でなければnullを返却
+	if ( !/^[+|-]?(\d*)(\.\d+)?$/.test(numVal) ){
+		return null
+	}
+
+	// 整数部分と小数部分に分割
+	let numData = numVal.toString().split('.')
+
+	// 整数部分を3桁カンマ区切りへ
+	numData[0] = Number(numData[0]).toString().replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
+
+	// 小数部分と結合して返却
+	return numData.join('.')
+}
+
 export const pageTitle = (_title) => {
 	return (
 		<table cols="1" style={pdfstyles.page_title_table}>
@@ -69,6 +111,7 @@ const getBilltoAndBillfrom = () => {
 					<span>{entry.contact_information.tel}</span>
 					<div>
 						{stamp && <img src={stamp} width="65.0" height="65.0" />}
+						{!stamp  && <br/>}
 						{ entry.creator && <span>担当者:{entry.creator}</span> }
 								
 					</div>
@@ -194,7 +237,7 @@ const getAllItemDetails = () => {
 							</td>
 
 							<td colspan="1" style={pdfstyles.tdRight}>
-								<span style={pdfstyles.fontsize6}>{item_details.unit_price}</span>
+								<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
 								<br />
 							</td>
 										
@@ -762,7 +805,7 @@ const invoicePage = () => {
 						<br/>
 						<br />
 						<span style={pdfstyles.totalAmountText}>合計請求金額　</span>
-						<span style={pdfstyles.totalAmount}>¥{entry.invoice.total_amount}</span>
+						<span style={pdfstyles.totalAmount}>¥{addFigure(entry.invoice.total_amount)}</span>
 						<br />
 					</td>
 					
@@ -811,7 +854,7 @@ const invoicePage = () => {
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥78054850</span>
+						<span style={pdfstyles.fontsize6}>¥{addFigure('78054850')}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>
@@ -829,7 +872,7 @@ const invoicePage = () => {
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{entry.invoice.consumption_tax}</span>
+						<span style={pdfstyles.fontsize6}>¥{addFigure(entry.invoice.consumption_tax)}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>
@@ -846,7 +889,7 @@ const invoicePage = () => {
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{entry.invoice.total_amount}</span>
+						<span style={pdfstyles.fontsize6}>¥{addFigure(entry.invoice.total_amount)}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>

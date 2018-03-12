@@ -8,12 +8,9 @@ export const _page = {
 	linecolor: '#000000'
 }
 
-
 export const widths = {
-	//widths: '5,10,4,14,6,7,12,6,16,5'
-	widths: '3, 10,15, 10, 14, 13, 13, 19, 3,'
+	widths: '3,10,15,10,14,13,13,19,3,'
 }
-
 
 export const borderTop = {
 	left: 'false',
@@ -477,9 +474,7 @@ export const tdRemarks = {
 
 export const totalAmountText = {
 	size: 8,
-	//offsetx: 3,
 	offsety: -4,
-	//style:'underline',
 }
 export const totalAmount = {
 	size: 15,

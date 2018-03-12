@@ -5,9 +5,11 @@
       <billfrom_code>0000001</billfrom_code>
       <billfrom_name>株式会社CONNECT・EC</billfrom_name>
       <payee>
-        <bank_info>5</bank_info>
+        <bank_info>8</bank_info>
         <account_type>0</account_type>
-        <account_number>000000000000</account_number>
+        <account_number>3279390</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>株式会社CONNECT・EC</account_name>
       </payee>
     </billfrom>
     <contact_information>
@@ -16,7 +18,7 @@
       <email>info@connect-ec.co.jp</email>
       <zip_code>107-0052</zip_code>
       <prefecture>東京都</prefecture>
-      <address1>港区</address1>
+      <address1>港区赤坂</address1>
       <address2>2丁目21番5号</address2>
     </contact_information>
     <link href="/billfrom/0000001" rel="self"/>
@@ -25,6 +27,13 @@
     <billfrom>
       <billfrom_code>0000002</billfrom_code>
       <billfrom_name>株式会社ネクストジェネレーション</billfrom_name>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>0002520</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>株式会社ネクストジェネレーション</account_name>
+      </payee>
     </billfrom>
     <contact_information>
       <tel>03-6904-1014</tel>
@@ -32,8 +41,8 @@
       <email></email>
       <zip_code>108-0014</zip_code>
       <prefecture>東京都</prefecture>
-      <address1>港区</address1>
-      <address2>5丁目27番3号(TEST)</address2>
+      <address1>港区芝</address1>
+      <address2>5丁目27番3号</address2>
     </contact_information>
     <link href="/billfrom/0000002" rel="self"/>
   </entry>
@@ -41,6 +50,13 @@
     <billfrom>
       <billfrom_code>0000003</billfrom_code>
       <billfrom_name>株式会社CONNECTコーポレーション</billfrom_name>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3279374</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>株式会社CONNECTコーポレーション</account_name>
+      </payee>
     </billfrom>
     <contact_information>
       <tel>048-299-8695</tel>
@@ -57,6 +73,20 @@
     <billfrom>
       <billfrom_code>0000004</billfrom_code>
       <billfrom_name>CONNECT　EXPRESS株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401253</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>コネクト エクスプレス 株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282082</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>コネクト エクスプレス 株式会社</account_name>
+      </payee>
     </billfrom>
     <contact_information>
       <tel>048-299-5987</tel>
@@ -77,6 +107,15 @@
         <bank_info>2</bank_info>
         <account_type>0</account_type>
         <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
       </payee>
     </billfrom>
     <contact_information>

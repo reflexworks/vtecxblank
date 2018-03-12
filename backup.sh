@@ -12,5 +12,6 @@ curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=staff&x" -o data/staff.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=warehouse&x" -o data/warehouse.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=quotation&x" -o data/quotation.xml
 curl -H "Authorization: Token "$1 "$2/s/getfeednoid?q=type_ahead&x" -o data/type_ahead.xml
+curl -H "Authorization: Token "$1 "$2/s/getfeedofinternalworklist?x" -o data/internal_work.xml
 
 #internal_work
