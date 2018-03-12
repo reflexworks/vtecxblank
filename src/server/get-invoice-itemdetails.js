@@ -127,9 +127,9 @@ function getMonthly(internal_work_all) {
 
 		const record = {
 			'category': 'monthly',
-			'item_name': entry.internal_work.item_details_name,
+			'item_name': entry.internal_work.item_details_name+'/'+entry.internal_work.item_details_unit_name,
 			'unit_name': '',
-			'unit': entry.internal_work.item_details_unit_name+'/'+entry.internal_work.item_details_unit,
+			'unit': entry.internal_work.item_details_unit,
 			'quantity': quantity,
 			'unit_price': unit_price,
 			'remarks': entry.internal_work.remarks,
@@ -264,9 +264,9 @@ function getSumRecordDaily(internal_work_daily,item_details_name,item_details_un
     
 	return {
 		'category': 'daily',
-		'item_name': item_details_name,
+		'item_name': item_details_name+'/'+item_details_unit_name,
 		'unit_name': '',
-		'unit': item_details_unit_name+'/'+item_details_unit,
+		'unit': item_details_unit,
 		'quantity': quantity,
 		'unit_price': unit_price,
 		'remarks': entry.internal_work ? entry.internal_work.remarks : '',
