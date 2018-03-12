@@ -123,6 +123,7 @@ item_details{}
  unit_price
  remarks
  is_taxation
+ amount
 quotation
  quotation_code
  quotation_code_sub
@@ -214,22 +215,12 @@ billing_data
  delivery_charge_org_total
  quantity
 billing_summary
- content{}
+ record{}
   size
   zone_name
   quantity
   delivery_charge
   subtotal  
-billing_details
- shipment_service_name
- shipment_service_type
- shipment_service_service_name
- shipment_class
- content{}
-  shipping_date
-  working_quantity
-  billing_quantity
-  billing_amount
 creator
 </content>
 <rights>
