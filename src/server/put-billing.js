@@ -128,16 +128,21 @@ export function getDeliverycharge(customer_all, shipper_code,shipment_service_se
 
 export function getFullDate(datestr) {
 	const matches = /^(\d+)月(\d+)日$/.exec(datestr)
-	const now = new Date()
-	const month = parseInt(matches[1])
-	const day = parseInt(matches[2])
-	let year = now.getFullYear()
+	if (matches&&matches.length >= 2) {
+		const now = new Date()
+		const month = parseInt(matches[1])
+		const day = parseInt(matches[2])
+		let year = now.getFullYear()
 
-	if (now.getMonth()+1 < month ) {
-		year = year - 1
+		if (now.getMonth()+1 < month ) {
+			year = year - 1
+		}
+		return year+'-'+month+'-'+day		
+	} else {
+		throw '日時のパースエラーです。正しい日時を入れてください。(入力値='+datestr+')'
 	}
-	return year+'-'+month+'-'+day
 }
+
 
 export function getKey(datestr, shipment_service_code,tracking_number) {
 
