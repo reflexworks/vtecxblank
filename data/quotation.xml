@@ -1250,11 +1250,13 @@
     </billto>
     <billfrom>
       <billfrom_code>0000001</billfrom_code>
-      <billfrom_name>CONNECT・EC</billfrom_name>
+      <billfrom_name>株式会社CONNECT・EC</billfrom_name>
       <payee>
-        <bank_info>5</bank_info>
+        <bank_info>8</bank_info>
         <account_type>0</account_type>
-        <account_number>000000000000</account_number>
+        <account_number>3279390</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>株式会社CONNECT・EC</account_name>
       </payee>
     </billfrom>
     <contact_information>
@@ -1263,7 +1265,7 @@
       <email>info@connect-ec.co.jp</email>
       <zip_code>107-0052</zip_code>
       <prefecture>東京都</prefecture>
-      <address1>港区</address1>
+      <address1>港区赤坂</address1>
       <address2>2丁目21番5号</address2>
     </contact_information>
     <packing_items>
@@ -1283,8 +1285,8 @@
       <outer_height>140</outer_height>
       <outer_total>800</outer_total>
       <purchase_price>42.00</purchase_price>
-      <regular_price>1,040.00</regular_price>
-      <regular_unit_price>52.00</regular_unit_price>
+      <regular_price>0</regular_price>
+      <regular_unit_price>0</regular_unit_price>
       <special_price>1,040.00</special_price>
       <special_unit_price>52.00</special_unit_price>
     </packing_items>
@@ -1305,8 +1307,8 @@
       <outer_height>220</outer_height>
       <outer_total>1000</outer_total>
       <purchase_price>60.00</purchase_price>
-      <regular_price>1,500.00</regular_price>
-      <regular_unit_price>75.00</regular_unit_price>
+      <regular_price>0</regular_price>
+      <regular_unit_price>0</regular_unit_price>
       <special_price>1,500.00</special_price>
       <special_unit_price>75.00</special_unit_price>
     </packing_items>
@@ -1327,8 +1329,8 @@
       <outer_height>420</outer_height>
       <outer_total>1200</outer_total>
       <purchase_price>87.00</purchase_price>
-      <regular_price>980.00</regular_price>
-      <regular_unit_price>98.00</regular_unit_price>
+      <regular_price>0</regular_price>
+      <regular_unit_price>0</regular_unit_price>
       <special_price>980.00</special_price>
       <special_unit_price>98.00</special_unit_price>
     </packing_items>
@@ -1349,8 +1351,8 @@
       <outer_height>470</outer_height>
       <outer_total>1400</outer_total>
       <purchase_price>118.00</purchase_price>
-      <regular_price>910.00</regular_price>
-      <regular_unit_price>182.00</regular_unit_price>
+      <regular_price>0</regular_price>
+      <regular_unit_price>0</regular_unit_price>
       <special_price>910.00</special_price>
       <special_unit_price>182.00</special_unit_price>
     </packing_items>
@@ -1371,8 +1373,8 @@
       <outer_height>505</outer_height>
       <outer_total>1600</outer_total>
       <purchase_price>146.00</purchase_price>
-      <regular_price>1,200.00</regular_price>
-      <regular_unit_price>240.00</regular_unit_price>
+      <regular_price>0</regular_price>
+      <regular_unit_price>0</regular_unit_price>
       <special_price>1,200.00</special_price>
       <special_unit_price>240.00</special_unit_price>
     </packing_items>
@@ -1393,8 +1395,8 @@
       <outer_height>182</outer_height>
       <outer_total>594</outer_total>
       <purchase_price>21.00</purchase_price>
-      <regular_price>1040.00</regular_price>
-      <regular_unit_price>52.00</regular_unit_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
       <special_price>1040.00</special_price>
       <special_unit_price>52.00</special_unit_price>
     </packing_items>
@@ -1415,8 +1417,8 @@
       <outer_height>430</outer_height>
       <outer_total>850</outer_total>
       <purchase_price>21.00</purchase_price>
-      <regular_price>2,800.00</regular_price>
-      <regular_unit_price>28.00</regular_unit_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
       <special_price>2,800.00</special_price>
       <special_unit_price>28.00</special_unit_price>
     </packing_items>
@@ -1437,46 +1439,337 @@
       <outer_height>123</outer_height>
       <outer_total>663</outer_total>
       <purchase_price>25.00</purchase_price>
-      <regular_price>30,000.00</regular_price>
-      <regular_unit_price>30.00</regular_unit_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
       <special_price>30,000.00</special_price>
       <special_unit_price>30.00</special_unit_price>
     </packing_items>
     <remarks>
-      <content>商品コード（JANコード）は必ず必要です</content>
+      <content>※離島の別途料金につきましては、ヤマト宅急便はかかりません。佐川急便・西濃運輸につきましては、別途実費をご負担頂く場合がございます。</content>
+    </remarks>
+    <remarks>
+      <content>※荷物の運送につきましては、業務提携会社約款に準じます。</content>
+    </remarks>
+    <remarks>
+      <content>※上記運賃につきましては、消費税は別途請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※コレクト（代金引換）手数料は、１万円以下全国一律300円（税別）、３万円以下全国一律４００円（税別）、１０万円以下全国一律６００円（税別）を請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※宅配便出荷商品が30万円以上の時は、荷物のお預かりはできません。</content>
+    </remarks>
+    <remarks>
+      <content>※DM便・ゆうﾊﾟｹｯﾄ・ゆうﾒｰﾙには補償がありません。</content>
     </remarks>
     <basic_condition>
-      <title>委託される業務</title>
+      <title>①委託される業務</title>
       <condition>
-        <content>ロジスティクス業務</content>
+        <content>ロジスティクス業務（ﾚﾃﾞｨｰｽﾌｧｯｼｮﾝ等）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>②保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費・光熱費・バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要。</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>③荷役</title>
+      <condition>
+        <content>入庫作業　　デバンニング・数量検品・外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業　　ピッキング・外観検品・梱包・出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>④配送</title>
+      <condition>
+        <content>宅配便・ＤＭ便・ゆうﾊﾟｹｯﾄにて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>⑤保険</title>
+      <condition>
+        <content>発送：火災保険付保。保管：盗難・火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>⑥決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込。</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>⑦税金</title>
+      <condition>
+        <content>消費税</content>
       </condition>
     </basic_condition>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>入庫作業pce(開梱検品)</unit_name>
       <unit>1点</unit>
-      <unit_price></unit_price>
+      <unit_price>5.00</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>デバンニング</unit_name>
       <unit>20フィート</unit>
-      <unit_price></unit_price>
+      <unit_price>18,000.00</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>デバンニング</unit_name>
       <unit>40フィート</unit>
-      <unit_price></unit_price>
+      <unit_price>31,000.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>自社便</unit_name>
+      <unit>1箱</unit>
+      <unit_price>300.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>エコ配便</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ショップリスト</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>他ショップリスト</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100.00</unit_price>
+      <remarks>ベルーナ向</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>DM便</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>70.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ネコポス</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>70.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>日本郵便ゆうパケ</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>70.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>日本郵便EMS</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>701.00</unit_price>
+      <remarks>国際郵便</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（宅配便）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（エコ配便）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ショップリスト）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（他ショップリスト）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（DM便）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ネコポス）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（日本郵便ゆうパケ）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（日本郵便EMS)</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>自社便１２０サイズまで</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>300.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>横移動</unit_name>
+      <unit>1点</unit>
+      <unit_price>20.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>再検品</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>バーコードシール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>袋入替</unit_name>
+      <unit>1点</unit>
+      <unit_price>45.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>OPPテープ貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>タグ切り</unit_name>
+      <unit>1点</unit>
+      <unit_price>80.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>箱折り折賃</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>採寸検品</unit_name>
+      <unit>1点</unit>
+      <unit_price>150.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>品質表示確認</unit_name>
+      <unit>1点</unit>
+      <unit_price>120.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>返品報告</item_name>
+      <unit_name>返品報告</unit_name>
+      <unit>1件</unit>
+      <unit_price>50.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>返品報告</item_name>
+      <unit_name>返品検品</unit_name>
+      <unit>1件</unit>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷資材</item_name>
+      <unit_name>レターパック</unit_name>
+      <unit>1個</unit>
+      <unit_price>360.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>坪</unit_name>
+      <unit>坪</unit>
+      <unit_price>4,200.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>棚使用料</unit_name>
+      <unit>1台</unit>
+      <unit_price>500</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷資材</item_name>
+      <unit_name>ラベルシート100枚入り</unit_name>
+      <unit>1式</unit>
+      <unit_price>2,800.00</unit_price>
       <remarks></remarks>
     </item_details>
     <quotation>
       <quotation_code>0000012</quotation_code>
       <quotation_code_sub>02</quotation_code_sub>
       <quotation_date>2018/02</quotation_date>
-      <status>0</status>
+      <status>1</status>
     </quotation>
     <link href="/quotation/0000012-02" rel="self"/>
   </entry>
@@ -43178,5 +43471,1051 @@
     </quotation>
     <creator>システム管理者</creator>
     <link href="/quotation/0000122-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000097</billto_code>
+      <billto_name>有限会社 イシカワ・ジョイント・オフィス</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>cushion_001</item_code>
+      <item_name>エアキャップ（プチプチ） 600mm×42m</item_name>
+      <material>ポリエチレンｄ35</material>
+      <category>エアキャップ（プチプチ）</category>
+      <size1>600mm × 42m</size1>
+      <size2>エアキャップ</size2>
+      <notices>1巻価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>600</outer_width>
+      <outer_depth>350</outer_depth>
+      <outer_height>350</outer_height>
+      <outer_total>1300</outer_total>
+      <purchase_price>704.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>775</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>cushion_002</item_code>
+      <item_name>エアキャップ（プチプチ） 1200mm×42m</item_name>
+      <material>ポリエチレンｄ35</material>
+      <category>エアキャップ（プチプチ）</category>
+      <size1>1200mm × 42m</size1>
+      <size2>エアキャップ</size2>
+      <notices>1巻価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>1200</outer_width>
+      <outer_depth>350</outer_depth>
+      <outer_height>350</outer_height>
+      <outer_total>1900</outer_total>
+      <purchase_price>1,176.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>1,310</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_016</item_code>
+      <item_name>ダンボール箱 60サイズ 底面 A5</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>160</inside_depth>
+      <inside_height>170</inside_height>
+      <outer_width>246</outer_width>
+      <outer_depth>166</outer_depth>
+      <outer_height>182</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>31.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>30</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_017</item_code>
+      <item_name>ダンボール箱 60サイズ 底面 B5</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面B5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>270</inside_width>
+      <inside_depth>190</inside_depth>
+      <inside_height>110</inside_height>
+      <outer_width>276</outer_width>
+      <outer_depth>196</outer_depth>
+      <outer_height>122</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>32.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>31</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_018</item_code>
+      <item_name>ダンボール箱 60サイズ 底面 A4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>300</inside_width>
+      <inside_depth>210</inside_depth>
+      <inside_height>64</inside_height>
+      <outer_width>306</outer_width>
+      <outer_depth>216</outer_depth>
+      <outer_height>76</outer_height>
+      <outer_total>598</outer_total>
+      <purchase_price>32.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>31</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_019</item_code>
+      <item_name>ダンボール箱 80サイズ 底面 B5</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面B5</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>270</inside_width>
+      <inside_depth>190</inside_depth>
+      <inside_height>300</inside_height>
+      <outer_width>280</outer_width>
+      <outer_depth>200</outer_depth>
+      <outer_height>320</outer_height>
+      <outer_total>800</outer_total>
+      <purchase_price>40.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>39.25</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_020</item_code>
+      <item_name>ダンボール箱 80サイズ 底面 A4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>230</inside_height>
+      <outer_width>320</outer_width>
+      <outer_depth>230</outer_depth>
+      <outer_height>250</outer_height>
+      <outer_total>800</outer_total>
+      <purchase_price>41.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>40.25</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_021</item_code>
+      <item_name>ダンボール箱 80サイズ 底面 B4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面B4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>375</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>120</inside_height>
+      <outer_width>385</outer_width>
+      <outer_depth>275</outer_depth>
+      <outer_height>140</outer_height>
+      <outer_total>800</outer_total>
+      <purchase_price>42.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>41.25</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_022</item_code>
+      <item_name>ダンボール箱 100サイズ 底面 A4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>330</inside_width>
+      <inside_depth>240</inside_depth>
+      <inside_height>390</inside_height>
+      <outer_width>340</outer_width>
+      <outer_depth>250</outer_depth>
+      <outer_height>410</outer_height>
+      <outer_total>1000</outer_total>
+      <purchase_price>56.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>55</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_023</item_code>
+      <item_name>ダンボール箱 100サイズ 底面 B4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面B4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>375</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>320</inside_height>
+      <outer_width>385</outer_width>
+      <outer_depth>275</outer_depth>
+      <outer_height>340</outer_height>
+      <outer_total>1000</outer_total>
+      <purchase_price>58.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>57</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_024</item_code>
+      <item_name>ダンボール箱 100サイズ 底面 A3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面A3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>440</inside_width>
+      <inside_depth>320</inside_depth>
+      <inside_height>200</inside_height>
+      <outer_width>450</outer_width>
+      <outer_depth>330</outer_depth>
+      <outer_height>220</outer_height>
+      <outer_total>1000</outer_total>
+      <purchase_price>60.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>59</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_025</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 B4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面B4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>375</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>520</inside_height>
+      <outer_width>385</outer_width>
+      <outer_depth>275</outer_depth>
+      <outer_height>540</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>82.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>81</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_026</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 A3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面A3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>440</inside_width>
+      <inside_depth>320</inside_depth>
+      <inside_height>400</inside_height>
+      <outer_width>450</outer_width>
+      <outer_depth>330</outer_depth>
+      <outer_height>420</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>88.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>86</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_027</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 B3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面B3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>530</inside_width>
+      <inside_depth>380</inside_depth>
+      <inside_height>250</inside_height>
+      <outer_width>540</outer_width>
+      <outer_depth>390</outer_depth>
+      <outer_height>270</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>78.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>77</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_028</item_code>
+      <item_name>ダンボール箱 140サイズ 底面 B3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>140サイズ</size1>
+      <size2>底面B3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.0</thickness>
+      <inside_width>530</inside_width>
+      <inside_depth>380</inside_depth>
+      <inside_height>450</inside_height>
+      <outer_width>540</outer_width>
+      <outer_depth>390</outer_depth>
+      <outer_height>470</outer_height>
+      <outer_total>1400</outer_total>
+      <purchase_price>118.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>116</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_029</item_code>
+      <item_name>ダンボール箱 140サイズ 底面 B3超</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>140サイズ</size1>
+      <size2>底面B3超</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>630</inside_width>
+      <inside_depth>445</inside_depth>
+      <inside_height>285</inside_height>
+      <outer_width>640</outer_width>
+      <outer_depth>455</outer_depth>
+      <outer_height>305</outer_height>
+      <outer_total>1400</outer_total>
+      <purchase_price>122.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>120</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_030</item_code>
+      <item_name>ダンボール箱 160サイズ 底面 B3超</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>160サイズ</size1>
+      <size2>底面B3超</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>630</inside_width>
+      <inside_depth>445</inside_depth>
+      <inside_height>485</inside_height>
+      <outer_width>640</outer_width>
+      <outer_depth>455</outer_depth>
+      <outer_height>505</outer_height>
+      <outer_total>1600</outer_total>
+      <purchase_price>146.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>144</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_031</item_code>
+      <item_name>ダンボール箱 160サイズ 底面 B2</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>160サイズ</size1>
+      <size2>底面B2超</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>735</inside_width>
+      <inside_depth>525</inside_depth>
+      <inside_height>300</inside_height>
+      <outer_width>745</outer_width>
+      <outer_depth>535</outer_depth>
+      <outer_height>320</outer_height>
+      <outer_total>1600</outer_total>
+      <purchase_price>150.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>148</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_032</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>404</outer_total>
+      <purchase_price>10.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>15</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_033</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>592</outer_total>
+      <purchase_price>15.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>20</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>16</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>21</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_036</item_code>
+      <item_name>ダンボール箱 特売 60サイズ 底面A5</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>160</inside_depth>
+      <inside_height>170</inside_height>
+      <outer_width>246</outer_width>
+      <outer_depth>166</outer_depth>
+      <outer_height>182</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>31.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>30</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_037</item_code>
+      <item_name>ダンボール箱 特売 80サイズ 底面A4</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width>316</outer_width>
+      <outer_depth>226</outer_depth>
+      <outer_height>252</outer_height>
+      <outer_total>794</outer_total>
+      <purchase_price>39.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>38.17</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_038</item_code>
+      <item_name>ダンボール箱 特売 100サイズ 底面A3</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面A3</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>440</inside_width>
+      <inside_depth>320</inside_depth>
+      <inside_height>210</inside_height>
+      <outer_width>446</outer_width>
+      <outer_depth>326</outer_depth>
+      <outer_height>222</outer_height>
+      <outer_total>994</outer_total>
+      <purchase_price>56.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>55</special_unit_price>
+    </packing_items>
+    <basic_condition>
+      <title>委託される業務　</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title> 保険</title>
+      <condition>
+        <content>発送：火災保険</content>
+      </condition>
+      <condition>
+        <content>保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品　</title>
+      <condition>
+        <content>バック、ファッション小物</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>1パレット</unit_name>
+      <unit>月</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>2パレット=1坪</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>バラ、アソート入庫、外装検品、品番確認、数量検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料</unit_name>
+      <unit>1箱</unit>
+      <unit_price>40</unit_price>
+      <remarks>正箱、外箱に内容個数記載のあるもの。(内容未検)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>DM便・ネコポス・ゆうパケット・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>80</unit_price>
+      <remarks>ピッキング・外装検品・1点封入</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100</unit_price>
+      <remarks>ピッキング・外装検品・伝票発行・１点梱包</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業(2点目～)</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>5</unit_price>
+      <remarks>ステッカー、チラシ、カタログ、パンフレットなど</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>伝票貼付け</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>30</unit_price>
+      <remarks>ピッキング、外装検品、梱包済の商品に伝票貼り付けのみになります</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>100</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の入庫処理等</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアキャップ巻き</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー等の小物(資材別途)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアキャップ巻き</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>資材別途</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>ラッピング</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>資材別途</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印字。貼り作業(用紙別途)※品番が無いもの</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>ＤＭ便・ゆうパッケット</unit_name>
+      <unit>1件</unit>
+      <unit_price>5</unit_price>
+      <remarks>伝票発行(指定のCSV・エクセルデータ)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1件</unit>
+      <unit_price>10</unit_price>
+      <remarks>伝票発行(指定のCSV・エクセルデータ)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name></unit_name>
+      <unit>月額</unit>
+      <unit_price>10,000</unit_price>
+      <remarks>ＷＭＳが必要な場合相談</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000123</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000123-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000100</billto_code>
+      <billto_name>日生バイオ 株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_032</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>404</outer_total>
+      <purchase_price>10.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>17</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_033</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>592</outer_total>
+      <purchase_price>15.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>22</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>18</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>23</special_unit_price>
+    </packing_items>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務(サプリメント等)</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料、動線負担を含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅急便、DM便にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険</content>
+      </condition>
+      <condition>
+        <content>保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>1坪</unit_name>
+      <unit>月</unit>
+      <unit_price>4,200</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>外装検品、品番確認、数量検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料</unit_name>
+      <unit>1箱</unit>
+      <unit_price>30</unit_price>
+      <remarks>正箱、外箱に内容個数記載のあるもの。(内容未検)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ゆうパッケット</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>80</unit_price>
+      <remarks>ピッキング(同SKU1~5PS )、外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>100</unit_price>
+      <remarks>ピッキング(同SKU1~10PS)、外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業料</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks>同SKU1～10PS迄が1点</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業料</unit_name>
+      <unit>1枚</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書(用紙・印字代含む)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業料</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>5</unit_price>
+      <remarks>ステッカー・チラシ・カタログ・パンフレット等共通のもの</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品作業</unit_name>
+      <unit>1件</unit>
+      <unit_price>100</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の入庫処理等</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1件</unit>
+      <unit_price>10</unit_price>
+      <remarks>伝票発行(弊社指定テンプレート・CSVまたはエクセルデータが条件)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>DM便等</unit_name>
+      <unit>1件</unit>
+      <unit_price>5</unit_price>
+      <remarks>伝票発行(弊社指定テンプレート・CSVまたはエクセルデータが条件)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name></unit_name>
+      <unit>月額</unit>
+      <unit_price>10,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000124</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000124-01" rel="self"/>
   </entry>
 </feed>

@@ -292,8 +292,8 @@
     <billto>
       <billto_code>0000019</billto_code>
       <billto_name>トゥモロー 株式会社</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date></payment_date>
+      <billing_closing_date>1</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
       <post_has_sizeweight>1</post_has_sizeweight>
       <yamato_has_details>0</yamato_has_details>
     </billto>

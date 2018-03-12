@@ -2,31 +2,6 @@
 <feed>
   <entry>
     <packing_item>
-      <item_code>AKP-001</item_code>
-      <item_name>エアキャップ</item_name>
-      <material>ビニール</material>
-      <category>梱包資材</category>
-      <size1>50cm x 10m</size1>
-      <size2></size2>
-      <notices>なし</notices>
-      <thickness>2cm</thickness>
-      <inside_width>50cm</inside_width>
-      <inside_depth>2cm</inside_depth>
-      <inside_height>10cm</inside_height>
-      <outer_width>50cm</outer_width>
-      <outer_depth>2cm</outer_depth>
-      <outer_height>10cm</outer_height>
-      <outer_total>62</outer_total>
-      <purchase_price>2,000</purchase_price>
-      <regular_price>3,000</regular_price>
-      <regular_unit_price>3,000</regular_unit_price>
-      <special_price>2,500</special_price>
-      <special_unit_price>2,500</special_unit_price>
-    </packing_item>
-    <link href="/packing_item/0-6-35-9-4-10-83" rel="self"/>
-  </entry>
-  <entry>
-    <packing_item>
       <item_code>band_001</item_code>
       <item_name>自動梱包用PPバンド（青）　15.5mm×2500ｍ</item_name>
       <material>ポリプロピレン</material>

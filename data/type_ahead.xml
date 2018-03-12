@@ -506,6 +506,34 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>アクセサリー等の小物(資材別途)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-76" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>国際郵便</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-77" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（ネコポス）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-78" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>外装検品、品番確認、数料検品</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-1-79" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>3</type>
       <value>360.00</value>
     </type_ahead>
@@ -1014,6 +1042,20 @@
       <value>1パレット追加\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-10-73" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>坪</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-10-74" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>外装検品、品番確認、数量検品</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-10-75" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -1543,9 +1585,65 @@
   <entry>
     <type_ahead>
       <type>1</type>
+      <value>エコ配便</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-76" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ネコポス</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-77" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>日本郵便ゆうパケ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-78" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（日本郵便EMS)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-79" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
       <value>宅急便</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-2-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>出荷資材</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-80" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>同SKU1～10PS迄が1点</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-81" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>返品作業</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-82" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>DM便等</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-2-83" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -2036,6 +2134,27 @@
       <value>15：00迄</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-3-71" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ショップリスト</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-3-72" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（日本郵便ゆうパケ）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-3-73" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング(同SKU1~10PS)、外装検品</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-3-74" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -2613,6 +2732,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>同梱作業（他ショップリスト）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-4-85" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ラベルシート100枚入り</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-4-86" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>4</type>
       <value>住所不明、長期不在等で返品になった商品の在庫戻し、貴社報告</value>
     </type_ahead>
@@ -3146,9 +3279,37 @@
   <entry>
     <type_ahead>
       <type>4</type>
+      <value>2パレット=1坪</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-79" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
       <value>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-5-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング、外装検品、梱包済の商品に伝票貼り付けのみになります</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-80" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（エコ配便）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-81" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（DM便）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-5-82" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -3754,10 +3915,45 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>資材別途</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-87" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>自社便１２０サイズまで</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-88" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>クルーズ出荷</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-89" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>0</type>
       <value>返品報告</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-6-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>納品書(用紙・印字代含む)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-90" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>伝票発行(弊社指定テンプレート・CSVまたはエクセルデータが条件)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-6-91" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -4269,6 +4465,20 @@
       <value>同梱作業料（ゆうパケット2点目～）</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-7-76" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ラッピング</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-7-77" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（宅配便）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-7-78" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -4804,6 +5014,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>DM便</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-8-78" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>日本郵便EMS</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-8-79" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>0</type>
       <value>ヤマト運輸代引き手数料(十万円未満）</value>
     </type_ahead>
@@ -5214,6 +5438,48 @@
       <value>ショップリスト</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-9-60" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>シール印字。貼り作業(用紙別途)※品番が無いもの</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-61" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>ラッピング</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-62" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>他ショップリスト</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-63" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（ショップリスト）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-64" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>箱折り折賃</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-65" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング(同SKU1~5PS )、外装検品</value>
+    </type_ahead>
+    <link href="/type_ahead/0-6-35-9-14-9-66" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
