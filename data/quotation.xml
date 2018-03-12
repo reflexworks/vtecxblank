@@ -13596,8 +13596,32 @@
       <billto_name>株式会社 ティニースプーン</billto_name>
     </billto>
     <billfrom>
-      <billfrom_name></billfrom_name>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
     </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
     <packing_items>
       <item_code>dbox_016</item_code>
       <item_name>ダンボール箱 60サイズ 底面 A5</item_name>
