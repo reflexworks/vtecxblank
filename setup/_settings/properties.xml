@@ -9,7 +9,7 @@
     </contributor>
 <rights>
 console.log=true
-console.warn=true 
+console.warn=false 
 console.error=true
 _errorpage.1.login.html=^/_html/.*$
 </rights>
