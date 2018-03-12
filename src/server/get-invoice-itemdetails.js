@@ -1,22 +1,25 @@
 import vtecxapi from 'vtecxapi' 
 import { getBillingdata } from './get-billingdata'
 
-const customer_code = '0000182' // 0000163
-const quotation_code = '0000107'
-const working_yearmonth = '2018/01'
+const customer_code = vtecxapi.getQueryString('customer_code') //0000182 // 0000163
+const quotation_code = vtecxapi.getQueryString('quotation_code') //0000107
+const working_yearmonth = vtecxapi.getQueryString('working_yearmonth') //2018/01
 
 try {
 	const response = { 'feed': { 'entry': [{ 'item_details': [] }] } }
-	response.feed.entry[0].item_details = getItemDetails(customer_code, quotation_code, working_yearmonth)
+	response.feed.entry[0].item_details = getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth)
 	vtecxapi.doResponse(response)
 
 } catch (e) {
 	vtecxapi.sendMessage(400, e)
 }
 
-function getItemDetails(customer_code, quotation_code, working_yearmonth) {
+export function getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth) {
     
 	const internal_work = vtecxapi.getFeed('/internal_work?customer.customer_code=' + customer_code + '&quotation.quotation_code=' + quotation_code + '&internal_work.working_yearmonth=' + working_yearmonth)
+
+	const shipment_service = vtecxapi.getFeed('/shipment_service')
+	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
 
 	let result = []
 	if (internal_work.feed.entry) {
@@ -33,10 +36,10 @@ function getItemDetails(customer_code, quotation_code, working_yearmonth) {
 			// period
 			result = result.concat(getPeriod(internal_work_all))
 			// shipping
-			result = result.concat(getShipping(customer_code,working_yearmonth,'YH','0','ヤマト運輸/発払'))    // ヤマト発払・出荷
-			result = result.concat(getShipping(customer_code,working_yearmonth,'YH1','0','ヤマト運輸/DM便'))    // ヤマト発払・出荷
-			result = result.concat(getShipping(customer_code,working_yearmonth,'YH2','0','ヤマト運輸/ネコポス'))    // ヤマト発払・出荷
-            
+			shipment_service.feed.entry.map((entry) => {
+				result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
+				result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
+			})
 		}
 	}
 	return result
