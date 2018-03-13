@@ -70,7 +70,7 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 					})
 					if (entry.length > 0) {
 						const subtotal = entry.length * parseInt(entry[0].billing_data.delivery_charge)
-						const record = { 'size' : size,'zone_name':zone,'quantity':entry.length,'delivery_charge':entry[0].billing_data.delivery_charge,'subtotal':subtotal}
+						const record = { 'size' : size,'zone_name':zone,'quantity':''+entry.length,'delivery_charge':entry[0].billing_data.delivery_charge,'subtotal':''+subtotal}
 						result.billing_summary.record.push(record)						
 					} else {
 						let delivery_area = null
@@ -78,7 +78,7 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 							delivery_area = billing_data.feed.entry[0].billing_data.delivery_class
 						}
 						const charge_by_zone = getChargeBySizeAndZone(customer_code,billing_data.feed.entry[0].billing_data.shipment_service_code, size, zone, delivery_area)
-						const record = { 'size' : size,'zone_name':zone,'quantity':0,'delivery_charge':charge_by_zone[0].price,'subtotal':0}
+						const record = { 'size' : size,'zone_name':zone,'quantity':'0','delivery_charge':charge_by_zone[0].price,'subtotal':'0'}
 						result.billing_summary.record.push(record)												
 					}
 				})

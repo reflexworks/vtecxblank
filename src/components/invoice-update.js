@@ -45,7 +45,9 @@ export default class InvoiceUpdate extends React.Component {
 
 		// 初期値の設定
 		this.entry = {}
+
 	}
+
 	/**
      * 画面描画の前処理
      */
@@ -116,8 +118,26 @@ export default class InvoiceUpdate extends React.Component {
 			print()
 		}
 	}
-    
+
+	doPrintSummary(_isPreview) {
+		const print = () => {
+			const shipping_yearmonth = this.state.workingYearmonth.replace(/\//, '')
+			let url = '/s/get-pdf-billing-summary?shipping_yearmonth='+ shipping_yearmonth +'&billto_code=' + this.entry.billto.billto_code
+			url = _isPreview ? url + '&preview' : url
+			location.href = url
+		}
+		print()
+	}
+
 	render() {
+		const buttons = [
+			<CommonBackBtn key={0} NavItem href={this.backUrl} />,
+			<CommonUpdateBtn key={1} NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />,
+			<CommonDeleteBtn key={2} NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />,
+			<CommonGeneralBtn key={3} NavItem onClick={()=>this.doPrint(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求書)</span>} />,
+			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrintSummary(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求明細簡易版)</span>} />
+		]
+
 		return (
 			<Grid>
 				<Row>
@@ -140,10 +160,7 @@ export default class InvoiceUpdate extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonBackBtn NavItem href={this.backUrl} />
-									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
-									<CommonGeneralBtn NavItem onClick={()=>this.doPrint(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求書)</span>} />
+									{buttons}
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -159,10 +176,7 @@ export default class InvoiceUpdate extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonBackBtn NavItem href={this.backUrl} />
-									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
-									<CommonGeneralBtn NavItem onClick={()=>this.doPrint(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求書)</span>} />
+									{buttons}
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
