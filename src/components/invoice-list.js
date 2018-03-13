@@ -6,9 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Button,
 	//	Panel,
-	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -19,7 +17,8 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonPrefecture,
+	CommonRadioBtn,
+	//CommonPrefecture,
 	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
 	CommonPagination,
@@ -76,7 +75,7 @@ export default class InvoiceList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ feed:'',isDisabled: false, isError: response })
+				this.setState({ feed:'',isDisabled: false, isError: response, })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -164,77 +163,57 @@ export default class InvoiceList extends React.Component {
 						
 						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
 						 
+							<CommonInputText
+								controlLabel="請求番号"
+								name="invoice.invoice_code"
+								type="text"
+								placeholder="請求番号"
+							/>
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
-								name="quotation.quotation_date"
+								name="invoice.invoice_yearmonth"
 								value={this.state.searchYearMonth}
 							/>
-							
 							<CommonInputText
-								controlLabel="顧客コード"
-								name="invoice.customer_code"
-								type="text"
-								placeholder="顧客コード"
-							/>
-							<CommonInputText
-								controlLabel="顧客名"
-								name="invoice.customer_name"
+								controlLabel="請求先名"
+								name="invoice.invoice_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
-							<CommonInputText
-								controlLabel="顧客名(カナ)"
-								name="invoice.customer_name_kana"
-								type="text"
-								placeholder="カブシキガイシャ ◯◯◯"
-							/>
-							<CommonInputText
-								controlLabel="電話番号"
-								name="invoice.customer_tel"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="FAX"
-								name="invoice.customer_fax"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="メールアドレス"
-								name="invoice.customer_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-							/>
-							<CommonInputText
-								controlLabel="郵便番号"
-								name="invoice.zip_code"
-								type="text"
-								placeholder="123-4567"
-								size="sm"
-							/>
-							<CommonPrefecture
-								controlLabel="都道府県"
-								componentClass="select"
-								name="invoice.prefecture"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="市区郡町村"
-								name="invoice.address1"
-								type="text"
-								placeholder="◯◯市××町"
-							/>
-							<CommonInputText
-								controlLabel="番地"
-								name="invoice.address2"
-								type="text"
-								placeholder="1丁目2番地 ◯◯ビル1階"
-								size="lg"
+
+							<CommonRadioBtn
+								controlLabel="発行ステータス"
+								name="invoice.issue_status"
+								data={[{
+									label: '発行',
+									value: '0',
+								}, {
+									label: '20日締',
+									value: '1',
+								}]}
 							/>
 
+							<CommonRadioBtn
+								controlLabel="発行ステータス"
+								name="issue.status"
+								data={[{
+									label: '全て',
+									value: ''
+								},{
+									label: '未発行',
+									value: '0'
+								},{
+									label: '発行済',
+									value: '1'
+								}]}
+							/>
+
+							<CommonInputText
+								controlLabel="作成者"
+								name="creator"
+								type="text"
+								placeholder="作成者"
+							/>
 						</CommonSearchConditionsFrom>
 						
 					</Col>
@@ -261,10 +240,6 @@ export default class InvoiceList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'invoice.total_amount', title: '合計請求金額', width: '200px'
-							}, {
-								field: 'invoice.consumption_tax', title: '消費税', width: '200px'
-							}, {
 								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {
 								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
@@ -278,14 +253,9 @@ export default class InvoiceList extends React.Component {
 								value={this.state.searchYearMonth}
 								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
 								table
+								//onChange={(data) => this.doSearch(data)}
 							/>
 
-							<Button bsSize="sm" style={{ float: 'left', width: '120px', 'margin': '0px 0px' }}>
-								請求先ごとに表示
-							</Button>
-							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
-								<Glyphicon glyph="download" />CSVダウンロード
-							</Button>
 						</CommonTable>
 					</Col>  
 				</Row>  

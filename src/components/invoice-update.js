@@ -22,6 +22,7 @@ import {
 	CommonDeleteBtn,
 	CommonBackBtn,
 	CommonGeneralBtn,
+
 } from './common'
 
 
@@ -31,7 +32,9 @@ export default class InvoiceUpdate extends React.Component {
 		super(props)
 		this.state = {
 			isDisabled: false,
-			isError: {}
+			isError: {},
+			workingYearmonth: '2018/01',
+			customer:'',
 		}
 
 		// URL設定
@@ -91,9 +94,17 @@ export default class InvoiceUpdate extends React.Component {
 	/**
      * 見積明細と基本条件と備考のプレビュー もしくは 再発行
      */
+
+	changeYearmonth(data) {
+		this.setState({workingYearmonth:data})
+	}
+	changeCustomerCode(data) {
+		this.setState({customer:data})
+	}
+
 	doPrint(_isPreview) {
 		const print = () => {
-			let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code
+			let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.state.workingYearmonth + '&customer_code=' + this.state.customer
 			url = _isPreview ? url + '&preview' : url
 			location.href = url
 		}
@@ -140,7 +151,7 @@ export default class InvoiceUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InvoiceForm name="mainForm" entry={this.entry} />
+						<InvoiceForm name="mainForm" entry={this.entry} changeCustomerCode={(data)=>this.changeCustomerCode(data)} changeYearmonth={(data)=>this.changeYearmonth(data)}/>
 					</Col>
 				</Row>
 				<Row>
