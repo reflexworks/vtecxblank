@@ -48,11 +48,11 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 			billing_summary: { record: [] }
 		}
 		const customer_code = _entry.customer.customer_code
-		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + delivery_company + '*', true)
+		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + delivery_company + '_*', true)
 		if (billing_data.feed.entry) {
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
-				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '*', true)
+				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '_*', true)
 				const d0 = new Date(lastyearmonth.slice(0, 4), parseInt(lastyearmonth.slice(-2)) - 1, '21').getTime()
 				const d1 = new Date(shipping_yearmonth.slice(0, 4), parseInt(shipping_yearmonth.slice(-2)) - 1, '20').getTime()
 				billing_data.feed.entry = billing_data_prev.feed.entry ? billing_data_prev.feed.entry.concat(billing_data.feed.entry) : billing_data.feed.entry
