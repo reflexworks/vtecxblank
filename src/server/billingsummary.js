@@ -3,21 +3,20 @@ import { getChargeBySizeAndZone } from './put-billing'
 
 const shipping_yearmonth = vtecxapi.getQueryString('shipping_yearmonth')  //201801
 const billto_code = vtecxapi.getQueryString('billto_code')  // 0000124
+const customer_code = vtecxapi.getQueryString('customer_code')  // 0000124
 const delivery_company = vtecxapi.getQueryString('delivery_company')  //YH or ECO
 
 try {
-	const result = {
-		'feed': { 'entry': [] }
-	}
+	const result = getSummary(shipping_yearmonth, billto_code, delivery_company, customer_code)
 
-	result.feed.entry.push(getSummary(shipping_yearmonth, billto_code, delivery_company))
 	vtecxapi.doResponse(result)
 	
 } catch (e) {
 	vtecxapi.sendMessage(400, e)
 }
 
-function getSummary(shipping_yearmonth,billto_code,delivery_company) {
+export function getSummary(shipping_yearmonth, billto_code, delivery_company, _customer_code) {
+
 	const billto = vtecxapi.getEntry('/billto/' + billto_code)
 
 	let billing_closing_date = 0
@@ -34,19 +33,26 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 		return zone.zone_name
 	})
 
-	const customer = vtecxapi.getFeed('/customer/?billto.billto_code=' + billto_code)
-	const customer_code = customer.feed.entry.map((entry) => { return entry.customer.customer_code })
-
-	const result = {
-		'billing_summary': { 'record': [] }
+	let customer
+	if (_customer_code) {
+		customer = vtecxapi.getEntry('/customer/' + _customer_code)
+	} else {
+		customer = vtecxapi.getFeed('/customer/?billto.billto_code=' + billto_code)
 	}
-	customer_code.map((customer_code) => {
 
-		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + delivery_company + '*', true)
+	const entry = []
+	customer.feed.entry.map((_entry) => {
+
+		const result = {
+			customer: _entry.customer,
+			billing_summary: { record: [] }
+		}
+		const customer_code = _entry.customer.customer_code
+		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + delivery_company + '_*', true)
 		if (billing_data.feed.entry) {
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
-				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '*', true)
+				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '_*', true)
 				const d0 = new Date(lastyearmonth.slice(0, 4), parseInt(lastyearmonth.slice(-2)) - 1, '21').getTime()
 				const d1 = new Date(shipping_yearmonth.slice(0, 4), parseInt(shipping_yearmonth.slice(-2)) - 1, '20').getTime()
 				billing_data.feed.entry = billing_data_prev.feed.entry ? billing_data_prev.feed.entry.concat(billing_data.feed.entry) : billing_data.feed.entry
@@ -78,8 +84,12 @@ function getSummary(shipping_yearmonth,billto_code,delivery_company) {
 				})
 			})
 		}
+		entry.push(result)
 	})
-	return result
+
+	const data = { feed: { entry: entry }}
+
+	return data
 }
 
 function getLastMonth(shipping_yearmonth) {

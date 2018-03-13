@@ -12,6 +12,8 @@ export function CommonGetFlag(_obj) {
 
 export function addFigure(numVal) {
 
+	numVal = '' + numVal
+
 	// 空の場合そのまま返却
 	if (numVal === ''){
 		return ''
