@@ -1144,10 +1144,10 @@ h3.title {
   white-space: nowrap;
 }
 .invoiceDetails-table>.table>tbody>tr>td {
-
   padding: 5px;
   vertical-align: middle;
   white-space: nowrap;
+  text-align: right;
 }
 .invoiceDetails-table>.table>tbody>tr>td>div {
   padding: 5px;
@@ -1212,7 +1212,9 @@ h3.title {
   color: #ccc;
   text-decoration: line-through;
 }
-
+.invoiceDetails-table .table .center {
+  text-align: center;
+}
 .test{
   color:red;
   padding: 100px 100px
