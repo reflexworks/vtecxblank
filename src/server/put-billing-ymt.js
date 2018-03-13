@@ -98,4 +98,3 @@ function getBillingDataOfMail(entry,shipment_service_service_name) {
 	}
 	return billing_data
 }
-
