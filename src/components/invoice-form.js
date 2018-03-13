@@ -42,10 +42,10 @@ export default class InvoiceForm extends React.Component {
 			showBillfromAddModal: false,
 			showBillfromEditModal: false,
 			selectQuotation: '',
-			selectCustomer: '',
-			selectInternalWorkYearMonth: this.props.workingYearmonth,
-			
+			selectCustomer: ''
 		}
+
+		this.selectInternalWorkYearMonth = this.props.workingYearmonth
 		
 		this.total_amount = 0
 		this.service_total_amount = 0
@@ -636,16 +636,13 @@ export default class InvoiceForm extends React.Component {
 				this.service_total_amount = response.data.feed.entry[0].item_details.reduce((prev,current) => { 
 					return { 'amount': ''+(Number(prev.amount) + Number(current.amount)) }
 				})
-				console.log(this.service_total_amount)
-				
-				
+
 				//カンマ差し込み処理
 				response.data.feed.entry[0].item_details.map((item_details) =>{
 					item_details.unit_price = addFigure(item_details.unit_price)
 					item_details.amount = addFigure(item_details.amount)
 				})
-	
-				console.log(response)
+
 				if (response.data.feed.entry[0].item_details) {
 
 					for (let i = 0; i < response.data.feed.entry[0].item_details.length; ++i) {
@@ -703,23 +700,8 @@ export default class InvoiceForm extends React.Component {
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})
-		
-		/* 請求データ用
-		axios({
-			url: '/s/billingdetails',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-			console.log(response)
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
-		*/
-	}
 
-	
+	}
 
 	/**
 	 *  請求元リストを作成する
@@ -783,6 +765,7 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})   
 	}
+
 	/**
 	 * 請求元リストの変更
 	 */
@@ -797,8 +780,9 @@ export default class InvoiceForm extends React.Component {
 			this.billfrom = {}
 		}
 		this.forceUpdate()
-		
+
 	}
+
 	setBillfromData(_data, _modal) {
 		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
 		if (_modal === 'add') {
@@ -842,17 +826,23 @@ export default class InvoiceForm extends React.Component {
 	 * 顧客変更処理
 	 */
 	changeCustomer(_data) {
+
 		if (_data) {
 			this.setState({selectCustomer :_data.data.customer})
 			this.customer = _data.data
 			if (this.props.changeCustomerCode) {
 				this.props.changeCustomerCode(_data.data.customer.customer_code)
 			}
-			if (this.state.selectInternalWorkYearMonth) { this.getService(_data.data.customer.customer_code,this.state.selectInternalWorkYearMonth) }
+			if (this.selectInternalWorkYearMonth) { this.getService(_data.data.customer.customer_code, this.selectInternalWorkYearMonth) }
+
 		} else {
 			this.setState({ selectCustomer: {} })
 			this.customer = {}
 		}	
+
+		// 簡易明細表示
+		this.setBillingSummaryTable()
+
 	}
 
 	/**
@@ -897,13 +887,23 @@ export default class InvoiceForm extends React.Component {
 	 * 庫内作業年月変更
 	 */
 	changeInternalWorkYearMonth(_data) {
-		this.setState({
-			selectInternalWorkYearMonth: _data ? _data.value : ''
-		})
-		if(this.props.changeYearmonth){
-			this.props.changeYearmonth(_data.value)
+
+		if (_data) {
+			this.selectInternalWorkYearMonth = _data.value
+			if(this.props.changeYearmonth){
+				this.props.changeYearmonth(_data.value)
+			}
+			if (this.state.selectCustomer) { this.getService(this.state.selectCustomer.customer_code, _data.value) }
+
+			this.forceUpdate()
+
+		} else {
+			this.selectInternalWorkYearMonth = null
 		}
-		if (this.state.selectCustomer) { this.getService(this.state.selectCustomer.customer_code, _data.value) }
+
+		// 簡易明細表示
+		this.setBillingSummaryTable()
+
 	}
 
 	/**
@@ -914,7 +914,6 @@ export default class InvoiceForm extends React.Component {
 		//変更処理
 		if (_celindex === 'is_taxation') {
 			this.item_details[list][_rowindex][_celindex] = _data ? _data.value : ''
-			console.log(this.item_details[list][_rowindex][_celindex])
 		} else {
 			this.item_details[list][_rowindex][_celindex] = _data	
 		}
@@ -946,7 +945,6 @@ export default class InvoiceForm extends React.Component {
 
 	changeTotalAmount() {
 
-		console.log(this.entry.item_details)
 		let entry_amount = '0'
 		
 		if (this.entry.item_details) {
@@ -958,36 +956,17 @@ export default class InvoiceForm extends React.Component {
 				})
 			}
 		}
-		/*
-		let taxArray = []
-		taxArray = this.entry.item_details.map((item_details) => {
-			if(item_details.is_taxation === '0'){
-				return item_details
-			}
-		})
 
-		this.consumption_tax = '0'
-		if (taxArray) {
-			taxArray.map((array) => {
-				if (array.amount) {
-					this.consumption_tax = Math.floor((Number(this.consumption_tax) +(Number(array.amount * 0.08))))
-				}
-			})
-		}	
-		console.log(taxArray)
-		*/
 		let entry_total = '0'
 		if (entry_amount !== '0') {
 			entry_total = entry_amount.amount	
 		} 
 		let service_total = this.service_total_amount ? this.service_total_amount.amount : '0'
-		
 
 		this.total_amount = (Number(entry_total) + Number(service_total))
-		console.log(this.total_amount)
+
 		this.forceUpdate()
 	}
-
 
 	/*
 	 * 請求書内の月時作業、日時作業、資材などに項目を追加する
@@ -1003,6 +982,7 @@ export default class InvoiceForm extends React.Component {
 		this.entry.item_details.push(_data)
 		this.forceUpdate()
 	}
+
 	/**
 	 * 請求書内で追加した項目を削除
 	 */
@@ -1072,14 +1052,256 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	billingDetailsCSVDownLoad(_data) {
-		if (this.state.selectInternalWorkYearMonth) {
-			let searchYearmonth = this.state.selectInternalWorkYearMonth.replace(/\//, '')
+		if (this.selectInternalWorkYearMonth) {
+			let searchYearmonth = this.selectInternalWorkYearMonth.replace(/\//, '')
 			let delivery = _data.delivery === 'ヤマト運輸' ? 'YH' : 'ECO'
 			location.href = '/s/downloadbillingcsv?shipping_yearmonth=' + searchYearmonth + '&billto_code=' + this.entry.billto.billto_code + '&delivery_company=' + delivery
 		} else {
 			alert('庫内作業年月が選択されていません。')
 		}
 	}
+
+	/**
+	 * 簡易明細テーブル表示
+	 */
+	setBillingSummaryTable() {
+
+		let getCount = 0
+		let tables = [null,null,null]
+
+		/**
+		 * 明細テーブル描画処理
+		 */
+		const viewTable = (_pdf_option) => {
+
+			// 合計通信数が2になったら描画処理
+			if (getCount === 2) {
+
+				if (tables[1] || tables[2]) {
+					const downloadSinglePdf = () => {
+						location.href = '/s/get-pdf-billing-summary' + _pdf_option
+					}
+
+					tables[0] = (
+						<div>
+							<Button bsSize="small" onClick={() => downloadSinglePdf()}>
+								<Glyphicon glyph="download" /> PDFダウンロード
+							</Button>
+							<br />
+							<br />
+						</div>
+					)
+				}
+				this.billingSummaryTable = tables
+				this.forceUpdate()
+			}
+		}
+
+		/**
+		 * 明細テーブル生成処理
+		 */
+		const setSummaryTable = (_record, _tableIndex, _tableName, _pdf_option) => {
+
+			let cash_header = {}
+			let header1 = [<th key={0}></th>]
+			let header2 = [<td className="center" key={0}>サイズ</td>]
+			let is_end_header = false
+
+			let befor_size
+			let this_size
+
+			let record_array = []
+			let record_array_index = -1
+
+			let sizeTotalData = {}
+			let sub_total = {}
+
+			const setSizeTotal = (_index, _size) => {
+				record_array[_index].push(
+					<td key={record_array[_index].length}>
+						{sizeTotalData[_size].quantity}
+					</td>
+				)
+				record_array[_index].push(
+					<td key={record_array[_index].length}>
+						{addFigure(sizeTotalData[_size].sub_total + '')}
+					</td>
+				)
+			}
+
+			for (let i = 0, ii = _record.length; i < ii; ++i) {
+
+				const record = _record[i]
+				this_size = record.size
+
+				if (!sizeTotalData[this_size]) {
+					sizeTotalData[this_size] = {
+						quantity: 0,
+						sub_total: 0
+					}
+				}
+				sizeTotalData[this_size].quantity = sizeTotalData[this_size].quantity + parseInt(record.quantity)
+				sizeTotalData[this_size].sub_total = sizeTotalData[this_size].sub_total + parseInt(record.subtotal)
+
+				if (!is_end_header && !cash_header[record.zone_name]) {
+					cash_header[record.zone_name] = true
+					header1.push(<th colspan="3" key={header1.length}>{record.zone_name}</th>)
+					header2.push(<td className="center" key={header2.length}>個数</td>)
+					header2.push(<td className="center" key={header2.length}>単価</td>)
+					header2.push(<td className="center" key={header2.length}>小計</td>)
+				} else if (!is_end_header) {
+					is_end_header = true
+				}
+				if (befor_size !== this_size) {
+					record_array_index++
+					if (!record_array[record_array_index]) {
+						record_array[record_array_index] = []
+					}
+					record_array[record_array_index].push(
+						<td className="center" key={record_array[record_array_index].length}>{this_size}</td>
+					)
+
+					const befor_index = parseInt(JSON.stringify(record_array_index)) - 1
+					if (befor_index > -1) {
+						setSizeTotal(befor_index, befor_size)
+					}
+					befor_size = record.size
+
+				}
+				record_array[record_array_index].push(
+					<td key={record_array[record_array_index].length}>
+						{record.quantity}
+					</td>
+				)
+				record_array[record_array_index].push(
+					<td key={record_array[record_array_index].length}>
+						{addFigure(record.delivery_charge)}
+					</td>
+				)
+				record_array[record_array_index].push(
+					<td key={record_array[record_array_index].length}>
+						{addFigure(record.subtotal)}
+					</td>
+				)
+
+				if (!sub_total[record.zone_name] && sub_total[record.zone_name] !== 0) {
+					sub_total[record.zone_name] = 0
+				}
+				sub_total[record.zone_name] = sub_total[record.zone_name] + parseInt(record.subtotal)
+			}
+
+			setSizeTotal(record_array_index, this_size)
+
+			header1.push(<th key={header1.length}></th>)
+			header1.push(<th key={header1.length}>合計</th>)
+			header2.push(<td className="center" key={header2.length}>総個数</td>)
+			header2.push(<td className="center" key={header2.length}>金額</td>)
+
+			let tr_array = []
+			record_array.map((_td) => {
+				tr_array.push(<tr>{_td}</tr>)
+			})
+
+			let sub_total_td = [<td key={0}>合計</td>]
+			Object.keys(sub_total).forEach((_key) => {
+				const value = sub_total[_key] + ''
+				sub_total_td.push(<td key={sub_total_td.length}></td>)
+				sub_total_td.push(<td key={sub_total_td.length}></td>)
+				sub_total_td.push(<td key={sub_total_td.length}>{addFigure(value)}</td>)
+			})
+
+			let total_sub_quantity = 0
+			let total_sub_total = 0
+			Object.keys(sizeTotalData).forEach((_key) => {
+				const size_data = sizeTotalData[_key]
+				total_sub_quantity = total_sub_quantity + size_data.quantity
+				total_sub_total = total_sub_total + size_data.sub_total
+			})
+			sub_total_td.push(<td key={sub_total_td.length}>{total_sub_quantity}</td>)
+			sub_total_td.push(<td key={sub_total_td.length}>{addFigure(total_sub_total + '')}</td>)
+			tr_array.push(<tr>{sub_total_td}</tr>)
+
+			tables[_tableIndex] = (
+				<Panel collapsible header={_tableName} eventKey="2" bsStyle="info" defaultExpanded="true">
+					<div className="invoiceDetails-table scroll">
+						<Table striped bordered hover>
+							<thead>
+								<tr>
+									{header1}
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									{header2}
+								</tr>
+								{tr_array}
+							</tbody>
+						</Table>
+					</div>
+				</Panel>
+			)
+
+			viewTable(_pdf_option)
+
+		}
+
+		/**
+		 * 明細データ取得処理
+		 */
+		const getBillingSummary = (_customer, _shipping_yearmonth, _delivery_company) => {
+
+			const billto_code = this.entry.billto.billto_code
+
+			const option = '?shipping_yearmonth=' + _shipping_yearmonth
+				+ '&billto_code=' + billto_code
+				+ '&customer_code=' + _customer
+
+			axios({
+				url: '/s/billingsummary' + option + '&delivery_company=' + _delivery_company,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+
+				// 合計通信数をカウント
+				getCount++
+
+				const record = response.data.feed.entry[0].billing_summary.record
+				const tableIndex = _delivery_company === 'YH' ? 2 : 1
+				const tableName = _delivery_company === 'YH' ? 'ヤマト運輸発払簡易明細' : 'エコ配JP簡易明細'
+
+				if (record) {
+					setSummaryTable(record, tableIndex, tableName, option)
+				} else {
+					tables[tableIndex] = null
+					viewTable(option)
+				}
+
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		}
+
+		const customer = this.customer ? this.customer.customer : null
+		const selectInternalWorkYearMonth = this.selectInternalWorkYearMonth
+
+		if (customer && selectInternalWorkYearMonth) {
+
+			const customer_code = customer.customer_code
+			const shipping_yearmonth = selectInternalWorkYearMonth.replace(/\//, '')
+			getBillingSummary(customer_code, shipping_yearmonth, 'YH')
+			getBillingSummary(customer_code, shipping_yearmonth, 'ECO')
+
+		} else {
+
+			this.billingSummaryTable = null
+			this.forceUpdate()
+
+		}
+
+	}
+
 	render() {
 
 		return (
@@ -1166,7 +1388,7 @@ export default class InvoiceForm extends React.Component {
 				/>
 				<CommonFilterBox
 					controlLabel="庫内作業年月"
-					value={this.state.selectInternalWorkYearMonth}
+					value={this.selectInternalWorkYearMonth}
 					options={this.internalWorkYearMonthList}
 					onChange={(data) => this.changeInternalWorkYearMonth(data)}
 					size='sm'
@@ -1705,40 +1927,7 @@ export default class InvoiceForm extends React.Component {
 					
 					<Tab eventKey={2} title="請求明細(簡易)">
 
-						<Panel collapsible header="エコ配JP簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
-							<div className="invoiceDetails-table scroll">	
-								<Table striped bordered hover>
-									<thead>
-										<tr>
-											{this.ehead}
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											{this.ebody}
-										</tr>
-										{this.etr}
-									</tbody>
-								</Table>
-							</div>
-						</Panel>	
-						<Panel collapsible header="ヤマト運輸発払簡易明細" eventKey="2" bsStyle="info" defaultExpanded="true">
-							<div className="invoiceDetails-table scroll">	
-								<Table striped bordered hover>
-									<thead>
-										<tr>
-											{this.ehead}
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											{this.ebody}
-										</tr>
-										{this.etr}
-									</tbody>
-								</Table>
-							</div>
-						</Panel>
+						{this.billingSummaryTable}
 
 					</Tab>
 
