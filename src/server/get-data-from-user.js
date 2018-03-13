@@ -104,7 +104,12 @@ export function getData(_type) {
 		}
 	}
 
-	const customerFromUser = getCustomer()
+	let customerFromUser
+	if (_type === 'customer') {
+		customerFromUser = true
+	} else {
+		customerFromUser = getCustomer()
+	}
 	const role = getRole()
 
 	if (customerFromUser) {
@@ -141,7 +146,7 @@ export function getData(_type) {
 		if (_type === 'customer') {
 
 			// 顧客の場合
-			total_array = customerFromUser
+			total_array = getCustomer('?f' + queryString)
 
 		} else if (_type === 'inquiry' || _type === 'internal_work') {
 
