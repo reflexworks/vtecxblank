@@ -50,7 +50,7 @@ export default class BillfromList extends React.Component {
 	 * @param {*} conditions 
 	 */
 	getFeed(activePage: number, conditions) {
-
+		console.log(conditions)
 		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
@@ -67,9 +67,9 @@ export default class BillfromList extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then( (response) => {
-
+			console.log(response)
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				this.setState({ feed:'',isDisabled: false, isError: response, })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
