@@ -9,6 +9,9 @@ export const _page = {
 }
 
 export const widths = {
+	widths: '3,50,7,4,7,3,4,19,3,'
+}
+export const payeeWidths = {
 	widths: '3,10,15,10,14,13,13,19,3,'
 }
 
@@ -235,9 +238,11 @@ export const tdCenter = {
 	right:'true',
 	top:'true',
 	bottom:'true',
-	align:'center',
-	height:'25',
-	offsety:9
+	align: 'center',
+	valign:'top',
+	//height:'15',
+	offsety: 5,
+	offsetx:1,
 }
 
 export const tdLeft = {
@@ -248,7 +253,8 @@ export const tdLeft = {
 	align:'left',
 	height:'15',
 	offsetx:5,
-	offsety:4
+	offsety: 4,
+	leading:7,
 }
 
 export const tdLeftNoFrame = {
@@ -283,7 +289,8 @@ export const tdRight = {
 	align:'right',
 	height:'15',
 	offsetx:-1,
-	offsety:4
+	offsety: 4,
+	leading:7,
 }
 
 export const tdRightNoFrame = {
@@ -480,4 +487,9 @@ export const totalAmount = {
 	size: 15,
 	style:'underline',
 	offsetx: 55,
+}
+
+export const leading = {
+	size: 6,
+	leading:7,
 }

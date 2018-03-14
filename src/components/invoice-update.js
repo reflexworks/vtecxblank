@@ -33,9 +33,10 @@ export default class InvoiceUpdate extends React.Component {
 		this.state = {
 			isDisabled: false,
 			isError: {},
-			workingYearmonth: '2018/01',
-			customer:'',
 		}
+
+		this.workingYearmonth = ''
+		this.customer = ''
 
 		// URL設定
 		this.url = '/d/invoice'
@@ -98,15 +99,17 @@ export default class InvoiceUpdate extends React.Component {
      */
 
 	changeYearmonth(data) {
-		this.setState({workingYearmonth:data})
+		this.workingYearmonth = data
+		this.forceUpdate()
 	}
 	changeCustomerCode(data) {
-		this.setState({customer:data})
+		this.customer = data
+		this.forceUpdate()
 	}
 
 	doPrint(_isPreview) {
 		const print = () => {
-			let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.state.workingYearmonth + '&customer_code=' + this.state.customer
+			let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
 			url = _isPreview ? url + '&preview' : url
 			location.href = url
 		}
