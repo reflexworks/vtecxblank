@@ -80,16 +80,20 @@ if (isList) {
 		}
 		let cash = {}
 		let cashIndex = 0
-		quotation.item_details.map((_item_details) => {
-			const key = getQuotationKey(_item_details)
-			cash[key] = JSON.parse(JSON.stringify(cashIndex))
-			cashIndex++
-		})
-		quotation.packing_items.map((_packing_items) => {
-			const key = getQuotationKey(_packing_items)
-			cash[key] = JSON.parse(JSON.stringify(cashIndex))
-			cashIndex++
-		})
+		if (quotation.item_details && quotation.item_details.length) {
+			quotation.item_details.map((_item_details) => {
+				const key = getQuotationKey(_item_details)
+				cash[key] = JSON.parse(JSON.stringify(cashIndex))
+				cashIndex++
+			})
+		}
+		if (quotation.packing_items && quotation.packing_items.length) {
+			quotation.packing_items.map((_packing_items) => {
+				const key = getQuotationKey(_packing_items)
+				cash[key] = JSON.parse(JSON.stringify(cashIndex))
+				cashIndex++
+			})
+		}
 
 		let array = new Array(cashIndex)
 		let array_other = []
