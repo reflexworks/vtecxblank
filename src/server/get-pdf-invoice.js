@@ -128,13 +128,13 @@ const getBilltoAndBillfrom = () => {
 			<td style={pdfstyles.spaceLeft}>
 			</td>
 
-			<td colspan="2">
+			<td colspan="1">
 				<div style={pdfstyles.fontsize10UL}>{entry.billto.billto_name}　御中</div>
 				<div style={pdfstyles.fontsize9}>{entry.invoice.invoice_yearmonth}月度ご請求書分</div>
 				<br/>
 			</td>
 
-			<td colspan="5" style={pdfstyles.fontsize10R}>
+			<td colspan="6" style={pdfstyles.fontsize10R}>
 				<div>{entry.billfrom.billfrom_name}</div>
 			
 				<div>
@@ -582,11 +582,12 @@ const getPayee = () => {
 							</td>
 
 							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
+								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>
+								
 							</td>
 								
 							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
+								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>
 							</td>
 								
 							<td colspan="1" style={pdfstyles.tdLeft}>
@@ -969,8 +970,9 @@ const invoicePage = () => {
 
 	const invoice_2 = (
 		<div className="_page" id="_page-2" style={pdfstyles._page}>
-			<table cols="9" style={pdfstyles.widths2}>
+			<table cols="9" style={pdfstyles.payeeWidths}>
 				
+
 				{/*備考*/}
 				<tr>
 					<td colspan="9">
