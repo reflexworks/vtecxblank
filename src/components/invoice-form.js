@@ -31,7 +31,6 @@ import {
 	addFigure,
 } from './common'
 
-
 import moment from 'moment'
 
 export default class InvoiceForm extends React.Component {
@@ -47,9 +46,12 @@ export default class InvoiceForm extends React.Component {
 
 		this.selectInternalWorkYearMonth = this.props.workingYearmonth
 		
+		//消費税と合計請求金額
+		this.sub_total = 0
 		this.total_amount = 0
-		this.service_total_amount = 0
 		this.consumption_tax = 0
+
+		this.serviceItem = []
 		this.entry = this.props.entry
 		this.entry.invoice = this.entry.invoice || {}
 		this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
@@ -68,10 +70,10 @@ export default class InvoiceForm extends React.Component {
 
 		this.taxationList=[{
 			label: '税込',
-			value: '0'
+			value: '1'
 		}, {	
 			label: '税抜',
-			value: '1'
+			value: '0'
 		}]
 		
 		this.bankList = [{
@@ -534,6 +536,8 @@ export default class InvoiceForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+
+		//口座情報が口座名義、支店名を持っていない時の処理
 		if(this.entry.billfrom.payee){
 			this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
 				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {	
@@ -548,13 +552,14 @@ export default class InvoiceForm extends React.Component {
 				} else {
 					return (oldPayee)
 				}
-			})
+			})	
 		}
 
 		this.setCustomerMasterData()
 		this.setBillfromMasterData()
 		this.setInternalWorkYearMonthList()
 		this.sortItemDetails()
+		this.changeTotalAmount()
 	}
 	
 	/**
@@ -611,6 +616,7 @@ export default class InvoiceForm extends React.Component {
 					break	
 				}
 			}
+			//this.changeTotalAmount()
 		}
 	}
 
@@ -633,10 +639,6 @@ export default class InvoiceForm extends React.Component {
 
 			if (response.status !== 204) {
 			
-				this.service_total_amount = response.data.feed.entry[0].item_details.reduce((prev,current) => { 
-					return { 'amount': ''+(Number(prev.amount) + Number(current.amount)) }
-				})
-
 				//カンマ差し込み処理
 				response.data.feed.entry[0].item_details.map((item_details) =>{
 					item_details.unit_price = addFigure(item_details.unit_price)
@@ -644,7 +646,7 @@ export default class InvoiceForm extends React.Component {
 				})
 
 				if (response.data.feed.entry[0].item_details) {
-
+					
 					for (let i = 0; i < response.data.feed.entry[0].item_details.length; ++i) {
 						switch (response.data.feed.entry[0].item_details[i].category) {
 						case 'monthly':
@@ -693,8 +695,9 @@ export default class InvoiceForm extends React.Component {
 						*/
 						}
 					}
+					this.serviceItem = response.data.feed.entry[0].item_details
+					this.changeTotalAmount()
 				}
-				this.changeTotalAmount()
 				this.forceUpdate()
 			}
 		}).catch((error) => {
@@ -842,7 +845,6 @@ export default class InvoiceForm extends React.Component {
 
 		// 簡易明細表示
 		this.setBillingSummaryTable()
-
 	}
 
 	/**
@@ -890,9 +892,7 @@ export default class InvoiceForm extends React.Component {
 
 		if (_data) {
 			this.selectInternalWorkYearMonth = _data.value
-			if(this.props.changeYearmonth){
-				this.props.changeYearmonth(_data.value)
-			}
+			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)}
 			if (this.state.selectCustomer) { this.getService(this.state.selectCustomer.customer_code, _data.value) }
 
 			this.forceUpdate()
@@ -917,24 +917,23 @@ export default class InvoiceForm extends React.Component {
 		} else {
 			this.item_details[list][_rowindex][_celindex] = _data	
 		}
-
+		
+		//数量、単価、税込/税抜を変更したら金額を変えて、合計金額と消費税も変える
 		if (_celindex === 'quantity' || _celindex === 'unit_price' || _celindex === 'is_taxation') {
 			
-			let quantity = this.item_details[list][_rowindex]['quantity']
-			let unit_price = this.item_details[list][_rowindex]['unit_price'].replace(/,/g, '')
+			const quantity = this.item_details[list][_rowindex]['quantity']
+			const unit_price = this.item_details[list][_rowindex]['unit_price'].replace(/,/g, '')
 			this.item_details[list][_rowindex]['amount'] = quantity * unit_price
 			
-			if (this.item_details[list][_rowindex]['is_taxation'] === '0') {
+			if (this.item_details[list][_rowindex]['is_taxation'] === '1') {
 				this.item_details[list][_rowindex]['amount'] += Math.floor(this.item_details[list][_rowindex]['amount'] * 0.08)
 			}
-			
 		}
 
 		let changeArray = []
 		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
 			if (this.entry.item_details[i].category !== list) {
-				changeArray.push(this.entry.item_details[i])
-				
+				changeArray.push(this.entry.item_details[i])		
 			}
 		}
 
@@ -943,28 +942,74 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	changeTotalAmount() {
-
-		let entry_amount = '0'
-		
-		if (this.entry.item_details) {
-			if (this.entry.item_details.length === '1') {
-				entry_amount = this.entry.item_details[0].amount
+	createItemArray() {
+		console.log(this.serviceItem)
+		console.log(this.entry.item_details)
+		let array = []
+		if (this.serviceItem) {
+			if (this.entry.item_details) {
+				array = this.serviceItem.concat(this.entry.item_details)
 			} else {
-				entry_amount = this.entry.item_details.reduce((prev, current) => {
-					return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
-				})
+				array = this.serviceItem
 			}
+		} else if (this.entry.item_details){
+			array = this.entry.item_details
 		}
+		console.log(array)
+		return(array)
+	}
+	
+	getSubTotal(allItem){
+		const noTaxList = allItem.filter((entry) => {
+			return entry.is_taxation === '0'
+		})
+		//税抜が１つも無かった
+		if (!(noTaxList.length)) {
+			return ('0')
+		//税抜が１つだけ
+		} else if (noTaxList.length === 1) {
+			return(noTaxList[0].amount)
+		}else{
+			const noTaxTotal = noTaxList.reduce((prev, current) => {
+				return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
+			})
+			return(noTaxTotal.amount)
+		}
+	}
+	getTaxTotal(allItem) {
+		const TaxList = allItem.filter((entry) => {
+			return entry.is_taxation === '1'
+		})
+		//税込が１つも無かった
+		if (!(TaxList.length)) {
+			return ('0')
+			//税込が１つだけ
+		} else if (TaxList.length === 1) {
+			return (TaxList[0].amount)
+		} else {
+			const TaxTotal = TaxList.reduce((prev, current) => {
+				return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
+			})	
+			return (TaxTotal.amount)
+		}	
+	}
+	
+	changeTotalAmount(){
+		const allItem = this.createItemArray()
+		if (allItem) {
+			//税抜の合計
+			this.sub_total = this.getSubTotal(allItem)
+			//税込の合計
+			const taxTotal = this.getTaxTotal(allItem)
+			//税抜×0.08
+			this.consumption_tax = Math.floor(this.sub_total * 0.08)
 
-		let entry_total = '0'
-		if (entry_amount !== '0') {
-			entry_total = entry_amount.amount	
-		} 
-		let service_total = this.service_total_amount ? this.service_total_amount.amount : '0'
-
-		this.total_amount = (Number(entry_total) + Number(service_total))
-
+			//合計請求金額
+			this.total_amount = (Number(this.sub_total) + Number(this.consumption_tax) + Number(taxTotal))
+		} else {
+			this.consumption_tax = '0'
+			this.total_amount = '0'
+		}
 		this.forceUpdate()
 	}
 
@@ -1607,7 +1652,7 @@ export default class InvoiceForm extends React.Component {
 											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks')}
 										}
 									}]}
-									add={() => this.addInvoiceList('period', { category:'monthly',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
+									add={() => this.addInvoiceList('period', { category:'period',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
 									remove={(data, index) => this.removeInvoiceList('period', index)}
 									fixed
 									noneScroll
@@ -1874,37 +1919,42 @@ export default class InvoiceForm extends React.Component {
 						</PanelGroup>
 
 						<br />
-
+						
+						<FormGroup className='hide'>
+							<CommonInputText
+								controlLabel="小計金額"
+								type="text"
+								value={this.sub_total}
+								readonly='true'
+								className="total_amount"
+							/>
+							<br />
+							<br/>
+						</FormGroup>	
+						
 						<CommonInputText
 							controlLabel="消費税"
-							name="invoice.consumption_tax"
 							type="text"
-							placeholder="消費税"
 							value={this.consumption_tax}
 							readonly
 							className="total_amount"
-							onchange={(data) => this.changeInvoice(data, 'consumption_tax')}
 						/>
-
+						
 						<br />
 						<br />
 
 						<CommonInputText
 							controlLabel="合計請求金額"
-							name="invoice.total_amount"
 							type="text"
-							placeholder="合計請求金額"
 							value={this.total_amount}
 							readonly='true'
 							className="total_amount"
-							onchange={(data)=>this.changeInvoice(data,'total_amount')}
-							price='true'
 						/>
 
 						<br />
 						<br />
 
-						<FormGroup className={'hide'}>	
+						<FormGroup className='hide'>	
 							<CommonTable	
 								name="item_details"
 								data={this.entry.item_details}
