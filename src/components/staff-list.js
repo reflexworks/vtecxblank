@@ -171,7 +171,13 @@ export default class StaffList extends React.Component {
 									value: '2'
 								}, {
 									label: '作業員',
-									value: '3'
+									value: '3',
+								}, {
+									label: '営業',
+									value: '4'
+								}, {
+									label: '経理',
+									value: '5'
 								}]}
 							/>
 							<CommonInputText

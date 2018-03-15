@@ -56,7 +56,6 @@ export default class InvoiceList extends React.Component {
 	 * @param {*} conditions 
 	 */
 	getFeed(activePage: number, conditions) {
-
 		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
@@ -249,11 +248,10 @@ export default class InvoiceList extends React.Component {
 						>
 							
 							<CommonMonthlySelect
-								name="quotation.quotation_date"
 								value={this.state.searchYearMonth}
 								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
 								table
-								//onChange={(data) => this.doSearch(data)}
+								onChange={(data) => this.doSearch('invoice.invoice_yearmonth=*' +data.value + '*')}
 							/>
 
 						</CommonTable>

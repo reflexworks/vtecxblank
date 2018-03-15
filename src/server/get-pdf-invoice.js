@@ -2,48 +2,21 @@ import vtecxapi from 'vtecxapi'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/invoicestyles.js'
+import { addFigure } from './common'
+import { getInvoiceItemDetails } from './get-invoice-itemdetails.js'
 
+/*
+function divln(str,n) {
+	const r=new RegExp('.{1,'+n+'}','g')
+	return str.match(r).map((token,i)=>{
+	 return(<div key={i.toString()}>{token}</div>)
+	})
+}
+*/
 /**
  * 数値の3桁カンマ区切り
  * 入力値をカンマ区切りにして返却
  */
-export function addFigure(numVal) {
-
-	// 空の場合そのまま返却
-	if (numVal === ''){
-		return ''
-	}
-
-	/**
-	 * 全角から半角への変革関数
-	 * 入力値の英数記号を半角変換して返却
-	 */
-	const toHalfWidth = (strVal) => {
-		// 半角変換
-		const halfVal = strVal.replace(/[！-～]/g, (tmpStr) => {
-			// 文字コードをシフト
-			return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 )
-		})
-		return halfVal
-	}
-
-	// 全角から半角へ変換し、既にカンマが入力されていたら事前に削除
-	numVal = toHalfWidth(numVal).replace(/,/g, '').trim()
-
-	// 数値でなければnullを返却
-	if ( !/^[+|-]?(\d*)(\.\d+)?$/.test(numVal) ){
-		return null
-	}
-
-	// 整数部分と小数部分に分割
-	let numData = numVal.toString().split('.')
-
-	// 整数部分を3桁カンマ区切りへ
-	numData[0] = Number(numData[0]).toString().replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
-
-	// 小数部分と結合して返却
-	return numData.join('.')
-}
 
 export const pageTitle = (_title) => {
 	return (
@@ -62,14 +35,76 @@ export const pageTitle = (_title) => {
 }
 
 const invoice_code = vtecxapi.getQueryString('invoice_code')
+const customer_code = vtecxapi.getQueryString('customer_code')
+const working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
+
 const getInvoice = () => {
 	const data = vtecxapi.getEntry('/invoice/' + invoice_code)
-	//vtecxapi.getFeed()
-	const entry = data.feed.entry[0]
+	let entry = data.feed.entry[0]
 	return entry
 }
 
-let entry = getInvoice()
+const createArray = () => {
+	let array = []
+	if (serviceItem_details) {
+		if (entry.item_details) {
+			array = serviceItem_details.concat(entry.item_details)
+		} else {
+			array = serviceItem_details
+		}
+	} else if (entry.item_details){
+		array = entry.item_details
+	}
+	return(array)
+}
+
+const entry = getInvoice()
+const serviceItem_details = getInvoiceItemDetails(customer_code, entry.invoice.quotation_code, working_yearmonth)
+const allItem = createArray()
+
+const getSubTotal = () =>{
+	const noTaxList = allItem.filter((entry) => {
+		return entry.is_taxation === '0'
+	})
+	//税抜が１つも無かった
+	if (!(noTaxList.length)) {
+		return ('0')
+	//税抜が１つだけ
+	} else if (noTaxList.length === 1) {
+		return(noTaxList[0].amount)
+	}else{
+		const noTaxTotal = noTaxList.reduce((prev, current) => {
+			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
+		})
+		return(noTaxTotal.amount)
+	}
+}
+
+const getTaxTotal = () =>{
+	const TaxList = allItem.filter((entry) => {
+		return entry.is_taxation === '1'
+	})
+	//税込が１つも無かった
+	if (!(TaxList.length)) {
+		return ('0')
+	//税込が１つだけ
+	} else if (TaxList.length === 1) {
+		return(TaxList[0].amount)
+	}else{
+		const TaxTotal = TaxList.reduce((prev, current) => {
+			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
+		})
+		return(TaxTotal.amount)
+	}
+}
+
+//消費税無の合計値
+const subTotal = getSubTotal()
+//消費税無合計値に0.08かける
+const taxation = Math.floor(subTotal * 0.08)	
+
+const taxTotal = getTaxTotal()
+const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
 
 const getBilltoAndBillfrom = () => {
 	
@@ -87,18 +122,19 @@ const getBilltoAndBillfrom = () => {
 		stamp = '/img/express.png'		
 	}
 	
+
 	return(
 		<tr>
 			<td style={pdfstyles.spaceLeft}>
 			</td>
 
-			<td colspan="4">
+			<td colspan="1">
 				<div style={pdfstyles.fontsize10UL}>{entry.billto.billto_name}　御中</div>
 				<div style={pdfstyles.fontsize9}>{entry.invoice.invoice_yearmonth}月度ご請求書分</div>
 				<br/>
 			</td>
 
-			<td colspan="3" style={pdfstyles.fontsize10R}>
+			<td colspan="6" style={pdfstyles.fontsize10R}>
 				<div>{entry.billfrom.billfrom_name}</div>
 			
 				<div>
@@ -113,7 +149,6 @@ const getBilltoAndBillfrom = () => {
 						{stamp && <img src={stamp} width="65.0" height="65.0" />}
 						{!stamp  && <br/>}
 						{ entry.creator && <span>担当者:{entry.creator}</span> }
-								
 					</div>
 				</div>	
 			</td>
@@ -125,152 +160,183 @@ const getBilltoAndBillfrom = () => {
 	)
 }
 
-const getAllItemDetails = () => {
+const getAllItemDetails = (item_details) => {
 
-	let categoryList = entry.item_details.map((item_details) => {
+	let categoryList = item_details.map((item_details) => {
 		return item_details.category
 	}).filter((x, i, self) => {
 		return self.indexOf(x) === i
 	})
-		
-	let sortItem_details = []
-	categoryList.map((categoryList) => {
-		entry.item_details.map((item_details) => {
-			if (categoryList === item_details.category) {
-				if (!sortItem_details[categoryList]) {
-					sortItem_details[categoryList] = []
-				}
-				return sortItem_details[categoryList].push(item_details)
-			}
-		})
-	})
-
-	return (
-		categoryList.map((categoryList) => {
-			let size = sortItem_details[categoryList].length
-			return (
-				sortItem_details[categoryList].map((item_details, idx) => {
-					let result = []
-					if (idx === 0) {
-						let categoryName = ''
-						switch (categoryList) {
-						case 'daily': categoryName = '日時'
-							break
-						case 'monthly': categoryName = '月時'
-							break
-						case 'packing_item': categoryName = '資材'
-							break
-						case 'delivery_charge_shipping': categoryName = '配送料(出荷)'
-							break
-						case 'delivery_charge_collecting': categoryName = '配送料(集荷)'
-							break
-						case 'others': categoryName = 'その他'
-							break
-						}
-
-						result.push(
-							<tr style={pdfstyles.fontsize6}>
-								<td style={pdfstyles.spaceLeft}>
-								</td>
-								<td colspan="7" style={pdfstyles.tableTdLeft}>
-									<span>{categoryName}</span>
-									<br />
-								</td>
-								<td style={pdfstyles.spaceRight}>
-								</td>
-							</tr>
-						)
-
-						result.push(
-							<tr>
-								<td style={pdfstyles.spaceLeft}>
-								</td>
-
-								<td colspan="2" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>ご請求内容(作業内容)</span>
-								</td>
-
-								<td colspan="1" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>数量</span>
-								</td>
-										
-								<td colspan="1" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>単位</span>
-								</td>
-
-								<td colspan="1" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>単価</span>
-								</td>
-
-								<td colspan="1" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>金額</span>
-								</td>
-
-								<td colspan="1" style={pdfstyles.tableTd}>
-									<span style={pdfstyles.fontsize6}>備考</span>
-								</td>
-										
-								<td style={pdfstyles.spaceRight}>
-								</td>
-							</tr>
-						)
-					}
-			
-					result.push(
-						<tr key={idx} style={pdfstyles.fontsize6}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{item_details.item_name}</span>
-								<br />
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdRight}>
-								<span style={pdfstyles.fontsize6}>{item_details.quantity}</span>
-								<br />
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdRight}>
-								<span style={pdfstyles.fontsize6}>{item_details.unit}</span>
-								<br />
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdRight}>
-								<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
-								<br />
-							</td>
-										
-							<td colspan="1" style={pdfstyles.tdRight}>
-								<span style={pdfstyles.fontsize6}></span>
-								<br />
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdRemarks}>
-								<span style={pdfstyles.fontsize6}>{item_details.remarks}</span>
-								<br />
-							</td>
-					
-							<td style={pdfstyles.spaceRight}>
-							</td>
-						</tr>
-					)
-					if (idx === (size-1)) {
-						result.push(
-							<tr>
-								<td colspan="9" >
-									<br />
-								</td>
-							</tr>
-						)
-					}
-
-					return(result)
-				})
-			)
-		})
-	)
 	
+	let result = []	
+	categoryList.map((categoryList) => {
+
+		const item_details_ofcategory  = item_details.filter((entry) => {
+			return entry.category === categoryList
+		})
+
+		const size = item_details_ofcategory.length			
+		item_details_ofcategory.map((item_details, idx) => {
+			if (idx === 0) {
+				let categoryName = ''
+				switch (categoryList) {
+				case 'monthly': categoryName = '月次'
+					break
+				case 'daily': categoryName = '日次'
+					break
+				case 'period': categoryName = '期次'
+					break
+				case 'packing_item': categoryName = '資材'
+					break
+				case 'shipping': categoryName = '配送料(出荷)'
+					break
+				case 'collecting': categoryName = '配送料(集荷)'
+					break
+				case 'others': categoryName = 'その他'
+					break
+				}
+
+				result.push(
+					<tr style={pdfstyles.fontsize6}>
+						<td style={pdfstyles.spaceLeft}>
+						</td>
+						<td colspan="7" style={pdfstyles.tableTdLeft}>
+							<span>{categoryName}</span>
+							<br />
+						</td>
+						<td style={pdfstyles.spaceRight}>
+						</td>
+					</tr>
+				)
+
+				result.push(
+					<tr>
+						<td style={pdfstyles.spaceLeft}>
+						</td>
+
+						<td colspan="1" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>ご請求内容(作業内容)</span>
+						</td>
+
+						<td colspan="1" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>数量</span>
+						</td>
+										
+						<td colspan="1" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>単位</span>
+						</td>
+
+						<td colspan="1" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>単価</span>
+						</td>
+
+						<td colspan="2" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>金額</span>
+						</td>
+
+						<td colspan="1" style={pdfstyles.tableTd}>
+							<span style={pdfstyles.fontsize6}>備考</span>
+						</td>
+										
+						<td style={pdfstyles.spaceRight}>
+						</td>
+					</tr>
+				)
+			}
+
+
+			if (categoryList === 'monthly' || categoryList === 'daily') {
+
+				result.push(
+					<tr key={idx} style={pdfstyles.fontsize6}>
+						<td style={pdfstyles.spaceLeft}>
+						</td>
+						{/*10,15*/}
+						<td colspan="1" style={pdfstyles.tdLeft}>
+							<span style={pdfstyles.fontsize6}>{item_details.item_name}{ item_details.unit_name}</span>
+							<br />
+						</td>
+						{/*10*/}
+						<td colspan="1" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{item_details.quantity}</span>
+							<br />
+						</td>
+						{/*14*/}
+						<td colspan="1" style={pdfstyles.tdCenter}>
+							<span style={pdfstyles.fontsize6}>{item_details.unit}</span>
+							<br />
+						</td>
+						{/*13*/}
+						<td colspan="1" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
+							<br />
+						</td>
+						{/*13*/}		
+						<td colspan="2" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{addFigure(item_details.amount)}</span>
+							<br />
+						</td>
+						{/*19*/}
+						<td colspan="1" style={pdfstyles.tdRemarks}>
+							<span style={pdfstyles.fontsize6}>{item_details.remarks}</span>
+							<br />
+						</td>
+						{/*3*/}
+						<td style={pdfstyles.spaceRight}>
+						</td>
+					</tr>
+				)
+			} else {
+				result.push(
+					<tr key={idx} style={pdfstyles.fontsize6}>
+						<td style={pdfstyles.spaceLeft}>
+						</td>
+						<td colspan="1" style={pdfstyles.tdLeft}>
+							<span style={pdfstyles.fontsize6}>{item_details.item_name}</span>
+							<br />
+						</td>
+						<td colspan="1" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{item_details.quantity}</span>
+							<br />
+						</td>
+						<td colspan="1" style={pdfstyles.tdCenter}>
+							<span style={pdfstyles.fontsize6}>{item_details.unit}{item_details.unit_name}</span>
+							<br />
+						</td>
+						<td colspan="1" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
+							<br />
+						</td>
+						<td colspan="2" style={pdfstyles.tdRight}>
+							<span style={pdfstyles.fontsize6}>{addFigure(item_details.amount)}</span>
+							<br />
+						</td>
+						<td colspan="1" style={pdfstyles.tdRemarks}>
+							<span style={pdfstyles.fontsize6}>{item_details.remarks}</span>
+							<br />
+						</td>
+						<td style={pdfstyles.spaceRight}>
+						</td>
+					</tr>
+				)
+			}	
+
+
+			if (idx === (size-1)) {
+				result.push(
+					<tr>
+						<td colspan="9" >
+							<br />
+						</td>
+					</tr>
+				)
+			}
+
+					
+		})
+			
+	})
+	return (result)
 }
 
 const getRemarks = () => {
@@ -516,11 +582,12 @@ const getPayee = () => {
 							</td>
 
 							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
+								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>
+								
 							</td>
 								
 							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
+								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>
 							</td>
 								
 							<td colspan="1" style={pdfstyles.tdLeft}>
@@ -805,7 +872,7 @@ const invoicePage = () => {
 						<br/>
 						<br />
 						<span style={pdfstyles.totalAmountText}>合計請求金額　</span>
-						<span style={pdfstyles.totalAmount}>¥{addFigure(entry.invoice.total_amount)}</span>
+						<span style={pdfstyles.totalAmount}>¥{addFigure(total_amount)}</span>
 						<br />
 					</td>
 					
@@ -839,22 +906,23 @@ const invoicePage = () => {
 
 				{/*項目一覧*/}
 
-				{ entry.item_details &&
-					getAllItemDetails()
+				{  allItem &&
+					getAllItemDetails(allItem)					
 				}
-				
+
+
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 
-					<td colspan="5"></td>
+					<td colspan="4"></td>
 
-					<td colspan="1" style={pdfstyles.tableTdRight}>
+					<td colspan="2" style={pdfstyles.tableTdRight}>
 						<span style={pdfstyles.fontsize6}>小計金額</span>	
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{addFigure('78054850')}</span>
+						<span style={pdfstyles.fontsize6}>¥{addFigure(subTotal)}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>
@@ -865,14 +933,14 @@ const invoicePage = () => {
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 
-					<td colspan="5"></td>			
+					<td colspan="4"></td>			
 					
-					<td colspan="1" style={pdfstyles.tableTdRight}>
+					<td colspan="2" style={pdfstyles.tableTdRight}>
 						<span style={pdfstyles.fontsize6}>消費税</span>	
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{addFigure(entry.invoice.consumption_tax)}</span>
+						<span style={pdfstyles.fontsize6}>¥{addFigure(taxation)}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>
@@ -883,13 +951,13 @@ const invoicePage = () => {
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 					
-					<td colspan="5"></td>
-					<td colspan="1" style={pdfstyles.tableTdRight}>
+					<td colspan="4"></td>
+					<td colspan="2" style={pdfstyles.tableTdRight}>
 						<span style={pdfstyles.fontsize6}>合計金額</span>	
 					</td>
 					
 					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{addFigure(entry.invoice.total_amount)}</span>
+						<span style={pdfstyles.fontsize6}>¥{total_amount}</span>
 					</td>
 
 					<td style={pdfstyles.spaceRight}>
@@ -899,36 +967,26 @@ const invoicePage = () => {
 			</table>
 		</div>
 	)
+
 	const invoice_2 = (
 		<div className="_page" id="_page-2" style={pdfstyles._page}>
-			<table cols="9" style={pdfstyles.widths}>
+			<table cols="9" style={pdfstyles.payeeWidths}>
 				
+
 				{/*備考*/}
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
-
-					<td colspan="7">
+					<td colspan="9">
 						<br/>
 					</td>
-										
-					<td style={pdfstyles.spaceRight}>
-					</td>
-				</tr>		
+				</tr>
 
 				{entry.remarks &&
 					getRemarks()
 				}
 
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
-
-					<td colspan="7">
+					<td colspan="9">
 						<br/>
-					</td>
-										
-					<td style={pdfstyles.spaceRight}>
 					</td>
 				</tr>
 				
@@ -975,7 +1033,7 @@ let html = ReactDOMServer.renderToStaticMarkup(element())
 const file_name = () => {
 	const preview = vtecxapi.getQueryString('preview')
 	if (preview === '') {
-		return 'preview-' + invoice_code + '.pdf'
+		return 'preview-' + invoice_code + '/' + customer_code + '/' + working_yearmonth + '.pdf'
 	} else {
 		return 'invoice-' + invoice_code +'.pdf'
 	}
