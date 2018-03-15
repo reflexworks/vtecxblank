@@ -2,41 +2,28 @@ import vtecxapi from 'vtecxapi'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/invoicestyles.js'
-import { addFigure } from './common'
 import { getInvoiceItemDetails } from './get-invoice-itemdetails.js'
+import {
+	addFigure,
+	getStamp,
+	convertPayee,
+} from './common'
 
-/*
-function divln(str,n) {
-	const r=new RegExp('.{1,'+n+'}','g')
-	return str.match(r).map((token,i)=>{
-	 return(<div key={i.toString()}>{token}</div>)
-	})
-}
-*/
-/**
- * 数値の3桁カンマ区切り
- * 入力値をカンマ区切りにして返却
- */
-
-export const pageTitle = (_title) => {
-	return (
-		<table cols="1" style={pdfstyles.page_title_table}>
-			<tr>
-				<td style={pdfstyles.page_title_blank}><div></div></td>
-			</tr>
-			<tr>
-				<td style={pdfstyles.page_title}>{_title} 御請求書</td>
-			</tr>
-			<tr>
-				<td style={pdfstyles.page_title_blank}><div></div></td>
-			</tr>
-		</table>
-	)
-}
-
+//名前をinvoice.entryにする
+const entry = getInvoice()
 const invoice_code = vtecxapi.getQueryString('invoice_code')
+//customer_codeが有無で処理を分ける、有るときはそれを使ってinvoicepageを行う
+//無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
 const customer_code = vtecxapi.getQueryString('customer_code')
 const working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
+const allItem = createArray()
+//消費税無の合計値
+const subTotal = getSubTotal()
+//消費税無合計値に0.08かける
+const taxation = Math.floor(subTotal * 0.08)	
+const taxTotal = getTaxTotal()
+const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+
 
 const getInvoice = () => {
 	const data = vtecxapi.getEntry('/invoice/' + invoice_code)
@@ -45,6 +32,7 @@ const getInvoice = () => {
 }
 
 const createArray = () => {
+	const serviceItem_details = getInvoiceItemDetails(customer_code, entry.invoice.quotation_code, working_yearmonth)
 	let array = []
 	if (serviceItem_details) {
 		if (entry.item_details) {
@@ -57,10 +45,6 @@ const createArray = () => {
 	}
 	return(array)
 }
-
-const entry = getInvoice()
-const serviceItem_details = getInvoiceItemDetails(customer_code, entry.invoice.quotation_code, working_yearmonth)
-const allItem = createArray()
 
 const getSubTotal = () =>{
 	const noTaxList = allItem.filter((entry) => {
@@ -98,31 +82,10 @@ const getTaxTotal = () =>{
 	}
 }
 
-//消費税無の合計値
-const subTotal = getSubTotal()
-//消費税無合計値に0.08かける
-const taxation = Math.floor(subTotal * 0.08)	
-
-const taxTotal = getTaxTotal()
-const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
-
 const getBilltoAndBillfrom = () => {
 	
-	let stamp = ''
+	const stamp = getStamp(entry.billfrom.billfrom_name)
 	
-	if (entry.billfrom.billfrom_name.match('コネクトロジスティクス')) {
-		stamp = '/img/connectlogi.png'
-	} else if (entry.billfrom.billfrom_name.match('コネクトコーポレーション')) {
-		stamp = '/img/connectcorp.png'
-	} else if (entry.billfrom.billfrom_name.match('CONNECT・EC')) {
-		stamp = '/img/connectec.png'
-	} else if (entry.billfrom.billfrom_name.match('ネクストジェネレーション')) {
-		stamp = '/img/nextgen.png'
-	} else if (entry.billfrom.billfrom_name.match('コネクトエクスプレス')) {
-		stamp = '/img/express.png'		
-	}
-	
-
 	return(
 		<tr>
 			<td style={pdfstyles.spaceLeft}>
@@ -130,7 +93,7 @@ const getBilltoAndBillfrom = () => {
 
 			<td colspan="1">
 				<div style={pdfstyles.fontsize10UL}>{entry.billto.billto_name}　御中</div>
-				<div style={pdfstyles.fontsize9}>{entry.invoice.invoice_yearmonth}月度ご請求書分</div>
+				<div style={pdfstyles.fontsize9}>{entry.invoice.invoice_yearmonth.replace(/\//,'年',)}月度ご請求書分</div>
 				<br/>
 			</td>
 
@@ -148,7 +111,6 @@ const getBilltoAndBillfrom = () => {
 					<div>
 						{stamp && <img src={stamp} width="65.0" height="65.0" />}
 						{!stamp  && <br/>}
-						{ entry.creator && <span>担当者:{entry.creator}</span> }
 					</div>
 				</div>	
 			</td>
@@ -157,6 +119,26 @@ const getBilltoAndBillfrom = () => {
 			</td>
 		</tr>
 	
+	)
+}
+
+const getTdNode = (_col,_tdStyle,_spanStyle,_span,figureFlag) => {
+
+	const td_style = _tdStyle ? _tdStyle : pdfstyles.tdLeft
+	const span_style = _spanStyle ? _spanStyle : pdfstyles.fontsize6
+
+	//数字かつ、金額フラグがtrueならカンマ差し込み処理(未完成)
+	/*
+	if (isNaN('_span') && figureFlag) {
+		_span = '¥' + addFigure(_span)
+	}
+	*/
+	//暫定的カンマ差し込み処理
+	_span = figureFlag ? '¥' + addFigure(_span) :_span
+	return (
+		<td colspan={_col} style={pdfstyles[td_style]}>
+			<span style={pdfstyles[span_style]}>{_span}</span>		
+		</td>
 	)
 }
 
@@ -200,10 +182,7 @@ const getAllItemDetails = (item_details) => {
 					<tr style={pdfstyles.fontsize6}>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colspan="7" style={pdfstyles.tableTdLeft}>
-							<span>{categoryName}</span>
-							<br />
-						</td>
+						{getTdNode(7,'TdLeft','',categoryName)}
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
@@ -213,31 +192,14 @@ const getAllItemDetails = (item_details) => {
 					<tr>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
+						
+						{ getTdNode(1, 'tableTd', 'fontsize6', 'ご請求内容') }
+						{ getTdNode(1, 'tableTd', 'fontsize6', '数量') }
+						{ getTdNode(1, 'tableTd', 'fontsize6', '単位')}
+						{ getTdNode(1, 'tableTd', 'fontsize6', '単価')}
+						{ getTdNode(2, 'tableTd', 'fontsize6', '金額')}
+						{ getTdNode(1, 'tableTd', 'fontsize6', '備考') }
 
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>ご請求内容(作業内容)</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>数量</span>
-						</td>
-										
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>単位</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>単価</span>
-						</td>
-
-						<td colspan="2" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>金額</span>
-						</td>
-
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>備考</span>
-						</td>
-										
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
@@ -251,37 +213,12 @@ const getAllItemDetails = (item_details) => {
 					<tr key={idx} style={pdfstyles.fontsize6}>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						{/*10,15*/}
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{item_details.item_name}{ item_details.unit_name}</span>
-							<br />
-						</td>
-						{/*10*/}
-						<td colspan="1" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{item_details.quantity}</span>
-							<br />
-						</td>
-						{/*14*/}
-						<td colspan="1" style={pdfstyles.tdCenter}>
-							<span style={pdfstyles.fontsize6}>{item_details.unit}</span>
-							<br />
-						</td>
-						{/*13*/}
-						<td colspan="1" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
-							<br />
-						</td>
-						{/*13*/}		
-						<td colspan="2" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{addFigure(item_details.amount)}</span>
-							<br />
-						</td>
-						{/*19*/}
-						<td colspan="1" style={pdfstyles.tdRemarks}>
-							<span style={pdfstyles.fontsize6}>{item_details.remarks}</span>
-							<br />
-						</td>
-						{/*3*/}
+						{getTdNode(1, 'tdLeft', 'fontsize6', item_details.item_name + item_details.unit_name)}
+						{getTdNode(1, 'tdRight', 'fontsize6', item_details.quantity)}
+						{getTdNode(1, 'tdCenter', 'fontsize6', item_details.unit)}
+						{getTdNode(1, 'tdRight', 'fontsize6', item_details.unit_price, true)}
+						{getTdNode(2,'tdRight','fontsize6',item_details.amount,true)}
+						{getTdNode(1,'tdRemarks','fontsize6',item_details.remarks,)}
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
@@ -291,36 +228,19 @@ const getAllItemDetails = (item_details) => {
 					<tr key={idx} style={pdfstyles.fontsize6}>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{item_details.item_name}</span>
-							<br />
-						</td>
-						<td colspan="1" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{item_details.quantity}</span>
-							<br />
-						</td>
-						<td colspan="1" style={pdfstyles.tdCenter}>
-							<span style={pdfstyles.fontsize6}>{item_details.unit}{item_details.unit_name}</span>
-							<br />
-						</td>
-						<td colspan="1" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{addFigure(item_details.unit_price)}</span>
-							<br />
-						</td>
-						<td colspan="2" style={pdfstyles.tdRight}>
-							<span style={pdfstyles.fontsize6}>{addFigure(item_details.amount)}</span>
-							<br />
-						</td>
-						<td colspan="1" style={pdfstyles.tdRemarks}>
-							<span style={pdfstyles.fontsize6}>{item_details.remarks}</span>
-							<br />
-						</td>
+
+						{getTdNode(1, 'tdLeft', 'fontsize6', item_details.item_name)}
+						{getTdNode(1, 'tdRight', 'fontsize6', item_details.quantity)}
+						{getTdNode(1, 'tdCenter', 'fontsize6', item_details.unit + item_details.unit_name)}
+						{getTdNode(1, 'tdRight', 'fontsize6', item_details.unit_price, true)}
+						{getTdNode(2,'tdRight','fontsize6',item_details.amount,true)}
+						{getTdNode(1,'tdRemarks','fontsize6',item_details.remarks,)}
+						
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
 				)
 			}	
-
 
 			if (idx === (size-1)) {
 				result.push(
@@ -332,7 +252,6 @@ const getAllItemDetails = (item_details) => {
 				)
 			}
 
-					
 		})
 			
 	})
@@ -349,10 +268,9 @@ const getRemarks = () => {
 					<tr style={pdfstyles.fontsize6}>
 						<td style={pdfstyles.spaceLeft}>
 						</td>
-						<td colspan="7" style={pdfstyles.tableTdLeft}>
-							<span>備考</span>
-							<br />
-						</td>
+
+						{getTdNode(7,'tableTdLeft','','備考')}
+						
 						<td style={pdfstyles.spaceRight}>
 						</td>
 					</tr>
@@ -364,9 +282,7 @@ const getRemarks = () => {
 					<td style={pdfstyles.spaceLeft}>	
 					</td>
 
-					<td colspan="7" style={pdfstyles.tdLeft}>
-						<span style={pdfstyles.fontsize6}>{remarks.content}</span>
-					</td>
+					{getTdNode(7,'tdLeft','fontsize6',remarks.content)}
 									
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -375,51 +291,6 @@ const getRemarks = () => {
 			return (result)
 		})
 	)
-}
-
-const convertPayee = (payee) => {
-	switch (payee.bank_info) {
-	case '1':
-		payee.bank_info = 'みずほ銀行'	
-		break
-	case '2':
-		payee.bank_info = '三菱東京UFJ銀行'	
-		break
-	case '3':
-		payee.bank_info = '三井住友銀行'	
-		break
-	case '4':
-		payee.bank_info = 'りそな銀行'	
-		break
-	case '5':
-		payee.bank_info = '埼玉りそな銀行'	
-		break
-	case '6':
-		payee.bank_info = '楽天銀行'	
-		break
-	case '7':
-		payee.bank_info = 'ジャパンネット銀行'	
-		break
-	case '8':
-		payee.bank_info = '巣鴨信用金庫'	
-		break
-	case '9':
-		payee.bank_info = '川口信用金庫'	
-		break
-	case '10':
-		payee.bank_info = '東京都民銀行'	
-		break
-	case '11':
-		payee.bank_info = '群馬銀行'	
-		break
-	}
-
-	if (payee.account_type === '0') {
-		payee.account_type = '普通'
-	} else {
-		payee.account_type = '当座'
-	}
-	return (payee)
 }
 
 const getPayee = () => {
@@ -606,7 +477,6 @@ const getPayee = () => {
 							</td>
 						</tr>
 					)
-					
 					
 				case half:
 					return (
@@ -824,6 +694,7 @@ const getPayee = () => {
 	)	
 }
 
+//引数：顧客情報、請求先情報
 const invoicePage = () => {
 	const invoice_1 = (
 		<div className="_page" id="_page-1" style={pdfstyles._page}>
@@ -847,7 +718,7 @@ const invoicePage = () => {
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
-
+			
 					<td colspan="7" style={pdfstyles.borderRight}>
 						<div>請求書コード : {entry.invoice.invoice_code}</div>
 						<br />
@@ -861,7 +732,8 @@ const invoicePage = () => {
 				{ entry.billto && entry.billfrom &&
 					getBilltoAndBillfrom()
 				}
-
+				
+				{/*請求金額*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 						<br />	
@@ -882,48 +754,26 @@ const invoicePage = () => {
 				</tr>
 				
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
-
-					<td colspan='1'>
-					</td>
-					<td colspan='1' >
-					</td>
-
-					<td colspan='6' style={pdfstyles.spaceRight}>
-							
-					</td>
+					<td style={pdfstyles.spaceLeft}></td>
+					<td colspan='7'><br/></td>
+					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
-				<tr>
-					<td colspan='3' style={pdfstyles.spaceLeft}>
-						<br/>	
-					</td>
-					<td colspan='6' style={pdfstyles.spaceRight}>
-						<br/>	
-					</td>
-				</tr>
+
 
 				{/*項目一覧*/}
 
-				{  allItem &&
+				{ allItem &&
 					getAllItemDetails(allItem)					
 				}
-
 
 				<tr>
 					<td style={pdfstyles.spaceLeft}>
 					</td>
 
 					<td colspan="4"></td>
-
-					<td colspan="2" style={pdfstyles.tableTdRight}>
-						<span style={pdfstyles.fontsize6}>小計金額</span>	
-					</td>
-					
-					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{addFigure(subTotal)}</span>
-					</td>
+					{getTdNode(2,'tableTdRight','fontsize6','小計金額')}
+					{getTdNode(1,'tdRight','fontsize6',subTotal,true)}
 
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -934,15 +784,9 @@ const invoicePage = () => {
 					</td>
 
 					<td colspan="4"></td>			
+					{getTdNode(2,'tableTdRight','fontsize6','消費税')}
+					{getTdNode(1,'tdRight','fontsize6',taxation,true)}
 					
-					<td colspan="2" style={pdfstyles.tableTdRight}>
-						<span style={pdfstyles.fontsize6}>消費税</span>	
-					</td>
-					
-					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{addFigure(taxation)}</span>
-					</td>
-
 					<td style={pdfstyles.spaceRight}>
 					</td>
 				</tr>
@@ -952,13 +796,8 @@ const invoicePage = () => {
 					</td>
 					
 					<td colspan="4"></td>
-					<td colspan="2" style={pdfstyles.tableTdRight}>
-						<span style={pdfstyles.fontsize6}>合計金額</span>	
-					</td>
-					
-					<td colspan="1" style={pdfstyles.tdRight}>
-						<span style={pdfstyles.fontsize6}>¥{total_amount}</span>
-					</td>
+					{getTdNode(2,'tableTdRight','fontsize6','合計金額')}
+					{getTdNode(1,'tdRight','fontsize6',total_amount,true)}
 
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -1041,3 +880,12 @@ const file_name = () => {
 
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
+
+/*
+function divln(str,n) {
+	const r=new RegExp('.{1,'+n+'}','g')
+	return str.match(r).map((token,i)=>{
+	 return(<div key={i.toString()}>{token}</div>)
+	})
+}
+*/
