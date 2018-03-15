@@ -138,6 +138,9 @@ export default class ShipmentServiceForm extends React.Component {
 		}]
 
 		this.sizeListType2 = [{
+			label: '1cm',
+			value: '1cm'
+		},{
 			label: '2cm以内',
 			value: '2cm以内'
 		},{
