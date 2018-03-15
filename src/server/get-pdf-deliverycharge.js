@@ -45,6 +45,7 @@ const header = (_customer, _quotationData) => {
 						{_quotationData.contact_information.address2}
 					</div>
 					<div>電話：{_quotationData.contact_information.tel}</div>
+					<div>担当者：{_quotationData.creator}</div>
 				</td>
 				<td rowspan="2"></td>
 			</tr>
@@ -299,7 +300,7 @@ const deliverychargeTable = (_data) => {
 		return a.shipment_service_type - b.shipment_service_type
 	})
 
-	let max_table_size = 47
+	let max_table_size = 40
 	let total_size = 0
 	let table_array = []
 	_data.feed.entry[0].delivery_charge.map((_obj) => {
@@ -307,15 +308,19 @@ const deliverychargeTable = (_data) => {
 		let table_size = 1
 		const type = _obj.shipment_service_type
 		if (type === '1') {
-			table_size = 10
+			table_size = 8
 		}
 		table_size = table_size + _obj.delivery_charge_details.length
 		
-		if (max_table_size < (total_size + table_size)) {
+		const table_total = total_size + table_size
+		if (max_table_size < table_total) {
+			//vtecxapi.log(_obj.shipment_service_name + ' : ' + table_total)
 			res.data.push(table_array)
 			res.maxPage++
 			table_array = []
 			total_size = 0
+		} else {
+			vtecxapi.log(_obj.shipment_service_name + ' / ' + _obj.shipment_service_service_name + ' : ' + table_total)
 		}
 		table_array.push(table(_obj))
 		total_size = total_size + table_size
@@ -345,17 +350,23 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 		return [pageTitle('配送料'),header(_obj.customer, quotationData)]
 	}
 
-	const pageHeaderSub = (_obj, _pageIndex, _maxPage) => {
+	const globalPageHeader = (_content) => {
 		return  (
 			<table cols="3" style={pdfstyles.header_table_sub}>
 				<tr>
 					<td></td>
 					<td style={pdfstyles.header_title_sub}>
-						<div>{_obj.customer.customer_name}　御中　( {_pageIndex} / {_maxPage} )</div>
+						{_content}
 					</td>
 					<td></td>
 				</tr>
 			</table>
+		)
+	}
+
+	const pageHeaderSub = (_obj, _pageIndex, _maxPage) => {
+		return (
+			globalPageHeader(<div>{_obj.customer.customer_name}　御中　( {_pageIndex} / {_maxPage} )</div>)
 		)
 	}
 
@@ -372,11 +383,14 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 			//pageData.pageList.page.push({word: ''})
 			index++
 		}
-		const setTopPage = (_customer, _deliverychargeData) => {
-			setPage([pageHeader(_customer), remarkTable(_deliverychargeData)])
+		const setTopPage = (_customer) => {
+			setPage([pageHeader(_customer)])
 		}
 		const setContentPage = (_customer, _pageIndex, _maxPage, _table) => {
 			setPage([pageHeaderSub(_customer, _pageIndex, _maxPage), _table])
+		}
+		const setRemarkPage = (_customer, _deliverychargeData) => {
+			setPage([globalPageHeader(<div>{_customer.customer.customer_name}　御中</div>), remarkTable(_deliverychargeData)])
 		}
 
 		customerData.map((_obj) => {
@@ -386,7 +400,7 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 			if (CommonGetFlag(deliverychargeData)) {
 
 				// 表紙の設定
-				setTopPage(_obj, deliverychargeData)
+				setTopPage(_obj)
 
 				// 配送料ページの設定
 				const req = deliverychargeTable(deliverychargeData)
@@ -395,6 +409,9 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 					setContentPage(_obj, _pageIndex, req.maxPage, _array)
 					_pageIndex++
 				})
+
+				// 備考の設定
+				setRemarkPage(_obj, deliverychargeData)
 
 			}
 		})
