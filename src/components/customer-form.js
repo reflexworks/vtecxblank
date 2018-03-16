@@ -62,6 +62,8 @@ export default class CustomerForm extends React.Component {
 				shipper: { data: {} },
 			}
 		}
+
+		this.shipper_convert = null
 		
 	}
 
@@ -121,6 +123,36 @@ export default class CustomerForm extends React.Component {
 		this.setBilltoMasterData()
 		this.setStaffMasterData()
 		this.setWarehouseMasterData()
+		this.setShipperConvertData()
+	}
+
+	/**
+	 * 配送業者取得処理
+	 */
+	setShipperConvertData() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.shipper_convert = {}
+				response.data.feed.entry.map((_value) => {
+					this.shipper_convert[_value.shipment_service.code] = _value.shipment_service.code + ' / ' + _value.shipment_service.name
+				})
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
 	}
 
 	/**
@@ -662,18 +694,13 @@ export default class CustomerForm extends React.Component {
 							name="customer.shipper"
 							data={this.entry.customer.shipper}
 							header={[{
-								field: 'shipment_service_code', title: '配送業者コード', width: '100px',
-								convert: {
-									ECO: 'エコ配ALLJP', ECO1: 'エコ配JP', ECO2: 'エコ配',
-									JP:'日本郵便',JP1:'日本郵便',JP2:'日本郵便',JP3:'日本郵便',
-									SG: '佐川急便', SN: '西濃運輸',
-									YH: 'ヤマト運輸',YH1: 'ヤマト運輸',YH2: 'ヤマト運輸'
-								}
+								field: 'shipment_service_code', title: '配送業者コード / 配送業者名', width: '250px',
+								convert: this.shipper_convert
 							}, {
-								field: 'shipment_service_service_name', title: 'サービス名', width: '100px',
+								field: 'shipment_service_service_name', title: 'サービス名', width: '250px',
 							}, {	
-								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '200px',
-								convert: { 0: '集荷', 1: '出荷' }
+								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '500px',
+								convert: [null,{ 0: '集荷', 1: '出荷' }]
 							}]}
 							edit={(data, index) => this.showEditModal(data, index)}
 							add={() => this.showAddModal()}
