@@ -2005,8 +2005,10 @@ export class CommonTable extends React.Component {
 									// 日時をフォーマット化
 									if (field === 'published' || field === 'updated') {
 										let date_value = __obj[__key].replace(/-/g, '/').split('T')
-										date_value = date_value[0] + ' ' + date_value[1].split('.')[0]
-										__obj[__key] = date_value
+										if (date_value[1]) {
+											date_value = date_value[0] + ' ' + date_value[1].split('.')[0]
+											__obj[__key] = date_value
+										}
 									}
 									array[cashInfo[field].index] = (
 										<td
