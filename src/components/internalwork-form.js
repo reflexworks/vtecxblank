@@ -1367,7 +1367,7 @@ export default class InternalWorkForm extends React.Component {
 							}, {
 								field: 'item_name', title: '商品名称', width: '250px'
 							}, {
-								field: 'special_unit_price', title: '特別販売価格・特別', width: '120px'
+								field: 'special_unit_price', title: '特別販売価格・単価', width: '120px'
     						}, {
     							field: 'quantity', title: '個数', width: '50px',
 								input: !this.isEdit ? false : {
