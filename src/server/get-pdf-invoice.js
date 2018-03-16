@@ -9,21 +9,18 @@ import {
 	convertPayee,
 } from './common'
 
-//名前をinvoice.entryにする
-const entry = getInvoice()
-const invoice_code = vtecxapi.getQueryString('invoice_code')
-//customer_codeが有無で処理を分ける、有るときはそれを使ってinvoicepageを行う
-//無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
-const customer_code = vtecxapi.getQueryString('customer_code')
-const working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
-const allItem = createArray()
-//消費税無の合計値
-const subTotal = getSubTotal()
-//消費税無合計値に0.08かける
-const taxation = Math.floor(subTotal * 0.08)	
-const taxTotal = getTaxTotal()
-const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+const getTdNode = (_col,_tdStyle,_spanStyle,_value) => {
 
+	const td_style = _tdStyle ? _tdStyle : 'tdLeft'
+	const span_style = _spanStyle ? _spanStyle : 'fontsize6'
+
+	return (
+		<td colspan={_col} style={pdfstyles[td_style]}>
+			<span style={pdfstyles[span_style]}>{_value}</span>
+			<br />
+		</td>
+	)
+}
 
 const getInvoice = () => {
 	const data = vtecxapi.getEntry('/invoice/' + invoice_code)
@@ -46,6 +43,7 @@ const createArray = () => {
 	return(array)
 }
 
+//「税抜」のデータの金額を合計して小計金額を出す
 const getSubTotal = () =>{
 	const noTaxList = allItem.filter((entry) => {
 		return entry.is_taxation === '0'
@@ -64,6 +62,7 @@ const getSubTotal = () =>{
 	}
 }
 
+//「税込」のデータの金額を合計して税込の合計金額を出す
 const getTaxTotal = () =>{
 	const TaxList = allItem.filter((entry) => {
 		return entry.is_taxation === '1'
@@ -122,26 +121,6 @@ const getBilltoAndBillfrom = () => {
 	)
 }
 
-const getTdNode = (_col,_tdStyle,_spanStyle,_span,figureFlag) => {
-
-	const td_style = _tdStyle ? _tdStyle : pdfstyles.tdLeft
-	const span_style = _spanStyle ? _spanStyle : pdfstyles.fontsize6
-
-	//数字かつ、金額フラグがtrueならカンマ差し込み処理(未完成)
-	/*
-	if (isNaN('_span') && figureFlag) {
-		_span = '¥' + addFigure(_span)
-	}
-	*/
-	//暫定的カンマ差し込み処理
-	_span = figureFlag ? '¥' + addFigure(_span) :_span
-	return (
-		<td colspan={_col} style={pdfstyles[td_style]}>
-			<span style={pdfstyles[span_style]}>{_span}</span>		
-		</td>
-	)
-}
-
 const getAllItemDetails = (item_details) => {
 
 	let categoryList = item_details.map((item_details) => {
@@ -180,64 +159,50 @@ const getAllItemDetails = (item_details) => {
 
 				result.push(
 					<tr style={pdfstyles.fontsize6}>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						{getTdNode(7,'TdLeft','',categoryName)}
-						<td style={pdfstyles.spaceRight}>
-						</td>
+						<td style={pdfstyles.spaceLeft}></td>
+						{getTdNode(7,'tableTdLeft','',categoryName)}
+						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)
 
 				result.push(
 					<tr>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						
-						{ getTdNode(1, 'tableTd', 'fontsize6', 'ご請求内容') }
-						{ getTdNode(1, 'tableTd', 'fontsize6', '数量') }
-						{ getTdNode(1, 'tableTd', 'fontsize6', '単位')}
-						{ getTdNode(1, 'tableTd', 'fontsize6', '単価')}
-						{ getTdNode(2, 'tableTd', 'fontsize6', '金額')}
-						{ getTdNode(1, 'tableTd', 'fontsize6', '備考') }
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
+						<td style={pdfstyles.spaceLeft}></td>
+						{ getTdNode(1, 'tableTd', '', 'ご請求内容') }
+						{ getTdNode(1, 'tableTd', '', '数量') }
+						{ getTdNode(1, 'tableTd', '', '単位')}
+						{ getTdNode(1, 'tableTd', '', '単価')}
+						{ getTdNode(2, 'tableTd', '', '金額')}
+						{ getTdNode(1, 'tableTd', '', '備考') }
+						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)
 			}
 
-
 			if (categoryList === 'monthly' || categoryList === 'daily') {
-
 				result.push(
 					<tr key={idx} style={pdfstyles.fontsize6}>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						{getTdNode(1, 'tdLeft', 'fontsize6', item_details.item_name + item_details.unit_name)}
-						{getTdNode(1, 'tdRight', 'fontsize6', item_details.quantity)}
-						{getTdNode(1, 'tdCenter', 'fontsize6', item_details.unit)}
-						{getTdNode(1, 'tdRight', 'fontsize6', item_details.unit_price, true)}
-						{getTdNode(2,'tdRight','fontsize6',item_details.amount,true)}
-						{getTdNode(1,'tdRemarks','fontsize6',item_details.remarks,)}
-						<td style={pdfstyles.spaceRight}>
-						</td>
+						<td style={pdfstyles.spaceLeft}></td>
+						{getTdNode(1, 'tdLeft', '', item_details.item_name + (item_details.unit_name ? item_details.unit_name : ''))}
+						{getTdNode(1, 'tdRight', '', item_details.quantity)}
+						{getTdNode(1, 'tdCenter', '', item_details.unit)}
+						{getTdNode(1, 'tdRight', '', item_details.unit_price)}
+						{getTdNode(2,'tdRight','',addFigure(item_details.amount))}
+						{getTdNode(1,'tdRemarks','',item_details.remarks)}
+						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)
 			} else {
 				result.push(
 					<tr key={idx} style={pdfstyles.fontsize6}>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-
-						{getTdNode(1, 'tdLeft', 'fontsize6', item_details.item_name)}
-						{getTdNode(1, 'tdRight', 'fontsize6', item_details.quantity)}
-						{getTdNode(1, 'tdCenter', 'fontsize6', item_details.unit + item_details.unit_name)}
-						{getTdNode(1, 'tdRight', 'fontsize6', item_details.unit_price, true)}
-						{getTdNode(2,'tdRight','fontsize6',item_details.amount,true)}
-						{getTdNode(1,'tdRemarks','fontsize6',item_details.remarks,)}
-						
-						<td style={pdfstyles.spaceRight}>
-						</td>
+						<td style={pdfstyles.spaceLeft}></td>
+						{getTdNode(1,'tdLeft','', item_details.item_name)}
+						{getTdNode(1,'tdRight','', item_details.quantity)}
+						{getTdNode(1,'tdCenter','', item_details.unit + (item_details.unit_name ? item_details.unit_name : ''))}
+						{getTdNode(1,'tdRight', '', item_details.unit_price)}
+						{getTdNode(2,'tdRight','',addFigure(item_details.amount))}
+						{getTdNode(1,'tdRemarks','',item_details.remarks)}
+						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)
 			}	
@@ -245,15 +210,11 @@ const getAllItemDetails = (item_details) => {
 			if (idx === (size-1)) {
 				result.push(
 					<tr>
-						<td colspan="9" >
-							<br />
-						</td>
+						<td colspan="9" ><br /></td>
 					</tr>
 				)
 			}
-
 		})
-			
 	})
 	return (result)
 }
@@ -282,7 +243,7 @@ const getRemarks = () => {
 					<td style={pdfstyles.spaceLeft}>	
 					</td>
 
-					{getTdNode(7,'tdLeft','fontsize6',remarks.content)}
+					{getTdNode(7,'tdLeft','',remarks.content)}
 									
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -305,137 +266,53 @@ const getPayee = () => {
 				case 0:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-
-							<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tableTdNoBottom}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				case half:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-								<span style={pdfstyles.fontsize6}>振込先</span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							{getTdNode(1,'tableTdNoTopBottom','','振込先')}
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)	
 				case length - 1:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoTop}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tableTdNoTop}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				default:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				}
@@ -445,139 +322,57 @@ const getPayee = () => {
 				case 0:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoBottom}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>
-								
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tableTdNoBottom}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
 							<td style={pdfstyles.spaceRight}>
 							</td>
 						</tr>
 					)
 					
+					
 				case half:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdCenterTwoLineNoTopBottom}>
-								<span style={pdfstyles.fontsize6}>振込先</span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							{getTdNode(1,'tdCenterTwoLineNoTopBottom','','振込先')}
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				case length - 1:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoTop}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>	
+							<td colspan="1" style={pdfstyles.tableTdNoTop}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				default:
 					return (	
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-								
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-								
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}></td>
+							{getTdNode(1,'tdCenterTwoLineNoBottom','','振込先')}
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)	
 				}
@@ -587,33 +382,13 @@ const getPayee = () => {
 				case 0:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdCenterTwoLineNoBottom}>
-								<span style={pdfstyles.fontsize6}>振込先</span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-						
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
+							<td style={pdfstyles.spaceLeft}></td>
+							{getTdNode(1,'tdCenterTwoLineNoBottom','','振込先')}
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
 							<td style={pdfstyles.spaceRight}>
 							</td>
 						</tr>
@@ -622,70 +397,28 @@ const getPayee = () => {
 				case length - 1:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}>
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdCenterTwoLineNoTop}>
-								<span></span>	
-							</td>
-
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-							</td>
-						
-							<td colspan="2" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-							</td>
-						
-							<td colspan="1" style={pdfstyles.tdLeft}>
-								<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-							</td>
-
-							<td style={pdfstyles.spaceRight}>
-							</td>
+							<td style={pdfstyles.spaceLeft}></td>
+							<td colspan="1" style={pdfstyles.tdCenterTwoLineNoTop}></td>
+							{getTdNode(1,'tdLeft','',payee.bank_info)}
+							{getTdNode(2,'tdLeft','',payee.branch_office)}
+							{getTdNode(1,'tdLeft','',payee.account_type)}
+							{getTdNode(1,'tdLeft','',payee.account_number)}
+							{getTdNode(1,'tdLeft','',payee.account_name)}
+							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
 				}		
 			} else {
 				return (	
 					<tr key={idx}>
-						<td style={pdfstyles.spaceLeft}>
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tableTd}>
-							<span style={pdfstyles.fontsize6}>振込先</span>	
-						</td>
-
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{payee.bank_info}</span>	
-						</td>
-						
-						<td colspan="2" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{payee.branch_office}</span>	
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{payee.account_type}</span>	
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{payee.account_number}</span>	
-						</td>
-						
-						<td colspan="1" style={pdfstyles.tdLeft}>
-							<span style={pdfstyles.fontsize6}>{payee.account_name}</span>	
-						</td>
-
-						<td style={pdfstyles.spaceRight}>
-						</td>
+						<td style={pdfstyles.spaceLeft}></td>
+						{getTdNode(1,'tableTd','','振込先')}
+						{getTdNode(1,'tdLeft','',payee.bank_info)}
+						{getTdNode(2,'tdLeft','',payee.branch_office)}
+						{getTdNode(1,'tdLeft','',payee.account_type)}
+						{getTdNode(1,'tdLeft','',payee.account_number)}
+						{getTdNode(1,'tdLeft','',payee.account_name)}
+						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)	
 			}
@@ -694,7 +427,9 @@ const getPayee = () => {
 	)	
 }
 
-//引数：顧客情報、請求先情報
+//引数を顧客情報、請求先情報にする
+//customer_codeの有無で処理を分ける。有るときはそれを使ってinvoicepageを行う
+//無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
 const invoicePage = () => {
 	const invoice_1 = (
 		<div className="_page" id="_page-1" style={pdfstyles._page}>
@@ -703,29 +438,14 @@ const invoicePage = () => {
 
 				{/*タイトル*/}
 				<tr>
-					<td>
-					</td>
-
-					<td colspan="7" style={pdfstyles.borderTop}>
-						<span style={pdfstyles.title}>御請求書</span>
-					</td>
-
-					<td>
-					</td>
+					{getTdNode(9,'borderTop','title','御請求書')}
 				</tr>
 				
 				{/*請求書情報*/}
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
-			
-					<td colspan="7" style={pdfstyles.borderRight}>
-						<div>請求書コード : {entry.invoice.invoice_code}</div>
-						<br />
-					</td>
-
-					<td style={pdfstyles.spaceRight}>
-					</td>
+					<td style={pdfstyles.spaceLeft}></td>
+					{getTdNode(7,'borderRight','fontsize10','請求書コード:' + entry.invoice.invoice_code)}
+					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
 				{/*請求先名 請求元*/}
@@ -735,72 +455,58 @@ const invoicePage = () => {
 				
 				{/*請求金額*/}
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-						<br />	
-					</td>
+					<td style={pdfstyles.spaceLeft}><br />	</td>
 
 					<td colspan='7' >
 						<span style={pdfstyles.fontsize8}>下記の通り、ご請求を申し上げます。</span>
 						<br/>
-						<br />
+						<br/>
 						<span style={pdfstyles.totalAmountText}>合計請求金額　</span>
 						<span style={pdfstyles.totalAmount}>¥{addFigure(total_amount)}</span>
-						<br />
+						<br/>
 					</td>
 					
-					<td style={pdfstyles.spaceRight}>
-						<br />
-					</td>
+					<td style={pdfstyles.spaceRight}><br/></td>
 				</tr>
 				
 				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan='7'><br/></td>
-					<td style={pdfstyles.spaceRight}></td>
+					<td colspan='9'><br/></td>
 				</tr>
-
-
 
 				{/*項目一覧*/}
 
-				{ allItem &&
+				{  allItem &&
 					getAllItemDetails(allItem)					
 				}
 
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
+					<td style={pdfstyles.spaceLeft}></td>
 
 					<td colspan="4"></td>
-					{getTdNode(2,'tableTdRight','fontsize6','小計金額')}
-					{getTdNode(1,'tdRight','fontsize6',subTotal,true)}
+					{getTdNode(2,'tableTdRight','','小計金額')}
+					{getTdNode(1,'tdRight','','¥'+ addFigure(subTotal))}
 
-					<td style={pdfstyles.spaceRight}>
-					</td>
+					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
+					<td style={pdfstyles.spaceLeft}></td>
 
 					<td colspan="4"></td>			
-					{getTdNode(2,'tableTdRight','fontsize6','消費税')}
-					{getTdNode(1,'tdRight','fontsize6',taxation,true)}
+					{getTdNode(2,'tableTdRight','','消費税')}
+					{getTdNode(1,'tdRight','','¥'+ addFigure(taxation))}
 					
-					<td style={pdfstyles.spaceRight}>
-					</td>
+					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
 				<tr>
-					<td style={pdfstyles.spaceLeft}>
-					</td>
+					<td style={pdfstyles.spaceLeft}></td>
 					
 					<td colspan="4"></td>
-					{getTdNode(2,'tableTdRight','fontsize6','合計金額')}
-					{getTdNode(1,'tdRight','fontsize6',total_amount,true)}
+					{getTdNode(2,'tableTdRight','','合計金額')}
+					{getTdNode(1,'tdRight','','¥'+ addFigure(total_amount))}
 
-					<td style={pdfstyles.spaceRight}>
-					</td>
+					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
 			</table>
@@ -814,9 +520,7 @@ const invoicePage = () => {
 
 				{/*備考*/}
 				<tr>
-					<td colspan="9">
-						<br/>
-					</td>
+					<td colspan="9"><br/></td>
 				</tr>
 
 				{entry.remarks &&
@@ -848,6 +552,22 @@ let pageData = {
 		page:[]
 	}
 }
+const invoice_code = vtecxapi.getQueryString('invoice_code')
+//名前をinvoice.entryにする
+const entry = getInvoice()
+const customer_code = vtecxapi.getQueryString('customer_code')
+const working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
+
+const allItem = createArray()
+//税抜合計値
+const subTotal = getSubTotal()
+//税抜合計値に0.08かける
+const taxation = Math.floor(subTotal * 0.08)	
+//税込合計値
+const taxTotal = getTaxTotal()
+//全ての金額を合計した合計請求金額
+const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+
 const element = () => {
 
 	const invoice = invoicePage()
@@ -866,6 +586,7 @@ const element = () => {
 		</html>
 	)	
 }
+
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
 
