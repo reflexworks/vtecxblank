@@ -2058,22 +2058,23 @@ export class CommonTable extends React.Component {
 
 		const tableNode = (
 			<div>
-				{ this.props.children }
 				{ (this.props.add && this.state.actionType === 'edit' || this.props.add && !this.props.edit) &&
-					<Button onClick={() => this.props.add()} bsSize="sm">
+					<Button onClick={() => this.props.add()} bsSize="sm" style={{float: 'left'}}>
 						<Glyphicon glyph="plus"></Glyphicon>
 					</Button>
 				}
 				{ (this.props.remove && this.state.actionType === 'edit') &&
-					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger">
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger" style={{float: 'left'}}>
 						<Glyphicon glyph="minus"></Glyphicon>
 					</Button>
 				}
 				{ (this.props.remove && this.state.actionType === 'remove' && this.props.edit) &&
-					<Button onClick={() => this.showRemoveBtn()} bsSize="sm">
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" style={{float: 'left'}}>
 						キャンセル
 					</Button>
 				}
+				{this.props.children}
+				<div style={{clear: 'both'}}></div>
 				<div className={this.tableClass} style={this.props.fixed ? null : {'max-height': this.tableHeight + 'px'}}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>

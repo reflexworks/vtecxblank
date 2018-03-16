@@ -613,7 +613,11 @@ export default class QuotationForm extends React.Component {
 								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
 								remove={this.isDisabled ? false : (data, index) => this.removeList('item_details', index)}
 								fixed
-							/>
+							>
+								<div style={{float: 'left','font-size': '12px', padding: '7px 10px 0px 20px'}}>
+									単位名称に「月」を含めれば月次事項、「期」を含めれば期次事項となります。
+								</div>
+							</CommonTable>	
 
 						</Tab>
 
