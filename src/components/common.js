@@ -1811,9 +1811,19 @@ export class CommonTable extends React.Component {
 			const style = _cashData.style ? _cashData.style : null
 			const filter = _cashData.filter
 			const input = _cashData.input
-			const getConvertValue = (_value) => {
+			const getConvertValue = (_value, _convertIndex) => {
 				if (convertData) {
-					return convertData[_value] || _value
+					let convertValue
+					if (Array.isArray(convertData)) {
+						if (convertData[_convertIndex] !== null) {
+							convertValue = convertData[_convertIndex][_value]
+						} else {
+							convertValue = _value
+						}
+					} else {
+						convertValue = convertData[_value]
+					}
+					return convertValue || _value
 				} else {
 					return _value
 				}
@@ -1832,7 +1842,7 @@ export class CommonTable extends React.Component {
 										_valueCount++
 										if (typeof _value[__key] === 'string') {
 											if (isMulti) {
-												__value.push(<p className="multi_item value" key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key])}</p>)
+												__value.push(<p className="multi_item value" key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key], _valueCount)}</p>)
 												if ((_valueCount + 1) !== _valueObj.length) {
 													__value.push(<p className="multi_item">/</p>)
 												}
@@ -1995,8 +2005,10 @@ export class CommonTable extends React.Component {
 									// 日時をフォーマット化
 									if (field === 'published' || field === 'updated') {
 										let date_value = __obj[__key].replace(/-/g, '/').split('T')
-										date_value = date_value[0] + ' ' + date_value[1].split('.')[0]
-										__obj[__key] = date_value
+										if (date_value[1]) {
+											date_value = date_value[0] + ' ' + date_value[1].split('.')[0]
+											__obj[__key] = date_value
+										}
 									}
 									array[cashInfo[field].index] = (
 										<td
@@ -2046,22 +2058,23 @@ export class CommonTable extends React.Component {
 
 		const tableNode = (
 			<div>
-				{ this.props.children }
 				{ (this.props.add && this.state.actionType === 'edit' || this.props.add && !this.props.edit) &&
-					<Button onClick={() => this.props.add()} bsSize="sm">
+					<Button onClick={() => this.props.add()} bsSize="sm" style={{float: 'left'}}>
 						<Glyphicon glyph="plus"></Glyphicon>
 					</Button>
 				}
 				{ (this.props.remove && this.state.actionType === 'edit') &&
-					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger">
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" bsStyle="danger" style={{float: 'left'}}>
 						<Glyphicon glyph="minus"></Glyphicon>
 					</Button>
 				}
 				{ (this.props.remove && this.state.actionType === 'remove' && this.props.edit) &&
-					<Button onClick={() => this.showRemoveBtn()} bsSize="sm">
+					<Button onClick={() => this.showRemoveBtn()} bsSize="sm" style={{float: 'left'}}>
 						キャンセル
 					</Button>
 				}
+				{this.props.children}
+				<div style={{clear: 'both'}}></div>
 				<div className={this.tableClass} style={this.props.fixed ? null : {'max-height': this.tableHeight + 'px'}}>
 					<Table striped bordered hover name={this.props.name}>
 						<thead>

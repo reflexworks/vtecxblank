@@ -183,13 +183,40 @@ export function getData(_type) {
 			}
 		} else {
 
+			const setCleanData = (_data) => {
+				if (queryString.indexOf('quotation_code_sub') !== -1) {
+					return _data
+				} 
+				// 見積書一覧の場合、最新枝番のみ抽出する
+				if (_type === 'quotation') {
+					let res = { feed: { entry: [] } }
+					let cash_quotation = {}
+					_data.feed.entry.map((_entry) => {
+						const quotation_code = _entry.quotation.quotation_code
+						if (cash_quotation[quotation_code]) {
+							const befor_sub_code = parseInt(cash_quotation[quotation_code].quotation.quotation_code_sub)
+							if (befor_sub_code < parseInt(_entry.quotation.quotation_code_sub)) {
+								cash_quotation[quotation_code] = _entry
+							}
+						} else[
+							cash_quotation[quotation_code] = _entry
+						]
+					})
+					Object.keys(cash_quotation).forEach((_key) => {
+						res.feed.entry.push(cash_quotation[_key])
+					})
+					return res
+				} else {
+					return _data
+				}
+			}
 			// 管理者と経理担当は全てのデータが対象
 			if (role === '1' || role === '5') {
 				const uri = '/'+ _type +'?f' + queryString
 				const data = vtecxapi.getFeed(uri, true)
 				const isData = CommonGetFlag(data)
 				if (isData) {
-					total_array = data.feed.entry
+					total_array = setCleanData(data).feed.entry
 				}
 			} else {
 				// 見積書 or 請求先 or 請求書の場合
@@ -209,7 +236,8 @@ export function getData(_type) {
 						const isData = CommonGetFlag(data)
 						if (isData) {
 							// 検索結果マージ
-							Array.prototype.push.apply(total_array, data.feed.entry)
+							const cleanData = setCleanData(data)
+							Array.prototype.push.apply(total_array, cleanData.feed.entry)
 						}
 
 						// 検索の最大件数になったらループを中止

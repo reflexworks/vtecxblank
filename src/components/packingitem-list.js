@@ -381,11 +381,11 @@ export default class PackingItemList extends React.Component {
 							}, {	
 								field: 'packing_item.regular_price', title: '通常販売価格', width: '150px'
 							}, {
-								field: 'packing_item.regular_unit_price', title: '通常販売価格・特別', width: '150px'
+								field: 'packing_item.regular_unit_price', title: '通常販売価格・単価', width: '150px'
 							}, {
 								field: 'packing_item.special_price', title: '特別販売価格', width: '150px'
 							}, {
-								field: 'packing_item.special_unit_price', title: '特別販売価格・特別', width: '150px'
+								field: 'packing_item.special_unit_price', title: '特別販売価格・単価', width: '150px'
 							}]}
 						/>			
 						

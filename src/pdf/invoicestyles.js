@@ -12,7 +12,8 @@ export const widths = {
 	widths: '3,50,7,4,7,3,4,19,3,'
 }
 export const payeeWidths = {
-	widths: '3,10,15,10,14,13,13,19,3,'
+	//左、振込先、銀号名、支店、口座種類、口座番号、口座名、 
+	widths: '3,6,19,10,14,4,13,28,3,'
 }
 
 export const borderTop = {
@@ -476,7 +477,8 @@ export const tdRemarks = {
 	align:'left',
 	height:'15',
 	offsetx:5,
-	offsety:4,	
+	offsety:4,
+	
 }
 
 export const totalAmountText = {

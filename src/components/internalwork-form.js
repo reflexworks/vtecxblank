@@ -777,14 +777,8 @@ export default class InternalWorkForm extends React.Component {
 	}
 
 	forcusList(_key, _data, _index) {
-		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
-			const entry = this[_key][_index].data
-			if (entry.internal_work.item_details_unit === '円') {
-				_data = delFigure(_data)
-				this[_key][_index].quantity = _data
-				this.forceUpdate()
-			}
-		}
+		this[_key][_index].quantity = delFigure(_data)
+		this.forceUpdate()
 	}
 
 	blurList(_key, _data, _index) {
@@ -850,11 +844,8 @@ export default class InternalWorkForm extends React.Component {
 			return key
 		}
 		const entry = this[_key][_index].data
-		if (_key === 'monthlyWorks' || _key.indexOf('periodWorks') !== -1) {
-			if (entry.internal_work.item_details_unit === '円') {
-				_data = addFigure(_data)
-			}
-		}
+		_data = addFigure(_data)
+
 		if (!_data && entry.internal_work.quantity) {
 			// 個数が元々入力されていて、かつ変更値が空の場合
 			// 空白を元の値に戻す
@@ -1243,14 +1234,15 @@ export default class InternalWorkForm extends React.Component {
 								name="quotationWorks"
 								data={this.quotationWorks}
 								header={[{
-									field: 'item_name',title: '作業内容', width: '200px'
+									field: 'item_name',title: '作業内容', width: '180px'
 								}, {
 									field: 'unit_name',title: '単位名称', width: '130px'
 								}, {
-									field: 'quantity', title: '個数', width: '50px',
+									field: 'quantity', title: '個数', width: '70px',
 									input: !this.isEdit ? false : {
 										onChange: (data, rowindex) => { this.editList('quotationWorks', data, rowindex) },
-										onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) }
+										onBlur: (data, rowindex) => { this.blurList('quotationWorks', data, rowindex) },
+										onForcus: (data, rowindex) => { this.forcusList('quotationWorks', data, rowindex) }
 									}
 								}, {
 									field: 'unit',title: '単位', width: '50px'
@@ -1289,12 +1281,13 @@ export default class InternalWorkForm extends React.Component {
     						name="deliveryWorks"
     						data={this.deliveryWorks}
     						header={[{
-    							field: 'name',title: '配送業者', width: '490px'
+    							field: 'name',title: '配送業者', width: '470px'
     						}, {
-    							field: 'quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '70px',
 								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('deliveryWorks', data, rowindex)},
-									onBlur: (data, rowindex) => { this.blurList('deliveryWorks', data, rowindex) }
+									onBlur: (data, rowindex) => { this.blurList('deliveryWorks', data, rowindex) },
+									onForcus: (data, rowindex) => { this.forcusList('deliveryWorks', data, rowindex) }
 								}
     						}, {
     							field: 'staff_name', title: '入力者', width: '100px'
@@ -1326,12 +1319,13 @@ export default class InternalWorkForm extends React.Component {
     						name="pickupWorks"
     						data={this.pickupWorks}
     						header={[{
-    							field: 'name',title: '配送業者', width: '490px'
+    							field: 'name',title: '配送業者', width: '470px'
     						}, {
-    							field: 'quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '70px',
 								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('pickupWorks', data, rowindex)},
-									onBlur: (data, rowindex) => { this.blurList('pickupWorks', data, rowindex) }
+									onBlur: (data, rowindex) => { this.blurList('pickupWorks', data, rowindex) },
+									onForcus: (data, rowindex) => { this.forcusList('pickupWorks', data, rowindex) }
 								}
     						}, {
     							field: 'staff_name', title: '入力者', width: '100px'
@@ -1363,16 +1357,17 @@ export default class InternalWorkForm extends React.Component {
     						name="packingWorks"
     						data={this.packingWorks}
     						header={[{
-								field: 'item_code',title: '品番', width: '100px'
+								field: 'item_code',title: '品番', width: '90px'
 							}, {
 								field: 'item_name', title: '商品名称', width: '250px'
 							}, {
-								field: 'special_unit_price', title: '特別販売価格・特別', width: '120px'
+								field: 'special_unit_price', title: '特別販売価格・単価', width: '110px'
     						}, {
-    							field: 'quantity', title: '個数', width: '50px',
+    							field: 'quantity', title: '個数', width: '70px',
 								input: !this.isEdit ? false : {
 									onChange: (data, rowindex)=>{this.editList('packingWorks', data, rowindex)},
-									onBlur: (data, rowindex) => { this.blurList('packingWorks', data, rowindex) }
+									onBlur: (data, rowindex) => { this.blurList('packingWorks', data, rowindex) },
+									onForcus: (data, rowindex) => { this.forcusList('packingWorks', data, rowindex) }
 								}
     						}, {
     							field: 'staff_name', title: '入力者', width: '100px'
