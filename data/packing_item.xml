@@ -2,6 +2,56 @@
 <feed>
   <entry>
     <packing_item>
+      <item_code>DB-M2</item_code>
+      <item_name>段ボールM2</item_name>
+      <material>紙</material>
+      <category>梱包資材</category>
+      <size1>80</size1>
+      <size2>M</size2>
+      <notices>なし</notices>
+      <thickness>2</thickness>
+      <inside_width>26</inside_width>
+      <inside_depth>26</inside_depth>
+      <inside_height>26</inside_height>
+      <outer_width>28</outer_width>
+      <outer_depth>28</outer_depth>
+      <outer_height>28</outer_height>
+      <outer_total>84</outer_total>
+      <purchase_price>40</purchase_price>
+      <regular_price>140</regular_price>
+      <regular_unit_price>140</regular_unit_price>
+      <special_price>100</special_price>
+      <special_unit_price>100</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/DB-M2" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>TEST-001</item_code>
+      <item_name>テスト商品1</item_name>
+      <material>プラ</material>
+      <category>資材</category>
+      <size1>SS-1</size1>
+      <size2></size2>
+      <notices>特記テスト</notices>
+      <thickness>2</thickness>
+      <inside_width>28</inside_width>
+      <inside_depth>28</inside_depth>
+      <inside_height>28</inside_height>
+      <outer_width>30</outer_width>
+      <outer_depth>30</outer_depth>
+      <outer_height>30</outer_height>
+      <outer_total>90</outer_total>
+      <purchase_price>50</purchase_price>
+      <regular_price>100</regular_price>
+      <regular_unit_price>100</regular_unit_price>
+      <special_price>80</special_price>
+      <special_unit_price>80</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/TEST-001" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
       <item_code>band_001</item_code>
       <item_name>自動梱包用PPバンド（青）　15.5mm×2500ｍ</item_name>
       <material>ポリプロピレン</material>
@@ -74,6 +124,81 @@
       <special_unit_price></special_unit_price>
     </packing_item>
     <link href="/packing_item/band_003" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>belmohk-001</item_code>
+      <item_name>折箱＜大＞3ｃｍ</item_name>
+      <material>ダンボール</material>
+      <category>メイモン用</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>メイモン用資材</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>0</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>0</outer_height>
+      <outer_total>0</outer_total>
+      <purchase_price>21</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>23</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/belmohk-001" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>belmohk-002</item_code>
+      <item_name>折箱＜大＞ 2ｃｍ</item_name>
+      <material>ダンボール</material>
+      <category>メイモン</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>メイモン用資材</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>0</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>0</outer_height>
+      <outer_total>0</outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>22</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/belmohk-002" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>belmohk-003</item_code>
+      <item_name>折箱＜小＞</item_name>
+      <material>ダンボール</material>
+      <category>メイモン</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>メイモン用資材</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>0</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>0</outer_height>
+      <outer_total>0</outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>17</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/belmohk-003" rel="self"/>
   </entry>
   <entry>
     <packing_item>
@@ -174,6 +299,56 @@
       <special_unit_price></special_unit_price>
     </packing_item>
     <link href="/packing_item/bfukuro_004" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>cc-d330-1y</item_code>
+      <item_name>ダンボール箱　ドリンク缶　330ｍｌ　１ケース</item_name>
+      <material>K5×120ｇ×Ｋ5</material>
+      <category>クリックル</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>クリックル向け専用資材</notices>
+      <thickness>5.000</thickness>
+      <inside_width>405</inside_width>
+      <inside_depth>275</inside_depth>
+      <inside_height>125</inside_height>
+      <outer_width>410</outer_width>
+      <outer_depth>280</outer_depth>
+      <outer_height>130</outer_height>
+      <outer_total>820</outer_total>
+      <purchase_price>48</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>57</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>50</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/cc-d330-1y" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>cc-d330-2y</item_code>
+      <item_name>ダンボール箱　ドリンク缶　３３０ml用横型</item_name>
+      <material>K5×Ｓ120ｇ×Ｋ５</material>
+      <category>クリックル</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>クリックル専用資材</notices>
+      <thickness>5.000</thickness>
+      <inside_width>405</inside_width>
+      <inside_depth>275</inside_depth>
+      <inside_height>245</inside_height>
+      <outer_width>410</outer_width>
+      <outer_depth>280</outer_depth>
+      <outer_height>250</outer_height>
+      <outer_total>940</outer_total>
+      <purchase_price></purchase_price>
+      <regular_price>78.0</regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price>69.0</special_price>
+      <special_unit_price></special_unit_price>
+    </packing_item>
+    <link href="/packing_item/cc-d330-2y" rel="self"/>
   </entry>
   <entry>
     <packing_item>
@@ -1577,6 +1752,56 @@
   </entry>
   <entry>
     <packing_item>
+      <item_code>dbox_058</item_code>
+      <item_name>ダンボール箱　ハンドラル・マラカス用内箱</item_name>
+      <material>C5B</material>
+      <category>ダンボール箱</category>
+      <size1>2</size1>
+      <size2>2</size2>
+      <notices>ティニースプーン専用資材</notices>
+      <thickness>5000</thickness>
+      <inside_width>258</inside_width>
+      <inside_depth>145</inside_depth>
+      <inside_height>205</inside_height>
+      <outer_width>260</outer_width>
+      <outer_depth>150</outer_depth>
+      <outer_height>210</outer_height>
+      <outer_total>620</outer_total>
+      <purchase_price>30</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>33</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/dbox_058" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>dbox_059</item_code>
+      <item_name>ダンボール箱　ハンドラル・マラカス用外箱</item_name>
+      <material>K5A</material>
+      <category>ダンボール箱</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>ティニースプーン専用資材</notices>
+      <thickness>5000</thickness>
+      <inside_width>306</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>437</inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>107</special_unit_price>
+    </packing_item>
+    <link href="/packing_item/dbox_059" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
       <item_code>dbox_064</item_code>
       <item_name>ダンボール箱　高島平　靴箱用</item_name>
       <material>C5B</material>
@@ -1699,6 +1924,81 @@
       <special_unit_price></special_unit_price>
     </packing_item>
     <link href="/packing_item/film_006" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>frontier-001</item_code>
+      <item_name>梱包資材（水筒用ダンボール）</item_name>
+      <material>K5/AF</material>
+      <category>フロンティアトレイド</category>
+      <size1></size1>
+      <size2></size2>
+      <notices>専用資材</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>330</outer_width>
+      <outer_depth>100</outer_depth>
+      <outer_height>100</outer_height>
+      <outer_total>530</outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price>63</special_price>
+      <special_unit_price></special_unit_price>
+    </packing_item>
+    <link href="/packing_item/frontier-001" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>frontier-002</item_code>
+      <item_name>梱包資材（抜型代）</item_name>
+      <material></material>
+      <category></category>
+      <size1></size1>
+      <size2></size2>
+      <notices></notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price>45,000</special_price>
+      <special_unit_price></special_unit_price>
+    </packing_item>
+    <link href="/packing_item/frontier-002" rel="self"/>
+  </entry>
+  <entry>
+    <packing_item>
+      <item_code>frontier-003</item_code>
+      <item_name>梱包資材（版代）</item_name>
+      <material></material>
+      <category>フロンティアトレイド</category>
+      <size1></size1>
+      <size2></size2>
+      <notices></notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price></purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price>11,000</special_price>
+      <special_unit_price></special_unit_price>
+    </packing_item>
+    <link href="/packing_item/frontier-003" rel="self"/>
   </entry>
   <entry>
     <packing_item>
