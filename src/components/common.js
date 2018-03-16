@@ -1811,9 +1811,19 @@ export class CommonTable extends React.Component {
 			const style = _cashData.style ? _cashData.style : null
 			const filter = _cashData.filter
 			const input = _cashData.input
-			const getConvertValue = (_value) => {
+			const getConvertValue = (_value, _convertIndex) => {
 				if (convertData) {
-					return convertData[_value] || _value
+					let convertValue
+					if (Array.isArray(convertData)) {
+						if (convertData[_convertIndex] !== null) {
+							convertValue = convertData[_convertIndex][_value]
+						} else {
+							convertValue = _value
+						}
+					} else {
+						convertValue = convertData[_value]
+					}
+					return convertValue || _value
 				} else {
 					return _value
 				}
@@ -1832,7 +1842,7 @@ export class CommonTable extends React.Component {
 										_valueCount++
 										if (typeof _value[__key] === 'string') {
 											if (isMulti) {
-												__value.push(<p className="multi_item value" key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key])}</p>)
+												__value.push(<p className="multi_item value" key={_valueCount} name={__key} data-value={_value[__key]}>{getConvertValue(_value[__key], _valueCount)}</p>)
 												if ((_valueCount + 1) !== _valueObj.length) {
 													__value.push(<p className="multi_item">/</p>)
 												}
