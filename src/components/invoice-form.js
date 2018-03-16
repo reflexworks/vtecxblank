@@ -41,7 +41,8 @@ export default class InvoiceForm extends React.Component {
 			showBillfromAddModal: false,
 			showBillfromEditModal: false,
 			selectQuotation: '',
-			selectCustomer: ''
+			selectCustomer: '',
+			item_detailsFlag: false,
 		}
 
 		this.selectInternalWorkYearMonth = this.props.workingYearmonth
@@ -530,6 +531,7 @@ export default class InvoiceForm extends React.Component {
 	
 	}
 
+
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -554,14 +556,16 @@ export default class InvoiceForm extends React.Component {
 				}
 			})	
 		}
-
-		this.setCustomerMasterData()
-		this.setBillfromMasterData()
-		this.setInternalWorkYearMonthList()
-		this.sortItemDetails()
+		this.setCustomerMasterData() 
+		this.setBillfromMasterData() 
+		this.setInternalWorkYearMonthList() 
+		if (!this.state.item_detailsFlag) {
+			this.sortItemDetails()
+		}
 		this.changeTotalAmount()
 	}
-	
+
+
 	/**
 	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
 	 */
@@ -615,8 +619,8 @@ export default class InvoiceForm extends React.Component {
 					this.item_details.others[this.item_details.others.length] = this.entry.item_details[i]
 					break	
 				}
+				this.setState({item_detailsFlag:true})
 			}
-			//this.changeTotalAmount()
 		}
 	}
 
@@ -892,9 +896,8 @@ export default class InvoiceForm extends React.Component {
 
 		if (_data) {
 			this.selectInternalWorkYearMonth = _data.value
-			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)}
+			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)} this.forceUpdate()
 			if (this.state.selectCustomer) { this.getService(this.state.selectCustomer.customer_code, _data.value) }
-
 			this.forceUpdate()
 
 		} else {
@@ -1049,6 +1052,7 @@ export default class InvoiceForm extends React.Component {
 			entryArray.push(this.item_details[list][i])
 		}	
 		this.entry.item_details = entryArray
+		this.changeTotalAmount()
 		
 		this.forceUpdate()
 	}
@@ -1473,7 +1477,7 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'amount', title: '金額', width: '100px',
 									}, {
-										field: 'remarks',title: '備考', width: '500px',	
+										field: 'remarks',title: '備考', width: '30px',
 									}]}
 								/>
 								
@@ -1539,7 +1543,7 @@ export default class InvoiceForm extends React.Component {
 									}, {
 										field: 'amount', title: '金額', width: '100px',	
 									}, {
-										field: 'remarks',title: '備考', width: '500px',	
+										field: 'remarks',title: '備考', width: '30px',
 									}]}
 								/>
 
@@ -1919,19 +1923,6 @@ export default class InvoiceForm extends React.Component {
 						</PanelGroup>
 
 						<br />
-						
-						<FormGroup className='hide'>
-							<CommonInputText
-								controlLabel="小計金額"
-								type="text"
-								value={this.sub_total}
-								readonly='true'
-								className="total_amount"
-							/>
-							<br />
-							<br/>
-						</FormGroup>	
-						
 						<CommonInputText
 							controlLabel="消費税"
 							type="text"
@@ -1939,10 +1930,8 @@ export default class InvoiceForm extends React.Component {
 							readonly
 							className="total_amount"
 						/>
-						
 						<br />
 						<br />
-
 						<CommonInputText
 							controlLabel="合計請求金額"
 							type="text"
@@ -1950,10 +1939,8 @@ export default class InvoiceForm extends React.Component {
 							readonly='true'
 							className="total_amount"
 						/>
-
 						<br />
 						<br />
-
 						<FormGroup className='hide'>	
 							<CommonTable	
 								name="item_details"
