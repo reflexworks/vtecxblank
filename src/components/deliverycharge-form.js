@@ -171,10 +171,11 @@ export default class DeliveryChargeForm extends React.Component {
 		const name = this.shipment_service[_code][0].name
 		const remove = () => {
 			let array = []
-			for (let i = 0, ii = this.entry.delivery_charge.length; i < ii; ++i) {
-				const delivery_charge = this.entry.delivery_charge[i]
+			const old_entry = JSON.parse(JSON.stringify(this.entry.delivery_charge))
+			for (let i = 0, ii = old_entry.length; i < ii; ++i) {
+				const delivery_charge = old_entry[i]
 				if (delivery_charge.shipment_service_code !== _code) {
-					array.push(JSON.parse(JSON.stringify(this.entry.delivery_charge[i])))
+					array.push(delivery_charge)
 				}
 			}
 			this.entry.delivery_charge = array
@@ -217,7 +218,10 @@ export default class DeliveryChargeForm extends React.Component {
 						field: key, title: zone_name, width: '60px',
 						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.charge_by_zone['+ i +'].price',
 						input: {
-							onChange: (data, rowindex) => { this.changeShipmentServiceListType(_code, key, data, rowindex) },
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].charge_by_zone['+ i +'].price'
+								this.changeShipmentServiceListType(_code, key, data, rowindex, entitiykey)
+							},
 							price: true
 						}
 					})
@@ -225,8 +229,8 @@ export default class DeliveryChargeForm extends React.Component {
 				if (!header[_code]) header[_code] = _header
 				return _data
 			}
-			let tableIndex = 0
-			const newData = (_delivery_charge) => {
+
+			const newData = (_delivery_charge, _tableIndex) => {
 
 				const s_code = _delivery_charge.shipment_service_code
 				const s_type = _delivery_charge.shipment_service_type
@@ -247,7 +251,7 @@ export default class DeliveryChargeForm extends React.Component {
 					new_data.price = dd.price || ''
 					new_data.note = dd.note || ''
 					if (dd.charge_by_zone) {
-						new_data = setZone(new_data, dd.charge_by_zone, tableIndex, s_code)
+						new_data = setZone(new_data, dd.charge_by_zone, _tableIndex, s_code)
 					}
 
 					this.shipment_service[s_code].push(new_data)
@@ -311,17 +315,23 @@ export default class DeliveryChargeForm extends React.Component {
 					let _header = initHeader()
 					_header.push({
 						field: 'price', title: '配送料', width: '60px',
-						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.price',
+						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.price',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'price', data, rowindex)},
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].price'
+								this.changeShipmentServiceListType(s_code, 'price', data, rowindex, entitiykey)
+							},
 							price: true
 						}
 					})
 					_header.push({
 						field: 'note', title: '記事', width: '100px',
-						entitiykey: 'delivery_charge['+ tableIndex +'].delivery_charge_details{}.note',
+						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.note',
 						input: {
-							onChange: (data, rowindex)=>{this.changeShipmentServiceListType(s_code, 'note', data, rowindex)}
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].note'
+								this.changeShipmentServiceListType(s_code, 'note', data, rowindex, entitiykey)
+							}
 						}
 					})
 					_header.push({
@@ -340,9 +350,10 @@ export default class DeliveryChargeForm extends React.Component {
 				}
 
 			}
+			let tableIndex = 0
 			const list = this.entry.delivery_charge
 			for (let i = 0, ii = list.length; i < ii; ++i) {
-				newData(list[i])
+				newData(list[i], tableIndex)
 				tableIndex++
 			}
 			this.forceUpdate()
@@ -350,8 +361,33 @@ export default class DeliveryChargeForm extends React.Component {
 
 	}
 
-	changeShipmentServiceListType(_key, _item, _data, _rowindex) {
+	changeShipmentServiceListType(_key, _item, _data, _rowindex, _entitiykey) {
+
 		this.shipment_service[_key][_rowindex][_item] = _data
+
+		const target_keys = _entitiykey.split('.')
+		const getArrayKeys = (__key) => {
+			return {
+				key: __key.split('[')[0],
+				index: parseInt(__key.split('[')[1].split(']')[0])
+			}
+		}
+		if (target_keys.length === 4) {
+			// 宅配便の場合
+			// (例)delivery_charge[2].delivery_charge_details[1].charge_by_zone[0].price
+			const no1 = getArrayKeys(target_keys[0])
+			const no2 = getArrayKeys(target_keys[1])
+			const no3 = getArrayKeys(target_keys[2])
+			const no4 = target_keys[3]
+			this.entry[no1.key][no1.index][no2.key][no2.index][no3.key][no3.index][no4] = _data
+		} else {
+			// メール便の場合
+			// (例)delivery_charge[0].delivery_charge_details[1].price
+			const no1 = getArrayKeys(target_keys[0])
+			const no2 = getArrayKeys(target_keys[1])
+			const no3 = target_keys[2]
+			this.entry[no1.key][no1.index][no2.key][no2.index][no3] = _data
+		}
 		this.forceUpdate()
 	}
 
