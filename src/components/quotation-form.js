@@ -613,7 +613,11 @@ export default class QuotationForm extends React.Component {
 								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
 								remove={this.isDisabled ? false : (data, index) => this.removeList('item_details', index)}
 								fixed
-							/>
+							>
+								<div style={{float: 'left','font-size': '12px', padding: '7px 10px 0px 20px'}}>
+									単位名称に「月」を含めれば月次事項、「期」を含めれば期次事項となります。
+								</div>
+							</CommonTable>	
 
 						</Tab>
 
@@ -666,7 +670,7 @@ export default class QuotationForm extends React.Component {
 										price: true
 									}
 								}, {
-									field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
+									field: 'regular_unit_price', title: '通常販売価格・単価', width: '120px',
 									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)},
 										price: true
@@ -678,7 +682,7 @@ export default class QuotationForm extends React.Component {
 										price: true
 									}
 								}, {
-									field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
+									field: 'special_unit_price', title: '特別販売価格・単価', width: '120px',
 									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)},
 										price: true

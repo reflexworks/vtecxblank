@@ -37,7 +37,7 @@ const getCalendarList = (_origin_data) => {
 	for (let i = 0, ii = _origin_data.feed.entry.length; i < ii; ++i) {
 		const entry = _origin_data.feed.entry[i]
 		const working_day = entry.internal_work.working_day ? parseInt(entry.internal_work.working_day) : null
-		const quantity = entry.internal_work.quantity ? parseInt(entry.internal_work.quantity) : null
+		const quantity = entry.internal_work.quantity ? parseInt(entry.internal_work.quantity.replace(/,/g, '')) : null
 		const key = getKey(entry.internal_work)
 		if (!calendarList[key]) calendarList[key] = new Array(31)
 		if (working_day) {
