@@ -161,7 +161,7 @@ export default class PackingitemTemplateForm extends React.Component {
 							price: true
 						}
 					}, {
-						field: 'regular_unit_price', title: '通常販売価格・特別', width: '120px',
+						field: 'regular_unit_price', title: '通常販売価格・単価', width: '120px',
 						input: {
 							onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)},
 							price: true
@@ -173,7 +173,7 @@ export default class PackingitemTemplateForm extends React.Component {
 							price: true
 						}
 					}, {
-						field: 'special_unit_price', title: '特別販売価格・特別', width: '120px',
+						field: 'special_unit_price', title: '特別販売価格・単価', width: '120px',
 						input: {
 							onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)},
 							price: true
