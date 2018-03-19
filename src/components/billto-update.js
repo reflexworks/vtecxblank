@@ -30,7 +30,6 @@ export default class BilltoUpdate extends React.Component {
 			isDisabled: false,
 			isError: {}
 		}
-
 		// URL設定
 		this.url = '/d/billto'
 

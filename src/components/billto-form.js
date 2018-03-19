@@ -22,7 +22,6 @@ export default class BilltoForm extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
-
 		this.entry = this.props.entry
 		this.entry.billto = this.entry.billto || {}
 		this.entry.contact_information = this.entry.contact_information || {}

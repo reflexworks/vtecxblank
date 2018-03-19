@@ -76,7 +76,6 @@ export default class BilltoList extends React.Component {
 				// activePageが「2」だったら51件目から100件目が格納されている
 				this.setState({ isDisabled: false, feed: response.data.feed})
 			}
-
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})    
