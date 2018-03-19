@@ -32,7 +32,6 @@ export default class BilltoRegistration extends React.Component {
 			billto: {},
 			contact_information: {},
 		}
-
 	}
  
 	/**
