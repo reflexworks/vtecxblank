@@ -719,7 +719,7 @@
       <billto_name>株式会社 ジェネレーションパス</billto_name>
       <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1383,6 +1383,9 @@
     <billto>
       <billto_code>0000073</billto_code>
       <billto_name>株式会社 NGWジャパン</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1399,6 +1402,9 @@
     <billto>
       <billto_code>0000074</billto_code>
       <billto_name>株式会社 Camelia</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1435,6 +1441,8 @@
     <billto>
       <billto_code>0000076</billto_code>
       <billto_name>合同会社 フィノン</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1451,6 +1459,9 @@
     <billto>
       <billto_code>0000077</billto_code>
       <billto_name>株式会社 スタジオヴィレイ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1467,6 +1478,9 @@
     <billto>
       <billto_code>0000078</billto_code>
       <billto_name>EP-TECHNO</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1483,6 +1497,9 @@
     <billto>
       <billto_code>0000079</billto_code>
       <billto_name>株式会社 ライフエンターテイメント</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1499,6 +1516,8 @@
     <billto>
       <billto_code>0000080</billto_code>
       <billto_name>株式会社 順天</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1515,6 +1534,8 @@
     <billto>
       <billto_code>0000081</billto_code>
       <billto_name>株式会社 MITT</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1531,6 +1552,9 @@
     <billto>
       <billto_code>0000082</billto_code>
       <billto_name>株式会社 ＮＴＴドコモ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1547,6 +1571,9 @@
     <billto>
       <billto_code>0000083</billto_code>
       <billto_name>株式会社 ドットジャパン</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1563,6 +1590,9 @@
     <billto>
       <billto_code>0000084</billto_code>
       <billto_name>お魚通販.COM 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1579,6 +1609,8 @@
     <billto>
       <billto_code>0000085</billto_code>
       <billto_name>株式会社 ハイラインズ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1595,6 +1627,9 @@
     <billto>
       <billto_code>0000086</billto_code>
       <billto_name>株式会社 ユニプラグド</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1611,6 +1646,9 @@
     <billto>
       <billto_code>0000087</billto_code>
       <billto_name>株式会社 アデルフォス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1647,6 +1685,9 @@
     <billto>
       <billto_code>0000089</billto_code>
       <billto_name>ラーバルマスク</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1663,6 +1704,9 @@
     <billto>
       <billto_code>0000090</billto_code>
       <billto_name>株式会社 ベルーナ・ジーエフ・ロジスティクス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1679,6 +1723,9 @@
     <billto>
       <billto_code>0000091</billto_code>
       <billto_name>株式会社 ベルーナBBS事業部</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1695,6 +1742,9 @@
     <billto>
       <billto_code>0000092</billto_code>
       <billto_name>らでぃっしゅぼーや 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1711,6 +1761,9 @@
     <billto>
       <billto_code>0000093</billto_code>
       <billto_name>オプティマルライフ 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1727,6 +1780,9 @@
     <billto>
       <billto_code>0000094</billto_code>
       <billto_name>有限会社 リツコ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1743,6 +1799,9 @@
     <billto>
       <billto_code>0000095</billto_code>
       <billto_name>株式会社 ジェイ･キュー･ウェイ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1779,6 +1838,9 @@
     <billto>
       <billto_code>0000097</billto_code>
       <billto_name>有限会社 イシカワ・ジョイント・オフィス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1795,6 +1857,9 @@
     <billto>
       <billto_code>0000098</billto_code>
       <billto_name>ローヤル家庭電化製品販売 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1811,6 +1876,9 @@
     <billto>
       <billto_code>0000099</billto_code>
       <billto_name>関越リース</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1827,6 +1895,9 @@
     <billto>
       <billto_code>0000100</billto_code>
       <billto_name>日生バイオ 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1843,6 +1914,9 @@
     <billto>
       <billto_code>0000101</billto_code>
       <billto_name>株式会社 イーコス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1879,6 +1953,9 @@
     <billto>
       <billto_code>0000103</billto_code>
       <billto_name>株式会社 農業総合研究所</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1893,24 +1970,11 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000104</billto_code>
-      <billto_name>株式会社 GLOBAL M&amp;S</billto_name>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>730-0052</zip_code>
-      <prefecture>広島県</prefecture>
-      <address1>広島市中区千田町</address1>
-      <address2>3-1-10　コーポ千田3階D号</address2>
-    </contact_information>
-    <link href="/billto/0000104" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000105</billto_code>
       <billto_name>株式会社 クラシコ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1947,6 +2011,9 @@
     <billto>
       <billto_code>0000107</billto_code>
       <billto_name>合同会社 ライフジュエル</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1963,6 +2030,9 @@
     <billto>
       <billto_code>0000108</billto_code>
       <billto_name>有限会社 岩下書店</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1979,6 +2049,9 @@
     <billto>
       <billto_code>0000109</billto_code>
       <billto_name>コマースメディア 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1995,6 +2068,9 @@
     <billto>
       <billto_code>0000110</billto_code>
       <billto_name>沼のオアシス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2011,6 +2087,8 @@
     <billto>
       <billto_code>0000111</billto_code>
       <billto_name>Reedo 合同会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2027,6 +2105,9 @@
     <billto>
       <billto_code>0000112</billto_code>
       <billto_name>有限会社 スティックアウト</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2043,6 +2124,8 @@
     <billto>
       <billto_code>0000113</billto_code>
       <billto_name>大河実業 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2059,6 +2142,8 @@
     <billto>
       <billto_code>0000114</billto_code>
       <billto_name>東京リスマチック 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2075,6 +2160,8 @@
     <billto>
       <billto_code>0000115</billto_code>
       <billto_name>ヤマト運輸 株式会社　北東京法人営業支店</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2091,6 +2178,9 @@
     <billto>
       <billto_code>0000116</billto_code>
       <billto_name>TMS 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2127,6 +2217,9 @@
     <billto>
       <billto_code>0000118</billto_code>
       <billto_name>ウルタロウ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2143,6 +2236,9 @@
     <billto>
       <billto_code>0000119</billto_code>
       <billto_name>クリックル 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2159,6 +2255,9 @@
     <billto>
       <billto_code>0000120</billto_code>
       <billto_name>株式会社 叢文社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2195,6 +2294,9 @@
     <billto>
       <billto_code>0000122</billto_code>
       <billto_name>株式会社 ジー・エス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2211,6 +2313,8 @@
     <billto>
       <billto_code>0000123</billto_code>
       <billto_name>株式会社 虎の穴</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2227,6 +2331,9 @@
     <billto>
       <billto_code>0000124</billto_code>
       <billto_name>モダンデコ 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2243,6 +2350,9 @@
     <billto>
       <billto_code>0000125</billto_code>
       <billto_name>株式会社 ティニースプーン</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2259,6 +2369,9 @@
     <billto>
       <billto_code>0000126</billto_code>
       <billto_name>株式会社 クルーザーズ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2275,6 +2388,8 @@
     <billto>
       <billto_code>0000127</billto_code>
       <billto_name>株式会社 キーエイト</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2291,6 +2406,9 @@
     <billto>
       <billto_code>0000128</billto_code>
       <billto_name>株式会社 MDB</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2347,6 +2465,9 @@
     <billto>
       <billto_code>0000131</billto_code>
       <billto_name>株式会社 MANET</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2363,6 +2484,8 @@
     <billto>
       <billto_code>0000132</billto_code>
       <billto_name>株式会社 with D</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2379,6 +2502,9 @@
     <billto>
       <billto_code>0000133</billto_code>
       <billto_name>株式会社 裕宝商事</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2395,6 +2521,9 @@
     <billto>
       <billto_code>0000134</billto_code>
       <billto_name>株式会社 RiLi</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2429,24 +2558,11 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000136</billto_code>
-      <billto_name>株式会社 CONNECT EC</billto_name>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>332-0027</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>川口市緑町</address1>
-      <address2>9-35</address2>
-    </contact_information>
-    <link href="/billto/0000136" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000137</billto_code>
       <billto_name>CONNECTロジスティクス 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2463,6 +2579,8 @@
     <billto>
       <billto_code>0000138</billto_code>
       <billto_name>バイオメディカルネット 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2479,6 +2597,8 @@
     <billto>
       <billto_code>0000139</billto_code>
       <billto_name>株式会社 アースネクスト</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2495,6 +2615,9 @@
     <billto>
       <billto_code>0000140</billto_code>
       <billto_name>株式会社 クロスオーバー</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2511,6 +2634,8 @@
     <billto>
       <billto_code>0000141</billto_code>
       <billto_name>海源物流 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2527,6 +2652,8 @@
     <billto>
       <billto_code>0000142</billto_code>
       <billto_name>株式会社 三峡</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2543,6 +2670,8 @@
     <billto>
       <billto_code>0000143</billto_code>
       <billto_name>株式会社 ジュネッス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2559,6 +2688,9 @@
     <billto>
       <billto_code>0000144</billto_code>
       <billto_name>株式会社 CONNECT コーポレーション</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2575,6 +2707,9 @@
     <billto>
       <billto_code>0000145</billto_code>
       <billto_name>株式会社 一通</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2591,6 +2726,9 @@
     <billto>
       <billto_code>0000146</billto_code>
       <billto_name>合同会社 NOAH</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2627,6 +2765,9 @@
     <billto>
       <billto_code>0000148</billto_code>
       <billto_name>株式会社 アメイズロジ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2643,6 +2784,9 @@
     <billto>
       <billto_code>0000149</billto_code>
       <billto_name>シダックスオフィスパートナー 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2659,6 +2803,9 @@
     <billto>
       <billto_code>0000150</billto_code>
       <billto_name>ダイオープリンティング 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2675,6 +2822,9 @@
     <billto>
       <billto_code>0000151</billto_code>
       <billto_name>株式会社 リンクルパッケージ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2691,6 +2841,9 @@
     <billto>
       <billto_code>0000152</billto_code>
       <billto_name>株式会社 エコ配</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2707,6 +2860,9 @@
     <billto>
       <billto_code>0000153</billto_code>
       <billto_name>k&amp;dエンジニアリング 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2723,6 +2879,9 @@
     <billto>
       <billto_code>0000154</billto_code>
       <billto_name>山野愛子どろんこ美容 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2739,6 +2898,8 @@
     <billto>
       <billto_code>0000155</billto_code>
       <billto_name>株式会社 帆風</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2753,24 +2914,11 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000157</billto_code>
-      <billto_name>L&amp;Lライブリーライフ 株式会社</billto_name>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>190-0022</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>立川市錦町</address1>
-      <address2>3-1-13　立川ASビル 3F</address2>
-    </contact_information>
-    <link href="/billto/0000157" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000158</billto_code>
       <billto_name>株式会社 GLOBAL M&amp;S</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2787,6 +2935,9 @@
     <billto>
       <billto_code>0000159</billto_code>
       <billto_name>k&amp;dエンジニアリング 株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2841,11 +2992,11 @@
   <entry>
     <billto>
       <billto_code>0000164</billto_code>
-      <billto_name>株式会社CONNECT・EC</billto_name>
+      <billto_name>株式会社CONNECT・EC（ＵＣ分）</billto_name>
       <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/31</payment_date>
       <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>1</yamato_has_details>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel>0482998475</tel>
@@ -2942,7 +3093,7 @@
     <billto>
       <billto_code>0000172</billto_code>
       <billto_name>CORK</billto_name>
-      <billing_closing_date>1</billing_closing_date>
+      <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/13</payment_date>
       <post_has_sizeweight>0</post_has_sizeweight>
       <yamato_has_details>0</yamato_has_details>
@@ -2980,29 +3131,11 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000174</billto_code>
-      <billto_name>株式会社デコレーションズ</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date></payment_date>
-      <post_has_sizeweight>1</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel>03-5726-9701</tel>
-      <fax>03-5726-9709</fax>
-      <email>wada@decorations.co.jp</email>
-      <zip_code>152-0034 </zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>目黒区緑が丘</address1>
-      <address2>2-25-7 スイーツフォレスト3F</address2>
-    </contact_information>
-    <link href="/billto/0000174" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000175</billto_code>
       <billto_name>株式会社デコレーションズ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/14</payment_date>
+      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel>03-5726-9701</tel>
@@ -3089,24 +3222,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000180</billto_code>
-      <billto_name>株式会社CONNECT-EC</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000180" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000181</billto_code>
       <billto_name>株式会社ベル・アンファン</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -3140,5 +3255,79 @@
       <address2></address2>
     </contact_information>
     <link href="/billto/0000182" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/17</payment_date>
+      <yamato_has_details>0</yamato_has_details>
+    </billto>
+    <contact_information>
+      <tel>092-409-9022</tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>812-0029</zip_code>
+      <prefecture>福岡県</prefecture>
+      <address1>福岡市博多区古門戸町</address1>
+      <address2>10-20-博多古門戸アパートメント301</address2>
+    </contact_information>
+    <link href="/billto/0000184" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000185</billto_code>
+      <billto_name>嘉年華株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+    </billto>
+    <contact_information>
+      <tel>03-6807-7851</tel>
+      <fax>03-6807-7852</fax>
+      <email></email>
+      <zip_code>116-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>荒川区町屋</address1>
+      <address2>5-19-3　ひかりビル　ＥＣＳ物流センター</address2>
+    </contact_information>
+    <link href="/billto/0000185" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000186</billto_code>
+      <billto_name>株式会社ワタナベアマダクション</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/19</payment_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>104-0061</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>中央区銀座</address1>
+      <address2>4-12-15　歌舞伎座タワー14F　株式会社ドワンゴ内</address2>
+    </contact_information>
+    <link href="/billto/0000186" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000187</billto_code>
+      <billto_name>株式会社 CONNECT・ EC</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+      <payment_date>2018/03/20</payment_date>
+      <yamato_has_details>0</yamato_has_details>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9-35</address2>
+    </contact_information>
+    <link href="/billto/0000187" rel="self"/>
   </entry>
 </feed>

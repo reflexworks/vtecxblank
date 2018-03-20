@@ -22,7 +22,7 @@ function getChargeByZoneImpl(delivery_charge_all,customer_all, size, prefecture,
 		return delivery_charge.shipment_service_code === shipment_service_code
 	})
 
-	if (delivery_charge.length === 0||delivery_charge[0].delivery_charge_details.length === 0) throw '配送料マスタが登録されていません。(サービスコード='+shipment_service_code+')'
+	if (delivery_charge.length === 0||delivery_charge[0].delivery_charge_details.length === 0) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +' サービスコード='+shipment_service_code+')'
 
 	// sizeからdelivery_charge_detailsを取得
 	const delivery_charge_details = delivery_area ? delivery_charge[0].delivery_charge_details :
@@ -127,7 +127,7 @@ export function getDeliverycharge(customer_all, shipper_code,shipment_service_se
 }
 
 export function getFullDate(datestr) {
-	const matches = /^(\d+)月(\d+)日$/.exec(datestr)
+	let matches = /^(\d+)月(\d+)日$/.exec(datestr)
 	if (matches&&matches.length >= 2) {
 		const now = new Date()
 		const month = parseInt(matches[1])
@@ -139,22 +139,37 @@ export function getFullDate(datestr) {
 		}
 		return year+'-'+month+'-'+day		
 	} else {
-		throw '日時のパースエラーです。正しい日時を入れてください。(入力値='+datestr+')'
+    	matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
+		if (!matches) {
+			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
+		}	
+		return matches[1]+'-'+matches[2]+'-'+matches[3]		
 	}
 }
 
 
+
 export function getKey(datestr, shipment_service_code,tracking_number) {
 
-	const matches = /^(\d+)月(\d+)日$/.exec(datestr)
-	const now = new Date()
-	const month = parseInt(matches[1])
-	let year = now.getFullYear()
+	let matches = /^(\d+)月(\d+)日$/.exec(datestr)
+	if (matches && matches.length >= 2) {
+	
+		const now = new Date()
+		const month = parseInt(matches[1])
+		let year = now.getFullYear()
 
-	if (now.getMonth() + 1 < month) {
-		year = year - 1
-	}
-	return year + ('0' + month).slice(-2) + customer_code+'_'+shipment_service_code+'_'+tracking_number
+		if (now.getMonth() + 1 < month) {
+			year = year - 1
+		}
+		return year + ('0' + month).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
+	} else {
+    	matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
+		if (!matches) {
+			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
+		}	
+		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
+		
+	}	
 }
 
 export function getPrefecture(addr) {

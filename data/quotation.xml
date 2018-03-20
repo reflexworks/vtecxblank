@@ -10639,6 +10639,681 @@
   </entry>
   <entry>
     <billto>
+      <billto_code>0000109</billto_code>
+      <billto_name>コマースメディア 株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>18.90</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>15.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>24.20</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_016</item_code>
+      <item_name>ダンボール箱 60サイズ 底面 A5</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>160</inside_depth>
+      <inside_height>170</inside_height>
+      <outer_width>246</outer_width>
+      <outer_depth>166</outer_depth>
+      <outer_height>182</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>30.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>31.50</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_020</item_code>
+      <item_name>ダンボール箱 80サイズ 底面 A4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>230</inside_height>
+      <outer_width>320</outer_width>
+      <outer_depth>230</outer_depth>
+      <outer_height>250</outer_height>
+      <outer_total>800</outer_total>
+      <purchase_price>41.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>52.50</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_038</item_code>
+      <item_name>ダンボール箱 特売 100サイズ 底面A3</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面A3</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>440</inside_width>
+      <inside_depth>320</inside_depth>
+      <inside_height>210</inside_height>
+      <outer_width>446</outer_width>
+      <outer_depth>326</outer_depth>
+      <outer_height>222</outer_height>
+      <outer_total>994</outer_total>
+      <purchase_price>49.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>56.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_021</item_code>
+      <item_name>ダンボール箱 80サイズ 底面 B4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面B4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>375</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>120</inside_height>
+      <outer_width>385</outer_width>
+      <outer_depth>275</outer_depth>
+      <outer_height>140</outer_height>
+      <outer_total>800</outer_total>
+      <purchase_price>42.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>44.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_025</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 B4</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面B4</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>375</inside_width>
+      <inside_depth>265</inside_depth>
+      <inside_height>520</inside_height>
+      <outer_width>385</outer_width>
+      <outer_depth>275</outer_depth>
+      <outer_height>540</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>82.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>78.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>fukuro_001</item_code>
+      <item_name>宅配紙袋（白）小 封緘テープ付き</item_name>
+      <material>晒片ツヤ紙120ｇ/ｍ2</material>
+      <category>宅配紙袋（白）</category>
+      <size1>(小)</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>260</outer_width>
+      <outer_depth>80</outer_depth>
+      <outer_height>320</outer_height>
+      <outer_total>660</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>24.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_027</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 B3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面B3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>530</inside_width>
+      <inside_depth>380</inside_depth>
+      <inside_height>250</inside_height>
+      <outer_width>540</outer_width>
+      <outer_depth>390</outer_depth>
+      <outer_height>270</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>78.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>78.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_036</item_code>
+      <item_name>ダンボール箱 特売 60サイズ 底面A5</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>160</inside_depth>
+      <inside_height>170</inside_height>
+      <outer_width>246</outer_width>
+      <outer_depth>166</outer_depth>
+      <outer_height>182</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>31.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>31.50</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_037</item_code>
+      <item_name>ダンボール箱 特売 80サイズ 底面A4</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width>316</outer_width>
+      <outer_depth>226</outer_depth>
+      <outer_height>252</outer_height>
+      <outer_total>794</outer_total>
+      <purchase_price>39.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>52.50</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>kfuto_001</item_code>
+      <item_name>クッション封筒（白）CD・DVD1枚用 封緘・開封テープ付き</item_name>
+      <material>表：晒クラフト紙／内：ポリエチレン</material>
+      <category>クッション封筒</category>
+      <size1>CD・DVD1枚用</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>180</inside_width>
+      <inside_depth>0</inside_depth>
+      <inside_height>270</inside_height>
+      <outer_width>200</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>270</outer_height>
+      <outer_total>470</outer_total>
+      <purchase_price>17.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>23.30</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>kfuto_003</item_code>
+      <item_name>クッション封筒（白）A4用 封緘・開封テープ付き</item_name>
+      <material>表：晒クラフト紙／内：ポリエチレン</material>
+      <category>クッション封筒</category>
+      <size1>A4用</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>0</inside_depth>
+      <inside_height>320</inside_height>
+      <outer_width>260</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>320</outer_height>
+      <outer_total>580</outer_total>
+      <purchase_price>24.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>42.40</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>cushion_003</item_code>
+      <item_name>ボーカスペーパー 538mm×50m ミシン目無し</item_name>
+      <material>再生紙100％　51ｇ/ｍ2</material>
+      <category>ボーカスペーパー</category>
+      <size1>538mm × 50m</size1>
+      <size2>ミシン目無し</size2>
+      <notices>1巻価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>538</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>240</outer_height>
+      <outer_total>1018</outer_total>
+      <purchase_price>363.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price>0</regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>400.00</special_unit_price>
+    </packing_items>
+    <remarks>
+      <content>※　保管、作業場所は弊社倉庫のいずれかとなり、適宣移動する可能性が御座います。</content>
+    </remarks>
+    <remarks>
+      <content>※　上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※　上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※　商品コード（JANコード）は必ず必要となります。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティック業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保存</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業・数量検品・外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業・ピッキング・外観検品・梱包・出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便・DM便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険　保管：盗難・火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月２０日　銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　銀行振込</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>ガジェット・スマホアクセサリーなど</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV・EXCELデータが必須となります</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>１パレット</unit_name>
+      <unit>月額</unit>
+      <unit_price>2,500.00</unit_price>
+      <remarks>２パレット＝１坪（パレットサイズ：1100×1100）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（日本ポステック横移動）</unit_name>
+      <unit>1点</unit>
+      <unit_price>3.00</unit_price>
+      <remarks>日本ポステック様からの横移動入庫品のみ</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（pce）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>バラ・アソート入庫・外装検品・品番確認・数量検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>30.00</unit_price>
+      <remarks>正箱・外箱に内容個数記載のあるもの（内容未検）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>棚使用料</unit_name>
+      <unit>月額1台</unit>
+      <unit_price>300.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケット・ゆうメール・定型外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>50.00</unit_price>
+      <remarks>ピッキング・外装検品・伝票発行・１点封入</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便・エコ配</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>80.00</unit_price>
+      <remarks>ピッキング・外装検品・伝票発行・１点梱包</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業(2点目～)</unit_name>
+      <unit>1点</unit>
+      <unit_price>20.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（納品書）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>納品書の同梱</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ステッカー・チラシ他）</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>5.00</unit_price>
+      <remarks>ステッカー・チラシ・カタログ・パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアーキャップ巻き（アクセサリー・小物）</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアーキャップ巻き（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50.00</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>360.00</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>完全包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100.00</unit_price>
+      <remarks>ラッピング・ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5.00</unit_price>
+      <remarks>シール印字・貼り作業（ペーパー代別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>その他</unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks>相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>150.00</unit_price>
+      <remarks>住所不明、長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>メーカー返品</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>200.00</unit_price>
+      <remarks>同梱数・サイズ制限なし（送料・資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000.00</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>クラウド型WMS</item_name>
+      <unit_name>ロジレス</unit_name>
+      <unit>月額</unit>
+      <unit_price></unit_price>
+      <remarks>実費、システムのご紹介</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name></unit_name>
+      <unit>月額</unit>
+      <unit_price></unit_price>
+      <remarks>サービス。専属窓口1名固定、在庫報告・システム保守・通信費など</remarks>
+    </item_details>
+    <item_details>
+      <item_name>梱包資材</item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks>支給品使用または、別途相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>対応日</item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks>相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷データ</item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks>1回目～12：00迄　最終14：00迄</remarks>
+    </item_details>
+    <item_details>
+      <item_name>納品受入時間</item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks>15:00迄</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>再発送（着払）</unit_name>
+      <unit>1個</unit>
+      <unit_price>150.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>FBAラベル貼り</unit_name>
+      <unit>1個</unit>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業カレー（宅配2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業カレー（エコ配2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業カレー（ゆうパケ2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（宅配2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（エコ配2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ゆうパケ2点目～）</unit_name>
+      <unit>1個</unit>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name></unit_name>
+      <unit>パレット</unit>
+      <unit_price>2,500.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>パレット</unit>
+      <unit_price>2,500.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアーキャップ巻き</unit_name>
+      <unit>1点</unit>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000024</quotation_code>
+      <quotation_code_sub>09</quotation_code_sub>
+      <quotation_date>2018/02</quotation_date>
+      <status>1</status>
+    </quotation>
+    <link href="/quotation/0000024-09" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
       <billto_code>0000003</billto_code>
       <billto_name>株式会社 CAN</billto_name>
     </billto>
@@ -34518,10 +35193,31 @@
       <billto_name>株式会社 ホープ</billto_name>
     </billto>
     <billfrom>
-      <billfrom_name></billfrom_name>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
     </billfrom>
     <contact_information>
-      <tel></tel>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
     </contact_information>
     <item_details>
       <item_name>宅配出荷作業料</item_name>
@@ -39537,7 +40233,7 @@
       <unit_name>パレット</unit_name>
       <unit>パレット</unit>
       <unit_price>5000</unit_price>
-      <remarks>1パレット追加\\\\\\\\+4000</remarks>
+      <remarks>1パレット追加\\\\\\\\\\\\\\\\+4000</remarks>
     </item_details>
     <quotation>
       <quotation_code>0000088</quotation_code>
@@ -39628,7 +40324,7 @@
       <unit_name>パレット</unit_name>
       <unit>坪</unit>
       <unit_price>6,000</unit_price>
-      <remarks>1パレット追加\\\\\\\\\\\\\\\\+5000</remarks>
+      <remarks>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</remarks>
     </item_details>
     <quotation>
       <quotation_code>0000090</quotation_code>
@@ -39697,7 +40393,7 @@
       <unit_name>1坪</unit_name>
       <unit>坪</unit>
       <unit_price>8,000</unit_price>
-      <remarks>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</remarks>
+      <remarks>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</remarks>
     </item_details>
     <quotation>
       <quotation_code>0000091</quotation_code>
@@ -58430,42 +59126,42 @@
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name></unit_name>
-      <unit>1PL</unit>
+      <unit>PL</unit>
       <unit_price>500</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name></unit_name>
-      <unit>１CS</unit>
+      <unit>CS</unit>
       <unit_price>30</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>出荷作業料</item_name>
       <unit_name>宅配</unit_name>
-      <unit>1個</unit>
+      <unit>個</unit>
       <unit_price>50</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>出荷作業料</item_name>
       <unit_name>同梱</unit_name>
-      <unit>1個</unit>
+      <unit>個</unit>
       <unit_price>30</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>イレギュラー処理費用</item_name>
       <unit_name>返品処理</unit_name>
-      <unit>1個</unit>
+      <unit>個</unit>
       <unit_price>100</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
       <item_name>保管料</item_name>
       <unit_name>月額</unit_name>
-      <unit>1坪</unit>
+      <unit>坪</unit>
       <unit_price>5,000</unit_price>
       <remarks></remarks>
     </item_details>
@@ -58510,6 +59206,63 @@
       <address1>川口市緑町</address1>
       <address2>9丁目35番</address2>
     </contact_information>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　相談</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ　1回目　12:00まで　最終14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間　15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>上記に無い項目等はご相談にて料金等算出させていただきます。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料・導線負担を含む 、保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 、出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付 、保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫料</item_name>
       <unit_name></unit_name>
@@ -58608,6 +59361,84 @@
       <special_price></special_price>
       <special_unit_price>174</special_unit_price>
     </packing_items>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　土日祝日、正月（1～3日）は出荷不可、※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>1回目　前日夜、2期目　12:00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入れ時間（随時）</content>
+    </remarks>
+    <remarks>
+      <content>転倉費用　別途相談</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性が御座います。</content>
+    </remarks>
+    <remarks>
+      <content>上記御見積もりは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>上記に金額のないもの、また上記にないものは随時相談</content>
+    </remarks>
+    <basic_condition>
+      <title>保管料</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料含む、保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 、出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ゆうメール等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険 、保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日、銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>カバン、財布、服飾雑貨等</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ　</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。 　弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税が掛かります。</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>単一商品</unit_name>
@@ -58715,9 +59546,9 @@
     </item_details>
     <item_details>
       <item_name>実地棚卸作業</item_name>
-      <unit_name></unit_name>
+      <unit_name>（ピース）</unit_name>
       <unit>人工×時間</unit>
-      <unit_price>2,000</unit_price>
+      <unit_price>2,200</unit_price>
       <remarks></remarks>
     </item_details>
     <item_details>
@@ -58729,9 +59560,23 @@
     </item_details>
     <item_details>
       <item_name>保管料</item_name>
-      <unit_name>月額</unit_name>
-      <unit>PL</unit>
-      <unit_price></unit_price>
+      <unit_name>一期</unit_name>
+      <unit>1PL</unit>
+      <unit_price>1,200</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>コンテナデバンニング料</item_name>
+      <unit_name>20Ｆ</unit_name>
+      <unit>1本</unit>
+      <unit_price>18,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>コンテナデバンニング料</item_name>
+      <unit_name>40F</unit_name>
+      <unit>1本</unit>
+      <unit_price>31,000</unit_price>
       <remarks></remarks>
     </item_details>
     <quotation>
@@ -60492,7 +61337,7 @@
         <content>毎月末締切、翌月２０日銀行振込（日本郵便ご利用の場合）</content>
       </condition>
       <condition>
-        <content>毎月末締切、翌月末日銀行振込\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t</content>
+        <content>毎月末締切、翌月末日銀行振込\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t</content>
       </condition>
     </basic_condition>
     <basic_condition>
@@ -60924,6 +61769,69 @@
       <special_price></special_price>
       <special_unit_price>8</special_unit_price>
     </packing_items>
+    <remarks>
+      <content>梱包資材　　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　　　正月３ケ日を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>倉庫対応日　正月３ケ日を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>出荷リードタイム　①宅配便：当日14：00迄にデータいただいたものは当日、②ゆうメール便：当日14：00迄のデータ頂いたものは、当日又は翌日ＡＭ出荷</content>
+    </remarks>
+    <remarks>
+      <content>出荷作業の目安　当日データ3000個/日、前日17：00迄データ5000個/日。その他のスポット対応</content>
+    </remarks>
+    <remarks>
+      <content>受入時期　　随時</content>
+    </remarks>
+    <remarks>
+      <content>転倉費用　別途相談</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>家電用品、家電雑貨等の保管と出荷業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料含む 、導線負担を含む。補償金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 　、出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>ゆうパケット、ヤマト運輸宅急便、ＤＭ便にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険 付　　保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name></unit_name>
@@ -61671,6 +62579,66 @@
       <address1>川口市緑町</address1>
       <address2>9丁目35番</address2>
     </contact_information>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>倉庫対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ　１回目　12：00迄、最終14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間　15:００ま迄</content>
+    </remarks>
+    <remarks>
+      <content>上記にない）項目等はご相談鋳て料金等算出させていただきます。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管、共益費、光熱費、バース使用料含む 、保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 　　出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>定形外郵便　宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付 　　　保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合） 、毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入荷作業料</item_name>
       <unit_name></unit_name>
@@ -64963,6 +65931,66 @@
       <special_price></special_price>
       <special_unit_price>1,950</special_unit_price>
     </packing_items>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>倉庫対応日　相談</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ　1回目　12：00　最終14：00</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間　15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動・棚リース）等はご相談にて料金等算出させていただきます。</content>
+    </remarks>
+    <remarks>
+      <content>事務所費用は現状￥０円とさせていただきます。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料・導線負担を含む、保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品 、出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ゆうパケット、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付 、保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>入庫料（バラ）</unit_name>
@@ -65103,10 +66131,31 @@
       <billto_name>株式会社 REBECCA</billto_name>
     </billto>
     <billfrom>
-      <billfrom_name></billfrom_name>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
     </billfrom>
     <contact_information>
-      <tel></tel>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
     </contact_information>
     <packing_items>
       <item_code>dbox_034</item_code>
@@ -65152,6 +66201,66 @@
       <special_price></special_price>
       <special_unit_price>23</special_unit_price>
     </packing_items>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>倉庫対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>出荷リードタイム　①宅配便：当日15：00迄データ頂いたものは出荷　　②ゆうメール便：15：００迄データ頂いたものは当日又は翌日ＡＭ出荷</content>
+    </remarks>
+    <remarks>
+      <content>受入時期　　15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>転倉費用　別途相談</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務（眼鏡等）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管料</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料,導線負担を含む 　保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 　　出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅急便・ＤＭ便・ＣＯＮＮＥＣＴ便、ゆうパケット、ゆうメールにて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付 、保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合） 、毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫料</item_name>
       <unit_name></unit_name>
@@ -65432,7 +66541,7 @@
       <unit_name>1坪</unit_name>
       <unit>坪</unit>
       <unit_price>8,000</unit_price>
-      <remarks>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</remarks>
+      <remarks>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</remarks>
     </item_details>
     <quotation>
       <quotation_code>0000154</quotation_code>
@@ -68790,16 +69899,103 @@
       <billto_name>夏黎 株式会社</billto_name>
     </billto>
     <billfrom>
-      <billfrom_name></billfrom_name>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
     </billfrom>
     <contact_information>
-      <tel></tel>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
     </contact_information>
+    <remarks>
+      <content>・離島・中継料・個人宛チャージ料金につきましては、西濃運輸は発生致しますので、ご了承下さい。西濃運輸は日曜祝祭日の配送は指定シール貼りが必要です。時間指定は、午前・午後の2区分となります。</content>
+    </remarks>
+    <remarks>
+      <content>荷物の運送につきましては、業務提携会社約款に準じます。</content>
+    </remarks>
+    <remarks>
+      <content>上記運賃につきましては、消費税は別途請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>コレクト（代金引換）手数料は、1万円以下全国一律300円・3万円以下全国一律400円・10万円以下全国一律600円を請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>宅急便出荷商品が30万円以上の時は、荷物のお預かりは出来ません。</content>
+    </remarks>
+    <remarks>
+      <content>ダイレクトメール便・ゆうパケットには補償が有りません</content>
+    </remarks>
+    <basic_condition>
+      <title>①委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>1万円未満</unit_name>
+      <unit>個</unit>
+      <unit_price>300.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>3万円未満</unit_name>
+      <unit>個</unit>
+      <unit_price>400.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>10万円未満</unit_name>
+      <unit>個</unit>
+      <unit_price>600.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>10万円以上</unit_name>
+      <unit>1個</unit>
+      <unit_price>1,000.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>クレジット支払手数料</unit_name>
+      <unit>個別</unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>ヤマト運輸代引き手数料</item_name>
+      <unit_name>電子マネー支払手数料</unit_name>
+      <unit>個別</unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
     <quotation>
       <quotation_code>0000163</quotation_code>
       <quotation_code_sub>01</quotation_code_sub>
       <quotation_date>2018/02</quotation_date>
-      <status>0</status>
+      <status>1</status>
     </quotation>
     <creator>システム管理者</creator>
     <link href="/quotation/0000163-01" rel="self"/>
@@ -79726,7 +80922,7 @@
         <content>毎月末締切、翌月２０日銀行振込（日本郵便ご利用の場合）</content>
       </condition>
       <condition>
-        <content>毎月末締切、翌月末日銀行振込\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t</content>
+        <content>毎月末締切、翌月末日銀行振込\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\t</content>
       </condition>
     </basic_condition>
     <basic_condition>
@@ -101555,6 +102751,66 @@
       <special_price></special_price>
       <special_unit_price>20</special_unit_price>
     </packing_items>
+    <remarks>
+      <content>梱包資材　支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>倉庫対応日　正月（1～3日）を除く年中</content>
+    </remarks>
+    <remarks>
+      <content>出荷リードタイム　①宅配便：当日15：00迄データ頂いたものは出荷　　②ゆうメール便：15：００迄データ頂いたものは当日又は翌日ＡＭ出荷</content>
+    </remarks>
+    <remarks>
+      <content>受入時期　15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>転倉費用　別途相談</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務（アパレル）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管 、共益費、光熱費、バース使用料・導線負担を含む 、保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、デバンニング、数量検品、外観検品 、　出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅急便・ＤＭ便・ＣＯＮＮＥＣＴ便・ゆうパック・ゆうメールにて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付 ,　保管：盗難、火災保険付</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
     <item_details>
       <item_name>入庫作業料</item_name>
       <unit_name>入庫時採寸検品</unit_name>
@@ -101742,13 +102998,6 @@
       <unit_name>ZOZOチャーター便（4ｔ）</unit_name>
       <unit>１便</unit>
       <unit_price>23,000</unit_price>
-      <remarks></remarks>
-    </item_details>
-    <item_details>
-      <item_name></item_name>
-      <unit_name></unit_name>
-      <unit></unit>
-      <unit_price></unit_price>
       <remarks></remarks>
     </item_details>
     <quotation>
@@ -102050,5 +103299,2793 @@
     </quotation>
     <creator>システム管理者</creator>
     <link href="/quotation/0000262-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※１　該当項目はご希望に応じて作業を行いますので必須ではござません。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険    保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>アパレル</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料　　　　　</item_name>
+      <unit_name>月</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品、品番検品、内容未見、箱積み（専用ケースなど）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケ・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>120</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業無し）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業あり）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>150</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ピッキング</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業　</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1点　</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1箱</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>完全梱包</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>ラッピング、ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※1</item_name>
+      <unit_name>SKU商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印刷、貼り作業(ペーパー代別)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※1</item_name>
+      <unit_name>バーコード作成</unit_name>
+      <unit>1SKU</unit>
+      <unit_price>200</unit_price>
+      <remarks>JAN登録は行いません</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業　※1</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要の場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>200</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>12,000</unit_price>
+      <remarks>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000265</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000265-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※１　該当項目はご希望に応じて作業を行いますので必須ではござません。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険    保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>アパレル</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品、品番検品、内容未見、箱積み（専用ケースなど）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケ・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>120</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業無し）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業あり）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>150</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ピッキング</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業　</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1点　</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1箱</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>完全梱包</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>ラッピング、ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印刷、貼り作業(ペーパー代別)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>バーコード作成</unit_name>
+      <unit>1SKU</unit>
+      <unit_price>200</unit_price>
+      <remarks>JAN登録は行いません</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業　※1</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要の場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>200</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>12,000</unit_price>
+      <remarks>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>1坪</unit>
+      <unit_price>4,500</unit_price>
+      <remarks>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000266</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000266-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※１　該当項目はご希望に応じて作業を行いますので必須ではござません。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険    保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>アパレル</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料　　　　　</item_name>
+      <unit_name>月</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>サイズ1,100×1,100</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品、品番確認、内容未見、箱積み</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケ・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>120</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業無し）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業あり）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>150</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ピッキング</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業　</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1点　</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1箱</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>完全梱包</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>ラッピング、ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※1</item_name>
+      <unit_name>SKU商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印刷、貼り作業(ペーパー代別)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※1</item_name>
+      <unit_name>バーコード作成</unit_name>
+      <unit>1SKU</unit>
+      <unit_price>200</unit_price>
+      <remarks>JAN登録は行いません</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業　※1</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要の場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>200</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>12,000</unit_price>
+      <remarks>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000267</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000267-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※１　該当項目はご希望に応じて作業を行いますので必須ではござません。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険    保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>アパレル</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料　　　　　</item_name>
+      <unit_name>月</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>サイズ1,100×1,100</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品、品番確認、内容未見、箱積み</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケ・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>120</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業無し）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業あり）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>150</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ピッキング</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業　</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1点　</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1箱</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>完全梱包</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>ラッピング、ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>SKU商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印刷、貼り作業(ペーパー代別)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>バーコード作成</unit_name>
+      <unit>1SKU</unit>
+      <unit_price>200</unit_price>
+      <remarks>JAN登録は行いません</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業　※1</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要の場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>200</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>12,000</unit_price>
+      <remarks>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>4,500</unit_price>
+      <remarks>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000269</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000269-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000184</billto_code>
+      <billto_name>株式会社日本芸能文化社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content>出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <remarks>
+      <content>保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。</content>
+    </remarks>
+    <remarks>
+      <content>上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>上記見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>※１　該当項目はご希望に応じて作業を行いますので必須ではござません。</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険    保管：盗難、火災保険</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>アパレル</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>2,250</unit_price>
+      <remarks>サイズ1,100×1,100</remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品、品番確認、内容未見、箱積み</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ＤＭ便・ネコポス・ゆうパケ・ゆうメール・定形外</unit_name>
+      <unit>1封緘</unit>
+      <unit_price>120</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業無し）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>50</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配便（梱包作業あり）</unit_name>
+      <unit>1梱包</unit>
+      <unit_price>150</unit_price>
+      <remarks>外装検品・伝票発行・伝票貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>ピッキング</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業　</unit_name>
+      <unit>1枚/冊</unit>
+      <unit_price>10</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1点　</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>アクセサリー・小物（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>エアキャップ巻き　1箱</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>完全梱包</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>ラッピング、ギフト梱包（資材別）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>SKU商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印刷、貼り作業(ペーパー代別)</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料　※１</item_name>
+      <unit_name>バーコード作成</unit_name>
+      <unit>1SKU</unit>
+      <unit_price>200</unit_price>
+      <remarks>JAN登録は行いません</remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業　※1</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>2,000</unit_price>
+      <remarks>必要の場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>200</unit_price>
+      <remarks>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>12,000</unit_price>
+      <remarks>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>4,500</unit_price>
+      <remarks>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000270</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000270-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000158</billto_code>
+      <billto_name>株式会社 GLOBAL M&amp;S</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>伝票発行の際お客様ﾃﾞｰﾀの加工は致しませんので弊社指定のＣＳＶ・ｴｸｾﾙﾃﾞｰﾀが必須となります。</content>
+    </remarks>
+    <remarks>
+      <content>保管・作業場所は弊社倉庫となります。</content>
+    </remarks>
+    <remarks>
+      <content>上記に無い項目（倉庫移動・棚ﾘｰｽ）等はご相談にて料金等算出させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>梱包資材（段ボール・袋）等は安価で提供させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>梱包資材:支給品使用または別途相談</content>
+    </remarks>
+    <remarks>
+      <content>対応日:相談　※エコ配ＪＰは土日祝日不可となります。</content>
+    </remarks>
+    <remarks>
+      <content> 出荷データ:1回目 ～12：00迄　最終 14：00迄</content>
+    </remarks>
+    <remarks>
+      <content>納品受入時間:15：00迄</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費・光熱費・バース使用料含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業　　数量検品・外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業　　ピッキング・外観検品・梱包・出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便・ＤＭ便等にて配送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付保。保管：盗難・火災保険付保</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日銀行振込（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日銀行振込</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>1期10日</unit_name>
+      <unit>1ﾊﾟﾚｯﾄ</unit>
+      <unit_price>750</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>コンテナデバンニング</item_name>
+      <unit_name>20Ｆ</unit_name>
+      <unit>1本</unit>
+      <unit_price>17,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>コンテナデバンニング</item_name>
+      <unit_name>40F</unit_name>
+      <unit>1本</unit>
+      <unit_price>30,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>260ｻｲｽﾞ30㎏未満</unit_name>
+      <unit>1箱</unit>
+      <unit_price>30</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>260ｻｲｽﾞ30㎏以上</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>DM便・ネコポス・ゆうパケット・ゆうメール・定形外</unit_name>
+      <unit>1箱</unit>
+      <unit_price>80</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>260ｻｲｽﾞ30㎏未満（宅配・梱包作業無し）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>260ｻｲｽﾞ30㎏以上（宅配・梱包作業無し）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配・梱包作業有り</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>貴社手配運送便分</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業(2点目～)</unit_name>
+      <unit>1点</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（商品外）</unit_name>
+      <unit>1枚</unit>
+      <unit_price>5</unit_price>
+      <remarks>ｽﾃｯｶｰ・ﾁﾗｼ・ｶﾀﾛｸﾞ・ﾊﾟﾝﾌﾚｯﾄ等共通のもの</remarks>
+    </item_details>
+    <item_details>
+      <item_name>イレギュラー処理費用</item_name>
+      <unit_name>返品処理</unit_name>
+      <unit>1件</unit>
+      <unit_price>100</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアキャップ巻き</unit_name>
+      <unit>1点</unit>
+      <unit_price>10</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアーキャップ巻き（箱）</unit_name>
+      <unit>1箱</unit>
+      <unit_price>50</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>簡易包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>60</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>完全包装</unit_name>
+      <unit>1箱</unit>
+      <unit_price>100</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>商品品番シール貼り</unit_name>
+      <unit>1点</unit>
+      <unit_price>5</unit_price>
+      <remarks>シール印字・貼り作業(用紙別途) ※品番がないもの</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>その他</unit_name>
+      <unit></unit>
+      <unit_price>相談</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>実地棚卸作業</item_name>
+      <unit_name>人工</unit_name>
+      <unit>1時間</unit>
+      <unit_price>相談</unit_price>
+      <remarks>必要な場合</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>DM便・ゆうパケット他</unit_name>
+      <unit>1件</unit>
+      <unit_price>5</unit_price>
+      <remarks>伝票発行（指定のＣＳＶ・ｴｸｾﾙﾃﾞｰﾀ）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷事務</item_name>
+      <unit_name>宅配便</unit_name>
+      <unit>1件</unit>
+      <unit_price>10</unit_price>
+      <remarks>伝票発行（指定のＣＳＶ・ｴｸｾﾙﾃﾞｰﾀ）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>運営管理費</item_name>
+      <unit_name>月</unit_name>
+      <unit>1月</unit>
+      <unit_price>10,000</unit_price>
+      <remarks>WMSが必要な場合は別途相談(スポット発送の場合かかりません)</remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000273</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000273-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000002</billto_code>
+      <billto_name>ネスリーフ 株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_name></billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel></tel>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_032</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>404</outer_total>
+      <purchase_price>10.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>16</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_033</item_code>
+      <item_name>ダンボール箱 DM用 2.0cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>DM用</size1>
+      <size2>2.0cm (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>16</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>20</outer_height>
+      <outer_total>592</outer_total>
+      <purchase_price>14.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>20</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>16</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>15.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>21</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>kfuto_001</item_code>
+      <item_name>クッション封筒（白）CD・DVD1枚用 封緘・開封テープ付き</item_name>
+      <material>表：晒クラフト紙／内：ポリエチレン</material>
+      <category>クッション封筒</category>
+      <size1>CD・DVD1枚用</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>180</inside_width>
+      <inside_depth>0</inside_depth>
+      <inside_height>270</inside_height>
+      <outer_width>200</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>270</outer_height>
+      <outer_total>470</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>17</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>futo_003</item_code>
+      <item_name>クラフト封筒 角1 封緘テープ付き</item_name>
+      <material>クラフト茶85g/m2</material>
+      <category>クラフト封筒</category>
+      <size1>角1</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>270</outer_width>
+      <outer_depth>0</outer_depth>
+      <outer_height>382</outer_height>
+      <outer_total>652</outer_total>
+      <purchase_price>9.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>9</special_unit_price>
+    </packing_items>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫数量検品等</unit_name>
+      <unit>個</unit>
+      <unit_price>10</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>宅配</unit_name>
+      <unit>個</unit>
+      <unit_price>60</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷料</item_name>
+      <unit_name>タイツ</unit_name>
+      <unit>枚</unit>
+      <unit_price>130</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>Ａ</unit_name>
+      <unit>個</unit>
+      <unit_price>10</unit_price>
+      <remarks>※ラベル貼り、返品商品の検品等</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>Ｂ</unit_name>
+      <unit>個</unit>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>Ｃ</unit_name>
+      <unit>個</unit>
+      <unit_price>30</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>チラシ入れ作業</unit_name>
+      <unit>個</unit>
+      <unit_price>10</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫（横移動分）</item_name>
+      <unit_name>軽・１０個まで</unit_name>
+      <unit>便</unit>
+      <unit_price>3,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫（横移動分）</item_name>
+      <unit_name>ワゴン３０個まで</unit_name>
+      <unit>便</unit>
+      <unit_price>3,500</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫（横移動分）</item_name>
+      <unit_name>2ｔ車</unit_name>
+      <unit>便</unit>
+      <unit_price>5,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name></item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000274</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000274-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000023</billto_code>
+      <billto_name>有限会社 新那須エッグ</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_039</item_code>
+      <item_name>ダンボール箱 卵①</item_name>
+      <material>K5×SCP160×K5</material>
+      <category>ダンボール箱</category>
+      <size1>卵①</size1>
+      <size2>ダンボール箱 卵①</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>340</inside_width>
+      <inside_depth>260</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price>49.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>75</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_040</item_code>
+      <item_name>ダンボール箱 卵②</item_name>
+      <material>K5×SCP160×K5</material>
+      <category>ダンボール箱</category>
+      <size1>卵②</size1>
+      <size2>ダンボール箱 卵②</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>450</inside_width>
+      <inside_depth>310</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price>68.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>100</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_041</item_code>
+      <item_name>ダンボール箱 卵③</item_name>
+      <material>K5×SCP160×K5</material>
+      <category>ダンボール箱</category>
+      <size1>卵③</size1>
+      <size2>ダンボール箱 卵③</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width>510</inside_width>
+      <inside_depth>340</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width></outer_width>
+      <outer_depth></outer_depth>
+      <outer_height></outer_height>
+      <outer_total></outer_total>
+      <purchase_price>81.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>120</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>cushion_002</item_code>
+      <item_name>エアキャップ（プチプチ） 1200mm×42m</item_name>
+      <material>ポリエチレンｄ35</material>
+      <category>エアキャップ（プチプチ）</category>
+      <size1>1200mm × 42m</size1>
+      <size2>エアキャップ</size2>
+      <notices>1巻価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>1200</outer_width>
+      <outer_depth>350</outer_depth>
+      <outer_height>350</outer_height>
+      <outer_total>1900</outer_total>
+      <purchase_price>1329.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>1,330</special_unit_price>
+    </packing_items>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫数（Mサイズ）</unit_name>
+      <unit>個</unit>
+      <unit_price>2</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫数（Lサイズ）</unit_name>
+      <unit>個</unit>
+      <unit_price>2</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫数（Mサイズ～2Lサイズ）</unit_name>
+      <unit>個</unit>
+      <unit_price>2</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000275</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000275-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000014</billto_code>
+      <billto_name>日本快倉 株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <item_details>
+      <item_name>保管料（高島平倉庫代）</item_name>
+      <unit_name>月次</unit_name>
+      <unit>坪</unit>
+      <unit_price>5,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>デバンニング(20f)</unit_name>
+      <unit>台</unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>デバンニング(40f)</unit_name>
+      <unit>台</unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>保管料（倉庫代賃料）</item_name>
+      <unit_name>月次</unit_name>
+      <unit>棟</unit>
+      <unit_price>664,000</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000276</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000276-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000088</billto_code>
+      <billto_name>株式会社 東王商事</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <quotation>
+      <quotation_code>0000277</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/02</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000277-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000063</billto_code>
+      <billto_name>アイコーチアカデミー</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>23.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>28.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_036</item_code>
+      <item_name>ダンボール箱 特売 60サイズ 底面A5</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>60サイズ</size1>
+      <size2>底面A5</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>240</inside_width>
+      <inside_depth>160</inside_depth>
+      <inside_height>170</inside_height>
+      <outer_width>246</outer_width>
+      <outer_depth>166</outer_depth>
+      <outer_height>182</outer_height>
+      <outer_total>594</outer_total>
+      <purchase_price>31.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>30.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_037</item_code>
+      <item_name>ダンボール箱 特売 80サイズ 底面A4</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width>316</outer_width>
+      <outer_depth>226</outer_depth>
+      <outer_height>252</outer_height>
+      <outer_total>794</outer_total>
+      <purchase_price>39.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>50.00</special_unit_price>
+    </packing_items>
+    <remarks>
+      <content>※ 荷物の運送につきましては、業務提携会社約款に準じます。</content>
+    </remarks>
+    <remarks>
+      <content>※ 上記運賃につきましては、消費税は別途請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※ コレクト（代金引換）手数料は、1万円以下全国一律300円（税別）、3万円以下全国一律400円（税別）、10万円以下全国一律600円（税別）を請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※ 宅配便出荷商品が30万円以上の時は、荷物のお預かりはできません。</content>
+    </remarks>
+    <remarks>
+      <content>※自社便で配送可能な場合は、自社便で配達する事もあります。</content>
+    </remarks>
+    <remarks>
+      <content>※上記運賃につきましては、月間500個の出荷を前提としております。</content>
+    </remarks>
+    <remarks>
+      <content>※出荷状況に応じて運賃の見直しをお願いする場合が御座います。</content>
+    </remarks>
+    <remarks>
+      <content>※梱包資材は、至急品使用または実費清算</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務（iphoneのケース、保護ガラス及びアクセサリー）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料、導線負担を含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>日本郵便（ゆうパケット）、ヤマト運輸（DM・宅配便）、自社便にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付保 　保管：盗難、火災保険付保</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>保管料</item_name>
+      <unit_name>月</unit_name>
+      <unit>坪</unit>
+      <unit_price>4,000.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料（1梱包）</unit_name>
+      <unit>梱包</unit>
+      <unit_price>200.00</unit_price>
+      <remarks>数量確認・検品を含む（1箱100個入りとして2円/個）中国からの梱包済商品の仕分けを含む</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>出荷作業（DM便･ネコポス･ゆうパケット・ゆうメール）</unit_name>
+      <unit>封緘</unit>
+      <unit_price>80.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>出荷作業（宅配）</unit_name>
+      <unit>梱包</unit>
+      <unit_price>120.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（DM便・ネコポス・ゆうパケット・メール）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（宅配便）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>付帯作業（初期動作確認）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>付帯作業（品番シール貼り）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks>品番採番・品番シール印刷・品番シール貼り</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>付帯作業（エアーキャップ巻）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name></item_name>
+      <unit_name></unit_name>
+      <unit></unit>
+      <unit_price></unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000278</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000278-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000055</billto_code>
+      <billto_name>ビースタニング 株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <packing_items>
+      <item_code>dbox_027</item_code>
+      <item_name>ダンボール箱 120サイズ 底面 B3</item_name>
+      <material>K5×S120g×K5</material>
+      <category>ダンボール箱</category>
+      <size1>120サイズ</size1>
+      <size2>底面B3</size2>
+      <notices>1枚価格</notices>
+      <thickness>5.00</thickness>
+      <inside_width>530</inside_width>
+      <inside_depth>380</inside_depth>
+      <inside_height>250</inside_height>
+      <outer_width>540</outer_width>
+      <outer_depth>390</outer_depth>
+      <outer_height>270</outer_height>
+      <outer_total>1200</outer_total>
+      <purchase_price>78.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>98.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_034</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（小）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (小)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>218</inside_width>
+      <inside_depth>154</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>222</outer_width>
+      <outer_depth>162</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>417</outer_total>
+      <purchase_price>11.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>23.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_035</item_code>
+      <item_name>ダンボール箱 メール用 3.5cm厚（大）</item_name>
+      <material>C5_E/F</material>
+      <category>ダンボール箱</category>
+      <size1>メール用</size1>
+      <size2>3.5cm厚 (大)</size2>
+      <notices>1枚価格</notices>
+      <thickness>2.00</thickness>
+      <inside_width>328</inside_width>
+      <inside_depth>232</inside_depth>
+      <inside_height>29</inside_height>
+      <outer_width>332</outer_width>
+      <outer_depth>240</outer_depth>
+      <outer_height>33</outer_height>
+      <outer_total>605</outer_total>
+      <purchase_price>16.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>28.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_037</item_code>
+      <item_name>ダンボール箱 特売 80サイズ 底面A4</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>80サイズ</size1>
+      <size2>底面A4</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>310</inside_width>
+      <inside_depth>220</inside_depth>
+      <inside_height>240</inside_height>
+      <outer_width>316</outer_width>
+      <outer_depth>226</outer_depth>
+      <outer_height>252</outer_height>
+      <outer_total>794</outer_total>
+      <purchase_price>39.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>55.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>dbox_038</item_code>
+      <item_name>ダンボール箱 特売 100サイズ 底面A3</item_name>
+      <material>C5_B/F</material>
+      <category>ダンボール箱</category>
+      <size1>100サイズ</size1>
+      <size2>底面A3</size2>
+      <notices>1枚価格</notices>
+      <thickness>3.00</thickness>
+      <inside_width>440</inside_width>
+      <inside_depth>320</inside_depth>
+      <inside_height>210</inside_height>
+      <outer_width>446</outer_width>
+      <outer_depth>326</outer_depth>
+      <outer_height>222</outer_height>
+      <outer_total>994</outer_total>
+      <purchase_price>56.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>75.00</special_unit_price>
+    </packing_items>
+    <packing_items>
+      <item_code>fukuro_002</item_code>
+      <item_name>宅配紙袋（白）大 封緘テープ付き</item_name>
+      <material>晒片ツヤ紙120ｇ/ｍ2</material>
+      <category>宅配紙袋（白）</category>
+      <size1>(大)</size1>
+      <size2>封緘テープ付き</size2>
+      <notices>1枚価格</notices>
+      <thickness></thickness>
+      <inside_width></inside_width>
+      <inside_depth></inside_depth>
+      <inside_height></inside_height>
+      <outer_width>320</outer_width>
+      <outer_depth>100</outer_depth>
+      <outer_height>430</outer_height>
+      <outer_total>850</outer_total>
+      <purchase_price>21.00</purchase_price>
+      <regular_price></regular_price>
+      <regular_unit_price></regular_unit_price>
+      <special_price></special_price>
+      <special_unit_price>32.00</special_unit_price>
+    </packing_items>
+    <remarks>
+      <content>※ 荷物の運送につきましては、業務提携会社約款に準じます。</content>
+    </remarks>
+    <remarks>
+      <content>※ 上記運賃につきましては、消費税は別途請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※ コレクト（代金引換）手数料は、1万円以下全国一律300円（税別）、3万円以下全国一律400円（税別）、10万円以下全国一律600円（税別）を請求させて頂きます。</content>
+    </remarks>
+    <remarks>
+      <content>※ 宅配便出荷商品が30万円以上の時は、荷物のお預かりはできません。</content>
+    </remarks>
+    <remarks>
+      <content>※自社便で配送可能な場合は自社便で配達する事もあります。</content>
+    </remarks>
+    <remarks>
+      <content>※上記運賃につきましては、月間500個の出荷を前提としております。</content>
+    </remarks>
+    <remarks>
+      <content>※出荷状況に応じて運賃の見直しをお願いする場合が御座います</content>
+    </remarks>
+    <basic_condition>
+      <title>委託される業務</title>
+      <condition>
+        <content>ロジスティクス業務（kids向教材・絵本・CD・DVD）</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保管</title>
+      <condition>
+        <content>常温保管</content>
+      </condition>
+      <condition>
+        <content>共益費、光熱費、バース使用料,導線負担を含む</content>
+      </condition>
+      <condition>
+        <content>保証金不要</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>荷役</title>
+      <condition>
+        <content>入庫作業、数量検品、外観検品</content>
+      </condition>
+      <condition>
+        <content>出荷作業、ピッキング、外観検品、梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>日本郵便（ゆうパケット）宅配便（ＤＭ便・宅急便）、自社便にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>保険</title>
+      <condition>
+        <content>発送：火災保険付保 　保管：盗難、火災保険付保</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>税金</title>
+      <condition>
+        <content>消費税</content>
+      </condition>
+    </basic_condition>
+    <item_details>
+      <item_name>入庫作業料</item_name>
+      <unit_name>入庫料</unit_name>
+      <unit>箱</unit>
+      <unit_price>200.00</unit_price>
+      <remarks>数量確認、検品を含む（1箱100個入りとして2円/個）</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>出荷作業（ヤマト宅配便・自社便）</unit_name>
+      <unit>梱包</unit>
+      <unit_price>120.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ヤマト宅配便・自社便）</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>出荷作業（ヤマトDM便・ゆうパケット・ゆうメール）</unit_name>
+      <unit>封緘</unit>
+      <unit_price>80.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>出荷作業料</item_name>
+      <unit_name>同梱作業（ヤマトDM便・ゆうパケット・ゆうメール）</unit_name>
+      <unit>点</unit>
+      <unit_price>20.00</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>エアーキャップ巻き</unit_name>
+      <unit>点</unit>
+      <unit_price>30.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <item_details>
+      <item_name>付帯作業料</item_name>
+      <unit_name>ラッピング</unit_name>
+      <unit>個</unit>
+      <unit_price>100.00</unit_price>
+      <remarks></remarks>
+    </item_details>
+    <quotation>
+      <quotation_code>0000279</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/03</quotation_date>
+      <status>1</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000279-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000185</billto_code>
+      <billto_name>嘉年華株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <quotation>
+      <quotation_code>0000280</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000280-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000185</billto_code>
+      <billto_name>嘉年華株式会社</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_name></billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel></tel>
+    </contact_information>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <quotation>
+      <quotation_code>0000281</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000281-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000186</billto_code>
+      <billto_name>株式会社ワタナベアマダクション</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <remarks>
+      <content>上記御見積りは税抜きの金額になります。</content>
+    </remarks>
+    <remarks>
+      <content>御社へ返送の場合個数に応じて料金が発生いたします。（20個1梱包にして120サイズにてお戻しいたします）</content>
+    </remarks>
+    <basic_condition>
+      <title>梱包</title>
+      <condition>
+        <content>梱包、出荷事務</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>配送</title>
+      <condition>
+        <content>宅配便、ＤＭ便等にて発送</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>決済</title>
+      <condition>
+        <content>毎月末締切、翌月20日　　銀行振込み（日本郵便ご利用の場合）</content>
+      </condition>
+      <condition>
+        <content>毎月末締切、翌月末日　　銀行振込み</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>取扱商品</title>
+      <condition>
+        <content>印刷物</content>
+      </condition>
+    </basic_condition>
+    <basic_condition>
+      <title>出荷データ</title>
+      <condition>
+        <content>伝票発行の際、お客様データの加工などは致しません。</content>
+      </condition>
+      <condition>
+        <content>弊社指定CSV、EXCELデータが必須となります。</content>
+      </condition>
+    </basic_condition>
+    <quotation>
+      <quotation_code>0000282</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000282-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000082</billto_code>
+      <billto_name>株式会社 ＮＴＴドコモ</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_code>0000005</billfrom_code>
+      <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
+      <payee>
+        <bank_info>2</bank_info>
+        <account_type>0</account_type>
+        <account_number>0401151</account_number>
+        <branch_office>西川口支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+      <payee>
+        <bank_info>8</bank_info>
+        <account_type>0</account_type>
+        <account_number>3282066</account_number>
+        <branch_office>戸田支店</branch_office>
+        <account_name>CONNECTロジスティクス株式会社</account_name>
+      </payee>
+    </billfrom>
+    <contact_information>
+      <tel>048-299-8213</tel>
+      <fax>048-299-8614</fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9丁目35番</address2>
+    </contact_information>
+    <quotation>
+      <quotation_code>0000283</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000283-01" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000003</billto_code>
+      <billto_name>株式会社 CAN</billto_name>
+    </billto>
+    <billfrom>
+      <billfrom_name></billfrom_name>
+    </billfrom>
+    <contact_information>
+      <tel></tel>
+    </contact_information>
+    <quotation>
+      <quotation_code>0000284</quotation_code>
+      <quotation_code_sub>01</quotation_code_sub>
+      <quotation_date>2018/04</quotation_date>
+      <status>0</status>
+    </quotation>
+    <creator>システム管理者</creator>
+    <link href="/quotation/0000284-01" rel="self"/>
   </entry>
 </feed>

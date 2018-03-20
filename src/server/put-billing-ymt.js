@@ -20,12 +20,14 @@ billingcsv.feed.entry.map((entry) => {
 		let billing_data
 		if (entry.billing.delivery_class1 === '宅急便発払') {
 			billing_data = getBillingDataOfHatsu(entry,entry.billing.delivery_class1)			
+			result.feed.entry.push(billing_data)
 		} else if (entry.billing.delivery_class1 === 'クロネコＤＭ便'){
 			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// DM便
+			result.feed.entry.push(billing_data)
 		} else if (entry.billing.delivery_class1 === 'ネコポス') {
 			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// ネコポス
+			result.feed.entry.push(billing_data)
 		}
-		result.feed.entry.push(billing_data)
 
 	} catch (e) {
 		vtecxapi.sendMessage(400, e)
