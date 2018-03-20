@@ -700,7 +700,7 @@ export default class CustomerForm extends React.Component {
 								field: 'shipment_service_service_name', title: 'サービス名', width: '250px',
 							}, {	
 								field: 'shipper_info', title: '荷主コード / 集荷出荷区分', width: '500px',
-								convert: [null,{ 0: '集荷', 1: '出荷' }]
+								convert: [null,{ 0: '出荷', 1: '集荷' }]
 							}]}
 							edit={(data, index) => this.showEditModal(data, index)}
 							add={() => this.showAddModal()}
