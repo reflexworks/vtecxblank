@@ -38,6 +38,7 @@ export default class InvoiceRegistration extends React.Component {
 		this.entry = {
 			invoice: {
 				invoice_yearmonth: moment().format('YYYY/MM'),
+				payment_date:moment(),
 			},
 			item_details: [],
 			billto: {},
