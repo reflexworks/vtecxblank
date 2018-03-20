@@ -15,7 +15,7 @@ const customer_code = customer.feed.entry.map((entry) => { return entry.customer
 
 customer_code.map((customer_code) => { 
 
-	let billing_data = getBillingdata(shipping_yearmonth,customer_code,delivery_company,billto_code)
+	let billing_data = getBillingdata(shipping_yearmonth,customer_code,delivery_company,billto_code).billing_data
 	if (billing_data.feed.entry) {
 		billing_data.feed.entry.map((entry) => {
 			const shipment_class = entry.billing_data.shipment_class==='0' ? '出荷' : '集荷' 
@@ -27,4 +27,3 @@ customer_code.map((customer_code) => {
 })
 
 vtecxapi.doResponseCsv(body,'billing_'+billto_code+'_'+delivery_company+'_'+shipping_yearmonth+'.csv')
-
