@@ -9,11 +9,12 @@ import {
 	convertPayee,
 } from './common'
 
+import moment from 'moment'
 const invoice_code = vtecxapi.getQueryString('invoice_code')
 const customer_code = vtecxapi.getQueryString('customer_code')
 const working_yearmonth = vtecxapi.getQueryString('working_yearmonth')
 
-const getTdNode = (_col,_tdStyle,_value,_spanStyle,) => {
+const getTdNode = (_col,_tdStyle,_value,_spanStyle) => {
 
 	const td_style = _tdStyle ? _tdStyle : 'tdLeft'
 	const span_style = _spanStyle ? _spanStyle : 'fontsize6'
@@ -32,9 +33,9 @@ const getInvoice = () => {
 	return entry
 }
 
-const createArray = (_invoiceEntry) => {
-	if (customer_code && _invoiceEntry.invoice.quotation_code && working_yearmonth) {
-		const serviceItem_details = getInvoiceItemDetails(customer_code, _invoiceEntry.invoice.quotation_code, working_yearmonth)
+const createArray = (_customerEntry,_invoiceEntry) => {
+	if (_customerEntry.customer.customer_code && _invoiceEntry.invoice.quotation_code && working_yearmonth) {
+		const serviceItem_details = getInvoiceItemDetails(_customerEntry.customer.customer_code, _invoiceEntry.invoice.quotation_code, working_yearmonth)
 		let array = []
 		if (serviceItem_details) {
 			if (_invoiceEntry.item_details) {
@@ -89,6 +90,20 @@ const getTaxTotal = (_allItem) =>{
 	}
 }
 
+//請求先の請求締日が月末なら請求年月の月末を返す。20日なら請求年月の20日を返す
+const getBillingClosingDate = (shipping_yearmonth,billing_closing_date,) => {
+	//20日
+	const twentyMonthDate = new Date(shipping_yearmonth.slice(0, 4) + '-' + shipping_yearmonth.slice(-2) + '-20')
+	//月末
+	const endMonthDate = new Date(twentyMonthDate.getFullYear(), twentyMonthDate.getMonth() + 1, 0)
+	//0：月末 1：20日
+	if (billing_closing_date === '0') {
+		return(moment(endMonthDate).format('YYYY/MM/DD'))		
+	} else {
+		return(moment(twentyMonthDate).format('YYYY/MM/DD'))
+	}
+}
+
 const getBilltoAndBillfrom = (_invoiceEntry) => {
 	
 	const stamp = getStamp(_invoiceEntry.billfrom.billfrom_name)
@@ -100,7 +115,7 @@ const getBilltoAndBillfrom = (_invoiceEntry) => {
 
 			<td colspan="1">
 				<div style={pdfstyles.fontsize10UL}>{_invoiceEntry.billto.billto_name}　御中</div>
-				<div style={pdfstyles.fontsize9}>{_invoiceEntry.invoice.invoice_yearmonth.replace(/\//,'年',)}月度ご請求書分</div>
+				<div style={pdfstyles.fontsize9}>{_invoiceEntry.invoice.invoice_yearmonth.replace(/\//,'年',)}月度ご請求分</div>
 				<br/>
 			</td>
 
@@ -204,10 +219,10 @@ const getAllItemDetails = (_itemDetails) => {
 				result.push(
 					<tr key={idx}>
 						<td style={pdfstyles.spaceLeft}></td>
-						{getTdNode(1,'tdLeft', _itemDetails.item_name)}
-						{getTdNode(1,'tdRight', _itemDetails.quantity)}
-						{getTdNode(1,'tdCenter', _itemDetails.unit + (_itemDetails.unit_name ? _itemDetails.unit_name : ''))}
-						{getTdNode(1,'tdRight',  _itemDetails.unit_price)}
+						{getTdNode(1,'tdLeft',_itemDetails.item_name)}
+						{getTdNode(1,'tdRight',_itemDetails.quantity)}
+						{getTdNode(1,'tdCenter',_itemDetails.unit + (_itemDetails.unit_name ? _itemDetails.unit_name : ''))}
+						{getTdNode(1,'tdRight',_itemDetails.unit_price)}
 						{getTdNode(2,'tdRight',addFigure(_itemDetails.amount))}
 						{getTdNode(1,'tdRemarks',_itemDetails.remarks)}
 						<td style={pdfstyles.spaceRight}></td>
@@ -237,7 +252,7 @@ const getRemarks = (_remarks) => {
 						<td style={pdfstyles.spaceLeft}>
 						</td>
 
-						{getTdNode(7,'tableTdLeft','備考')}
+						{getTdNode(8,'tableTdLeft','備考')}
 						
 						<td style={pdfstyles.spaceRight}>
 						</td>
@@ -250,7 +265,7 @@ const getRemarks = (_remarks) => {
 					<td style={pdfstyles.spaceLeft}>	
 					</td>
 
-					{getTdNode(7,'tdLeft',remarks.content)}
+					{getTdNode(8,'tdLeft',remarks.content)}
 									
 					<td style={pdfstyles.spaceRight}>
 					</td>
@@ -279,7 +294,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -292,7 +307,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)	
@@ -305,7 +320,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -318,7 +333,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -335,7 +350,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}>
 							</td>
 						</tr>
@@ -351,7 +366,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -364,7 +379,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -378,7 +393,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)	
@@ -395,7 +410,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}>
 							</td>
 						</tr>
@@ -410,7 +425,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.branch_office)}
 							{getTdNode(1,'tdLeft',payee.account_type)}
 							{getTdNode(1,'tdLeft',payee.account_number)}
-							{getTdNode(1,'tdLeft',payee.account_name)}
+							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
 					)
@@ -424,7 +439,7 @@ const getPayee = (_payee) => {
 						{getTdNode(2,'tdLeft',payee.branch_office)}
 						{getTdNode(1,'tdLeft',payee.account_type)}
 						{getTdNode(1,'tdLeft',payee.account_number)}
-						{getTdNode(1,'tdLeft',payee.account_name)}
+						{getTdNode(2,'tdLeft',payee.account_name)}
 						<td style={pdfstyles.spaceRight}></td>
 					</tr>
 				)	
@@ -433,10 +448,9 @@ const getPayee = (_payee) => {
 	)	
 }
 
-const invoicePage = (_customerEntry,_invoiceEntry,) => {
+const invoicePage = (_customerEntry,_invoiceEntry) => {
 
-	const allItem = createArray(_invoiceEntry)
-	vtecxapi.log('allItem='+allItem)
+	const allItem = createArray(_customerEntry,_invoiceEntry)
 	//税抜合計値
 	const subTotal = allItem ? getSubTotal(allItem):'0'
 	//税抜合計値に0.08かける
@@ -445,6 +459,8 @@ const invoicePage = (_customerEntry,_invoiceEntry,) => {
 	const taxTotal = allItem ? getTaxTotal(allItem): '0'
 	//全ての金額を合計した合計請求金額
 	const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+
+	_invoiceEntry.invoice.invoice_yearmonth
 
 	const invoice_1 = (
 		<div className="_page" id="_page-1" style={pdfstyles._page}>
@@ -459,7 +475,12 @@ const invoicePage = (_customerEntry,_invoiceEntry,) => {
 				{/*請求書情報*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
-					{getTdNode(7,'borderRight','請求書コード:' + _invoiceEntry.invoice.invoice_code,'fontsize10')}
+					{getTdNode(7,'borderRight','日付:' + getBillingClosingDate(_invoiceEntry.invoice.invoice_yearmonth,_invoiceEntry.billto.billing_closing_date) ,'fontsize10')}
+					<td style={pdfstyles.spaceRight}></td>
+				</tr>
+				<tr>
+					<td style={pdfstyles.spaceLeft}></td>
+					{getTdNode(7,'borderRight','請求番号:' + _invoiceEntry.invoice.invoice_code,'fontsize10')}
 					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
@@ -536,11 +557,11 @@ const invoicePage = (_customerEntry,_invoiceEntry,) => {
 
 	const invoice_2 = (
 		<div className="_page" id="_page-2" style={pdfstyles._page}>
-			<table cols="9" style={pdfstyles.payeeWidths}>
+			<table cols="10" style={pdfstyles.payeeWidths}>
 				
 				{/*備考*/}
 				<tr>
-					<td colspan="9"><br/></td>
+					<td colspan="10"><br/></td>
 				</tr>
 
 				{_invoiceEntry.remarks &&
@@ -548,14 +569,26 @@ const invoicePage = (_customerEntry,_invoiceEntry,) => {
 				}
 
 				<tr>
-					<td colspan="9">
-						<br/>
-					</td>
+					<td colspan="10"><br/></td>
 				</tr>
 				
 				{_invoiceEntry.billfrom.payee &&
 					getPayee(_invoiceEntry.billfrom.payee)
 				}
+
+				<tr>
+					<td colspan="10"><br/></td>
+				</tr>
+
+				<tr>
+					<td style={pdfstyles.spaceLeft}></td>
+					
+					<td colspan="6"></td>
+					{getTdNode(1,'tableTdCenter','支払日')}
+					{getTdNode(1,'tdLeft',_invoiceEntry.invoice.payment_date)}
+					
+					<td style={pdfstyles.spaceRight}></td>
+				</tr>
 			</table>
 		</div>
 	)
@@ -573,56 +606,46 @@ let pageData = {
 	}
 }
 
+
 //customer_codeの有無で処理を分ける。有るときはそれを使ってinvoicePageを行う
 //無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
 const element = () => {
 	const invoice_entry = getInvoice()
-	
+	const billto_data = vtecxapi.getEntry('/billto/' + invoice_entry.billto.billto_code)
+	invoice_entry.billto = billto_data.feed.entry[0].billto
+
+	let customer_data
 	if (customer_code) {
-		const data = vtecxapi.getEntry('/customer/' + customer_code)
-		const customer_entry = data.feed.entry[0]
-
-		const invoice = invoicePage(customer_entry,invoice_entry)
-		const invoice_size = invoice.size
-
-		const total_size = invoice_size
-		for (let i = 0, ii = total_size; i < ii; ++i) {
-			pageData.pageList.page.push({ word: '' })
-		}
-
-		return (
-			<html>
-				<body>
-					{invoice.html}
-				</body>
-			</html>
-		)
-	
+		customer_data = vtecxapi.getEntry('/customer/' + customer_code)
 	} else {
-		const data = vtecxapi.getFeed('/customer/')
-		const customerList = data.feed.entry.filter((entry) => {
-			return entry.billto.billto_code === invoice_entry.invoice.invoice_code
-		})
-		vtecxapi.log('customerList.length=' + JSON.stringify(customerList.length))
-
-		const invoice = customerList.map((customer_entry, invoice_entry) => {
-			 invoicePage(customer_entry,invoice_entry)
-		})
-		const invoice_size = invoice.size
-
-		const total_size = invoice_size
-		for (let i = 0, ii = total_size; i < ii; ++i) {
-			pageData.pageList.page.push({ word: '' })
-		}
-		
-		return (
-			<html>
-				<body>
-					{invoice.html}
-				</body>
-			</html>
-		)		
+		const billto_code  = invoice_entry.billto.billto_code 
+		customer_data = vtecxapi.getFeed('/customer?billto.billto_code=' + billto_code, true)
 	}
+
+	let invoice =[]
+	customer_data.feed.entry.map((customer_entry) => {
+		invoice.push(invoicePage(customer_entry, invoice_entry))
+	})
+
+	let invoice_size = 0
+	invoice.map((_invoice) => {
+		invoice_size = (Number(invoice_size) + Number(_invoice.size))
+	})
+	
+	const total_size = invoice_size
+	for (let i = 0, ii = total_size; i < ii; ++i) {
+		pageData.pageList.page.push({word: ''})
+	}
+
+	return (
+		<html>
+			<body>
+				{invoice.map((_invoice) => {
+					return(_invoice.html)
+				})}
+			</body>
+		</html>
+	)
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
@@ -636,6 +659,7 @@ const file_name = () => {
 	}
 }
 
+vtecxapi.log('html='+html)
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
 
