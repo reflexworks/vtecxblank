@@ -17,6 +17,7 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 	}
 
 	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '*', true)
+
 	if (billing_data.feed.entry) {
 		if (billing_closing_date === '1') {
 			const lastyearmonth = getLastMonth(shipping_yearmonth)
@@ -33,11 +34,11 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 		}
 
 	}
-	return billing_data
+	return { 'billing_data': billing_data, 'billing_closing_date': billing_closing_date }
 }
 
 function getLastMonth(shipping_yearmonth) {
-	const d = new Date(parseInt(shipping_yearmonth.slice(0, 4)), parseInt(shipping_yearmonth.slice(-2)) - 1, '1')
+	const d = new Date(shipping_yearmonth.slice(0, 4) + '-' + shipping_yearmonth.slice(-2) + '-01')
 	d.setDate(0)
 	return d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2) 
 }

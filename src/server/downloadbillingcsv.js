@@ -15,16 +15,17 @@ const customer_code = customer.feed.entry.map((entry) => { return entry.customer
 
 customer_code.map((customer_code) => { 
 
-	let billing_data = getBillingdata(shipping_yearmonth,customer_code,delivery_company,billto_code)
-	if (billing_data.feed.entry) {
-		billing_data.feed.entry.map((entry) => {
-			const shipment_class = entry.billing_data.shipment_class==='0' ? '出荷' : '集荷' 
-			const record = ['"'+entry.billing_data.customer_code+'"', entry.billing_data.shipment_service_service_name, shipment_class,entry.billing_data.shipping_date,entry.billing_data.tracking_number,entry.billing_data.size,entry.billing_data.zone_name,entry.billing_data.prefecture,entry.billing_data.quantity,entry.billing_data.delivery_charge]
-			body.push(record)
+	let billing_data = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code)	
+	if (billing_data.billing_data.feed.entry) {
+		billing_data.billing_data.feed.entry.map((entry) => {
+			if (entry) {	// 登録時に不具合によりnullで登録されることがある
+				const shipment_class = entry.billing_data.shipment_class === '0' ? '出荷' : '集荷'
+				const record = ['"' + entry.billing_data.customer_code + '"', entry.billing_data.shipment_service_service_name, shipment_class, entry.billing_data.shipping_date, entry.billing_data.tracking_number, entry.billing_data.size, entry.billing_data.zone_name, entry.billing_data.prefecture, entry.billing_data.quantity, entry.billing_data.delivery_charge]
+				body.push(record)
+			}	
 		}
 		)
 	}
 })
 
 vtecxapi.doResponseCsv(body,'billing_'+billto_code+'_'+delivery_company+'_'+shipping_yearmonth+'.csv')
-

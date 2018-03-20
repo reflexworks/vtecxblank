@@ -138,6 +138,7 @@ invoice
  consumption_tax
  issue_status
  deposit_status
+ payment_date 
 delivery_charge{}
  shipment_service_name
  shipment_service_code
@@ -222,6 +223,15 @@ billing_summary
   delivery_charge
   subtotal  
 creator
+billing_compare{}
+ shipment_service_code
+ shipment_service_service_name
+ shipment_class
+ record{}
+  shipping_date
+  internal_work_quantity
+  billing_quantity
+  billing_amount
 </content>
 <rights>
 </rights>

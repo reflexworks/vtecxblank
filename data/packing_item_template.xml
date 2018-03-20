@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <feed>
   <entry>
+    <link href="/packing_item_template/0-4-43-6-6-5-1" rel="self"/>
+    <title>クリックル専用資材ｃｃ－ｄ330－1ｙ</title>
+  </entry>
+  <entry>
     <packing_items>
       <item_code>dbox_002</item_code>
       <item_name>ダンボール箱 SSサイズ② 底面 A4</item_name>

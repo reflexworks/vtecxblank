@@ -428,7 +428,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -888,7 +888,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -1348,7 +1348,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -1808,7 +1808,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -2268,7 +2268,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -2303,7 +2303,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>エコ配ALLJP</shipment_service_name>
-      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_code>ECO</shipment_service_code>
       <shipment_service_type>1</shipment_service_type>
       <shipment_service_service_name>エコ配便ALLJP</shipment_service_service_name>
       <delivery_charge_details>
@@ -2818,7 +2818,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -3278,7 +3278,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -3738,7 +3738,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -4198,7 +4198,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -4658,7 +4658,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -5118,7 +5118,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -5578,7 +5578,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -6038,7 +6038,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -6498,7 +6498,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -6958,7 +6958,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -6993,7 +6993,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>エコ配ALLJP</shipment_service_name>
-      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_code>ECO</shipment_service_code>
       <shipment_service_type>1</shipment_service_type>
       <shipment_service_service_name>エコプラス便</shipment_service_service_name>
       <delivery_charge_details>
@@ -7508,7 +7508,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -7968,7 +7968,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -8428,7 +8428,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -8888,7 +8888,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -8923,7 +8923,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>日本郵便</shipment_service_name>
-      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_code>JP1</shipment_service_code>
       <shipment_service_type>2</shipment_service_type>
       <shipment_service_service_name>ゆうメール</shipment_service_service_name>
       <delivery_charge_details>
@@ -9396,7 +9396,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -9856,7 +9856,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -10316,7 +10316,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -10776,7 +10776,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -10811,7 +10811,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>日本郵便</shipment_service_name>
-      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_code>JP</shipment_service_code>
       <shipment_service_type>2</shipment_service_type>
       <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
       <delivery_charge_details>
@@ -11266,7 +11266,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -11726,7 +11726,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -11761,7 +11761,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>日本郵便</shipment_service_name>
-      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_code>JP</shipment_service_code>
       <shipment_service_type>2</shipment_service_type>
       <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
       <delivery_charge_details>
@@ -12218,7 +12218,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -12678,7 +12678,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -13138,7 +13138,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -13598,7 +13598,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -14058,7 +14058,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -14518,7 +14518,7 @@
       </delivery_charge_details>
     </delivery_charge>
     <shipment_service>
-      <code>YH</code>
+      <code>YH1</code>
       <name>ヤマト運輸</name>
       <type>1</type>
       <service_name>発払い</service_name>
@@ -14553,7 +14553,7 @@
   <entry>
     <delivery_charge>
       <shipment_service_name>エコ配ALLJP1</shipment_service_name>
-      <shipment_service_code>ECO4</shipment_service_code>
+      <shipment_service_code>ECO3</shipment_service_code>
       <shipment_service_type>1</shipment_service_type>
       <shipment_service_service_name>エコ配便ALLJP1</shipment_service_service_name>
       <delivery_charge_details>
