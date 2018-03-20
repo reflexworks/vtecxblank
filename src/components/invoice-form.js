@@ -29,6 +29,7 @@ import {
 	CommonPrefecture,
 	CommonMonthlySelect,
 	addFigure,
+	CommonDatePicker,
 } from './common'
 
 import moment from 'moment'
@@ -49,9 +50,15 @@ export default class InvoiceForm extends React.Component {
 		
 		//消費税と合計請求金額
 		this.sub_total = 0
-		this.total_amount = 0
 		this.consumption_tax = 0
-
+		this.total_amount = 0
+		
+		this.monthly = []
+		this.daily = []
+		this.period = []
+		this.packing_item = []
+		this.shipping = []
+		this.collecting = []
 		this.serviceItem = []
 		this.entry = this.props.entry
 		this.entry.invoice = this.entry.invoice || {}
@@ -127,76 +134,9 @@ export default class InvoiceForm extends React.Component {
 	componentWillMount() {
 		this.sampleData()		
 	}
-	getHead() {
-		let head = []
-		head.push(<th aling="middle"></th>)
-
-		this.zoneArray.map((_value) => {
-			head.push(<th colspan="3" align="middle" margin="20px">{_value}</th>)
-		})
-
-		head.push(<th></th>)
-		head.push(<th align="middle">合計</th>)	
-
-		return head
-	}
-	getBody() {
-		let body = []
-
-		body.push(<td align="middle">サイズ</td>)
-
-		this.zoneArray.map(() => {
-			body.push(<td align="middle" >個数</td>)
-			body.push(<td align="middle" >単価</td>)
-			body.push(<td align="middle" >小計</td>)
-		})
-
-		body.push(<td  align="middle">総個数</td>)
-		body.push(<td  align="middle">金額</td>)
-
-		return body
-	}
-
-	getEtrTotal() {
-		let etr = []
-		this.deliverySize.map((_size) => {
-			etr.push(this.getEtr(_size))
-		})
-		etr.push(this.getTotal())
-		return etr
-	}
-	getEtr(size){
-		let tdnode = []
-		tdnode.push(<td  align="center" >{size}</td>)
-		this.zoneArray.map(() => {
-			tdnode.push(<td  align="right">26</td>)
-			tdnode.push(<td  align="right">480</td>)
-			tdnode.push(<td  align="right">12,480</td>)
-		})
-		tdnode.push(<td  align="right">338</td>)
-		tdnode.push(<td  align="right">162,240</td>)
-		
-		return <tr>{tdnode}</tr>
-	}
-	getTotal() {
-		let tdnode = []
-		tdnode.push(<td valign="top" align="middle">合計</td>)
-		this.zoneArray.map(() => {
-			tdnode.push(<td  align="right"></td>)
-			tdnode.push(<td  align="right"></td>)
-			tdnode.push(<td  align="right">74,880</td>)
-		})
-
-		tdnode.push(<td  align="right">2,028</td>)
-		tdnode.push(<td  align="right">973,440</td>)
-		return <tr>{tdnode}</tr>
-	}
 
 	sampleData() {
-		this.ehead = this.getHead()
-		this.ebody = this.getBody()
-		this.etr = this.getEtrTotal()
-
+		
 		this.ecoJP = [{
 			day: '12/1',
 			work: '10',
@@ -531,15 +471,14 @@ export default class InvoiceForm extends React.Component {
 	
 	}
 
-
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-
-		//口座情報が口座名義、支店名を持っていない時の処理
+		this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
+		//口座情報に口座名義、支店名が無い時の処理
 		if(this.entry.billfrom.payee){
 			this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
 				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {	
@@ -564,7 +503,6 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.changeTotalAmount()
 	}
-
 
 	/**
 	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
@@ -644,62 +582,51 @@ export default class InvoiceForm extends React.Component {
 			if (response.status !== 204) {
 			
 				//カンマ差し込み処理
+				/*
 				response.data.feed.entry[0].item_details.map((item_details) =>{
 					item_details.unit_price = addFigure(item_details.unit_price)
 					item_details.amount = addFigure(item_details.amount)
 				})
-
-				if (response.data.feed.entry[0].item_details) {
-					
-					for (let i = 0; i < response.data.feed.entry[0].item_details.length; ++i) {
-						switch (response.data.feed.entry[0].item_details[i].category) {
+				*/
+				this.monthly = []
+				this.daily = []
+				this.period = []
+				this.packing_item = []
+				this.shipping = []
+				this.collecting = []
+				const serviceData = response.data.feed.entry[0]
+				if (serviceData.item_details) {
+					for (let i = 0; i < serviceData.item_details.length; ++i) {
+						switch (serviceData.item_details[i].category) {
 						case 'monthly':
-							if (!this.monthly) {
-								this.monthly = []
-							}
-							this.monthly[this.monthly.length] = response.data.feed.entry[0].item_details[i]
+							this.monthly[this.monthly.length] = serviceData.item_details[i]
 							break
 						case 'daily':
-							if (!this.daily) {
-								this.daily = []
-							}
-							this.daily[this.daily.length] = response.data.feed.entry[0].item_details[i]
+							this.daily[this.daily.length] = serviceData.item_details[i]
 							break
 						case 'period':
-							if (!this.period) {
-								this.period = []
-							}
-							this.period[this.period.length] = response.data.feed.entry[0].item_details[i]
+							this.period[this.period.length] = serviceData.item_details[i]
 							break
 						case 'packing_item':
-							if (!this.packing_item) {
-								this.packing_item = []
-							}
-							this.packing_item[this.packing_item.length] = response.data.feed.entry[0].item_details[i]
+							this.packing_item[this.packing_item.length] = serviceData.item_details[i]
 							break
 						case 'shipping':
-							if (!this.shipping) {
-								this.shipping = []
-							}
-							this.shipping[this.shipping.length] = response.data.feed.entry[0].item_details[i]
+							this.shipping[this.shipping.length] = serviceData.item_details[i]
 							break
 						case 'collecting':
-							if (!this.collecting) {
-								this.collecting = []
-							}
-							this.collecting[this.collecting.length] = response.data.feed.entry[0].item_details[i]
+							this.collecting[this.collecting.length] = serviceData.item_details[i]
 							break
 						/*
 						default:
 							if (!this.entry.item_details) {
 								this.entry.item_details = []
 							}
-							this.entry.item_details[this.entry.item_details.length] = response.data.feed.entry[0].item_details[i]
+							this.entry.item_details[this.entry.item_details.length] = serviceData.item_details[i]
 							break
 						*/
 						}
 					}
-					this.serviceItem = response.data.feed.entry[0].item_details
+					this.serviceItem = serviceData.item_details
 					this.changeTotalAmount()
 				}
 				this.forceUpdate()
@@ -896,17 +823,15 @@ export default class InvoiceForm extends React.Component {
 
 		if (_data) {
 			this.selectInternalWorkYearMonth = _data.value
-			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)} this.forceUpdate()
+			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)}
 			if (this.state.selectCustomer) { this.getService(this.state.selectCustomer.customer_code, _data.value) }
 			this.forceUpdate()
-
 		} else {
 			this.selectInternalWorkYearMonth = null
+			if(this.props.changeYearmonth){ this.props.changeYearmonth('')}
 		}
-
 		// 簡易明細表示
 		this.setBillingSummaryTable()
-
 	}
 
 	/**
@@ -1006,12 +931,11 @@ export default class InvoiceForm extends React.Component {
 			const taxTotal = this.getTaxTotal(allItem)
 			//税抜×0.08
 			this.consumption_tax = Math.floor(this.sub_total * 0.08)
-
 			//合計請求金額
 			this.total_amount = (Number(this.sub_total) + Number(this.consumption_tax) + Number(taxTotal))
 		} else {
-			this.consumption_tax = '0'
-			this.total_amount = '0'
+			this.consumption_tax = 0
+			this.total_amount = 0
 		}
 		this.forceUpdate()
 	}
@@ -1092,11 +1016,9 @@ export default class InvoiceForm extends React.Component {
 	changeInvoice(_data, _index) {
 		if (_index === 'invoice_yearmonth') {
 			this.entry.invoice[_index] = _data.value
-		} else if (_index === 'total_amount' || 'consumption_tax') {
-			this.entry.invoice[_index] = addFigure(_data)
 		} else {
 			this.entry.invoice[_index] = _data
-		}	
+		}
 		this.forceUpdate()
 	}
 
@@ -1411,6 +1333,13 @@ export default class InvoiceForm extends React.Component {
 					placeholder="見積番号"
 					value={this.entry.invoice.quotation_code}
 					readonly='true'
+				/>
+
+				<CommonDatePicker
+					controlLabel="支払日"
+					name="invoice.payment_date"
+					selected={this.entry.invoice.payment_date}
+					onChange={(data) => this.changeInvoice(data,'payment_date')}
 				/>
 
 				<CommonRadioBtn 
