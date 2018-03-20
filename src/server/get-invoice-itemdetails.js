@@ -34,12 +34,12 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 		result = result.concat(getMonthly(internal_work_all))
 		// period
 		result = result.concat(getPeriod(internal_work_all))
-		// shipping
-		shipment_service.feed.entry.map((entry) => {
-			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
-			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
-		})
 	}
+	// shipping
+	shipment_service.feed.entry.map((entry) => {
+		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
+		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
+	})
 	return result
 }
 
