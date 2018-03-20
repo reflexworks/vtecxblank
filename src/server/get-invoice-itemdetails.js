@@ -1,5 +1,6 @@
 import vtecxapi from 'vtecxapi' 
 import { getBillingdata } from './get-billingdata'
+import { getInternalworkdata } from './get-internalwork-data'
 
 const customer_code = vtecxapi.getQueryString('customer_code') //0000182 // 0000163
 const quotation_code = vtecxapi.getQueryString('quotation_code') //0000107
@@ -14,41 +15,37 @@ try {
 	vtecxapi.sendMessage(400, e)
 }
 
+
 export function getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth) {
     
-	const internal_work = vtecxapi.getFeed('/internal_work?customer.customer_code=' + customer_code + '&quotation.quotation_code=' + quotation_code + '&internal_work.working_yearmonth=' + working_yearmonth)
 
 	const shipment_service = vtecxapi.getFeed('/shipment_service')
 	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
 
 	let result = []
-	if (internal_work.feed.entry) {
-		const id = internal_work.feed.entry[0].id.split(',')[0]
-		//		if (internal_work.feed.entry[0].internal_work.is_completed==='0') throw '完了がなされていません'
-		const internal_work_all = vtecxapi.getFeed(id+'/data')
-		if (internal_work_all.feed.entry) {
-			// daily
-			result = getDaily(internal_work_all)
-			// packing_item
-			result = result.concat(getPacking_item(internal_work_all))
-			// monthly
-			result = result.concat(getMonthly(internal_work_all))
-			// period
-			result = result.concat(getPeriod(internal_work_all))
-			// shipping
-			shipment_service.feed.entry.map((entry) => {
-				result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
-				result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
-			})
-		}
+	const internal_work_all = getInternalworkdata(working_yearmonth,customer_code,quotation_code)
+
+	if (internal_work_all.feed.entry) {
+		// daily
+		result = getDaily(internal_work_all)
+		// packing_item
+		result = result.concat(getPacking_item(internal_work_all))
+		// monthly
+		result = result.concat(getMonthly(internal_work_all))
+		// period
+		result = result.concat(getPeriod(internal_work_all))
+		// shipping
+		shipment_service.feed.entry.map((entry) => {
+			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
+			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
+		})
 	}
 	return result
 }
 
-
 function getShipping(customer_code, working_yearmonth,shipment_service_code,shipment_class,shipment_service_name) {
 	const result = []
-	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code)
+	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code).billing_data
 	if (billing_data.feed.entry) {
 
 		const summary = billing_data.feed.entry.filter((entry) => {
