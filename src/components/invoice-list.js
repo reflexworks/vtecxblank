@@ -18,13 +18,13 @@ import {
 	CommonTable,
 	CommonInputText,
 	CommonRadioBtn,
+	CommonDatePicker,
 	//CommonPrefecture,
 	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
 	CommonPagination,
 } from './common'
 
-import moment from 'moment'
 type State = {
 	feed: any,
 	url: string
@@ -40,7 +40,7 @@ export default class InvoiceList extends React.Component {
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
 		this.url = '/s/get-invoice?f&l=' + this.maxDisplayRows
 		this.state = {
-			searchYearMonth: moment().format('YYYY/MM'),
+			searchYearMonth: '',
 			searchDetails: false,
 			feed: { entry: [] },
 			isDisabled: false,
@@ -101,29 +101,35 @@ export default class InvoiceList extends React.Component {
 	 * @param {*} data 
 	 */
 	onDelete(data) {
-	
-		if (confirm('請求番号:' + data.invoice.invoice_code + '\n' +
-					'この情報を削除します。よろしいですか？')) {
-			const id = data.invoice.invoice_code
+		const _delete = () => {
+			if (confirm('請求番号:' + data.invoice.invoice_code + '\n' +
+				'この情報を削除します。よろしいですか？')) {
+				const id = data.invoice.invoice_code
 		
-			axios({
-				url: '/d/invoice/' + id,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(this.activePage)
-			}).catch((error) => {
-				if (this.props.error) {
-					this.setState({ isDisabled: false })
-					this.props.error(error)
-				} else {
-					this.setState({ isDisabled: false, isError: error })
-				}
-			})
-			this.forceUpdate()
+				axios({
+					url: '/d/invoice/' + id,
+					method: 'delete',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+					this.getFeed(this.activePage)
+				}).catch((error) => {
+					if (this.props.error) {
+						this.setState({ isDisabled: false })
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				})
+				this.forceUpdate()
+			}
+		}
+		if (data.issue_status === '1') {
+			alert('発行済なため削除できません。')
+		} else {
+			_delete()
 		}
 	}
 
@@ -134,6 +140,17 @@ export default class InvoiceList extends React.Component {
 	doSearch(conditions) {
 		this.getFeed(1, conditions)
 	}
+
+	changeSearchYearmonth(_data) {
+		if (_data) {
+			this.setState({ searchYearMonth: _data.value })
+			this.doSearch('invoice.invoice_yearmonth=*' + _data.value + '*')
+		} else {
+			this.setState({ searchYearMonth: '' })
+			this.getFeed(1)
+		}	
+	}
+
 
 	/**
 	 * 描画後の処理
@@ -180,18 +197,23 @@ export default class InvoiceList extends React.Component {
 								placeholder="株式会社 ◯◯◯"
 							/>
 
+							<CommonDatePicker
+								controlLabel="支払日"
+								name="invoice.payment_date"
+							/>
+
 							<CommonRadioBtn
-								controlLabel="発行ステータス"
-								name="invoice.issue_status"
+								controlLabel="入金ステータス"
+								name="invoice.deposit_status"
 								data={[{
-									label: '発行',
+									label: '未入金',
 									value: '0',
 								}, {
-									label: '20日締',
+									label: '入金済',
 									value: '1',
 								}]}
 							/>
-
+							
 							<CommonRadioBtn
 								controlLabel="発行ステータス"
 								name="issue.status"
@@ -239,9 +261,11 @@ export default class InvoiceList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
+								field: 'invoice.payment_date', title: '支払日', width: '200px'
 							}, {
 								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
+							}, {
+								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {
 								field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}							
 							}]}
@@ -251,7 +275,7 @@ export default class InvoiceList extends React.Component {
 								value={this.state.searchYearMonth}
 								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
 								table
-								onChange={(data) => this.doSearch('invoice.invoice_yearmonth=*' +data.value + '*')}
+								onChange={(data) => this.changeSearchYearmonth(data)}
 							/>
 
 						</CommonTable>
