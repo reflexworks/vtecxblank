@@ -91,7 +91,7 @@ const getTaxTotal = (_allItem) =>{
 }
 
 //請求先の請求締日が月末なら請求年月の月末を返す。20日なら請求年月の20日を返す
-const getBillingClosingDate = (shipping_yearmonth,billing_closing_date,) => {
+const getBillingClosingDate = (shipping_yearmonth,billing_closing_date) => {
 	//20日
 	const twentyMonthDate = new Date(shipping_yearmonth.slice(0, 4) + '-' + shipping_yearmonth.slice(-2) + '-20')
 	//月末
@@ -462,7 +462,8 @@ const invoicePage = (_customerEntry,_invoiceEntry) => {
 
 	_invoiceEntry.invoice.invoice_yearmonth
 
-	const invoice_1 = (
+
+	const invoice_1  = (
 		<div className="_page" id="_page-1" style={pdfstyles._page}>
 		
 			<table cols="9" style={pdfstyles.widths}>
@@ -611,6 +612,7 @@ let pageData = {
 //無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
 const element = () => {
 	const invoice_entry = getInvoice()
+	//締日用
 	const billto_data = vtecxapi.getEntry('/billto/' + invoice_entry.billto.billto_code)
 	invoice_entry.billto = billto_data.feed.entry[0].billto
 
@@ -659,7 +661,6 @@ const file_name = () => {
 	}
 }
 
-vtecxapi.log('html='+html)
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
 
