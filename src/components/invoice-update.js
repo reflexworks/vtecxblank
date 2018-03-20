@@ -100,26 +100,37 @@ export default class InvoiceUpdate extends React.Component {
 
 	changeYearmonth(data) {
 		this.workingYearmonth = data
-		this.forceUpdate()
 	}
 	changeCustomerCode(data) {
 		this.customer = data
-		this.forceUpdate()
 	}
 
-	doPrint(_isPreview) {
-		const print = () => {
-			let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
-			url = _isPreview ? url + '&preview' : url
-			location.href = url
-		}
-		if (_isPreview) {
-			if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
-				print()
+	doPrint(_isPreview,_allPreview) {
+		if (this.workingYearmonth) {
+			let print
+			if (!_allPreview) {
+				print = () => {
+					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
+					url = _isPreview ? url + '&preview' : url
+					location.href = url
+				}
+			}else {
+				print = () => {
+					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth
+					url = _isPreview ? url + '&preview' : url
+					location.href = url
+				}	
 			}
+			if (_isPreview) {
+				if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
+					print()
+				}
+			} else {
+				print()
+			}	
 		} else {
-			print()
-		}
+			alert('庫内作業年月が選択されていません。')
+		}	
 	}
 
 	doPrintSummary(_isPreview) {
@@ -137,8 +148,8 @@ export default class InvoiceUpdate extends React.Component {
 			<CommonBackBtn key={0} NavItem href={this.backUrl} />,
 			<CommonUpdateBtn key={1} NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />,
 			<CommonDeleteBtn key={2} NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />,
-			<CommonGeneralBtn key={3} NavItem onClick={()=>this.doPrint(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求書)</span>} />,
-			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrintSummary(true)} label={<span><Glyphicon glyph="print" /> プレビュー(請求明細簡易版)</span>} />
+			<CommonGeneralBtn key={3} NavItem onClick={()=>this.doPrint(true,false)} label={<span><Glyphicon glyph="print" /> プレビュー 請求書(顧客毎)</span>} />,
+			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrint(true,true)} label={<span><Glyphicon glyph="print" /> プレビュー 請求書(請求先毎)</span>} />
 		]
 
 		return (

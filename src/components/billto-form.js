@@ -14,17 +14,14 @@ import type {
 import {
 	CommonInputText,
 	CommonPrefecture,
-	CommonDatePicker,
 	CommonRadioBtn,
 } from './common'
 
-import moment from 'moment'
 export default class BilltoForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
-
 		this.entry = this.props.entry
 		this.entry.billto = this.entry.billto || {}
 		this.entry.contact_information = this.entry.contact_information || {}
@@ -38,8 +35,6 @@ export default class BilltoForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		this.entry.billto.payment_date = this.entry.billto.payment_date ? moment(Date.parse(this.entry.billto.payment_date)) : moment()
-		console.log(this.entry)
 		this.forceUpdate()
 	}
 
@@ -106,41 +101,6 @@ export default class BilltoForm extends React.Component {
 								value: '1',
 							}]}
 							onChange={(data) => this.changeBillto(data,'billing_closing_date')}
-						/>
-
-						<CommonDatePicker
-							controlLabel="支払日"
-							name="billto.payment_date"
-							selected={this.entry.billto.payment_date}
-							onChange={(data) => this.changeBillto(data,'payment_date')}
-						/>
-
-						<CommonRadioBtn
-							controlLabel='日本郵政/請求明細表示'	
-							name="billto.post_has_sizeweight"
-							checked={this.entry.billto.post_has_sizeweight}
-							data={[{
-								label: 'サイズ・重量を区別する',
-								value: '0',
-							}, {
-								label: '区別しない',
-								value: '1',
-							}]}
-							onChange={(data) => this.changeBillto(data,'post_has_sizeweight')}
-						/>
-
-						<CommonRadioBtn
-							controlLabel="ヤマト/請求明細表示"	
-							name="billto.yamato_has_details"
-							checked={this.entry.billto.yamato_has_details}
-							data={[{
-								label: '簡易',
-								value: '0',
-							}, {
-								label: '詳細',
-								value: '1',
-							}]}
-							onChange={(data) => this.changeBillto(data,'yamato_has_details')}
 						/>
 
 						<CommonInputText
