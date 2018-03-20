@@ -22,10 +22,10 @@ export class CustomerShipperModal extends React.Component {
 			type: this.props.type
 		}
 		this.shipmentClassList=[{
-			label: '集荷',
+			label: '出荷',
 			value: '0'
 		}, {	
-			label: '出荷',
+			label: '集荷',
 			value: '1'
 		}]
 		
@@ -125,7 +125,6 @@ export class CustomerShipperModal extends React.Component {
 	render() {
 
 		return (
-
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
