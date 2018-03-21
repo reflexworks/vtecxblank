@@ -222,21 +222,21 @@ gulp.task('upload:entry', function (done) {
 
 gulp.task('upload:data', function (done) {
 	recursive('data', [], function (err, files) {
-		files.map((file) => sendfile(file, ''))				
+		files.map((file) => sendfile(file, '?_bulk'))				
 		done()
 	})
 })
 
 gulp.task('upload:htmlfolders', function (done) {
-	sendfile('setup/_settings/htmlfolders.xml', '',done)
+	sendfile('setup/_settings/htmlfolders.xml', '?_bulk',done)
 })
 
 gulp.task('upload:template', function (done) {
-	sendfile('setup/_settings/template.xml','',done)
+	sendfile('setup/_settings/template.xml','?_bulk',done)
 })
 
 gulp.task('upload:folderacls', function (done) {
-	sendfile('setup/_settings/folderacls.xml', '',done)
+	sendfile('setup/_settings/folderacls.xml', '?_bulk',done)
 })
 
 gulp.task('upload:counts', function (done) {
