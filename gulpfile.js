@@ -23,6 +23,7 @@ env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
+		mode: devtool ? "development" : "production",
 		output: {
 			filename: filename
 		},
@@ -53,11 +54,7 @@ function webpackconfig(filename,externals,devtool) {
 				{
 					test: /\.js$/,
 					exclude: /(node_modules)/,
-					loader: 'eslint-loader',
-					options: {
-						fix: true,
-						failOnError: true,
-					}
+					use: { loader: 'eslint-loader', options: { emitWarning: true,fix:true,failOnError: true } }
 				}                      
 			]
 		},
@@ -69,8 +66,11 @@ function webpackconfig(filename,externals,devtool) {
 			'axios': 'axios'
 		} : {
 		},
-		plugins: devtool ? [] : [
-			new BabiliPlugin()
+		plugins: devtool ? [
+			new webpack.LoaderOptionsPlugin({ options: {} })			
+		] : [
+			new BabiliPlugin(),
+			new webpack.LoaderOptionsPlugin({ options: {} })
 		]
 		,devtool: devtool ? 'source-map' : ''
 	}
