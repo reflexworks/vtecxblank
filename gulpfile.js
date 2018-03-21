@@ -16,6 +16,10 @@ const tap = require('gulp-tap')
 const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
 const request = require('request')
+const mocha = require('gulp-mocha')
+const env = require('node-env-file')
+
+env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
@@ -253,6 +257,15 @@ gulp.task('upload:counts', function (done) {
 	})
 })
 
+gulp.task('test', function () {
+	let target = 'test/*.test.js'
+	if (argv.f) {
+		target = 'test/'+argv.f+'.test.js'
+	}
+	return gulp.src([target], { read: false })
+		.pipe(mocha({ reporter: 'list',require: 'babel-register',timeout:'60000'}))
+		.on('error', gutil.log)
+})
 
 function sendcontent(file) {
 	sendfile(file,'?_content',false,false)
