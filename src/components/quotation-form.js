@@ -2,45 +2,60 @@
 import React from 'react'
 import axios from 'axios'
 import {
-	PageHeader,
 	Form,
 	Tabs,
 	Tab,
-//	Glyphicon
+	Glyphicon,
+	Button,
+	FormGroup,
 } from 'react-bootstrap'
 import type {
 	Props
 } from 'demo3.types'
 
 import {
+	BillfromAddModal,
+	BillfromEditModal,
+} from './billfrom-modal'
+
+import {
 	CommonInputText,
-	CommonTable
+	CommonTable,
+	CommonFilterBox,
+	CommonPrefecture,
 } from './common'
 
 import {
 	DeliveryChargeModal,
 	BasicConditionModal,
-	ManifestoModal,
+	PackingItemModal,
 } from './quotation-modal'
 
 export default class QuotationForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			showBillfromAddModal: false,
+			showBillfromEditModal: false,
+		}
 
 		this.entry = this.props.entry
 		this.entry.quotation = this.entry.quotation || {}
-		this.entry.quotation.basic_condition = this.entry.quotation.basic_condition || []
-		this.entry.quotation.manifesto = this.entry.quotation.manifesto || []
+		this.entry.basic_condition = this.entry.basic_condition || []
+		this.entry.packing_items = this.entry.packing_items || []
 		this.entry.billto = this.entry.billto || {}
 		this.entry.item_details = this.entry.item_details || []
 		this.entry.remarks = this.entry.remarks || []
-
+		this.entry.billfrom = this.entry.billfrom || {}
+		this.entry.billfrom.payee = this.entry.billfrom.payee || []
+		this.entry.contact_information = this.entry.contact_information || {}
 		this.selectItemDetails = null
 
 		this.master = {
-			typeList: []
+			typeList: [],
+			packingItemTemplateList: [],
+			billfromList: [],
 		}
 		this.originTypeList = [[],[],[],[],[]]
 		this.typeList = [[], [], [], [], []]
@@ -50,7 +65,7 @@ export default class QuotationForm extends React.Component {
 			basic_condition: { data: {} },
 			item_details: { data: {} },
 			remarks: { data: {} },
-			manifesto: { data: {} }
+			packing_items: { data: {} }
 		}
 
 	}
@@ -62,16 +77,184 @@ export default class QuotationForm extends React.Component {
 	componentWillReceiveProps(newProps) {
 
 		this.entry = newProps.entry
+		if (this.entry.quotation.status === '0') {
+			this.status = '未発行'
+			this.isDisabled = false
+		} else if (this.entry.quotation.status === '1'){
+			this.status = '発行済'
+			this.isDisabled = true
+		}
 
+		// 前の枝番情報
+		this.befor = newProps.befor
+		if (this.befor) {
+			this.setBeforQuotation()
+		}
+		
+		this.setBillfromMasterData()
 	}
 
 	/**
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
-
 		this.setTypeaheadMasterData()
+		this.setPackingItemTemplateData()
+	}
 
+	/**
+	 * 前の枝番情報は変更・削除できない処理
+	 * 基本条件と備考は庫内作業に影響がないため変更できるものとする
+	 */
+	setBeforQuotation() {
+		if (this.befor.item_details) {
+			const cash_item_details = {}
+			this.befor.item_details.map((_obj) => {
+				const key = _obj.item_name + _obj.unit_name
+				cash_item_details[key] = true
+			})
+			this.entry.item_details = this.entry.item_details.map((_obj) => {
+				const key = _obj.item_name + _obj.unit_name
+				if (cash_item_details[key]) {
+					_obj.item_name = <div className="__is_readonly">{_obj.item_name}</div>
+					_obj.unit_name = <div className="__is_readonly">{_obj.unit_name}</div>
+					_obj.is_remove = false
+				}
+				return _obj
+			})
+		}
+		if (this.befor.packing_items) {
+			const cash_packing_items = {}
+			this.befor.packing_items.map((_obj) => {
+				cash_packing_items[_obj.item_code] = true
+			})
+			this.entry.packing_items = this.entry.packing_items.map((_obj) => {
+				if (cash_packing_items[_obj.item_code]) {
+					_obj.is_remove = false
+				}
+				return _obj
+			})
+		}
+	}
+
+	/**
+	 *  請求元リストを作成する
+	 */
+	setBillfromMasterData(_billfrom) {
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/billfrom?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+			if (response.status !== 204) {
+
+				this.master.billfromList = response.data.feed.entry
+				this.billfromList = this.master.billfromList.map((obj) => {
+					return {
+						label: obj.billfrom.billfrom_name,
+						value: obj.billfrom.billfrom_code,
+						data: obj
+					}
+				})
+
+				//全てのbillfrom.payeeを見て、支店名と口座名義が無かったら登録や更新は行わずに追加。
+				this.billfromList.map((billfromList) => {
+					if (billfromList.data.billfrom.payee) {
+						billfromList.data.billfrom.payee = billfromList.data.billfrom.payee.map((oldPayee) => {
+							if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {
+								let newPayee = {
+									'bank_info': oldPayee.bank_info,
+									'account_type': oldPayee.account_type,
+									'account_number': oldPayee.account_number,
+									'branch_office': '',
+									'account_name': '',
+								}
+								return (newPayee)
+							} else {
+								return (oldPayee)
+							}
+						})
+					}	
+				})
+				
+				if (_billfrom) this.entry.billfrom = _billfrom
+				if (this.entry.billfrom.billfrom_code) {
+					for (let i = 0, ii = this.billfromList.length; i < ii; ++i) {
+						if (this.entry.billfrom.billfrom_code === this.billfromList[i].value) {
+							this.billfrom = this.billfromList[i].data
+							this.entry.billfrom = this.billfrom.billfrom
+							this.entry.contact_information = this.billfrom.contact_information							
+							break
+						}
+					}
+				}
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
+	}
+	/**
+	 * 請求元リストの変更
+	 */
+	changeBillfrom(_data) {
+		if (_data) {
+			this.entry.billfrom = _data.data.billfrom
+			this.entry.contact_information = _data.data.contact_information
+			this.billfrom = _data.data
+		} else {
+			this.entry.billfrom = {}
+			this.entry.contact_information = {}
+			this.billfrom = {}
+		}
+		this.forceUpdate()
+	}
+	setBillfromData(_data, _modal) {
+		this.setBillfromMasterData(_data.feed.entry[0].billfrom)
+		if (_modal === 'add') {
+			this.setState({ showBillfromAddModal: false })
+		} else {
+			this.setState({ showBillfromEditModal: false })
+		}
+	}
+
+	/**
+	 * 資材テンプレート取得処理
+	 */
+	setPackingItemTemplateData() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/d/packing_item_template?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+
+				this.master.packingItemTemplateList = response.data.feed.entry
+				this.packingItemTemplateList = this.master.packingItemTemplateList.map((obj) => {
+					return {
+						label: obj.title,
+						value: obj.title,
+						data: obj
+					}
+				})
+
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})   
 	}
 
 	/**
@@ -112,29 +295,31 @@ export default class QuotationForm extends React.Component {
 	}
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
-		if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
-			this.originTypeList[_celIndex].push(_data)
-			const feed = {
-				feed: {
-					entry: [{
-						type_ahead: {
-							type: '' + _celIndex,
-							value: _data.value
-						}
-					}]
+		if (_celIndex !== 3) {
+			if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
+				this.originTypeList[_celIndex].push(_data)
+				const feed = {
+					feed: {
+						entry: [{
+							type_ahead: {
+								type: '' + _celIndex,
+								value: _data.value
+							}
+						}]
+					}
 				}
+				axios({
+					url: '/d/type_ahead',
+					method: 'post',
+					data: feed,
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+				}).catch((error) => {
+					this.setState({ isDisabled: false, isError: error })
+				})
 			}
-			axios({
-				url: '/d/type_ahead',
-				method: 'post',
-				data: feed,
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
 		}
 
 		let itemName
@@ -143,13 +328,84 @@ export default class QuotationForm extends React.Component {
 		if (_celIndex === 2) itemName = 'unit'
 		if (_celIndex === 3) itemName = 'unit_price'
 		if (_celIndex === 4) itemName = 'remarks'
-		if (itemName) this.entry.item_details[_rowindex][itemName] = _data.value
+		if (itemName) {
+			if (itemName === 'item_name' || itemName === 'unit_name' || itemName === 'unit') {
+
+				// 明細項目の項目名と単位名称が一致しているものは登録させない処理
+				const target = this.entry.item_details[_rowindex]
+				const item_name = itemName === 'item_name' ? _data.value : target.item_name
+				const unit_name = itemName === 'unit_name' ? _data.value : target.unit_name
+				const unit = itemName === 'unit' ? _data.value : target.unit
+				if (item_name && unit_name && unit) {
+					const check = () => {
+						const getValue = (_value) => {
+							if (Object.prototype.toString.call(_value) === '[object Object]') {
+								if (_value['$$typeof']) {
+									return _value.props.children
+								} else {
+									return _value
+								}
+							}
+							return _value
+						}
+						let flg = true
+						this.entry.item_details.map((_obj) => {
+							if (_obj.item_name && _obj.unit_name && _obj.unit) {
+								const _item_name = getValue(_obj.item_name)
+								const _unit_name = getValue(_obj.unit_name)
+								const _unit = getValue(_obj.unit)
+								if (item_name + unit_name + unit === _item_name + _unit_name + _unit) {
+									flg = false
+								}
+							}
+						})
+						return  flg
+					}
+					if (check()) {
+						this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+					} else {
+						this.entry.item_details[_rowindex][itemName] = null
+					}
+				} else {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+				}
+			} else {
+				if (_celIndex === 3) {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data : null
+				} else {
+					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+				}
+			}
+		}
 		this.forceUpdate()
 	}
 
 	changeRemarks(_data, _rowindex) {
 		this.entry.remarks[_rowindex].content = _data.value
 		this.forceUpdate()
+	}
+
+	getPackingItemList(input) {
+		return axios({
+			url: `/d/packing_item?f&packing_item.item_code=*${input}*`,
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			if (response.status !== 204) {
+				const optionsList = response.data.feed.entry.map((_obj) => {
+					return {
+						label: _obj.packing_item.item_code,
+						value: _obj.packing_item.item_code,
+						data: _obj
+					}
+				})
+				return { options: optionsList }
+			}
+
+		})
 	}
 
 	showAddModal(_key) {
@@ -171,34 +427,42 @@ export default class QuotationForm extends React.Component {
 	}
 	removeList(_key, _index) {
 		let array = []
-		const oldEntry = _key === 'basic_condition' || _key === 'manifesto' ? this.entry.quotation[_key] : this.entry[_key]
+		const oldEntry = this.entry[_key]
 		for (let i = 0, ii = oldEntry.length; i < ii; ++i) {
 			if (i !== _index) array.push(oldEntry[i])
 		}
-		if (_key === 'basic_condition' || _key === 'manifesto') {
-			this.entry.quotation[_key] = array
-		} else {
-			this.entry[_key] = array
-		}
+		this.entry[_key] = array
 		this.forceUpdate()
 	}
 	addList(_key, _data) {
-		if (_key === 'basic_condition' || _key === 'manifesto') {
-			this.entry.quotation[_key].push(_data)
-		} else {
-			this.entry[_key].push(_data)
-		}
+		this.entry[_key].push(_data)
 		this.modal[_key].visible = false
 		this.forceUpdate()
 	}
 	updateList(_key, _data) {
-		if (_key === 'basic_condition' || _key === 'manifesto') {
-			this.entry.quotation[_key][this.modal[_key].index] = _data
-		} else {
-			this.entry[_key][this.modal[_key].index] = _data
+		this.entry[_key][this.modal[_key].index] = _data
+		this.modal[_key].visible = false
+		this.forceUpdate()
+	}
+	selectList(_key, _data) {
+		for (let i = 0, ii = _data.length; i < ii; ++i) {
+			this.entry[_key].push(_data[i].packing_item)
 		}
 		this.modal[_key].visible = false
 		this.forceUpdate()
+	}
+
+	changePackingItem(_key, _data, _rowindex) {
+		this.entry.packing_items[_rowindex][_key] = _data
+	}
+	changePackingItemTemplate(_data) {
+		this.packingItemTemplate = _data ? _data.value : null
+		if (_data) {
+			if (confirm('設定した資材が破棄されます。よろしいでしょうか？')) {
+				this.entry.packing_items = _data.data.packing_items
+				this.forceUpdate()
+			}
+		}
 	}
 
 	render() {
@@ -210,11 +474,12 @@ export default class QuotationForm extends React.Component {
 
 					<CommonInputText
 						controlLabel="見積書コード"
-						name="quotation.quotation_code"
+						name=""
 						type="text"
-						value={this.entry.quotation.quotation_code}
+						value={this.entry.quotation.quotation_code + ' - ' +this.entry.quotation.quotation_code_sub}
 						readonly
 					/>
+
 					<CommonInputText
 						controlLabel="見積月"
 						name="quotation.quotation_date"
@@ -223,10 +488,24 @@ export default class QuotationForm extends React.Component {
 						readonly
 					/>
 					<CommonInputText
+						controlLabel="発行ステータス"
+						name="quotation.status"
+						type="text"
+						value={this.status}
+						readonly
+					/>
+					<CommonInputText
 						controlLabel="請求先名"
 						name="billto.billto_name"
 						type="text"
 						value={this.entry.billto.billto_name}
+						readonly
+					/>
+					<CommonInputText
+						controlLabel="作成者"
+						name="creator"
+						type="text"
+						value={this.entry.creator}
 						readonly
 					/>
 				</Form>
@@ -239,6 +518,12 @@ export default class QuotationForm extends React.Component {
 							name="quotation.quotation_code"
 							type="text"
 							value={this.entry.quotation.quotation_code}
+						/>
+						<CommonInputText
+							controlLabel="枝番"
+							name="quotation.quotation_code_sub"
+							type="text"
+							value={this.entry.quotation.quotation_code_sub}
 						/>
 						<CommonInputText
 							controlLabel="見積月"
@@ -260,6 +545,13 @@ export default class QuotationForm extends React.Component {
 							value={this.entry.billto.billto_name}
 							readonly
 						/>
+						<CommonInputText
+							controlLabel="発行ステータス"
+							name="quotation.status"
+							type="text"
+							value={this.entry.quotation.status}
+							readonly
+						/>
 					</div>
 
 					<DeliveryChargeModal isShow={this.state.showDeliveryChargeModal} close={() => this.setState({ showDeliveryChargeModal: false })} />
@@ -271,13 +563,13 @@ export default class QuotationForm extends React.Component {
 						data={this.modal.basic_condition.data}
 						type={this.modal.basic_condition.type}
 					/>
-					<ManifestoModal
-						isShow={this.modal.manifesto.visible}
-						close={() => this.closeModal('manifesto')}
-						add={(obj) => this.addList('manifesto', obj)}
-						edit={(obj) => this.updateList('manifesto', obj)}
-						data={this.modal.manifesto.data}
-						type={this.modal.manifesto.type}
+					<PackingItemModal
+						isShow={this.modal.packing_items.visible}
+						close={() => this.closeModal('packing_items')}
+						add={(obj) => this.addList('packing_items', obj)}
+						select={(obj) => this.selectList('packing_items', obj)}
+						data={this.modal.packing_items.data}
+						type={this.modal.packing_items.type}
 					/>
 						
 					<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
@@ -288,56 +580,62 @@ export default class QuotationForm extends React.Component {
 								name="item_details"
 								data={this.entry.item_details}
 								header={[{
-									field: 'item_name', title: '項目', width: '100px',
-									filter: {
+									field: 'item_name', title: '項目', width: '250px',
+									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 0, rowindex)}
 									}
 								}, {
-									field: 'unit_name',title: '単位名称', width: '50px',
-									filter: {
+									field: 'unit_name',title: '単位名称', width: '250px',
+									filter: this.isDisabled ? false : {
 										options: this.typeList[1],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)}
 									}
 								}, {
-									field: 'unit',title: '単位', width: '50px',
-									filter: {
+									field: 'unit',title: '単位', width: '100px',
+									filter: this.isDisabled ? false : {
 										options: this.typeList[2],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)}
 									}
 								}, {
-									field: 'unit_price',title: '単価', width: '100px',
-									filter: {
-										options: this.typeList[3],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 3, rowindex)}
+									field: 'unit_price',title: '単価', width: '100px',
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex) => { this.changeTypeahead(data, 3, rowindex) },
+										price: true
 									}
 								}, {
-									field: 'remarks',title: '備考', width: '500px',
-									filter: {
+									field: 'remarks',title: '備考', width: '200px',
+									filter: this.isDisabled ? false : {
 										options: this.typeList[4],
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)}
 									}
 								}]}
-								add={() => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
-								remove={(data, index) => this.removeList('item_details', index)}
-								noneScroll
-							/>
+								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('item_details', index)}
+								fixed
+							>
+								{ !this.isDisabled && 
+									<div style={{float: 'left','font-size': '12px', padding: '7px 10px 0px 20px'}}>
+										単位名称に「月」を含めれば月次事項、「期」を含めれば期次事項となります。
+									</div>
+								}
+							</CommonTable>	
 
 						</Tab>
 
 						<Tab eventKey={2} title="基本条件">
 
 							<CommonTable
-								name="quotation.basic_condition"
-								data={this.entry.quotation.basic_condition}
+								name="basic_condition"
+								data={this.entry.basic_condition}
 								header={[{
-									field: 'title',title: '条件名', width: '300px'
+									field: 'title',title: '条件名', width: '300px'
 								}, {
 									field: 'condition', title: '条件内容', width: '800px'
 								}]}
-								edit={(data, index) => this.showEditModal('basic_condition', data, index)}
-								add={() => this.showAddModal('basic_condition')}
-								remove={(data, index) => this.removeList('basic_condition', index)}
+								edit={this.isDisabled ? false : (data, index) => this.showEditModal('basic_condition', data, index)}
+								add={this.isDisabled ? false : () => this.showAddModal('basic_condition')}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('basic_condition', index)}
 							/>
 
 						</Tab>
@@ -349,27 +647,60 @@ export default class QuotationForm extends React.Component {
 								data={this.entry.remarks}
 								header={[{
 									field: 'content', title: '備考', 
-									input: {
+									input: this.isDisabled ? false : {
 										onChange: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
 									}
 								}]}
-								add={() => this.addList('remarks', { content: ''})}
-								remove={(data, index) => this.removeList('remarks', index)}
-								noneScroll
+								add={this.isDisabled ? false : () => this.addList('remarks', { content: ''})}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('remarks', index)}
+								fixed
 							/>
 
 						</Tab>
 
 						<Tab eventKey={4} title="梱包資材">
+							
 							<CommonTable
-								name="quotation.manifesto"
-								data={this.entry.quotation.manifesto}
+								name="packing_items"
+								data={this.entry.packing_items}
 								header={[{
-									field: 'manifesto_code',title: '品番', width: '100px'
+									field: 'item_code',title: '品番', width: '100px'
 								}, {
-									field: 'manifesto_name', title: '商品名称', width: '200px'
+									field: 'regular_price', title: '通常販売価格', width: '100px',
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex) => { this.changePackingItem('regular_price', data, rowindex) },
+										price: true
+									}
+								}, {
+									field: 'regular_unit_price', title: '通常販売価格・単価', width: '120px',
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex)=>{this.changePackingItem('regular_unit_price', data, rowindex)},
+										price: true
+									}
+								}, {
+									field: 'special_price', title: '特別販売価格', width: '100px',
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex)=>{this.changePackingItem('special_price', data, rowindex)},
+										price: true
+									}
+								}, {
+									field: 'special_unit_price', title: '特別販売価格・単価', width: '120px',
+									input: this.isDisabled ? false : {
+										onChange: (data, rowindex)=>{this.changePackingItem('special_unit_price', data, rowindex)},
+										price: true
+									}
+								}, {
+									field: 'item_name', title: '商品名称', width: '200px'
 								}, {
 									field: 'material', title: '材質', width: '200px'
+								}, {
+									field: 'category', title: 'カテゴリ', width: '200px'
+								}, {
+									field: 'size1', title: 'サイズ１', width: '200px'
+								}, {
+									field: 'size2', title: 'サイズ２', width: '200px'
+								}, {
+									field: 'notices', title: '特記', width: '200px'
 								}, {
 									field: 'thickness', title: '厚み', width: '70px'
 								}, {
@@ -384,213 +715,191 @@ export default class QuotationForm extends React.Component {
 									field: 'outer_depth', title: '外寸奥行', width: '70px'
 								}, {
 									field: 'outer_height', title: '外寸高さ', width: '70px'
+								}, {
+									field: 'outer_total', title: '三辺合計', width: '70px'
 								}, {	
-									field: 'regular_price', title: '通常販売価格', width: '150px'
-								}, {
-									field: 'regular_unit_price', title: '通常販売価格・単価', width: '150px'
-								}, {
-									field: 'special_price', title: '特別販売価格', width: '150px'
-								}, {
-									field: 'special_unit_price', title: '特別販売価格・単価', width: '150px'
+									field: 'purchase_price', title: '仕入れ単価', width: '150px'
 								}]}
-								edit={(data, index) => this.showEditModal('manifesto', data, index)}
-								add={() => this.showAddModal('manifesto')}
-								remove={(data, index) => this.removeList('manifesto', index)}
-							/>
+								add={this.isDisabled ? false : () => this.showAddModal('packing_items')}
+								remove={this.isDisabled ? false : (data, index) => this.removeList('packing_items', index)}
+							>
+								{!this.isDisabled && 
+									<div>
+										<CommonFilterBox
+											placeholder="品番から追加"
+											name=""
+											value={this.selectPackingItem}
+											onChange={(data) => this.addList('packing_items', data.data.packing_item)}
+											style={{float: 'left', width: '200px'}}
+											table
+											async={(input)=>this.getPackingItemList(input)}
+										/>
+
+										<Button style={{float: 'left'}} bsSize="sm" onClick={() => this.showEditModal('packing_items')}><Glyphicon glyph="search" /></Button>
+
+										<CommonFilterBox
+											placeholder="テンプレート選択"
+											name=""
+											value={this.packingItemTemplate}
+											options={this.packingItemTemplateList}
+											onChange={(data) => this.changePackingItemTemplate(data)}
+											style={{float: 'right', width: '200px'}}
+											table
+										/>
+									</div>
+								}
+							</CommonTable>
 						</Tab>
 
-						<Tab eventKey={5} title="庫内作業状況">
-							<PageHeader>見積項目作業一覧</PageHeader>
-							<CommonTable
-								name=""
-								data={this.entry.internal_work}
-								header={[{
-									field: 'staff_name',title: '担当者', width: '100px'
-								}, {
-									field: 'working_date', title: '作業日', width: '200px'
-								}, {
-									field: 'approval_status', title: '承認ステータス', width: '200px'
-								}, {
-									field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
-								}, {
-									field: 'custody_fee', title: '保管費', width: '150px'
-								}, {
-									field: 'additional1_palette', title: '追加１パレット', width: '200px'
-								}, {
-									field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
-								}, {
-									field: 'deletion_palette', title: '削除パレット', width: '150px'
-								}, {
-									field: 'received', title: '入荷', width: '200px'
-								}, {
-									field: 'received_normal', title: '入荷（通常）', width: '200px'
-								}, {
-									field: 'returns', title: '返品処理', width: '200px'
-								}, {
-									field: 'received_others', title: '入荷（その他）', width: '200px'
-								}, {
-									field: 'packing_normal', title: '発送（通常）', width: '200px'
-								}, {
-									field: 'packing_others', title: '発送（その他）', width: '200px'
-								}, {
-									field: 'packing', title: '梱包数', width: '200px'	
-								}, {
-									field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
-								}, {
-									field: 'seino', title: '西濃運輸', width: '200px'
-								}, {
-									field: 'cash_on_arrival', title: '着払い発送', width: '200px'
-								}, {
-									field: 'work_others', title: '作業・その他', width: '200px'
-								}, {
-									field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
-								}, {
-									field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
-								}, {
-									field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
-								}, {
-									field: 'cardboard100', title: '段ボール（１００）', width: '200px'
-								}, {
-									field: 'cardboard80', title: '段ボール（８０）', width: '200px'
-								}, {
-									field: 'cardboard60', title: '段ボール（６０）', width: '200px'
-								}, {
-									field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
-								}, {
-									field: 'buffer_material', title: '緩衝材', width: '200px'
-								}, {
-									field: 'bubble_wrap', title: 'エアプチ', width: '200px'
-								}]}
-							/>
+						<Tab eventKey={5} title="請求元"> 
+						
+							{/*
+							画面に表示
+							 名前
+							 郵便番号
+							 住所（都道府県 + 市区郡町村 + 番地）表示用
+							 電話番号
+							 口座情報
+							
+							画面に非表示
+							 FAX
+							 メールアドレス
+							 都道府県
+							 市区郡町村
+							 番地
+							*/}
 
-							<PageHeader>発送作業一覧</PageHeader>
-							<CommonTable
-								name=""
-								data={this.entry.internal_work}
-								header={[{
-									field: 'staff_name',title: '担当者', width: '100px'
-								}, {
-									field: 'working_date', title: '作業日', width: '200px'
-								}, {
-									field: 'approval_status', title: '承認ステータス', width: '200px'
-								}, {
-									field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
-								}, {
-									field: 'custody_fee', title: '保管費', width: '150px'
-								}, {
-									field: 'additional1_palette', title: '追加１パレット', width: '200px'
-								}, {
-									field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
-								}, {
-									field: 'deletion_palette', title: '削除パレット', width: '150px'
-								}, {
-									field: 'received', title: '入荷', width: '200px'
-								}, {
-									field: 'received_normal', title: '入荷（通常）', width: '200px'
-								}, {
-									field: 'returns', title: '返品処理', width: '200px'
-								}, {
-									field: 'received_others', title: '入荷（その他）', width: '200px'
-								}, {
-									field: 'packing_normal', title: '発送（通常）', width: '200px'
-								}, {
-									field: 'packing_others', title: '発送（その他）', width: '200px'
-								}, {
-									field: 'packing', title: '梱包数', width: '200px'	
-								}, {
-									field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
-								}, {
-									field: 'seino', title: '西濃運輸', width: '200px'
-								}, {
-									field: 'cash_on_arrival', title: '着払い発送', width: '200px'
-								}, {
-									field: 'work_others', title: '作業・その他', width: '200px'
-								}, {
-									field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
-								}, {
-									field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
-								}, {
-									field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
-								}, {
-									field: 'cardboard100', title: '段ボール（１００）', width: '200px'
-								}, {
-									field: 'cardboard80', title: '段ボール（８０）', width: '200px'
-								}, {
-									field: 'cardboard60', title: '段ボール（６０）', width: '200px'
-								}, {
-									field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
-								}, {
-									field: 'buffer_material', title: '緩衝材', width: '200px'
-								}, {
-									field: 'bubble_wrap', title: 'エアプチ', width: '200px'
-								}]}
-							/>
+							{ !this.isDisabled &&
+								<CommonFilterBox
+									controlLabel="請求元選択"
+									name="billfrom.billfrom_code"
+									value={this.entry.billfrom.billfrom_code}
+									options={this.billfromList}
+									add={() => this.setState({ showBillfromAddModal: true })}
+									edit={() => this.setState({ showBillfromEditModal: true })}
+									onChange={(data) => this.changeBillfrom(data)}
+								/>
+							}
+							{(this.isDisabled && !this.entry.billfrom.billfrom_code) &&
+								<div>
+									<CommonInputText
+										controlLabel=" "
+										name=""
+										type="text"
+										value="請求元を指定せずに発行された見積書です。追加発行から請求元を選択してください。"
+										size="lg"
+										readonly
+									/>
+								</div>
+							}
 
-							<PageHeader>資材作業一覧</PageHeader>
-							<CommonTable
-								name=""
-								data={this.entry.internal_work}
-								header={[{
-									field: 'staff_name',title: '担当者', width: '100px'
-								}, {
-									field: 'working_date', title: '作業日', width: '200px'
-								}, {
-									field: 'approval_status', title: '承認ステータス', width: '200px'
-								}, {
-									field: 'mgmt_basic_fee', title: '管理基本料', width: '200px'
-								}, {
-									field: 'custody_fee', title: '保管費', width: '150px'
-								}, {
-									field: 'additional1_palette', title: '追加１パレット', width: '200px'
-								}, {
-									field: 'additional2_steel_shelf', title: '追加２スチール棚', width: '200px'
-								}, {
-									field: 'deletion_palette', title: '削除パレット', width: '150px'
-								}, {
-									field: 'received', title: '入荷', width: '200px'
-								}, {
-									field: 'received_normal', title: '入荷（通常）', width: '200px'
-								}, {
-									field: 'returns', title: '返品処理', width: '200px'
-								}, {
-									field: 'received_others', title: '入荷（その他）', width: '200px'
-								}, {
-									field: 'packing_normal', title: '発送（通常）', width: '200px'
-								}, {
-									field: 'packing_others', title: '発送（その他）', width: '200px'
-								}, {
-									field: 'packing', title: '梱包数', width: '200px'	
-								}, {
-									field: 'yamato60size', title: 'ヤマト運輸６０サイズ迄', width: '200px'
-								}, {
-									field: 'seino', title: '西濃運輸', width: '200px'
-								}, {
-									field: 'cash_on_arrival', title: '着払い発送', width: '200px'
-								}, {
-									field: 'work_others', title: '作業・その他', width: '200px'
-								}, {
-									field: 'cardboard160', title: '段ボール（１６０）', width: '200px'
-								}, {
-									field: 'cardboard140', title: '段ボール（１４０）', width: '200px'
-								}, {
-									field: 'cardboard120', title: '段ボール（１２０）', width: '200px'
-								}, {
-									field: 'cardboard100', title: '段ボール（１００）', width: '200px'
-								}, {
-									field: 'cardboard80', title: '段ボール（８０）', width: '200px'
-								}, {
-									field: 'cardboard60', title: '段ボール（６０）', width: '200px'
-								}, {
-									field: 'corrugated_cardboard', title: '巻段ボール', width: '200px'
-								}, {
-									field: 'buffer_material', title: '緩衝材', width: '200px'
-								}, {
-									field: 'bubble_wrap', title: 'エアプチ', width: '200px'
-								}]}
-							/>
+							{this.entry.billfrom.billfrom_code &&
+								<div>
+									<CommonInputText
+										controlLabel="請求元名"
+										name="billfrom.billfrom_name"
+										type="text"
+										value={this.entry.billfrom.billfrom_name}
+										readonly
+									/>
+									<CommonInputText
+										controlLabel="郵便番号"
+										name="contact_information.zip_code"
+										type="text"
+										placeholder="郵便番号"
+										value={this.entry.contact_information.zip_code}
+										readonly
+									/>
+									<CommonInputText
+										controlLabel="住所"
+										type="text"
+										value={this.entry.contact_information.prefecture + this.entry.contact_information.address1 + this.entry.contact_information.address2}
+										readonly
+									/>
+									<CommonInputText
+										controlLabel="電話番号"
+										name="contact_information.tel"
+										type="text"
+										placeholder="電話番号"
+										value={this.entry.contact_information.tel}
+										readonly
+									/>
+									<CommonTable
+										controlLabel="口座情報"
+										name="billfrom.payee"
+										data={this.entry.billfrom.payee}
+										header={[{
+											field: 'bank_info', title: '銀行名', width: '30px',
+											convert: {
+												1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+												6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
+											}
+										}, {
+											field: 'branch_office', title: '支店名', width: '30px',
+										}, {
+											field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
+										}, {
+											field: 'account_number', title: '口座番号', width: '30px',
+										}, {
+											field: 'account_name', title: '口座名義', width: '30px',
+										}]}
+										noneScroll
+										fixed
+									/>
+								</div>
+							}
+
+
+							{!this.entry.billfrom.billfrom_code &&
+								<FormGroup className="hide"	>
+									<CommonInputText
+										name="billfrom.billfrom_name"
+										type="text"
+										value=""
+										readonly
+									/>
+								</FormGroup>
+							}
+							{this.entry.contact_information.fax &&
+								<FormGroup className="hide"	>
+									<CommonInputText
+										name="contact_information.fax"
+										type="text"
+										value={this.entry.contact_information.fax}
+										readonly
+									/>
+									<CommonInputText
+										name="contact_information.email"
+										type="text"
+										value={this.entry.contact_information.email}
+										readonly
+									/>
+									<CommonPrefecture
+										controlLabel="都道府県"
+										componentClass="select"
+										name="contact_information.prefecture"
+										value={this.entry.contact_information.prefecture}
+									/>
+									<CommonInputText
+										name="contact_information.address1"
+										type="text"
+										value={this.entry.contact_information.address1}
+										readonly
+									/>
+									<CommonInputText
+										name="contact_information.address2"
+										type="text"
+										value={this.entry.contact_information.address2}
+										readonly
+									/>
+								</FormGroup>
+							}
+
 						</Tab>
-
+						
 					</Tabs>
+					<BillfromAddModal isShow={this.state.showBillfromAddModal} close={() => this.setState({ showBillfromAddModal: false })} add={(data) => this.setBillfromData(data, 'add')} />
+					<BillfromEditModal isShow={this.state.showBillfromEditModal} close={() => this.setState({ showBillfromEditModal: false })} edit={(data) => this.setBillfromData(data, 'edit')} data={this.billfrom} />
 				</Form>
 			</div>
 		)

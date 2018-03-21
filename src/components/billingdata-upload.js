@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import {
-	CommonFilterBox,
+
 } from './common'
 
 type InputEvent = {
@@ -24,85 +24,66 @@ type InputEvent = {
 export default class BillingDataUpload extends React.Component {  
 	constructor() {
 		super()
-		this.state = {}
-		this.entry = {
-			customer: {}
-		}
-		this.master = {
-			customerList: []
-		}
-		this.customerList = []
-		this.exList = []
 	}
  
-	/**
-	 * 画面描画の前処理
-	 */
-	componentWillMount() {
+	handleSubmitYmt(e: InputEvent) {
+		e.preventDefault()
 
-		this.setCustomerMasterData()
+		const formData = new FormData(e.currentTarget)
+		if (confirm('アップロードを実行します。よろしいですか？')) {
+			axios({
+				url: '/s/put-billing-ymt',
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data : formData
 
-	}
-
-	setCustomerMasterData() {
-
-		this.setState({ isDisabled: true })
-
-		axios({
-			url: '/d/customer?f',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-	
-			if (response.status !== 204) {
-
-				this.master.customerList = response.data.feed.entry
-				this.customerList = this.master.customerList.map((obj) => {
-					return {
-						label: obj.customer.customer_name,
-						value: obj.customer.customer_code,
-						data: obj
+			}).then(() => {
+				alert('アップロードに成功しました')
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('undefined')>=0) {
+						alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
+					} else {
+						alert(error.response.data.feed.title)				
 					}
-				})
-
-				this.forceUpdate()
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})
+				} else {
+					alert('アップロードに失敗しました')
+				}
+			})
+		}
+	
 	}
 
-	handleSubmit(e: InputEvent) {
+	handleSubmitEco(e: InputEvent) {
 		e.preventDefault()
 
 		const formData = new FormData(e.currentTarget)
 
-		// 画像は、/d/registration/{key} としてサーバに保存されます
-		axios({
-			url: '/s/getcsv',
-			method: 'post',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			data : formData
+		if (confirm('アップロードを実行します。よろしいですか？')) {
+			axios({
+				url: '/s/put-billing-eco',
+				method: 'post',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				},
+				data: formData
 
-		}).then(() => {
-			alert('success')
-		}).catch((error) => {
-			if (error.response) {
-				alert('error='+JSON.stringify(error.response))
-			} else {
-				alert('error')
-			}
-		})
-
-	}
-
-	changed() {
-		
+			}).then(() => {
+				alert('アップロードに成功しました')
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.data.feed.title.indexOf('undefined') >= 0) {
+						alert('CSVデータが正しくありません。:' + error.response.data.feed.title)
+					} else {
+						alert(error.response.data.feed.title)
+					}
+				} else {
+					alert('アップロードに失敗しました')
+				}
+			})
+		}
 	}
 
 	render() {
@@ -119,26 +100,14 @@ export default class BillingDataUpload extends React.Component {
 							<thead>
 								<tr>
 									<th width="100px">配送業者</th>
-									<th width="70px">種類</th>
-									<th width="200px">顧客選択</th>
 									<th width="500px">ファイル選択</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>エコ配JP</td>
-									<td>-</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[6]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+										<Form horizontal onChange={(e) => this.handleSubmitEco(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
 											</FormGroup>
@@ -146,213 +115,9 @@ export default class BillingDataUpload extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td rowspan="4">ヤマト運輸</td>
-									<td>発払</td>
+									<td rowspan="3">ヤマト運輸</td>
 									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[0]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>代引</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[1]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>DM便</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[2]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ネコポス</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[3]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td rowspan="2">佐川急便</td>
-									<td>発払</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[4]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>代引</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[5]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>西濃運輸</td>
-									<td>-</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[6]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td rowspan="3">日本郵政</td>
-									<td>EMS</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[7]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ゆうパケット</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[8]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>ゆうメール</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[9]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-											<FormGroup>
-												<FormControl type="file" name="csv" />
-											</FormGroup>
-										</Form>
-									</td>
-								</tr>
-								<tr>
-									<td>自社配送</td>
-									<td>-</td>
-									<td>
-										<CommonFilterBox
-											name="customer_code"
-											value={this.exList[10]}
-											options={this.customerList}
-											onChange={(data) => this.changed(data)}
-											table
-										/>
-									</td>
-									<td>
-										<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+										<Form horizontal onChange={(e) => this.handleSubmitYmt(e)}>
 											<FormGroup>
 												<FormControl type="file" name="csv" />
 											</FormGroup>
@@ -367,4 +132,3 @@ export default class BillingDataUpload extends React.Component {
 		)
 	}
 }
-

@@ -126,13 +126,14 @@ export class BasicConditionModal extends React.Component {
 	}
 }
 
-//import ManifestoForm from './manifesto-form'
-import ManifestoList from './manifesto-list'
-export class ManifestoModal extends React.Component {
+import PackingItemForm from './packingitem-form'
+import PackingItemList from './packingitem-list'
+
+export class PackingItemModal extends React.Component {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			data: this.props.data ? { manifesto: this.props.data } : {manifesto: {}},
+			data: this.props.data ? { packing_item: this.props.data } : {packing_item: {}},
 			isShow: this.props.isShow,
 			type: this.props.type
 		}
@@ -147,9 +148,22 @@ export class ManifestoModal extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.setState({
 			isShow: newProps.isShow,
-			data: newProps.data ? { manifesto: newProps.data } : {manifesto: {}},
+			data: newProps.data ? { packing_item: newProps.data } : {packing_item: {}},
 			type: newProps.type
 		})
+		this.url = '/d/packing_item'
+		this.formName = 'PackingItemModal'
+
+		this.disabled = true
+	}
+
+	/**
+	 * 入力チェック
+	 * @param {*} _data 
+	 */
+	onCheck(_data) {
+		this.disabled = !_data
+		this.forceUpdate()
 	}
 
 	/**
@@ -168,23 +182,33 @@ export class ManifestoModal extends React.Component {
 	}
 
 	add(_obj) {
-		this.props.add(_obj.manifesto)
+		this.props.add(_obj.feed.entry[0].packing_item)
 	}
 
-	edit(_obj) {
-		this.props.edit(_obj.manifesto)
+	select(_obj) {
+		this.props.select(_obj)
 	}
 
 	render() {
 
 		return (
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
-				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
-				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
+				addAxiosBtn={this.state.type === 'add' ? {
+					url: this.url,
+					callback: (data) => this.add(data),
+					disabled: this.disabled
+				} : false}
+				fromName={this.formName}
+				selectBtn={this.state.type === 'edit' ? (obj) => this.select(obj) : false}
 				size="lg"
 				height="500px"
 			>
-				<ManifestoList name="ManifestoModal" entry={this.state.data} />	
+				{ this.state.type === 'add' &&
+					<PackingItemForm name={this.formName} entry={this.state.data} isCreate={true} onCheck={(data)=>this.onCheck(data)} />	
+				}	
+				{ this.state.type === 'edit' &&
+					<PackingItemList name={this.formName} entry={this.state.data} selectTable />
+				}
 			</CommonModal>
 		)
 	}

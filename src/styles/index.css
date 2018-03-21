@@ -180,16 +180,31 @@ h3.title {
   height: 50px;
 }
 .side-menu ul li.child-menu ul.s200{
-  height: 100px;
+  height: 101px;
 }
 .side-menu ul li.child-menu ul.s300{
-  height: 150px;
+  height: 152px;
 }
 .side-menu ul li.child-menu ul.s400{
-  height: 200px;
+  height: 203px;
 }
 .side-menu ul li.child-menu ul.s500{
-  height: 250px;
+  height: 254px;
+}
+.side-menu ul li.child-menu ul.s600{
+  height: 305px;
+}
+.side-menu ul li.child-menu ul.s700{
+  height: 356px;
+}
+.side-menu ul li.child-menu ul.s800{
+  height: 407px;
+}
+.side-menu ul li.child-menu ul.s900{
+  height: 458px;
+}
+.side-menu ul li.child-menu ul.s1000{
+  height: 509px;
 }
 .side-menu ul li.child-menu.menu-hide ul{
   height: 0px;
@@ -535,7 +550,7 @@ h3.title {
 ------------------------*/
 .pagination_area {
   width: 100%;
-  padding: 15px 0px;
+  padding: 5px 0px;
 }
 .count_area {
   float: left;
@@ -842,15 +857,20 @@ h3.title {
 .common-action-btn-span.delete{
   color: #DD2E17;
 }
+.common-action-btn-span.disabled{
+  color: #cccccc;
+  cursor: not-allowed;
+}
 
 .common-table {
   width: 100%;
   height: auto;
-  border: 1px solid #DDDDDD;
   background: #fff;
+  margin-top: 2px;
 }
 .common-table.scroll {
   overflow: scroll;
+  border: 1px solid #DDDDDD;
 }
 .common-table .table{
   margin-bottom: 0px;
@@ -859,7 +879,6 @@ h3.title {
   margin-right: -1px;
   font-size: 12px;
 }
-.common-table>.table>tbody>tr>td, 
 .common-table>.table>tbody>tr>th, 
 .common-table>.table>tfoot>tr>td, 
 .common-table>.table>tfoot>tr>th, 
@@ -869,18 +888,74 @@ h3.title {
   vertical-align: middle;
   white-space: nowrap;
 }
+.common-table>.table>tbody>tr>td {
+  padding: 0px;
+  vertical-align: middle;
+  word-break: break-all;
+}
+.common-table>.table>tbody>tr>td>div {
+  padding: 5px;
+}
 .common-table .table th{
   color: #fff;
   background: #337ab7;
 }
 .common-table .table td div.ellipsis{
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .common-table.Select{
   position: absolute;
   top: 0;
   left: 0;
+}
+.common-table .isError td,
+.common-table .isError td:hover,
+.common-table .isError td:focus {
+  background: rgb(255, 231, 231);
+}
+.common-table .isTotal td,
+.common-table .isTotal td:hover,
+.common-table .isTotal td:focus {
+  background: rgb(231, 255, 233);
+}
+.common-table .isSelected td{
+  background: rgb(236, 250, 243);
+}
+.common-table .table td .array {
+  padding: 5px;
+}
+.common-table .table td .multi {
+  display: table-row;
+}
+.common-table .table td .multi p.multi_item{
+  display: table-cell;
+}
+.common-table .table td .multi p.multi_item.value{
+  display: table-cell;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.common-table th .old{
+  color: rgb(231, 141, 141);
+}
+.common-table td .old{
+  color: red;
+}
+.common-table .old span{
+  text-decoration: line-through;
+}
+.common-table th .new{
+  color: rgb(80, 211, 158);
+}
+.common-table td .new{
+  color: rgb(5, 184, 115);
+}
+.common-table td .disabled{
+  color: #ccc;
+  text-decoration: line-through;
+}
+.clear{
+  clear: both;
 }
 .ReactModalPortal,
 .ReactModal__Overlay,
@@ -957,4 +1032,193 @@ h3.title {
   color: #555;
   padding-left: 20px;
   padding-top: 5px;
+}
+.CommonDisplayCalendar{
+  width: 100%;
+  border: 1px solid #eee;
+}
+.CommonDisplayCalendar th{
+  text-align: center;
+  font-weight: normal;
+  color: #999;
+  font-size: 11px;
+}
+.CommonDisplayCalendar th{
+  border: 1px solid #eee;
+}
+.CommonDisplayCalendar td{
+  border: 1px solid #eee;
+  position: relative;
+  height: 35px;
+}
+.CommonDisplayCalendar td.disabled{
+  background: #efefef;
+}
+.CommonDisplayCalendar td div{
+  width: 100%;
+}
+.CommonDisplayCalendar td .day{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: left;
+  font-size: 11px;
+  padding-left: 2px;
+}
+.CommonDisplayCalendar td.disabled .day{
+  color: #ccc;
+}
+.CommonDisplayCalendar td .value{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  padding: 7px;
+}
+.CommonDisplayCalendar .toDay{
+  background: rgb(220, 241, 255);
+}
+.CommonDisplayCalendar .sun{
+  color: red;
+}
+.CommonDisplayCalendar .sat{
+  color: rgb(5, 65, 177);
+}
+.CommonDisplayCalendar .other{
+  color: #999;
+}
+.CommonTextArea{
+  width: 100%;
+}
+.total_amount{
+  float: right;
+  width: 300px;
+}
+.total_amount > .form-group{
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+.total_amount > .form-group > .control-label{
+  width: 80px;
+  padding: 7px 0px;
+  margin: 0px;
+  text-align: left;
+}
+.total_amount > .form-group > div{
+  width: 220px;
+  padding: 0px;
+  text-align: right;
+  font-size: 14px;
+}
+.shipment_service_table .common-table{
+  margin-bottom: 10px;
+}
+
+.invoiceDetails-table {
+  width: 100%;
+  height: auto;
+  border: 1px solid #DDDDDD;
+  background: #fff;
+  margin-top: 2px;
+}
+.invoiceDetails-table.scroll {
+  overflow: scroll;
+}
+.invoiceDetails-table .table{
+  margin-bottom: 0px;
+  border: 0px;
+  margin-left: -1px;
+  margin-right: -1px;
+  font-size: 12px;
+}
+.invoiceDetails-table>.table>tbody>tr>th, 
+.invoiceDetails-table>.table>tfoot>tr>td, 
+.invoiceDetails-table>.table>tfoot>tr>th, 
+.invoiceDetails-table>.table>thead>tr>td, 
+.invoiceDetails-table>.table>thead>tr>th {
+  padding: 5px 50px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.invoiceDetails-table>.table>tbody>tr>td {
+  padding: 5px;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: right;
+}
+.invoiceDetails-table>.table>tbody>tr>td>div {
+  padding: 5px;
+}
+.invoiceDetails-table .table th{
+  color: #fff;
+  background: #337ab7;
+}
+.invoiceDetails-table .table td div.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.invoiceDetails-table.Select{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.invoiceDetails-table .isError td,
+.invoiceDetails-table .isError td:hover,
+.invoiceDetails-table .isError td:focus {
+  background: rgb(255, 231, 231);
+}
+.invoiceDetails-table .isTotal td,
+.invoiceDetails-table .isTotal td:hover,
+.invoiceDetails-table .isTotal td:focus {
+  background: rgb(231, 255, 233);
+}
+.invoiceDetails-table .isSelected td{
+  background: rgb(236, 250, 243);
+}
+.invoiceDetails-table .table td .array {
+  padding: 5px;
+}
+.invoiceDetails-table .table td .multi {
+  display: table-row;
+}
+.invoiceDetails-table .table td .multi p.multi_item{
+  display: table-cell;
+}
+.invoiceDetails-table .table td .multi p.multi_item.value{
+  display: table-cell;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.invoiceDetails-table th .old{
+  color: rgb(231, 141, 141);
+}
+.invoiceDetails-table td .old{
+  color: red;
+}
+.invoiceDetails-table .old span{
+  text-decoration: line-through;
+}
+.invoiceDetails-table th .new{
+  color: rgb(80, 211, 158);
+}
+.invoiceDetails-table td .new{
+  color: rgb(5, 184, 115);
+}
+.invoiceDetails-table td .disabled{
+  color: #ccc;
+  text-decoration: line-through;
+}
+.invoiceDetails-table .table .center {
+  text-align: center;
+}
+.test{
+  color:red;
+  padding: 100px 100px
+}
+.comment {
+  color: #999;
 }

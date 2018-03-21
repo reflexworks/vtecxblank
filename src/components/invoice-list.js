@@ -6,7 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Button,
+	//	Panel,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -17,9 +17,12 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonPrefecture,
+	CommonRadioBtn,
+	CommonDatePicker,
+	//CommonPrefecture,
+	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
-	CommonPagination
+	CommonPagination,
 } from './common'
 
 type State = {
@@ -35,8 +38,10 @@ export default class InvoiceList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/invoice?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-invoice?f&l=' + this.maxDisplayRows
 		this.state = {
+			searchYearMonth: '',
+			searchDetails: false,
 			feed: { entry: [] },
 			isDisabled: false,
 			isError: {},
@@ -51,7 +56,6 @@ export default class InvoiceList extends React.Component {
 	 * @param {*} conditions 
 	 */
 	getFeed(activePage: number, conditions) {
-
 		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
@@ -70,7 +74,7 @@ export default class InvoiceList extends React.Component {
 		}).then( (response) => {
 
 			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
+				this.setState({ feed:'',isDisabled: false, isError: response, })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -86,10 +90,47 @@ export default class InvoiceList extends React.Component {
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
-	onSelect(index) {
+	onSelect(_data) {
 		// 入力画面に遷移
-		const customer_code = this.state.feed.entry[index].customer.customer_code
-		this.props.history.push('/InvoiceUpdate?' + customer_code)
+		const invoice_code = _data.invoice.invoice_code
+		this.props.history.push('/InvoiceUpdate?' + invoice_code)
+	}
+
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+	onDelete(data) {
+		const _delete = () => {
+			if (confirm('請求番号:' + data.invoice.invoice_code + '\n' +
+				'この情報を削除します。よろしいですか？')) {
+				const id = data.invoice.invoice_code
+		
+				axios({
+					url: '/d/invoice/' + id,
+					method: 'delete',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+					this.getFeed(this.activePage)
+				}).catch((error) => {
+					if (this.props.error) {
+						this.setState({ isDisabled: false })
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				})
+				this.forceUpdate()
+			}
+		}
+		if (data.issue_status === '1') {
+			alert('発行済なため削除できません。')
+		} else {
+			_delete()
+		}
 	}
 
 	/**
@@ -100,6 +141,17 @@ export default class InvoiceList extends React.Component {
 		this.getFeed(1, conditions)
 	}
 
+	changeSearchYearmonth(_data) {
+		if (_data) {
+			this.setState({ searchYearMonth: _data.value })
+			this.doSearch('invoice.invoice_yearmonth=*' + _data.value + '*')
+		} else {
+			this.setState({ searchYearMonth: '' })
+			this.getFeed(1)
+		}	
+	}
+
+
 	/**
 	 * 描画後の処理
 	 */
@@ -108,7 +160,9 @@ export default class InvoiceList extends React.Component {
 	}
 
 	render() {
+
 		return (
+
 			<Grid>
 
 				{/* 通信中インジケータ */}
@@ -122,73 +176,67 @@ export default class InvoiceList extends React.Component {
 
 						<PageHeader>請求書一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+						
+						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
+						 
 							<CommonInputText
-								controlLabel="顧客コード"
-								name="customer.customer_code"
+								controlLabel="請求番号"
+								name="invoice.invoice_code"
 								type="text"
-								placeholder="顧客コード"
+								placeholder="請求番号"
+							/>
+							<CommonMonthlySelect
+    							controlLabel="請求年月"  
+								name="invoice.invoice_yearmonth"
+								value={this.state.searchYearMonth}
 							/>
 							<CommonInputText
-								controlLabel="顧客名"
-								name="customer.customer_name"
+								controlLabel="請求先名"
+								name="invoice.invoice_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
+
+							<CommonDatePicker
+								controlLabel="支払日"
+								name="invoice.payment_date"
+							/>
+
+							<CommonRadioBtn
+								controlLabel="入金ステータス"
+								name="invoice.deposit_status"
+								data={[{
+									label: '未入金',
+									value: '0',
+								}, {
+									label: '入金済',
+									value: '1',
+								}]}
+							/>
+							
+							<CommonRadioBtn
+								controlLabel="発行ステータス"
+								name="issue.status"
+								data={[{
+									label: '全て',
+									value: ''
+								},{
+									label: '未発行',
+									value: '0'
+								},{
+									label: '発行済',
+									value: '1'
+								}]}
+							/>
+
 							<CommonInputText
-								controlLabel="顧客名(カナ)"
-								name="customer.customer_name_kana"
+								controlLabel="作成者"
+								name="creator"
 								type="text"
-								placeholder="カブシキガイシャ ◯◯◯"
-							/>
-							<CommonInputText
-								controlLabel="電話番号"
-								name="customer.customer_tel"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="FAX"
-								name="customer.customer_fax"
-								type="text"
-								placeholder="090-1234-5678"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="メールアドレス"
-								name="customer.customer_email"
-								type="email"
-								placeholder="logioffice@gmail.com"
-							/>
-							<CommonInputText
-								controlLabel="郵便番号"
-								name="customer.zip_code"
-								type="text"
-								placeholder="123-4567"
-								size="sm"
-							/>
-							<CommonPrefecture
-								controlLabel="都道府県"
-								componentClass="select"
-								name="customer.prefecture"
-								size="sm"
-							/>
-							<CommonInputText
-								controlLabel="市区郡長村"
-								name="customer.address1"
-								type="text"
-								placeholder="◯◯市××町"
-							/>
-							<CommonInputText
-								controlLabel="番地"
-								name="customer.address2"
-								type="text"
-								placeholder="1丁目2番地 ◯◯ビル1階"
-								size="lg"
+								placeholder="作成者"
 							/>
 						</CommonSearchConditionsFrom>
-
+						
 					</Col>
 				</Row>
 				<Row>
@@ -201,33 +249,36 @@ export default class InvoiceList extends React.Component {
 							maxButtons={4}
 						/>
 
-						<Button>顧客ごとに表示</Button>
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={{ title: '編集', onclick: this.onSelect.bind(this) }}
+							edit={(data)=>this.onSelect(data)}
+							remove={(data) => this.onDelete(data)}
 							header={[{
-								field: 'customer.customer_code',title: '請求番号', width: '200px'
+								field: 'invoice.invoice_code', title: '請求番号', width: '100px'
 							}, {
-								field: 'customer.customer_name', title: '見積番号', width: '200px'
+								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '200px'
 							}, {
-								field: 'customer.customer_name_kana', title: '合計請求金額', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'customer.customer_tel', title: '課税対象合計', width: '200px'
+								field: 'invoice.payment_date', title: '支払日', width: '200px'
 							}, {
-								field: 'customer.customer_staff', title: '振込先', width: '200px'
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
 							}, {
-								field: 'customer.customer_email', title: '小計金額', width: '200px'
+								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {
-								field: 'customer.customer_fax', title: '消費税', width: '200px'
-							}, {
-								field: 'customer.zip_code', title: 'EMS', width: '150px'
-							}, {
-								field: 'customer.prefecture', title: '立替金', width: '200px'
-							}, {
-								field: 'customer.address1', title: '購入、弁済代', width: '200px'
+								field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}							
 							}]}
-						/>
+						>
+							
+							<CommonMonthlySelect
+								value={this.state.searchYearMonth}
+								style={{float: 'left', width: '150px', 'margin': '0px 5px'}}
+								table
+								onChange={(data) => this.changeSearchYearmonth(data)}
+							/>
+
+						</CommonTable>
 					</Col>  
 				</Row>  
 		 </Grid>

@@ -1,4 +1,4 @@
-import reflexcontext from 'reflexcontext' 
+import vtecxapi from 'vtecxapi' 
 
 const settings = new Object()
  
@@ -15,7 +15,7 @@ settings['mail.pop3.socketFactory.port'] = '995'
 settings['username']='xxxxx@yahoo.co.jp'
 settings['password']='xxxxx'
 
-const result = reflexcontext.getMail(settings)
-reflexcontext.log(JSON.stringify(result))
+const result = vtecxapi.getMail(settings)
+vtecxapi.log(JSON.stringify(result))
 
 

@@ -67,11 +67,10 @@ export default class StaffList extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then( (response) => {
-
 			this.setState({ isDisabled: false })
 
 			if (response.status === 204) {
-				this.setState({ isError: response })
+				this.setState({ feed:'',isError: response })
 			} else {
 				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 				// activePageが「2」だったら51件目から100件目が格納されている
@@ -80,7 +79,8 @@ export default class StaffList extends React.Component {
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
-		})    
+		})   
+		this.forceUpdate()
 	}
   
 	/**
@@ -88,11 +88,40 @@ export default class StaffList extends React.Component {
 	 */
 	onSelect(data) {
 		// 入力画面に遷移
-		const id = data.link[0].___href.slice(7)
+		const id = data.staff.uid
 		this.props.history.push('/StaffUpdate?' + id)
 	}
 	
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+	onDelete(data) {
 
+		if (confirm('担当者名:' + data.staff.staff_name + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.link[0].___href.slice(7)
+		
+			axios({
+				url: '/d/staff/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
+	}
 	/**
 	 * 検索実行
 	 * @param {*} conditions 
@@ -142,18 +171,24 @@ export default class StaffList extends React.Component {
 									value: '2'
 								}, {
 									label: '作業員',
-									value: '3'
+									value: '3',
+								}, {
+									label: '営業',
+									value: '4'
+								}, {
+									label: '経理',
+									value: '5'
 								}]}
-							/>
-							<CommonInputText
-								controlLabel="上長メールアドレス"
-								name="staff.superior_email"
-								type="text"
-								placeholder="logioffice@gmail.com"
 							/>
 							<CommonInputText
 								controlLabel="メールアドレス"
 								name="staff.staff_email"
+								type="text"
+								placeholder="logioffice@gmail.com"
+							/>
+							<CommonInputText
+								controlLabel="上長メールアドレス"
+								name="staff.superior_email"
 								type="text"
 								placeholder="logioffice@gmail.com"
 							/>
@@ -175,15 +210,16 @@ export default class StaffList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data) => this.onSelect(data) }
+							edit={(data) => this.onSelect(data)}
+							remove={(data) => this.onDelete(data)}
 							header={[{
 								field: 'staff.staff_name',title: '担当者名', width: '100px'
 							}, {
 								field: 'staff.role', title: 'ロール', width: '70px', convert: { 1:'管理者', 2:'上長', 3:'作業員', 4:'営業', 5:'経理'}
 							}, {
-								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
+								field: 'staff.staff_email', title: 'メールアドレス', width: '200px'
 							}, {
-								field: 'staff.staff_email', title: 'メールアドレス', width: '150px'
+								field: 'staff.superior_email', title: '上長メールアドレス', width: '200px'
 							}]}
 						/>
 

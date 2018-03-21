@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<feed>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000001</warehouse_code>
+      <warehouse_name>川口倉庫</warehouse_name>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9-35</address2>
+    </warehouse>
+    <link href="/warehouse/0000001" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000002</warehouse_code>
+      <warehouse_name>和光倉庫</warehouse_name>
+      <zip_code>351-0113</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>和光市中央</address1>
+      <address2>2-5-58</address2>
+    </warehouse>
+    <link href="/warehouse/0000002" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000003</warehouse_code>
+      <warehouse_name>三芳倉庫</warehouse_name>
+      <zip_code>354-0044</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>入間郡三芳町大字北永井</address1>
+      <address2>421-1</address2>
+    </warehouse>
+    <link href="/warehouse/0000003" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000004</warehouse_code>
+      <warehouse_name>高島平物流センターＡ棟</warehouse_name>
+      <zip_code>175-0082</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>板橋区高島平</address1>
+      <address2>6-2-1</address2>
+    </warehouse>
+    <link href="/warehouse/0000004" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000005</warehouse_code>
+      <warehouse_name>下前倉庫</warehouse_name>
+      <zip_code>335-0023</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市下前</address1>
+      <address2>1-8-20</address2>
+    </warehouse>
+    <link href="/warehouse/0000005" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000006</warehouse_code>
+      <warehouse_name>高島平物流センターC棟</warehouse_name>
+      <zip_code>175-0082</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>板橋区高島平</address1>
+      <address2>6-2-3</address2>
+    </warehouse>
+    <link href="/warehouse/0000006" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000007</warehouse_code>
+      <warehouse_name>朝霞倉庫</warehouse_name>
+      <zip_code>351-0023</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>朝霞市溝沼</address1>
+      <address2>855</address2>
+    </warehouse>
+    <link href="/warehouse/0000007" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000008</warehouse_code>
+      <warehouse_name>川越倉庫</warehouse_name>
+      <zip_code>350-1162</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川越市南大塚</address1>
+      <address2>6-38-3</address2>
+    </warehouse>
+    <link href="/warehouse/0000008" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000009</warehouse_code>
+      <warehouse_name>寄居倉庫</warehouse_name>
+      <zip_code>369-1202</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>大里郡寄居町大字桜沢</address1>
+      <address2>414</address2>
+    </warehouse>
+    <link href="/warehouse/0000009" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000010</warehouse_code>
+      <warehouse_name>戸田倉庫</warehouse_name>
+      <zip_code>335-0035</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市笹目南町</address1>
+      <address2>17-34</address2>
+    </warehouse>
+    <link href="/warehouse/0000010" rel="self"/>
+  </entry>
+  <entry>
+    <warehouse>
+      <warehouse_code>0000011</warehouse_code>
+      <warehouse_name>金谷倉庫</warehouse_name>
+      <zip_code>335-0023</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市本町</address1>
+      <address2>4-4-8</address2>
+    </warehouse>
+    <link href="/warehouse/0000011" rel="self"/>
+  </entry>
+</feed>

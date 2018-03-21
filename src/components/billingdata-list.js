@@ -16,11 +16,12 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonDatePicker,
+	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
 	CommonPagination
 } from './common'
 
+import moment from 'moment'
 type State = {
     feed: any,
     url: string
@@ -34,14 +35,17 @@ export default class BillingDataList extends React.Component {
     constructor(props:Props) {
     	super(props)
     	this.maxDisplayRows = 50 // 1ページにおける最大表示件数（例：50件/1ページ）
-    	this.url = '/d/internal_work?f&l=' + this.maxDisplayRows
+    	this.url = '/d/billing_data?f&l=' + this.maxDisplayRows
     	this.state = {
+    		searchDate: moment().format('YYYY/MM'),
     		feed: { entry: [] },
+    		disabled: true,
     		isDisabled: false,
     		isError: {},
     		urlToPagenation: '' // ページネーション用に渡すURL
     	}
     	this.activePage = 1
+    	this.createSampleData()
     }
 
     /**
@@ -69,7 +73,7 @@ export default class BillingDataList extends React.Component {
     	}).then( (response) => {
 
     		if (response.status === 204) {
-    			this.setState({ isDisabled: false, isError: response })
+    			this.setState({ feed:'',isDisabled: false, isError: response })
     		} else {
     			// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
     			// activePageが「2」だったら51件目から100件目が格納されている
@@ -81,18 +85,62 @@ export default class BillingDataList extends React.Component {
     	})
     }
 	
+
+    createSampleData() {
+		
+    	this.sample = [{
+    		customer_name: '顧客１',
+    		date: '2017/12',
+    	}, {
+    		customer_name: '顧客2',
+    		date: '2017/12',
+    	}]
+    }
     /**
      * 更新画面に遷移する
      * @param {*} index
      */
-    /*更新処理は未作成なのでコメントアウト
-    onSelect(data) {
-        // 入力画面に遷移
-        const internal_work_code = data.internal_work.internal_work_code
-        this.props.history.push('/InternalWorkUpdate?' + internal_work_code)
-    }
-    */
 
+    onSelect() {
+    	// 入力画面に遷移
+    	//const billing_data_code = data.billing_data.billing_data_code
+    	//this.props.history.push('/InternalWorkUpdate' + billing_data_code)
+    	this.props.history.push('/BillingDataRegistration')
+    }
+	
+	/**
+	 * リスト上で削除処理
+	 * @param {*} data 
+	 */
+    onDelete(/*data*/) {
+    	/*
+		if (confirm('請求データ:' + data.billing_data. + '\n' +
+					'この情報を削除します。よろしいですか？')) {
+			const id = data.link[0].___href.slice(14)
+		
+			axios({
+				url: '/d/billing_data/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+				this.getFeed(this.activePage)
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+			this.forceUpdate()
+		}
+	*/
+    }
+	
+		
     /**
      * 検索実行
      * @param {*} conditions
@@ -123,25 +171,19 @@ export default class BillingDataList extends React.Component {
 
     					<PageHeader>請求データ一覧</PageHeader>
 
-    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+    					<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)} open={true}>
+
+    						<CommonMonthlySelect
+    							controlLabel="請求年月"
+    							name="quotation_date"
+    							value={this.state.searchDate}
+    						/>
+							
     						<CommonInputText
     							controlLabel="顧客"
-    							name="internal_work.staff_name"
+    							name="customer_name"
     							type="text"
     							placeholder="顧客"
-    						/>
-
-    						<CommonDatePicker
-    							controlLabel="年月"  
-    							name="internal_work.working_date"
-    							placeholder="年月"
-    						/>
-
-    						<CommonInputText
-    							controlLabel="承認ステータス"
-    							name="internal_work.approval_status"
-    							type="text"
-    							placeholder="承認ステータス"
     						/>
 
     					</CommonSearchConditionsFrom>
@@ -160,14 +202,14 @@ export default class BillingDataList extends React.Component {
 
     					<CommonTable
     						name="entry"
-    						data={this.state.feed.entry}
-    						//edit={(data) => this.onSelect(data) }
+    						data={this.sample}
+    						edit={() => this.onSelect()}
+    						remove={(data) => this.onDelete(data)}
     						header={[{
-    							field: 'internal_work.staff_name',title: '顧客名', width: '100px'
+    							field: 'customer_name',title: '顧客名', width: '100px'
     						}, {
-    							field: 'internal_work.working_date', title: '年月', width: '100px'
-    						}, {
-    							field: 'internal_work.approval_status', title: '承認ステータス', width: '50px'
+    							field: 'date', title: '年月', width: '100px'
+    						
     						}]}
     					/>
     				</Col>

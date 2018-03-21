@@ -16,6 +16,7 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
+	CommonRadioBtn,
 	CommonPrefecture,
 	CommonSearchConditionsFrom,
 	CommonPagination
@@ -34,7 +35,7 @@ export default class BilltoList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/billto?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-billto?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -75,7 +76,6 @@ export default class BilltoList extends React.Component {
 				// activePageが「2」だったら51件目から100件目が格納されている
 				this.setState({ isDisabled: false, feed: response.data.feed})
 			}
-
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})    
@@ -129,11 +129,24 @@ export default class BilltoList extends React.Component {
 								type="text"
 								placeholder="請求先コード"
 							/>
+
 							<CommonInputText
 								controlLabel="請求先名"
 								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
+							/>
+
+							<CommonRadioBtn
+								controlLabel="請求締日"
+								name="billto.billing_closing_date"
+								data={[{
+									label: '月末',
+									value: '0',
+								}, {
+									label: '20日締',
+									value: '1',
+								}]}
 							/>
 
 							<CommonInputText
@@ -175,7 +188,7 @@ export default class BilltoList extends React.Component {
 							/>
 
 							<CommonInputText
-								controlLabel="市区郡長村"
+								controlLabel="市区郡町村"
 								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
@@ -202,7 +215,7 @@ export default class BilltoList extends React.Component {
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
-
+						
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
@@ -212,9 +225,7 @@ export default class BilltoList extends React.Component {
 							}, {
 								field: 'billto.billto_name', title: '請求先名', width: '200px'
 							}, {
-								field: 'billto.billing_closing_date', title: '請求締切日', width: '200px'
-							}, {
-								field: 'billto.payment_date', title: '支払日', width: '200px'
+								field: 'billto.billing_closing_date', title: '請求締日', width: '200px',convert: {0:'月末',1:'20日'}
 							}, {
 								field: 'contact_information.tel', title: '電話番号', width: '200px'
 							}, {

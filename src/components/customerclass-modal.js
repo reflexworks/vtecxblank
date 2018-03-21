@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import {
-//Form
+	Form
 } from 'react-bootstrap'
 import type {
 	Props,
@@ -34,6 +34,17 @@ export class CustomerClassModal extends React.Component {
 			data: newProps.data || {},
 			type: newProps.type
 		})
+		if (newProps.data.delivery_company === 'ヤマト' || newProps.data.delivery_company === 'YN') {
+			this.delivery_company = 'YN'
+		} else if (newProps.data.delivery_company === '西濃' || newProps.data.delivery_company === 'SN') {
+			this.delivery_company = 'SN'
+		} else if(newProps.data.delivery_company === 'エコ配JP' || newProps.data.delivery_company === 'EC'){
+			this.delivery_company = 'EC'
+		} else {
+			this.delivery_company = ''
+		}
+		this.classcode = newProps.data.classcode
+		this.forceUpdate()
 	}
 
 	/**
@@ -52,49 +63,49 @@ export class CustomerClassModal extends React.Component {
 	}
 
 	add(_obj) {
-		this.props.add(_obj.customer_class)
+		this.props.add(_obj)
 	}
 
 	edit(_obj) {
-		this.props.edit(_obj.customer_class)
+		this.props.edit(_obj)
 	}
 
 	render() {
 
 		return (
+
+
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
 				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
 				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
-				size="lg"
-				height="500px"
+				height="180px"
 			>
+				<Form name="CustomerClassModal" horizontal>
+					<CommonFilterBox
+						controlLabel="配送業者"
+						name="delivery_company"
+						value={this.delivery_company}
+						options={[{
+							label: 'ヤマト',
+							value: 'YN'
+						}, {
+							label: '西濃',
+							value: 'SN'
+						}, {
+							label: 'エコ配JP',
+							value: 'EC'
+						}]}
+					/>
 
-				<CommonFilterBox
-					controlLabel="入力補完種別"
-					size="sm"
-					name="delivery_company"
-					value={this.delivery_company}
-					options={[{
-						label: 'ヤマト',
-						value: 'YN'
-					}, {
-						label: '西濃',
-						value: 'SN'
-					}, {
-						label: 'エコ配JP',
-						value: 'EC'
-					}]}
-				/>
-
-				<CommonInputText
-					controlLabel="分類コード"   
-					name="classcode"
-					type="text"
-					value={this.classcode}
-					placeholder="分類コード"
-					size='lg'
-				/>	
-
+					<CommonInputText
+						controlLabel="分類コード"   
+						name="classcode"
+						type="text"
+						value={this.classcode}
+						placeholder="分類コード"
+						size='lg'
+					/>	
+				</Form>
 			</CommonModal>
 		)
 	}

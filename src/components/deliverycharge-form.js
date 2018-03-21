@@ -1,40 +1,48 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	PageHeader,
 	Form,
-	PanelGroup,
-	Panel,
-	Table
+	Button,
+	Glyphicon,
+	Alert
 } from 'react-bootstrap'
 import type {
 	Props
 } from 'demo3.types'
 
 import {
-//	CommonPrefecture,
-	CommonInputText,
-	//CommonSelectBox,
+	CommonTable,
 	CommonFilterBox,
-//CommonTable
+	CommonEntry
 } from './common'
 
-export default class QuotationForm extends React.Component {
+export default class DeliveryChargeForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {}
 
-		this.entry = this.props.entry
-		this.entry.customer = this.entry.customer || {}
-		this.entry.work = this.entry.work || []
-		this.entry.item_details = this.entry.item_details || []
-		this.entry.manifesto = this.entry.manifesto || []
+		this.entry = this.props.entry || {}
 
+		this.master = {}
+		this.template = {}
+		this.templateList = {}
 
+		this.masterShipmentService = null
+
+		this.init()
 	}
 
-
+	init() {
+		// データキャッシュ
+		this.shipment_service = {}
+		// 宅配便
+		this.shipmentServiceListType1 = []
+		// メール便
+		this.shipmentServiceListType2 = []
+	}
 
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -42,280 +50,411 @@ export default class QuotationForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
+		if (this.entry.customer.customer_code) {
+			this.setTemplateList(newProps.templateList)
+			this.setTable()
+			this.setMasterList()
+		}
 	}
 
-	onSelect() {
+	setMasterList() {
+
+		this.setState({ isDisabled: true })
+
+		axios({
+			url: '/s/get-shipment-service-to-deliverycharge',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+
+			this.masterShipmentService = []
+			response.data.feed.entry[0].delivery_charge.map((_obj) => {
+				const type = _obj.shipment_service_type === '1' ? '宅配便' : 'メール便'
+				let name = _obj.shipment_service_name
+				if (_obj.shipment_service_service_name) {
+					name = name + ' / ' + _obj.shipment_service_service_name
+				}
+				const option = {
+					label: '【 ' + type + ' 】' + name,
+					value: _obj.shipment_service_code,
+					data: _obj
+				}
+				this.masterShipmentService.push(option)
+			})
+			this.setState({ isDisabled: false })
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	addTemplate(_data) {
+		if (_data) {
+			const code = _data.value
+			this.isAdd = true
+			if (!this.shipment_service[code]) {
+				this.entry.delivery_charge.push(_data.data)
+				this.addStatus = 'info'
+				this.addMesseage = _data.label + 'を追加しました。'
+				this.setTable()
+			} else {
+				this.addStatus = 'danger'
+				this.addMesseage = _data.label + 'は存在します。'
+				this.forceUpdate()
+			}
+		} else {
+			this.isAdd = false
+			this.forceUpdate()
+		}
+	}
+
+	setTemplateList(_templateList) {
+		if (_templateList) {
+			const getOption = (_obj) => {
+				return {
+					label: _obj.title,
+					value: _obj.title,
+					data: _obj
+				}
+			}
+			_templateList.map((_obj) => {
+				const shipment_service = _obj.shipment_service
+				if (shipment_service) {
+					const flg = this.templateList[shipment_service.code]
+					if (!flg || flg.length === 0) {
+						this.templateList[shipment_service.code] = []
+					}
+					this.templateList[shipment_service.code].push(getOption(_obj))
+				}
+			})
+
+			this.forceUpdate()
+		}
+	}
+
+	/**
+	 * テンプレート変更処理
+	 */
+	changeTemplate(_data) {
+
+		if (_data) {
+			const shipment_service_code = _data.data.shipment_service.code
+			const setTemplate = () => {
+				for (let i = 0, ii = this.entry.delivery_charge.length; i < ii; ++i) {
+					const delivery_charge = this.entry.delivery_charge[i]
+					if (delivery_charge.shipment_service_code === shipment_service_code) {
+						this.entry.delivery_charge[i] = JSON.parse(JSON.stringify(_data.data.delivery_charge[0]))
+						break
+					}
+				}
+				this.setTable()
+				CommonEntry().init(this.entry)
+				this.forceUpdate()
+			}
+			if (confirm('入力したものが破棄されます。よろしいでしょうか？')) {
+				this.template[shipment_service_code] = _data.data.title
+				setTemplate()
+			} else {
+				this.template[shipment_service_code] = ''
+				this.forceUpdate()
+			}
+		}
+	}
+
+	/**
+	 * 配送業者削除処理
+	 * @param {*} _code 
+	 */
+	removeDeliveryCharge(_code) {
+		const name = this.shipment_service[_code][0].name
+		const remove = () => {
+			let array = []
+			const old_entry = JSON.parse(JSON.stringify(this.entry.delivery_charge))
+			for (let i = 0, ii = old_entry.length; i < ii; ++i) {
+				const delivery_charge = old_entry[i]
+				if (delivery_charge.shipment_service_code !== _code) {
+					array.push(delivery_charge)
+				}
+			}
+			this.entry.delivery_charge = array
+			this.setTable()
+			CommonEntry().init(this.entry)
+			this.forceUpdate()
+		}
+		if (confirm(name + 'を削除します。よろしいでしょうか？')) {
+			remove()
+		}
+	}
+
+	/**
+	 * 配送料テーブル作成処理
+	 */
+	setTable() {
+
+		this.init()
+
+		if (this.entry.delivery_charge) {
+
+			let header = {}
+			const initHeader = () => {
+				return [{
+					field: 'size', title: 'サイズ', width: '80px'
+				}, {
+					field: 'weight', title: '重量', width: '80px'
+				}]
+			}
+			const setZone = (_data, _entry, _tableIndex, _code) => {
+				let _header = initHeader()
+				for (let i = 0, ii = _entry.length; i < ii; ++i) {
+
+					const key = _entry[i].zone_code
+
+					let zone_name = _entry[i].zone_name
+					_data[key] = _entry[i].price
+
+					_header.push({
+						field: key, title: zone_name, width: '60px',
+						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.charge_by_zone['+ i +'].price',
+						input: {
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].charge_by_zone['+ i +'].price'
+								this.changeShipmentServiceListType(_code, key, data, rowindex, entitiykey)
+							},
+							price: true
+						}
+					})
+				}
+				if (!header[_code]) header[_code] = _header
+				return _data
+			}
+
+			const newData = (_delivery_charge, _tableIndex) => {
+
+				const s_code = _delivery_charge.shipment_service_code
+				const s_type = _delivery_charge.shipment_service_type
+
+				let s_name = _delivery_charge.shipment_service_name
+
+				if (_delivery_charge.shipment_service_service_name) {
+					s_name = s_name + ' / ' + _delivery_charge.shipment_service_service_name
+				}
+
+				this.shipment_service[s_code] = []
+				for (let dd of _delivery_charge.delivery_charge_details) {
+
+					let new_data = {}
+					new_data.name = s_name
+					new_data.size = dd.size || '-'
+					new_data.weight = dd.weight || '-'
+					new_data.price = dd.price || ''
+					new_data.note = dd.note || ''
+					if (dd.charge_by_zone) {
+						new_data = setZone(new_data, dd.charge_by_zone, _tableIndex, s_code)
+					}
+
+					this.shipment_service[s_code].push(new_data)
+					if (!this.templateList[s_code] || this.templateList[s_code].length === 0) {
+						this.templateList[s_code] = []
+					}
+					this.template[s_code] = ''
+
+				}
+				const menu = () => {
+					return (
+						<div>
+							<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px', width: '30%' }}>{s_name}</h4>
+							<Button
+								bsSize="small"
+								bsStyle="danger"
+								style={{ float: 'left', 'margin-right': '10px' }}
+								onClick={()=>this.removeDeliveryCharge(s_code)}
+							><Glyphicon glyph="remove" /></Button>
+							<CommonFilterBox
+								placeholder="テンプレート選択"
+								name=""
+								value={this.template[s_code]}
+								options={this.templateList[s_code]}
+								onChange={(data) => this.changeTemplate(data)}
+								style={{float: 'left', width: '200px'}}
+								table
+							/>
+						</div>
+					)
+				}
+				if (s_type === '1') {
+					// 宅配便
+					if (header[s_code]) {
+						this.shipmentServiceListType1.push(
+							<CommonTable
+								name=""
+								data={this.shipment_service[s_code]}
+								header={header[s_code]}
+							>
+								{menu()}
+							</CommonTable>
+						)
+					} else {
+						this.shipmentServiceListType1.push(
+							<div>
+								<h4 style={{ float: 'left', 'margin-right': '30px', 'line-height': '10px', 'padding-left': '5px' }}>{s_name}</h4>
+								<Button
+									bsSize="small"
+									bsStyle="danger"
+									style={{ float: 'left', 'margin-right': '10px' }}
+									onClick={()=>this.removeDeliveryCharge(s_code)}
+								><Glyphicon glyph="remove" /></Button>
+								<div style={{clear: 'both'}}>地域帯が設定されていません。</div>
+							</div>
+						)
+					}
+					this.shipmentServiceListType1.push(<hr />)
+				} else {
+					// メール便
+					let _header = initHeader()
+					_header.push({
+						field: 'price', title: '配送料', width: '60px',
+						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.price',
+						input: {
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].price'
+								this.changeShipmentServiceListType(s_code, 'price', data, rowindex, entitiykey)
+							},
+							price: true
+						}
+					})
+					_header.push({
+						field: 'note', title: '記事', width: '100px',
+						entitiykey: 'delivery_charge['+ _tableIndex +'].delivery_charge_details{}.note',
+						input: {
+							onChange: (data, rowindex) => {
+								const entitiykey = 'delivery_charge['+ _tableIndex +'].delivery_charge_details['+ rowindex +'].note'
+								this.changeShipmentServiceListType(s_code, 'note', data, rowindex, entitiykey)
+							}
+						}
+					})
+					_header.push({
+						field: 'other', title: '', width: '400px'
+					})
+					this.shipmentServiceListType2.push(
+						<CommonTable
+							name=""
+							data={this.shipment_service[s_code]}
+							header={_header}
+						>
+							{menu()}
+						</CommonTable>	
+					)
+					this.shipmentServiceListType2.push(<hr />)
+				}
+
+			}
+			let tableIndex = 0
+			const list = this.entry.delivery_charge
+			for (let i = 0, ii = list.length; i < ii; ++i) {
+				newData(list[i], tableIndex)
+				tableIndex++
+			}
+			this.forceUpdate()
+		}
+
+	}
+
+	changeShipmentServiceListType(_key, _item, _data, _rowindex, _entitiykey) {
+
+		this.shipment_service[_key][_rowindex][_item] = _data
+
+		const target_keys = _entitiykey.split('.')
+		const getArrayKeys = (__key) => {
+			return {
+				key: __key.split('[')[0],
+				index: parseInt(__key.split('[')[1].split(']')[0])
+			}
+		}
+		if (target_keys.length === 4) {
+			// 宅配便の場合
+			// (例)delivery_charge[2].delivery_charge_details[1].charge_by_zone[0].price
+			const no1 = getArrayKeys(target_keys[0])
+			const no2 = getArrayKeys(target_keys[1])
+			const no3 = getArrayKeys(target_keys[2])
+			const no4 = target_keys[3]
+			this.entry[no1.key][no1.index][no2.key][no2.index][no3.key][no3.index][no4] = _data
+		} else {
+			// メール便の場合
+			// (例)delivery_charge[0].delivery_charge_details[1].price
+			const no1 = getArrayKeys(target_keys[0])
+			const no2 = getArrayKeys(target_keys[1])
+			const no3 = target_keys[2]
+			this.entry[no1.key][no1.index][no2.key][no2.index][no3] = _data
+		}
+		this.forceUpdate()
+	}
+
+	addNotes() {
+		this.entry.remarks.push({content: ''})
+		this.forceUpdate()
+	}
+
+	changeNotes(_data, _rowindex) {
+		this.entry.remarks[_rowindex] = {content: _data}
+		this.forceUpdate()
+	}
+
+	removeNotes(_data, _index) {
+		let array = []
+		for (let i = 0, ii = this.entry.remarks.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.entry.remarks[i])
+		}
+		this.entry.remarks = array
+		this.forceUpdate()
 	}
 
 	render() {
 
 		return (
-			<Form name={this.props.name} horizontal data-submit-form>
+			<Form className="shipment_service_table" name={this.props.name} horizontal data-submit-form>
 
-				<PanelGroup defaultActiveKey="1">
-					<Panel collapsible header="顧客情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+				<CommonFilterBox
+					controlLabel="配送業者追加"
+					name=""
+					value=""
+					options={this.masterShipmentService}
+					onChange={(data) => this.addTemplate(data)}
+				/>
+				{this.isAdd &&
+					<Alert bsStyle={this.addStatus}>
+						{this.addMesseage}
+					</Alert>
+				}
 
-						<CommonInputText
-							controlLabel="顧客コード"
-							name="customer.customer_code"
-							type="text"
-							placeholder="顧客コード"
-							value={this.entry.customer.customer_code}
-						/>
+				<hr />
 
-						<CommonFilterBox
-							controlLabel="顧客名"
-							name="customer.customer_name"
-							value={this.entry.customer.customer_name}
-							options={[{
-								label: '顧客A',
-								value: '00001'
-							}, {
-								label: '顧客B',
-								value: '00002'
-							}]}
-						/>
+				<PageHeader>宅配便</PageHeader>
+				<div>
+					{this.shipmentServiceListType1}
+				</div>
 
-						<CommonInputText
-							controlLabel="担当者"
-							name="customer.customer_staff"
-							type="text"
-							placeholder="1丁目2番地 ◯◯ビル1階"
-							value={this.entry.customer.customer_staff}
-							readonly
-						/>
+				<PageHeader>メール便</PageHeader>
+				<div>
+					{this.shipmentServiceListType2}
+				</div>
 
-					</Panel>
-					<Panel collapsible header="配送料" eventKey="2" bsStyle="info" defaultExpanded="true">
-						
-						<PageHeader>発払い</PageHeader>
-						<Table striped bordered>
-							<thead>
-								<tr>
-									<th>利用運送会社</th>
-									<th>サイズ(cm)</th>
-									<th>重量(kg)</th>
-									<th>南九州</th>
-									<th>北九州</th>
-									<th>四国</th>
-									<th>中国</th>
-									<th>関西</th>
-									<th>北陸</th>
-									<th>東海</th>
-									<th>信越</th>
-									<th>関東</th>
-									<th>南東北</th>
-									<th>北東北</th>
-									<th>北海道</th>
-									<th>沖縄</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>エコ配JP</td>
-									<td>〜80</td>
-									<td>15kg迄</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>390</td>
-									<td>600</td>
-									<td>1,000</td>
-								</tr>
-								<tr>
-									<td rowspan="3">ヤマト運輸</td>
-									<td>60</td>
-									<td>2kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>80</td>
-									<td>5kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>100</td>
-									<td>10kg迄</td>
-									<td>780</td>
-									<td>780</td>
-									<td>690</td>
-									<td>580</td>
-									<td>470</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>450</td>
-									<td>470</td>
-									<td>780</td>
-									<td>1,050</td>
-								</tr>
-								<tr>
-									<td>佐川急便</td>
-									<td>160以上</td>
-									<td>-</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-								</tr>
-								<tr>
-									<td>西濃運輸</td>
-									<td>160以上</td>
-									<td>-</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-									<td>※1</td>
-								</tr>
-							</tbody>
-						</Table>
-						<p>(※1 都度相談)</p>							
+				<PageHeader>記事</PageHeader>
+				<CommonTable
+					name=""
+					data={this.entry.remarks}
+					header={[{
+						field: 'content', title: '内容', width: '1000px',
+						entitiykey:'remarks{}.content',
+						input: {
+							onChange: (data, rowindex)=>{this.changeNotes(data, rowindex)}
+						}
+					}]}
+					add={()=>this.addNotes()}
+					remove={(data, i)=>this.removeNotes(data, i)}
+				/>
 
-						<PageHeader>メール便・ゆうパケット</PageHeader>
-						<Table striped bordered>
-							<thead>
-								<tr>
-									<th>サービス名</th>
-									<th>サイズ(cm)</th>
-									<th>重量(kg)</th>
-									<th>価格</th>
-									<th>追跡 有/無</th>
-									<th>備考</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>ヤマトDM便</td>
-									<td>2cm以内</td>
-									<td>1kg未満</td>
-									<td>90</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>ネコポス</td>
-									<td>2.5cm以内</td>
-									<td>1kg未満</td>
-									<td>190</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>ゆうパケット</td>
-									<td>3cm以内</td>
-									<td>1kg未満</td>
-									<td>180</td>
-									<td>◯</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td rowspan="4">ゆうメール</td>
-									<td>3.5cm以内</td>
-									<td>250g以内</td>
-									<td>95</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>500g以内</td>
-									<td>100</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>700g以内</td>
-									<td>115</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>3.5cm以内</td>
-									<td>1kg以内</td>
-									<td>120</td>
-									<td>×</td>
-									<td>全国一律</td>
-								</tr>
-								<tr>
-									<td>EMS</td>
-									<td>-</td>
-									<td>-</td>
-									<td>定価</td>
-									<td>×</td>
-									<td>18％割引</td>
-								</tr>
-							</tbody>
-						</Table>
-
-						<PageHeader>記事</PageHeader>
-						<Table striped bordered>
-							<tbody>
-								<tr><td>エコ配JPは、土日祝日は対応不可となります。</td></tr>
-								<tr><td>離島の別途料金につきましては、ヤマト宅急便はかかりません。</td></tr>
-								<tr><td>荷物の運送につきましては、業務提携会社に準じます。</td></tr>
-								<tr><td>コレクト（代金引換）手数料は、1万円以下全国一律300円(税別)、3万円以下全国一律400円(税別)、10万円以下全国一律600円(税別)を請求させて頂きます。</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-								<tr><td>...</td></tr>
-							</tbody>
-						</Table>
-					
-					</Panel>
-				        
-				</PanelGroup>
-			
 			</Form>
 		)
 	}

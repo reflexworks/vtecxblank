@@ -6,6 +6,7 @@ import {
 	Row,
 	Col,
 	PageHeader,
+	Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -16,10 +17,10 @@ import {
 	CommonNetworkMessage,
 	CommonTable,
 	CommonInputText,
-	CommonFilterBox,
 	CommonPrefecture,
 	CommonSearchConditionsFrom,
-	CommonPagination
+	CommonPagination,
+	CommonLoginUser
 } from './common'
 
 type State = {
@@ -36,7 +37,7 @@ export default class CustomerList extends React.Component {
 	constructor(props:Props) {
 		super(props)
 		this.maxDisplayRows = 50    // 1ページにおける最大表示件数（例：50件/1ページ）
-		this.url = '/d/customer?f&l=' + this.maxDisplayRows
+		this.url = '/s/get-customer?f&l=' + this.maxDisplayRows
 		this.state = {
 			feed: { entry: [] },
 			isDisabled: false,
@@ -44,6 +45,55 @@ export default class CustomerList extends React.Component {
 			urlToPagenation: '' // ページネーション用に渡すURL
 		}
 		this.activePage = 1
+
+		// ログインユーザ情報
+		this.loginUser = CommonLoginUser().get()
+
+		// 編集権限の有無
+		this.isEdit = this.loginUser.role !== '5'
+
+		this.btn1 = this.isEdit ? {
+			field: 'btn1', title: '配送料', width: '30px',
+			label: <Glyphicon glyph="usd" />, onClick: (_data) => this.moveDeliverycharge(_data)
+		} : null
+		this.header = this.btn1 ? [this.btn1] : []
+		this.header_other = [{
+			field: 'customer.customer_code',title: '顧客コード', width: '80px'
+		}, {
+			field: 'customer.customer_name', title: '顧客名', width: '400px'
+		}, {
+			field: 'customer.customer_name_kana', title: '顧客名カナ', width: '400px'
+		}, {
+			field: 'contact_information.tel', title: '電話番号', width: '100px'
+		}, {
+			field: 'billto.billto_name', title: '請求先', width: '400px'
+		}, {
+			field: 'customer.sales_staff', title: '営業担当者', width: '300px'
+		}, {
+			field: 'customer.working_staff', title: '作業担当者', width: '300px'
+		}, {
+			field: 'contact_information.fax', title: 'FAX', width: '100px'
+		}, {
+			field: 'contact_information.email', title: 'メールアドレス', width: '300px'
+		}, {
+			field: 'contact_information.zip_code', title: '郵便番号', width: '80px'
+		}, {
+			field: 'contact_information.prefecture', title: '都道府県', width: '50px'
+		}, {
+			field: 'contact_information.address1', title: '市区郡町村', width: '150px'
+		}, {
+			field: 'contact_information.address2', title: '番地', width: '300px'
+		}, {
+			field: 'customer.url', title: '顧客URL', width: '200px'
+		}, {
+			field: 'customer.person_in_charge', title: '顧客側担当者', width: '300px'
+		}, {
+			field: 'customer.products', title: '取扱品', width: '300px'
+		}, {
+			field: 'customer.warehouse_code', title: '倉庫コード', width: '100px'
+		}]
+
+		this.header = this.header.concat(this.header_other)
 	}
 
 	/**
@@ -105,6 +155,14 @@ export default class CustomerList extends React.Component {
 	 */
 	componentDidMount() {
 		this.getFeed(1)
+	}
+
+	/**
+	 * 配送料登録へ移動
+	 * @param {*} _data 
+	 */
+	moveDeliverycharge(_data) {
+		this.props.history.push('/DeliveryChargeRegistration?customer_code=' + _data.customer.customer_code)
 	}
 
 	render() {
@@ -175,7 +233,7 @@ export default class CustomerList extends React.Component {
 								size="sm"
 							/>
 							<CommonInputText
-								controlLabel="市区郡長村"
+								controlLabel="市区郡町村"
 								name="contact_information.address1"
 								type="text"
 								placeholder="◯◯市××町"
@@ -211,22 +269,6 @@ export default class CustomerList extends React.Component {
 								size="lg"
 							/>
 
-							<CommonFilterBox
-								controlLabel="集荷出荷区分"
-								size="sm"
-								name="customer.shipment_class"
-								options={[{
-									label: '出荷',
-									value: '0'
-								}, {
-									label: '集荷',
-									value: '1'
-								}, {
-									label: '両方',
-									value: '2'
-								}]}
-							/>
-
 						</CommonSearchConditionsFrom>
 
 					</Col>
@@ -244,46 +286,8 @@ export default class CustomerList extends React.Component {
 						<CommonTable
 							name="entry"
 							data={this.state.feed.entry}
-							edit={(data)=>this.onSelect(data)}
-							header={[{
-								field: 'customer.customer_class.delivery_company', title: '配送業者', width: '150px'
-							}, {
-								field: 'customer.customer_class.classcode', title: '分類コード', width: '150px'
-							},{	
-								field: 'customer.customer_code',title: '顧客コード', width: '100px'
-							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '150px'
-							}, {
-								field: 'customer.customer_name_kana', title: '顧客名カナ', width: '150px'
-							}, {
-								field: 'contact_information.tel', title: '電話番号', width: '100px'
-							}, {
-								field: 'billto.billto_name', title: '請求先', width: '200px'
-							}, {
-								field: 'customer.sales_staff', title: '営業担当者', width: '200px'
-							}, {
-								field: 'customer.working_staff', title: '作業担当者', width: '200px'
-							}, {
-								field: 'contact_information.fax', title: 'FAX', width: '100px'
-							}, {
-								field: 'contact_information.email', title: 'メールアドレス', width: '200px'
-							}, {
-								field: 'contact_information.zip_code', title: '郵便番号', width: '50px'
-							}, {
-								field: 'contact_information.prefecture', title: '都道府県', width: '50px'
-							}, {
-								field: 'contact_information.address1', title: '市区郡町村', width: '200px'
-							}, {
-								field: 'contact_information.address2', title: '番地', width: '200px'
-							}, {
-								field: 'customer.url', title: '顧客URL', width: '200px'
-							}, {
-								field: 'customer.person_in_charge', title: '顧客の担当者', width: '200px'
-							}, {
-								field: 'customer.products', title: '取扱品', width: '200px'
-							}, {
-								field: 'customer.shipment_class', title: '集荷出荷区分', width: '200px',convert: { 0:'出荷', 1:'集荷', 2:'両方'}
-							}]}
+							edit={this.isEdit ? (data)=>this.onSelect(data) : null}
+							header={this.header}
 						/>
 					</Col>  
 				</Row>  

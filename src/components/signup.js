@@ -95,7 +95,7 @@ class Signup extends React.Component {
 						<h2 className="login_form__title">仮登録完了</h2>
 						<div className="login_form__block text-center">
 							<p>ご登録いだいたメールアドレスに
-								<br />確認メールをお送りしてます。</p>
+							<br />確認メールをお送りしてます。</p>
 							<p>ご確認ください。</p>
 							<a className="btn btn-lg login_form__btn--submit" href="index.html">TOPページに戻る</a>
 						</div>

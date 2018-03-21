@@ -13,21 +13,37 @@ billto
  billto_name
  billing_closing_date
  payment_date
+ post_has_sizeweight
+ yamato_has_details
 customer
  customer_code
- customer_class{}
-  delivery_company
-  classcode
+ shipper{}
+  shipment_service_service_name
+  shipment_service_code
+  shipper_info{}
+   shipper_code
+   shipment_class
  customer_name
  customer_name_kana
  sales_staff{}
-  content
+  staff_name
+  staff_email
  working_staff{}
-  content
+  staff_name
+  staff_email
  url
  person_in_charge
  products
- shipment_class
+ warehouse_code
+billfrom
+ billfrom_code
+ billfrom_name
+ payee{}
+  bank_info
+  account_type
+  account_number
+  branch_office
+  account_name
 contact_information
  tel
  fax 
@@ -41,6 +57,8 @@ staff
  role
  superior_email 
  staff_email
+ uid
+ password
 warehouse
  warehouse_code
  warehouse_name
@@ -48,10 +66,14 @@ warehouse
  prefecture
  address1
  address2
-manifesto
- manifesto_code
- manifesto_name
+packing_item
+ item_code
+ item_name
  material
+ category
+ size1
+ size2
+ notices
  thickness
  inside_width
  inside_depth
@@ -60,18 +82,40 @@ manifesto
  outer_depth
  outer_height
  outer_total
+ purchase_price
  regular_price
  regular_unit_price
  special_price
  special_unit_price
- islot
+packing_items{}
+ item_code
+ item_name
+ material
+ category
+ size1
+ size2
+ notices
+ thickness
+ inside_width
+ inside_depth
+ inside_height
+ outer_width
+ outer_depth
+ outer_height
+ outer_total
+ purchase_price
+ regular_price
+ regular_unit_price
+ special_price
+ special_unit_price
 remarks{}
  content
-basic_condition
+basic_condition{}
  title
  condition{}
   content
 item_details{}
+ category
  item_name
  unit_name
  unit
@@ -79,87 +123,116 @@ item_details{}
  unit_price
  remarks
  is_taxation
+ amount
 quotation
  quotation_code
+ quotation_code_sub
  quotation_date
  status
- basic_condition{}
-  title
-  condition{}
-   content
- manifesto{}
-  manifesto_code
-  manifesto_name
-  material
-  thickness
-  inside_width
-  inside_depth
-  inside_height
-  outer_width
-  outer_depth
-  outer_height
-  outer_total
-  regular_price
-  regular_unit_price
-  special_price
-  special_unit_price
-  islot
 invoice
  invoice_code
  quotation_code
- internal_work_code 
+ working_yearmonth
+ invoice_yearmonth
  total_amount
- taxation_amount
- payee{}
-  content
- subtotal
  consumption_tax
- ems
- advance_payment
- payment_cost
- status
-delivery_charge
- delivery_company{}
-  service_code
-  kind_class
-  delivery_charge_details{}
-   size
-   weight
-   charge_by_zone{}
-    zone_code
-    delivery_charge
+ issue_status
+ deposit_status
+ payment_date
+ customer_code 
+delivery_charge{}
+ shipment_service_name
+ shipment_service_code
+ shipment_service_type
+ shipment_service_service_name
+ delivery_charge_details{}
+  size
+  weight
+  price
+  note
+  charge_by_zone{}
+   zone_code
+   zone_name
+   price
 internal_work
- internal_work_code 
  staff_name
- working_date
+ working_yearmonth
+ working_day
  approval_status
- work_kind_class
+ work_type
+ quantity
+ item_details_name
+ item_details_unit
+ packing_item_code
+ packing_item_name
+ shipment_service_code
+ shipment_service_name
+ shipment_service_type
+ shipment_service_service_name
+ shipment_service_size
+ shipment_service_weight
+ period
+ is_completed
+ item_details_unit_name
+ unit_price
+ remarks
+ special_unit_price
 shipment_service
- code
- size
- name
- zone{}
-  zone_code
-  pref_codes{}
-   pref_code
-delivery_charge_amount
- shipping_date
- prefecture
- city
- size
- quantity
- delivery_charge
-work_record
- item_name
- unit_name
- unit
- quantity
-used_manifesto
- manifesto_code
- quantity 
+ code 
+ name  
+ type   
+ service_name  
+ sizes{}
+  size  
+  weight  
+zone{}
+ zone_name
+ zone_code
+ pref_codes{}
+  pref_code
+ invoice_zones{}
+  invoice_zone
 type_ahead
  type
  value
+inquiry
+ staff_name
+ inquiry_status
+ content
+billing_data
+ shipment_service_code
+ shipment_service_type
+ customer_code
+ shipment_class
+ shipper_code
+ shipping_date
+ tracking_number
+ shipment_service_service_name
+ delivery_class
+ size
+ zone_name
+ prefecture
+ city
+ delivery_charge
+ delivery_charge_org_total
+ quantity
+billing_summary
+ record{}
+  size
+  zone_name
+  quantity
+  delivery_charge
+  subtotal  
+creator
+billing_compare{}
+ shipment_service_code
+ shipment_service_service_name
+ shipment_class
+ record{}
+  shipping_date
+  internal_work_quantity
+  billing_quantity
+  billing_amount
 </content>
 <rights>
 </rights>

@@ -1,43 +1,85 @@
 /* @flow */
 import React from 'react'
+import axios from 'axios'
 import {
 	Grid,
 	Row,
 	Col,
 	PageHeader,
 	Navbar,
-	Nav
+	Nav,
 } from 'react-bootstrap'
 import type {
 	Props
 } from 'demo3.types'
 
 import InvoiceForm from './invoice-form'
+
 import {
 	CommonRegistrationBtn,
-	CommonClearBtn
+	CommonClearBtn,
+	CommonLoginUser,
 } from './common'
 
-
+import moment from 'moment'
 export default class InvoiceRegistration extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			disabled: true,
+		}
 
 		// 登録先のURL
 		this.url = '/d/invoice'
+		this.fromUrl = '/d/quotation'
 
 		// 初期値の設定
 		this.entry = {
-			invoice: {},
-
+			invoice: {
+				invoice_yearmonth: moment().format('YYYY/MM'),
+				payment_date:moment(),
+			},
+			item_details: [],
+			billto: {},
+			billfrom: {},
+			contact_information: {},
+			remarks: [],
+			creator:CommonLoginUser().get().staff_name
 		}
 	}
  
-	/**
-	 * 登録完了後の処理
-	 */
+	componentWillMount() {
+		this.setState({ isDisabled: true })
+
+		this.entrykey = location.hash.substring(location.hash.indexOf('?') + 1)
+		
+		axios({
+			url: this.fromUrl + '/' + this.entrykey + '?e',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {
+	
+			this.setState({ isDisabled: false })
+
+			if (response.status === 204) {
+				this.setState({ isError: response })
+			} else {
+				this.entry.invoice.quotation_code = response.data.feed.entry[0].quotation.quotation_code
+				this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
+				this.entry.billto = response.data.feed.entry[0].billto
+				this.entry.billfrom = response.data.feed.entry[0].billfrom || {}
+				this.entry.remarks = response.data.feed.entry[0].remarks || []
+				this.forceUpdate()
+			}
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
 		location.href = '#/InvoiceList'
@@ -48,7 +90,7 @@ export default class InvoiceRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>請求書情報の登録</PageHeader>
+						<PageHeader>請求書の作成</PageHeader>
 					</Col>
 				</Row>
 				<Row>

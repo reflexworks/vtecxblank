@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import {
 	Form,
-	//FormGroup,
+	FormControl,
 	PanelGroup,
 	Panel,
 } from 'react-bootstrap'
@@ -14,6 +14,7 @@ import type {
 import {
 	CommonInputText,
 	CommonFilterBox,
+	CommonPassword,
 } from './common'
 
 export default class StaffForm extends React.Component {
@@ -95,7 +96,6 @@ export default class StaffForm extends React.Component {
 		})   
 	}
 
-
 	/**
 	 * 請求先変更処理
 	 * @param {*} _data 
@@ -117,8 +117,21 @@ export default class StaffForm extends React.Component {
 	 * ロール選択で作業員が選ばれたら上長情報パネルフラグを立てる
 	 */
 	changedRole(value) {
-		this.entry.staff.role = value.value
+		if (value) {
+			this.entry.staff.role = value.value	
+		} else {
+			this.entry.staff.role = ''
+		}
 		this.forceUpdate()
+	}
+
+	/**
+	 * パスワード変更処理
+	 * @param {*} value 
+	 * @param {*} flg 
+	 */
+	changedPassword(value, flg) {
+		console.log(value, flg)
 	}
 
 	render() {
@@ -130,6 +143,11 @@ export default class StaffForm extends React.Component {
 				<PanelGroup defaultActiveKey="1">
 
 					<Panel collapsible header="担当者情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+
+						<div className="hide">
+							<FormControl name="link" data-rel="self" type="text" value="/staff/${staff.staff_email}" />
+							<FormControl name="staff.uid" type="text" value={this.entry.staff.uid ? this.entry.staff.uid : '${_addids}'} />
+						</div>
 
 						<CommonInputText
 							controlLabel="担当者名"
@@ -165,7 +183,6 @@ export default class StaffForm extends React.Component {
 							onChange={(value) => this.changedRole(value)}
 						/>
 
-
 						<CommonInputText
 							controlLabel="メールアドレス"
 							name="staff.staff_email"
@@ -173,6 +190,15 @@ export default class StaffForm extends React.Component {
 							placeholder="logioffice@gmail.com"
 							value={this.entry.staff.staff_email}
 						/>
+
+						{ !this.entry.staff.uid && 
+							<CommonPassword
+								name="staff.password"
+								type="password"
+								value={this.entry.staff.password}
+								onChange={(value, flg) => this.changedPassword(value, flg)}
+							/>
+						}
 
 					</Panel>
 

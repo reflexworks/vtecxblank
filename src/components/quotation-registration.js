@@ -19,7 +19,8 @@ import {
 	CommonMonthlySelect,
 	CommonInputText,
 	CommonRegistrationBtn,
-	CommonTable
+	CommonTable,
+	CommonLoginUser
 } from './common'
 
 import {
@@ -40,11 +41,12 @@ export default class QuotationRegistration extends React.Component {
 
 		// 初期値の設定
 		this.entry = {
-			quotation: {
-				basic_condition: [],
-				manifesto: []
-			},
-			billto: {}
+			quotation: {},
+			packing_items: [],
+			billto: {},
+			basic_condition: [],
+			billfrom: {},
+			contact_information:{}
 		}
 
 		this.master = {
@@ -53,13 +55,14 @@ export default class QuotationRegistration extends React.Component {
 
 		this.billto = null
 		this.monthly = null
-		this.selfValue = ''
+
 		this.template = {
-			quotation: {
-				basic_condition: [],
-				manifesto: []
-			}
+			quotation: {},
+			packing_items: [],
+			basic_condition: []
 		}
+
+		this.login_user = CommonLoginUser().get().staff_name
 
 	}
 
@@ -78,10 +81,6 @@ export default class QuotationRegistration extends React.Component {
 
 	setMonthly(_data) {
 		this.monthly = _data
-		if (_data) {
-			if (this.selfValue !== '') this.selfValue = this.selfValue.split('_')[0]
-			this.selfValue = this.selfValue + '_' + _data.value.replace('/', '')
-		}
 		this.setDisabled()
 	}
 
@@ -93,7 +92,7 @@ export default class QuotationRegistration extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/billto?f',
+			url: '/s/get-billto',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -150,8 +149,6 @@ export default class QuotationRegistration extends React.Component {
 		if (_data) {
 			this.entry.billto = _data.data.billto
 			this.billto = _data.data
-			if (this.selfValue !== '') this.selfValue = this.selfValue.split('_')[1]
-			this.selfValue = '/quotation/' + this.entry.billto.billto_code + '_' + this.selfValue
 			this.templateList = null
 			this.setTemplateData(this.entry.billto.billto_code)
 		} else {
@@ -204,10 +201,8 @@ export default class QuotationRegistration extends React.Component {
 		} else {
 			this.selectTemplate = null
 			this.template = {
-				quotation: {
-					basic_condition: [],
-					manifesto: []
-				}
+				packing_items: [],
+				basic_condition: []
 			}
 		}
 		this.forceUpdate()
@@ -268,7 +263,11 @@ export default class QuotationRegistration extends React.Component {
 									value={this.entry.billto.billto_code}
 								/>
 								<FormControl name="quotation.quotation_code" type="text" value="${_addids}" />
-								<FormControl name="link" data-rel="self" type="text" value={this.selfValue} />
+								<FormControl name="quotation.quotation_code_sub" type="text" value="01" />
+								<FormControl name="quotation.status" type="text" value="0" />
+								<FormControl name="link" data-rel="self" type="text" value="/quotation/,${_addids},-,${quotation.quotation_code_sub}" />
+								<FormControl name="creator" type="text" value={this.login_user} />
+							
 							</FormGroup>
 						}
 						{ !this.entry.billto.billto_code && 
@@ -293,8 +292,8 @@ export default class QuotationRegistration extends React.Component {
 						}
 						<div className="hide">
 							<CommonTable
-								name="quotation.basic_condition"
-								data={this.template.quotation.basic_condition}
+								name="basic_condition"
+								data={this.template.basic_condition}
 								header={[{
 									field: 'title',title: '条件名', width: '300px'
 								}]}
@@ -314,14 +313,53 @@ export default class QuotationRegistration extends React.Component {
 								}]}
 							/>
 							<CommonTable
-								name="quotation.manifesto"
-								data={this.template.quotation.manifesto}
+								name="packing_items"
+								data={this.template.packing_items}
 								header={[{
-									field: 'manifesto_code',title: '品番', width: '100px'
+									field: 'item_code',title: '品番', width: '100px'
 								}]}
 							/>
+							<CommonInputText
+								name="billfrom.billfrom_name"
+								value={this.entry.billfrom.billfrom_name}
+							/>
+							<CommonInputText
+								name="contact_information.tel"
+								value={this.entry.contact_information.tel}
+							/>
+
+							<CommonTable
+								controlLabel="口座情報"
+								name="billfrom.payee"
+								data={this.entry.billfrom.payee}
+								header={[{
+									field: 'bank_info', title: '銀行名', width: '30px',
+									convert: {
+										1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+										6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
+									}
+								}, {
+									field: 'branch_office', title: '支店名', width: '30px',
+								}, {
+									field: 'account_type', title: '口座種類', width: '30px',convert: { 0: '普通' ,1: '当座',}
+								}, {
+									field: 'account_number', title: '口座番号', width: '30px',
+								}, {
+									field: 'account_name', title: '口座名義', width: '30px',
+								}]}
+								noneScroll
+								fixed
+							/>
+
 						</div>
-						<CommonRegistrationBtn label="見積内容入力へ" url={this.url} callback={(data) => this.callbackRegistrationButton(data)} disabled={this.state.disabled} />	
+						<CommonRegistrationBtn
+							controlLabel=" "
+							label="見積内容入力へ"
+							url={this.url}
+							callback={(data) => this.callbackRegistrationButton(data)}
+							disabled={this.state.disabled}
+							pure
+						/>
 					</Form>
 				</Row>
 			</Grid>

@@ -4,7 +4,6 @@ const webserver  = require('gulp-webserver')
 const imagemin  = require('gulp-imagemin')
 const vfs = require('vinyl-fs') 
 const runSequence = require('run-sequence')
-const exec = require('child_process').exec
 const clean = require('gulp-clean')
 const argv = require('minimist')(process.argv.slice(2))
 const webpack = require('webpack')
@@ -12,9 +11,15 @@ const webpackStream = require('webpack-stream')
 const gutil = require('gulp-util')
 const eventStream = require('event-stream')
 const fs = require('fs-sync')
+const fsasync = require('fs')
 const tap = require('gulp-tap')
 const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
+const request = require('request')
+const mocha = require('gulp-mocha')
+const env = require('node-env-file')
+
+env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
@@ -62,15 +67,14 @@ function webpackconfig(filename,externals,devtool) {
 			'react-bootstrap': 'ReactBootstrap',
 			'react-router-dom': 'ReactRouterDOM',            
 			'axios': 'axios'
-		} : {},
+		} : {
+		},
 		plugins: devtool ? [] : [
 			new BabiliPlugin()
 		]
-
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
-
 
 gulp.task('watch:components', function(){
 	gulp.watch('./src/components/*.js')
@@ -139,11 +143,11 @@ gulp.task('watch:settings', function(){
 	gulp.watch('./setup/_settings/*')
 		.on('change', function(changedFile) {
 			const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
-			sendentry(file, null)
+			sendfile(file, '',false,false)
 		})
 })
 
-function webpack_files(src,dest,done) {
+function webpack_files(src,dest,externals,done) {
 	let filenames = []
 	let streams = tap(function(file){
 		const filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
@@ -154,7 +158,7 @@ function webpack_files(src,dest,done) {
 
 	eventStream.merge(streams).on('end', function() { 
 		let tasks = filenames.map(function(filename) {
-			return webpack_file(filename,src,dest)   
+			return webpack_file(filename,src,dest,externals)   
 		}
 		)
 		eventStream.merge(tasks).on('end', done) 
@@ -163,9 +167,9 @@ function webpack_files(src,dest,done) {
 	return streams
 }
 
-function webpack_file(filename,src,dest) {
+function webpack_file(filename,src,dest,externals) {
 	      return gulp.src(src+'/'+filename)
-	      .pipe(webpackStream(webpackconfig(filename,false,false),webpack))
+	      .pipe(webpackStream(webpackconfig(filename,externals,false),webpack))
 	      .pipe(gulp.dest(dest))
 }
 
@@ -173,58 +177,165 @@ gulp.task('build:html_components',['copy:images','copy:pdf','copy:xls'], functio
 	gulp.src('./src/*.html')
 		.pipe(minifyHtml({ empty: true }))
 		.pipe(gulp.dest('./dist'))
-		.pipe(webpack_files('./src/components','./dist/components',done))
+		.pipe(webpack_files('./src/components','./dist/components',true,done))
 })
 
-gulp.task('upload:content', function(){
-	recursive('dist', [sendcontent],function(){})
-})
-
-gulp.task('upload:server', function(){
-	recursive('dist/server', [sendcontent],function(){})
-})
-
-gulp.task('upload:entry', function(){
-	recursive('setup', [sendentry],function(){})
-})
-
-function sendcontent(file, stats) { 
-	const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1) : argv.h
-	curl(getargs(file,stats,argvh,'?_content'),file,argvh,false)
-}
-
-function sendentry(file, stats) {  
-	const argvh = argv.h.substr( argv.h.length-1 ) === '/' ? argv.h.substr(0,argv.h.length-1)+'/d' : argv.h+'/d'
-	curl(getargs(file,stats,argvh,''),file,argvh,true)
-}
-
-function getargs(file, stats, argvh, option) {
-	let args = ''
-	if (stats&&stats.isDirectory()) {
-		args += '-H "Authorization:Token '+argv.k+'"'
-		args += ' -H "Content-Type:'+gettype(file)+'"'
-		args += ' -H "Content-Length:0"'
-		args += ' -X PUT '+argvh+file.substring(file.indexOf('/'))+'?_content'
-	}else {
-		args += '-H "Authorization:Token '+argv.k+'"'
-		args += ' -H "Content-Type:'+gettype(file)+'"'
-		args += ' -T '+file
-		args += ' '+argvh+file.substring(file.indexOf('/'))+option    
-	}
-	return args
-}
-
-function curl(args,file,argvh,isentry) {
-	exec('curl '+args,function (err, stdout, stderr) {
-		if (isentry) {
-			console.log(file)
-		}else {
-			console.log(file+' --> '+argvh+file.substring(file.indexOf('/')))
-		}
-		console.log(stdout)
-		console.log(stderr)
+gulp.task('upload:content', function(done){
+	recursive('dist', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
 	})
+})
+
+gulp.task('upload:images', function(done){
+	recursive('dist/img', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:server', function(done){
+	recursive('dist/server', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:components', function(done){
+	recursive('dist/components', [createfolder], function (err, files) {
+		files.map( (file) => sendcontent(file) )		
+		done()
+	})
+})
+
+gulp.task('upload:entry', function (done) {
+	recursive('setup', [], function (err, files) {
+		files.map((file) => {
+			if ((file.indexOf('template.xml')< 0) &&
+				(file.indexOf('folderacls.xml') < 0)) {
+				sendfile(file, '')	
+			}
+		})		
+		done()
+	})
+})
+
+gulp.task('upload:data', function (done) {
+	recursive('data', [], function (err, files) {
+		files.map((file) => sendfile(file, ''))				
+		done()
+	})
+})
+
+gulp.task('upload:htmlfolders', function (done) {
+	sendfile('setup/_settings/htmlfolders.xml', '',done)
+})
+
+gulp.task('upload:template', function (done) {
+	sendfile('setup/_settings/template.xml','',done)
+})
+
+gulp.task('upload:folderacls', function (done) {
+	sendfile('setup/_settings/folderacls.xml', '',done)
+})
+
+gulp.task('upload:counts', function (done) {
+	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	var options = {
+		method: 'GET',
+		url: path+'/s/adjustallocids',
+		headers: {
+			'Content-Type': 'text/html',
+			'X-Requested-With': 'XMLHttpRequest',
+			'Authorization': 'Token ' + argv.k,
+		}
+	}
+	request(options, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			console.log(body)
+		} 
+	})
+})
+
+gulp.task('test', function () {
+	let target = 'test/*.test.js'
+	if (argv.f) {
+		target = 'test/'+argv.f+'.test.js'
+	}
+	return gulp.src([target], { read: false })
+		.pipe(mocha({ reporter: 'list',require: 'babel-register',timeout:'60000'}))
+		.on('error', gutil.log)
+})
+
+function sendcontent(file) {
+	sendfile(file,'?_content',false,false)
 }
+
+function sendfile(file,iscontent,done,isdirectory) {
+	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	let url = path + file.substring(file.indexOf('/'))
+	
+	var options = {
+		url: url+iscontent,
+		headers: {
+			'Content-Type': gettype(file),
+			'X-Requested-With': 'XMLHttpRequest',
+			'Authorization': 'Token ' + argv.k,
+		}
+	}
+	if (isdirectory) {
+		options.headers['Content-Length'] = '0'
+	}
+ 
+	function callback(error, response, body) {
+		var dir =''
+		if (isdirectory) {
+			dir = ' (folder)'
+		}
+		console.log(file+dir+' --> '+url)
+		if (!error && response.statusCode == 200) {
+			console.log(body)
+		} else {
+			if (response) {
+				if (response.statusCode) {
+					console.log('can\'t PUT content. status=' + response.statusCode)
+					console.log(response.body)
+					if (response.statusCode == 302) {
+						response.headers['set-cookie'].map((msg) => {
+							if (msg.indexOf('ERROR_') >= 0) {
+								console.log(msg)
+							}
+						})
+					}
+				} else {
+					console.log('can\'t PUT content. Retry it may work.')
+				}
+			} else {
+				console.log('can\'t PUT content.then retry.')
+				fsasync.createReadStream(file).pipe(request.put(options,callback))	
+			}	
+		}
+		if (done) {
+			done()		
+		}
+	}
+	if (isdirectory) {
+		request.put(options,callback)
+	} else {
+		fsasync.createReadStream(file).pipe(request.put(options,callback))	
+	}
+
+}
+
+function createfolder(file, stats) { 
+
+	if (stats && stats.isDirectory()) {
+		sendfile(file, '?_content', false, true)
+		return true
+	}
+	return false
+}
+
 
 function gettype(file) {
 	const ext = file.match(/(.*)(?:\.([^.]+$))/)
@@ -281,16 +392,16 @@ gulp.task('watch:server',['watch:settings'], function(){
 
 gulp.task('build:server_dist', function(done){
 	gulp.src('./src/server/*.js')
-		.pipe(webpack_files('./src/server','./dist/server',done))      
+		.pipe(webpack_files('./src/server','./dist/server',false,done))      
 })
 
 gulp.task('build:server_test', function(done){
 	gulp.src('./test/*.html')
-		.pipe(webpack_files('./src/server','./test/server',done))      
+		.pipe(webpack_files('./src/server','./test/server',false,done))      
 })
 
 gulp.task('build:server', function ( callback ) {
-	runSequence('clean-dist',['build:server_dist','build:server_test'])
+	runSequence('clean-dist',['build:server_dist','build:server_test'],callback)
 }) 
 
 gulp.task( 'copy:images', function() {
@@ -374,24 +485,22 @@ gulp.task('clean-dist', function () {
 })
 
 gulp.task('build:client', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'])
+	runSequence('clean-dist',['build:html_components'],callback)
 }) 
 gulp.task('build', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'],['build:server_dist','build:server_test'])
+	runSequence('clean-dist',['build:html_components'],['build:server_dist','build:server_test'],callback)
 }) 
 gulp.task('deploy', function ( callback ) {
-	runSequence('clean-dist',['build:html_components'],'build:server_dist','upload')
+	runSequence('clean-dist',['build:html_components'],'build:server_dist','upload',callback)
 }) 
 
 gulp.task('deploy:server', function ( callback ) {
-	runSequence('clean-dist','build:server_dist','upload:server')
+	runSequence('clean-dist','build:server_dist','upload:server',callback)
 }) 
 
-gulp.task('upload:images', function ( callback ) {
-	runSequence('copy:images','upload:content')
+gulp.task('upload', function ( callback ) {
+	runSequence('upload:htmlfolders','upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
-
-gulp.task('upload', ['upload:content','upload:entry','upload:server'])
 
 gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
 
