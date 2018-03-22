@@ -105,10 +105,10 @@ export default class InvoiceUpdate extends React.Component {
 		this.customer = data
 	}
 
-	doPrint(_isPreview,_allPreview) {
+	doPrint(_isPreview,_allCustomer) {
 		if (this.workingYearmonth) {
 			let print
-			if (!_allPreview) {
+			if (!_allCustomer) {
 				print = () => {
 					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
 					url = _isPreview ? url + '&preview' : url
@@ -149,7 +149,7 @@ export default class InvoiceUpdate extends React.Component {
 			<CommonUpdateBtn key={1} NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />,
 			<CommonDeleteBtn key={2} NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />,
 			<CommonGeneralBtn key={3} NavItem onClick={()=>this.doPrint(true,false)} label={<span><Glyphicon glyph="print" /> プレビュー 請求書(顧客毎)</span>} />,
-			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrint(true,true)} label={<span><Glyphicon glyph="print" /> プレビュー 請求書(請求先毎)</span>} />
+			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrint(true,true)}label={<span><Glyphicon glyph="print" /> プレビュー 請求書(請求先毎)</span>} />
 		]
 
 		return (
