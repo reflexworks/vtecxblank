@@ -32,8 +32,9 @@ function getBillingData(entry) {
 
 	const prefecture = getPrefecture(entry.billing.shipping_address1)
 	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code, entry.billing.billing_item)
-	const charge_by_zone = getChargeByZone( delivery_charge_all,customer_all,'',prefecture,entry.billing.billing_item,entry.billing.delivery_area)
 	const shipment_service_code = getShipmentServiceCode(entry.billing.billing_item)
+	delivery_charge_all.shipment_service_code = shipment_service_code
+	const charge_by_zone = getChargeByZone( delivery_charge_all,customer_all,'',prefecture,entry.billing.billing_item,entry.billing.delivery_area)
 
 	const billing_data = {
 		billing_data: {

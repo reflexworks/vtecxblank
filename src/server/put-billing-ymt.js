@@ -70,7 +70,6 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 	return billing_data
 }
 
-
 function getBillingDataOfMail(entry,shipment_service_service_name) {
 
 	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code,shipment_service_service_name)
