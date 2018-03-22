@@ -448,7 +448,8 @@ const getPayee = (_payee) => {
 	)	
 }
 
-const invoicePage = (_customerEntry,_invoiceEntry) => {
+const invoicePage = (_customerEntry,_invoiceEntry,count) => {
+
 
 	const allItem = createArray(_customerEntry,_invoiceEntry)
 	//税抜合計値
@@ -462,7 +463,7 @@ const invoicePage = (_customerEntry,_invoiceEntry) => {
 	//_invoiceEntry.invoice.invoice_yearmonth
 
 	const invoice_1  = (
-		<div className="_page" id={_customerEntry.customer.customer_code + '-1'} style={pdfstyles._page}>
+		<div className="_page" id={'page-'+count} style={pdfstyles._page}>
 		
 			<table cols="9" style={pdfstyles.widths}>
 
@@ -561,8 +562,9 @@ const invoicePage = (_customerEntry,_invoiceEntry) => {
 		</div>
 	)
 
+	count++
 	const invoice_2 = (
-		<div className="_page" id={_customerEntry.customer.customer_code + '-2'} style={pdfstyles._page}>
+		<div className="_page" id={'page-'+count} style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.payeeWidths}>
 				
 				{/*備考*/}
@@ -598,12 +600,14 @@ const invoicePage = (_customerEntry,_invoiceEntry) => {
 			</table>
 		</div>
 	)
+
 	const tables = [invoice_1, invoice_2]
 	let res = {
 		html: tables,
 		size: tables.length
 	}
 	return res
+
 }
 
 let pageData = {
@@ -611,7 +615,6 @@ let pageData = {
 		page:[]
 	}
 }
-
 
 //customer_codeの有無で処理を分ける。有るときはそれを使ってinvoicePageを行う
 //無いときは請求先コードで絞った顧客情報を元にinvoicepageを行う
@@ -629,11 +632,13 @@ const element = () => {
 		customer_data = vtecxapi.getFeed('/customer?billto.billto_code=' + billto_code, true)
 	}
 
-	let invoice = []	
+	let invoice = []
+	let count = 1
 	customer_data.feed.entry.map((customer_entry) => {
-		invoice.push(invoicePage(customer_entry, invoice_entry))
+		invoice.push(invoicePage(customer_entry,invoice_entry,count))
+		count += 2
 	})
-	
+
 	let invoice_size = 0
 	invoice.map((_invoice) => {
 		invoice_size = (Number(invoice_size) + Number(_invoice.size))
@@ -643,33 +648,32 @@ const element = () => {
 	for (let i = 0, ii = total_size; i < ii; ++i) {
 		pageData.pageList.page.push({word: ''})
 	}
-
+	
 	return (
 		<html>
 			<body>
 				{invoice.map((_invoice) => {
-					vtecxapi.log('_invoicePage1ID='+JSON.stringify(_invoice.html[0].props.id))
-					vtecxapi.log('_invoicePage2ID='+JSON.stringify(_invoice.html[1].props.id))
 					return (_invoice.html)
 				})
 				}
 			</body>
 		</html>
 	)
-	
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
-
 const file_name = () => {
 	const preview = vtecxapi.getQueryString('preview')
 	if (preview === '') {
-		return 'preview-' + invoice_code + '/' + customer_code + '/' + working_yearmonth + '.pdf'
+		if(customer_code){
+			return 'preview-' + invoice_code + '/' + customer_code + '/' + working_yearmonth + '.pdf'
+		} else {
+			return 'preview-' + invoice_code + '/' + working_yearmonth + '.pdf'
+		}
 	} else {
 		return 'invoice-' + invoice_code +'.pdf'
 	}
 }
-vtecxapi.log('html='+html)
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
 
