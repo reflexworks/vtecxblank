@@ -8297,10 +8297,10 @@
   </entry>
   <entry>
     <type_ahead>
-      <type>0</type>
-      <value>保管料　　　　　</value>
+      <type>1</type>
+      <value>出荷数（ＤＭ、ゆうパケ、ゆうメール）</value>
     </type_ahead>
-    <link href="/type_ahead/0-7-44-6-14-1-1" rel="self"/>
+    <link href="/type_ahead/0-7-44-6-14-1-10" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8332,10 +8332,45 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>PP結束</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-1-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（川越倉庫 固定分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-1-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>3規制、各期末日のﾊﾟﾚｯﾄ合計を請求</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-1-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷数（ＤＭ、ゆうﾊﾟｹ、ゆうﾒｰﾙ）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-1-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>4</type>
       <value>外装検品・伝票発行・伝票貼り</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>配送料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-10" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8350,6 +8385,48 @@
       <value>出荷作業（ヤマトDM便・ゆうパケット・ゆうメール）</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-10-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>商品</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ラップ巻</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>段ボール個数</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>3期制、各期末日のﾊﾟﾚｯﾄ合計請求</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>らでぃっしゅぼーや首都圏ｾﾝﾀｰ積込はＰＭ～</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>パレット使用料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-10-9" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8381,6 +8458,41 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>0</type>
+      <value>商品代金</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-2-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>炭箱入れ(2ヶ入)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-2-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>振分け梱包作業</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-2-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ﾊﾟﾚｯﾄ/枚、1期</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-2-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入荷数</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-2-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>入庫数（Mサイズ）</value>
     </type_ahead>
@@ -8392,6 +8504,27 @@
       <value>保管料（高島平倉庫代）</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-3-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>エアーキャップ巻(大)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-3-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>エアキャップ巻き（小）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-3-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>664000</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-3-5" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8444,6 +8577,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>デパート包装</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-4-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>月額（15日間　</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-4-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>2</type>
       <value>便</value>
     </type_ahead>
@@ -8455,6 +8602,48 @@
       <value>入庫数（Lサイズ）</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（川越倉庫_固定分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>輸送料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>4ｔ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>7ｔ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（戸田）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷数（宅配）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-5-8" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8480,6 +8669,48 @@
   <entry>
     <type_ahead>
       <type>1</type>
+      <value>エアキャップ巻き（大）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>出庫作業料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>1期</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ﾊﾟﾚｯﾄ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>10ｔ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>データ変換ソウト（ご希望に」</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-6-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
       <value>同梱作業（DM便・ネコポス・ゆうパケット・メール）</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-7-1" rel="self"/>
@@ -8500,10 +8731,24 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>0</type>
+      <value>パレット資料料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-7-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>2</type>
       <value>CS</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>3規制、各期末日のﾊﾟﾚｯﾄ数合計を請求</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-10" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -8515,8 +8760,78 @@
   <entry>
     <type_ahead>
       <type>1</type>
+      <value>DM便・ゆうパケット・ゆうメール等</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>エアーキャップ巻(小)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>アマゾン転送、箱入替</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>作業終了後保管が必要な場合</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>月（15日単位</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>期　（15日）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（川越倉庫_変動分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-8-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
       <value>同梱作業（ヤマト宅配便・自社便）</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-9-1186" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>ミラクルシェイプ</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-9-1187" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>プレゼントラッピング/巾着入れ)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-9-1188" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>エアキャップ巻き　大）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-7-44-6-14-9-1189" rel="self"/>
   </entry>
 </feed>

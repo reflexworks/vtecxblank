@@ -18060,6 +18060,17 @@
       <work_type>0</work_type>
       <item_details_name>出荷作業料</item_details_name>
       <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業カレー（エコ配2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/list/0-7-44-6-6-8-35-9-1-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
       <item_details_unit_name>同梱作業（ゆうパケ2点目～）</item_details_unit_name>
       <unit_price>10.00</unit_price>
       <remarks>商品</remarks>
@@ -18272,6 +18283,65 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>2</quantity>
+      <shipment_service_code>ECO3</shipment_service_code>
+      <shipment_service_name>エコ配</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>2</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（納品書）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>納品書の同梱</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-1-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>1</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-1-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>2</quantity>
+      <packing_item_code>dbox_020</packing_item_code>
+      <packing_item_name>ダンボール箱 80サイズ 底面 A4</packing_item_name>
+      <special_unit_price>52.50</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -18302,6 +18372,19 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>1</quantity>
+      <packing_item_code>kfuto_001</packing_item_code>
+      <packing_item_name>クッション封筒（白）CD・DVD1枚用 封緘・開封テープ付き</packing_item_name>
+      <special_unit_price>23.30</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-4-15" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -18313,6 +18396,21 @@
       <remarks>納品書の同梱</remarks>
     </internal_work>
     <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業カレー（エコ配2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000165/data/0-7-44-6-6-8-35-9-2-5-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -18464,11 +18562,44 @@
       <work_type>0</work_type>
       <item_details_name>付帯作業料</item_details_name>
       <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアーキャップ巻き</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-1-12" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
       <item_details_unit_name>エアーキャップ巻き（アクセサリー・小物）</item_details_unit_name>
       <unit_price>10.00</unit_price>
       <remarks>アクセサリー・小物（資材別）</remarks>
     </internal_work>
     <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>FBAラベル貼り</item_details_unit_name>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit></item_details_unit>
+      <item_details_unit_name>その他</item_details_unit_name>
+      <unit_price></unit_price>
+      <remarks>相談</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-3-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -18491,6 +18622,17 @@
       <remarks>商品</remarks>
     </internal_work>
     <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業（宅配2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/list/0-7-44-6-6-8-36-3-1-8-1" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -18695,6 +18837,63 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>2</quantity>
+      <packing_item_code>dbox_020</packing_item_code>
+      <packing_item_name>ダンボール箱 80サイズ 底面 A4</packing_item_name>
+      <special_unit_price>52.50</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-10-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>4</quantity>
+      <shipment_service_code>ECO3</shipment_service_code>
+      <shipment_service_name>エコ配</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-2-12" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>3</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアーキャップ巻き</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-2-13" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>31</quantity>
+      <packing_item_code>dbox_034</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（小）</packing_item_name>
+      <special_unit_price>18.90</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-2-14" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -18706,6 +18905,49 @@
       <shipment_service_size>3cm以内</shipment_service_size>
     </internal_work>
     <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>13</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業（エコ配2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>45</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>FBAラベル貼り</item_details_unit_name>
+      <unit_price>5.00</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>1</quantity>
+      <packing_item_code>dbox_035</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（大）</packing_item_name>
+      <special_unit_price>24.20</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-5-4" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -18725,6 +18967,19 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>2</quantity>
+      <packing_item_code>dbox_016</packing_item_code>
+      <packing_item_name>ダンボール箱 60サイズ 底面 A5</packing_item_name>
+      <special_unit_price>31.50</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -18737,6 +18992,95 @@
       <shipment_service_weight>15kg迄</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>12</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-8-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>4</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（納品書）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>納品書の同梱</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-8-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>213</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業（宅配2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-8-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>32</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-8-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>45</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit></item_details_unit>
+      <item_details_unit_name>その他</item_details_unit_name>
+      <unit_price></unit_price>
+      <remarks>相談</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>87</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>同梱作業カレー（ゆうパケ2点目～）</item_details_unit_name>
+      <unit_price>10.00</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000024-201803-0000220/data/0-7-44-6-6-8-36-3-2-9-2" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -19941,6 +20285,20 @@
   <entry>
     <internal_work>
       <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>3</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000034-201803-0000161/data/0-7-44-6-6-8-40-4-2-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -19982,6 +20340,22 @@
       <remarks>ピッキング、外装検品、１点梱包</remarks>
     </internal_work>
     <link href="/internal_work/0000034-201803-0000161/data/0-7-44-6-6-8-40-4-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>3</quantity>
+      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_name>エコ配ALLJP</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコ配便ALLJP</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000034-201803-0000161/data/0-7-44-6-6-8-40-4-2-9-1" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -24449,26 +24823,6 @@
   </entry>
   <entry>
     <internal_work>
-      <work_type>2</work_type>
-      <shipment_service_code>YH3</shipment_service_code>
-      <shipment_service_name>ヤマト運輸</shipment_service_name>
-      <shipment_service_type>2</shipment_service_type>
-      <shipment_service_service_name>ネコポス</shipment_service_service_name>
-    </internal_work>
-    <link href="/internal_work/0000052-201802-0000006/list/0-7-44-6-6-3-1-6-1-2-1" rel="self"/>
-  </entry>
-  <entry>
-    <internal_work>
-      <work_type>2</work_type>
-      <shipment_service_code>YH2</shipment_service_code>
-      <shipment_service_name>ヤマト運輸</shipment_service_name>
-      <shipment_service_type>2</shipment_service_type>
-      <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-    </internal_work>
-    <link href="/internal_work/0000052-201802-0000006/list/0-7-44-6-6-3-1-6-1-4-1" rel="self"/>
-  </entry>
-  <entry>
-    <internal_work>
       <work_type>1</work_type>
       <shipment_service_code>YH1</shipment_service_code>
       <shipment_service_name>ヤマト運輸</shipment_service_name>
@@ -24479,13 +24833,16 @@
   </entry>
   <entry>
     <internal_work>
-      <work_type>2</work_type>
-      <shipment_service_code>YH1</shipment_service_code>
-      <shipment_service_name>ヤマト運輸</shipment_service_name>
-      <shipment_service_type>1</shipment_service_type>
-      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+      <staff_name>システム管理者</staff_name>
+      <work_type>4</work_type>
+      <quantity>0</quantity>
+      <item_details_name>保管料（パレット使用料）</item_details_name>
+      <item_details_unit>1パレット</item_details_unit>
+      <item_details_unit_name>月</item_details_unit_name>
+      <unit_price>0</unit_price>
+      <remarks></remarks>
     </internal_work>
-    <link href="/internal_work/0000052-201802-0000006/list/0-7-44-6-6-3-1-6-1-8-1" rel="self"/>
+    <link href="/internal_work/0000052-201802-0000006/data/0-7-44-6-6-3-1-6-2-1-1" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -29221,6 +29578,17 @@
   </entry>
   <entry>
     <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>ワールドサプライ送り状</item_details_unit_name>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/list/0-7-44-6-6-8-54-9-1-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
       <work_type>3</work_type>
       <packing_item_code>dbox_058</packing_item_code>
       <packing_item_name>ダンボール箱　ハンドラル・マラカス用内箱</packing_item_name>
@@ -29769,6 +30137,51 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>15</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1枚</item_details_unit>
+      <item_details_unit_name>REFAX</item_details_unit_name>
+      <unit_price>10</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-10-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>51</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1枚</item_details_unit>
+      <item_details_unit_name>値札貼り</item_details_unit_name>
+      <unit_price>５</unit_price>
+      <remarks>シール支給</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-10-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>22</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1セット</item_details_unit>
+      <item_details_unit_name>同梱作業</item_details_unit_name>
+      <unit_price>20</unit_price>
+      <remarks>ステッカー・チラシ・カタログ・パンフレットなどの販促物</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-10-6" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -29784,6 +30197,35 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>16</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-2-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>袋詰め</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>商品をOPPへ袋詰め</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-2-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>3</work_type>
@@ -29793,6 +30235,19 @@
       <special_unit_price>61.0</special_unit_price>
     </internal_work>
     <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>1</quantity>
+      <packing_item_code>dbox_038</packing_item_code>
+      <packing_item_name>ダンボール箱 特売 100サイズ 底面A3</packing_item_name>
+      <special_unit_price>61.0</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-4-1" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -29821,6 +30276,51 @@
       <special_unit_price>107</special_unit_price>
     </internal_work>
     <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>9</quantity>
+      <item_details_name>入庫作業料</item_details_name>
+      <item_details_unit>1箱</item_details_unit>
+      <item_details_unit_name>入庫料</item_details_unit_name>
+      <unit_price>50</unit_price>
+      <remarks>正箱、外箱に内容個数記載のあるもの(内容未検)、箱積み</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>2</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1箱</item_details_unit>
+      <item_details_unit_name>簡易包装</item_details_unit_name>
+      <unit_price>60</unit_price>
+      <remarks>ラッピング袋などへ詰め込みのみ（資材別）</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-5-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>ワールドサプライ送り状</item_details_unit_name>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-5-5" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -29855,6 +30355,51 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>119</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>セット組</item_details_unit_name>
+      <unit_price>45</unit_price>
+      <remarks>キリンのソフィー(組立＋シール貼り/仕様書要)</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-6-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>93</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>法定ラベル貼り</item_details_unit_name>
+      <unit_price>5</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-6-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>１枚</item_details_unit>
+      <item_details_unit_name>メッセージカード</item_details_unit_name>
+      <unit_price>20</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-6-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -29881,6 +30426,21 @@
       <remarks>商品</remarks>
     </internal_work>
     <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>158</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング</item_details_unit_name>
+      <unit_price>20</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000095-201803-0000183/data/0-7-44-6-6-8-54-9-2-8-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -29958,6 +30518,230 @@
       <packing_item_name>ダンボール箱 60サイズ 底面 A5</packing_item_name>
     </internal_work>
     <link href="/internal_work/0000098-201803-0000032/list/0-4-43-6-7-1-4-5-1-10-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き/定形外分</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>エアキャップ巻き/定形外分</remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>1</work_type>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き</item_details_unit_name>
+      <unit_price>10</unit_price>
+      <remarks>エアキャップ巻き</remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-2-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（ゆうパケット2点目～）</item_details_unit_name>
+      <unit_price>５</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>1</work_type>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>250g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>1</work_type>
+      <shipment_service_code>JP3</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>定形外（規格内）</shipment_service_service_name>
+      <shipment_service_weight>250g</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>引き戻し料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name></item_details_unit_name>
+      <unit_price>80</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（エコ配2点目～）</item_details_unit_name>
+      <unit_price>5</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/list/0-7-44-6-6-8-56-5-1-6-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>4</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>250g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>38</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（エコ配2点目～）</item_details_unit_name>
+      <unit_price>5</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>837</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き/定形外分</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>エアキャップ巻き/定形外分</remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>232</quantity>
+      <shipment_service_code>JP3</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>定形外（規格内）</shipment_service_service_name>
+      <shipment_service_weight>250g</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>48</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>53</quantity>
+      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_name>エコ配ALLJP</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>569</quantity>
+      <item_details_name>引き戻し料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name></item_details_unit_name>
+      <unit_price>80</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>7</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（ゆうパケット2点目～）</item_details_unit_name>
+      <unit_price>５</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>15</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き</item_details_unit_name>
+      <unit_price>10</unit_price>
+      <remarks>エアキャップ巻き</remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000032/data/0-7-44-6-6-8-56-5-2-7-2" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -30653,6 +31437,21 @@
   <entry>
     <internal_work>
       <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業（エコ配2点目～）</item_details_unit_name>
+      <unit_price>5</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000034/data/0-7-44-6-6-8-58-2-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -30664,6 +31463,21 @@
       <remarks></remarks>
     </internal_work>
     <link href="/internal_work/0000098-201803-0000034/data/0-7-44-6-6-8-58-2-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>1</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000034/data/0-7-44-6-6-8-58-2-2-4-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -30680,6 +31494,22 @@
       <shipment_service_weight>15kg迄</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000098-201803-0000034/data/0-7-44-6-6-8-58-2-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>1</quantity>
+      <shipment_service_code>ECO3</shipment_service_code>
+      <shipment_service_name>エコ配</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000098-201803-0000034/data/0-7-44-6-6-8-58-2-2-8-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -30932,6 +31762,35 @@
   <entry>
     <internal_work>
       <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>9</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000099-201803-0000089/data/0-7-44-6-6-8-59-9-2-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>2</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>2Ｌ補強作業</item_details_unit_name>
+      <unit_price>29</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000099-201803-0000089/data/0-7-44-6-6-8-59-9-2-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -30959,6 +31818,22 @@
       <shipment_service_weight>15kg迄</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000099-201803-0000089/data/0-7-44-6-6-8-59-9-2-6-10" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>10</quantity>
+      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_name>エコ配ALLJP</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000099-201803-0000089/data/0-7-44-6-6-8-59-9-2-6-11" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -31247,6 +32122,34 @@
   <entry>
     <internal_work>
       <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>638</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1枚/冊</item_details_unit>
+      <item_details_unit_name>同梱作業</item_details_unit_name>
+      <unit_price>5</unit_price>
+      <remarks>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</remarks>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>0</quantity>
+      <packing_item_code>dbox_035</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（大）</packing_item_name>
+      <special_unit_price>21.00</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -31258,6 +32161,19 @@
       <remarks></remarks>
     </internal_work>
     <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>0</quantity>
+      <packing_item_code>dbox_033</packing_item_code>
+      <packing_item_name>ダンボール箱 DM用 2.0cm厚（大）</packing_item_name>
+      <special_unit_price>20.00</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-2-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -31290,6 +32206,21 @@
   <entry>
     <internal_work>
       <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>638</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1封緘</item_details_unit>
+      <item_details_unit_name>DM便・ゆうパケット</item_details_unit_name>
+      <unit_price>60</unit_price>
+      <remarks>ピッキング、外装検品、６点封入まで</remarks>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-4-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -31301,6 +32232,36 @@
       <remarks>正箱、外箱に内容個数記載のあるもの。(内容未検)</remarks>
     </internal_work>
     <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>638</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>2cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>森 雅史</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>638</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>全品検査</item_details_unit_name>
+      <unit_price>3</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000102-201803-0000163/data/0-7-44-6-6-8-61-7-2-6-1" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -34511,6 +35472,34 @@
   <entry>
     <internal_work>
       <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>93</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1封緘</item_details_unit>
+      <item_details_unit_name>DM便・ネコポス・ゆうパケット・ゆうメール・定形外</item_details_unit_name>
+      <unit_price>30</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>265</quantity>
+      <packing_item_code>dbox_035</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（大）</packing_item_name>
+      <special_unit_price>18</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-10-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -34569,6 +35558,35 @@
   <entry>
     <internal_work>
       <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>189</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-2-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>63</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（～700g）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -34580,6 +35598,34 @@
       <shipment_service_weight>1kg以内</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>17</quantity>
+      <packing_item_code>dbox_037</packing_item_code>
+      <packing_item_name>ダンボール箱 特売 80サイズ 底面A4</packing_item_name>
+      <special_unit_price>42</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>38</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（～500g）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-5-1" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -34610,6 +35656,66 @@
       <shipment_service_weight>700g以内</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>189</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1梱包</item_details_unit>
+      <item_details_unit_name>宅配便</item_details_unit_name>
+      <unit_price>65</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-8-25" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>225</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（宅配便）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-8-26" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>38</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>500g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-8-27" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>55</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>700g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000143-201803-0000175/data/0-7-44-6-6-8-66-8-2-8-28" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -35047,6 +36153,108 @@
   <entry>
     <internal_work>
       <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>21</quantity>
+      <packing_item_code>dbox_035</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（大）</packing_item_name>
+      <special_unit_price>18</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>5</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>１封緘</item_details_unit>
+      <item_details_unit_name>DM便・ネコポス・ゆうパケット・ゆうメール・定形外</item_details_unit_name>
+      <unit_price>30</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>18</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>2</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（～700g）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>4</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>500g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-10-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>1</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>700g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-10-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>18</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1梱包</item_details_unit>
+      <item_details_unit_name>宅配便</item_details_unit_name>
+      <unit_price>65</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -35086,6 +36294,49 @@
       <special_unit_price>18</special_unit_price>
     </internal_work>
     <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-3-14" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>23</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（宅配便）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>2</quantity>
+      <packing_item_code>dbox_037</packing_item_code>
+      <packing_item_name>ダンボール箱 特売 80サイズ 底面A4</packing_item_name>
+      <special_unit_price>42</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>皆見 圭一郎</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>4</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ピッキング（～500g）</item_details_unit_name>
+      <unit_price>17</unit_price>
+      <remarks>外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000146-201803-0000174/data/0-7-44-6-6-8-67-7-2-5-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -35482,6 +36733,46 @@
   </entry>
   <entry>
     <internal_work>
+      <work_type>3</work_type>
+      <packing_item_code>dbox_034</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（小）</packing_item_name>
+      <special_unit_price>18</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/list/0-7-44-6-6-8-74-2-1-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>1</work_type>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/list/0-7-44-6-6-8-74-2-1-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>3</work_type>
+      <packing_item_code>dbox_036</packing_item_code>
+      <packing_item_name>ダンボール箱 特売 60サイズ 底面A5</packing_item_name>
+      <special_unit_price>30</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/list/0-7-44-6-6-8-74-2-1-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き</item_details_unit_name>
+      <unit_price>12</unit_price>
+      <remarks>携帯アクセサリー(資材込)</remarks>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/list/0-7-44-6-6-8-74-2-1-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
       <staff_name>木幡 昭宏</staff_name>
       <working_day>16</working_day>
       <approval_status>0</approval_status>
@@ -35510,6 +36801,93 @@
       <remarks>商品</remarks>
     </internal_work>
     <link href="/internal_work/0000165-201803-0000047/data/0-4-43-6-7-9-3-10-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>5</quantity>
+      <shipment_service_code>ECO3</shipment_service_code>
+      <shipment_service_name>エコ配</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>6</quantity>
+      <packing_item_code>dbox_034</packing_item_code>
+      <packing_item_name>ダンボール箱 メール用 3.5cm厚（小）</packing_item_name>
+      <special_unit_price>18</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-10-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>3</work_type>
+      <quantity>5</quantity>
+      <packing_item_code>dbox_036</packing_item_code>
+      <packing_item_name>ダンボール箱 特売 60サイズ 底面A5</packing_item_name>
+      <special_unit_price>30</special_unit_price>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>5</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>同梱作業(商品2点目~)</item_details_unit_name>
+      <unit_price>10</unit_price>
+      <remarks>商品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>4</quantity>
+      <item_details_name>付帯作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>エアキャップ巻き</item_details_unit_name>
+      <unit_price>12</unit_price>
+      <remarks>携帯アクセサリー(資材込)</remarks>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>木幡 昭宏</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>6</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000165-201803-0000047/data/0-7-44-6-6-8-74-2-2-9-1" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -37129,6 +38507,52 @@
   <entry>
     <internal_work>
       <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>38</quantity>
+      <item_details_name>取り置き</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>一次ピック</item_details_unit_name>
+      <unit_price>40</unit_price>
+      <remarks>一次ピッキング</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>3</quantity>
+      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_name>エコ配ALLJP</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-1-4" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>132</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>3cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-1-5" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -37140,6 +38564,21 @@
       <remarks>ピッキング・外装検品</remarks>
     </internal_work>
     <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>44</quantity>
+      <item_details_name>自社配送便</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>個建て分</item_details_unit_name>
+      <unit_price>340</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-10-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -37174,6 +38613,21 @@
   <entry>
     <internal_work>
       <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>48</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>(卸ＢtoB)・(相模原への納品分）</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -37185,6 +38639,20 @@
       <remarks>ピッキング・外装検品</remarks>
     </internal_work>
     <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>72</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-4-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -37204,6 +38672,21 @@
   <entry>
     <internal_work>
       <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>202</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>DM便。ネコポス・ゆうパケット。ゆうメール</item_details_unit_name>
+      <unit_price>50</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -37219,6 +38702,36 @@
   <entry>
     <internal_work>
       <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>73</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>宅配便</item_details_unit_name>
+      <unit_price>60</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>70</quantity>
+      <shipment_service_code>JP1</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうパケット</shipment_service_service_name>
+      <shipment_service_size>2cm以内</shipment_service_size>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-7-29" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>0</work_type>
@@ -37230,6 +38743,21 @@
       <remarks>ピッキング・外装検品</remarks>
     </internal_work>
     <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>67</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>(卸ＢtoB)・(引き戻し分）</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-8-2" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -37259,6 +38787,21 @@
       <remarks>ピッキング・外装検品</remarks>
     </internal_work>
     <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-9-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>荒畑 敬吾</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>0</work_type>
+      <quantity>1,916</quantity>
+      <item_details_name>出荷作業料</item_details_name>
+      <item_details_unit>1点</item_details_unit>
+      <item_details_unit_name>ＣＲＯＯＺ・ヤマト発送分</item_details_unit_name>
+      <unit_price>15</unit_price>
+      <remarks>ピッキング・外装検品</remarks>
+    </internal_work>
+    <link href="/internal_work/0000190-201803-0000031/data/0-7-44-6-6-8-81-1-2-9-3" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -37657,6 +39200,21 @@
   <entry>
     <internal_work>
       <staff_name>坂間 直緒</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>3</quantity>
+      <shipment_service_code>JP2</shipment_service_code>
+      <shipment_service_name>日本郵便</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ゆうメール</shipment_service_service_name>
+      <shipment_service_weight>250g以内</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000191-201803-0000003/data/0-7-44-6-6-8-82-10-2-10-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>坂間 直緒</staff_name>
       <working_day>19</working_day>
       <approval_status>0</approval_status>
       <work_type>1</work_type>
@@ -37684,6 +39242,36 @@
       <shipment_service_weight>15kg迄</shipment_service_weight>
     </internal_work>
     <link href="/internal_work/0000191-201803-0000003/data/0-7-44-6-6-8-82-10-2-4-8" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>坂間 直緒</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>75</quantity>
+      <shipment_service_code>YH2</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000191-201803-0000003/data/0-7-44-6-6-8-82-10-2-4-9" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>坂間 直緒</staff_name>
+      <working_day>20</working_day>
+      <approval_status>0</approval_status>
+      <work_type>1</work_type>
+      <quantity>2</quantity>
+      <shipment_service_code>ECO1</shipment_service_code>
+      <shipment_service_name>エコ配ALLJP</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+      <shipment_service_size>〜80cm</shipment_service_size>
+      <shipment_service_weight>15kg迄</shipment_service_weight>
+    </internal_work>
+    <link href="/internal_work/0000191-201803-0000003/data/0-7-44-6-6-8-82-10-2-6-1" rel="self"/>
   </entry>
   <entry>
     <internal_work>
@@ -38111,14 +39699,18 @@
   </entry>
   <entry>
     <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <working_day>1</working_day>
+      <approval_status>2</approval_status>
       <work_type>0</work_type>
+      <quantity>0</quantity>
       <item_details_name>出荷作業料</item_details_name>
       <item_details_unit>1封緘</item_details_unit>
       <item_details_unit_name>ゆうパケット・ＤＭ便</item_details_unit_name>
       <unit_price>70</unit_price>
       <remarks>ピッキング・外装検品・1点封入</remarks>
     </internal_work>
-    <link href="/internal_work/0000210-201804-0000053/list/0-7-44-6-6-8-91-9-1-8-1" rel="self"/>
+    <link href="/internal_work/0000210-201804-0000053/data/0-7-44-6-6-8-91-9-2-1-1" rel="self"/>
   </entry>
   <entry>
     <customer>
@@ -40167,5 +41759,300 @@
       <special_unit_price>55.00</special_unit_price>
     </internal_work>
     <link href="/internal_work/0000279-201803-0000071/list/0-7-44-6-6-8-97-6-1-8-4" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000016</customer_code>
+      <customer_name>株式会社 KAND</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000287</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000287-201802-0000016" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000287-201802-0000016/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000287-201802-0000016/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <working_day>1</working_day>
+      <approval_status>2</approval_status>
+      <work_type>2</work_type>
+      <quantity>0</quantity>
+      <shipment_service_code>YH2</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000287-201802-0000016/data/0-7-44-6-6-1-1-4-2-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <working_day>1</working_day>
+      <approval_status>2</approval_status>
+      <work_type>1</work_type>
+      <quantity>0</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000287-201802-0000016/data/0-7-44-6-6-1-1-4-2-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000010</customer_code>
+      <customer_name>株式会社 ティーオー</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000288</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000288-201802-0000010" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000288-201802-0000010/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000288-201802-0000010/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>2</work_type>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000288-201802-0000010/list/0-7-44-6-6-8-98-1-1-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>1</work_type>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000288-201802-0000010/list/0-7-44-6-6-8-98-1-1-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000010</customer_code>
+      <customer_name>株式会社 ティーオー</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000295</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000295-201802-0000010" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000295-201802-0000010/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000295-201802-0000010/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>2</work_type>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/list/0-7-44-6-6-2-2-6-1-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>2</work_type>
+      <shipment_service_code>YH2</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/list/0-7-44-6-6-2-2-6-1-7-2" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>2</work_type>
+      <shipment_service_code>YH3</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ネコポス</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/list/0-7-44-6-6-2-2-6-1-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <work_type>4</work_type>
+      <quantity>2</quantity>
+      <item_details_name>保管料（川越倉庫_変動分）</item_details_name>
+      <item_details_unit>坪</item_details_unit>
+      <item_details_unit_name>月次</item_details_unit_name>
+      <unit_price>2,500</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/data/0-7-44-6-6-2-2-6-2-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <working_day>1</working_day>
+      <approval_status>2</approval_status>
+      <work_type>1</work_type>
+      <quantity>0</quantity>
+      <shipment_service_code>YH1</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>1</shipment_service_type>
+      <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/data/0-7-44-6-6-2-2-6-2-4-3" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <working_day>1</working_day>
+      <approval_status>2</approval_status>
+      <work_type>1</work_type>
+      <quantity>0</quantity>
+      <shipment_service_code>YH3</shipment_service_code>
+      <shipment_service_name>ヤマト運輸</shipment_service_name>
+      <shipment_service_type>2</shipment_service_type>
+      <shipment_service_service_name>ネコポス</shipment_service_service_name>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/data/0-7-44-6-6-2-2-6-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <work_type>4</work_type>
+      <quantity>1</quantity>
+      <item_details_name>保管料（川越倉庫_固定分）</item_details_name>
+      <item_details_unit>月</item_details_unit>
+      <item_details_unit_name>月次</item_details_unit_name>
+      <unit_price>1,125,000</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000295-201802-0000010/data/0-7-44-6-6-2-2-6-2-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000006</customer_code>
+      <customer_name>株式会社 潤恒縁</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000298</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000298-201802-0000006" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000298-201802-0000006/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000298-201802-0000006/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <work_type>0</work_type>
+      <item_details_name>ヤマト運輸代引き手数料</item_details_name>
+      <item_details_unit>1個</item_details_unit>
+      <item_details_unit_name>全国一律</item_details_unit_name>
+      <unit_price>350</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000298-201802-0000006/list/0-7-44-6-6-2-3-3-1-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000015</customer_code>
+      <customer_name>日本快倉 株式会社</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000309</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000309-201802-0000015" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000309-201802-0000015/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000309-201802-0000015/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <work_type>4</work_type>
+      <quantity>64</quantity>
+      <item_details_name>保管料（高島平倉庫代）</item_details_name>
+      <item_details_unit>坪</item_details_unit>
+      <item_details_unit_name>月次</item_details_unit_name>
+      <unit_price>5,000</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000309-201802-0000015/data/0-7-44-6-6-9-27-4-2-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <customer>
+      <customer_code>0000246</customer_code>
+      <customer_name>日本快倉 株式会社(倉庫料)</customer_name>
+    </customer>
+    <quotation>
+      <quotation_code>0000310</quotation_code>
+    </quotation>
+    <internal_work>
+      <working_yearmonth>2018/02</working_yearmonth>
+      <is_completed>1</is_completed>
+    </internal_work>
+    <creator>システム管理者</creator>
+    <link href="/internal_work/0000310-201802-0000246" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000310-201802-0000246/list" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/internal_work/0000310-201802-0000246/data" rel="self"/>
+  </entry>
+  <entry>
+    <internal_work>
+      <staff_name>システム管理者</staff_name>
+      <work_type>4</work_type>
+      <quantity>1</quantity>
+      <item_details_name>保管料（高島平倉庫代）</item_details_name>
+      <item_details_unit>棟</item_details_unit>
+      <item_details_unit_name>月次</item_details_unit_name>
+      <unit_price>664,000</unit_price>
+      <remarks></remarks>
+    </internal_work>
+    <link href="/internal_work/0000310-201802-0000246/data/0-7-44-6-6-5-1-6-2-5-1" rel="self"/>
   </entry>
 </feed>
