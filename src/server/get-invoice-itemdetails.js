@@ -34,12 +34,12 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 		result = result.concat(getMonthly(internal_work_all))
 		// period
 		result = result.concat(getPeriod(internal_work_all))
-		// shipping
-		shipment_service.feed.entry.map((entry) => {
-			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 出荷
-			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
-		})
 	}
+	// shipping
+	shipment_service.feed.entry.map((entry) => {
+		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name + '/' + entry.shipment_service.service_name))    // 出荷
+		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
+	})
 	return result
 }
 
@@ -47,9 +47,9 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 	const result = []
 	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code).billing_data
 	if (billing_data.feed.entry) {
-
 		const summary = billing_data.feed.entry.filter((entry) => {
-			return ((entry.billing_data.shipment_class===shipment_class)&&(entry.billing_data.shipment_service_code===shipment_service_code))  
+			if (entry) return ((entry.billing_data.shipment_class === shipment_class) && (entry.billing_data.shipment_service_code === shipment_service_code))  
+			else return false 
 		}).reduce((prev, current) => { 
 			const entry = {
 				'billing_data': {
@@ -59,7 +59,7 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 			}
 			return entry       
 		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0' } })
-    
+
 		const record = {
 			'category': shipment_class==='0' ? 'shipping':'collecting',
 			'item_name': shipment_service_name,

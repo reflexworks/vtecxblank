@@ -187,7 +187,7 @@ export const tableTdCenter = {
 	align:'center',
 	color: '#000000',
 	height:10,
-	offsetx:-2,
+	offsetx:4,
 	offsety:0,
 }
 
@@ -303,7 +303,7 @@ export const tdRight = {
 	bottom:'true',
 	align:'right',
 	height:'15',
-	offsetx:-1,
+	offsetx:1,
 	offsety: 4,
 	leading:7,
 }
