@@ -43,7 +43,7 @@ export default class InternalWorkUpdate extends React.Component {
 			this.setState({ isDisabled: true })
 
 			axios({
-				url: '/d/internal_work/' + _code,
+				url: '/s/get-internalwork-body?code=' + _code,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -54,7 +54,18 @@ export default class InternalWorkUpdate extends React.Component {
 
 				this.entry = response.data.feed.entry[0]
 				const working_yearmonth = this.entry.internal_work.working_yearmonth
-				this.monthly = working_yearmonth.split('/')[0] + '年' + working_yearmonth.split('/')[1] + '月'
+
+				const year = working_yearmonth.split('/')[0]
+				const month = working_yearmonth.split('/')[1]
+
+				if (this.entry.billto.billing_closing_date === '1') {
+					let befor_month = parseInt(month) - 1
+					const befor_year = befor_month === 0 ? parseInt(befor_year) - 1 : year
+					befor_month = befor_month === 0 ? 12 : befor_month
+					this.monthly = befor_year + '年' + befor_month + '月21日〜' + year + '年' + month + '月20日'
+				} else {
+					this.monthly = year + '年' + month + '月01日〜' + year + '年' + month + '月末日'
+				}
 
 				this.forceUpdate()
 
@@ -74,7 +85,7 @@ export default class InternalWorkUpdate extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>庫内作業状況：{this.monthly} {this.entry.customer.customer_name}</PageHeader>
+						<PageHeader>庫内作業状況：{this.monthly}：{this.entry.customer.customer_name}</PageHeader>
 					</Col>
 				</Row>
 				<Row>
