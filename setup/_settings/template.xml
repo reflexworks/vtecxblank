@@ -176,6 +176,7 @@ internal_work
  unit_price
  remarks
  special_unit_price
+ comment
 shipment_service
  code 
  name  
