@@ -132,13 +132,14 @@ quotation
 invoice
  invoice_code
  quotation_code
- internal_work_code
+ working_yearmonth
  invoice_yearmonth
  total_amount
  consumption_tax
  issue_status
  deposit_status
- payment_date 
+ payment_date
+ customer_code 
 delivery_charge{}
  shipment_service_name
  shipment_service_code

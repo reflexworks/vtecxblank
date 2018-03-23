@@ -16,9 +16,14 @@ const tap = require('gulp-tap')
 const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
 const request = require('request')
+const mocha = require('gulp-mocha')
+const env = require('node-env-file')
+
+env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
+		mode: devtool ? "development" : "production",
 		output: {
 			filename: filename
 		},
@@ -49,11 +54,7 @@ function webpackconfig(filename,externals,devtool) {
 				{
 					test: /\.js$/,
 					exclude: /(node_modules)/,
-					loader: 'eslint-loader',
-					options: {
-						fix: true,
-						failOnError: true,
-					}
+					use: { loader: 'eslint-loader', options: { emitWarning: true,fix:true,failOnError: true } }
 				}                      
 			]
 		},
@@ -65,8 +66,11 @@ function webpackconfig(filename,externals,devtool) {
 			'axios': 'axios'
 		} : {
 		},
-		plugins: devtool ? [] : [
-			new BabiliPlugin()
+		plugins: devtool ? [
+			new webpack.LoaderOptionsPlugin({ options: {} })			
+		] : [
+			new BabiliPlugin(),
+			new webpack.LoaderOptionsPlugin({ options: {} })
 		]
 		,devtool: devtool ? 'source-map' : ''
 	}
@@ -218,21 +222,21 @@ gulp.task('upload:entry', function (done) {
 
 gulp.task('upload:data', function (done) {
 	recursive('data', [], function (err, files) {
-		files.map((file) => sendfile(file, ''))				
+		files.map((file) => sendfile(file, '?_bulk'))				
 		done()
 	})
 })
 
 gulp.task('upload:htmlfolders', function (done) {
-	sendfile('setup/_settings/htmlfolders.xml', '',done)
+	sendfile('setup/_settings/htmlfolders.xml', '?_bulk',done)
 })
 
 gulp.task('upload:template', function (done) {
-	sendfile('setup/_settings/template.xml','',done)
+	sendfile('setup/_settings/template.xml','?_bulk',done)
 })
 
 gulp.task('upload:folderacls', function (done) {
-	sendfile('setup/_settings/folderacls.xml', '',done)
+	sendfile('setup/_settings/folderacls.xml', '?_bulk',done)
 })
 
 gulp.task('upload:counts', function (done) {
@@ -253,6 +257,15 @@ gulp.task('upload:counts', function (done) {
 	})
 })
 
+gulp.task('test', function () {
+	let target = 'test/*.test.js'
+	if (argv.f) {
+		target = 'test/'+argv.f+'.test.js'
+	}
+	return gulp.src([target], { read: false })
+		.pipe(mocha({ reporter: 'list',require: 'babel-register',timeout:'60000'}))
+		.on('error', gutil.log)
+})
 
 function sendcontent(file) {
 	sendfile(file,'?_content',false,false)
