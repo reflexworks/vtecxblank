@@ -116,9 +116,14 @@ export function getChargeOfMail(delivery_charge_all,customer_all,shipper_code,sh
 		return delivery_charge.shipment_service_code === shipment_service_code
 	})
 
-	if (delivery_charge.length === 0) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +',サービスコード='+shipment_service_code+')'
-
-	return delivery_charge[0].delivery_charge_details[0].price	
+	if (delivery_charge.length === 0) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
+	const price = delivery_charge[0].delivery_charge_details[0].price.replace(/[^0-9^\\.]/g,'')
+	if (price && price.length > 0) {
+		return price
+	} else {
+		throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
+	}
+		
 }
 
 export function getDeliverycharge(customer_all, shipper_code, shipment_service_service_name) {

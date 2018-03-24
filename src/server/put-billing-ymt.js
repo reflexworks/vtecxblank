@@ -42,8 +42,12 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 	delivery_charge_all.shipment_service_code = shipment_service_code
 	const charge_by_zone = getChargeByZone(delivery_charge_all, customer_all, entry.billing.size, entry.billing.prefecture, shipment_service_service_name)
 	const tracking_number = entry.billing.tracking_number.replace(/[^0-9^\\.]/g,'')
-	if (!tracking_number||tracking_number.length===0) throw '正しい原票番号を入れてください'
-	
+	if (!tracking_number || tracking_number.length === 0) throw '正しい原票番号を入れてください'
+	const price = charge_by_zone[0].price.replace(/[^0-9^\\.]/g,'')
+	if (!price||price.length === 0) {
+		throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
+	}
+
 	const billing_data = {
 		billing_data: {
 			'shipment_service_code': shipment_service_code,
@@ -60,7 +64,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 			'zone_name': charge_by_zone[0].zone_name,
 			'city': entry.billing.city,
 			'delivery_charge_org_total': entry.billing.delivery_charge_org_total,
-			'delivery_charge': charge_by_zone[0].price,
+			'delivery_charge': price,
 			'quantity' : entry.billing.quantity
 		},
 		'link': [
