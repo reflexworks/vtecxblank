@@ -130,33 +130,37 @@ export function getDeliverycharge(customer_all, shipper_code, shipment_service_s
 
 	if (cache[shipper_code]) return cache[shipper_code]
 	else {
-	// 荷主コード(分類コード)からcustomerを検索
-		let customer_code = null
-		let shipment_class = null
-		customer_all.feed.entry.some((entry) => {
-			if (entry&&entry.customer.shipper&&entry.customer.shipper.length>0) {
-				entry.customer.shipper.map((shipper) => {
-					if (shipper.shipment_service_service_name ===shipment_service_service_name) {
-						shipper.shipper_info.map((shipper_info) => { 
-							if (shipper_info.shipper_code === shipper_code)
-							{
-								shipment_class = shipper_info.shipment_class 
-								customer_code = entry.customer.customer_code
-							}	
-						})
-					}
-				})
-				if (customer_code) return true
-			}
-		})
-		if (!customer_code) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
-		const deliverycharge = vtecxapi.getEntry('/customer/' + customer_code + '/deliverycharge')	
-		if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +')'
+		const customer = getCustomerByShipper(customer_all,shipper_code,shipment_service_service_name)
+		if (!customer.customer_code) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
+		const deliverycharge = vtecxapi.getEntry('/customer/' + customer.customer_code + '/deliverycharge')	
+		if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer.customer_code +')'
 
-		cache[shipper_code] = { 'customer_code': customer_code, 'shipment_class': shipment_class, 'delivery_charge': deliverycharge }
+		cache[shipper_code] = { 'customer_code': customer.customer_code, 'shipment_class': customer.shipment_class, 'delivery_charge': deliverycharge }
 		return cache[shipper_code]
 	}
 
+}
+export function getCustomerByShipper(customer_all,shipper_code,shipment_service_service_name) {
+	// 荷主コード(分類コード)からcustomerを検索
+	let customer_code = null
+	let shipment_class = null
+	customer_all.feed.entry.some((entry) => {
+		if (entry&&entry.customer.shipper&&entry.customer.shipper.length>0) {
+			entry.customer.shipper.map((shipper) => {
+				if (!shipment_service_service_name||shipper.shipment_service_service_name ===shipment_service_service_name) {
+					shipper.shipper_info.map((shipper_info) => { 
+						if (shipper_info.shipper_code === shipper_code)
+						{
+							shipment_class = shipper_info.shipment_class 
+							customer_code = entry.customer.customer_code
+						}	
+					})
+				}
+			})
+			if (customer_code) return true
+		}
+	})
+	return {'customer_code':customer_code,'shipment_class':shipment_class}
 }
 
 export function getFullDate(datestr) {
