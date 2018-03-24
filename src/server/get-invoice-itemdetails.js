@@ -53,8 +53,9 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 		}).reduce((prev, current) => { 
 			const entry = {
 				'billing_data': {
-					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
-					'quantity': ''+(Number(prev.billing_data.quantity)+Number(current.billing_data.quantity))
+					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)*Number(current.billing_data.quantity)),
+					'quantity': '' + (Number(prev.billing_data.quantity) + Number(current.billing_data.quantity)),
+					'unit_price': current.billing_data.delivery_charge
 				}
 			}
 			return entry       
@@ -66,7 +67,7 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 			'unit_name': '',
 			'unit': '個',
 			'quantity': summary.billing_data.quantity,
-			'unit_price': '個別',
+			'unit_price': (shipment_service_code==='YH2'||shipment_service_code==='YH3') ? summary.billing_data.unit_price :'個別',
 			'remarks': '別紙明細',
 			'is_taxation': '0',
 			'amount': summary.billing_data.delivery_charge 
