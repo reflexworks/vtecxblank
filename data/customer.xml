@@ -55,47 +55,6 @@
           <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 フロムアイコーポレーション（出荷分）</customer_name>
-      <customer_name_kana>カ) フロムアイコーポレーション</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>森 奈津子</staff_name>
-        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>武政 夏実</staff_name>
-        <staff_email>n.takemasa@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>335-0023</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>戸田市本町</address1>
-      <address2>4-4-6</address2>
-    </contact_information>
-    <link href="/customer/0000001" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000001</billto_code>
-      <billto_name>株式会社 フロムアイコーポレーション</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000002</customer_code>
       <shipper>
         <shipment_service_service_name>宅急便発払</shipment_service_service_name>
         <shipment_service_code>YH1</shipment_service_code>
@@ -137,14 +96,63 @@
         </shipper_info>
       </shipper>
       <shipper>
-        <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
-        <shipment_service_code>ECO3</shipment_service_code>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
         <shipper_info>
           <shipper_code>484565817253</shipper_code>
           <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 フロムアイコーポレーション(集荷分)</customer_name>
+      <shipper>
+        <shipment_service_service_name>コレクト便</shipment_service_service_name>
+        <shipment_service_code>ECO2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>484565817253</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社 フロムアイコーポレーション</customer_name>
+      <customer_name_kana>カ) フロムアイコーポレーション</customer_name_kana>
+      <sales_staff>
+        <staff_name>高野 潤一</staff_name>
+        <staff_email>takano@connect-logi.jp</staff_email>
+      </sales_staff>
+      <sales_staff>
+        <staff_name>楠本 真也</staff_name>
+        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
+      </sales_staff>
+      <working_staff>
+        <staff_name>森 奈津子</staff_name>
+        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <working_staff>
+        <staff_name>武政 夏実</staff_name>
+        <staff_email>n.takemasa@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <url></url>
+      <person_in_charge></person_in_charge>
+      <products></products>
+      <warehouse_code>0000001</warehouse_code>
+    </customer>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>335-0023</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市本町</address1>
+      <address2>4-4-6</address2>
+    </contact_information>
+    <link href="/customer/0000001" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000001</billto_code>
+      <billto_name>株式会社 フロムアイコーポレーション</billto_name>
+    </billto>
+    <customer>
+      <customer_code>0000002</customer_code>
+      <customer_name>株式会社 フロムアイコーポレーション(削除)</customer_name>
       <customer_name_kana>カ) フロムアイコーポレーション</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -286,7 +294,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>600</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -294,7 +302,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>600</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -302,7 +310,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>600</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -310,7 +318,7 @@
         <shipment_service_code>ECO1</shipment_service_code>
         <shipper_info>
           <shipper_code>482297962250</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -318,7 +326,7 @@
         <shipment_service_code>ECO2</shipment_service_code>
         <shipper_info>
           <shipper_code>482297962250</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -338,7 +346,7 @@
         </shipper_info>
       </shipper>
       <customer_name>株式会社 CAN</customer_name>
-      <customer_name_kana>カ) キャン</customer_name_kana>
+      <customer_name_kana>カブシキガイシャキャン</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
         <staff_email>takano@connect-logi.jp</staff_email>
@@ -550,6 +558,30 @@
     </billto>
     <customer>
       <customer_code>0000007</customer_code>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>235</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>235</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>235</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
       <customer_name>株式会社 リーフ</customer_name>
       <customer_name_kana>カ) リーフ</customer_name_kana>
       <sales_staff>
@@ -1334,7 +1366,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>15</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1342,7 +1374,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>15</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1350,7 +1382,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>15</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>東洋電興 株式会社</customer_name>
@@ -1625,7 +1657,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>20</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1633,7 +1665,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>20</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1641,7 +1673,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>20</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>株式会社 フジリビング</customer_name>
@@ -1685,6 +1717,7 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
+      <warehouse_code>0000004</warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -1846,7 +1879,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>27</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1854,7 +1887,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>27</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1862,7 +1895,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>27</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>有限会社 新那須エッグ</customer_name>
@@ -1919,7 +1952,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>28</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1927,7 +1960,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>28</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1935,7 +1968,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>28</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1943,7 +1976,7 @@
         <shipment_service_code>ECO1</shipment_service_code>
         <shipper_info>
           <shipper_code>7031461028250</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -1951,7 +1984,7 @@
         <shipment_service_code>ECO2</shipment_service_code>
         <shipper_info>
           <shipper_code>7031461028250</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>DKSインターナショナル</customer_name>
@@ -2185,31 +2218,7 @@
     </billto>
     <customer>
       <customer_code>0000028</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>32</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>32</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>32</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>株式会社 ecoプラン(集荷分）</customer_name>
+      <customer_name>株式会社 ecoプラン(削除）</customer_name>
       <customer_name_kana>カ) エコプラン</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -2282,7 +2291,31 @@
           <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 ecoプラン(出荷分)</customer_name>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>32</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>32</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>32</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社 ecoプラン</customer_name>
       <customer_name_kana>カ)エコプラン</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -2331,47 +2364,7 @@
     </billto>
     <customer>
       <customer_code>0000030</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>39</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>39</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>39</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
-        <shipment_service_code>ECO1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>482423128251</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>コレクト便</shipment_service_service_name>
-        <shipment_service_code>ECO2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>482423128251</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>株式会社 クラシカルエルフ(出荷分)</customer_name>
+      <customer_name>株式会社 クラシカルエルフ(削除)</customer_name>
       <customer_name_kana>カ) クラシカルエルフ</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -2484,7 +2477,47 @@
           <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 クラシカルエルフ(集荷分)</customer_name>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>39</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>39</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>39</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>482423128251</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>コレクト便</shipment_service_service_name>
+        <shipment_service_code>ECO2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>482423128251</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社 クラシカルエルフ</customer_name>
       <customer_name_kana>カ) クラシカルエルフ</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -2643,7 +2676,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>49</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2651,7 +2684,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>49</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2659,7 +2692,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>49</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2667,7 +2700,7 @@
         <shipment_service_code>ECO1</shipment_service_code>
         <shipper_info>
           <shipper_code>367098498251</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2675,7 +2708,7 @@
         <shipment_service_code>ECO2</shipment_service_code>
         <shipper_info>
           <shipper_code>367098498251</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>1make</customer_name>
@@ -2748,7 +2781,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>115</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2756,7 +2789,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>115</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -2764,7 +2797,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>115</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>髪mama</customer_name>
@@ -3114,6 +3147,7 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
+      <warehouse_code>0000001</warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -3383,7 +3417,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>89</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -3391,7 +3425,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>89</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -3399,7 +3433,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>89</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>CJ Logistics Japan 株式会社</customer_name>
@@ -3458,8 +3492,8 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000035</billto_code>
-      <billto_name>CJ Logistics Japan 株式会社</billto_name>
+      <billto_code>0000200</billto_code>
+      <billto_name>CJ　Logistics　Japan　株式会社</billto_name>
     </billto>
     <customer>
       <customer_code>0000045</customer_code>
@@ -3773,41 +3807,17 @@
         <staff_email>takano@connect-logi.jp</staff_email>
       </sales_staff>
       <sales_staff>
-        <staff_name>森 光正</staff_name>
-        <staff_email>mori@connect-logi.co.jp</staff_email>
+        <staff_name>林 直人</staff_name>
+        <staff_email>hayashi@connect-logi.co.jp</staff_email>
       </sales_staff>
-      <working_staff>
-        <staff_name>森 光正</staff_name>
-        <staff_email>mori@connect-logi.co.jp</staff_email>
-      </working_staff>
       <working_staff>
         <staff_name>林 直人</staff_name>
         <staff_email>hayashi@connect-logi.co.jp</staff_email>
       </working_staff>
-      <working_staff>
-        <staff_name>皆見 圭一郎</staff_name>
-        <staff_email>minami@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>風間 輝明</staff_name>
-        <staff_email>kazama@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>境 智成</staff_name>
-        <staff_email>sakai@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>飯島 真紀</staff_name>
-        <staff_email>iijima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>小島 忠</staff_name>
-        <staff_email>t.kojima@connect-logi.co.jp</staff_email>
-      </working_staff>
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
+      <warehouse_code>0000007</warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -3933,7 +3943,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>48</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -3941,7 +3951,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>48</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -3949,7 +3959,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>48</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4017,7 +4027,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -4119,7 +4128,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>53</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4127,7 +4136,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>53</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4135,7 +4144,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>53</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4143,7 +4152,7 @@
         <shipment_service_code>ECO1</shipment_service_code>
         <shipper_info>
           <shipper_code>484234155250</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4151,7 +4160,7 @@
         <shipment_service_code>ECO2</shipment_service_code>
         <shipper_info>
           <shipper_code>484234155250</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>株式会社 日進</customer_name>
@@ -4187,7 +4196,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>54</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4195,7 +4204,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>54</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4203,7 +4212,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>54</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>L&amp;Lライブリーライフ 株式会社</customer_name>
@@ -4247,6 +4256,7 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
+      <warehouse_code>0000004</warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -4271,7 +4281,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>56</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4279,7 +4289,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>56</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4287,7 +4297,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>56</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>福瑞 株式会社</customer_name>
@@ -4412,7 +4422,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>58</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4420,7 +4430,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>58</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4428,7 +4438,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>58</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>松崎電機 株式会社</customer_name>
@@ -4440,7 +4450,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -4460,47 +4469,7 @@
     </billto>
     <customer>
       <customer_code>0000057</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>59</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>59</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>59</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
-        <shipment_service_code>ECO1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359278253251</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>コレクト便</shipment_service_service_name>
-        <shipment_service_code>ECO2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359278253251</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>株式会社 イーストシー(集荷分)</customer_name>
+      <customer_name>株式会社 イーストシー(削除)</customer_name>
       <customer_name_kana>カ) イーストシー</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -4545,7 +4514,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code>0000010</warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -4605,7 +4573,47 @@
           <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 イーストシー(出荷分)</customer_name>
+      <shipper>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359278253251</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>コレクト便</shipment_service_service_name>
+        <shipment_service_code>ECO2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359278253251</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>59</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>59</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>59</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社 イーストシー</customer_name>
       <customer_name_kana>カ) イーストシー</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -4675,7 +4683,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>61</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4683,7 +4691,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>61</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4691,7 +4699,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>61</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>株式会社 ヴィックスコミュニケーションズ</customer_name>
@@ -4865,7 +4873,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>63</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4873,7 +4881,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>63</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -4881,7 +4889,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>63</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>マイティカンパニー 株式会社</customer_name>
@@ -4893,7 +4901,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -5075,7 +5082,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>85</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -5179,7 +5186,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>87</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -5187,7 +5194,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>87</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -5195,7 +5202,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>87</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>フィジーク</customer_name>
@@ -5207,7 +5214,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -5874,7 +5880,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>79</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -5882,7 +5888,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>79</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -5890,7 +5896,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>79</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>株式会社 セテックジャパン</customer_name>
@@ -7670,6 +7676,30 @@
     </billto>
     <customer>
       <customer_code>0000098</customer_code>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>191</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>191</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>191</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
       <customer_name>株式会社 ＮＴＴドコモ</customer_name>
       <customer_name_kana>カ) エヌティティドコモ</customer_name_kana>
       <sales_staff>
@@ -7679,7 +7709,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -8751,7 +8780,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>137</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -8759,7 +8788,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>137</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -8767,7 +8796,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>137</shipper_code>
-          <shipment_class>0</shipment_class>
+          <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>ART OF LIFE</customer_name>
@@ -8779,7 +8808,6 @@
       <url></url>
       <person_in_charge></person_in_charge>
       <products></products>
-      <warehouse_code></warehouse_code>
     </customer>
     <contact_information>
       <tel></tel>
@@ -10800,24 +10828,8 @@
           <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>171</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>171</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
       <customer_name>ローヤル家庭電化製品販売 株式会社</customer_name>
-      <customer_name_kana>ローヤルカデンデンカセイヒンハンバイ (カ</customer_name_kana>
+      <customer_name_kana>ローヤルカテイカデンセイヒンハンバイカブシキガイシャ</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
         <staff_email>takano@connect-logi.jp</staff_email>
@@ -11245,7 +11257,7 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000104</billto_code>
+      <billto_code>0000158</billto_code>
       <billto_name>株式会社 GLOBAL M&amp;S</billto_name>
     </billto>
     <customer>
@@ -11274,7 +11286,7 @@
           <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>株式会社 GLOBAL M&amp;S</customer_name>
+      <customer_name>株式会社 GLOBAL M&amp;S(削除)</customer_name>
       <customer_name_kana>カ) グローバル エムアンドエス</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -14460,32 +14472,8 @@
           <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>600</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>600</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>600</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>株式会社 アメイズロジ</customer_name>
-      <customer_name_kana>カ) アメイズロジ</customer_name_kana>
+      <customer_name>株式会社 アメイズロジ　三芳</customer_name>
+      <customer_name_kana>カ) アメイズロジ　ミヨシ</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
         <staff_email>takano@connect-logi.jp</staff_email>
@@ -14802,7 +14790,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>78</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>山野愛子どろんこ美容 株式会社</customer_name>
@@ -15359,7 +15347,8 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
+      <billto_code>0000176</billto_code>
+      <billto_name>合同会社ＦＲＯＮＴＩＥＲ　ＴＲＡＤＥ</billto_name>
     </billto>
     <customer>
       <customer_code>0000235</customer_code>
@@ -15368,7 +15357,7 @@
         <shipment_service_code>YH2</shipment_service_code>
         <shipper_info>
           <shipper_code>201</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -15376,7 +15365,7 @@
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
           <shipper_code>201</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <shipper>
@@ -15384,7 +15373,7 @@
         <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>201</shipper_code>
-          <shipment_class>1</shipment_class>
+          <shipment_class>0</shipment_class>
         </shipper_info>
       </shipper>
       <customer_name>合同会社FRONTIER TRADE</customer_name>
@@ -15652,7 +15641,7 @@
           <shipment_class>1</shipment_class>
         </shipper_info>
       </shipper>
-      <customer_name>日本ポステック　株式会社（集荷分）</customer_name>
+      <customer_name>日本ポステック　株式会社（削除）</customer_name>
       <customer_name_kana>ニホンポステック　カブシキカイシャ</customer_name_kana>
       <sales_staff>
         <staff_name>高野 潤一</staff_name>
@@ -16069,13 +16058,30 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
+      <billto_code>0000116</billto_code>
+      <billto_name>TMS 株式会社</billto_name>
     </billto>
     <customer>
       <customer_code>0000252</customer_code>
       <shipper>
         <shipment_service_service_name>宅急便発払</shipment_service_service_name>
         <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>216</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>216</shipper_code>
+          <shipment_class>1</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
         <shipper_info>
           <shipper_code>216</shipper_code>
           <shipment_class>1</shipment_class>
@@ -16109,14 +16115,6 @@
     </billto>
     <customer>
       <customer_code>0000253</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>105</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
       <customer_name>株式会社 CONNECT コーポレーション（高島平）</customer_name>
       <customer_name_kana>カブシキガイシャコネクトコーポレーション　タカシマダイラ</customer_name_kana>
       <sales_staff>
@@ -16200,5 +16198,95 @@
       <address2>9-35</address2>
     </contact_information>
     <link href="/customer/0000255" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000201</billto_code>
+      <billto_name>株式会社Gerard</billto_name>
+    </billto>
+    <customer>
+      <customer_code>0000256</customer_code>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>246</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>246</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>246</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社Gerard</customer_name>
+      <customer_name_kana>カ）ジェラード</customer_name_kana>
+      <sales_staff>
+        <staff_name>高野 潤一</staff_name>
+        <staff_email>takano@connect-logi.jp</staff_email>
+      </sales_staff>
+      <working_staff>
+        <staff_name>森 光正</staff_name>
+        <staff_email>mori@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <working_staff>
+        <staff_name>皆見 圭一郎</staff_name>
+        <staff_email>minami@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <url></url>
+      <person_in_charge></person_in_charge>
+      <products></products>
+      <warehouse_code>0000004</warehouse_code>
+    </customer>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code></zip_code>
+      <prefecture></prefecture>
+      <address1></address1>
+      <address2></address2>
+    </contact_information>
+    <link href="/customer/0000256" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000148</billto_code>
+      <billto_name>株式会社 アメイズロジ</billto_name>
+    </billto>
+    <customer>
+      <customer_code>0000257</customer_code>
+      <customer_name>株式会社アメイズロジ　川口</customer_name>
+      <customer_name_kana>カブシキガイシャアメイズロジ　川口</customer_name_kana>
+      <sales_staff>
+        <staff_name>高野 潤一</staff_name>
+        <staff_email>takano@connect-logi.jp</staff_email>
+      </sales_staff>
+      <url></url>
+      <person_in_charge></person_in_charge>
+      <products></products>
+      <warehouse_code>0000003</warehouse_code>
+    </customer>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>335-0016</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市下前</address1>
+      <address2>1-8-20</address2>
+    </contact_information>
+    <link href="/customer/0000257" rel="self"/>
   </entry>
 </feed>

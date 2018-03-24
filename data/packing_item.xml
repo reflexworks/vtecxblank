@@ -27,31 +27,6 @@
   </entry>
   <entry>
     <packing_item>
-      <item_code>TEST-001</item_code>
-      <item_name>テスト商品1</item_name>
-      <material>プラ</material>
-      <category>資材</category>
-      <size1>SS-1</size1>
-      <size2></size2>
-      <notices>特記テスト</notices>
-      <thickness>2</thickness>
-      <inside_width>28</inside_width>
-      <inside_depth>28</inside_depth>
-      <inside_height>28</inside_height>
-      <outer_width>30</outer_width>
-      <outer_depth>30</outer_depth>
-      <outer_height>30</outer_height>
-      <outer_total>90</outer_total>
-      <purchase_price>50</purchase_price>
-      <regular_price>100</regular_price>
-      <regular_unit_price>100</regular_unit_price>
-      <special_price>80</special_price>
-      <special_unit_price>80</special_unit_price>
-    </packing_item>
-    <link href="/packing_item/TEST-001" rel="self"/>
-  </entry>
-  <entry>
-    <packing_item>
       <item_code>band_001</item_code>
       <item_name>自動梱包用PPバンド（青）　15.5mm×2500ｍ</item_name>
       <material>ポリプロピレン</material>
