@@ -35,6 +35,7 @@ function getBillingData(entry) {
 	delivery_charge_all.shipment_service_code = shipment_service_code
 	const charge_by_zone = getChargeByZone( delivery_charge_all,customer_all,'',prefecture,entry.billing.billing_item,entry.billing.delivery_area)
 	const tracking_number = entry.billing.tracking_number.replace(/[^0-9^\\.]/g,'')
+	if (!tracking_number||tracking_number.length===0) throw '正しい原票番号を入れてください'
 
 	const billing_data = {
 		billing_data: {
