@@ -24,7 +24,6 @@ billingcsv.feed.entry.map((entry) => {
 		vtecxapi.sendMessage(400, e)
 	}
 })
-
 // datastoreを更新
 vtecxapi.put(result,true)
 
@@ -35,6 +34,7 @@ function getBillingData(entry) {
 	const shipment_service_code = getShipmentServiceCode(entry.billing.billing_item)
 	delivery_charge_all.shipment_service_code = shipment_service_code
 	const charge_by_zone = getChargeByZone( delivery_charge_all,customer_all,'',prefecture,entry.billing.billing_item,entry.billing.delivery_area)
+	const tracking_number = entry.billing.tracking_number.replace(/[^0-9^\\.]/g,'')
 
 	const billing_data = {
 		billing_data: {
@@ -44,7 +44,7 @@ function getBillingData(entry) {
 			'shipment_class': delivery_charge_all.shipment_class,
 			'shipper_code': entry.billing.shipper_code,
 			'shipping_date': getFullDate(entry.billing.shipping_date),
-			'tracking_number': entry.billing.tracking_number,
+			'tracking_number': tracking_number,
 			'shipment_service_service_name': entry.billing.billing_item,
 			'delivery_class': entry.billing.delivery_area,
 			'size': '',
@@ -56,7 +56,7 @@ function getBillingData(entry) {
 			'quantity' : entry.billing.quantity
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,entry.billing.tracking_number) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,tracking_number) }
 		]
 	}
 

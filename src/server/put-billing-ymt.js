@@ -42,7 +42,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 	const shipment_service_code = getShipmentServiceCode(shipment_service_service_name)
 	delivery_charge_all.shipment_service_code = shipment_service_code
 	const charge_by_zone = getChargeByZone(delivery_charge_all, customer_all, entry.billing.size, entry.billing.prefecture, shipment_service_service_name)
-	const tracking_number = entry.billing.tracking_number.replace(/-/g,'')
+	const tracking_number = entry.billing.tracking_number.replace(/[^0-9^\\.]/g,'')
 	
 	const billing_data = {
 		billing_data: {
@@ -73,7 +73,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 function getBillingDataOfMail(entry,shipment_service_service_name) {
 
 	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code,shipment_service_service_name)
-	const tracking_number = entry.billing.tracking_number.replace(/-/g, '')
+	const tracking_number = entry.billing.tracking_number.replace(/[^0-9^\\.]/g,'')
 	const shipment_service_code = getShipmentServiceCode(shipment_service_service_name)
 
 	const billing_data = {
