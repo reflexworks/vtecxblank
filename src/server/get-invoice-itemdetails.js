@@ -53,13 +53,13 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 		}).reduce((prev, current) => { 
 			const entry = {
 				'billing_data': {
-					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)*Number(current.billing_data.quantity)),
+					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
 					'quantity': '' + (Number(prev.billing_data.quantity) + Number(current.billing_data.quantity)),
-					'unit_price': current.billing_data.delivery_charge
+					'unit_price': current.billing_data.unit_price
 				}
 			}
 			return entry       
-		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0' } })
+		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0', 'unit_price': '0' } })
 
 		const record = {
 			'category': shipment_class==='0' ? 'shipping':'collecting',
@@ -77,7 +77,6 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 
 	return result
 }
-
 
 function getDaily(internal_work_all) {
 	const result = []
