@@ -1203,6 +1203,7 @@ export default class InternalWorkForm extends React.Component {
 	setIsToDay() {
 		let flg = false
 		let value // 判定する値
+		this.to.day = 1
 		if (this.entry.billto.billing_closing_date === '1') {
 			if (parseInt(this.worksDay) > 20) {
 				value = this.befor_year + this.befor_month + this.worksDay
@@ -1215,22 +1216,15 @@ export default class InternalWorkForm extends React.Component {
 		flg = value === this.to.year + this.to.month + this.to.day
 		if (!flg) {
 			let plus1_value
-			let plus1 = parseInt(this.to.day) + 1
+			let plus1 = parseInt(this.to.day) - 1
 			if (this.entry.billto.billing_closing_date === '1') {
-				if (parseInt(this.to.day) > 28) {
-					if (this.befor_end === plus1) {
-						plus1 = 1
-						let next_month = parseInt(this.to.month) + 1
-						const next_year = next_month === 13 ? parseInt(this.to.year) + 1 : this.to.year
-						next_month = next_month === 13 ? 1 : next_month
-						next_month = next_month > 9 ? next_month : '0' + next_month
-						plus1_value = next_year + next_month
-					}
+				if (this.year + this.month === this.to.year + this.to.month && plus1 === 0) {
+					plus1 = this.befor_end - 1
+					plus1_value = this.befor_year + this.befor_month
 				}
 			}
-			if (!plus1_value) {
-				plus1_value = this.to.year + this.to.month
-			}
+			if (!plus1_value) plus1_value = this.to.year + this.to.month
+			if (plus1 === 0) plus1 = 1
 			flg = value === plus1_value + plus1
 		}
 		return flg
