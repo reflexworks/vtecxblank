@@ -30,14 +30,18 @@ import {
 	CommonLoginUser,
 	CommonCheckBox,
 	addFigure,
-	delFigure
+	delFigure,
+	CommonIndicator,
+	CommonNetworkMessage
 } from './common'
 
 export default class InternalWorkForm extends React.Component {
 
 	constructor(props: Props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			isError: {}
+		}
 
 		this.year = null
 		this.month = null
@@ -948,8 +952,6 @@ export default class InternalWorkForm extends React.Component {
 				}
 			}).then((response) => {
 
-				this.setState({ isDisabled: false })
-
 				if (_isCreate) {
 					const key = response.data.feed.title
 					this[_key][_index].data.id = response.data.feed.title + ',1'
@@ -983,7 +985,8 @@ export default class InternalWorkForm extends React.Component {
 					this[_key][_index].approval_status_btn = this.setApprovalStatusBtn(_key, _index, this[_key][_index].data)
 				}
 
-				this.forceUpdate()
+				this.setState({ isDisabled: false, isCompleted: 'update', isError: null  })
+				this.setState({ isCompleted: null })
 
 			}).catch((error) => {
 				this.setState({ isDisabled: false, isError: error })
@@ -1269,7 +1272,16 @@ export default class InternalWorkForm extends React.Component {
 
 		return (
 
-			<Form name={this.props.name} horizontal data-submit-form>
+			<Form name={this.props.name} horizontal data-submit-form id="InternalWorkForm">
+
+				{/* 通信中インジケータ */}
+				<CommonIndicator visible={this.state.isDisabled} />
+
+				{/* 通信メッセージ */}
+				<CommonNetworkMessage
+					isError={this.state.isError}
+					isCompleted={this.state.isCompleted}
+				/>
 
 				<CommonInputText
 					controlLabel="作業対象見積書"

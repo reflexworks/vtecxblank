@@ -93,7 +93,7 @@ export class CommonNetworkMessage extends React.Component {
 	 */
 	showSuccess = (_messeage) => {
 		this.msg.success(_messeage, {
-			time: 10000,
+			time: 2500,
 			icon: <Glyphicon glyph="ok"></Glyphicon>
 		})
 	}
@@ -124,22 +124,24 @@ export class CommonNetworkMessage extends React.Component {
 
 			const error = this.state.error
 
-			if (error.response && error.response.status === 401) {
+			if (error) {
+				if (error.response && error.response.status === 401) {
 
-				this.showFixAlert(<span><a href="login.html">ログイン</a>を行ってから実行してください。</span>)
+					this.showFixAlert(<span><a href="login.html">ログイン</a>を行ってから実行してください。</span>)
 
-			} else if (error.response && error.response.status === 403) {
+				} else if (error.response && error.response.status === 403) {
 
-				this.showFixAlert(<span>実行権限がありません。<br /><a href="login.html">ログイン</a>からやり直してください。</span>)
+					this.showFixAlert(<span>実行権限がありません。<br /><a href="login.html">ログイン</a>からやり直してください。</span>)
 
-			} else if (error.response) {
+				} else if (error.response) {
 
-				this.showAlert(<span>データ登録に失敗しました。[{error.response.status}]<br />{error.response.data.feed.title}</span>)
+					this.showAlert(<span>データ登録に失敗しました。[{error.response.status}]<br />{error.response.data.feed.title}</span>)
 
-			} else if (error.status === 204) {
+				} else if (error.status === 204) {
 
-				this.showAlert(<span>情報がありません</span>)
+					this.showAlert(<span>情報がありません</span>)
 
+				}
 			}
 		}
 
@@ -1483,6 +1485,7 @@ export class CommonInputText extends React.Component {
 						data-validate={this.props.validate}
 						data-required={this.props.required}
 						bsSize="small"
+						className={this.state.entitiykey}
 					/>
 				)
 			}
@@ -2898,4 +2901,26 @@ export class CommonPassword extends React.Component {
 		)
 	}
 
+}
+
+export function CommonBackInternalWork(_befor_url) {
+	const forms = document.forms[0]
+	let isBack = true
+	for (let i = 0, ii = forms.length; i < ii; ++i) {
+		const node = forms[i]
+		if (node.className.indexOf('quantity') !== -1) {
+			if (!node.value || node.value === '') {
+				isBack = false
+			}
+		}
+	}
+	if (document.getElementById('InternalWorkForm')) {
+		if (!isBack) {
+			if (confirm('未入力の項目がありますが移動してもよろしいでしょうか？')) {
+				location.hash = _befor_url ? _befor_url : '#'
+			}
+		} else {
+			location.hash = _befor_url ? _befor_url : '#'
+		}
+	}
 }
