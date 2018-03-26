@@ -1037,7 +1037,7 @@ export default class InvoiceForm extends React.Component {
 		if (this.entry.invoice.working_yearmonth) {
 			let searchYearmonth = this.entry.invoice.working_yearmonth.replace(/\//, '')
 			let delivery = _data.delivery === 'ヤマト運輸' ? 'YH' : 'ECO'
-			location.href = '/s/downloadbillingcsv?shipping_yearmonth=' + searchYearmonth + '&billto_code=' + this.entry.billto.billto_code + '&delivery_company=' + delivery
+			location.href = '/s/download-billing-csv?shipping_yearmonth=' + searchYearmonth + '&billto_code=' + this.entry.billto.billto_code + '&delivery_company=' + delivery
 		} else {
 			alert('庫内作業年月が選択されていません。')
 		}

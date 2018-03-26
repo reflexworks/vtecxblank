@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import {
-
+	CommonIndicator
 } from './common'
 
 type InputEvent = {
@@ -24,6 +24,9 @@ type InputEvent = {
 export default class BillingDataUpload extends React.Component {  
 	constructor() {
 		super()
+		this.state = {
+			isDisabled: false,
+		}
 	}
  
 	handleSubmitYmt(e: InputEvent) {
@@ -31,6 +34,9 @@ export default class BillingDataUpload extends React.Component {
 
 		const formData = new FormData(e.currentTarget)
 		if (confirm('アップロードを実行します。よろしいですか？')) {
+			this.setState({
+				isDisabled: true
+			})
 			axios({
 				url: '/s/put-billing-ymt',
 				method: 'post',
@@ -40,8 +46,14 @@ export default class BillingDataUpload extends React.Component {
 				data : formData
 
 			}).then(() => {
+				this.setState({
+					isDisabled: false
+				})
 				alert('アップロードに成功しました')
 			}).catch((error) => {
+				this.setState({
+					isDisabled: false
+				})
 				if (error.response) {
 					if (error.response.data.feed.title.indexOf('undefined')>=0) {
 						alert('CSVデータが正しくありません。:'+error.response.data.feed.title)
@@ -52,8 +64,8 @@ export default class BillingDataUpload extends React.Component {
 					alert('アップロードに失敗しました')
 				}
 			})
+			
 		}
-	
 	}
 
 	handleSubmitEco(e: InputEvent) {
@@ -89,6 +101,8 @@ export default class BillingDataUpload extends React.Component {
 	render() {
 		return (
 			<Grid>
+				{/* 通信中インジケータ */}
+				<CommonIndicator visible={this.state.isDisabled} />
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						<PageHeader>請求データアップロード</PageHeader>

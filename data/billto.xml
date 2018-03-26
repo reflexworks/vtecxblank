@@ -82,7 +82,7 @@
       <billto_name>株式会社 潤恒縁</billto_name>
       <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/15</payment_date>
-      <yamato_has_details>0</yamato_has_details>
+      <yamato_has_details>1</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -351,7 +351,7 @@
     <billto>
       <billto_code>0000019</billto_code>
       <billto_name>トゥモロー 株式会社</billto_name>
-      <billing_closing_date>1</billing_closing_date>
+      <billing_closing_date>0</billing_closing_date>
       <payment_date>2018/03/20</payment_date>
       <post_has_sizeweight>1</post_has_sizeweight>
       <yamato_has_details>0</yamato_has_details>
@@ -526,8 +526,6 @@
       <billto_code>0000028</billto_code>
       <billto_name>株式会社 クラシカルエルフ</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1477,10 +1475,8 @@
   <entry>
     <billto>
       <billto_code>0000078</billto_code>
-      <billto_name>EP-TECHNO</billto_name>
+      <billto_name>EP-TECHNO合同会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1743,17 +1739,15 @@
       <billto_code>0000092</billto_code>
       <billto_name>らでぃっしゅぼーや 株式会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
       <fax></fax>
       <email></email>
-      <zip_code>163-1416</zip_code>
+      <zip_code>175-0082</zip_code>
       <prefecture>東京都</prefecture>
-      <address1>新宿区西新宿</address1>
-      <address2>3-20-2　東京オペラシティ16Ｆ</address2>
+      <address1>板橋区高島平</address1>
+      <address2>6-1-1</address2>
     </contact_information>
     <link href="/billto/0000092" rel="self"/>
   </entry>
@@ -2218,8 +2212,6 @@
       <billto_code>0000118</billto_code>
       <billto_name>ウルタロウ</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
-      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2228,7 +2220,7 @@
       <zip_code>335-0025</zip_code>
       <prefecture>埼玉県</prefecture>
       <address1>戸田市南町</address1>
-      <address2>12-20</address2>
+      <address2>12-20　ＣＡＮ内</address2>
     </contact_information>
     <link href="/billto/0000118" rel="self"/>
   </entry>
@@ -2314,7 +2306,6 @@
       <billto_code>0000123</billto_code>
       <billto_name>株式会社 虎の穴</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2687,10 +2678,8 @@
   <entry>
     <billto>
       <billto_code>0000144</billto_code>
-      <billto_name>株式会社 CONNECT コーポレーション</billto_name>
+      <billto_name>株式会社 CONNECT コーポレーション（戸田）</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
-      <yamato_has_details>0</yamato_has_details>
     </billto>
     <contact_information>
       <tel></tel>
@@ -2949,26 +2938,6 @@
       <address2>7-1-1</address2>
     </contact_information>
     <link href="/billto/0000159" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000160</billto_code>
-      <billto_name>テスト</billto_name>
-      <billing_closing_date>1</billing_closing_date>
-      <payment_date>2018/02/28</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel>0123456789</tel>
-      <fax>0123456789</fax>
-      <email>test@xxx.xxx</email>
-      <zip_code>123-4567</zip_code>
-      <prefecture>栃木県</prefecture>
-      <address1>XXX市XXX町</address1>
-      <address2>1-2-3</address2>
-    </contact_information>
-    <link href="/billto/0000160" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -3329,5 +3298,224 @@
       <address2>9-35</address2>
     </contact_information>
     <link href="/billto/0000187" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000188</billto_code>
+      <billto_name>株式会社広英社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel>03-5689-0230</tel>
+      <fax>03-5689-0240</fax>
+      <email></email>
+      <zip_code>113-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>文京区白山</address1>
+      <address2>1-13-7</address2>
+    </contact_information>
+    <link href="/billto/0000188" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000189</billto_code>
+      <billto_name>株式会社ハセガワロジスティクス（Abelia）</billto_name>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>143-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>大田区東海</address1>
+      <address2>4-2-10　コクサイエアロマリン株式会社内2F</address2>
+    </contact_information>
+    <link href="/billto/0000189" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000190</billto_code>
+      <billto_name>株式会社ハセガワロジスティクス（CyDen）</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>143-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>大田区東海</address1>
+      <address2>4-2-10　コクサイエアロマリン株式会社内2F</address2>
+    </contact_information>
+    <link href="/billto/0000190" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000191</billto_code>
+      <billto_name>株式会社ハセガワロジスティクス（資材館）</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>143-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>大田区東海</address1>
+      <address2>4-2-10　コクサイエアロマリン株式会社内2F</address2>
+    </contact_information>
+    <link href="/billto/0000191" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000192</billto_code>
+      <billto_name>株式会社ハセガワロジスティクス（サイダー）</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>143-0001</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>大田区東海</address1>
+      <address2>4-2-10　コクサイエアロマリン株式会社内2F</address2>
+    </contact_information>
+    <link href="/billto/0000192" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000194</billto_code>
+      <billto_name>エス・ロジステックス株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>160-0021</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>新宿区歌舞伎町</address1>
+      <address2>1-17-10　シダックス新宿セントラルロード</address2>
+    </contact_information>
+    <link href="/billto/0000194" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000195</billto_code>
+      <billto_name>ＴＭＳ株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>335-0015</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市川岸</address1>
+      <address2>2-5-20-202</address2>
+    </contact_information>
+    <link href="/billto/0000195" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000196</billto_code>
+      <billto_name>株式会社 CONNECT コーポレーション（高島平）</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9-35</address2>
+    </contact_information>
+    <link href="/billto/0000196" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000197</billto_code>
+      <billto_name>株式会社 CONNECT コーポレーション（朝霞）</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9-35</address2>
+    </contact_information>
+    <link href="/billto/0000197" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000198</billto_code>
+      <billto_name>株式会社 CONNECT コーポレーション（三芳）</billto_name>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>332-0027</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>川口市緑町</address1>
+      <address2>9-35</address2>
+    </contact_information>
+    <link href="/billto/0000198" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000199</billto_code>
+      <billto_name>日本快倉 株式会社(倉庫料)</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>175-0082</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>板橋区高島平</address1>
+      <address2>6-2-1</address2>
+    </contact_information>
+    <link href="/billto/0000199" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000200</billto_code>
+      <billto_name>CJ　Logistics　Japan　株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>105-0003</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>港区西新橋</address1>
+      <address2>2-7-4　CJビル9F</address2>
+    </contact_information>
+    <link href="/billto/0000200" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000201</billto_code>
+      <billto_name>株式会社Gerard</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code></zip_code>
+      <prefecture></prefecture>
+      <address1></address1>
+      <address2></address2>
+    </contact_information>
+    <link href="/billto/0000201" rel="self"/>
   </entry>
 </feed>

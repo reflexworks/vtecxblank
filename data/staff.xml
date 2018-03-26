@@ -186,7 +186,7 @@
     <staff>
       <staff_name>石井 香瑞紀</staff_name>
       <role>3</role>
-      <superior_email>n.kawashima@connect-logi.co.jp</superior_email>
+      <superior_email>nagase@connect-logi.jp</superior_email>
       <staff_email>ishii@connect-logi.co.jp</staff_email>
       <uid>857</uid>
     </staff>
@@ -249,15 +249,6 @@
       <uid>864</uid>
     </staff>
     <link href="/staff/h.sato@connect-logi.co.jp" rel="self"/>
-  </entry>
-  <entry>
-    <staff>
-      <staff_name>服部半蔵（テスト）</staff_name>
-      <role>3</role>
-      <staff_email>info-connectcorporasion@xxx.com</staff_email>
-      <uid>865</uid>
-    </staff>
-    <link href="/staff/info-connectcorporasion@xxx.com" rel="self"/>
   </entry>
   <entry>
     <staff>

@@ -221,10 +221,15 @@ gulp.task('upload:entry', function (done) {
 })
 
 gulp.task('upload:data', function (done) {
-	recursive('data', [], function (err, files) {
-		files.map((file) => sendfile(file, '?_bulk'))				
-		done()
-	})
+	if (argv.f) {
+		const file = 'data/' + argv.f
+		sendfile(file, '?_bulk')		
+	} else {
+		recursive('data', [], function (err, files) {
+			files.map((file) => sendfile(file, '?_bulk'))				
+			done()
+		})		
+	}
 })
 
 gulp.task('upload:htmlfolders', function (done) {
