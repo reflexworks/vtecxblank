@@ -1206,7 +1206,7 @@ export default class InternalWorkForm extends React.Component {
 	setIsToDay() {
 		let flg = false
 		let value // 判定する値
-		this.to.day = 1
+
 		if (this.entry.billto.billing_closing_date === '1') {
 			if (parseInt(this.worksDay) > 20) {
 				value = this.befor_year + this.befor_month + this.worksDay
