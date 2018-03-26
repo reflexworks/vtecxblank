@@ -113,7 +113,8 @@ import {
 	getAuthList
 } from './common-auth'
 import {
-	CommonLoginUser
+	CommonLoginUser,
+	CommonBackInternalWork
 } from './common'
 
 class MainContainer extends React.Component {
@@ -186,6 +187,21 @@ class MainContainer extends React.Component {
 		}
 
 		init()
+	}
+
+	componentDidMount() {
+		if (history && history.pushState) {
+			// history イベントの監視
+			let befor_url
+			window.addEventListener('popstate', function () {
+				if (location.hash.indexOf('InternalWorkUpdate') !== -1) {
+					CommonBackInternalWork(befor_url)
+					history.pushState(null, null, null)
+				} else {
+					befor_url = location.hash
+				}
+			}, false)
+		}
 	}
 
 	setAuthList() {
