@@ -8,7 +8,12 @@ const quotation_code = vtecxapi.getQueryString('quotation_code')  //0000107
 const shipment_class = vtecxapi.getQueryString('shipment_class')
 
 try {
-	const result = getCompare(shipping_yearmonth, customer_code)
+	const result = {
+		'feed': {
+			'entry':[]
+		}
+	}
+	result.feed.entry = result.feed.entry.concat(getCompare(shipping_yearmonth, customer_code))
 
 	vtecxapi.doResponse(result)
 	
@@ -16,10 +21,9 @@ try {
 	vtecxapi.sendMessage(400, e)
 }
 
-
 function getCompare(shipping_yearmonth, customer_code) {
 
-	const result = []
+	const result = { 'billing_compare': [] }
 
 	const shipment_service = vtecxapi.getFeed('/shipment_service/')
 	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
@@ -28,7 +32,7 @@ function getCompare(shipping_yearmonth, customer_code) {
 		if (billing_data.billing_data.feed.entry) {
 			const internal_work_data = getInternalworkdata(shipping_yearmonth, customer_code, quotation_code)
 			const billing_compare = getBillingCompare(internal_work_data, billing_data, shipping_yearmonth, shipment_class, entry.shipment_service.code, entry.shipment_service.name)
-			result.push(billing_compare)
+			result.billing_compare.push(billing_compare)
 		}	
 	})
 
@@ -38,13 +42,11 @@ function getCompare(shipping_yearmonth, customer_code) {
 function getBillingCompare(internal_work_data,billing_data,shipping_yearmonth,shipment_class,shipment_service_code,shipment_service_service_name) {
 
 	const result = {
-		'billing_compare': {
-			'shipment_service_code': shipment_service_code,
-			'shipment_service_service_name': shipment_service_service_name,
-			'shipment_class': shipment_class,
-			'record': []
-		}
-	    }
+		'shipment_service_code': shipment_service_code,
+		'shipment_service_service_name': shipment_service_service_name,
+		'shipment_class': shipment_class,
+		'record': []
+	}
 
 	let dates1 = new Date(shipping_yearmonth.slice(0, 4) + '-' + shipping_yearmonth.slice(-2) + '-01')
 	let dates2 = new Date(dates1.getFullYear(), dates1.getMonth()+1 , 0)     // 月末
@@ -65,7 +67,7 @@ function getBillingCompare(internal_work_data,billing_data,shipping_yearmonth,sh
 				'billing_quantity': result_billing.billing_data.quantity,
 				'billing_amount': result_billing.billing_data.delivery_charge
 			}
-			result.billing_compare.record.push(record)
+			result.record.push(record)
 		}
 	}
 	return result

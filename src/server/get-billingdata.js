@@ -2,6 +2,8 @@ import vtecxapi from 'vtecxapi'
 
 export function getBillingdata(shipping_yearmonth,customer_code,shipment_service_code,billto_code) {
 
+	shipping_yearmonth = shipping_yearmonth.replace(/[^0-9^\\.]/g,'')
+
 	let billto
 	if (!billto_code) {
 		const customer = vtecxapi.getFeed('/customer/?customer.customer_code=' + customer_code)
