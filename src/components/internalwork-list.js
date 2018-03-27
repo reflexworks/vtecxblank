@@ -6,8 +6,8 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Button,
-	Glyphicon,
+	//Button,
+	//Glyphicon,
 } from 'react-bootstrap'
 import type {
 	Props
@@ -202,9 +202,6 @@ export default class InternalWorkList extends React.Component {
     							field: 'creator', title: '作成者', width: '200px'
     						}]}
     					>
-    						<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
-    							<Glyphicon glyph="download" />CSVダウンロード
-    						</Button>
     					</CommonTable>
     				</Col>
     			</Row>
