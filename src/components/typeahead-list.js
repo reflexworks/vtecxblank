@@ -47,15 +47,13 @@ export default class TypeAheadList extends React.Component {
     /**
      * 一覧取得実行
      * @param {*} activePage
-     * @param {*} conditions
-     */
-    getFeed(activePage: number, conditions) {
+	 * @param {*} url 
+	 */
+    getFeed(activePage: number, url) {
 
-    	const url = this.url + (conditions ? '&' + conditions : '')
     	this.setState({
     		isDisabled: true,
-    		isError: {},
-    		urlToPagenation: url
+    		isError: {}
     	})
 
     	this.activePage = activePage
@@ -80,8 +78,20 @@ export default class TypeAheadList extends React.Component {
     		this.setState({ isDisabled: false, isError: error })
     	})
     }
-	
-    /**
+
+	/**
+	 * 一覧取得設定
+	 * @param {*} conditions 
+	 */
+    doGetFeed(conditions) {
+
+    	const url = this.url + (conditions ? '&' + conditions : '')
+    	this.setState({
+    		urlToPagenation: url
+    	})
+    }
+
+	/**
      * 更新画面に遷移する
      * @param {*} index
      */
@@ -110,7 +120,7 @@ export default class TypeAheadList extends React.Component {
     			}
     		}).then(() => {
     			this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-    			this.getFeed(this.activePage)
+    			this.getFeed(this.activePage, this.state.urlToPagenation)
     		}).catch((error) => {
     			if (this.props.error) {
     				this.setState({ isDisabled: false })
@@ -125,19 +135,10 @@ export default class TypeAheadList extends React.Component {
     }
 
     /**
-     * 検索実行
-     * @param {*} conditions
-     */
-    doSearch(conditions) {
-    	this.getFeed(1, conditions)
-    }
-
-	
-    /**
      * 描画後の処理
      */
     componentDidMount() {
-    	this.getFeed(1)
+    	this.doGetFeed()
     }
 
     render() {
@@ -155,7 +156,7 @@ export default class TypeAheadList extends React.Component {
 
     					<PageHeader>入力補完一覧</PageHeader>
 
-    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions)}>
     						<CommonFilterBox
     							controlLabel="入力補完種別"
     							size="sm"
@@ -195,7 +196,7 @@ export default class TypeAheadList extends React.Component {
 
     					<CommonPagination
     						url={this.state.urlToPagenation}
-    						onChange={(activePage)=>this.getFeed(activePage)}
+    						onChange={(activePage, url)=>this.getFeed(activePage, url)}
     						maxDisplayRows={this.maxDisplayRows}
     						maxButtons={4}
     					/>

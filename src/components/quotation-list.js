@@ -51,15 +51,13 @@ export default class QuotationList extends React.Component {
 	/**
 	 * 一覧取得実行
 	 * @param {*} activePage 
-	 * @param {*} conditions 
+	 * @param {*} url 
 	 */
-	getFeed(activePage: number, conditions) {
+	getFeed(activePage: number, url) {
 
-		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
-			isError: {},
-			urlToPagenation: url
+			isError: {}
 		})
 
 		this.activePage = activePage
@@ -81,6 +79,18 @@ export default class QuotationList extends React.Component {
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})    
+	}
+
+	/**
+	 * 一覧取得設定
+	 * @param {*} conditions 
+	 */
+	doGetFeed(conditions) {
+
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			urlToPagenation: url
+		})
 	}
 
 	/**
@@ -113,7 +123,7 @@ export default class QuotationList extends React.Component {
 					}
 				}).then(() => {
 					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-					this.getFeed(this.activePage)
+					this.getFeed(this.activePage, this.state.urlToPagenation)
 				}).catch((error) => {
 					if (this.props.error) {
 						this.setState({ isDisabled: false })
@@ -133,18 +143,10 @@ export default class QuotationList extends React.Component {
 	}
 
 	/**
-	 * 検索実行
-	 * @param {*} conditions 
-	 */
-	doSearch(conditions) {
-		this.getFeed(1, conditions)
-	}
-
-	/**
 	 * 描画後の処理
 	 */
 	componentDidMount() {
-		this.getFeed(1)
+		this.doGetFeed()
 	}
 
 	render() {
@@ -162,7 +164,7 @@ export default class QuotationList extends React.Component {
 
 						<PageHeader>見積書一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions)}>
 							<CommonInputText
 								controlLabel="見積書No"
 								name="quotation.quotation_code"
@@ -208,7 +210,7 @@ export default class QuotationList extends React.Component {
 
 						<CommonPagination
 							url={this.state.urlToPagenation}
-							onChange={(activePage)=>this.getFeed(activePage)}
+							onChange={(activePage, url)=>this.getFeed(activePage, url)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
