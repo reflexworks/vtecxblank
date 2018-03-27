@@ -2941,26 +2941,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000160</billto_code>
-      <billto_name>テスト</billto_name>
-      <billing_closing_date>1</billing_closing_date>
-      <payment_date>2018/02/28</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel>0123456789</tel>
-      <fax>0123456789</fax>
-      <email>test@xxx.xxx</email>
-      <zip_code>123-4567</zip_code>
-      <prefecture>栃木県</prefecture>
-      <address1>XXX市XXX町</address1>
-      <address2>1-2-3</address2>
-    </contact_information>
-    <link href="/billto/0000160" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000163</billto_code>
       <billto_name>Tomofun 株式会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -3503,5 +3483,39 @@
       <address2>6-2-1</address2>
     </contact_information>
     <link href="/billto/0000199" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000200</billto_code>
+      <billto_name>CJ　Logistics　Japan　株式会社</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>105-0003</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>港区西新橋</address1>
+      <address2>2-7-4　CJビル9F</address2>
+    </contact_information>
+    <link href="/billto/0000200" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000201</billto_code>
+      <billto_name>株式会社Gerard</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code></zip_code>
+      <prefecture></prefecture>
+      <address1></address1>
+      <address2></address2>
+    </contact_information>
+    <link href="/billto/0000201" rel="self"/>
   </entry>
 </feed>

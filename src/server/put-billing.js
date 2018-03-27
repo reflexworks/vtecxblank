@@ -116,42 +116,51 @@ export function getChargeOfMail(delivery_charge_all,customer_all,shipper_code,sh
 		return delivery_charge.shipment_service_code === shipment_service_code
 	})
 
-	if (delivery_charge.length === 0) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +',サービスコード='+shipment_service_code+')'
-
-	return delivery_charge[0].delivery_charge_details[0].price	
+	if (delivery_charge.length === 0) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
+	const price = delivery_charge[0].delivery_charge_details[0].price.replace(/[^0-9^\\.]/g,'')
+	if (price && price.length > 0) {
+		return price
+	} else {
+		throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
+	}
+		
 }
 
 export function getDeliverycharge(customer_all, shipper_code, shipment_service_service_name) {
 
 	if (cache[shipper_code]) return cache[shipper_code]
 	else {
-	// 荷主コード(分類コード)からcustomerを検索
-		let customer_code = null
-		let shipment_class = null
-		customer_all.feed.entry.some((entry) => {
-			if (entry&&entry.customer.shipper&&entry.customer.shipper.length>0) {
-				entry.customer.shipper.map((shipper) => {
-					if (shipper.shipment_service_service_name ===shipment_service_service_name) {
-						shipper.shipper_info.map((shipper_info) => { 
-							if (shipper_info.shipper_code === shipper_code)
-							{
-								shipment_class = shipper_info.shipment_class 
-								customer_code = entry.customer.customer_code
-							}	
-						})
-					}
-				})
-				if (customer_code) return true
-			}
-		})
-		if (!customer_code) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
-		const deliverycharge = vtecxapi.getEntry('/customer/' + customer_code + '/deliverycharge')	
-		if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +')'
+		const customer = getCustomerByShipper(customer_all,shipper_code,shipment_service_service_name)
+		if (!customer.customer_code) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
+		const deliverycharge = vtecxapi.getEntry('/customer/' + customer.customer_code + '/deliverycharge')	
+		if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer.customer_code +')'
 
-		cache[shipper_code] = { 'customer_code': customer_code, 'shipment_class': shipment_class, 'delivery_charge': deliverycharge }
+		cache[shipper_code] = { 'customer_code': customer.customer_code, 'shipment_class': customer.shipment_class, 'delivery_charge': deliverycharge }
 		return cache[shipper_code]
 	}
 
+}
+export function getCustomerByShipper(customer_all,shipper_code,shipment_service_service_name) {
+	// 荷主コード(分類コード)からcustomerを検索
+	let customer_code = null
+	let shipment_class = null
+	customer_all.feed.entry.some((entry) => {
+		if (entry&&entry.customer.shipper&&entry.customer.shipper.length>0) {
+			entry.customer.shipper.map((shipper) => {
+				if (!shipment_service_service_name||shipper.shipment_service_service_name ===shipment_service_service_name) {
+					shipper.shipper_info.map((shipper_info) => { 
+						if (shipper_info.shipper_code === shipper_code)
+						{
+							shipment_class = shipper_info.shipment_class 
+							customer_code = entry.customer.customer_code
+						}	
+					})
+				}
+			})
+			if (customer_code) return true
+		}
+	})
+	return {'customer_code':customer_code,'shipment_class':shipment_class}
 }
 
 export function getFullDate(datestr) {
@@ -180,7 +189,7 @@ export function getKey(customer_code,datestr, shipment_service_code,tracking_num
 
 	let matches = /^(\d+)月(\d+)日$/.exec(datestr)
 	if (matches && matches.length >= 2) {
-	
+		
 		const now = new Date()
 		const month = parseInt(matches[1])
 		let year = now.getFullYear()
@@ -190,13 +199,14 @@ export function getKey(customer_code,datestr, shipment_service_code,tracking_num
 		}
 		return year + ('0' + month).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
 	} else {
-    	matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
+		matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
 		if (!matches) {
 			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
 		}	
 		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
-		
+			
 	}	
+
 }
 
 export function getPrefecture(addr) {

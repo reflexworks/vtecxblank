@@ -217,6 +217,7 @@ billing_data
  delivery_charge
  delivery_charge_org_total
  quantity
+ unit_price
 billing_summary
  record{}
   size
