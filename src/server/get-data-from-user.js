@@ -249,7 +249,7 @@ export function getData(_type) {
 			}
 		}
 
-		if (total_array.length) {
+		if (total_array && total_array.length) {
 
 			let res_array
 			if (end_size) {

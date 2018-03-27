@@ -208,17 +208,17 @@ export default class InquiryList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'published',title: '登録日時', width: '200px'
+								field: 'published',title: '登録日時', width: '150px'
 							}, {
-								field: 'updated',title: '更新日時', width: '200px'
+								field: 'updated',title: '更新日時', width: '150px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'customer.customer_name', title: '顧客名', width: '300px'
 							}, {
-								field: 'customer.customer_code', title: '顧客コード', width: '200px'
+								field: 'customer.customer_code', title: '顧客コード', width: '100px'
 							}, {
-								field: 'inquiry.staff_name', title: '担当者', width: '200px'
+								field: 'inquiry.staff_name', title: '作成者', width: '150px'
 							}, {
-								field: 'inquiry.inquiry_status', title: 'ステータス', width: '200px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
+								field: 'inquiry.inquiry_status', title: 'ステータス', width: '100px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
 							}]}
 						/>
 					</Col>  
