@@ -27,10 +27,28 @@ if (codes.length > 2) {
 	).concat(
 		internal_work_all.feed.entry.filter((entry) => {
 			return entry.internal_work.work_type === '3'
+		}).sort((entry1,entry2) => { 
+			if (entry1.internal_work.packing_item_name > entry2.internal_work.packing_item_name) return 1
+			else {
+				if (entry1.internal_work.packing_item_name === entry2.internal_work.packing_item_name) {
+					if (Number(entry1.internal_work.working_day) > Number(entry2.internal_work.working_day)) return 1
+					else return -1
+				}
+				else return -1
+			}
 		})
 	).concat(
 		internal_work_all.feed.entry.filter((entry) => {
 			return entry.internal_work.work_type === '1'
+		}).sort((entry1,entry2) => { 
+			if (entry1.internal_work.shipment_service_service_name > entry2.internal_work.shipment_service_service_name) return 1
+			else {
+				if (entry1.internal_work.shipment_service_service_name === entry2.internal_work.shipment_service_service_name) {
+					if (Number(entry1.internal_work.working_day) > Number(entry2.internal_work.working_day)) return 1
+					else return -1
+				}
+				else return -1
+			}
 		})
 	).concat(
 		internal_work_all.feed.entry.filter((entry) => {
@@ -40,11 +58,16 @@ if (codes.length > 2) {
 		internal_work_all.feed.entry.filter((entry) => {
 			return entry.internal_work.work_type === '0'
 		}).sort((entry1,entry2) => { 
-			if (Number(entry1.internal_work.working_day) > Number(entry2.internal_work.working_day)) return 1
-			else return -1
+			if (entry1.internal_work.item_details_name > entry2.internal_work.item_details_name) return 1
+			else {
+				if (entry1.internal_work.item_details_name === entry2.internal_work.item_details_name) {
+					if (Number(entry1.internal_work.working_day) > Number(entry2.internal_work.working_day)) return 1
+					else return -1
+				}
+				else return -1
+			}
 		})
 	)
-
 	internal_work.map((entry) => {
 		let unit_price = entry.internal_work.unit_price || ''
 		if (entry.internal_work.work_type === '3') {
