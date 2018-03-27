@@ -1268,6 +1268,11 @@ export default class InternalWorkForm extends React.Component {
 		})
 	}
 
+	downloadCalendar() {
+		const code = this.entry.id.split(',')[0].replace('/internal_work/', '')
+		location.href = '/s/download-internalwork-csv?code=' + code
+	}
+
 	render() {
 
 		return (
@@ -1683,6 +1688,12 @@ export default class InternalWorkForm extends React.Component {
 					</Tab>
 
 					<Tab eventKey={0} title="作業状況">
+						<CommonFormGroup controlLabel="庫内作業明細">
+							<Button onClick={()=>this.downloadCalendar()} bsSize="sm" style={{width: '130px', 'margin': '0px 5px'}}>
+								<Glyphicon glyph="download" />CSVダウンロード
+							</Button>
+						</CommonFormGroup>
+						<hr />
 						{this.calendar[0]}
 						{this.calendar[1]}
 						{this.calendar[2]}

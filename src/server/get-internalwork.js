@@ -108,10 +108,12 @@ if (isList) {
 		})
 
 		array_other.sort((a, b) => {
-			const a_index = a.internal_work.shipment_service_code.toString().toLowerCase()
-		    const b_index = b.internal_work.shipment_service_code.toString().toLowerCase()
-			if( a_index < b_index ) return -1
-			if( a_index > b_index ) return 1
+			if (a.internal_work && b.internal_work && a.internal_work.shipment_service_code && b.internal_work.shipment_service_code) {
+				const a_index = a.internal_work.shipment_service_code.toString().toLowerCase()
+				const b_index = b.internal_work.shipment_service_code.toString().toLowerCase()
+				if( a_index < b_index ) return -1
+				if( a_index > b_index ) return 1
+			}
 			return 0
 		})
 
