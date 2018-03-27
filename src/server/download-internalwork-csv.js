@@ -39,9 +39,12 @@ if (codes.length > 2) {
 	).concat(
 		internal_work_all.feed.entry.filter((entry) => {
 			return entry.internal_work.work_type === '0'
+		}).sort((entry1,entry2) => { 
+			if (Number(entry1.internal_work.working_day) > Number(entry2.internal_work.working_day)) return 1
+			else return -1
 		})
 	)
-	
+
 	internal_work.map((entry) => {
 		let unit_price = entry.internal_work.unit_price || ''
 		if (entry.internal_work.work_type === '3') {
