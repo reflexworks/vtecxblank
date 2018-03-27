@@ -1215,10 +1215,28 @@ h3.title {
 .invoiceDetails-table .table .center {
   text-align: center;
 }
-.test{
-  color:red;
-  padding: 100px 100px
+.invoice-total_amount{
+  float: right;
+  width: 350px;
 }
+.invoice-total_amount > .form-group{
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+.invoice-total_amount > .form-group > .control-label{
+  width: 100px;
+  padding: 7px 0px;
+  margin: 0px;
+  text-align: left;
+}
+.invoice-total_amount > .form-group > div{
+  width: 220px;
+  padding: 0px;
+  text-align: right;
+  font-size: 14px;
+}
+
 .comment {
   color: #999;
 }
