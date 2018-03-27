@@ -387,7 +387,7 @@ export default class QuotationForm extends React.Component {
 
 	getPackingItemList(input) {
 		return axios({
-			url: `/d/packing_item?f&packing_item.item_code=*${input}*`,
+			url: `/d/packing_item?f&packing_item.item_code-rg-*${input}*`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'

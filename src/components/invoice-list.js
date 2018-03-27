@@ -147,7 +147,7 @@ export default class InvoiceList extends React.Component {
 	changeSearchYearmonth(_data) {
 		if (_data) {
 			this.setState({ searchYearMonth: _data.value })
-			this.doGetFeed('invoice.invoice_yearmonth=*' + _data.value + '*')
+			this.doGetFeed('invoice.invoice_yearmonth-rg-*' + _data.value + '*')
 		} else {
 			this.setState({ searchYearMonth: '' })
 			this.doGetFeed()

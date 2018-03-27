@@ -2289,7 +2289,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
-				conditions = conditions + name + '=*' + value + '*'
+				conditions = conditions + name + '-rg-*' + value + '*'
 			}
 
 		}
