@@ -49,6 +49,9 @@ export default class ShipmentServiceForm extends React.Component {
 		this.maxIndex = 0
 		
 		this.sizeListType1 = [{
+			label: '〜60cm',
+			value: '〜60cm'
+		},{
 			label: '〜80cm',
 			value: '〜80cm'
 		},{

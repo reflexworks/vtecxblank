@@ -2289,7 +2289,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
-				conditions = conditions + name + '=*' + value + '*'
+				conditions = conditions + name + '-rg-*' + value + '*'
 			}
 
 		}
@@ -2367,10 +2367,12 @@ export class CommonPagination extends React.Component {
 		} 
 	}
 
-	 handleSelect(eventKey) {		 
-		this.buildIndex(this.props.url, eventKey)
+	handleSelect(eventKey, _url) {	
+		let url = _url
+		if (!url) url = this.props.url
+		this.buildIndex(url, eventKey)
 		this.setState( {activePage: eventKey} )
-		this.props.onChange(eventKey)	// 再検索
+		this.props.onChange(eventKey, url)	// 再検索
 	}
 	
 	/**
@@ -2381,10 +2383,9 @@ export class CommonPagination extends React.Component {
 
 		const new_url = newProps.url
 		if (this.url !== new_url) {
-	    	// pageIndex作成処理呼び出し
-			this.buildIndex(new_url, 1)
+			// pageIndex作成処理呼び出し
+			this.handleSelect(1, new_url)
 			this.url = new_url
-			this.setState({activePage:1})
 		}
 		// 件数取得
 		axios({
