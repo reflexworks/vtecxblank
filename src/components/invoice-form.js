@@ -845,6 +845,47 @@ export default class InvoiceForm extends React.Component {
 		this.setBillingSummaryTable()
 	}
 
+	/*
+	 * 請求書内の月時作業、日時作業、資材などに項目を追加する
+	 */
+	addInvoiceList(list, _data) {
+		if (!this.item_details[list]) {
+			this.item_details[list] = []
+		}
+		this.item_details[list].push(_data)
+
+		if (!this.entry.item_details) {
+			this.entry.item_details = []
+		}
+		this.entry.item_details.push(_data)
+
+		this.forceUpdate()
+	}
+
+	/**
+	 * 請求書内で追加した項目を削除
+	 */
+	removeInvoiceList(list, _index) {
+		let array = []
+		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i) {
+			if (i !== _index) array.push(this.item_details[list][i])
+		}
+		this.item_details[list] = array
+
+		let entryArray = []
+		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
+			if (this.entry.item_details[i].category !== list) {
+				entryArray.push(this.entry.item_details[i])
+			}
+		}
+		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i){
+			entryArray.push(this.item_details[list][i])
+		}	
+		this.entry.item_details = entryArray
+		this.changeTotalAmount()
+		
+		this.forceUpdate()
+	}
 	/**
 	 * 請求書内で追加した請求リストの変更処理
 	 */
@@ -876,6 +917,10 @@ export default class InvoiceForm extends React.Component {
 				changeArray.push(this.entry.item_details[i])		
 			}
 		}
+
+		this.entry.item_details = changeArray.concat(this.item_details[list])
+		console.log(this.entry.item_details)
+
 
 		this.changeTotalAmount()
 		
@@ -951,47 +996,6 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	/*
-	 * 請求書内の月時作業、日時作業、資材などに項目を追加する
-	 */
-	addInvoiceList(list, _data) {
-		if (!this.item_details[list]) {
-			this.item_details[list] = []
-		}
-		this.item_details[list].push(_data)
-		if (!this.entry.item_details) {
-			this.entry.item_details = []
-		}
-		this.entry.item_details.push(_data)
-		this.forceUpdate()
-	}
-
-	/**
-	 * 請求書内で追加した項目を削除
-	 */
-	removeInvoiceList(list, _index) {
-		let array = []
-		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i) {
-			if (i !== _index) array.push(this.item_details[list][i])
-		}
-		this.item_details[list] = array
-
-		let entryArray = []
-		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
-			if (this.entry.item_details[i].category !== list) {
-				entryArray.push(this.entry.item_details[i])
-			}
-		}
-
-		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i){
-			entryArray.push(this.item_details[list][i])
-		}	
-		this.entry.item_details = entryArray
-		this.changeTotalAmount()
-		
-		this.forceUpdate()
-	}
-	
 	/**
 	 * 	備考リストの追加
 	 */

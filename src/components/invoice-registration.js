@@ -33,6 +33,7 @@ export default class InvoiceRegistration extends React.Component {
 		// 登録先のURL
 		this.url = '/d/invoice'
 		this.fromUrl = '/d/quotation'
+		this.sideurl = '/d/invoice_details'
 
 		// 初期値の設定
 		this.entry = {
@@ -40,12 +41,21 @@ export default class InvoiceRegistration extends React.Component {
 				invoice_yearmonth: moment().format('YYYY/MM'),
 				payment_date:moment(),
 			},
-			item_details: [],
 			billto: {},
 			billfrom: {},
 			contact_information: {},
-			remarks: [],
-			creator:CommonLoginUser().get().staff_name
+			remarks:[],
+			creator: CommonLoginUser().get().staff_name
+		}
+		this.invoice_details = {
+			invoice: {
+				invoice_code:''
+			},
+			customer: {
+				customer_code:''
+			},
+			item_details: [],
+			remarks:[],
 		}
 	}
  
@@ -71,7 +81,7 @@ export default class InvoiceRegistration extends React.Component {
 				this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
 				this.entry.billto = response.data.feed.entry[0].billto
 				this.entry.billfrom = response.data.feed.entry[0].billfrom || {}
-				this.entry.remarks = response.data.feed.entry[0].remarks || []
+				
 				this.forceUpdate()
 			}
 
@@ -82,7 +92,7 @@ export default class InvoiceRegistration extends React.Component {
 
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
-		location.href = '#/InvoiceList'
+		location.href = '#/InvoiceList'		
 	}
 
 	render() {
@@ -107,7 +117,7 @@ export default class InvoiceRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InvoiceForm name="mainForm" entry={this.entry} />
+						<InvoiceForm name="mainForm" entry={this.entry}/>
 					</Col>
 				</Row>
 				<Row>
