@@ -10,6 +10,9 @@ import {
 import type {
 	InputEvent
 } from 'demo.types'
+import {
+	CommonBackInternalWork
+} from './common'
 
 export default class SideMenu extends React.Component {
 
@@ -244,12 +247,21 @@ export default class SideMenu extends React.Component {
 		}
 	}
 
+	onClick(e, _data) {
+		e.preventDefault()
+		if (location.hash.indexOf('InternalWorkUpdate') !== -1) {
+			CommonBackInternalWork('#/' + _data)
+		} else {
+			location.hash = '#/' + _data
+		}
+	}
+
 	sideMenuList(key) {
 		const list = this.list[key]
 		if (list && list.length) {
 			const itemlist = list.map((obj, i) => {
 				return (
-					<li key={i}><Link to={obj.to}><Glyphicon glyph={obj.glyph} className="child-menu-icon" />{obj.title}</Link></li>
+					<li key={i}><Link onClick={(e) => this.onClick(e, obj.to)} to={obj.to}><Glyphicon glyph={obj.glyph} className="child-menu-icon" />{obj.title}</Link></li>
 				)
 			})
 			const listSizeClass = 's' + list.length + '00'

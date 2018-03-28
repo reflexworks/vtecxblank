@@ -48,15 +48,13 @@ export default class InquiryList extends React.Component {
 	/**
 	 * 一覧取得実行
 	 * @param {*} activePage 
-	 * @param {*} conditions 
+	 * @param {*} url 
 	 */
-	getFeed(activePage: number, conditions) {
+	getFeed(activePage: number, url) {
 
-		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
-			isError: {},
-			urlToPagenation: url
+			isError: {}
 		})
 
 		this.activePage = activePage
@@ -83,6 +81,18 @@ export default class InquiryList extends React.Component {
 	}
 
 	/**
+	 * 一覧取得設定
+	 * @param {*} conditions 
+	 */
+	doGetFeed(conditions) {
+
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			urlToPagenation: url
+		})
+	}
+
+	/**
 	 * 更新画面に遷移する
 	 * @param {*} index 
 	 */
@@ -94,18 +104,10 @@ export default class InquiryList extends React.Component {
 	}
 
 	/**
-	 * 検索実行
-	 * @param {*} conditions 
-	 */
-	doSearch(conditions) {
-		this.getFeed(1, conditions)
-	}
-
-	/**
 	 * 描画後の処理
 	 */
 	componentDidMount() {
-		this.getFeed(1)
+		this.doGetFeed()
 	}
 
 	render() {
@@ -123,7 +125,7 @@ export default class InquiryList extends React.Component {
 
 						<PageHeader>特記事項</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions)}>
 							
 							<CommonInputText
 								controlLabel="顧客名"
@@ -196,7 +198,7 @@ export default class InquiryList extends React.Component {
 
 						<CommonPagination
 							url={this.state.urlToPagenation}
-							onChange={(activePage)=>this.getFeed(activePage)}
+							onChange={(activePage, url)=>this.getFeed(activePage, url)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
@@ -206,17 +208,17 @@ export default class InquiryList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'published',title: '登録日時', width: '200px'
+								field: 'published',title: '登録日時', width: '150px'
 							}, {
-								field: 'updated',title: '更新日時', width: '200px'
+								field: 'updated',title: '更新日時', width: '150px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'customer.customer_name', title: '顧客名', width: '300px'
 							}, {
-								field: 'customer.customer_code', title: '顧客コード', width: '200px'
+								field: 'customer.customer_code', title: '顧客コード', width: '100px'
 							}, {
-								field: 'inquiry.staff_name', title: '担当者', width: '200px'
+								field: 'inquiry.staff_name', title: '作成者', width: '150px'
 							}, {
-								field: 'inquiry.inquiry_status', title: 'ステータス', width: '200px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
+								field: 'inquiry.inquiry_status', title: 'ステータス', width: '100px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
 							}]}
 						/>
 					</Col>  
