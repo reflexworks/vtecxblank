@@ -237,7 +237,7 @@ gulp.task('upload:htmlfolders', function (done) {
 })
 
 gulp.task('upload:template', function (done) {
-	sendfile('setup/_settings/template.xml','?_bulk',done)
+	sendfile('setup/_settings/template.xml','',done)
 })
 
 gulp.task('upload:folderacls', function (done) {
@@ -268,7 +268,7 @@ gulp.task('test', function () {
 		target = 'test/'+argv.f+'.test.js'
 	}
 	return gulp.src([target], { read: false })
-		.pipe(mocha({ reporter: 'list',require: 'babel-register',timeout:'60000'}))
+		.pipe(mocha({ reporter: 'list',require: 'babel-register',timeout:'120000'}))
 		.on('error', gutil.log)
 })
 
@@ -298,7 +298,7 @@ function sendfile(file,iscontent,done,isdirectory) {
 			dir = ' (folder)'
 		}
 		console.log(file+dir+' --> '+url)
-		if (!error && response.statusCode == 200) {
+		if (!error && (response.statusCode == 200||response.statusCode == 202)) {
 			console.log(body)
 		} else {
 			if (response) {

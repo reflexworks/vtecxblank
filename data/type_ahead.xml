@@ -3481,13 +3481,6 @@
   </entry>
   <entry>
     <type_ahead>
-      <type>4</type>
-      <value>テスト</value>
-    </type_ahead>
-    <link href="/type_ahead/0-6-35-9-14-10-25" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
       <type>3</type>
       <value>15</value>
     </type_ahead>
@@ -3853,7 +3846,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-10-73" rel="self"/>
   </entry>
@@ -4931,7 +4924,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-3-70" rel="self"/>
   </entry>
@@ -5484,7 +5477,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+5000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-4-77" rel="self"/>
   </entry>
@@ -5505,16 +5498,9 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-4-80" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>テスト</value>
-    </type_ahead>
-    <link href="/type_ahead/0-6-35-9-14-4-81" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -6044,7 +6030,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+5000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-5-73" rel="self"/>
   </entry>
@@ -6702,7 +6688,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-6-84" rel="self"/>
   </entry>
@@ -7801,7 +7787,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-8-74" rel="self"/>
   </entry>
@@ -9750,5 +9736,341 @@
       <value>出荷数</value>
     </type_ahead>
     <link href="/type_ahead/0-7-44-6-14-9-1201" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入庫作業（家電）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（西濃・家電）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入荷作業（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（EMSキャンセルonward分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷事務作業料（菜鳥物流・cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配便（cecile））</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配梱包無し）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（商品）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷事務作業料（EMSキャンセルonward分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>キャンセル品返送費用（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品処理・再出荷（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品処理・返送費用（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>棚卸作業（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ゆうパケット　２ｃｍ以内</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配便・梱包無し）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業（パンプレット・チラシ他）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（EMS【onward】）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷重量測定（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品処理・再出荷（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷事務手数料（EMSキャンセルcecile分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（菜鳥物流・cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷事務作業料（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入庫作業（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（西濃・エアコン）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>引き戻し（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>福袋おまけラベルシール貼り（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配便・梱包有り）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（保留商品）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（EMSキャンセルcecile分）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷重量測定（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>棚卸作業（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>人工</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ゆうパケット　3ｃｍ以内</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配・梱包有り）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（EMS【cecile】）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷事務作業料（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品処理・返送費用（onward）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>１個</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入庫作業（エアコン）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-8-1394" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>引き戻し（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-8-1395" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>セット</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>集荷作業（宅配・梱包無し）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>枚・冊</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>滞留追跡</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>キャンセル品返送費用（cecile）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配便（onward））</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>エアキャップ巻</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ゆうパケット3ｃｍ以内</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-8" rel="self"/>
   </entry>
 </feed>
