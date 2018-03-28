@@ -21,6 +21,7 @@ import {
 	CommonSearchConditionsFrom,
 	CommonPagination,
 	CommonMonthlySelect,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -60,24 +61,9 @@ export default class InternalWorkList extends React.Component {
 
     	this.activePage = activePage
 
-    	axios({
-    		url: url + '&n=' + activePage,
-    		method: 'get',
-    		headers: {
-    			'X-Requested-With': 'XMLHttpRequest'
-    		}
-    	}).then( (response) => {
-
-    		if (response.status === 204) {
-    			this.setState({ isDisabled: false, isError: response })
-    		} else {
-    			this.setState({ isDisabled: false, feed: response.data.feed})
-    		}
-
-    	}).catch((error) => {
-    		this.setState({ isDisabled: false, isError: error })
+    	CommonGetList(url, activePage).then((_state) => {
+    		this.setState(_state)
     	})
-		
 		
     }
 
