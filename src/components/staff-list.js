@@ -19,6 +19,7 @@ import {
 	CommonSelectBox,
 	CommonSearchConditionsFrom,
 	CommonPagination,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -58,27 +59,10 @@ export default class StaffList extends React.Component {
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
-			this.setState({ isDisabled: false })
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			if (response.status === 204) {
-				this.setState({ feed:'',isError: response })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ feed: response.data.feed, isError: {}})
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})   
-		this.forceUpdate()
 	}
   
 	/**

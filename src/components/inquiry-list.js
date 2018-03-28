@@ -1,5 +1,5 @@
 /* @flow */
-import axios from 'axios'
+//import axios from 'axios'
 import React from 'react'
 import {
 	Grid,
@@ -20,6 +20,7 @@ import {
 	CommonInputText,
 	CommonFilterBox,
 	CommonTextArea,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -59,25 +60,10 @@ export default class InquiryList extends React.Component {
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ isDisabled: false, feed: response.data.feed})
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})    
 	}
 
 	/**

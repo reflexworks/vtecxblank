@@ -16,6 +16,11 @@ export const payeeWidths = {
 	widths: '3,6,19,10,14,4,10,10,17,3,'
 }
 
+export const totalAmountWidths = {
+	//widths: '3,6,19,10,14,4,10,10,17,3,'
+	//widths: '3,37,8,12,37,3'
+	widths: '3,6,19,20,4,4,10,10,17,3,'
+}
 
 export const borderTop = {
 	left: 'false',
@@ -489,10 +494,10 @@ export const tdRemarks = {
 	top:'true',
 	bottom:'true',
 	align:'left',
-	height:'15',
+	height:15,
 	offsetx:5,
 	offsety: 4,
-	//leading: 8,
+	leading: 8,
 }
 
 export const totalAmountText = {

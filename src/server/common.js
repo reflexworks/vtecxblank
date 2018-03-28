@@ -56,7 +56,7 @@ export function getStamp(_billfromName){
 	let stamp = ''
 	if (_billfromName.match('コネクトロジスティクス')) {
 		stamp = '/img/connectlogi.png'
-	} else if (_billfromName.match('コネクトコーポレーション')) {
+	} else if (_billfromName.match('CONNECTコーポレーション')) {
 		stamp = '/img/connectcorp.png'
 	} else if (_billfromName.match('CONNECT・EC')) {
 		stamp = '/img/connectec.png'
