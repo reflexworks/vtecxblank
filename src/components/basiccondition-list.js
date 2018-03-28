@@ -1,5 +1,5 @@
 /* @flow */
-import axios from 'axios'
+//import axios from 'axios'
 import React from 'react'
 import {
 	Grid,
@@ -17,6 +17,7 @@ import {
 	CommonTable,
 	CommonSearchConditionsFrom,
 	CommonPagination,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -56,27 +57,10 @@ export default class BasicConditionList extends React.Component {
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			this.setState({ isDisabled: false })
-
-			if (response.status === 204) {
-				this.setState({ isError: response })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ feed: response.data.feed, isError: {}})
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})    
 	}
   
 	/**

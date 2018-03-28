@@ -2925,3 +2925,40 @@ export function CommonBackInternalWork(_befor_url) {
 		}
 	}
 }
+
+import { setTimeout } from 'timers'
+export function CommonGetList(_url, _activePage) {
+	return new Promise((resolve) => {
+		const get = () => {
+			axios({
+				url: _url + '&n=' + _activePage,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then( (response) => {
+
+				if (response.status === 204) {
+					resolve({ isDisabled: false, isError: response })
+				} else {
+					// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
+					// activePageが「2」だったら51件目から100件目が格納されている
+					resolve({ isDisabled: false, feed: response.data.feed})
+				}
+
+			}).catch((error) => {
+				if (error.response && error.response.data && error.response.data.feed) {
+					const title = error.response.data.feed.title
+					if (title === 'Please make a pagination index in advance.') {
+						setTimeout(() => {
+							get()
+						}, 200)
+					}
+				} else {
+					resolve({ isDisabled: false, isError: error })
+				}
+			})
+		}
+		get()
+	})
+}
