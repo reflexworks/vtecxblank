@@ -237,6 +237,13 @@ billing_compare{}
   billing_amount
 </content>
 <rights>
+billto.billto_code:/quotation|/customer
+shipment_service.service_name:/shipment_service
+shipment_service.code:/deliverycharge_template
+staff.staff_email:/staff
+billto.billto_name:/billto
+customer.customer_name:/customer
+warehouse.warehouse_name:/warehouse
 </rights>
 </entry>
 </feed>
