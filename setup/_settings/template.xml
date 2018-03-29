@@ -200,6 +200,7 @@ inquiry
  staff_name
  inquiry_status
  content
+ content_type
 billing_data
  shipment_service_code
  shipment_service_type
