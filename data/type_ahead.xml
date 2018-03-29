@@ -9760,6 +9760,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>正箱・外箱に内容個数記載のあるもの・内容未検</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-1-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ラッピング、袋へ詰め込み（資材別）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-1-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>出荷作業（EMSキャンセルonward分）</value>
     </type_ahead>
@@ -9782,9 +9796,65 @@
   <entry>
     <type_ahead>
       <type>1</type>
+      <value>クール便加算料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>箱外装検品、品番確認、内容未見、箱積み</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング料金含む</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（その他エアコン）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ラップ巻作業</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-10-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
       <value>出荷作業（宅配梱包無し）</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>伝票発行作業</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-10" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング料含む</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-11" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配エアコン以外）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-12" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -9837,10 +9907,31 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>正箱/外箱外装検品・数量検品・伝票貼り</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-2-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>出荷作業（宅配便・梱包無し）</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>ヤマト運輸</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-10" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（その他エアコン以外）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-11" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -9886,6 +9977,20 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>商品外装検品・数量検品・伝票貼り</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入庫料（電子タバコ）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-3-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>出荷事務作業料（cecile）</value>
     </type_ahead>
@@ -9897,6 +10002,34 @@
       <value>入庫作業（cecile）</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物添付</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>パレットラック、ネステナーによる2段目以降</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（その他）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（自社便エアコン）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-4-6" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -9921,10 +10054,38 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>4</type>
+      <value>サイズ1,100×1,100　※1期10日計算</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-5-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>領収書・請求書・延長保障書＝１セット(格作成費ご相談)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-5-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>出荷作業（宅配便・梱包有り）</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（宅配エアコン）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-10" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>キャンセル</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-11" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -9971,6 +10132,20 @@
   <entry>
     <type_ahead>
       <type>1</type>
+      <value>入庫料（アクセサリー）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ラッピング袋などへ詰め込みのみ(資材別)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-6-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
       <value>出荷作業（宅配・梱包有り）</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-7-1" rel="self"/>
@@ -10005,6 +10180,34 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>0</type>
+      <value>事務手数料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>宅配便（100サイズ以下）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（和光倉庫）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷作業（自社便エアコン以外）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-7-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>1</type>
       <value>入庫作業（エアコン）</value>
     </type_ahead>
@@ -10019,10 +10222,38 @@
   </entry>
   <entry>
     <type_ahead>
+      <type>1</type>
+      <value>入庫料（パレット）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-8-1396" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
       <type>2</type>
       <value>セット</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>棚、ラックリース(新品:500円／中古品:300円)支給品利用可能</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-10" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>宅配便（120サイズ以上）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-11" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>伝票貼付け出荷</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-12" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
@@ -10072,5 +10303,12 @@
       <value>ゆうパケット3ｃｍ以内</value>
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-9-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入庫料(電子タバコ)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-8-50-3-14-9-9" rel="self"/>
   </entry>
 </feed>

@@ -1097,6 +1097,15 @@
   </entry>
   <entry>
     <shipment_service>
+      <code>EMS1</code>
+      <name>日本郵便EMS</name>
+      <type>2</type>
+      <service_name>EMS国際郵便</service_name>
+    </shipment_service>
+    <link href="/shipment_service/EMS1" rel="self"/>
+  </entry>
+  <entry>
+    <shipment_service>
       <code>JP1</code>
       <name>日本郵便</name>
       <type>2</type>
