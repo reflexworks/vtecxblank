@@ -48,7 +48,7 @@ export default class InquiryRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<PageHeader>問い合わせ情報の登録</PageHeader>
+						<PageHeader>特記事項の登録</PageHeader>
 					</Col>
 				</Row>
 				<Row>
