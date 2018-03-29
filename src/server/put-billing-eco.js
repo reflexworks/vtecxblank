@@ -25,7 +25,7 @@ billingcsv.feed.entry.map((entry) => {
 	}
 })
 // datastoreを更新
-vtecxapi.put(result,true,true)
+vtecxapi.put(result,true)
 
 function getBillingData(entry) {
 
