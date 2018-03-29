@@ -35,7 +35,6 @@ export default class InquiryForm extends React.Component {
 
 		//console.log(CommonLoginUser().get())
 		this.staff_name = CommonLoginUser().get().staff_name
-
 	}
 
 	/**
@@ -97,6 +96,15 @@ export default class InquiryForm extends React.Component {
 		this.forceUpdate()
 	}
 
+	changeInquiry(_data, _index) {
+		if (_index === 'inquiry_status' || _index === 'content_type') {
+			this.entry.inquiry[_index] = _data ? _data.value : ''
+		} else {
+			this.entry.inquiry[_index] = _data
+		}
+		this.forceUpdate()
+	}
+
 	render() {
 
 		return (
@@ -154,7 +162,7 @@ export default class InquiryForm extends React.Component {
 								readonly
 							/>
 						}
-
+						
 						{!this.entry.inquiry.staff_name &&
 							<div className="hide">
 								<CommonInputText
@@ -182,8 +190,33 @@ export default class InquiryForm extends React.Component {
 								value: '3'
 							}, {
 								label: '完了',
-								value: '4'	
+								value: '4'
 							}]}
+							onChange={(data)=>this.changeInquiry(data,'inquiry_status')}
+						/>
+						
+						<CommonFilterBox
+							controlLabel="分類"
+							size="sm"
+							name="inquiry.content_type"
+							value={this.entry.inquiry.content_type}
+							options={[{
+								label: '経理連絡',
+								value: '1'
+							}, {
+								label: '営業連絡',
+								value: '2'
+							}, {
+								label: 'システム連絡',
+								value: '3'
+							}, {
+								label: 'メモ',
+								value: '4',
+							}, {
+								label: 'その他',
+								value: '5'
+							}]}
+							onChange={(data)=>this.changeInquiry(data,'content_type')}
 						/>
 
 						<CommonTextArea
@@ -192,7 +225,8 @@ export default class InquiryForm extends React.Component {
 							placeholder="内容"
 							value={this.entry.inquiry.content}
 							size='lg'
-							style={{'height':'300px'}}
+							style={{ 'height': '300px' }}
+							onChange={(data)=>this.changeInquiry(data,'content')}
 						/>	
 					
 					</Panel>	

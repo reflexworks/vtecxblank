@@ -163,7 +163,29 @@ export default class InquiryList extends React.Component {
 									value: '3'
 								}, {
 									label: '完了',
-									value: '4'	
+									value: '4'
+								}]}
+							/>
+
+							<CommonFilterBox
+								controlLabel="分類"
+								size="sm"
+								name="inquiry.content_type"
+								options={[{
+									label: '経理連絡',
+									value: '1'
+								}, {
+									label: '営業連絡',
+									value: '2'
+								}, {
+									label: 'システム連絡',
+									value: '3'
+								}, {
+									label: 'メモ',
+									value: '4'
+								}, {
+									label: 'その他',
+									value: '5'
 								}]}
 							/>
 							
@@ -204,7 +226,15 @@ export default class InquiryList extends React.Component {
 							}, {
 								field: 'inquiry.staff_name', title: '作成者', width: '150px'
 							}, {
-								field: 'inquiry.inquiry_status', title: 'ステータス', width: '100px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
+								field: 'inquiry.inquiry_status', title: 'ステータス', width: '100px',
+								convert: {
+									1: '問い合わせ', 2: '確認中', 3: '返答待ち', 4: '完了',
+								}
+							}, {
+								field: 'inquiry.content_type', title: '分類', width: '100px',
+								convert: {
+									1: '経理連絡',2: '営業連絡',3:'システム連絡',4:'メモ',5:'その他',
+								}
 							}]}
 						/>
 					</Col>  
