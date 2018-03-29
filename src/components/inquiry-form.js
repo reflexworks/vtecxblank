@@ -33,7 +33,7 @@ export default class InquiryForm extends React.Component {
 			customerList: [],
 		}
 
-		console.log(CommonLoginUser().get())
+		//console.log(CommonLoginUser().get())
 		this.staff_name = CommonLoginUser().get().staff_name
 
 	}
@@ -105,7 +105,7 @@ export default class InquiryForm extends React.Component {
 
 				<PanelGroup defaultActiveKey="1">
 
-					<Panel collapsible header="問い合わせ情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+					<Panel collapsible header="特記事項" eventKey="1" bsStyle="info" defaultExpanded="true">
 						
 						{ !this.entry.published && 
 							<CommonFilterBox
