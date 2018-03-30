@@ -32,7 +32,6 @@ export default class InquiryForm extends React.Component {
 		this.master = {
 			customerList: [],
 		}
-
 		//console.log(CommonLoginUser().get())
 		this.staff_name = CommonLoginUser().get().staff_name
 	}
@@ -161,6 +160,18 @@ export default class InquiryForm extends React.Component {
 								value={this.entry.updated}
 								readonly
 							/>
+						}
+
+						{this.entry.inquiry.staff_name &&
+							<div className="hide">
+								<CommonInputText
+									controlLabel="作成者"
+									name="inquiry.staff_name"
+									type="text"
+									value={this.entry.inquiry.staff_name}
+									readonly
+								/>
+							</div>
 						}
 						
 						{!this.entry.inquiry.staff_name &&
