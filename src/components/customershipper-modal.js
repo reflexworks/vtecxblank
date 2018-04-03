@@ -28,7 +28,7 @@ export class CustomerShipperModal extends React.Component {
 			label: '集荷',
 			value: '1'
 		}]
-		
+		this.errorMessage = ''
 		this.master = {
 			shipmentServiceList: [],
 		}
@@ -57,15 +57,26 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	close() {
+		this.errorMessage = ''
 		this.props.close()
 	}
 
 	add(_obj) {
-		this.props.add(_obj)
+
+		if (this.errorMessage) {
+			alert(this.errorMessage)	
+		} else {
+			this.props.add(_obj)
+
+		}	
 	}
 	
 	edit(_obj) {
-		this.props.edit(_obj)
+		if (this.errorMessage) {
+			alert(this.errorMessage)	
+		} else {
+			this.props.edit(_obj)
+		}	
 	}
 
 	addList(_data) {
@@ -83,8 +94,31 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	changeShipperCode(_data, _rowindex) {
+		
 		this.shipper.shipper_info[_rowindex].shipper_code = _data
 		this.forceUpdate()
+		if (_data && this.shipper.shipper_info[_rowindex].shipper_code) {			
+			axios({
+				url: '/s/check-duplicated-shippercode?shipper_code=' + _data,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+				console.log(response.data.feed.title)
+				if (response.data.feed.title) {
+					this.errorMessage = '荷主コード:' + _data + 'は既に使用されています。\n'
+				} else {
+					this.errorMessage = ''
+				}
+				console.log(this.errorMessage)
+				this.forceUpdate()
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		} else {
+			this.errorMessage = ''
+		}		
 	}
 
 	changeShipmentClass(_data, _rowindex) {
@@ -149,6 +183,17 @@ export class CustomerShipperModal extends React.Component {
 						/>
 					}	
 					
+					{this.errorMessage &&
+						<div style={{
+							'padding-left': '100px',
+							'text-decoration': 'underline',
+							'color':'#FF0000'
+						}}>
+							<tr>
+								<td >{this.errorMessage}</td>
+							</tr>
+						</div>
+					}
 					<CommonTable
 						controlLabel="荷主情報"
 						name="shipper_info"

@@ -369,25 +369,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000020</billto_code>
-      <billto_name>株式会社 フジリビング</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>101-0048</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>千代田区神田司町</address1>
-      <address2>2-21-10　冨士神田ビル2F</address2>
-    </contact_information>
-    <link href="/billto/0000020" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000021</billto_code>
       <billto_name>有限会社 アリス・インターナショナル</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -463,25 +444,6 @@
       <address2>2-8-30　桜丘フラット116</address2>
     </contact_information>
     <link href="/billto/0000024" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000025</billto_code>
-      <billto_name>TSURUYA CREATION</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>273-0047</zip_code>
-      <prefecture>千葉県</prefecture>
-      <address1>船橋市藤原</address1>
-      <address2>2-13-18　ふじよし102</address2>
-    </contact_information>
-    <link href="/billto/0000025" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -729,25 +691,6 @@
       <address2>6-12-1　西新宿パークウエストビル5F</address2>
     </contact_information>
     <link href="/billto/0000038" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000039</billto_code>
-      <billto_name>株式会社 BV</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>105-0001</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>港区虎ノ門</address1>
-      <address2>3-14-1-1604</address2>
-    </contact_information>
-    <link href="/billto/0000039" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -1168,25 +1111,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000062</billto_code>
-      <billto_name>株式会社 Lavoc</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>155-0033</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>世田谷区代田</address1>
-      <address2>3-14-13</address2>
-    </contact_information>
-    <link href="/billto/0000062" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000063</billto_code>
       <billto_name>アイコーチアカデミー</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -1455,25 +1379,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000077</billto_code>
-      <billto_name>株式会社 スタジオヴィレイ</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>212-0005</zip_code>
-      <prefecture>神奈川県</prefecture>
-      <address1>川崎市幸区 戸手</address1>
-      <address2>2-2-7-1</address2>
-    </contact_information>
-    <link href="/billto/0000077" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000078</billto_code>
       <billto_name>EP-TECHNO合同会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -1637,25 +1542,6 @@
       <address2>5-67-4　中野北口ビル4F</address2>
     </contact_information>
     <link href="/billto/0000086" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000087</billto_code>
-      <billto_name>株式会社 アデルフォス</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>336-0022</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>さいたま市南区白幡</address1>
-      <address2>4-15-17-702</address2>
-    </contact_information>
-    <link href="/billto/0000087" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -3497,7 +3383,7 @@
   <entry>
     <billto>
       <billto_code>0000203</billto_code>
-      <billto_name>カンテラ合同会社</billto_name>
+      <billto_name>CANTERA合同会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
     </billto>
     <contact_information>
@@ -3526,5 +3412,55 @@
       <address2>3-2-3　帝都青山ビル1階</address2>
     </contact_information>
     <link href="/billto/0000204" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000205</billto_code>
+      <billto_name>株式会社ＲＥＮＩ</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel>03-6407-0046</tel>
+      <fax>03-6379-9277</fax>
+      <email></email>
+      <zip_code>151-0063</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>渋谷区富ケ谷</address1>
+      <address2>1-41-7　クリサンテ♯1008</address2>
+    </contact_information>
+    <link href="/billto/0000205" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000206</billto_code>
+      <billto_name>株式会社ピーシーあきんど</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel>03-5807-5755</tel>
+      <fax>03-3835-1609</fax>
+      <email></email>
+      <zip_code>110-0005</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>台東区上野</address1>
+      <address2>3-8-2</address2>
+    </contact_information>
+    <link href="/billto/0000206" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000208</billto_code>
+      <billto_name>株式会社アメイズロジ　川口</billto_name>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>335-0016</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市下前</address1>
+      <address2>1-8-20</address2>
+    </contact_information>
+    <link href="/billto/0000208" rel="self"/>
   </entry>
 </feed>
