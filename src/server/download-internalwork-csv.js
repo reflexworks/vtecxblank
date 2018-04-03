@@ -73,7 +73,7 @@ if (codes.length > 2) {
 		if (entry.internal_work.work_type === '3') {
 			unit_price = entry.internal_work.special_unit_price || ''
 		}
-		const record = ['"' + customer_code + '"', quotation_code, working_yearmonth, entry.internal_work.working_day, entry.internal_work.staff_name, getWorkType(entry.internal_work.work_type), getItem1(entry.internal_work), getItem2(entry.internal_work), getItem3(entry.internal_work), unit_price.replace(/[^0-9^\\.]/g,''),entry.internal_work.quantity]
+		const record = ['"' + customer_code + '"', quotation_code, working_yearmonth, entry.internal_work.working_day, entry.internal_work.staff_name, getWorkType(entry.internal_work.work_type), getItem1(entry.internal_work), getItem2(entry.internal_work), getItem3(entry.internal_work), unit_price.replace(/[^0-9^\\.]/g,''),entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'')]
 		body.push(record)
 	}
 	)

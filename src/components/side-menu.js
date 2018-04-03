@@ -21,7 +21,7 @@ export default class SideMenu extends React.Component {
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				customer: false,			//顧客、請求、問い合わせ
+				customer: false,			//顧客、請求、
 				master: false,				//担当者、倉庫、配送料、資材
 				template: false,			//テンプレート
 				quotation: false,			//見積書、入力補完
@@ -29,11 +29,12 @@ export default class SideMenu extends React.Component {
 				invoice: false				//請求書、請求データ
 			}
 		}
+
 		this.authList = this.props.authList
 		this.isChange = false
 
 		this.list = {
-			customer: [],			//顧客、請求、問い合わせ
+			customer: [],			//顧客、請求、
 			master: [],				//担当者、倉庫、配送料、資材
 			template: [],			//テンプレート
 			quotation: [],			//見積書、入力補完
@@ -64,12 +65,12 @@ export default class SideMenu extends React.Component {
 			},
 			InquiryRegistration: {
 				glyph: 'edit',
-				title: '問い合わせ記録',
+				title: '特記事項登録',
 				type: 'internal_work'
 			},
 			InquiryList: {
 				glyph: 'list',
-				title: '特記事項',
+				title: '特記事項一覧',
 				type: 'internal_work'
 			},
 			StaffRegistration: {
