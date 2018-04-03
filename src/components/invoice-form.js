@@ -515,6 +515,7 @@ export default class InvoiceForm extends React.Component {
 			this.entry.item_details = []
 		}
 		this.entry.item_details.push(_data)
+		console.log(this.entry.item_details.length)
 
 		this.forceUpdate()
 	}
@@ -529,28 +530,34 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.item_details[list] = array
 
-		let entryArray = []
-		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
-			if (this.entry.item_details[i].category !== list) {
-				entryArray.push(this.entry.item_details[i])
-			}
-		}
-		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i){
-			entryArray.push(this.item_details[list][i])
-		}	
-		this.entry.item_details = entryArray
-		this.changeTotalAmount()
-		
+		let changeArray = []
+		Object.keys(this.item_details).map((_key) => {
+			this.item_details[_key].map((_value) => {
+				changeArray.push(_value)
+			})
+		})
+
+		const serviceItem = JSON.parse(JSON.stringify(this.serviceItem))
+		this.entry.item_details = serviceItem.concat(changeArray)
+
 		this.addEntry.item_details = this.item_details
 		this.props.setReqestData(this.addEntry, 'item_details')
-		this.forceUpdate()
+
+		this.changeTotalAmount()
 	}
+
 	/**
 	 * 請求書内で追加した請求リストの変更処理
 	 */
 	changeInvoiceList(list, _data, _rowindex, _celindex, _isEdit) {
 	
 		if (_isEdit) {
+
+			const obj = this[list][_rowindex]
+			const key = this.getKey(obj.category, obj.item_name, obj.unit)
+			const index = this.cashData[key]
+
+			this.serviceItem[index][_celindex] = _data
 			this[list][_rowindex][_celindex] = _data
 			const target_data = this[list][_rowindex]
 			if (!this.editEntry.id) {
@@ -580,37 +587,50 @@ export default class InvoiceForm extends React.Component {
 			}
 			this.props.setReqestData(this.editEntry, 'edit')
 		} else {
+
 			//変更処理
-			if (_celindex === 'is_taxation') {
-				this.item_details[list][_rowindex][_celindex] = _data ? _data.value : ''
-			} else {
-				this.item_details[list][_rowindex][_celindex] = _data	
-			}
-			
-			//数量,単価,税込/税抜を変更したら金額を変えて、小計,合計請求金額,消費税も変える
-			if (_celindex === 'quantity' || _celindex === 'unit_price' || _celindex === 'is_taxation') {
+			this.item_details[list][_rowindex][_celindex] = _data
+
+			//数量,単価を変更したら金額を変えて、小計,合計請求金額,消費税も変える
+			if (_celindex === 'quantity' || _celindex === 'unit_price') {
 				
-				const quantity = this.item_details[list][_rowindex].quantity
-				const unit_price = this.item_details[list][_rowindex].unit_price.replace(/,/g, '')
-				this.item_details[list][_rowindex].amount = quantity * unit_price
+				let unit_price
+				let isMinus
+				if (_celindex === 'unit_price') {
+					isMinus = _data && String(_data)[0] === '-'
+					unit_price = isMinus ? '-' + addFigure(_data) : addFigure(_data)
+					this.item_details[list][_rowindex].unit_price = unit_price
+				} else {
+					unit_price = this.item_details[list][_rowindex].unit_price
+					isMinus = unit_price && String(unit_price)[0] === '-'
+				}
+
+				unit_price = isMinus ? unit_price.replace('-', '') : unit_price
+				unit_price = parseInt(delFigure(unit_price))
+
+				const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
+
+				const amount = quantity * unit_price
+				this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
 				
 				//税込なら消費税を足す
 				if (this.item_details[list][_rowindex].is_taxation === '1') {
 					this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
 				}
 				if (this.item_details[list][_rowindex].amount) {
-					this.item_details[list][_rowindex].amount = addFigure(this.item_details[list][_rowindex].amount)
+					this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(this.item_details[list][_rowindex].amount) : addFigure(this.item_details[list][_rowindex].amount)
 				}
 			}
 
 			let changeArray = []
-			for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
-				if (this.entry.item_details[i].category !== list) {
-					changeArray.push(this.entry.item_details[i])		
-				}
-			}
+			Object.keys(this.item_details).map((_key) => {
+				this.item_details[_key].map((_value) => {
+					changeArray.push(_value)
+				})
+			})
 
-			this.entry.item_details = changeArray.concat(this.item_details[list])
+			const serviceItem = JSON.parse(JSON.stringify(this.serviceItem))
+			this.entry.item_details = serviceItem.concat(changeArray)
 
 			this.changeTotalAmount()
 			
@@ -621,20 +641,36 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	changeTotalAmount(){
+	forcusUnitPrice(list, _data, _rowindex) {
+		const isMinus = _data && String(_data)[0] === '-'
+		this.item_details[list][_rowindex].unit_price = isMinus ? '-' + delFigure(_data) : delFigure(_data)
+		this.forceUpdate()
+	}
+
+	changeTotalAmount() {
 
 		const allItem = this.entry.item_details
 		let sub_total = 0
 		let ems_total = 0
 
 		if (allItem && allItem.length) {
+
 			allItem.map((_obj) => {
-				if (_obj.amount) {
+				const amount = _obj.amount
+				if (amount) {
+					const isMinus = String(amount)[0] === '-'
+					const calculation = (_value, _total) => {
+						if (isMinus) {
+							return parseInt(_value) - _total
+						} else {
+							return parseInt(_value) + _total
+						}
+					}
 					const value = delFigure(_obj.amount)
 					if (_obj.category === 'ems') {
-						ems_total = parseInt(value) + ems_total
+						ems_total = calculation(value, ems_total)
 					} else {
-						sub_total = parseInt(value) + sub_total
+						sub_total = calculation(value, sub_total)
 					}
 				}
 			})
@@ -679,6 +715,7 @@ export default class InvoiceForm extends React.Component {
 		this.props.setReqestData(this.entry.remarks, 'remarks')
 		this.forceUpdate()
 	}
+
 	/**
 	 *  備考リストの内容変更
 	 */
@@ -1095,34 +1132,34 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.monthly}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'item_name')}
 											}
 										}, {
-											field: 'quantity',title: '数量', width: '30px',
+											field: 'quantity',title: '数量', width: '50px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit')}
 											}
 										}, {
-											field: 'unit_price',title: '単価', width: '100px',
+											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
-												price:true,
-											}
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex)},
+											},
 										}, {
-											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
 											convert: this.convert_taxation
 										}, {
-											field: 'amount',title: '金額', width: '100px',
+											field: 'amount',title: '金額', width: '100px',
 										}, {
-											field: 'remarks',title: '備考', width: '200px',
+											field: 'remarks',title: '備考', width: '200px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks')}
 											}
@@ -1167,7 +1204,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1178,7 +1216,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('daily',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1232,7 +1270,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1243,7 +1282,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('period',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1296,7 +1335,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1307,7 +1347,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('packing_item',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1360,7 +1400,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1371,7 +1412,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('shipping',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1425,7 +1466,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1436,7 +1478,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('collecting',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1466,7 +1508,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1477,7 +1520,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('others',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
@@ -1507,7 +1550,8 @@ export default class InvoiceForm extends React.Component {
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
 											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'quantity')}
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'quantity')},
+												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
@@ -1518,7 +1562,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit_price')},
-												price:true,
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('ems',data,rowindex)},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
