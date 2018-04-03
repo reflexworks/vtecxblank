@@ -1908,7 +1908,7 @@ export class CommonTable extends React.Component {
 								name="__tableInput"
 								type="text"
 								value={value}
-								onChange={(data) => input.onChange(data, _index)}
+								onChange={input.onChange ? (data) => input.onChange(data, _index) : null }
 								onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
 								onForcus={input.onForcus ? (data) => input.onForcus(data, _index) : null }
 								entitiykey={entitiykey}

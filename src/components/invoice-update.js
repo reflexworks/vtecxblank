@@ -66,13 +66,11 @@ export default class InvoiceUpdate extends React.Component {
 			}
 		}).then((response) => {
     
-			this.setState({ isDisabled: false })
-
 			if (response.status === 204) {
-				this.setState({ isError: response })
+				this.setState({ isDisabled: false ,isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				this.forceUpdate()
+				this.setState({ isDisabled: false })
 			}
 
 		}).catch((error) => {
@@ -80,11 +78,65 @@ export default class InvoiceUpdate extends React.Component {
 		})
 	}
 
+	setReqestData(_data, _type) {
+		if (_type === 'item_details') {
+			let array = []
+			Object.keys(_data.item_details).forEach((_key) => {
+				const list = _data.item_details[_key]
+				list.map((_value) => {
+					array.push(_value)
+				})
+			})
+			if (array.length === 0) {
+				array = [{
+					category: 'none'
+				}]
+			}
+			_data.item_details = array
+		}
+		this[_type] = _data
+	}
+
 	/**
      * 更新完了後の処理
      */
 	callbackButton() {
-		location.reload()
+		const req = { feed:{entry:[]}}	
+		if (this.item_details) {
+			if (this.remarks) {
+				this.item_details.remarks = this.remarks
+			}
+			req.feed.entry.push(this.item_details)
+		}
+		if (this.edit) {
+			req.feed.entry.push(this.edit)
+		}
+		if (req.feed.entry.length) {
+			this.doAfterPut(req)
+		} else {
+			this.compleat()
+		}
+	}
+
+	compleat() {
+		//location.reload()
+	}
+
+	doAfterPut(_data) {
+		axios({
+			url: '/d/',
+			method: 'put',
+			data: _data,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+	
+			this.compleat()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 	}
 
 	/**
@@ -147,7 +199,7 @@ export default class InvoiceUpdate extends React.Component {
 	render() {
 		const buttons = [
 			<CommonBackBtn key={0} NavItem href={this.backUrl} />,
-			<CommonUpdateBtn key={1} NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />,
+			<CommonUpdateBtn key={1} NavItem url={this.url} callback={() => this.callbackButton()} entry={this.entry} />,
 			<CommonDeleteBtn key={2} NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />,
 			<CommonGeneralBtn key={3} NavItem onClick={()=>this.doPrint(true,false)} label={<span><Glyphicon glyph="print" /> プレビュー 請求書(顧客毎)</span>} />,
 			<CommonGeneralBtn key={4} NavItem onClick={()=>this.doPrint(true,true)}label={<span><Glyphicon glyph="print" /> プレビュー 請求書(請求先毎)</span>} />
@@ -183,7 +235,13 @@ export default class InvoiceUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InvoiceForm name="mainForm" entry={this.entry} changeCustomerCode={(data)=>this.changeCustomerCode(data)} changeYearmonth={(data)=>this.changeYearmonth(data)}/>
+						<InvoiceForm
+							name="mainForm"
+							entry={this.entry}
+							setReqestData={(_data, _type) => this.setReqestData(_data, _type)}
+							changeCustomerCode={(data) => this.changeCustomerCode(data)}
+							changeYearmonth={(data) => this.changeYearmonth(data)}
+						/>
 					</Col>
 				</Row>
 				<Row>
