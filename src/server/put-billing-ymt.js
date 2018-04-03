@@ -33,7 +33,7 @@ billingcsv.feed.entry.map((entry) => {
 
 })
 // datastoreを更新
-vtecxapi.put(result,true,true)
+vtecxapi.put(result,true)
 
 function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 
