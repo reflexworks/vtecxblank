@@ -119,7 +119,7 @@ export default class InvoiceUpdate extends React.Component {
 	}
 
 	compleat() {
-		//location.reload()
+		location.reload()
 	}
 
 	doAfterPut(_data) {
