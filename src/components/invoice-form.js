@@ -67,7 +67,6 @@ export default class InvoiceForm extends React.Component {
 		this.entry.billfrom = this.entry.billfrom || {}
 		this.entry.billfrom.payee = this.entry.billfrom.payee || []
 		this.entry.contact_information = this.entry.contact_information || {}
-		this.entry.item_details = this.entry.item_details || []
 		this.entry.remarks = this.entry.remarks || []
 		this.master = {
 			customerList: [],
@@ -136,7 +135,7 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	getKey(_category, _item_name, _unit) {
-		return encodeURIComponent(_category + _item_name + _unit)
+		return _category + _item_name + _unit
 	}
 
 	/**
@@ -152,7 +151,6 @@ export default class InvoiceForm extends React.Component {
 		this.shipping = []
 		this.collecting = []
 		this.serviceItem = []
-		this.entry.item_details = []
 
 		axios({
 			url: 's/get-invoice-itemdetails?customer_code=' + customer_code +
@@ -186,7 +184,6 @@ export default class InvoiceForm extends React.Component {
 						this.cashData[key] = this[category].length - 1
 					}
 					this.serviceItem = serviceData.item_details
-					this.entry.item_details = serviceData.item_details
 
 					// 明細表示
 					this.setItemDetailsTable()
@@ -600,7 +597,6 @@ export default class InvoiceForm extends React.Component {
 									this.item_details[category] = []
 								}
 								this.item_details[category].push(details)
-								this.entry.item_details.push(details)
 							}
 						}
 						if (_url.indexOf('invoice_remarks') != -1) {
@@ -610,8 +606,8 @@ export default class InvoiceForm extends React.Component {
 								const item_name = _item_details.item_name
 								const unit = _item_details.unit
 								const key = this.getKey(category, item_name, unit)
-								if (this.cashData[key] || this.cashData[key] === 0) {
-									const index = this.cashData[key]
+								const index = this.cashData[key]
+								if (index || index === 0) {
 									this[category][index].remarks = _item_details.remarks
 								}
 								this.forceUpdate()
@@ -648,12 +644,6 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.item_details[list].push(_data)
 
-		if (!this.entry.item_details) {
-			this.entry.item_details = []
-		}
-		this.entry.item_details.push(_data)
-		console.log(this.entry.item_details)
-
 		this.forceUpdate()
 	}
 
@@ -666,16 +656,6 @@ export default class InvoiceForm extends React.Component {
 			if (i !== _index) array.push(this.item_details[list][i])
 		}
 		this.item_details[list] = array
-
-		let changeArray = []
-		Object.keys(this.item_details).map((_key) => {
-			this.item_details[_key].map((_value) => {
-				changeArray.push(_value)
-			})
-		})
-
-		const serviceItem = JSON.parse(JSON.stringify(this.serviceItem))
-		this.entry.item_details = serviceItem.concat(changeArray)
 
 		this.addEntry.item_details = this.item_details
 		this.props.setReqestData(this.addEntry, 'item_details')
@@ -690,12 +670,8 @@ export default class InvoiceForm extends React.Component {
 	
 		if (_isEdit) {
 
-			const obj = this[list][_rowindex]
-			const key = this.getKey(obj.category, obj.item_name, obj.unit)
-			const index = this.cashData[key]
-
-			this.serviceItem[index][_celindex] = _data
 			this[list][_rowindex][_celindex] = _data
+
 			const target_data = this[list][_rowindex]
 			if (!this.editEntry.id) {
 				this.editEntry.link = [{
@@ -760,16 +736,6 @@ export default class InvoiceForm extends React.Component {
 				}
 			}
 
-			let changeArray = []
-			Object.keys(this.item_details).map((_key) => {
-				this.item_details[_key].map((_value) => {
-					changeArray.push(_value)
-				})
-			})
-
-			const serviceItem = JSON.parse(JSON.stringify(this.serviceItem))
-			this.entry.item_details = serviceItem.concat(changeArray)
-
 			this.changeTotalAmount()
 			
 			this.addEntry.item_details = this.item_details
@@ -787,13 +753,20 @@ export default class InvoiceForm extends React.Component {
 
 	changeTotalAmount() {
 
-		const allItem = this.entry.item_details
+		let allItem = []
+		this.serviceItem.map((_value) => {
+			allItem.push(_value)
+		})
+		Object.keys(this.item_details).forEach((_key) => {
+			this.item_details[_key].map((_value) => {
+				allItem.push(_value)
+			})
+		})
 		let sub_total = 0
 		let ems_total = 0
 
-		if (allItem && allItem.length) {
+		if (allItem.length) {
 
-			console.log(allItem)
 			allItem.map((_obj) => {
 				const amount = _obj.amount
 				if (amount) {
@@ -807,7 +780,6 @@ export default class InvoiceForm extends React.Component {
 					}
 					const value = delFigure(_obj.amount)
 					if (_obj.category === 'ems') {
-						console.log(ems_total)
 						ems_total = calculation(value, ems_total)
 					} else {
 						sub_total = calculation(value, sub_total)
@@ -2048,7 +2020,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 					
 					<Tab eventKey={5} title="請求データ(発送)">
-						{this.shippingData &&
+						{(this.shippingData && this.shippingData.billing_compare) === true &&
 							this.shippingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">
@@ -2073,7 +2045,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 
 					<Tab eventKey={6} title="請求データ(集荷)">
-						{this.collectingData &&
+						{(this.collectingData && this.collectingData.billing_compare) === true && 
 							this.collectingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">
