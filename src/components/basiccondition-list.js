@@ -1,5 +1,5 @@
 /* @flow */
-import axios from 'axios'
+//import axios from 'axios'
 import React from 'react'
 import {
 	Grid,
@@ -17,6 +17,7 @@ import {
 	CommonTable,
 	CommonSearchConditionsFrom,
 	CommonPagination,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -45,46 +46,26 @@ export default class BasicConditionList extends React.Component {
 	/**
 	 * 一覧取得実行
 	 * @param {*} activePage 
-	 * @param {*} conditions 
+	 * @param {*} url 
 	 */
-	getFeed(activePage:number, conditions) {
+	getFeed(activePage:number, url) {
 
-		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
-			isError: {},
-			urlToPagenation: url
+			isError: {}
 		})
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			this.setState({ isDisabled: false })
-
-			if (response.status === 204) {
-				this.setState({ isError: response })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ feed: response.data.feed, isError: {}})
-			}
-
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})    
 	}
   
 	/**
 	 * 更新画面に遷移する
 	 */
-	更新画面未作成なのでコメントアウト
 	onSelect(data) {
 		// 入力画面に遷移
 		const id = data.link[0].___href.slice(17)
@@ -92,19 +73,22 @@ export default class BasicConditionList extends React.Component {
 	}
 
 	/**
-	 * 検索実行
+	 * 一覧取得設定
 	 * @param {*} conditions 
 	 */
-	doSearch(conditions) {
-		this.getFeed(1, conditions)
+	doGetFeed(conditions) {
+
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			urlToPagenation: url
+		})
 	}
 
 	/**
 	 * 描画後の処理
 	 */
 	componentDidMount() {
-		// 一覧取得
-		this.getFeed(1)
+		this.doGetFeed()
 	}
 	
 
@@ -122,7 +106,7 @@ export default class BasicConditionList extends React.Component {
 						
 						<PageHeader>基本条件一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions) => this.doGetFeed(conditions)}>
 							
 						
 							
@@ -136,7 +120,7 @@ export default class BasicConditionList extends React.Component {
 
 						<CommonPagination
 							url={this.state.urlToPagenation}
-							onChange={(activePage) => this.getFeed(activePage)}
+							onChange={(activePage, url)=>this.getFeed(activePage, url)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>	

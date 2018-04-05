@@ -23,6 +23,7 @@ import {
 	CommonMonthlySelect,
 	CommonSearchConditionsFrom,
 	CommonPagination,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -53,37 +54,33 @@ export default class InvoiceList extends React.Component {
 	/**
 	 * 一覧取得実行
 	 * @param {*} activePage 
-	 * @param {*} conditions 
+	 * @param {*} url 
 	 */
-	getFeed(activePage: number, conditions) {
-		const url = this.url + (conditions ? '&' + conditions : '')
+	getFeed(activePage: number, url) {
+
 		this.setState({
 			isDisabled: true,
-			isError: {},
-			urlToPagenation: url
+			isError: {}
 		})
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			if (response.status === 204) {
-				this.setState({ feed:'',isDisabled: false, isError: response, })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ isDisabled: false, feed: response.data.feed})
-			}
+	}
 
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})    
+	/**
+	 * 一覧取得設定
+	 * @param {*} conditions 
+	 */
+	doGetFeed(conditions) {
+
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			urlToPagenation: url
+		})
 	}
 
 	/**
@@ -93,7 +90,8 @@ export default class InvoiceList extends React.Component {
 	onSelect(_data) {
 		// 入力画面に遷移
 		const invoice_code = _data.invoice.invoice_code
-		this.props.history.push('/InvoiceUpdate?' + invoice_code)
+		const invoice_code_sub = _data.invoice.invoice_code_sub
+		this.props.history.push('/InvoiceUpdate?' + invoice_code + '-' + invoice_code_sub)
 	}
 
 	/**
@@ -114,7 +112,7 @@ export default class InvoiceList extends React.Component {
 					}
 				}).then(() => {
 					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-					this.getFeed(this.activePage)
+					this.getFeed(this.activePage, this.state.urlToPagenation)
 				}).catch((error) => {
 					if (this.props.error) {
 						this.setState({ isDisabled: false })
@@ -133,21 +131,13 @@ export default class InvoiceList extends React.Component {
 		}
 	}
 
-	/**
-	 * 検索実行
-	 * @param {*} conditions 
-	 */
-	doSearch(conditions) {
-		this.getFeed(1, conditions)
-	}
-
 	changeSearchYearmonth(_data) {
 		if (_data) {
 			this.setState({ searchYearMonth: _data.value })
-			this.doSearch('invoice.invoice_yearmonth=*' + _data.value + '*')
+			this.doGetFeed('invoice.invoice_yearmonth-rg-*' + _data.value + '*')
 		} else {
 			this.setState({ searchYearMonth: '' })
-			this.getFeed(1)
+			this.doGetFeed()
 		}	
 	}
 
@@ -156,7 +146,7 @@ export default class InvoiceList extends React.Component {
 	 * 描画後の処理
 	 */
 	componentDidMount() {
-		this.getFeed(1)
+		this.doGetFeed()
 	}
 
 	render() {
@@ -177,13 +167,19 @@ export default class InvoiceList extends React.Component {
 						<PageHeader>請求書一覧</PageHeader>
 
 						
-						<CommonSearchConditionsFrom doSearch={(conditions) => this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions) => this.doGetFeed(conditions)}>
 						 
 							<CommonInputText
 								controlLabel="請求番号"
 								name="invoice.invoice_code"
 								type="text"
-								placeholder="請求番号"
+								placeholder="0000001"
+							/>
+							<CommonInputText
+								controlLabel="枝番"
+								name="invoice.invoice_code_sub"
+								type="text"
+								placeholder="01"
 							/>
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
@@ -192,16 +188,14 @@ export default class InvoiceList extends React.Component {
 							/>
 							<CommonInputText
 								controlLabel="請求先名"
-								name="invoice.invoice_name"
+								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
-
 							<CommonDatePicker
 								controlLabel="支払日"
 								name="invoice.payment_date"
 							/>
-
 							<CommonRadioBtn
 								controlLabel="入金ステータス"
 								name="invoice.deposit_status"
@@ -213,10 +207,9 @@ export default class InvoiceList extends React.Component {
 									value: '1',
 								}]}
 							/>
-							
 							<CommonRadioBtn
 								controlLabel="発行ステータス"
-								name="issue.status"
+								name="invoice.issue_status"
 								data={[{
 									label: '全て',
 									value: ''
@@ -228,7 +221,6 @@ export default class InvoiceList extends React.Component {
 									value: '1'
 								}]}
 							/>
-
 							<CommonInputText
 								controlLabel="作成者"
 								name="creator"
@@ -244,7 +236,7 @@ export default class InvoiceList extends React.Component {
 
 						<CommonPagination
 							url={this.state.urlToPagenation}
-							onChange={(activePage)=>this.getFeed(activePage)}
+							onChange={(activePage, url)=>this.getFeed(activePage, url)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
@@ -257,13 +249,15 @@ export default class InvoiceList extends React.Component {
 							header={[{
 								field: 'invoice.invoice_code', title: '請求番号', width: '100px'
 							}, {
-								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '200px'
+								field: 'invoice.invoice_code_sub', title: '枝番', width: '50px'
 							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '200px'
+								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '100px'
 							}, {
-								field: 'invoice.payment_date', title: '支払日', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '300px'
 							}, {
-								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
+								field: 'invoice.payment_date', title: '支払日', width: '100px'
+							}, {
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '100px', convert: { 0: '未入金', 1: '入金済' }
 							}, {
 								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {

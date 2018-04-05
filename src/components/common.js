@@ -1545,6 +1545,8 @@ export function addFigure(numVal) {
 		return ''
 	}
 
+	numVal = '' + numVal
+
 	/**
 	 * 全角から半角への変革関数
 	 * 入力値の英数記号を半角変換して返却
@@ -1908,7 +1910,7 @@ export class CommonTable extends React.Component {
 								name="__tableInput"
 								type="text"
 								value={value}
-								onChange={(data) => input.onChange(data, _index)}
+								onChange={input.onChange ? (data) => input.onChange(data, _index) : null }
 								onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
 								onForcus={input.onForcus ? (data) => input.onForcus(data, _index) : null }
 								entitiykey={entitiykey}
@@ -2289,7 +2291,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 
 			if (value || value !== '') {
 				conditions = conditions ? conditions + '&' : ''
-				conditions = conditions + name + '=*' + value + '*'
+				conditions = conditions + name + '-rg-*' + value + '*'
 			}
 
 		}
@@ -2367,10 +2369,12 @@ export class CommonPagination extends React.Component {
 		} 
 	}
 
-	 handleSelect(eventKey) {		 
-		this.buildIndex(this.props.url, eventKey)
+	handleSelect(eventKey, _url) {	
+		let url = _url
+		if (!url) url = this.props.url
+		this.buildIndex(url, eventKey)
 		this.setState( {activePage: eventKey} )
-		this.props.onChange(eventKey)	// 再検索
+		this.props.onChange(eventKey, url)	// 再検索
 	}
 	
 	/**
@@ -2381,10 +2385,9 @@ export class CommonPagination extends React.Component {
 
 		const new_url = newProps.url
 		if (this.url !== new_url) {
-	    	// pageIndex作成処理呼び出し
-			this.buildIndex(new_url, 1)
+			// pageIndex作成処理呼び出し
+			this.handleSelect(1, new_url)
 			this.url = new_url
-			this.setState({activePage:1})
 		}
 		// 件数取得
 		axios({
@@ -2923,4 +2926,41 @@ export function CommonBackInternalWork(_befor_url) {
 			location.hash = _befor_url ? _befor_url : '#'
 		}
 	}
+}
+
+import { setTimeout } from 'timers'
+export function CommonGetList(_url, _activePage) {
+	return new Promise((resolve) => {
+		const get = () => {
+			axios({
+				url: _url + '&n=' + _activePage,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then( (response) => {
+
+				if (response.status === 204) {
+					resolve({ isDisabled: false, isError: response })
+				} else {
+					// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
+					// activePageが「2」だったら51件目から100件目が格納されている
+					resolve({ isDisabled: false, feed: response.data.feed})
+				}
+
+			}).catch((error) => {
+				if (error.response && error.response.data && error.response.data.feed) {
+					const title = error.response.data.feed.title
+					if (title === 'Please make a pagination index in advance.') {
+						setTimeout(() => {
+							get()
+						}, 200)
+					}
+				} else {
+					resolve({ isDisabled: false, isError: error })
+				}
+			})
+		}
+		get()
+	})
 }

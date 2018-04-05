@@ -79,6 +79,7 @@ export default class InquiryUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
+		location.reload()
 	}
 
 	/**
@@ -102,7 +103,7 @@ export default class InquiryUpdate extends React.Component {
 						<CommonNetworkMessage isError={this.state.isError}/>
 
 						<PageHeader>
-							問い合わせ情報の更新
+							特記事項の更新
 						</PageHeader>
 
 					</Col>

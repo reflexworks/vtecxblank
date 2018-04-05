@@ -139,7 +139,8 @@ invoice
  issue_status
  deposit_status
  payment_date
- customer_code 
+ customer_code
+ invoice_code_sub
 delivery_charge{}
  shipment_service_name
  shipment_service_code
@@ -200,6 +201,7 @@ inquiry
  staff_name
  inquiry_status
  content
+ content_type
 billing_data
  shipment_service_code
  shipment_service_type
@@ -237,6 +239,13 @@ billing_compare{}
   billing_amount
 </content>
 <rights>
+billto.billto_code:/quotation|/customer
+shipment_service.service_name:/shipment_service
+shipment_service.code:/deliverycharge_template
+staff.staff_email:/staff
+billto.billto_name:/billto
+customer.customer_name:/customer
+warehouse.warehouse_name:/warehouse
 </rights>
 </entry>
 </feed>

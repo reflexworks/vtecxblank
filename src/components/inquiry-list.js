@@ -1,5 +1,5 @@
 /* @flow */
-import axios from 'axios'
+//import axios from 'axios'
 import React from 'react'
 import {
 	Grid,
@@ -20,6 +20,7 @@ import {
 	CommonInputText,
 	CommonFilterBox,
 	CommonTextArea,
+	CommonGetList
 } from './common'
 
 type State = {
@@ -48,38 +49,33 @@ export default class InquiryList extends React.Component {
 	/**
 	 * 一覧取得実行
 	 * @param {*} activePage 
-	 * @param {*} conditions 
+	 * @param {*} url 
 	 */
-	getFeed(activePage: number, conditions) {
+	getFeed(activePage: number, url) {
 
-		const url = this.url + (conditions ? '&' + conditions : '')
 		this.setState({
 			isDisabled: true,
-			isError: {},
-			urlToPagenation: url
+			isError: {}
 		})
 
 		this.activePage = activePage
 
-		axios({
-			url: url + '&n=' + activePage,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then( (response) => {
+		CommonGetList(url, activePage).then((_state) => {
+			this.setState(_state)
+		})
 
-			if (response.status === 204) {
-				this.setState({ isDisabled: false, isError: response })
-			} else {
-				// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
-				// activePageが「2」だったら51件目から100件目が格納されている
-				this.setState({ isDisabled: false, feed: response.data.feed})
-			}
+	}
 
-		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
-		})    
+	/**
+	 * 一覧取得設定
+	 * @param {*} conditions 
+	 */
+	doGetFeed(conditions) {
+
+		const url = this.url + (conditions ? '&' + conditions : '')
+		this.setState({
+			urlToPagenation: url
+		})
 	}
 
 	/**
@@ -94,18 +90,10 @@ export default class InquiryList extends React.Component {
 	}
 
 	/**
-	 * 検索実行
-	 * @param {*} conditions 
-	 */
-	doSearch(conditions) {
-		this.getFeed(1, conditions)
-	}
-
-	/**
 	 * 描画後の処理
 	 */
 	componentDidMount() {
-		this.getFeed(1)
+		this.doGetFeed()
 	}
 
 	render() {
@@ -121,9 +109,9 @@ export default class InquiryList extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 
-						<PageHeader>特記事項</PageHeader>
+						<PageHeader>特記事項一覧</PageHeader>
 
-						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doSearch(conditions)}>
+						<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions)}>
 							
 							<CommonInputText
 								controlLabel="顧客名"
@@ -175,7 +163,29 @@ export default class InquiryList extends React.Component {
 									value: '3'
 								}, {
 									label: '完了',
-									value: '4'	
+									value: '4'
+								}]}
+							/>
+
+							<CommonFilterBox
+								controlLabel="分類"
+								size="sm"
+								name="inquiry.content_type"
+								options={[{
+									label: '経理連絡',
+									value: '1'
+								}, {
+									label: '営業連絡',
+									value: '2'
+								}, {
+									label: 'システム連絡',
+									value: '3'
+								}, {
+									label: 'メモ',
+									value: '4'
+								}, {
+									label: 'その他',
+									value: '5'
 								}]}
 							/>
 							
@@ -196,7 +206,7 @@ export default class InquiryList extends React.Component {
 
 						<CommonPagination
 							url={this.state.urlToPagenation}
-							onChange={(activePage)=>this.getFeed(activePage)}
+							onChange={(activePage, url)=>this.getFeed(activePage, url)}
 							maxDisplayRows={this.maxDisplayRows}
 							maxButtons={4}
 						/>
@@ -206,17 +216,25 @@ export default class InquiryList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data)=>this.onSelect(data)}
 							header={[{
-								field: 'published',title: '登録日時', width: '200px'
+								field: 'published',title: '登録日時', width: '150px'
 							}, {
-								field: 'updated',title: '更新日時', width: '200px'
+								field: 'updated',title: '更新日時', width: '150px'
 							}, {
-								field: 'customer.customer_name', title: '顧客名', width: '200px'
+								field: 'customer.customer_name', title: '顧客名', width: '300px'
 							}, {
-								field: 'customer.customer_code', title: '顧客コード', width: '200px'
+								field: 'customer.customer_code', title: '顧客コード', width: '100px'
 							}, {
-								field: 'inquiry.staff_name', title: '担当者', width: '200px'
+								field: 'inquiry.staff_name', title: '作成者', width: '150px'
 							}, {
-								field: 'inquiry.inquiry_status', title: 'ステータス', width: '200px',convert: { 1:'問い合わせ', 2:'確認中', 3:'返答待ち', 4:'完了'}
+								field: 'inquiry.inquiry_status', title: 'ステータス', width: '100px',
+								convert: {
+									1: '問い合わせ', 2: '確認中', 3: '返答待ち', 4: '完了',
+								}
+							}, {
+								field: 'inquiry.content_type', title: '分類', width: '100px',
+								convert: {
+									1: '経理連絡',2: '営業連絡',3:'システム連絡',4:'メモ',5:'その他',
+								}
 							}]}
 						/>
 					</Col>  
