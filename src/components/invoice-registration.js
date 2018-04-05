@@ -47,16 +47,8 @@ export default class InvoiceRegistration extends React.Component {
 			remarks:[],
 			creator: CommonLoginUser().get().staff_name
 		}
-		this.invoice_details = {
-			invoice: {
-				invoice_code:''
-			},
-			customer: {
-				customer_code:''
-			},
-			item_details: [],
-			remarks:[],
-		}
+		this.item_details = null
+		this.edit = null
 	}
  
 	componentWillMount() {
@@ -72,17 +64,16 @@ export default class InvoiceRegistration extends React.Component {
 			}
 		}).then((response) => {
 	
-			this.setState({ isDisabled: false })
-
 			if (response.status === 204) {
-				this.setState({ isError: response })
+				this.setState({ isDisabled: false,isError: response })
 			} else {
 				this.entry.invoice.quotation_code = response.data.feed.entry[0].quotation.quotation_code
 				this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
 				this.entry.billto = response.data.feed.entry[0].billto
 				this.entry.billfrom = response.data.feed.entry[0].billfrom || {}
 				
-				this.forceUpdate()
+				this.setState({ isDisabled: false })
+
 			}
 
 		}).catch((error) => {
@@ -90,9 +81,92 @@ export default class InvoiceRegistration extends React.Component {
 		})
 	}
 
-	callbackRegistrationButton() {
+	setReqestData(_data, _type) {
+		if (_type === 'item_details' && _data) {
+			const array = []
+			Object.keys(_data.item_details).forEach((_key) => {
+				const list = _data.item_details[_key]
+				list.map((_value) => {
+					array.push(_value)
+				})
+			})
+			_data.item_details = array
+		}
+		this[_type] = _data
+	}
+
+	callbackRegistrationButton(_res_data) {
+		const rea_data = _res_data.feed.entry[0]
+		const req = { feed: { entry: [] } }
+		const key = rea_data.invoice.invoice_code + '-' + rea_data.invoice.invoice_code_sub
+		const item_details_obj_self = {
+			link: [{
+				___href: '/invoice_details/' + key,
+				___rel: 'self'
+			}]
+		}
+		const remarks_obj_self = {
+			link: [{
+				___href: '/invoice_remarks/' + key,
+				___rel: 'self'
+			}]
+		}
+		req.feed.entry.push(item_details_obj_self)
+		req.feed.entry.push(remarks_obj_self)
+
+		if (this.item_details) {
+			let item_details = JSON.parse(JSON.stringify(this.item_details))
+			item_details.invoice = {
+				invoice_code: rea_data.invoice.invoice_code,
+				invoice_code_sub: rea_data.invoice.invoice_code_sub
+			}
+			item_details.link = [{
+				___href: '/invoice_details/' + key + '/' + rea_data.invoice.customer_code,
+				___rel: 'self'
+			}]
+			if (this.remarks) {
+				item_details.remarks
+			}
+
+			req.feed.entry.push(item_details)
+		}
+		if (this.edit) {
+			let edit = JSON.parse(JSON.stringify(this.edit))
+			edit.invoice.invoice_code = rea_data.invoice.invoice_code
+			edit.invoice.invoice_code_sub = rea_data.invoice.invoice_code_sub
+			edit.link = [{
+				___href: '/invoice_remarks/' + key + '/' + rea_data.invoice.customer_code,
+				___rel: 'self'
+			}]
+			req.feed.entry.push(edit)
+		}
+		if (req.feed.entry.length) {
+			this.doAfterPost(req)
+		} else {
+			this.compleat()
+		}
+	}
+
+	compleat() {
 		alert('登録が完了しました。')
-		location.href = '#/InvoiceList'		
+		location.href = '#/InvoiceList'
+	}
+
+	doAfterPost(_data) {
+		axios({
+			url: '/d/',
+			method: 'post',
+			data: _data,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+	
+			this.compleat()
+
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
 	}
 
 	render() {
@@ -108,7 +182,7 @@ export default class InvoiceRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn NavItem url={this.url} callback={(_res_data)=>this.callbackRegistrationButton(_res_data)} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>
@@ -117,7 +191,7 @@ export default class InvoiceRegistration extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<InvoiceForm name="mainForm" entry={this.entry}/>
+						<InvoiceForm name="mainForm" entry={this.entry} setReqestData={(_data, _type)=>this.setReqestData(_data, _type)} />
 					</Col>
 				</Row>
 				<Row>
@@ -125,7 +199,7 @@ export default class InvoiceRegistration extends React.Component {
 						<Navbar collapseOnSelect>
 							<Navbar.Collapse>
 								<Nav>
-									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
+									<CommonRegistrationBtn NavItem url={this.url} callback={(_res_data)=>this.callbackRegistrationButton(_res_data)} />
 									<CommonClearBtn NavItem />
 								</Nav>
 							</Navbar.Collapse>

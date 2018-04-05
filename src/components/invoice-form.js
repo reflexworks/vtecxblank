@@ -29,6 +29,7 @@ import {
 	CommonPrefecture,
 	CommonMonthlySelect,
 	addFigure,
+	delFigure,
 	CommonDatePicker,
 } from './common'
 
@@ -41,14 +42,12 @@ export default class InvoiceForm extends React.Component {
 		this.state = {
 			showBillfromAddModal: false,
 			showBillfromEditModal: false,
-			selectCustomer: '',
-			item_detailsFlag: false,
+			selectCustomer: ''
 		}
-
 		
 		//消費税と合計請求金額
 		this.sub_total = 0
-		this.tax_total = 0
+		this.ems_total = 0
 		this.consumption_tax = 0
 		this.total_amount = 0
 		
@@ -58,6 +57,7 @@ export default class InvoiceForm extends React.Component {
 		this.packing_item = []
 		this.shipping = []
 		this.collecting = []
+
 		this.serviceItem = []
 		this.entry = this.props.entry
 		this.entry.invoice = this.entry.invoice || {}
@@ -66,8 +66,6 @@ export default class InvoiceForm extends React.Component {
 		this.entry.billfrom = this.entry.billfrom || {}
 		this.entry.billfrom.payee = this.entry.billfrom.payee || []
 		this.entry.contact_information = this.entry.contact_information || {}
-		this.entry.item_details = this.entry.item_details || []
-		this.item_details = this.item_details || []
 		this.entry.remarks = this.entry.remarks || []
 		this.master = {
 			customerList: [],
@@ -77,62 +75,21 @@ export default class InvoiceForm extends React.Component {
 		this.shippingData
 		this.collectingData
 
-		this.taxationList=[{
-			label: '税込',
-			value: '1'
-		}, {	
-			label: '税抜',
-			value: '0'
-		}]
-		
-		this.bankList = [{
-			label: 'みずほ銀行',
-			value: '1',
-		}, {
-			label: '三菱東京UFJ銀行',
-			value: '2',
-		}, {
-			label: '三井住友銀行',
-			value: '3',
-		}, {
-			label: 'りそな銀行',
-			value: '4',
-		}, {
-			label: '埼玉りそな銀行',
-			value: '5',
-		}, {
-			label: '楽天銀行',
-			value: '6',
-		}, {
-			label: 'ジャパンネット銀行',
-			value: '7',
-		}, {
-			label: '巣鴨信用金庫',
-			value: '8',
-		}, {
-			label: '川口信用金庫',
-			value: '9',
-		}, {
-			label: '東京都民銀行',
-			value: '10',
-		}, {
-			label: '群馬銀行',
-			value: '11',
-		}]
-		
-		this.bankTypeList = [{
-			label: '普通',
-			value: '0',
-		}, {
-			label: '当座',
-			value: '1',
-		}]
+		this.item_details = this.item_details || []
+		this.addEntry = this.addEntry || {}
+		this.addDetails = []
+		this.editEntry = this.editEntry || {}
+
+		this.convert_taxation = { '0': '税抜', '1': '税込' }
+
+		this.cashData = {}
+
+		this.isEdit = true
 
 	}
 	
-	componentWillMount() {		
+	componentWillMount() {
 	}
-
 
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
@@ -140,97 +97,48 @@ export default class InvoiceForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
-		this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
-		if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
-		if (this.entry.invoice.customer_code) this.props.changeCustomerCode(this.entry.invoice.customer_code)
-			
-		//口座情報に口座名義、支店名が無い時の処理
-		if(this.entry.billfrom.payee){
-			this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
-				if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {	
-					let newPayee = {
-						'bank_info': oldPayee.bank_info,
-						'account_type': oldPayee.account_type,
-						'account_number': oldPayee.account_number,
-						'branch_office': '',
-						'account_name': '',
-					}
-					return (newPayee)
-				} else {
-					return (oldPayee)
-				}
-			})	
-		}
-		this.setCustomerMasterData() 
-		this.setBillfromMasterData() 
-		this.setInternalWorkYearMonthList()
-		
-		if (!this.state.item_detailsFlag) {
-			this.sortItemDetails()
-			this.changeTotalAmount()
-		}
+		if (newProps.entry) {
 
-		if (this.entry.invoice.working_yearmonth && this.entry.invoice.customer_code) {
-			this.getService(this.entry.invoice.customer_code, this.entry.invoice.working_yearmonth)
-		}
-	}
+			this.isEdit = this.entry.invoice.issue_status === '1' ? false : true
 
-	/**
-	 * /d/で登録されているitem_detailsをカテゴリ毎に振り分ける
-	 */
-	sortItemDetails() {
-		if (this.entry.item_details) {
-			for (let i = 0; i < this.entry.item_details.length; ++i) {
-				switch (this.entry.item_details[i].category) {
-				case 'monthly':
-					if (!this.item_details.monthly) {
-						this.item_details.monthly = []
+			this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
+			if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
+			if (this.entry.invoice.customer_code) this.props.changeCustomerCode(this.entry.invoice.customer_code)
+
+			//口座情報に口座名義、支店名が無い時の処理
+			if(this.entry.billfrom.payee){
+				this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
+					if (oldPayee.bank_info && !oldPayee.branch_office && !oldPayee.account_name) {	
+						let newPayee = {
+							'bank_info': oldPayee.bank_info,
+							'account_type': oldPayee.account_type,
+							'account_number': oldPayee.account_number,
+							'branch_office': '',
+							'account_name': '',
+						}
+						return (newPayee)
+					} else {
+						return (oldPayee)
 					}
-					this.item_details.monthly[this.item_details.monthly.length] = this.entry.item_details[i]
-					break
-				case 'daily':
-					if (!this.item_details.daily) {
-						this.item_details.daily = []
-					}
-	
-					this.item_details.daily[this.item_details.daily.length] = this.entry.item_details[i]
-					break
-				case 'period':
-					if (!this.item_details.period) {
-						this.item_details.period = []
-					}
-	
-					this.item_details.period[this.item_details.period.length] = this.entry.item_details[i]
-					break
-				case 'packing_item':
-					if (!this.item_details.packing_item) {
-						this.item_details.packing_item = []
-					}
-					this.item_details.packing_item[this.item_details.packing_item.length] = this.entry.item_details[i]
-					break
-				case 'shipping':
-					if (!this.item_details.shipping) {
-						this.item_details.shipping = []
-					}
-					this.item_details.shipping[this.item_details.shipping.length] = this.entry.item_details[i]
-					break
-				case 'collecting':
-					if (!this.item_details.collecting) {
-						this.item_details.collecting = []
-					}
-					this.item_details.collecting[this.item_details.collecting.length] = this.entry.item_details[i]
-					break
-					
-				case 'others':
-					if (!this.item_details.others) {
-						this.item_details.others = []
-					}
-					this.item_details.others[this.item_details.others.length] = this.entry.item_details[i]
-					break	
-				}
-				this.setState({item_detailsFlag:true})
+				})	
+			}
+			this.setCustomerMasterData() 
+			this.setBillfromMasterData() 
+			this.setInternalWorkYearMonthList()
+
+			if (this.entry.invoice.working_yearmonth && this.entry.invoice.customer_code) {
+
+				this.getService(this.entry.invoice.customer_code, this.entry.invoice.working_yearmonth)
+
+				// 簡易明細表示
+				this.setBillingSummaryTable()
 			}
 		}
+
+	}
+
+	getKey(_category, _item_name, _unit) {
+		return _category + _item_name + _unit
 	}
 
 	/**
@@ -239,7 +147,14 @@ export default class InvoiceForm extends React.Component {
 	getService(customer_code,working_yearmonth) {
 		this.setState({ isDisabled: true })
 
-		//url: 's/get-invoice-itemdetails?customer_code=0000182&quotation_code=0000002&working_yearmonth=2018/01',
+		this.monthly = []
+		this.daily = []
+		this.period = []
+		this.packing_item = []
+		this.shipping = []
+		this.collecting = []
+		this.serviceItem = []
+
 		axios({
 			url: 's/get-invoice-itemdetails?customer_code=' + customer_code +
 				 '&quotation_code=' + this.entry.invoice.quotation_code +
@@ -252,57 +167,37 @@ export default class InvoiceForm extends React.Component {
 
 			if (response.status !== 204) {
 			
-				//カンマ差し込み処理
-				/*
-				response.data.feed.entry[0].item_details.map((item_details) =>{
-					item_details.unit_price = addFigure(item_details.unit_price)
-					item_details.amount = addFigure(item_details.amount)
-				})
-				*/
-				this.monthly = []
-				this.daily = []
-				this.period = []
-				this.packing_item = []
-				this.shipping = []
-				this.collecting = []
 				const serviceData = response.data.feed.entry[0]
 				if (serviceData.item_details) {
+
 					for (let i = 0; i < serviceData.item_details.length; ++i) {
-						switch (serviceData.item_details[i].category) {
-						case 'monthly':
-							this.monthly[this.monthly.length] = serviceData.item_details[i]
-							break
-						case 'daily':
-							this.daily[this.daily.length] = serviceData.item_details[i]
-							break
-						case 'period':
-							this.period[this.period.length] = serviceData.item_details[i]
-							break
-						case 'packing_item':
-							this.packing_item[this.packing_item.length] = serviceData.item_details[i]
-							break
-						case 'shipping':
-							this.shipping[this.shipping.length] = serviceData.item_details[i]
-							break
-						case 'collecting':
-							this.collecting[this.collecting.length] = serviceData.item_details[i]
-							break
-						/*
-						default:
-							if (!this.entry.item_details) {
-								this.entry.item_details = []
-							}
-							this.entry.item_details[this.entry.item_details.length] = serviceData.item_details[i]
-							break
-						*/
-						}
+
+						let item_details = serviceData.item_details[i]
+						const category = item_details.category
+						const item_name = item_details.item_name
+						const unit = item_details.unit
+
+						// カンマ差し込み処理
+						item_details.quantity = addFigure(item_details.quantity)
+						item_details.unit_price = addFigure(item_details.unit_price)
+						item_details.amount = addFigure(item_details.amount)
+						this[category].push(item_details)
+
+						const key = this.getKey(category, item_name, unit)
+						this.cashData[key] = this[category].length - 1
 					}
 					this.serviceItem = serviceData.item_details
-					this.changeTotalAmount()
+
+					// 明細表示
+					this.setItemDetailsTable()
 				}
-				this.forceUpdate()
+			} else {
+				// 明細表示
+				this.setItemDetailsTable()
 			}
 		}).catch((error) => {
+			// 明細表示
+			this.setItemDetailsTable()
 			this.setState({ isDisabled: false, isError: error })
 		})
 
@@ -443,16 +338,22 @@ export default class InvoiceForm extends React.Component {
 				this.getInvoiceData(this.entry.invoice.customer_code,this.entry.invoice.working_yearmonth,this.entry.invoice.quotation_code)
 			}
 		} else {
+
+			this.props.setReqestData(null, 'item_details')
+			this.props.setReqestData(null, 'remarks')
+			this.props.setReqestData(null, 'edit')
+
+			this.isItemDetailsTable = false
+
 			this.entry.invoice.customer_code = ''
 			this.customer = {}
 			if (this.props.changeCustomerCode) {
 				this.props.changeCustomerCode('')
 			}
-		}	
+		}
 
 		// 簡易明細表示
 		this.setBillingSummaryTable()
-		this.forceUpdate()
 	}
 
 	getInvoiceData(_customerCode,_workingYearmonth,_quotationCode) {
@@ -632,9 +533,18 @@ export default class InvoiceForm extends React.Component {
 		if (_data) {
 			this.entry.invoice.working_yearmonth = _data.value
 			if(this.props.changeYearmonth){ this.props.changeYearmonth(_data.value)}
-			if (this.entry.invoice.customer_code) { this.getService(this.entry.invoice.customer_code, _data.value) }
+			if (this.entry.invoice.customer_code) {
+				this.getService(this.entry.invoice.customer_code, _data.value)
+			}
 			this.forceUpdate()
 		} else {
+
+			this.props.setReqestData(null, 'item_details')
+			this.props.setReqestData(null, 'remarks')
+			this.props.setReqestData(null, 'edit')
+
+			this.isItemDetailsTable = false
+
 			this.entry.invoice.working_yearmonth = null
 			if(this.props.changeYearmonth){ this.props.changeYearmonth('')}
 		}
@@ -642,19 +552,201 @@ export default class InvoiceForm extends React.Component {
 		this.setBillingSummaryTable()
 	}
 
+	setItemDetailsTable() {
+
+		const customer_code = this.entry.invoice.customer_code
+		const selectInternalWorkYearMonth = this.entry.invoice.working_yearmonth
+
+		this.addEntry = {
+			customer: {
+				customer_code: customer_code
+			},
+			item_details: []
+		}
+		this.editEntry = {
+			invoice: {
+				working_yearmonth: selectInternalWorkYearMonth
+			},
+			customer: {
+				customer_code: customer_code
+			},
+			item_details: []
+		}
+		this.props.setReqestData(null, 'item_details')
+		this.props.setReqestData(null, 'remarks')
+		this.props.setReqestData(null, 'edit')
+
+		this.isItemDetailsTable = false
+
+		let count = 0
+		const complate = () => {
+			if (count === 2) {
+				this.isItemDetailsTable = true
+				this.changeTotalAmount()
+				this.setState({ isDisabled: false })
+			}
+		}
+		const setAddEntry = () => {
+			this.item_details = {}
+			for (let i = 0; i < this.addEntry.item_details.length; ++i) {
+				const details = this.addEntry.item_details[i]
+				const category = details.category
+				if (!this.item_details[category]) {
+					this.item_details[category] = []
+				}
+				this.item_details[category].push(details)
+			}
+		}
+		const setEditEntry = () => {
+			this.editEntry.item_details.map((_item_details) => {
+				const category = _item_details.category
+				const item_name = _item_details.item_name
+				const unit = _item_details.unit
+				const key = this.getKey(category, item_name, unit)
+				const index = this.cashData[key]
+				if (index || index === 0) {
+					this[category][index].remarks = _item_details.remarks
+				}
+			})
+		}
+		if (this.entry.invoice.invoice_code) {
+
+			const invoice_code = this.entry.invoice.invoice_code
+			const invoice_code_sub = this.entry.invoice.invoice_code_sub
+			const key = invoice_code + '-' + invoice_code_sub
+
+			this.addEntry.link = [{
+				___href: '/invoice_details/' + key + '/' + customer_code,
+				___rel: 'self'
+			}]
+			const get = (_url) => {
+				axios({
+					url: '/d' + _url,
+					method: 'get',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then((response) => {
+
+					count++
+
+					if (_url.indexOf('invoice_details') != -1) this.item_details = {}
+
+					if (response.status !== 204) {
+
+						if (_url.indexOf('invoice_details') != -1) {
+							this.addEntry = response.data.feed.entry[0]
+							setAddEntry()
+						}
+						if (_url.indexOf('invoice_remarks') != -1) {
+							this.editEntry = response.data.feed.entry[0]
+							setEditEntry()
+						}
+
+					}
+					complate()
+
+				}).catch((error) => {
+					count++
+					this.item_details = {}
+					this.setState({ isDisabled: false, isError: error })
+					complate()
+				})
+			}
+			get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
+			get('/invoice_remarks/' + key + '?f&customer.customer_code=' + customer_code + '&invoice.working_yearmonth=' + selectInternalWorkYearMonth)
+
+		} else {
+
+			// 前月の発行済みの請求書情報を取得
+			const getBeforInvoice = () => {
+				axios({
+					url: '/d/invoice?f&billto.billto_code=' + this.entry.billto.billto_code + '&invoice.issue_status=' + 1,
+					method: 'get',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then((response) => {
+					if (response.status === 204) {
+						count = 2
+						complate()
+					} else {
+						const datas = response.data.feed.entry
+						let befor_code = 0
+						let befor_sub_code = 0
+						let befor_entry
+						datas.map((_entry) => {
+							const _invoice_code = parseInt(_entry.invoice.invoice_code)
+							const _invoice_code_sub = parseInt(_entry.invoice.invoice_code_sub)
+							if (befor_code < _invoice_code) {
+								befor_code = _invoice_code
+								befor_sub_code = 0
+								befor_entry = _entry
+							} else if (befor_code === _invoice_code && befor_sub_code < _invoice_code_sub) {
+								befor_sub_code = _invoice_code_sub
+								befor_entry = _entry
+							}
+						})
+
+						const invoice_code = befor_entry.invoice.invoice_code
+						const invoice_code_sub = befor_entry.invoice.invoice_code_sub
+						const key = invoice_code + '-' + invoice_code_sub
+						const get = (_url) => {
+							this.item_details = {}
+							axios({
+								url: '/d' + _url,
+								method: 'get',
+								headers: {
+									'X-Requested-With': 'XMLHttpRequest'
+								}
+							}).then((response) => {
+
+								if (response.status !== 204) {
+
+									let befor_details = {}
+									Object.keys(response.data.feed.entry[0]).forEach((_key) => {
+										if (_key !== 'link' && _key !== 'id' && _key !== 'author') {
+											befor_details[_key] = response.data.feed.entry[0][_key]
+										}
+									})
+									this.addEntry = befor_details
+									setAddEntry()
+									this.addEntry.item_details = this.item_details
+									this.props.setReqestData(this.addEntry, 'item_details')
+
+								}
+								count = 2
+								complate()
+
+							}).catch((error) => {
+								this.setState({ isDisabled: false, isError: error })
+								count = 2
+								complate()
+							})
+						}
+						get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
+					}
+
+				}).catch((error) => {
+					count = 2
+					complate()
+					this.setState({ isDisabled: false, isError: error })
+				})
+			}
+			getBeforInvoice()
+		}
+
+	}
+
 	/*
 	 * 請求書内の月時作業、日時作業、資材などに項目を追加する
 	 */
 	addInvoiceList(list, _data) {
+		
 		if (!this.item_details[list]) {
 			this.item_details[list] = []
 		}
 		this.item_details[list].push(_data)
-
-		if (!this.entry.item_details) {
-			this.entry.item_details = []
-		}
-		this.entry.item_details.push(_data)
 
 		this.forceUpdate()
 	}
@@ -669,123 +761,150 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.item_details[list] = array
 
-		let entryArray = []
-		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
-			if (this.entry.item_details[i].category !== list) {
-				entryArray.push(this.entry.item_details[i])
-			}
-		}
-		for (let i = 0, ii = this.item_details[list].length; i < ii; ++i){
-			entryArray.push(this.item_details[list][i])
-		}	
-		this.entry.item_details = entryArray
+		this.addEntry.item_details = this.item_details
+		this.props.setReqestData(this.addEntry, 'item_details')
+
 		this.changeTotalAmount()
-		
-		this.forceUpdate()
 	}
+
 	/**
 	 * 請求書内で追加した請求リストの変更処理
 	 */
-	changeInvoiceList(list, _data, _rowindex, _celindex) {
+	changeInvoiceList(list, _data, _rowindex, _celindex, _isEdit) {
 	
-		//変更処理
-		if (_celindex === 'is_taxation') {
-			this.item_details[list][_rowindex][_celindex] = _data ? _data.value : ''
-		} else {
-			this.item_details[list][_rowindex][_celindex] = _data	
-		}
-		
-		//数量,単価,税込/税抜を変更したら金額を変えて、小計,合計請求金額,消費税も変える
-		if (_celindex === 'quantity' || _celindex === 'unit_price' || _celindex === 'is_taxation') {
-			const quantity = this.item_details[list][_rowindex]['quantity']
-			const unit_price = this.item_details[list][_rowindex]['unit_price'].replace(/,/g, '')
-			this.item_details[list][_rowindex]['amount'] = quantity * unit_price
-			//税込なら消費税を足す
-			if (this.item_details[list][_rowindex]['is_taxation'] === '1') {
-				this.item_details[list][_rowindex]['amount'] += Math.floor(this.item_details[list][_rowindex]['amount'] * 0.08)
+		if (_isEdit) {
+
+			this[list][_rowindex][_celindex] = _data
+
+			const target_data = this[list][_rowindex]
+			if (!this.editEntry.id) {
+				const key = this.entry.invoice.invoice_code + '-' + this.entry.invoice.invoice_code_sub
+				this.editEntry.link = [{
+					___href: '/invoice_remarks/' + key + '/' + this.entry.invoice.customer_code,
+					___rel: 'self'
+				}]
 			}
-		}
 
-		let changeArray = []
-		for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
-			if (this.entry.item_details[i].category !== list) {
-				changeArray.push(this.entry.item_details[i])		
-			}
-		}
-
-		this.entry.item_details = changeArray.concat(this.item_details[list])
-		this.changeTotalAmount()
-		
-		this.forceUpdate()
-	}
-
-	createItemArray() {
-		let array = []
-		if (this.serviceItem) {
-			if (this.entry.item_details) {
-				array = this.serviceItem.concat(this.entry.item_details)
+			if (this.editEntry.item_details.length) {
+				let index
+				for (let i = 0, ii = this.editEntry.item_details.length; i < ii; ++i) {
+					const value = this.editEntry.item_details[i]
+					if (value.category === target_data.category
+						&& value.item_name === target_data.item_name
+						&& value.unit === target_data.unit
+					) {
+						index = i
+					}
+				}
+				if (index && index !== 0) {
+					this.editEntry.item_details[index] = target_data
+				} else {
+					this.editEntry.item_details.push(target_data)
+				}
 			} else {
-				array = this.serviceItem
+				this.editEntry.item_details.push(target_data)
 			}
-		} else if (this.entry.item_details){
-			array = this.entry.item_details
-		}
-		return(array)
-	}
-	
-	getSubTotal(allItem){
-		const noTaxList = allItem.filter((entry) => {
-			return entry.is_taxation === '0'
-		})
-		//税抜が１つも無かった
-		if (!(noTaxList.length)) {
-			return ('0')
-		//税抜が１つだけ
-		} else if (noTaxList.length === 1) {
-			return(noTaxList[0].amount)
-		}else{
-			const noTaxTotal = noTaxList.reduce((prev, current) => {
-				return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
-			})
-			return(noTaxTotal.amount)
-		}
-	}
-	getTaxTotal(allItem) {
-		const TaxList = allItem.filter((entry) => {
-			return entry.is_taxation === '1'
-		})
-		//税込が１つも無かった
-		if (!(TaxList.length)) {
-			return '0'
-		//税込が１つだけ
-		} else if (TaxList.length === 1) {
-			return (TaxList[0].amount)
+			this.props.setReqestData(this.editEntry, 'edit')
 		} else {
-			const tax_total = TaxList.reduce((prev, current) => {
-				return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
-			})
-			return (tax_total.amount)
-		}	
-	}
-	
-	changeTotalAmount(){
-		const allItem = this.createItemArray()
-		if (allItem) {
-			//税抜の合計
-			this.sub_total = this.getSubTotal(allItem)
-			//税込の合計
-			this.tax_total = this.getTaxTotal(allItem)
-			//税抜×0.08
-			this.consumption_tax = Math.floor(this.sub_total * 0.08)
-			//合計請求金額
-			this.total_amount = (Number(this.sub_total) + Number(this.consumption_tax) + Number(this.tax_total))
-		} else {
-			this.sub_total = 0
-			this.consumption_tax = 0
-			this.tax_total = 0
-			this.total_amount = 0
+
+			//変更処理
+			this.item_details[list][_rowindex][_celindex] = _data
+
+			//数量,単価を変更したら金額を変えて、小計,合計請求金額,消費税も変える
+			if (_celindex === 'quantity' || _celindex === 'unit_price') {
+				
+				let unit_price
+				let isMinus
+				if (_celindex === 'unit_price') {
+					isMinus = _data && String(_data)[0] === '-'
+					unit_price = isMinus ? '-' + addFigure(_data) : addFigure(_data)
+					this.item_details[list][_rowindex].unit_price = unit_price
+				} else {
+					unit_price = this.item_details[list][_rowindex].unit_price
+					isMinus = unit_price && String(unit_price)[0] === '-'
+				}
+
+				unit_price = isMinus ? unit_price.replace('-', '') : unit_price
+				unit_price = parseInt(delFigure(unit_price))
+
+				const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
+
+				const amount = quantity * unit_price
+				this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
+				
+				//税込なら消費税を足す
+				if (this.item_details[list][_rowindex].is_taxation === '1') {
+					this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
+				}
+				if (this.item_details[list][_rowindex].amount) {
+					this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(this.item_details[list][_rowindex].amount) : addFigure(this.item_details[list][_rowindex].amount)
+				}
+			}
+
+			this.changeTotalAmount()
+			
+			this.addEntry.item_details = this.item_details
+			this.props.setReqestData(this.addEntry, 'item_details')
 		}
+
 		this.forceUpdate()
+	}
+
+	forcusUnitPrice(list, _data, _rowindex) {
+		const isMinus = _data && String(_data)[0] === '-'
+		this.item_details[list][_rowindex].unit_price = isMinus ? '-' + delFigure(_data) : delFigure(_data)
+		this.forceUpdate()
+	}
+
+	changeTotalAmount() {
+
+		let allItem = []
+		this.serviceItem.map((_value) => {
+			allItem.push(_value)
+		})
+		Object.keys(this.item_details).forEach((_key) => {
+			this.item_details[_key].map((_value) => {
+				allItem.push(_value)
+			})
+		})
+		let sub_total = 0
+		let ems_total = 0
+
+		if (allItem.length) {
+
+			allItem.map((_obj) => {
+				const amount = _obj.amount
+				if (amount) {
+					const isMinus = String(amount)[0] === '-'
+					const calculation = (_value, _total) => {
+						if (isMinus) {
+							return parseInt(_value) - _total
+						} else {
+							return parseInt(_value) + _total
+						}
+					}
+					const value = delFigure(_obj.amount)
+					if (_obj.category === 'ems') {
+						ems_total = calculation(value, ems_total)
+					} else {
+						sub_total = calculation(value, sub_total)
+					}
+				}
+			})
+		}
+
+		// 税抜の合計
+		this.sub_total = addFigure(sub_total)
+		// 消費税
+		const consumption_tax = Math.floor(sub_total * 0.08)
+		this.consumption_tax = addFigure(consumption_tax)
+		// EMS・立替金など
+		this.ems_total = addFigure(ems_total)
+		// 合計請求金額
+		this.total_amount = addFigure(sub_total + consumption_tax + ems_total)
+
+		this.forceUpdate()
+
 	}
 
 	/**
@@ -796,10 +915,11 @@ export default class InvoiceForm extends React.Component {
 		if (!this.entry[list]) {
 			this.entry[list] = []
 		}
-		this.entry[list].push(_data)	
+		this.entry[list].push(_data)
 		this.forceUpdate()
 	}
-	/** 
+
+	/**
 	 * 	備考リストの削除
 	 */
 	removeRemarksList(list, _index) {
@@ -810,19 +930,22 @@ export default class InvoiceForm extends React.Component {
 		}
 		this.entry[list] = array
 
+		this.props.setReqestData(this.entry.remarks, 'remarks')
 		this.forceUpdate()
 	}
+
 	/**
 	 *  備考リストの内容変更
 	 */
 	changeRemarks(_data, _rowindex) {
 		this.entry.remarks[_rowindex].content = _data
+		this.props.setReqestData(this.entry.remarks, 'remarks')
 		this.forceUpdate()
 	}
 
 	changeInvoice(_data, _index) {
 		if (_index === 'invoice_yearmonth') {
-			this.entry.invoice[_index] = _data.value
+			this.entry.invoice[_index] = _data ? _data.value : null
 		} else {
 			this.entry.invoice[_index] = _data
 		}
@@ -1061,12 +1184,11 @@ export default class InvoiceForm extends React.Component {
 			})
 		}
 
-		const customer = this.customer ? this.customer.customer : null
+		const customer_code = this.entry.invoice.customer_code
 		const selectInternalWorkYearMonth = this.entry.invoice.working_yearmonth
 
-		if (customer && selectInternalWorkYearMonth) {
+		if (customer_code && selectInternalWorkYearMonth) {
 
-			const customer_code = customer.customer_code
 			const shipping_yearmonth = selectInternalWorkYearMonth.replace(/\//, '')
 			getBillingSummary(customer_code, shipping_yearmonth, 'YH')
 			getBillingSummary(customer_code, shipping_yearmonth, 'ECO')
@@ -1090,7 +1212,9 @@ export default class InvoiceForm extends React.Component {
 				{!this.entry.invoice.invoice_code &&
 					<FormGroup className="hide">
 						<FormControl name="invoice.invoice_code" type="text" value="${_addids}" />
-						<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}" />
+						<FormControl name="invoice.invoice_code_sub" type="text" value="01" />
+						<FormControl name="invoice.issue_status" type="text" value="0" />
+						<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}-01" />
 					</FormGroup>
 				}
 
@@ -1098,30 +1222,56 @@ export default class InvoiceForm extends React.Component {
 				{this.entry.invoice.invoice_code &&
 					<CommonInputText
 						controlLabel="請求番号"
-						name="invoice.invoice_code"
 						type="text"
 						placeholder="請求番号"
-						value={this.entry.invoice.invoice_code}
-						readonly="true"
+						value={this.entry.invoice.invoice_code + ' - ' + this.entry.invoice.invoice_code_sub}
+						readonly
 					/>
 				}
+				{this.entry.invoice.invoice_code &&
+					<CommonInputText
+						controlLabel="発行ステータス"
+						type="text"
+						placeholder="請求番号"
+						value={this.entry.invoice.issue_status === '0' ? '未発行' : '発行済'}
+						readonly
+					/>
+				}
+				{this.entry.invoice.invoice_code &&
+					<FormGroup className="hide">
+						<FormControl name="invoice.invoice_code" type="text" value={this.entry.invoice.invoice_code} />
+						<FormControl name="invoice.invoice_code_sub" type="text" value={this.entry.invoice.invoice_code_sub} />
+						<FormControl name="invoice.issue_status" type="text" value={this.entry.invoice.issue_status} />
+					</FormGroup>
+				}
 				
-				<CommonMonthlySelect
-					controlLabel="請求年月"  
-					name="invoice.invoice_yearmonth"
-					value={this.entry.invoice.invoice_yearmonth}
-					onChange={(data)=>this.changeInvoice(data,'invoice_yearmonth')}
-				/>
-				
+				{ this.isEdit &&
+					<CommonMonthlySelect
+						controlLabel="請求年月"
+						name="invoice.invoice_yearmonth"
+						value={this.entry.invoice.invoice_yearmonth}
+						onChange={(data)=>this.changeInvoice(data,'invoice_yearmonth')}
+					/>
+				}
+				{ !this.isEdit &&
+					<CommonInputText
+						controlLabel="請求年月"
+						name="invoice.invoice_yearmonth"
+						type="text"
+						value={this.entry.invoice.invoice_yearmonth}
+						readonly
+					/>
+				}
+
 				<CommonInputText
 					controlLabel="請求先名"	
 					name='billto.billto_name'							
 					type="text"
 					placeholder="請求先名"
 					value={this.entry.billto.billto_name}
-					readonly='true'
+					readonly
 				/>
-					
+
 				<FormGroup className="hide">
 					<CommonInputText
 						controlLabel="請求先コード"	
@@ -1129,7 +1279,7 @@ export default class InvoiceForm extends React.Component {
 						type="text"
 						placeholder="請求先コード"
 						value={this.entry.billto.billto_code}
-						readonly='true'
+						readonly
 					/>
 				</FormGroup>	
 
@@ -1171,14 +1321,26 @@ export default class InvoiceForm extends React.Component {
 					value={this.entry.creator}
 					readonly='true'
 				/>
-				<CommonFilterBox
-					controlLabel="庫内作業年月"
-					name="invoice.working_yearmonth"
-					value={this.entry.invoice.working_yearmonth}
-					options={this.internalWorkYearMonthList}
-					onChange={(data) => this.changeInternalWorkYearMonth(data)}
-					size='sm'
-				/>
+
+				{ this.isEdit &&
+					<CommonFilterBox
+						controlLabel="庫内作業年月"
+						name="invoice.working_yearmonth"
+						value={this.entry.invoice.working_yearmonth}
+						options={this.internalWorkYearMonthList}
+						onChange={(data) => this.changeInternalWorkYearMonth(data)}
+						size='sm'
+					/>
+				}
+				{ !this.isEdit &&
+					<CommonInputText
+						controlLabel="庫内作業年月"
+						name="invoice.working_yearmonth"
+						value={this.entry.invoice.working_yearmonth}
+						type="text"
+						readonly
+					/>
+				}
 
 				<CommonFilterBox
 					controlLabel="顧客選択"
@@ -1187,535 +1349,552 @@ export default class InvoiceForm extends React.Component {
 					options={this.customerList}
 					onChange={(data) => this.changeCustomer(data)}
 				/>
-						
+
 				<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
 					<Tab eventKey={1} title="請求内容">
-						<PanelGroup defaultActiveKey="1">
-							
-							<Button bsSize="sm" style={{width:'130px'}} >
-								<Glyphicon glyph="download" />CSVダウンロード
-							</Button>
+						{ this.isItemDetailsTable &&
 
-							<br />
-							<br />
-							<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.monthly}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-									}]}
-								/>
+							<PanelGroup defaultActiveKey="1">
 								
+								<Button bsSize="sm" style={{width:'130px'}} >
+									<Glyphicon glyph="download" />CSVダウンロード
+								</Button>
+
 								<br />
 								<br />
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.monthly}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')}	
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('monthly', { category:'monthly',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('monthly', index)}
-									fixed
-									noneScroll
-								/>
-							</Panel>
-								
-							<Panel collapsible header="日次作業情報" eventKey="2" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.daily}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',	
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-									}]}
-								/>
+								<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.monthly}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '50px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '30px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+									
+									<br />
+									<br />
+									<CommonTable
+										data={this.item_details.monthly}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('monthly', { category:'monthly',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('monthly', index) : null}
+										fixed
+									/>
+								</Panel>
 
+								<Panel collapsible header="日次作業情報" eventKey="2" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.daily}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+
+									<br />
+									<br />		
+									<CommonTable
+										data={this.item_details.daily}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('daily',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('daily', { category:'daily',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('daily', index) : null}
+										fixed
+									/>
+								</Panel>
+								
+								<Panel collapsible header="期次作業情報" eventKey="3" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.period}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+
+									<br />
+									<br />
+									
+									<CommonTable
+										data={this.item_details.period}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('period',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('period', { category:'period',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('period', index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<Panel collapsible header="資材情報" eventKey="4" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.packing_item}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+
+									<br />
+									<br />
+									<CommonTable
+										data={this.item_details.packing_item}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('packing_item',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('packing_item', { category:'packing_item',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('packing_item', index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<Panel collapsible header="配送料(出荷)" eventKey="5" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.shipping}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+
+									<br />
+									<br />
+									<CommonTable
+										data={this.item_details.shipping}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('shipping',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('shipping', { category:'shipping',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('shipping', index) : null}
+										fixed
+									/>
+								</Panel>	
+								
+								<Panel collapsible header="配送料(集荷)" eventKey="6" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.collecting}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'remarks',true)}
+											}
+										}]}
+										fixed
+									/>
+									<br />
+									<br />
+									<CommonTable
+										data={this.item_details.collecting}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'item_name') }
+											}
+										}, {
+											field: 'quantity', title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'quantity') },
+												price: true,
+											}
+										}, {
+											field: 'unit', title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'unit') }
+											}
+										}, {
+											field: 'unit_price', title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'unit_price') },
+												onForcus: (data, rowindex) => { this.forcusUnitPrice('collecting', data, rowindex) },
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount', title: '金額', width: '100px',
+										}, {
+											field: 'remarks', title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'remarks') }
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('collecting', { category: 'collecting', item_name: '', quantity: '', unit: '', unit_price: '', amount: '1', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('collecting', index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<Panel collapsible header="その他" eventKey="7" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.item_details.others}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('others',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('others', { category:'others',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('others',index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<Panel collapsible header="EMS・立替金など" eventKey="7" bsStyle="info" defaultExpanded="true">
+									<CommonTable
+										data={this.item_details.ems}
+										header={[{
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'item_name')}
+											}
+										}, {
+											field: 'quantity',title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'quantity')},
+												price:true,
+											}
+										}, {
+											field: 'unit',title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit')}
+											}
+										}, {
+											field: 'unit_price',title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit_price')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('ems',data,rowindex)},
+											},
+										}, {
+											field: 'is_taxation', title: '税込/税抜', width: '50px',
+											convert: this.convert_taxation
+										}, {
+											field: 'amount',title: '金額', width: '100px',
+										}, {
+											field: 'remarks',title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'remarks')}
+											}
+										}]}
+										add={this.isEdit ? () => this.addInvoiceList('ems', { category:'ems',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '1', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('ems',index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<Panel collapsible header="備考" eventKey="8" bsStyle="info" defaultExpanded="true">
+									<CommonTable	
+										name="remarks"
+										data={this.entry.remarks}
+										header={[{
+											field: 'content', title: '備考', 
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
+											}
+										}]}
+										add={this.isEdit ? () => this.addRemarksList('remarks', { content: ''}) : null}
+										remove={this.isEdit ? (data, index) => this.removeRemarksList('remarks', index) : null}
+										fixed
+									/>
+								</Panel>
+
+								<br />
+
+								<CommonInputText
+									controlLabel="小計金額"
+									type="text"
+									value={this.sub_total}
+									readonly
+									className="invoice-total_amount"
+								/>
+								<br/>
+								<br/>
+								<CommonInputText
+									controlLabel="消費税"
+									type="text"
+									value={this.consumption_tax}
+									readonly
+									className="invoice-total_amount"
+								/>
 								<br />
 								<br />		
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.daily}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('daily', { category:'daily',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('daily', index)}
-									fixed
-									noneScroll
+								<CommonInputText
+									controlLabel="EMS・立替金など"
+									type="text"
+									value={this.ems_total}
+									readonly
+									className="invoice-total_amount"
 								/>
-							</Panel>
-							
-							<Panel collapsible header="期次作業情報" eventKey="3" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.period}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位/単位名称', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',	
-									}, {
-										field: 'remarks',title: '備考', width: '500px',	
-									}]}
+								<br/>
+								<br/>
+								<CommonInputText
+									controlLabel="合計請求金額"
+									type="text"
+									value={this.total_amount}
+									readonly='true'
+									className="invoice-total_amount"
 								/>
-
-
 								<br />
 								<br />
-								
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.period}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit')}
-										}
 
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('period', { category:'period',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('period', index)}
-									fixed
-									noneScroll
-								/>
-							</Panel>
+							</PanelGroup>
+						}
 
-							<Panel collapsible header="資材情報" eventKey="4" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.packing_item}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位/単位名称', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',	
-									}, {
-										field: 'remarks',title: '備考', width: '500px',	
-									}]}
-								/>
-
-								<br />
-								<br />
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.packing_item}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('packing_item', { category:'packing_item',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('packing_item', index)}
-									fixed
-								/>
-							</Panel>
-
-							<Panel collapsible header="配送料(出荷)" eventKey="5" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.shipping}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位/単位名称', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',	
-									}, {
-										field: 'remarks',title: '備考', width: '500px',	
-									}]}
-								/>
-
-								<br />
-								<br />
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.shipping}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('shipping', { category:'shipping',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('shipping', index)}
-									fixed
-								/>
-							</Panel>	
-							
-							<Panel collapsible header="配送料(集荷)" eventKey="6" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.collecting}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
-									}, {
-										field: 'quantity', title: '数量', width: '50px',
-									}, {
-										field: 'unit', title: '単位/単位名称', width: '50px',
-									}, {
-										field: 'unit_price', title: '単価', width: '100px',
-									}, {
-										field: 'amount', title: '金額', width: '100px',	
-									}, {
-										field: 'remarks',title: '備考', width: '500px',	
-									}]}
-								/>
-
-								
-								<br />
-								<br />
-								<CommonTable	
-									//name="item_details"
-									data={this.item_details.collecting}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'is_taxation')},	
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('collecting', { category:'collecting',item_name: '', quantity: '', unit: '', unit_price: '',amount:'1', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('collecting', index)}
-									fixed
-								/>
-							</Panel>
-
-							<Panel collapsible header="その他" eventKey="7" bsStyle="info" defaultExpanded="true">
-								<CommonTable
-									//name="item_details"
-									data={this.item_details.others}
-									header={[{
-										field: 'item_name', title: 'ご請求内容(作業内容)', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'item_name')}
-										}
-									}, {
-										field: 'quantity',title: '数量', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'quantity')}
-										}
-									}, {
-										field: 'unit',title: '単位', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit')}
-										}
-									}, {
-										field: 'unit_price',title: '単価', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')},
-											price:true,
-										},
-									}, {
-										field: 'is_taxation',title: '税込/税抜　　 　', width: '30px',
-										filter: {
-											options: this.taxationList,
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'is_taxation')}
-										}
-									}, {
-										field: 'amount',title: '金額', width: '30px',
-									}, {
-										field: 'remarks',title: '備考', width: '30px',
-										input: {
-											onChange: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'remarks')}
-										}
-									}]}
-									add={() => this.addInvoiceList('others', { category:'others',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-									remove={(data, index) => this.removeInvoiceList('others',index)}
-									fixed
-								/>
-							</Panel>
-
-							<Panel collapsible header="備考" eventKey="8" bsStyle="info" defaultExpanded="true">
-								<CommonTable	
-									name="remarks"
-									data={this.entry.remarks}
-									header={[{
-										field: 'content', title: '備考', 
-										input: {
-											onChange: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
-										}
-									}]}
-									add={() => this.addRemarksList('remarks', { content: ''})}
-									remove={(data, index) => this.removeRemarksList('remarks', index)}
-									fixed
-								/>
-							</Panel>
-							
-						</PanelGroup>
-
-						<br />
-
-						<CommonInputText
-							controlLabel="小計金額"
-							type="text"
-							value={this.sub_total}
-							readonly
-							className="invoice-total_amount"
-						/>
-						<br/>
-						<br/>
-						<CommonInputText
-							controlLabel="消費税"
-							type="text"
-							value={this.consumption_tax}
-							readonly
-							className="invoice-total_amount"
-						/>
-						<br />
-						<br />		
-						<CommonInputText
-							controlLabel="EMS・立替金など"
-							type="text"
-							value={this.tax_total}
-							readonly
-							className="invoice-total_amount"
-						/>
-						<br/>
-						<br/>
-						<CommonInputText
-							controlLabel="合計請求金額"
-							type="text"
-							value={this.total_amount}
-							readonly='true'
-							className="invoice-total_amount"
-						/>
-						<br />
-						<br />
-						<FormGroup className='hide'>	
-							<CommonTable	
-								name="item_details"
-								data={this.entry.item_details}
-								header={[{
-									field: 'category',title:'項目',width:'200px',
-								}, {
-									field: 'item_name',title: 'ご請求内容(作業内容)', width: '200px'
-								}, {
-									field: 'quantity',title: '数量', width: '50px'
-								}, {
-									field: 'unit',title: '単位', width: '50px'
-								}, {
-									field: 'unit_price',title: '単価', width: '100px'
-								}, {
-									field: 'remarks',title: '備考', width: '500px'	
-								}]}
-							/>
-						</FormGroup>
 					</Tab>
 					
 					<Tab eventKey={2} title="請求明細(簡易)">
@@ -1728,7 +1907,6 @@ export default class InvoiceForm extends React.Component {
 						
 						<Panel collapsible header="明細CSVダウンロード" eventKey="3" bsStyle="info" defaultExpanded="true">
 							<CommonTable
-							//name="""
 								data={this.deliveryCSV}
 								header={[{
 									field: 'btn1', title: 'CSV', width: '10px',
@@ -1737,7 +1915,6 @@ export default class InvoiceForm extends React.Component {
 								}, {
 									field:'delivery', title:'配送業者',width:'1000px',
 								}]}
-								
 							/>
 						</Panel>
 
@@ -1761,15 +1938,26 @@ export default class InvoiceForm extends React.Component {
 							 番地
 						*/}
 
-						<CommonFilterBox
-							controlLabel="請求元"
-							name="billfrom.billfrom_code"
-							value={this.entry.billfrom.billfrom_code}
-							options={this.billfromList}
-							add={() => this.setState({ showBillfromAddModal: true })}
-							edit={() => this.setState({ showBillfromEditModal: true })}
-							onChange={(data) => this.changeBillfrom(data)}
-						/>		
+						{ this.isEdit &&
+							<CommonFilterBox
+								controlLabel="請求元"
+								name="billfrom.billfrom_code"
+								value={this.entry.billfrom.billfrom_code}
+								options={this.billfromList}
+								add={() => this.setState({ showBillfromAddModal: true })}
+								edit={() => this.setState({ showBillfromEditModal: true })}
+								onChange={(data) => this.changeBillfrom(data)}
+							/>
+						}
+						{ !this.isEdit &&
+							<CommonInputText
+								controlLabel="請求元"
+								name="billfrom.billfrom_code"
+								value={this.entry.billfrom.billfrom_code}
+								type="text"
+								readonly
+							/>
+						}
 						{this.entry.billfrom.billfrom_code &&
 								<CommonInputText
 									controlLabel=" "
@@ -1985,7 +2173,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 					
 					<Tab eventKey={5} title="請求データ(発送)">
-						{this.shippingData &&
+						{(this.shippingData && this.shippingData.billing_compare) === true &&
 							this.shippingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">
@@ -2010,7 +2198,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 
 					<Tab eventKey={6} title="請求データ(集荷)">
-						{this.collectingData &&
+						{(this.collectingData && this.collectingData.billing_compare) === true && 
 							this.collectingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">

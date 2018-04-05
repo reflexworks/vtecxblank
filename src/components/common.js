@@ -1545,6 +1545,8 @@ export function addFigure(numVal) {
 		return ''
 	}
 
+	numVal = '' + numVal
+
 	/**
 	 * 全角から半角への変革関数
 	 * 入力値の英数記号を半角変換して返却
@@ -1908,7 +1910,7 @@ export class CommonTable extends React.Component {
 								name="__tableInput"
 								type="text"
 								value={value}
-								onChange={(data) => input.onChange(data, _index)}
+								onChange={input.onChange ? (data) => input.onChange(data, _index) : null }
 								onBlur={input.onBlur ? (data) => input.onBlur(data, _index) : null }
 								onForcus={input.onForcus ? (data) => input.onForcus(data, _index) : null }
 								entitiykey={entitiykey}
