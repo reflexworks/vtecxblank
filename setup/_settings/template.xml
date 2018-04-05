@@ -139,7 +139,8 @@ invoice
  issue_status
  deposit_status
  payment_date
- customer_code 
+ customer_code
+ invoice_code_sub
 delivery_charge{}
  shipment_service_name
  shipment_service_code

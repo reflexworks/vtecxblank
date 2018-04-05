@@ -82,7 +82,7 @@ export default class InvoiceRegistration extends React.Component {
 	}
 
 	setReqestData(_data, _type) {
-		if (_type === 'item_details') {
+		if (_type === 'item_details' && _data) {
 			const array = []
 			Object.keys(_data.item_details).forEach((_key) => {
 				const list = _data.item_details[_key]
@@ -98,15 +98,16 @@ export default class InvoiceRegistration extends React.Component {
 	callbackRegistrationButton(_res_data) {
 		const rea_data = _res_data.feed.entry[0]
 		const req = { feed: { entry: [] } }
+		const key = rea_data.invoice.invoice_code + '-' + rea_data.invoice.invoice_code_sub
 		const item_details_obj_self = {
 			link: [{
-				___href: '/invoice_details/' + rea_data.invoice.invoice_code,
+				___href: '/invoice_details/' + key,
 				___rel: 'self'
 			}]
 		}
 		const remarks_obj_self = {
 			link: [{
-				___href: '/invoice_remarks/' + rea_data.invoice.invoice_code,
+				___href: '/invoice_remarks/' + key,
 				___rel: 'self'
 			}]
 		}
@@ -115,10 +116,11 @@ export default class InvoiceRegistration extends React.Component {
 
 		if (this.item_details) {
 			this.item_details.invoice = {
-				invoice_code: rea_data.invoice.invoice_code
+				invoice_code: rea_data.invoice.invoice_code,
+				invoice_code_sub: rea_data.invoice.invoice_code_sub
 			}
 			this.item_details.link = [{
-				___href: '/invoice_details/' + rea_data.invoice.invoice_code + '/' + rea_data.invoice.customer_code,
+				___href: '/invoice_details/' + key + '/' + rea_data.invoice.customer_code,
 				___rel: 'self'
 			}]
 			if (this.remarks) {
@@ -129,8 +131,9 @@ export default class InvoiceRegistration extends React.Component {
 		}
 		if (this.edit) {
 			this.edit.invoice.invoice_code = rea_data.invoice.invoice_code
+			this.edit.invoice.invoice_code_sub = rea_data.invoice.invoice_code_sub
 			this.edit.link = [{
-				___href: '/invoice_remarks/' + rea_data.invoice.invoice_code + '/' + rea_data.invoice.customer_code,
+				___href: '/invoice_remarks/' + key + '/' + rea_data.invoice.customer_code,
 				___rel: 'self'
 			}]
 			req.feed.entry.push(this.edit)

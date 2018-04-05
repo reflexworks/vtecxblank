@@ -44,7 +44,6 @@ export default class InvoiceForm extends React.Component {
 			showBillfromEditModal: false,
 			selectCustomer: ''
 		}
-
 		
 		//消費税と合計請求金額
 		this.sub_total = 0
@@ -85,6 +84,8 @@ export default class InvoiceForm extends React.Component {
 
 		this.cashData = {}
 
+		this.isEdit = true
+
 	}
 	
 	componentWillMount() {
@@ -97,6 +98,8 @@ export default class InvoiceForm extends React.Component {
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry
 		if (newProps.entry) {
+
+			this.isEdit = this.entry.invoice.issue_status === '1' ? false : true
 
 			this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
 			if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
@@ -335,6 +338,13 @@ export default class InvoiceForm extends React.Component {
 				this.getInvoiceData(this.entry.invoice.customer_code,this.entry.invoice.working_yearmonth,this.entry.invoice.quotation_code)
 			}
 		} else {
+
+			this.props.setReqestData(null, 'item_details')
+			this.props.setReqestData(null, 'remarks')
+			this.props.setReqestData(null, 'edit')
+
+			this.isItemDetailsTable = false
+
 			this.entry.invoice.customer_code = ''
 			this.customer = {}
 			if (this.props.changeCustomerCode) {
@@ -528,6 +538,13 @@ export default class InvoiceForm extends React.Component {
 			}
 			this.forceUpdate()
 		} else {
+
+			this.props.setReqestData(null, 'item_details')
+			this.props.setReqestData(null, 'remarks')
+			this.props.setReqestData(null, 'edit')
+
+			this.isItemDetailsTable = false
+
 			this.entry.invoice.working_yearmonth = null
 			if(this.props.changeYearmonth){ this.props.changeYearmonth('')}
 		}
@@ -555,6 +572,8 @@ export default class InvoiceForm extends React.Component {
 			},
 			item_details: []
 		}
+		this.props.setReqestData(null, 'item_details')
+		this.props.setReqestData(null, 'remarks')
 		this.props.setReqestData(null, 'edit')
 
 		this.isItemDetailsTable = false
@@ -564,10 +583,19 @@ export default class InvoiceForm extends React.Component {
 			if (count === 2) {
 				this.isItemDetailsTable = true
 				this.changeTotalAmount()
+				this.setState({ isDisabled: false })
 			}
 		}
 		if (this.entry.invoice.invoice_code) {
+
 			const invoice_code = this.entry.invoice.invoice_code
+			const invoice_code_sub = this.entry.invoice.invoice_code_sub
+			const key = invoice_code + '-' + invoice_code_sub
+
+			this.addEntry.link = [{
+				___href: '/invoice_details/' + key + '/' + this.entry.invoice.customer_code,
+				___rel: 'self'
+			}]
 			const get = (_url) => {
 				axios({
 					url: '/d' + _url,
@@ -582,8 +610,6 @@ export default class InvoiceForm extends React.Component {
 					if (_url.indexOf('invoice_details') != -1) {
 						this.item_details = {}
 					}
-
-					this.setState({ isDisabled: false })
 
 					if (response.status !== 204) {
 
@@ -610,7 +636,6 @@ export default class InvoiceForm extends React.Component {
 								if (index || index === 0) {
 									this[category][index].remarks = _item_details.remarks
 								}
-								this.forceUpdate()
 							})
 						}
 
@@ -624,11 +649,12 @@ export default class InvoiceForm extends React.Component {
 					complate()
 				})
 			}
-			get('/invoice_details/' + invoice_code + '?f&customer.customer_code=' + customer_code)
-			get('/invoice_remarks/' + invoice_code + '?f&customer.customer_code=' + customer_code + '&invoice.working_yearmonth=' + selectInternalWorkYearMonth)
+			get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
+			get('/invoice_remarks/' + key + '?f&customer.customer_code=' + customer_code + '&invoice.working_yearmonth=' + selectInternalWorkYearMonth)
 
 		} else {
 			count = 2
+			//console.log(this.entry.billto.billto_code)
 			complate()
 		}
 
@@ -674,8 +700,9 @@ export default class InvoiceForm extends React.Component {
 
 			const target_data = this[list][_rowindex]
 			if (!this.editEntry.id) {
+				const key = this.entry.invoice.invoice_code + '-' + this.entry.invoice.invoice_code_sub
 				this.editEntry.link = [{
-					___href: '/invoice_remarks/' + this.entry.invoice.invoice_code + '/' + this.entry.invoice.customer_code,
+					___href: '/invoice_remarks/' + key + '/' + this.entry.invoice.customer_code,
 					___rel: 'self'
 				}]
 			}
@@ -813,7 +840,8 @@ export default class InvoiceForm extends React.Component {
 		this.entry[list].push(_data)
 		this.forceUpdate()
 	}
-	/** 
+
+	/**
 	 * 	備考リストの削除
 	 */
 	removeRemarksList(list, _index) {
@@ -839,7 +867,7 @@ export default class InvoiceForm extends React.Component {
 
 	changeInvoice(_data, _index) {
 		if (_index === 'invoice_yearmonth') {
-			this.entry.invoice[_index] = _data.value
+			this.entry.invoice[_index] = _data ? _data.value : null
 		} else {
 			this.entry.invoice[_index] = _data
 		}
@@ -1106,7 +1134,9 @@ export default class InvoiceForm extends React.Component {
 				{!this.entry.invoice.invoice_code &&
 					<FormGroup className="hide">
 						<FormControl name="invoice.invoice_code" type="text" value="${_addids}" />
-						<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}" />
+						<FormControl name="invoice.invoice_code_sub" type="text" value="01" />
+						<FormControl name="invoice.issue_status" type="text" value="0" />
+						<FormControl name="link" data-rel="self" type="text" value="/invoice/${_addids}-01" />
 					</FormGroup>
 				}
 
@@ -1114,30 +1144,56 @@ export default class InvoiceForm extends React.Component {
 				{this.entry.invoice.invoice_code &&
 					<CommonInputText
 						controlLabel="請求番号"
-						name="invoice.invoice_code"
 						type="text"
 						placeholder="請求番号"
-						value={this.entry.invoice.invoice_code}
-						readonly="true"
+						value={this.entry.invoice.invoice_code + ' - ' + this.entry.invoice.invoice_code_sub}
+						readonly
 					/>
 				}
+				{this.entry.invoice.invoice_code &&
+					<CommonInputText
+						controlLabel="発行ステータス"
+						type="text"
+						placeholder="請求番号"
+						value={this.entry.invoice.issue_status === '0' ? '未発行' : '発行済'}
+						readonly
+					/>
+				}
+				{this.entry.invoice.invoice_code &&
+					<FormGroup className="hide">
+						<FormControl name="invoice.invoice_code" type="text" value={this.entry.invoice.invoice_code} />
+						<FormControl name="invoice.invoice_code_sub" type="text" value={this.entry.invoice.invoice_code_sub} />
+						<FormControl name="invoice.issue_status" type="text" value={this.entry.invoice.issue_status} />
+					</FormGroup>
+				}
 				
-				<CommonMonthlySelect
-					controlLabel="請求年月"  
-					name="invoice.invoice_yearmonth"
-					value={this.entry.invoice.invoice_yearmonth}
-					onChange={(data)=>this.changeInvoice(data,'invoice_yearmonth')}
-				/>
-				
+				{ this.isEdit &&
+					<CommonMonthlySelect
+						controlLabel="請求年月"
+						name="invoice.invoice_yearmonth"
+						value={this.entry.invoice.invoice_yearmonth}
+						onChange={(data)=>this.changeInvoice(data,'invoice_yearmonth')}
+					/>
+				}
+				{ !this.isEdit &&
+					<CommonInputText
+						controlLabel="請求年月"
+						name="invoice.invoice_yearmonth"
+						type="text"
+						value={this.entry.invoice.invoice_yearmonth}
+						readonly
+					/>
+				}
+
 				<CommonInputText
 					controlLabel="請求先名"	
 					name='billto.billto_name'							
 					type="text"
 					placeholder="請求先名"
 					value={this.entry.billto.billto_name}
-					readonly='true'
+					readonly
 				/>
-					
+
 				<FormGroup className="hide">
 					<CommonInputText
 						controlLabel="請求先コード"	
@@ -1145,7 +1201,7 @@ export default class InvoiceForm extends React.Component {
 						type="text"
 						placeholder="請求先コード"
 						value={this.entry.billto.billto_code}
-						readonly='true'
+						readonly
 					/>
 				</FormGroup>	
 
@@ -1187,14 +1243,26 @@ export default class InvoiceForm extends React.Component {
 					value={this.entry.creator}
 					readonly='true'
 				/>
-				<CommonFilterBox
-					controlLabel="庫内作業年月"
-					name="invoice.working_yearmonth"
-					value={this.entry.invoice.working_yearmonth}
-					options={this.internalWorkYearMonthList}
-					onChange={(data) => this.changeInternalWorkYearMonth(data)}
-					size='sm'
-				/>
+
+				{ this.isEdit &&
+					<CommonFilterBox
+						controlLabel="庫内作業年月"
+						name="invoice.working_yearmonth"
+						value={this.entry.invoice.working_yearmonth}
+						options={this.internalWorkYearMonthList}
+						onChange={(data) => this.changeInternalWorkYearMonth(data)}
+						size='sm'
+					/>
+				}
+				{ !this.isEdit &&
+					<CommonInputText
+						controlLabel="庫内作業年月"
+						name="invoice.working_yearmonth"
+						value={this.entry.invoice.working_yearmonth}
+						type="text"
+						readonly
+					/>
+				}
 
 				<CommonFilterBox
 					controlLabel="顧客選択"
@@ -1232,7 +1300,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '30px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks',true)}
 											}
 										}]}
@@ -1245,23 +1313,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.monthly}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex)},
 											},
@@ -1272,16 +1340,16 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('monthly', { category:'monthly',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('monthly', index)}
+										add={this.isEdit ? () => this.addInvoiceList('monthly', { category:'monthly',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('monthly', index) : null}
 										fixed
 									/>
 								</Panel>
-									
+
 								<Panel collapsible header="日次作業情報" eventKey="2" bsStyle="info" defaultExpanded="true">
 									<CommonTable
 										data={this.daily}
@@ -1297,7 +1365,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'remarks',true)}
 											}
 										}]}
@@ -1310,23 +1378,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.daily}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('daily',data,rowindex)},
 											},
@@ -1337,12 +1405,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('daily', { category:'daily',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('daily', index)}
+										add={this.isEdit ? () => this.addInvoiceList('daily', { category:'daily',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('daily', index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1362,7 +1430,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks',true)}
 											}
 										}]}
@@ -1376,23 +1444,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.period}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('period',data,rowindex)},
 											},
@@ -1403,12 +1471,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('period', { category:'period',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('period', index)}
+										add={this.isEdit ? () => this.addInvoiceList('period', { category:'period',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('period', index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1428,7 +1496,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'remarks',true)}
 											}
 										}]}
@@ -1441,23 +1509,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.packing_item}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('packing_item',data,rowindex)},
 											},
@@ -1468,12 +1536,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('packing_item', { category:'packing_item',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('packing_item', index)}
+										add={this.isEdit ? () => this.addInvoiceList('packing_item', { category:'packing_item',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('packing_item', index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1493,7 +1561,7 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'remarks',true)}
 											}
 										}]}
@@ -1506,23 +1574,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.shipping}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('shipping',data,rowindex)},
 											},
@@ -1533,12 +1601,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('shipping', { category:'shipping',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('shipping', index)}
+										add={this.isEdit ? () => this.addInvoiceList('shipping', { category:'shipping',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('shipping', index) : null}
 										fixed
 									/>
 								</Panel>	
@@ -1558,53 +1626,51 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount', title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'remarks',true)}
 											}
 										}]}
 										fixed
 									/>
-
-									
 									<br />
 									<br />
 									<CommonTable
 										data={this.item_details.collecting}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'item_name')}
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'item_name') }
 											}
 										}, {
-											field: 'quantity',title: '数量', width: '50px',
-											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'quantity')},
-												price:true,
+											field: 'quantity', title: '数量', width: '50px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'quantity') },
+												price: true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
-											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'unit')}
+											field: 'unit', title: '単位', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'unit') }
 											}
 										}, {
-											field: 'unit_price',title: '単価', width: '100px',
-											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'unit_price')},
-												onForcus: (data, rowindex)=>{this.forcusUnitPrice('collecting',data,rowindex)},
+											field: 'unit_price', title: '単価', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'unit_price') },
+												onForcus: (data, rowindex) => { this.forcusUnitPrice('collecting', data, rowindex) },
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
 											convert: this.convert_taxation
 										}, {
-											field: 'amount',title: '金額', width: '100px',
+											field: 'amount', title: '金額', width: '100px',
 										}, {
-											field: 'remarks',title: '備考', width: '200px',
-											input: {
-												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'remarks')}
+											field: 'remarks', title: '備考', width: '200px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'remarks') }
 											}
 										}]}
-										add={() => this.addInvoiceList('collecting', { category:'collecting',item_name: '', quantity: '', unit: '', unit_price: '',amount:'1', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('collecting', index)}
+										add={this.isEdit ? () => this.addInvoiceList('collecting', { category: 'collecting', item_name: '', quantity: '', unit: '', unit_price: '', amount: '1', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('collecting', index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1614,23 +1680,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.others}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('others',data,rowindex)},
 											},
@@ -1641,12 +1707,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('others', { category:'others',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('others',index)}
+										add={this.isEdit ? () => this.addInvoiceList('others', { category:'others',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '0', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('others',index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1656,23 +1722,23 @@ export default class InvoiceForm extends React.Component {
 										data={this.item_details.ems}
 										header={[{
 											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'item_name')}
 											}
 										}, {
 											field: 'quantity',title: '数量', width: '50px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'quantity')},
 												price:true,
 											}
 										}, {
 											field: 'unit',title: '単位', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit')}
 											}
 										}, {
 											field: 'unit_price',title: '単価', width: '100px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit_price')},
 												onForcus: (data, rowindex)=>{this.forcusUnitPrice('ems',data,rowindex)},
 											},
@@ -1683,12 +1749,12 @@ export default class InvoiceForm extends React.Component {
 											field: 'amount',title: '金額', width: '100px',
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'remarks')}
 											}
 										}]}
-										add={() => this.addInvoiceList('ems', { category:'ems',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '1', remarks: '', })}
-										remove={(data, index) => this.removeInvoiceList('ems',index)}
+										add={this.isEdit ? () => this.addInvoiceList('ems', { category:'ems',item_name: '', quantity: '', unit: '', unit_price: '',amount:'', is_taxation: '1', remarks: '', }) : null}
+										remove={this.isEdit ? (data, index) => this.removeInvoiceList('ems',index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1699,12 +1765,12 @@ export default class InvoiceForm extends React.Component {
 										data={this.entry.remarks}
 										header={[{
 											field: 'content', title: '備考', 
-											input: {
+											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
 											}
 										}]}
-										add={() => this.addRemarksList('remarks', { content: ''})}
-										remove={(data, index) => this.removeRemarksList('remarks', index)}
+										add={this.isEdit ? () => this.addRemarksList('remarks', { content: ''}) : null}
+										remove={this.isEdit ? (data, index) => this.removeRemarksList('remarks', index) : null}
 										fixed
 									/>
 								</Panel>
@@ -1763,7 +1829,6 @@ export default class InvoiceForm extends React.Component {
 						
 						<Panel collapsible header="明細CSVダウンロード" eventKey="3" bsStyle="info" defaultExpanded="true">
 							<CommonTable
-							//name="""
 								data={this.deliveryCSV}
 								header={[{
 									field: 'btn1', title: 'CSV', width: '10px',
@@ -1772,7 +1837,6 @@ export default class InvoiceForm extends React.Component {
 								}, {
 									field:'delivery', title:'配送業者',width:'1000px',
 								}]}
-								
 							/>
 						</Panel>
 
@@ -1796,15 +1860,26 @@ export default class InvoiceForm extends React.Component {
 							 番地
 						*/}
 
-						<CommonFilterBox
-							controlLabel="請求元"
-							name="billfrom.billfrom_code"
-							value={this.entry.billfrom.billfrom_code}
-							options={this.billfromList}
-							add={() => this.setState({ showBillfromAddModal: true })}
-							edit={() => this.setState({ showBillfromEditModal: true })}
-							onChange={(data) => this.changeBillfrom(data)}
-						/>		
+						{ this.isEdit &&
+							<CommonFilterBox
+								controlLabel="請求元"
+								name="billfrom.billfrom_code"
+								value={this.entry.billfrom.billfrom_code}
+								options={this.billfromList}
+								add={() => this.setState({ showBillfromAddModal: true })}
+								edit={() => this.setState({ showBillfromEditModal: true })}
+								onChange={(data) => this.changeBillfrom(data)}
+							/>
+						}
+						{ !this.isEdit &&
+							<CommonInputText
+								controlLabel="請求元"
+								name="billfrom.billfrom_code"
+								value={this.entry.billfrom.billfrom_code}
+								type="text"
+								readonly
+							/>
+						}
 						{this.entry.billfrom.billfrom_code &&
 								<CommonInputText
 									controlLabel=" "
