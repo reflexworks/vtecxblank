@@ -76,7 +76,11 @@ export function getAuthList(_role) {
 
 				InternalWorkRegistration: true,
 				InternalWorkUpdate: true,
-				InternalWorkList: true
+				InternalWorkList: true,
+
+				InvoiceRegistration: true,
+				InvoiceList: true,
+				InvoiceUpdate: true,
 			}
 
 		}
@@ -130,6 +134,7 @@ export function getAuthList(_role) {
 				QuotationUpdate: true,
 
 				InvoiceList: true,
+				InvoiceRegistration: true,
 				InvoiceUpdate: true,
 			}
 		}
