@@ -586,6 +586,29 @@ export default class InvoiceForm extends React.Component {
 				this.setState({ isDisabled: false })
 			}
 		}
+		const setAddEntry = () => {
+			this.item_details = {}
+			for (let i = 0; i < this.addEntry.item_details.length; ++i) {
+				const details = this.addEntry.item_details[i]
+				const category = details.category
+				if (!this.item_details[category]) {
+					this.item_details[category] = []
+				}
+				this.item_details[category].push(details)
+			}
+		}
+		const setEditEntry = () => {
+			this.editEntry.item_details.map((_item_details) => {
+				const category = _item_details.category
+				const item_name = _item_details.item_name
+				const unit = _item_details.unit
+				const key = this.getKey(category, item_name, unit)
+				const index = this.cashData[key]
+				if (index || index === 0) {
+					this[category][index].remarks = _item_details.remarks
+				}
+			})
+		}
 		if (this.entry.invoice.invoice_code) {
 
 			const invoice_code = this.entry.invoice.invoice_code
@@ -593,7 +616,7 @@ export default class InvoiceForm extends React.Component {
 			const key = invoice_code + '-' + invoice_code_sub
 
 			this.addEntry.link = [{
-				___href: '/invoice_details/' + key + '/' + this.entry.invoice.customer_code,
+				___href: '/invoice_details/' + key + '/' + customer_code,
 				___rel: 'self'
 			}]
 			const get = (_url) => {
@@ -607,36 +630,17 @@ export default class InvoiceForm extends React.Component {
 
 					count++
 
-					if (_url.indexOf('invoice_details') != -1) {
-						this.item_details = {}
-					}
+					if (_url.indexOf('invoice_details') != -1) this.item_details = {}
 
 					if (response.status !== 204) {
 
 						if (_url.indexOf('invoice_details') != -1) {
 							this.addEntry = response.data.feed.entry[0]
-							this.item_details = {}
-							for (let i = 0; i < this.addEntry.item_details.length; ++i) {
-								const details = this.addEntry.item_details[i]
-								const category = details.category
-								if (!this.item_details[category]) {
-									this.item_details[category] = []
-								}
-								this.item_details[category].push(details)
-							}
+							setAddEntry()
 						}
 						if (_url.indexOf('invoice_remarks') != -1) {
 							this.editEntry = response.data.feed.entry[0]
-							this.editEntry.item_details.map((_item_details) => {
-								const category = _item_details.category
-								const item_name = _item_details.item_name
-								const unit = _item_details.unit
-								const key = this.getKey(category, item_name, unit)
-								const index = this.cashData[key]
-								if (index || index === 0) {
-									this[category][index].remarks = _item_details.remarks
-								}
-							})
+							setEditEntry()
 						}
 
 					}
@@ -653,9 +657,83 @@ export default class InvoiceForm extends React.Component {
 			get('/invoice_remarks/' + key + '?f&customer.customer_code=' + customer_code + '&invoice.working_yearmonth=' + selectInternalWorkYearMonth)
 
 		} else {
-			count = 2
-			//console.log(this.entry.billto.billto_code)
-			complate()
+
+			// 前月の発行済みの請求書情報を取得
+			const getBeforInvoice = () => {
+				axios({
+					url: '/d/invoice?f&billto.billto_code=' + this.entry.billto.billto_code + '&invoice.issue_status=' + 1,
+					method: 'get',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then((response) => {
+					if (response.status === 204) {
+						count = 2
+						complate()
+					} else {
+						const datas = response.data.feed.entry
+						let befor_code = 0
+						let befor_sub_code = 0
+						let befor_entry
+						datas.map((_entry) => {
+							const _invoice_code = parseInt(_entry.invoice.invoice_code)
+							const _invoice_code_sub = parseInt(_entry.invoice.invoice_code_sub)
+							if (befor_code < _invoice_code) {
+								befor_code = _invoice_code
+								befor_sub_code = 0
+								befor_entry = _entry
+							} else if (befor_code === _invoice_code && befor_sub_code < _invoice_code_sub) {
+								befor_sub_code = _invoice_code_sub
+								befor_entry = _entry
+							}
+						})
+
+						const invoice_code = befor_entry.invoice.invoice_code
+						const invoice_code_sub = befor_entry.invoice.invoice_code_sub
+						const key = invoice_code + '-' + invoice_code_sub
+						const get = (_url) => {
+							this.item_details = {}
+							axios({
+								url: '/d' + _url,
+								method: 'get',
+								headers: {
+									'X-Requested-With': 'XMLHttpRequest'
+								}
+							}).then((response) => {
+
+								if (response.status !== 204) {
+
+									let befor_details = {}
+									Object.keys(response.data.feed.entry[0]).forEach((_key) => {
+										if (_key !== 'link' && _key !== 'id' && _key !== 'author') {
+											befor_details[_key] = response.data.feed.entry[0][_key]
+										}
+									})
+									this.addEntry = befor_details
+									setAddEntry()
+									this.addEntry.item_details = this.item_details
+									this.props.setReqestData(this.addEntry, 'item_details')
+
+								}
+								count = 2
+								complate()
+
+							}).catch((error) => {
+								this.setState({ isDisabled: false, isError: error })
+								count = 2
+								complate()
+							})
+						}
+						get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
+					}
+
+				}).catch((error) => {
+					count = 2
+					complate()
+					this.setState({ isDisabled: false, isError: error })
+				})
+			}
+			getBeforInvoice()
 		}
 
 	}
