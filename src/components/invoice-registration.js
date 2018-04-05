@@ -47,8 +47,8 @@ export default class InvoiceRegistration extends React.Component {
 			remarks:[],
 			creator: CommonLoginUser().get().staff_name
 		}
-		this.item_details = []
-		this.edit = []
+		this.item_details = null
+		this.edit = null
 	}
  
 	componentWillMount() {
@@ -115,28 +115,30 @@ export default class InvoiceRegistration extends React.Component {
 		req.feed.entry.push(remarks_obj_self)
 
 		if (this.item_details) {
-			this.item_details.invoice = {
+			let item_details = JSON.parse(JSON.stringify(this.item_details))
+			item_details.invoice = {
 				invoice_code: rea_data.invoice.invoice_code,
 				invoice_code_sub: rea_data.invoice.invoice_code_sub
 			}
-			this.item_details.link = [{
+			item_details.link = [{
 				___href: '/invoice_details/' + key + '/' + rea_data.invoice.customer_code,
 				___rel: 'self'
 			}]
 			if (this.remarks) {
-				this.item_details.remarks
+				item_details.remarks
 			}
 
-			req.feed.entry.push(this.item_details)
+			req.feed.entry.push(item_details)
 		}
 		if (this.edit) {
-			this.edit.invoice.invoice_code = rea_data.invoice.invoice_code
-			this.edit.invoice.invoice_code_sub = rea_data.invoice.invoice_code_sub
-			this.edit.link = [{
+			let edit = JSON.parse(JSON.stringify(this.edit))
+			edit.invoice.invoice_code = rea_data.invoice.invoice_code
+			edit.invoice.invoice_code_sub = rea_data.invoice.invoice_code_sub
+			edit.link = [{
 				___href: '/invoice_remarks/' + key + '/' + rea_data.invoice.customer_code,
 				___rel: 'self'
 			}]
-			req.feed.entry.push(this.edit)
+			req.feed.entry.push(edit)
 		}
 		if (req.feed.entry.length) {
 			this.doAfterPost(req)
