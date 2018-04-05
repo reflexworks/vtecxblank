@@ -90,7 +90,8 @@ export default class InvoiceList extends React.Component {
 	onSelect(_data) {
 		// 入力画面に遷移
 		const invoice_code = _data.invoice.invoice_code
-		this.props.history.push('/InvoiceUpdate?' + invoice_code)
+		const invoice_code_sub = _data.invoice.invoice_code_sub
+		this.props.history.push('/InvoiceUpdate?' + invoice_code + '-' + invoice_code_sub)
 	}
 
 	/**
@@ -172,7 +173,13 @@ export default class InvoiceList extends React.Component {
 								controlLabel="請求番号"
 								name="invoice.invoice_code"
 								type="text"
-								placeholder="請求番号"
+								placeholder="0000001"
+							/>
+							<CommonInputText
+								controlLabel="枝番"
+								name="invoice.invoice_code_sub"
+								type="text"
+								placeholder="01"
 							/>
 							<CommonMonthlySelect
     							controlLabel="請求年月"  
@@ -181,16 +188,14 @@ export default class InvoiceList extends React.Component {
 							/>
 							<CommonInputText
 								controlLabel="請求先名"
-								name="invoice.invoice_name"
+								name="billto.billto_name"
 								type="text"
 								placeholder="株式会社 ◯◯◯"
 							/>
-
 							<CommonDatePicker
 								controlLabel="支払日"
 								name="invoice.payment_date"
 							/>
-
 							<CommonRadioBtn
 								controlLabel="入金ステータス"
 								name="invoice.deposit_status"
@@ -202,10 +207,9 @@ export default class InvoiceList extends React.Component {
 									value: '1',
 								}]}
 							/>
-							
 							<CommonRadioBtn
 								controlLabel="発行ステータス"
-								name="issue.status"
+								name="invoice.issue_status"
 								data={[{
 									label: '全て',
 									value: ''
@@ -217,7 +221,6 @@ export default class InvoiceList extends React.Component {
 									value: '1'
 								}]}
 							/>
-
 							<CommonInputText
 								controlLabel="作成者"
 								name="creator"
@@ -246,13 +249,15 @@ export default class InvoiceList extends React.Component {
 							header={[{
 								field: 'invoice.invoice_code', title: '請求番号', width: '100px'
 							}, {
-								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '200px'
+								field: 'invoice.invoice_code_sub', title: '枝番', width: '50px'
 							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '200px'
+								field: 'invoice.invoice_yearmonth', title: '請求年月', width: '100px'
 							}, {
-								field: 'invoice.payment_date', title: '支払日', width: '200px'
+								field: 'billto.billto_name', title: '請求先名', width: '300px'
 							}, {
-								field: 'invoice.deposit_status', title: '入金ステータス', width: '200px', convert: { 0: '未入金', 1: '入金済' }
+								field: 'invoice.payment_date', title: '支払日', width: '100px'
+							}, {
+								field: 'invoice.deposit_status', title: '入金ステータス', width: '100px', convert: { 0: '未入金', 1: '入金済' }
 							}, {
 								field: 'invoice.issue_status', title: '発行ステータス', width: '150px', convert: { 0: '未発行', 1: '発行済' }
 							}, {
