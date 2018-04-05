@@ -82,7 +82,7 @@ export default class InvoiceRegistration extends React.Component {
 	}
 
 	setReqestData(_data, _type) {
-		if (_type === 'item_details') {
+		if (_type === 'item_details' && _data) {
 			const array = []
 			Object.keys(_data.item_details).forEach((_key) => {
 				const list = _data.item_details[_key]

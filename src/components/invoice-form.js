@@ -84,6 +84,8 @@ export default class InvoiceForm extends React.Component {
 
 		this.cashData = {}
 
+		this.isEdit = true
+
 	}
 	
 	componentWillMount() {
@@ -97,7 +99,7 @@ export default class InvoiceForm extends React.Component {
 		this.entry = newProps.entry
 		if (newProps.entry) {
 
-			this.isEdit = this.entry.invoice.issue_status === '0' ? true : false
+			this.isEdit = this.entry.invoice.issue_status === '1' ? false : true
 
 			this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
 			if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
@@ -581,6 +583,7 @@ export default class InvoiceForm extends React.Component {
 			if (count === 2) {
 				this.isItemDetailsTable = true
 				this.changeTotalAmount()
+				this.setState({ isDisabled: false })
 			}
 		}
 		if (this.entry.invoice.invoice_code) {
@@ -608,8 +611,6 @@ export default class InvoiceForm extends React.Component {
 						this.item_details = {}
 					}
 
-					this.setState({ isDisabled: false })
-
 					if (response.status !== 204) {
 
 						if (_url.indexOf('invoice_details') != -1) {
@@ -635,7 +636,6 @@ export default class InvoiceForm extends React.Component {
 								if (index || index === 0) {
 									this[category][index].remarks = _item_details.remarks
 								}
-								this.forceUpdate()
 							})
 						}
 
@@ -654,6 +654,7 @@ export default class InvoiceForm extends React.Component {
 
 		} else {
 			count = 2
+			//console.log(this.entry.billto.billto_code)
 			complate()
 		}
 
