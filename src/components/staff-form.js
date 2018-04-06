@@ -125,13 +125,21 @@ export default class StaffForm extends React.Component {
 		this.forceUpdate()
 	}
 
+	changedValue(_key, _value) {
+		this.entry.staff[_key] = _value
+	}
+
 	/**
 	 * パスワード変更処理
 	 * @param {*} value 
 	 * @param {*} flg 
 	 */
 	changedPassword(value, flg) {
-		console.log(value, flg)
+		if (flg) {
+			this.entry.staff.password = value
+		} else {
+			this.entry.staff.password = null
+		}
 	}
 
 	render() {
@@ -144,10 +152,12 @@ export default class StaffForm extends React.Component {
 
 					<Panel collapsible header="担当者情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 
-						<div className="hide">
-							<FormControl name="link" data-rel="self" type="text" value="/staff/${staff.staff_email}" />
-							<FormControl name="staff.uid" type="text" value={this.entry.staff.uid ? this.entry.staff.uid : '${_addids}'} />
-						</div>
+						{ this.entry.id && 
+							<div className="hide">
+								<FormControl name="staff.uid" type="text" value={this.entry.staff.uid} />
+								<FormControl name="staff.password" type="text" value={this.entry.staff.password} />
+							</div>
+						}
 
 						<CommonInputText
 							controlLabel="担当者名"
@@ -155,8 +165,7 @@ export default class StaffForm extends React.Component {
 							type="text"
 							placeholder="担当者名"
 							value={this.entry.staff.staff_name}
-							validate="string"
-							required
+							onChange={(value) => this.changedValue('staff_name', value)}
 						/>	
 						
 						<CommonFilterBox
@@ -189,9 +198,10 @@ export default class StaffForm extends React.Component {
 							type="email"
 							placeholder="logioffice@gmail.com"
 							value={this.entry.staff.staff_email}
+							onChange={(value) => this.changedValue('staff_email', value)}
 						/>
 
-						{ !this.entry.staff.uid && 
+						{ !this.entry.id && 
 							<CommonPassword
 								name="staff.password"
 								type="password"
