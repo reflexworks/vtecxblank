@@ -143,7 +143,7 @@ export default class InternalWorkList extends React.Component {
 
     						<CommonMonthlySelect
     							controlLabel="作業年月"
-    							name="internal_work.working_date"
+    							name="internal_work.working_yearmonth"
     						/>
 
     						<CommonInputText
