@@ -42,6 +42,9 @@ if (isList) {
 		const type = _internal_work.work_type
 		let key = _internal_work.work_type
 		if (type === '0' || type === '4' || type === '5') {
+			if (type === '5') {
+				key += _internal_work.period
+			}
 			key += _internal_work.item_details_name
 			key += _internal_work.item_details_unit_name
 			key += _internal_work.item_details_unit
@@ -69,6 +72,7 @@ if (isList) {
 					key += '4'
 				} else if (_obj.unit_name && _obj.unit_name.indexOf('期') !== -1) {
 					key += '5'
+					key += _obj.period
 				} else {
 					key += '0'
 				}
@@ -148,7 +152,7 @@ if (isList) {
 			if (cash[key]) {
 				list.feed.entry[i] = cash[key]
 			} else {
-				if (type !== '4') {
+				if (type !== '4' && type !== '5') {
 					list.feed.entry[i].id = null
 					list.feed.entry[i].link = null
 				}
