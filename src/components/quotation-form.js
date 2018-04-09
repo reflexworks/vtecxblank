@@ -90,6 +90,20 @@ export default class QuotationForm extends React.Component {
 		if (this.befor) {
 			this.setBeforQuotation()
 		}
+
+		if (this.entry.item_details && this.entry.item_details.length) {
+			let array = { unit: [], remarks: [] }
+			const options = (_value) => {
+				return _value && _value !== '' ? [{value: _value, label: _value}] : []
+			}
+			for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
+				const item_details = this.entry.item_details[i]
+				array.unit[i] = options(item_details.unit)
+				array.remarks[i] = options(item_details.remarks)
+			}
+			this.typeList[2] = array.unit
+			this.typeList[4] = array.remarks
+		}
 		
 		this.setBillfromMasterData()
 	}
@@ -264,6 +278,8 @@ export default class QuotationForm extends React.Component {
 
 		this.setState({ isDisabled: true })
 
+		this.cashTypeAhead = {}
+
 		axios({
 			url: '/d/type_ahead?f',
 			method: 'get',
@@ -277,12 +293,19 @@ export default class QuotationForm extends React.Component {
 				this.master.typeList = response.data.feed.entry
 				response.data.feed.entry.map((obj) => {
 					const type = parseInt(obj.type_ahead.type)
-					const res = {
-						label: obj.type_ahead.value,
-						value: obj.type_ahead.value,
+					if (type !== 2 && type !== 4) {
+						const res = {
+							label: obj.type_ahead.value,
+							value: obj.type_ahead.value,
+						}
+						this.typeList[type].push(res)
+						this.originTypeList[type].push(res)
+
+						if (!this.cashTypeAhead[type]) this.cashTypeAhead[type] = {}
+						if (!obj.type_aheads) obj.type_aheads = []
+						this.cashTypeAhead[type][obj.type_ahead.value] = obj
 					}
-					this.typeList[type].push(res)
-					this.originTypeList[type].push(res)
+
 					return obj
 				})
 
@@ -291,34 +314,188 @@ export default class QuotationForm extends React.Component {
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
-		})   
+		})
+
+	}
+
+	clickTypeahead(_celIndex, _rowindex) {
+
+		let itemName
+		if (_celIndex === 0) itemName = 'item_name'
+		if (_celIndex === 1) itemName = 'unit_name'
+		if (_celIndex === 2) itemName = 'unit'
+		if (_celIndex === 3) itemName = 'unit_price'
+		if (_celIndex === 4) itemName = 'remarks'
+
+		const targetRowData = this.entry.item_details[_rowindex]
+		const targetValue = targetRowData[itemName]
+
+		// 自身に値がない場合
+		if (!targetValue || targetValue === '') return false 
+
+		let isPut = true
+
+		let item_name = targetRowData.item_name
+		let unit = targetRowData.unit
+		let remarks = targetRowData.remarks
+
+		if (itemName === 'item_name') item_name = targetValue
+		if (itemName === 'unit') unit = targetValue
+		if (itemName === 'remarks') remarks = targetValue
+
+		if (item_name && Object.prototype.toString.call(item_name) === '[object Object]') {
+			item_name = item_name.props.children
+		}
+
+		const cashData = this.cashTypeAhead[0][item_name]
+
+		if (cashData) {
+			// 「単位」「備考」に値がある場合は、
+			// 「項目」に紐付いてるかチェックする
+			let isUnit = unit ? false : true
+			let isRemarks = remarks ? false : true
+			cashData.type_aheads.map((_obj) => {
+				if (unit && _obj.type === '2' && _obj.value === unit) {
+					isUnit = true
+				}
+				if (remarks && _obj.type === '4' && _obj.value === remarks) {
+					isRemarks = true
+				}
+			})
+			if (isUnit && isRemarks) {
+				isPut = false
+			}
+			if (unit && !isUnit) {
+				cashData.type_aheads.push({
+					value: unit,
+					type: '2'
+				})
+			}
+			if (remarks && !isRemarks) {
+				cashData.type_aheads.push({
+					value: remarks,
+					type: '4'
+				})
+			}
+
+			// 自身に紐付かれていなかったら紐付けてput処理する
+			if (isPut) {
+				this.cashTypeAhead[0][item_name] = cashData
+				this.putTypeList(item_name, _rowindex)
+			} else {
+				if (itemName === 'unit' || itemName === 'remarks') {
+					this.setTypeList(cashData, _rowindex)
+					this.forceUpdate()
+				}
+			}
+
+		}
+
+	}
+
+	putTypeList(_item_name, _rowindex) {
+
+		this.setTypeList(this.cashTypeAhead[0][_item_name], _rowindex)
+		const feed = {
+			feed: {
+				entry: [this.cashTypeAhead[0][_item_name]]
+			}
+		}
+		this.setState({ isDisabled: true })
+		axios({
+			url: '/d/',
+			method: 'put',
+			data: feed,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+			const ids = this.cashTypeAhead[0][_item_name].id.split(',')
+			const rev = parseInt(ids[1]) + 1
+			this.cashTypeAhead[0][_item_name].id = ids[0] + ',' + rev
+			this.setState({ isDisabled: false })
+		}).catch((error) => {
+			this.setState({ isDisabled: false, isError: error })
+		})
+	}
+
+	setTypeList(_cashData, _rowindex) {
+		let array = {
+			unit: [],
+			remarks: []
+		}
+		if (this.typeList[2] && this.typeList[2][_rowindex]) {
+			array.unit = JSON.parse(JSON.stringify(this.typeList[2][_rowindex]))
+			array.remarks = JSON.parse(JSON.stringify(this.typeList[4][_rowindex]))
+		}
+		array.unit = []
+		array.remarks = []
+		_cashData.type_aheads.map((_obj) => {
+			const type = parseInt(_obj.type)
+			let type_name
+			if (type === 2) {
+				type_name = 'unit'
+			} else if (type === 4) {
+				type_name = 'remarks'
+			}
+			array[type_name].push({
+				value: _obj.value,
+				label: _obj.value
+			})
+		})
+		this.typeList[2][_rowindex] = JSON.parse(JSON.stringify(array.unit))
+		this.originTypeList[2][_rowindex] = JSON.parse(JSON.stringify(array.unit))
+		this.typeList[4][_rowindex] = JSON.parse(JSON.stringify(array.remarks))
+		this.originTypeList[4][_rowindex] = JSON.parse(JSON.stringify(array.remarks))
 	}
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
 		if (_celIndex !== 3) {
-			if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
-				this.originTypeList[_celIndex].push(_data)
-				const feed = {
-					feed: {
-						entry: [{
-							type_ahead: {
-								type: '' + _celIndex,
-								value: _data.value
-							}
-						}]
+			if (_celIndex === 2 || _celIndex === 4) {
+				if (!this.typeList[_celIndex][_rowindex] || this.typeList[_celIndex][_rowindex].length !== this.originTypeList[_celIndex][_rowindex].length) {
+					const item_name = this.entry.item_details[_rowindex].item_name
+					if (item_name) {
+						this.cashTypeAhead[0][item_name].type_aheads.push({
+							value: _data.value,
+							type: '' + _celIndex
+						})
+						this.putTypeList(item_name, _rowindex)
+
+					} else {
+						alert('項目を選択してください。')
+						if (this.typeList[_celIndex]) {
+							this.typeList[_celIndex][_rowindex] = []
+							this.originTypeList[_celIndex][_rowindex] = []
+						}
+						this.forceUpdate()
+						return false
 					}
 				}
-				axios({
-					url: '/d/type_ahead',
-					method: 'post',
-					data: feed,
-					headers: {
-						'X-Requested-With': 'XMLHttpRequest'
+			} else {
+				if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
+					this.originTypeList[_celIndex].push(_data)
+					const feed = {
+						feed: {
+							entry: [{
+								type_ahead: {
+									type: '' + _celIndex,
+									value: _data.value
+								}
+							}]
+						}
 					}
-				}).then(() => {
-				}).catch((error) => {
-					this.setState({ isDisabled: false, isError: error })
-				})
+					axios({
+						url: '/d/type_ahead',
+						method: 'post',
+						data: feed,
+						headers: {
+							'X-Requested-With': 'XMLHttpRequest'
+						}
+					}).then(() => {
+					}).catch((error) => {
+						this.setState({ isDisabled: false, isError: error })
+					})
+				}
 			}
 		}
 
@@ -330,6 +507,14 @@ export default class QuotationForm extends React.Component {
 		if (_celIndex === 4) itemName = 'remarks'
 		if (itemName) {
 			if (itemName === 'item_name' || itemName === 'unit_name' || itemName === 'unit') {
+
+				if (itemName === 'item_name') {
+					this.setTypeList(this.cashTypeAhead[0][_data.value], _rowindex)
+					if (_data.value !== this.entry.item_details[_rowindex].item_name) {
+						this.entry.item_details[_rowindex].unit = null
+						this.entry.item_details[_rowindex].remarks = null
+					}
+				}
 
 				// 明細項目の項目名と単位名称が一致しているものは登録させない処理
 				const target = this.entry.item_details[_rowindex]
@@ -369,6 +554,7 @@ export default class QuotationForm extends React.Component {
 				} else {
 					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 				}
+
 			} else {
 				if (_celIndex === 3) {
 					this.entry.item_details[_rowindex][itemName] = _data ? _data : null
@@ -583,7 +769,8 @@ export default class QuotationForm extends React.Component {
 									field: 'item_name', title: '項目', width: '250px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 0, rowindex)}
+										onChange: (data, rowindex) => { this.changeTypeahead(data, 0, rowindex) },
+										onClick: (rowindex) => { this.clickTypeahead(0, rowindex) }
 									}
 								}, {
 									field: 'unit_name',title: '単位名称', width: '250px',
@@ -595,7 +782,9 @@ export default class QuotationForm extends React.Component {
 									field: 'unit',title: '単位', width: '100px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[2],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)}
+										isRow: true,
+										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)},
+										onClick: (rowindex) => { this.clickTypeahead(2, rowindex) }
 									}
 								}, {
 									field: 'unit_price',title: '単価', width: '100px',
@@ -607,7 +796,9 @@ export default class QuotationForm extends React.Component {
 									field: 'remarks',title: '備考', width: '200px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[4],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)}
+										isRow: true,
+										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)},
+										onClick: (rowindex) => { this.clickTypeahead(4, rowindex) }
 									}
 								}]}
 								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
