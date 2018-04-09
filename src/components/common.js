@@ -1893,16 +1893,19 @@ export class CommonTable extends React.Component {
 
 				if (!isDom) {
 					if (filter) {
+						const options = filter.isRow === true ? filter.options[_index] : filter.options
 						return (
-							<CommonFilterBox
-								name="__tableFilter"
-								value={value}
-								options={filter.options}
-								onChange={(data) => filter.onChange(data, _index)}
-								creatable
-								entitiykey={entitiykey}
-								table
-							/>
+							<div onClick={filter.onClick ? () => filter.onClick(_index) : null}>
+								<CommonFilterBox
+									name="__tableFilter"
+									value={value}
+									options={options}
+									onChange={(data) => filter.onChange(data, _index)}
+									creatable
+									entitiykey={entitiykey}
+									table
+								/>
+							</div>
 						)
 					} else if (input) {
 						return (

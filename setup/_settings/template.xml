@@ -237,6 +237,9 @@ billing_compare{}
   internal_work_quantity
   billing_quantity
   billing_amount
+type_aheads{}
+ type
+ value
 </content>
 <rights>
 billto.billto_code:/quotation|/customer
