@@ -65,7 +65,6 @@ export default class StaffUpdate extends React.Component {
 				this.setState({ isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
-				
 				this.forceUpdate()
 			}
 
@@ -78,6 +77,7 @@ export default class StaffUpdate extends React.Component {
 	 * 更新完了後の処理
 	 */
 	callbackButton() {
+		location.reload()
 	}
 
 	/**
@@ -85,10 +85,9 @@ export default class StaffUpdate extends React.Component {
 	 */
 	callbackDeleteButton() {
 		alert('削除が完了しました。')
-		location.href = this.backUrl
+		location.reload()
 	}
 
-	
 	render() {
 		return (
 			<Grid>
