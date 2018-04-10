@@ -447,7 +447,7 @@ export default class InternalWorkForm extends React.Component {
 		}
 		const setFullMouthDays = () => {
 			let array = []
-			this.this_end = getMonthDays(this.befor_year, this.befor_month)
+			this.this_end = getMonthDays(this.year, this.month)
 			for (let i = 1, ii = this.this_end; i < ii; ++i) {
 				const day = (i < 10 ? '0' + i : i)
 				array.push({

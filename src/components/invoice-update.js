@@ -100,12 +100,22 @@ export default class InvoiceUpdate extends React.Component {
 	}
 
 	setAfterData() {
-		const req = { feed:{entry:[]}}	
+
+		const req = { feed: { entry: [] } }
+
+		let item_details
 		if (this.item_details) {
-			if (this.remarks) {
-				this.item_details.remarks = this.remarks
+			item_details = this.item_details
+		}
+		if (this.remarks) {
+			if (item_details) {
+				item_details.remarks = this.remarks.remarks
+			} else {
+				item_details = this.remarks
 			}
-			req.feed.entry.push(this.item_details)
+		}
+		if (item_details) {
+			req.feed.entry.push(item_details)
 		}
 		if (this.edit) {
 			req.feed.entry.push(this.edit)
