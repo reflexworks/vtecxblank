@@ -41,6 +41,10 @@ export default class CustomerRegistration extends React.Component {
 		location.href = '#/CustomerList'
 	}
 
+	clear() {
+		console.log('clear')
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -55,7 +59,7 @@ export default class CustomerRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
