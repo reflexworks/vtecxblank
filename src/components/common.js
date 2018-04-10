@@ -951,6 +951,9 @@ export class CommonClearBtn extends React.Component {
 	 */
 	action(e: InputEvent) {
 		e.preventDefault()
+		if (this.props.callback) {
+			this.props.callback()
+		}
 	}
 
 	render() {
