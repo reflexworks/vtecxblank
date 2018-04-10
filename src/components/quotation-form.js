@@ -92,15 +92,17 @@ export default class QuotationForm extends React.Component {
 		}
 
 		if (this.entry.item_details && this.entry.item_details.length) {
-			let array = { unit: [], remarks: [] }
+			let array = { unit_name: [], unit: [], remarks: [] }
 			const options = (_value) => {
 				return _value && _value !== '' ? [{value: _value, label: _value}] : []
 			}
 			for (let i = 0, ii = this.entry.item_details.length; i < ii; ++i) {
 				const item_details = this.entry.item_details[i]
+				array.unit_name[i] = options(item_details.unit_name)
 				array.unit[i] = options(item_details.unit)
 				array.remarks[i] = options(item_details.remarks)
 			}
+			this.typeList[1] = array.unit_name
 			this.typeList[2] = array.unit
 			this.typeList[4] = array.remarks
 		}
@@ -293,7 +295,7 @@ export default class QuotationForm extends React.Component {
 				this.master.typeList = response.data.feed.entry
 				response.data.feed.entry.map((obj) => {
 					const type = parseInt(obj.type_ahead.type)
-					if (type !== 2 && type !== 4) {
+					if (type === 0) {
 						const res = {
 							label: obj.type_ahead.value,
 							value: obj.type_ahead.value,
@@ -331,15 +333,26 @@ export default class QuotationForm extends React.Component {
 		const targetValue = targetRowData[itemName]
 
 		// 自身に値がない場合
-		if (!targetValue || targetValue === '') return false 
+		if (!targetValue || targetValue === '') {
+			if (itemName !== 'item_name') {
+				const item_name = this.entry.item_details[_rowindex].item_name
+				if (item_name) {
+					this.setTypeList(this.cashTypeAhead[0][item_name], _rowindex)
+					this.forceUpdate()
+				}
+			}
+			return false
+		}
 
 		let isPut = true
 
 		let item_name = targetRowData.item_name
+		let unit_name = targetRowData.unit_name
 		let unit = targetRowData.unit
 		let remarks = targetRowData.remarks
 
 		if (itemName === 'item_name') item_name = targetValue
+		if (itemName === 'unit_name') unit_name = targetValue
 		if (itemName === 'unit') unit = targetValue
 		if (itemName === 'remarks') remarks = targetValue
 
@@ -350,11 +363,15 @@ export default class QuotationForm extends React.Component {
 		const cashData = this.cashTypeAhead[0][item_name]
 
 		if (cashData) {
-			// 「単位」「備考」に値がある場合は、
+			// 「単位名称」「単位」「備考」に値がある場合は、
 			// 「項目」に紐付いてるかチェックする
+			let isUnitName = unit ? false : true
 			let isUnit = unit ? false : true
 			let isRemarks = remarks ? false : true
 			cashData.type_aheads.map((_obj) => {
+				if (unit_name && _obj.type === '1' && _obj.value === unit_name) {
+					isUnitName = true
+				}
 				if (unit && _obj.type === '2' && _obj.value === unit) {
 					isUnit = true
 				}
@@ -362,8 +379,14 @@ export default class QuotationForm extends React.Component {
 					isRemarks = true
 				}
 			})
-			if (isUnit && isRemarks) {
+			if (isUnitName && isUnit && isRemarks) {
 				isPut = false
+			}
+			if (unit_name && !isUnitName) {
+				cashData.type_aheads.push({
+					value: unit_name,
+					type: '1'
+				})
 			}
 			if (unit && !isUnit) {
 				cashData.type_aheads.push({
@@ -383,7 +406,7 @@ export default class QuotationForm extends React.Component {
 				this.cashTypeAhead[0][item_name] = cashData
 				this.putTypeList(item_name, _rowindex)
 			} else {
-				if (itemName === 'unit' || itemName === 'remarks') {
+				if (itemName === 'unit_name' || itemName === 'unit' || itemName === 'remarks') {
 					this.setTypeList(cashData, _rowindex)
 					this.forceUpdate()
 				}
@@ -421,28 +444,29 @@ export default class QuotationForm extends React.Component {
 
 	setTypeList(_cashData, _rowindex) {
 		let array = {
+			unit_name: [],
 			unit: [],
 			remarks: []
 		}
-		if (this.typeList[2] && this.typeList[2][_rowindex]) {
-			array.unit = JSON.parse(JSON.stringify(this.typeList[2][_rowindex]))
-			array.remarks = JSON.parse(JSON.stringify(this.typeList[4][_rowindex]))
-		}
-		array.unit = []
-		array.remarks = []
-		_cashData.type_aheads.map((_obj) => {
-			const type = parseInt(_obj.type)
-			let type_name
-			if (type === 2) {
-				type_name = 'unit'
-			} else if (type === 4) {
-				type_name = 'remarks'
-			}
-			array[type_name].push({
-				value: _obj.value,
-				label: _obj.value
+		if (_cashData) {
+			_cashData.type_aheads.map((_obj) => {
+				const type = parseInt(_obj.type)
+				let type_name
+				if (type === 1) {
+					type_name = 'unit_name'
+				} else if (type === 2) {
+					type_name = 'unit'
+				} else if (type === 4) {
+					type_name = 'remarks'
+				}
+				array[type_name].push({
+					value: _obj.value,
+					label: _obj.value
+				})
 			})
-		})
+		}
+		this.typeList[1][_rowindex] = JSON.parse(JSON.stringify(array.unit_name))
+		this.originTypeList[1][_rowindex] = JSON.parse(JSON.stringify(array.unit_name))
 		this.typeList[2][_rowindex] = JSON.parse(JSON.stringify(array.unit))
 		this.originTypeList[2][_rowindex] = JSON.parse(JSON.stringify(array.unit))
 		this.typeList[4][_rowindex] = JSON.parse(JSON.stringify(array.remarks))
@@ -450,8 +474,31 @@ export default class QuotationForm extends React.Component {
 	}
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
+
+		let itemName
+		if (_celIndex === 0) itemName = 'item_name'
+		if (_celIndex === 1) itemName = 'unit_name'
+		if (_celIndex === 2) itemName = 'unit'
+		if (_celIndex === 3) itemName = 'unit_price'
+		if (_celIndex === 4) itemName = 'remarks'
+
+		if (!_data) {
+			this.entry.item_details[_rowindex][itemName] = null
+			if (itemName === 'item_name') {
+				this.entry.item_details[_rowindex].unit_name = null
+				this.entry.item_details[_rowindex].unit = null
+				this.entry.item_details[_rowindex].remarks = null
+				this.setTypeList(null, _rowindex)
+			}
+			this.forceUpdate()
+			return false
+		}
+
 		if (_celIndex !== 3) {
-			if (_celIndex === 2 || _celIndex === 4) {
+			if (_celIndex !== 0) {
+				if (!this.originTypeList[_celIndex][_rowindex]) {
+					this.originTypeList[_celIndex][_rowindex] = []
+				}
 				if (!this.typeList[_celIndex][_rowindex] || this.typeList[_celIndex][_rowindex].length !== this.originTypeList[_celIndex][_rowindex].length) {
 					const item_name = this.entry.item_details[_rowindex].item_name
 					if (item_name) {
@@ -474,16 +521,19 @@ export default class QuotationForm extends React.Component {
 			} else {
 				if (this.typeList[_celIndex].length !== this.originTypeList[_celIndex].length) {
 					this.originTypeList[_celIndex].push(_data)
+					const new_type_ahead = {
+						type_ahead: {
+							type: '' + _celIndex,
+							value: _data.value
+						},
+						type_aheads: []
+					}
 					const feed = {
 						feed: {
-							entry: [{
-								type_ahead: {
-									type: '' + _celIndex,
-									value: _data.value
-								}
-							}]
+							entry: [new_type_ahead]
 						}
 					}
+					this.cashTypeAhead[0][_data.value] = new_type_ahead
 					axios({
 						url: '/d/type_ahead',
 						method: 'post',
@@ -499,18 +549,13 @@ export default class QuotationForm extends React.Component {
 			}
 		}
 
-		let itemName
-		if (_celIndex === 0) itemName = 'item_name'
-		if (_celIndex === 1) itemName = 'unit_name'
-		if (_celIndex === 2) itemName = 'unit'
-		if (_celIndex === 3) itemName = 'unit_price'
-		if (_celIndex === 4) itemName = 'remarks'
 		if (itemName) {
 			if (itemName === 'item_name' || itemName === 'unit_name' || itemName === 'unit') {
 
 				if (itemName === 'item_name') {
 					this.setTypeList(this.cashTypeAhead[0][_data.value], _rowindex)
 					if (_data.value !== this.entry.item_details[_rowindex].item_name) {
+						this.entry.item_details[_rowindex].unit_name = null
 						this.entry.item_details[_rowindex].unit = null
 						this.entry.item_details[_rowindex].remarks = null
 					}
@@ -776,7 +821,9 @@ export default class QuotationForm extends React.Component {
 									field: 'unit_name',title: '単位名称', width: '250px',
 									filter: this.isDisabled ? false : {
 										options: this.typeList[1],
-										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)}
+										isRow: true,
+										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)},
+										onClick: (rowindex) => { this.clickTypeahead(1, rowindex) }
 									}
 								}, {
 									field: 'unit',title: '単位', width: '100px',
