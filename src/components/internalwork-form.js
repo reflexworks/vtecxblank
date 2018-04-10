@@ -1307,7 +1307,7 @@ export default class InternalWorkForm extends React.Component {
 				{ this.isEdit &&
 					<CommonCheckBox
 						controlLabel="庫内作業入力完了"
-						label="完了"
+						label="完了 ※月締め(完了)時にチェックしてください"
 						value={this.isCompleted}
 						onChange={(value) => this.onCompleted(value)}
 					/>
