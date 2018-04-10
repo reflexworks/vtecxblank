@@ -157,6 +157,15 @@ export const fontsize6UL = {
 	style:'underline'	
 }
 
+export const footerFontsize6UL = {
+	size: 6,
+	//style: 'underline',
+	//valign:'bottom',
+	absolutex: 50,
+	absolutey: 50,
+}
+
+
 export const tableTdLeft = {
 	left:'true',
 	right:'true',
@@ -166,7 +175,7 @@ export const tableTdLeft = {
 	align:'left',
 	color: '#000000',
 	height: 10,
-	offsetx:5,
+	offsetx:2,
 	offsety:0,
 }
 
@@ -261,8 +270,8 @@ export const tdCenter = {
 	align: 'center',
 	valign:'top',
 	//height:'15',
-	offsety: 5,
 	offsetx:1,
+	offsety: 5,
 }
 
 export const tdLeft = {
@@ -270,11 +279,11 @@ export const tdLeft = {
 	right:'true',
 	top:'true',
 	bottom:'true',
-	align:'left',
-	height:'15',
-	offsetx:5,
-	offsety: 4,
-	leading:7,
+	align: 'left',
+	valign:'top',
+	//height:'15',
+	offsetx:2,
+	offsety: 5,
 }
 
 export const tdLeftNoFrame = {
@@ -306,7 +315,8 @@ export const tdRight = {
 	right:'true',
 	top:'true',
 	bottom:'true',
-	align:'right',
+	align: 'right',
+	valign:'top',
 	height:'15',
 	offsetx:1,
 	offsety: 4,
@@ -493,11 +503,12 @@ export const tdRemarks = {
 	right:'true',
 	top:'true',
 	bottom:'true',
-	align:'left',
-	height:15,
-	offsetx:5,
-	offsety: 4,
-	leading: 8,
+	align: 'left',
+	valign:'top',
+	height:30,
+	offsetx:2,
+	offsety: 19,
+	leading: 7,
 }
 
 export const totalAmountText = {
