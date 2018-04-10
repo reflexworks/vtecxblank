@@ -588,6 +588,7 @@ export default class InvoiceForm extends React.Component {
 		}
 		const setAddEntry = () => {
 			this.item_details = {}
+			if (!this.addEntry.item_details) this.addEntry.item_details = []
 			for (let i = 0; i < this.addEntry.item_details.length; ++i) {
 				const details = this.addEntry.item_details[i]
 				const category = details.category
@@ -595,6 +596,10 @@ export default class InvoiceForm extends React.Component {
 					this.item_details[category] = []
 				}
 				this.item_details[category].push(details)
+			}
+			this.customer_remarks = []
+			if (this.addEntry.remarks) {
+				this.customer_remarks = this.addEntry.remarks
 			}
 		}
 		const setEditEntry = () => {
@@ -910,27 +915,28 @@ export default class InvoiceForm extends React.Component {
 	/**
 	 * 	備考リストの追加
 	 */
-	addRemarksList(list,_data) {
+	addRemarksList(_data) {
 		
-		if (!this.entry[list]) {
-			this.entry[list] = []
+		if (!this.customer_remarks) {
+			this.customer_remarks = []
 		}
-		this.entry[list].push(_data)
+		this.customer_remarks.push(_data)
 		this.forceUpdate()
 	}
 
 	/**
 	 * 	備考リストの削除
 	 */
-	removeRemarksList(list, _index) {
+	removeRemarksList(_index) {
 		let array = []
 
-		for (let i = 0, ii = this.entry[list].length; i < ii; ++i) {
-			if (i !== _index) array.push(this.entry[list][i])
+		for (let i = 0, ii = this.customer_remarks.length; i < ii; ++i) {
+			if (i !== _index) array.push(this.customer_remarks[i])
 		}
-		this.entry[list] = array
+		this.customer_remarks = array
 
-		this.props.setReqestData(this.entry.remarks, 'remarks')
+		this.addEntry.remarks = JSON.parse(JSON.stringify(this.customer_remarks))
+		this.props.setReqestData(this.addEntry, 'remarks')
 		this.forceUpdate()
 	}
 
@@ -938,8 +944,9 @@ export default class InvoiceForm extends React.Component {
 	 *  備考リストの内容変更
 	 */
 	changeRemarks(_data, _rowindex) {
-		this.entry.remarks[_rowindex].content = _data
-		this.props.setReqestData(this.entry.remarks, 'remarks')
+		this.customer_remarks[_rowindex].content = _data
+		this.addEntry.remarks = JSON.parse(JSON.stringify(this.customer_remarks))
+		this.props.setReqestData(this.addEntry, 'remarks')
 		this.forceUpdate()
 	}
 
@@ -1839,16 +1846,15 @@ export default class InvoiceForm extends React.Component {
 
 								<Panel collapsible header="備考" eventKey="8" bsStyle="info" defaultExpanded="true">
 									<CommonTable	
-										name="remarks"
-										data={this.entry.remarks}
+										data={this.customer_remarks}
 										header={[{
 											field: 'content', title: '備考', 
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeRemarks(data, rowindex)}
 											}
 										}]}
-										add={this.isEdit ? () => this.addRemarksList('remarks', { content: ''}) : null}
-										remove={this.isEdit ? (data, index) => this.removeRemarksList('remarks', index) : null}
+										add={this.isEdit ? () => this.addRemarksList({ content: ''}) : null}
+										remove={this.isEdit ? (data, index) => this.removeRemarksList(index) : null}
 										fixed
 									/>
 								</Panel>
