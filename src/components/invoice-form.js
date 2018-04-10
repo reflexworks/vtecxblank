@@ -841,9 +841,9 @@ export default class InvoiceForm extends React.Component {
 				this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
 				
 				//税込なら消費税を足す
-				if (this.item_details[list][_rowindex].is_taxation === '1') {
-					this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
-				}
+				//if (this.item_details[list][_rowindex].is_taxation === '1') {
+				//this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
+				//}
 				if (this.item_details[list][_rowindex].amount) {
 					this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(this.item_details[list][_rowindex].amount) : addFigure(this.item_details[list][_rowindex].amount)
 				}
