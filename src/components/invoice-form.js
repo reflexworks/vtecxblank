@@ -599,6 +599,9 @@ export default class InvoiceForm extends React.Component {
 			}
 			this.customer_remarks = []
 			if (this.addEntry.remarks) {
+				if (this.addEntry.remarks.length === 1 && this.addEntry.remarks[0].content === '') {
+					this.addEntry.remarks = []
+				}
 				this.customer_remarks = this.addEntry.remarks
 			}
 		}

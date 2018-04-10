@@ -108,11 +108,15 @@ export default class InvoiceUpdate extends React.Component {
 			item_details = this.item_details
 		}
 		if (this.remarks) {
-			if (item_details) {
-				item_details.remarks = this.remarks.remarks
-			} else {
+			let remarks = JSON.parse(JSON.stringify(this.remarks.remarks))
+
+			// 空の場合、空の行を一行追加する
+			// こうしないとフレームワーク側にremarksの値が変更できない不具合がある
+			if (remarks.length === 0) remarks = [{content: ''}]
+			if (!item_details) {
 				item_details = this.remarks
 			}
+			item_details.remarks = remarks
 		}
 		if (item_details) {
 			req.feed.entry.push(item_details)
@@ -136,7 +140,7 @@ export default class InvoiceUpdate extends React.Component {
 	}
 
 	compleat() {
-		location.reload()
+		//location.reload()
 	}
 
 	doAfterPut(_data) {
