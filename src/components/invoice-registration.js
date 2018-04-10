@@ -114,8 +114,18 @@ export default class InvoiceRegistration extends React.Component {
 		req.feed.entry.push(item_details_obj_self)
 		req.feed.entry.push(remarks_obj_self)
 
+		let item_details
 		if (this.item_details) {
-			let item_details = JSON.parse(JSON.stringify(this.item_details))
+			item_details = JSON.parse(JSON.stringify(this.item_details))
+		}
+		if (this.remarks) {
+			if (item_details) {
+				item_details.remarks = JSON.parse(JSON.stringify(this.remarks.remarks))
+			} else {
+				item_details = JSON.parse(JSON.stringify(this.remarks))
+			}
+		}
+		if (item_details) {
 			item_details.invoice = {
 				invoice_code: rea_data.invoice.invoice_code,
 				invoice_code_sub: rea_data.invoice.invoice_code_sub
@@ -124,12 +134,9 @@ export default class InvoiceRegistration extends React.Component {
 				___href: '/invoice_details/' + key + '/' + rea_data.invoice.customer_code,
 				___rel: 'self'
 			}]
-			if (this.remarks) {
-				item_details.remarks
-			}
-
 			req.feed.entry.push(item_details)
 		}
+
 		if (this.edit) {
 			let edit = JSON.parse(JSON.stringify(this.edit))
 			edit.invoice.invoice_code = rea_data.invoice.invoice_code
