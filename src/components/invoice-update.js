@@ -180,13 +180,13 @@ export default class InvoiceUpdate extends React.Component {
 			let print
 			if (!_allCustomer) {
 				print = () => {
-					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
+					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&invoice_code_sub=' + this.entry.invoice.invoice_code_sub + '&working_yearmonth=' + this.workingYearmonth + '&customer_code=' + this.customer
 					url = _isPreview ? url + '&preview' : url
 					location.href = url
 				}
 			}else {
 				print = () => {
-					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&working_yearmonth=' + this.workingYearmonth
+					let url = '/s/get-pdf-invoice?invoice_code=' + this.entry.invoice.invoice_code + '&invoice_code_sub=' + this.entry.invoice.invoice_code_sub +'&working_yearmonth=' + this.workingYearmonth
 					url = _isPreview ? url + '&preview' : url
 					location.href = url
 				}
