@@ -4,10 +4,11 @@ import { getChargeBySizeAndZone } from './put-billing'
 const shipping_yearmonth = vtecxapi.getQueryString('shipping_yearmonth')  //201801
 const billto_code = vtecxapi.getQueryString('billto_code')  // 0000124
 const customer_code = vtecxapi.getQueryString('customer_code')  // 0000124
-const delivery_company = vtecxapi.getQueryString('delivery_company')  //YH or ECO
+const shipment_service_code = vtecxapi.getQueryString('shipment_service_code')  //YH or ECO
+const shipment_class = vtecxapi.getQueryString('shipment_class')  //0:出荷、1:集荷
 
 try {
-	const result = getSummary(shipping_yearmonth, billto_code, delivery_company, customer_code)
+	const result = getSummary(shipping_yearmonth, billto_code, shipment_service_code, customer_code)
 
 	vtecxapi.doResponse(result)
 	
@@ -15,7 +16,7 @@ try {
 	vtecxapi.sendMessage(400, e)
 }
 
-export function getSummary(shipping_yearmonth, billto_code, delivery_company, _customer_code) {
+export function getSummary(shipping_yearmonth, billto_code, shipment_service_code, _customer_code) {
 
 	const billto = vtecxapi.getEntry('/billto/' + billto_code)
 
@@ -24,8 +25,8 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 		billing_closing_date = billto.feed.entry[0].billto.billing_closing_date
 	}
 
-	const shipment_service = vtecxapi.getEntry('/shipment_service/' + delivery_company)
-	if (!shipment_service.feed.entry) throw '配送サービスが登録されていません。(配送サービスコード=' + delivery_company + ')'
+	const shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code) // YH1 or ECO1
+	if (!shipment_service.feed.entry) throw '配送サービスが登録されていません。(配送サービスコード=' + shipment_service_code + ')'
 	const sizes = shipment_service.feed.entry[0].shipment_service.sizes.map((sizes) => {
 		return sizes.size.match(/\d+/)[0]
 	})
@@ -48,11 +49,19 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 			billing_summary: { record: [] }
 		}
 		const customer_code = _entry.customer.customer_code
-		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + delivery_company + '_*', true)
+		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_*', true)
+		billing_data.feed.entry = billing_data.feed.entry.filter((entry) => {
+			return entry.billing_data.shipment_class === shipment_class
+		}) 
+		
 		if (billing_data.feed.entry) {
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
-				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + delivery_company + '_*', true)
+				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '_*', true)
+				billing_data_prev.feed.entry = billing_data_prev.feed.entry.filter((entry) => {
+					return entry.billing_data.shipment_class === shipment_class
+				})
+
 				const d0 = new Date(lastyearmonth.slice(0, 4), parseInt(lastyearmonth.slice(-2)) - 1, '21').getTime()
 				const d1 = new Date(shipping_yearmonth.slice(0, 4), parseInt(shipping_yearmonth.slice(-2)) - 1, '20').getTime()
 				billing_data.feed.entry = billing_data_prev.feed.entry ? billing_data_prev.feed.entry.concat(billing_data.feed.entry) : billing_data.feed.entry
@@ -66,7 +75,7 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 			sizes.map((size) => { 
 				zones.map((zone) => { 
 					const entry = billing_data.feed.entry.filter((entry) => { 
-						return (entry.billing_data.zone_name === zone)&&(entry.billing_data.size===size)
+						return entry&&(entry.billing_data.zone_name === zone)&&(entry.billing_data.size===size)
 					})
 					if (entry.length > 0) {
 						const subtotal = entry.length * parseInt(entry[0].billing_data.delivery_charge)
@@ -74,7 +83,7 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 						result.billing_summary.record.push(record)						
 					} else {
 						let delivery_area = null
-						if (delivery_company.indexOf('ECO')>=0) {
+						if (shipment_service_code.indexOf('ECO')>=0) {
 							delivery_area = billing_data.feed.entry[0].billing_data.delivery_class
 						}
 						const charge_by_zone = getChargeBySizeAndZone(customer_code,billing_data.feed.entry[0].billing_data.shipment_service_code, size, zone, delivery_area)
