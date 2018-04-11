@@ -50,11 +50,11 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 		}
 		const customer_code = _entry.customer.customer_code
 		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_*', true)
-		billing_data.feed.entry = billing_data.feed.entry.filter((entry) => {
+		billing_data.feed.entry = billing_data.feed.entry ? billing_data.feed.entry.filter((entry) => {
 			return entry.billing_data.shipment_class === shipment_class
-		}) 
-		
-		if (billing_data.feed.entry) {
+		}) : billing_data.feed.entry
+
+		if (billing_data.feed.entry&&billing_data.feed.entry.length>0) {
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
 				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '_*', true)
@@ -75,7 +75,11 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 			sizes.map((size) => { 
 				zones.map((zone) => { 
 					const entry = billing_data.feed.entry.filter((entry) => { 
-						return entry&&(entry.billing_data.zone_name === zone)&&(entry.billing_data.size===size)
+						if (shipment_service_code.indexOf('ECO') >= 0) {
+							return entry && (entry.billing_data.zone_name === zone)
+						} else {
+							return entry && (entry.billing_data.zone_name === zone) && (entry.billing_data.size === size)							
+						}
 					})
 					if (entry.length > 0) {
 						const subtotal = entry.length * parseInt(entry[0].billing_data.delivery_charge)
