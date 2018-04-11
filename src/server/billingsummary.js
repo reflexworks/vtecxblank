@@ -74,7 +74,7 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 						result.billing_summary.record.push(record)						
 					} else {
 						let delivery_area = null
-						if (delivery_company === 'ECO') {
+						if (delivery_company.indexOf('ECO')>=0) {
 							delivery_area = billing_data.feed.entry[0].billing_data.delivery_class
 						}
 						const charge_by_zone = getChargeBySizeAndZone(customer_code,billing_data.feed.entry[0].billing_data.shipment_service_code, size, zone, delivery_area)
@@ -88,7 +88,6 @@ export function getSummary(shipping_yearmonth, billto_code, delivery_company, _c
 	})
 
 	const data = { feed: { entry: entry }}
-
 	return data
 }
 
