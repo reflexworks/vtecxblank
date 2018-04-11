@@ -1307,7 +1307,7 @@ export default class InternalWorkForm extends React.Component {
 				{ this.isEdit &&
 					<CommonCheckBox
 						controlLabel="庫内作業入力完了"
-						label="完了 ※月締め(完了)時にチェックしてください"
+						label="完了　　※月締め(完了)時にチェックしてください"
 						value={this.isCompleted}
 						onChange={(value) => this.onCompleted(value)}
 					/>
@@ -1322,7 +1322,7 @@ export default class InternalWorkForm extends React.Component {
 						readonly
 					/>
 				}
-
+				
 				{this.isApproval &&
 					<Alert bsStyle="warning">
 						{this.approvalDays}
@@ -1330,9 +1330,7 @@ export default class InternalWorkForm extends React.Component {
 				}
 
 				<Tabs defaultActiveKey={4} id="uncontrolled-tab-example" onSelect={(activeKey)=>this.selectTab(activeKey)}>
-
 					<Tab eventKey={4} title="月次入力 / 期次入力">
-
 						<PanelGroup defaultActiveKey="1">
 							<Panel collapsible header="月次作業情報" eventKey="2" bsStyle="info" defaultExpanded={true}>
 								<CommonTable
