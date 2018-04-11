@@ -283,6 +283,8 @@ export default class ShipmentServiceForm extends React.Component {
 	addList(_key, _data) {
 		this.modal[_key].visible = false
 		if (_key === 'sizes') {
+			if (!_data.size) _data.size = ''
+			if (!_data.weight) _data.weight = ''
 			this.entry.shipment_service[_key].push(_data)
 		} else {
 			this.maxIndex++
