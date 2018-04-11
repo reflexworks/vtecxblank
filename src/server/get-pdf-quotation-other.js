@@ -45,7 +45,7 @@ const element = () => {
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
-
+/*
 const file_name = () => {
 	const preview = vtecxapi.getQueryString('preview')
 	if (preview === '') {
@@ -57,3 +57,5 @@ const file_name = () => {
 
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
+*/
+vtecxapi.toPdf(pageData, html, null)

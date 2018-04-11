@@ -8,6 +8,52 @@ export const _page = {
 	linecolor: '#000000'
 }
 
+export const page_title_table = {
+	widths: '100',
+	width: '100%'
+}
+
+export const page_title = {
+	size: 18,
+	align: 'center',
+	space: 10,
+	height: 60,
+	offsety: 20
+}
+export const page_title_blank = {
+	size: 6,
+	leading: 0,
+	space: 1
+}
+
+export const header_table = {
+	width: '100%',
+	widths: '10,40,20,20,10',
+	bordercolor: '#000000',
+	'border-spacing': '1px'
+}
+
+export const header_title = {
+	size: 18,
+	left: 'false',
+	right: 'false',
+	top: 'false',
+	bottom: 'true',
+	offsety: 5
+}
+
+export const header_comment = {
+	size: 6,
+	leading: 9,
+	space: 1
+}
+
+export const billfrom_info = {
+	size: 6,
+	leading: 10,
+	space: 1
+}
+
 export const widths = {
 	widths: '5,6,19,19,4,4,4,4,4,4,4,4,4,4,4,4,5',
 	width: '100%',
