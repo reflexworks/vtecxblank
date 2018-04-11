@@ -332,20 +332,6 @@ export default class QuotationForm extends React.Component {
 		const targetRowData = this.entry.item_details[_rowindex]
 		const targetValue = targetRowData[itemName]
 
-		// 自身に値がない場合
-		if (!targetValue || targetValue === '') {
-			if (itemName !== 'item_name') {
-				const item_name = this.entry.item_details[_rowindex].item_name
-				if (item_name) {
-					this.setTypeList(this.cashTypeAhead[0][item_name], _rowindex)
-					this.forceUpdate()
-				}
-			}
-			return false
-		}
-
-		let isPut = true
-
 		let item_name = targetRowData.item_name
 		let unit_name = targetRowData.unit_name
 		let unit = targetRowData.unit
@@ -359,11 +345,20 @@ export default class QuotationForm extends React.Component {
 		if (item_name && Object.prototype.toString.call(item_name) === '[object Object]') {
 			item_name = item_name.props.children
 		}
+		if (unit_name && Object.prototype.toString.call(unit_name) === '[object Object]') {
+			unit_name = unit_name.props.children
+		}
+
+		let isPut = true
+
+		// 自身に値がない場合
+		if (!targetValue || targetValue === '') {
+			isPut = false
+		}
 
 		const cashData = this.cashTypeAhead[0][item_name]
 
 		if (cashData) {
-			// 「単位名称」「単位」「備考」に値がある場合は、
 			// 「項目」に紐付いてるかチェックする
 			let isUnitName = unit ? false : true
 			let isUnit = unit ? false : true
@@ -379,9 +374,6 @@ export default class QuotationForm extends React.Component {
 					isRemarks = true
 				}
 			})
-			if (isUnitName && isUnit && isRemarks) {
-				isPut = false
-			}
 			if (unit_name && !isUnitName) {
 				cashData.type_aheads.push({
 					value: unit_name,
@@ -399,6 +391,9 @@ export default class QuotationForm extends React.Component {
 					value: remarks,
 					type: '4'
 				})
+			}
+			if (isUnitName && isUnit && isRemarks) {
+				isPut = false
 			}
 
 			// 自身に紐付かれていなかったら紐付けてput処理する
@@ -815,7 +810,7 @@ export default class QuotationForm extends React.Component {
 									filter: this.isDisabled ? false : {
 										options: this.typeList[0],
 										onChange: (data, rowindex) => { this.changeTypeahead(data, 0, rowindex) },
-										onClick: (rowindex) => { this.clickTypeahead(0, rowindex) }
+										onFocus: (rowindex) => { this.clickTypeahead(0, rowindex) }
 									}
 								}, {
 									field: 'unit_name',title: '単位名称', width: '250px',
@@ -823,7 +818,7 @@ export default class QuotationForm extends React.Component {
 										options: this.typeList[1],
 										isRow: true,
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 1, rowindex)},
-										onClick: (rowindex) => { this.clickTypeahead(1, rowindex) }
+										onFocus: (rowindex) => { this.clickTypeahead(1, rowindex) },
 									}
 								}, {
 									field: 'unit',title: '単位', width: '100px',
@@ -831,7 +826,7 @@ export default class QuotationForm extends React.Component {
 										options: this.typeList[2],
 										isRow: true,
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 2, rowindex)},
-										onClick: (rowindex) => { this.clickTypeahead(2, rowindex) }
+										onFocus: (rowindex) => { this.clickTypeahead(2, rowindex) },
 									}
 								}, {
 									field: 'unit_price',title: '単価', width: '100px',
@@ -845,7 +840,7 @@ export default class QuotationForm extends React.Component {
 										options: this.typeList[4],
 										isRow: true,
 										onChange: (data, rowindex)=>{this.changeTypeahead(data, 4, rowindex)},
-										onClick: (rowindex) => { this.clickTypeahead(4, rowindex) }
+										onFocus: (rowindex) => { this.clickTypeahead(4, rowindex) }
 									}
 								}]}
 								add={this.isDisabled ? false : () => this.addList('item_details', { item_name: '', unit_name: '', unit: '', unit_price: '', remarks: '' })}
