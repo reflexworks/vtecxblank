@@ -22,7 +22,7 @@ export const page_title = {
 }
 export const page_title_blank = {
 	size: 6,
-	leading: 50,
+	leading: 0,
 	space: 1
 }
 
@@ -54,7 +54,6 @@ export const billfrom_info = {
 	space: 1
 }
 
-
 export const remark_table = {
 	width: '100%',
 	widths: '10,80,10',
@@ -73,7 +72,7 @@ export const remark = {
 }
 export const remark_table_top_blank = {
 	size: 6,
-	leading: 50,
+	leading: 10,
 	space: 1
 }
 
@@ -91,7 +90,7 @@ export const header_title_sub = {
 	top: 'false',
 	bottom: 'true',
 	offsety: 5,
-	height: 30
+	height: 45
 }
 export const deliverycharge_title = {
 	size: 6,
