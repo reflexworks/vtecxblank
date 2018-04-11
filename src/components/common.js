@@ -1898,7 +1898,7 @@ export class CommonTable extends React.Component {
 					if (filter) {
 						const options = filter.isRow === true ? filter.options[_index] : filter.options
 						return (
-							<div onClick={filter.onClick ? () => filter.onClick(_index) : null}>
+							<div onFocusCapture={filter.onFocus ? () => filter.onFocus(_index) : null}>
 								<CommonFilterBox
 									name="__tableFilter"
 									value={value}
