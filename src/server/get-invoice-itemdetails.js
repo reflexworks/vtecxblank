@@ -61,18 +61,20 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 			return entry       
 		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0', 'unit_price': '0' } })
 
-		const record = {
-			'category': shipment_class==='0' ? 'shipping':'collecting',
-			'item_name': shipment_service_name,
-			'unit_name': '',
-			'unit': '個',
-			'quantity': summary.billing_data.quantity,
-			'unit_price': (shipment_service_code==='YH2'||shipment_service_code==='YH3') ? summary.billing_data.unit_price :'個別',
-			'remarks': '別紙明細',
-			'is_taxation': '0',
-			'amount': summary.billing_data.delivery_charge 
+		if (Number(summary.billing_data.delivery_charge) > 0) {			
+			const record = {
+				'category': shipment_class==='0' ? 'shipping':'collecting',
+				'item_name': shipment_service_name,
+				'unit_name': '',
+				'unit': '個',
+				'quantity': summary.billing_data.quantity,
+				'unit_price': (shipment_service_code==='YH2'||shipment_service_code==='YH3') ? summary.billing_data.unit_price :'個別',
+				'remarks': '別紙明細',
+				'is_taxation': '0',
+				'amount': summary.billing_data.delivery_charge 
+			}
+			result.push(record)
 		}
-		result.push(record)
 	}
 
 	return result

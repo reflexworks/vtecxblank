@@ -6,7 +6,6 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Button,
 	Glyphicon,
 } from 'react-bootstrap'
 import type {
@@ -241,9 +240,6 @@ export default class QuotationList extends React.Component {
 							remove={(data) => this.onDelete(data)}
 							header={header}
 						>
-							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
-								<Glyphicon glyph="download" />CSVダウンロード
-							</Button>
 						</CommonTable>
 					</Col>  
 				</Row>  
