@@ -40,7 +40,7 @@ export const header_blank = {
 	leading: 10,
 	space: 1,
 	offsety: 2,
-	height: 40,
+	height: 20,
 	left:'false',
 	right:'false',
 	top:'false',
@@ -61,7 +61,7 @@ export const summary_title = {
 }
 export const summary_title_table_top_blank = {
 	size: 6,
-	leading: 6,
+	leading: 10,
 	space: 1
 }
 
@@ -168,4 +168,17 @@ export const total_table_td_bold = {
 	right:'true',
 	top:'true',
 	bottom:'true'
+}
+export const class_title = {
+	size: 7,
+	left: 'false',
+	right: 'false',
+	top: 'false',
+	bottom: 'true',
+	offsety: 5,
+	height: 20
+}
+export const class_title_blank = {
+	height: 0,
+	leading: 5,
 }

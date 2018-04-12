@@ -1206,11 +1206,11 @@ export default class InvoiceForm extends React.Component {
 				let tableName = shipmentClassName + ' : '
 
 				if (_shipment_service_code === 'YH1') {
-					tableName += 'ヤマト運輸発払簡易明細'
+					tableName += 'ヤマト運輸/宅急便発払'
 				} else if (_shipment_service_code === 'ECO1') {
-					tableName += 'エコ配JP簡易明細'
+					tableName += 'エコ配ALLJP/エコプラス便'
 				} else if (_shipment_service_code === 'ECO2') {
-					tableName += 'エコ配JP簡易明細'
+					tableName += 'エコ配ALLJP/コレクト便'
 				}
 				if (record) {
 					setSummaryTable(record, tableIndex, tableName, option)
