@@ -626,7 +626,7 @@ const getBasicLine = (_basicCondition) => {
 	return (titleLength > conditionLength ? titleLength: conditionLength)
 }
 
-const getBasicLimit = (_array, _startIndex, _lmax,) => {
+const getBasicLimit = (_array, _startIndex, _lmax) => {
 	
 	let length = 0
 	let lastIndex = _startIndex + _lmax
@@ -654,17 +654,17 @@ const checkItemLimit = (_itemDetails,_lmax) =>{
 	if (_itemDetails.item_name.length > _lmax * 21) {
 		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax*21)
 	}
-	if (_itemDetails.item_name.length > _lmax * 21) {
-		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax * 21)
+	if (_itemDetails.unit_name.length > _lmax * 21) {
+		_itemDetails.unit_name = _itemDetails.unit_name.slice(0,_lmax * 21)
 	}
-	if (_itemDetails.item_name.length > _lmax * 8) {
-		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax * 8)
+	if (_itemDetails.unit.length > _lmax * 8) {
+		_itemDetails.unit = _itemDetails.unit.slice(0,_lmax * 8)
 	}
-	if (_itemDetails.item_name.length > _lmax * 12) {
-		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax * 12)
+	if (_itemDetails.unit_price.length > _lmax * 12) {
+		_itemDetails.unit_price= _itemDetails.unit_price.slice(0,_lmax * 12)
 	}
-	if (_itemDetails.item_name.length > _lmax * 34) {
-		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax * 34)
+	if (_itemDetails.remarks.length > _lmax * 34) {
+		_itemDetails.remarks = _itemDetails.remarks.slice(0,_lmax * 34)
 	}
 
 	return(_itemDetails)
@@ -747,7 +747,7 @@ const element = () => {
 
 	if (entry.basic_condition) {
 		//タイトル用基本条件切り取り
-		const titleBasicIndex = getBasicLimit(entry.basic_condition, 0, titleBasicMax, 1)
+		const titleBasicIndex = getBasicLimit(entry.basic_condition, 0, titleBasicMax)
 		const title_basic = titleBasicIndex ? entry.basic_condition.slice(0, titleBasicIndex) : ''
 		quotation.push(quotationTitlePage(1, title_basic))
 		pageNumber++
