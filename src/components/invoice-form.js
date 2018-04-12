@@ -810,37 +810,47 @@ export default class InvoiceForm extends React.Component {
 		} else {
 
 			//変更処理
-			this.item_details[list][_rowindex][_celindex] = _data
+			if (_celindex === 'amount') {
+				const isMinus = _data && String(_data)[0] === '-'
+				this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(_data) : addFigure(_data)
+			} else {
+				this.item_details[list][_rowindex][_celindex] = _data
+			}
 
 			//数量,単価を変更したら金額を変えて、小計,合計請求金額,消費税も変える
 			if (_celindex === 'quantity' || _celindex === 'unit_price') {
 				
-				let unit_price
-				let isMinus
-				if (_celindex === 'unit_price') {
-					isMinus = _data && String(_data)[0] === '-'
-					unit_price = isMinus ? '-' + addFigure(_data) : addFigure(_data)
-					this.item_details[list][_rowindex].unit_price = unit_price
-				} else {
-					unit_price = this.item_details[list][_rowindex].unit_price
-					isMinus = unit_price && String(unit_price)[0] === '-'
+				const isNumber = parseInt(this.item_details[list][_rowindex].unit_price) ? true : false
+
+				if (isNumber) {
+					let unit_price
+					let isMinus = false
+					if (_celindex === 'unit_price') {
+						isMinus = _data && String(_data)[0] === '-'
+						unit_price = isMinus ? '-' + addFigure(_data) : addFigure(_data)
+						this.item_details[list][_rowindex].unit_price = unit_price
+					} else {
+						unit_price = this.item_details[list][_rowindex].unit_price
+						isMinus = unit_price && String(unit_price)[0] === '-'
+					}
+
+					unit_price = isMinus ? unit_price.replace('-', '') : unit_price
+					unit_price = parseInt(delFigure(unit_price))
+
+					const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
+
+					const amount = quantity * unit_price
+					this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
+					
+					//税込なら消費税を足す
+					//if (this.item_details[list][_rowindex].is_taxation === '1') {
+					//this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
+					//}
+					if (this.item_details[list][_rowindex].amount) {
+						this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(this.item_details[list][_rowindex].amount) : addFigure(this.item_details[list][_rowindex].amount)
+					}
 				}
 
-				unit_price = isMinus ? unit_price.replace('-', '') : unit_price
-				unit_price = parseInt(delFigure(unit_price))
-
-				const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
-
-				const amount = quantity * unit_price
-				this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
-				
-				//税込なら消費税を足す
-				//if (this.item_details[list][_rowindex].is_taxation === '1') {
-				//this.item_details[list][_rowindex].amount += Math.floor(this.item_details[list][_rowindex].amount * 0.08)
-				//}
-				if (this.item_details[list][_rowindex].amount) {
-					this.item_details[list][_rowindex].amount = isMinus ? '-' + addFigure(this.item_details[list][_rowindex].amount) : addFigure(this.item_details[list][_rowindex].amount)
-				}
 			}
 
 			this.changeTotalAmount()
@@ -852,10 +862,14 @@ export default class InvoiceForm extends React.Component {
 		this.forceUpdate()
 	}
 
-	forcusUnitPrice(list, _data, _rowindex) {
-		const isMinus = _data && String(_data)[0] === '-'
-		this.item_details[list][_rowindex].unit_price = isMinus ? '-' + delFigure(_data) : delFigure(_data)
-		this.forceUpdate()
+	forcusUnitPrice(list, _data, _rowindex, _key) {
+
+		const isNumber = parseInt(_data) ? true : false
+		if (isNumber) {
+			const isMinus = _data && String(_data)[0] === '-'
+			this.item_details[list][_rowindex][_key] = isMinus ? '-' + delFigure(_data) : delFigure(_data)
+			this.forceUpdate()
+		}
 	}
 
 	changeTotalAmount() {
@@ -1150,10 +1164,18 @@ export default class InvoiceForm extends React.Component {
 
 		}
 
+		const index_list = {
+			YH1_0: 0,
+			ECO1_0: 1,
+			ECO2_0: 2,
+			YH1_1: 3,
+			ECO1_1: 4,
+			ECO2_1: 5,
+		}
 		/**
 		 * 明細データ取得処理
 		 */
-		const getBillingSummary = (_customer, _shipping_yearmonth, _delivery_company) => {
+		const getBillingSummary = (_customer, _shipping_yearmonth, _shipment_service_code, _shipment_class) => {
 
 			const billto_code = this.entry.billto.billto_code
 
@@ -1162,7 +1184,7 @@ export default class InvoiceForm extends React.Component {
 				+ '&customer_code=' + _customer
 
 			axios({
-				url: '/s/billingsummary' + option + '&delivery_company=' + _delivery_company,
+				url: '/s/billingsummary' + option + '&shipment_service_code=' + _shipment_service_code + '&shipment_class=' + _shipment_class,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -1173,9 +1195,17 @@ export default class InvoiceForm extends React.Component {
 				getCount++
 
 				const record = response.data.feed.entry[0].billing_summary.record
-				const tableIndex = _delivery_company === 'YH' ? 2 : 1
-				const tableName = _delivery_company === 'YH' ? 'ヤマト運輸発払簡易明細' : 'エコ配JP簡易明細'
+				let tableIndex = index_list[_shipment_service_code + '_' + _shipment_class]
+				const shipmentClassName = _shipment_class === '0' ? '出荷' : '集荷'
+				let tableName = shipmentClassName + ' : '
 
+				if (_shipment_service_code === 'YH1') {
+					tableName += 'ヤマト運輸発払簡易明細'
+				} else if (_shipment_service_code === 'ECO1') {
+					tableName += 'エコ配JP簡易明細'
+				} else if (_shipment_service_code === 'ECO2') {
+					tableName += 'エコ配JP簡易明細'
+				}
 				if (record) {
 					setSummaryTable(record, tableIndex, tableName, option)
 				} else {
@@ -1194,8 +1224,12 @@ export default class InvoiceForm extends React.Component {
 		if (customer_code && selectInternalWorkYearMonth) {
 
 			const shipping_yearmonth = selectInternalWorkYearMonth.replace(/\//, '')
-			getBillingSummary(customer_code, shipping_yearmonth, 'YH')
-			getBillingSummary(customer_code, shipping_yearmonth, 'ECO')
+			Object.keys(index_list).forEach((_key) => {
+				const keys = _key.split('_')
+				const shipment_service_code = keys[0]
+				const shipment_class = keys[1]
+				getBillingSummary(customer_code, shipping_yearmonth, shipment_service_code, shipment_class)
+			})
 
 		} else {
 
@@ -1413,13 +1447,17 @@ export default class InvoiceForm extends React.Component {
 											field: 'unit_price',title: '単価', width: '100px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit_price')},
-												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex)},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex,'unit_price')},
 											},
 										}, {
 											field: 'is_taxation', title: '税込/税抜', width: '50px',
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('monthly',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {

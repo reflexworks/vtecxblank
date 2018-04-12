@@ -495,7 +495,10 @@ export default class QuotationForm extends React.Component {
 					this.originTypeList[_celIndex][_rowindex] = []
 				}
 				if (!this.typeList[_celIndex][_rowindex] || this.typeList[_celIndex][_rowindex].length !== this.originTypeList[_celIndex][_rowindex].length) {
-					const item_name = this.entry.item_details[_rowindex].item_name
+					let item_name = this.entry.item_details[_rowindex].item_name
+					if (item_name && Object.prototype.toString.call(item_name) === '[object Object]') {
+						item_name = item_name.props.children
+					}
 					if (item_name) {
 						this.cashTypeAhead[0][item_name].type_aheads.push({
 							value: _data.value,
