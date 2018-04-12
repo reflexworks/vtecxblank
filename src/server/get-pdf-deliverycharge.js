@@ -68,8 +68,14 @@ const remarkTable = (_deliverychargeData) => {
 	const remarks = _deliverychargeData.feed.entry[0].remarks
 
 	if (remarks) {
+		let res = {}
 		let array = []
+		let size = 0
 		remarks.map((_obj) => {
+			size++
+			if (String(_obj.content).length > 95) {
+				size++
+			}
 			array.push(
 				<tr>
 					<td></td>
@@ -88,7 +94,9 @@ const remarkTable = (_deliverychargeData) => {
 				{array}
 			</table>
 		)
-		return table
+		res.table = table
+		res.size = size
+		return res
 	} else {
 		return null
 	}
@@ -300,7 +308,7 @@ const deliverychargeTable = (_data) => {
 		return a.shipment_service_type - b.shipment_service_type
 	})
 
-	let max_table_size = 40
+	let max_table_size
 	let total_size = 0
 	let table_array = []
 	_data.feed.entry[0].delivery_charge.map((_obj) => {
@@ -308,19 +316,24 @@ const deliverychargeTable = (_data) => {
 		let table_size = 1
 		const type = _obj.shipment_service_type
 		if (type === '1') {
-			table_size = 8
+			table_size = 10
 		}
-		table_size = table_size + _obj.delivery_charge_details.length
+		const length = _obj.delivery_charge_details.length
+		table_size = table_size + length
 		
 		const table_total = total_size + table_size
+		if (res.maxPage === 0) {
+			// 1ページ目はヘッダを考慮した最大サイズ
+			max_table_size = 30
+		} else {
+			// 2ページ目以降は配送料のみの最大サイズ
+			max_table_size = 40
+		}
 		if (max_table_size < table_total) {
-			//vtecxapi.log(_obj.shipment_service_name + ' : ' + table_total)
-			res.data.push(table_array)
+			res.data.push(JSON.parse(JSON.stringify(table_array)))
 			res.maxPage++
 			table_array = []
 			total_size = 0
-		} else {
-			vtecxapi.log(_obj.shipment_service_name + ' / ' + _obj.shipment_service_service_name + ' : ' + table_total)
 		}
 		table_array.push(table(_obj))
 		total_size = total_size + table_size
@@ -331,6 +344,8 @@ const deliverychargeTable = (_data) => {
 		res.data.push(table_array)
 		res.maxPage++
 	}
+	res.maxSize = max_table_size
+	res.totalSize = total_size
 
 	return res
 }
@@ -383,14 +398,20 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 			//pageData.pageList.page.push({word: ''})
 			index++
 		}
-		const setTopPage = (_customer) => {
-			setPage([pageHeader(_customer)])
+		const setContentPage = (_customer, _pageIndex, _maxPage, _table, _remark_table) => {
+			let page = []
+			if (index === 1) {
+				page.push(pageHeader(_customer))
+			}
+			page.push(pageHeaderSub(_customer, _pageIndex, _maxPage))
+			page.push(_table)
+			if (_remark_table) {
+				page.push(_remark_table)
+			}
+			setPage(page)
 		}
-		const setContentPage = (_customer, _pageIndex, _maxPage, _table) => {
-			setPage([pageHeaderSub(_customer, _pageIndex, _maxPage), _table])
-		}
-		const setRemarkPage = (_customer, _deliverychargeData) => {
-			setPage([globalPageHeader(<div>{_customer.customer.customer_name}　御中</div>), remarkTable(_deliverychargeData)])
+		const setRemarkPage = (_customer, _pageIndex, _maxPage, _remark_table) => {
+			setPage([pageHeaderSub(_customer, _pageIndex, _maxPage), _remark_table.table])
 		}
 
 		customerData.map((_obj) => {
@@ -399,19 +420,40 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 
 			if (CommonGetFlag(deliverychargeData)) {
 
-				// 表紙の設定
-				setTopPage(_obj)
-
 				// 配送料ページの設定
 				const req = deliverychargeTable(deliverychargeData)
-				let _pageIndex = 1
-				req.data.map((_array) => {
-					setContentPage(_obj, _pageIndex, req.maxPage, _array)
-					_pageIndex++
-				})
+
+				const remark_table = remarkTable(deliverychargeData)
+
+				let isRemarks = false
+				if (remark_table) {
+					// 1行が配送料の1行分の2倍とする
+					const remarks_size = remark_table.size * 1.5
+					const total_size = req.totalSize + remarks_size
+					if (req.maxSize > total_size) {
+						isRemarks = true
+					} else {
+						req.maxPage++
+					}
+				}
+
+				let _pageIndex
+				for (let i = 0, ii = req.data.length; i < ii; ++i) {
+					const _array = req.data[i]
+					_pageIndex = i + 1
+					if (_pageIndex === req.data.length && isRemarks) {
+						setContentPage(_obj, _pageIndex, req.maxPage, _array, remark_table.table)
+					} else {
+						setContentPage(_obj, _pageIndex, req.maxPage, _array)
+					}
+				}
 
 				// 備考の設定
-				setRemarkPage(_obj, deliverychargeData)
+				// 前ページに備考が含まれなかった場合
+				if (remark_table && !isRemarks) {
+					_pageIndex++
+					setRemarkPage(_obj, _pageIndex, req.maxPage, remark_table)
+				}
 
 			}
 		})

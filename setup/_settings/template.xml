@@ -59,6 +59,7 @@ staff
  staff_email
  uid
  password
+ superior_name
 warehouse
  warehouse_code
  warehouse_name
