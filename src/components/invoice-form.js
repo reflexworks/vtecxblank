@@ -1170,10 +1170,18 @@ export default class InvoiceForm extends React.Component {
 
 		}
 
+		const index_list = {
+			YH1_0: 0,
+			ECO1_0: 1,
+			ECO2_0: 2,
+			YH1_1: 3,
+			ECO1_1: 4,
+			ECO2_1: 5,
+		}
 		/**
 		 * 明細データ取得処理
 		 */
-		const getBillingSummary = (_customer, _shipping_yearmonth, _delivery_company, _shipment_class) => {
+		const getBillingSummary = (_customer, _shipping_yearmonth, _shipment_service_code, _shipment_class) => {
 
 			const billto_code = this.entry.billto.billto_code
 
@@ -1182,7 +1190,7 @@ export default class InvoiceForm extends React.Component {
 				+ '&customer_code=' + _customer
 
 			axios({
-				url: '/s/billingsummary' + option + '&shipment_service_code=' + _delivery_company + '&shipment_class=' + _shipment_class,
+				url: '/s/billingsummary' + option + '&shipment_service_code=' + _shipment_service_code + '&shipment_class=' + _shipment_class,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -1193,10 +1201,17 @@ export default class InvoiceForm extends React.Component {
 				getCount++
 
 				const record = response.data.feed.entry[0].billing_summary.record
-				const tableIndex = _delivery_company === 'YH' ? 2 : 1
+				let tableIndex = index_list[_shipment_service_code + '_' + _shipment_class]
 				const shipmentClassName = _shipment_class === '0' ? '出荷' : '集荷'
-				const tableName = _delivery_company === 'YH' ? shipmentClassName + ' : ヤマト運輸発払簡易明細' : shipmentClassName + ' : エコ配JP簡易明細'
+				let tableName = shipmentClassName + ' : '
 
+				if (_shipment_service_code === 'YH1') {
+					tableName += 'ヤマト運輸発払簡易明細'
+				} else if (_shipment_service_code === 'ECO1') {
+					tableName += 'エコ配JP簡易明細'
+				} else if (_shipment_service_code === 'ECO2') {
+					tableName += 'エコ配JP簡易明細'
+				}
 				if (record) {
 					setSummaryTable(record, tableIndex, tableName, option)
 				} else {
@@ -1215,12 +1230,12 @@ export default class InvoiceForm extends React.Component {
 		if (customer_code && selectInternalWorkYearMonth) {
 
 			const shipping_yearmonth = selectInternalWorkYearMonth.replace(/\//, '')
-			getBillingSummary(customer_code, shipping_yearmonth, 'YH1', '0')
-			getBillingSummary(customer_code, shipping_yearmonth, 'ECO1', '0')
-			getBillingSummary(customer_code, shipping_yearmonth, 'ECO2', '0')
-			getBillingSummary(customer_code, shipping_yearmonth, 'YH1', '1')
-			getBillingSummary(customer_code, shipping_yearmonth, 'ECO1', '1')
-			getBillingSummary(customer_code, shipping_yearmonth, 'ECO2', '1')
+			Object.keys(index_list).forEach((_key) => {
+				const keys = _key.split('_')
+				const shipment_service_code = keys[0]
+				const shipment_class = keys[1]
+				getBillingSummary(customer_code, shipping_yearmonth, shipment_service_code, shipment_class)
+			})
 
 		} else {
 
