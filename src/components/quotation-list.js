@@ -6,7 +6,6 @@ import {
 	Row,
 	Col,
 	PageHeader,
-	Button,
 	Glyphicon,
 } from 'react-bootstrap'
 import type {
@@ -22,7 +21,8 @@ import {
 	CommonPagination,
 	CommonRadioBtn,
 	CommonMonthlySelect,
-	CommonGetList
+	CommonGetList,
+	CommonLoginUser
 } from './common'
 
 type State = {
@@ -47,6 +47,8 @@ export default class QuotationList extends React.Component {
 			urlToPagenation: '' // ページネーション用に渡すURL
 		}
 		this.activePage = 1
+		const role = CommonLoginUser().get().role
+		this.isInvoice = role === '2' || role === '4' ? false : true
 	}
 
 	/**
@@ -138,6 +140,34 @@ export default class QuotationList extends React.Component {
 	}
 
 	render() {
+
+		let header = []
+
+		if (this.isInvoice) {
+			header.push({
+				field: 'btn1', title:'請求書', width: '30px',
+				label: <Glyphicon glyph="open-file" />,
+				onClick: (_data) => this.moveInvoiceRegistration(_data)
+			})
+		}
+		header.push({
+			field: 'quotation.quotation_code',title: '見積書No', width: '70px'
+		})
+		header.push({
+			field: 'quotation.quotation_code_sub',title: '枝番', width: '50px'
+		})
+		header.push({
+			field: 'quotation.quotation_date',title: '見積年月', width: '70px'
+		})
+		header.push({
+			field: 'billto.billto_name', title: '請求先名', width: '500px'
+		})
+		header.push({
+			field: 'quotation.status', title: '発行ステータス', width: '80px', convert: {0: '未発行', 1: '発行済'}
+		})
+		header.push({
+			field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}
+		})
 		return (
 			<Grid>
 
@@ -208,27 +238,8 @@ export default class QuotationList extends React.Component {
 							data={this.state.feed.entry}
 							edit={(data) => this.onSelect(data)}
 							remove={(data) => this.onDelete(data)}
-							header={[{
-								field: 'btn1', title:'請求書', width: '30px',
-								label: <Glyphicon glyph="open-file" />,
-								onClick: (_data) => this.moveInvoiceRegistration(_data)
-							},{
-								field: 'quotation.quotation_code',title: '見積書No', width: '70px'
-							}, {
-								field: 'quotation.quotation_code_sub',title: '枝番', width: '50px'
-							}, {
-								field: 'quotation.quotation_date',title: '見積年月', width: '70px'
-							}, {
-								field: 'billto.billto_name', title: '請求先名', width: '500px'
-							}, {
-								field: 'quotation.status', title: '発行ステータス', width: '80px', convert: {0: '未発行', 1: '発行済'}
-							}, {
-								field: 'creator', title: '作成者', width: '150px', convert: {0: '未発行', 1: '発行済'}
-							}]}
+							header={header}
 						>
-							<Button bsSize="sm" style={{float: 'left', width: '130px', 'margin': '0px 5px'}}>
-								<Glyphicon glyph="download" />CSVダウンロード
-							</Button>
 						</CommonTable>
 					</Col>  
 				</Row>  

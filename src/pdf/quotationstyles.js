@@ -5,13 +5,22 @@ export const _page = {
 	right: -30,
 	top: 30,
 	bottom: 30,
-	linecolor: '#000000'
+	linecolor: '#000000',
 }
 
 export const widths = {
-	widths:'5,10,4,14,6,7,12,6,16,5'
+	widths: '5,10,4,14,6,7,12,6,16,5',
 }
 
+export const header_title = {
+	size: 4,
+	left: 'false',
+	right: 'false',
+	top: 'false',
+	bottom: 'false',
+	offsetx: -15,
+	offsety: 20
+}
 
 export const borderTop = {
 	left: 'false',
@@ -132,6 +141,14 @@ export const fontsize6UL = {
 	style:'underline'	
 }
 
+export const footerFontsize6UL = {
+	//size: 10,
+	style: 'underline',
+	valign:'bottom',
+	//absolutex: 50,
+	//absolutey: 50,
+}
+
 export const tableTd = {
 	left:'true',
 	right:'true',
@@ -141,6 +158,19 @@ export const tableTd = {
 	align:'center',
 	color:'#000000',	
 	offsety:3
+}
+
+export const tableTdLeft = {
+	left:'true',
+	right:'true',
+	top:'true',
+	bottom:'true',
+	bgcolor:'#CCCCCC',
+	align:'left',
+	color: '#000000',
+	height: 10,
+	offsetx:1,
+	offsety:0,
 }
 
 export const tdCenter = {
@@ -160,8 +190,8 @@ export const tdLeft = {
 	bottom:'true',
 	align:'left',
 	height:'15',
-	offsetx:5,
-	offsety:4
+	offsetx:1,
+	offsety:4,
 }
 
 export const tdLeftb = {
@@ -171,7 +201,7 @@ export const tdLeftb = {
 	bottom:'true',
 	align:'left',
 	height:'25',
-	offsetx:5,
+	offsetx:1,
 	offsety:9,
 	color:'#000000',	
 	bgcolor:'#CCCCCC'
@@ -212,7 +242,7 @@ export const tdLeftNoTop= {
 	bottom:'true',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:-30,
 }
 
@@ -223,7 +253,7 @@ export const tdLeftTwoLineNoBottom= {
 	bottom:'false',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:-4,
 }
 
@@ -234,7 +264,7 @@ export const tdLeftTwoLineNoTopBottom= {
 	bottom:'false',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:12,
 }
 
@@ -245,7 +275,7 @@ export const tdLeftNoTopBottom = {
 	bottom:'false',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:4,
 }
 
@@ -256,7 +286,7 @@ export const tdLeftNoBottom = {
 	bottom:'false',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:-4,
 }
 
@@ -267,7 +297,7 @@ export const tdRemarks = {
 	bottom:'true',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:4,	
 }
 
@@ -278,7 +308,7 @@ export const tdRemarks2LineLeft = {
 	bottom:'true',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:-4,
 }
 
@@ -300,7 +330,7 @@ export const tdRemarks3Line = {
 	bottom:'true',
 	align:'left',
 	height:'15',
-	offsetx:5,
+	offsetx:1,
 	offsety:-15,
 }
 
