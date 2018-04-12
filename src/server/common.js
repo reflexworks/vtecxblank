@@ -54,15 +54,15 @@ export function addFigure(numVal) {
 //渡された請求元の名前での判子の種類を決める
 export function getStamp(_billfromName){
 	let stamp = ''
-	if (_billfromName.match('コネクトロジスティクス')) {
+	if (_billfromName.match('CONNECTロジスティクス') ||  _billfromName.match('コネクトロジスティクス')) {
 		stamp = '/img/connectlogi.png'
-	} else if (_billfromName.match('CONNECTコーポレーション')) {
+	} else if (_billfromName.match('CORPORATION') || _billfromName.match('コーポレーション')) {
 		stamp = '/img/connectcorp.png'
-	} else if (_billfromName.match('CONNECT・EC')) {
+	} else if (_billfromName.match('CONNECT・EC') || _billfromName.match('コネクト・EC')){
 		stamp = '/img/connectec.png'
-	} else if (_billfromName.match('ネクストジェネレーション')) {
+	} else if (_billfromName.match('NEXT') || _billfromName.match('ネクスト')) {
 		stamp = '/img/nextgen.png'
-	} else if (_billfromName.match('コネクトエクスプレス')) {
+	} else if (_billfromName.match('CONNECT　EXPRESS') || _billfromName.match('エクスプレス')) {
 		stamp = '/img/express.png'		
 	} else {
 		stamp = ''

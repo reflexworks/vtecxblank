@@ -52,7 +52,7 @@ function getBillingData(entry) {
 			'tracking_number': tracking_number,
 			'shipment_service_service_name': entry.billing.billing_item,
 			'delivery_class': entry.billing.delivery_area,
-			'size': '',
+			'size': '80',
 			'prefecture': prefecture,
 			'zone_name': charge_by_zone[0].zone_name,
 			'city': '',
