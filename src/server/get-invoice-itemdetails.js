@@ -35,6 +35,7 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 		// period
 		result = result.concat(getPeriod(internal_work_all))
 	}
+
 	// shipping
 	shipment_service.feed.entry.map((entry) => {
 		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name + '/' + entry.shipment_service.service_name))    // 出荷
@@ -219,16 +220,16 @@ function getSumRecordPacking_item(internal_work_packing_item, packing_item_code)
 	}).reduce((prev,current) => {
 		return {
 			'internal_work': {
-				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity)),
-				'unit_price': current.internal_work.special_unit_price,
+				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity.replace(/[^0-9^\\.]/g,''))),
+				'unit_price': current.internal_work.special_unit_price.replace(/[^0-9^\\.]/g,''),
 				'item_name' : current.internal_work.packing_item_name, 
 				'remarks' : current.internal_work.packing_item_code
 			}
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
 
-	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
-	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+	const quantity = entry.internal_work ? entry.internal_work.quantity : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price : '0'
 
 	return {
 		'category': 'packing_item',
@@ -251,15 +252,15 @@ function getSumRecordDaily(internal_work_daily,item_details_name,item_details_un
 	}).reduce((prev,current) => {
 		return {
 			'internal_work': {
-				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity)),
-				'unit_price': current.internal_work.unit_price,                
+				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity.replace(/[^0-9^\\.]/g,''))),
+				'unit_price': current.internal_work.unit_price.replace(/[^0-9^\\.]/g,''),                
 				'remarks': current.internal_work.remarks                
 			}
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
-    
-	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
-	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+	
+	const quantity = entry.internal_work ? entry.internal_work.quantity : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price : '0'
     
 	return {
 		'category': 'daily',
