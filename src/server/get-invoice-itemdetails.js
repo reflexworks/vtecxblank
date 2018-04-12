@@ -18,13 +18,11 @@ try {
 
 export function getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth) {
     
-
 	const shipment_service = vtecxapi.getFeed('/shipment_service')
 	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
 
 	let result = []
 	const internal_work_all = getInternalworkdata(working_yearmonth,customer_code,quotation_code)
-
 	if (internal_work_all.feed.entry) {
 		// daily
 		result = getDaily(internal_work_all)
@@ -97,14 +95,14 @@ function getDaily(internal_work_all) {
 			}
 		}).filter((x, i, self) => {
 			return self.indexOf(x) === i
-		}).filter(Boolean)                      // nullを除去
+		})
 			.map((item_details_unit_name) => {
 				internal_work_daily.map((entry) => {
 					if ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name))
 						return entry.internal_work.item_details_unit
 				}).filter((x, i, self) => {
 					return self.indexOf(x) === i
-				}).filter(Boolean)              // nullを除去
+				})
 					.map((item_details_unit) => { 
 						result.push(getSumRecordDaily(internal_work_daily,item_details_name,item_details_unit_name,item_details_unit))
 					})
@@ -158,14 +156,14 @@ function getPeriod(internal_work_all) {
 			}
 		}).filter((x, i, self) => {
 			return self.indexOf(x) === i
-		}).filter(Boolean)                      // nullを除去
+		})
 			.map((item_details_unit_name) => {
 				internal_work_period.map((entry) => {
 					if ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name))
 						return entry.internal_work.item_details_unit
 				}).filter((x, i, self) => {
 					return self.indexOf(x) === i
-				}).filter(Boolean)              // nullを除去
+				})
 					.map((item_details_unit) => { 
 						result.push(getRecordPeriod(internal_work_period, item_details_name, item_details_unit_name, item_details_unit, '1'))                        
 						result.push(getRecordPeriod(internal_work_period, item_details_name, item_details_unit_name, item_details_unit, '2'))                        
