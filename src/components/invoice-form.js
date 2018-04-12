@@ -999,10 +999,10 @@ export default class InvoiceForm extends React.Component {
 		 */
 		const viewTable = (_pdf_option) => {
 
-			// 合計通信数が2になったら描画処理
-			if (getCount === 2) {
+			// 合計通信数が6になったら描画処理
+			if (getCount === 6) {
 
-				if (tables[1] || tables[2]) {
+				if (tables[1] || tables[2] || tables[3] || tables[4] || tables[5] || tables[6]) {
 					const downloadSinglePdf = () => {
 						location.href = '/s/get-pdf-billing-summary' + _pdf_option
 					}
@@ -1171,12 +1171,12 @@ export default class InvoiceForm extends React.Component {
 		}
 
 		const index_list = {
-			YH1_0: 0,
-			ECO1_0: 1,
-			ECO2_0: 2,
-			YH1_1: 3,
-			ECO1_1: 4,
-			ECO2_1: 5,
+			YH1_0: 1,
+			ECO1_0: 2,
+			ECO2_0: 3,
+			YH1_1: 4,
+			ECO1_1: 5,
+			ECO2_1: 6,
 		}
 		/**
 		 * 明細データ取得処理
@@ -1206,11 +1206,11 @@ export default class InvoiceForm extends React.Component {
 				let tableName = shipmentClassName + ' : '
 
 				if (_shipment_service_code === 'YH1') {
-					tableName += 'ヤマト運輸発払簡易明細'
+					tableName += 'ヤマト運輸/宅急便発払'
 				} else if (_shipment_service_code === 'ECO1') {
-					tableName += 'エコ配JP簡易明細'
+					tableName += 'エコ配ALLJP/エコプラス便'
 				} else if (_shipment_service_code === 'ECO2') {
-					tableName += 'エコ配JP簡易明細'
+					tableName += 'エコ配ALLJP/コレクト便'
 				}
 				if (record) {
 					setSummaryTable(record, tableIndex, tableName, option)
