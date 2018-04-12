@@ -5,10 +5,10 @@ const shipping_yearmonth = vtecxapi.getQueryString('shipping_yearmonth')  //2018
 const billto_code = vtecxapi.getQueryString('billto_code')  // 0000124
 const customer_code = vtecxapi.getQueryString('customer_code')  // 0000124
 const shipment_service_code = vtecxapi.getQueryString('shipment_service_code')  //YH or ECO
-const shipment_class = vtecxapi.getQueryString('shipment_class')  //0:出荷、1:集荷
+const _shipment_class = vtecxapi.getQueryString('shipment_class')  //0:出荷、1:集荷
 
 try {
-	const result = getSummary(shipping_yearmonth, billto_code, shipment_service_code, customer_code)
+	const result = getSummary(shipping_yearmonth, billto_code, shipment_service_code, customer_code, _shipment_class)
 
 	vtecxapi.doResponse(result)
 	
@@ -16,7 +16,7 @@ try {
 	vtecxapi.sendMessage(400, e)
 }
 
-export function getSummary(shipping_yearmonth, billto_code, shipment_service_code, _customer_code) {
+export function getSummary(shipping_yearmonth, billto_code, shipment_service_code, _customer_code, shipment_class) {
 
 	const billto = vtecxapi.getEntry('/billto/' + billto_code)
 
