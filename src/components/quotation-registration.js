@@ -106,9 +106,8 @@ export default class QuotationRegistration extends React.Component {
 				]
 			}],
 			item_details: [
-				{item_name: '保管料', unit_name: '1坪', unit: '月', unit_price: '4,700', remarks: '棚、ラックリース（新品：500円／中古品：300円）支給品利用可能'},
-				{item_name: '保管料', unit_name: '1パレット', unit: '月', unit_price: '2,250', remarks: 'サイズ1,100×1,100'},
-				{item_name: '保管料', unit_name: '1パレット', unit: '月', unit_price: '2,250', remarks: 'パレットラック、ネステナーによる縦積み'},
+				{item_name: '保管料', unit_name: '月', unit: '1坪', unit_price: '4,700', remarks: '棚、ラックリース（新品：500円／中古品：300円）支給品利用可能'},
+				{item_name: '保管料', unit_name: '月', unit: '1パレット', unit_price: '2,250', remarks: 'サイズ1,100×1,100 パレットラック、ネステナーによる縦積み'},
 				{item_name: '入庫作業料', unit_name: '入庫料', unit: '1点', unit_price: '30', remarks: 'バラ、アソート入庫、外装検品、品番確認、数量検品、棚格納'},
 				{item_name: '入庫作業料', unit_name: '入庫料', unit: '1箱', unit_price: '50', remarks: '外装検品、品番確認、内容未見、箱積み'},
 				{item_name: '入庫作業料', unit_name: 'デバンニング', unit: '20F', unit_price: '18,000', remarks: 'ハイキューブ＋¥3,000'},
@@ -131,8 +130,8 @@ export default class QuotationRegistration extends React.Component {
 				{item_name: '付帯作業料　※１', unit_name: 'その他', unit: '', unit_price: '', remarks: 'ご相談'},
 				{item_name: '実地棚卸作業　※1', unit_name: '人工', unit: '1時間', unit_price: '2,800', remarks: '必要な場合'},
 				{item_name: 'イレギュラー処理費用', unit_name: '返品処理', unit: '1件', unit_price: '250', remarks: '住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告'},
-				{item_name: '運営管理費', unit_name: 'データ変換ソフト ', unit: '月額', unit_price: '5,000', remarks: 'ご希望に応じて　※２'},
-				{item_name: '運営管理費', unit_name: '', unit: '月額', unit_price: '18,000', remarks: '専属窓口1名、在庫報告、システム保守、㼃M㻿が必要な場合別途相談'},
+				{item_name: '運営管理費', unit_name: 'データ変換ソフト(月額) ', unit: '', unit_price: '5,000', remarks: 'ご希望に応じて　※２'},
+				{item_name: '運営管理費', unit_name: '月額', unit: '', unit_price: '18,000', remarks: '専属窓口1名、在庫報告、システム保守、㼃M㻿が必要な場合別途相談'},
 				{item_name: '梱包資材', unit_name: '', unit: '', unit_price: '', remarks: '支給品使用または別途相談'},
 				{item_name: '対応日', unit_name: '', unit: '', unit_price: '', remarks: '相談　※エコ配JPは土日祝日不可となります。'},
 				{item_name: '出荷データ', unit_name: '', unit: '', unit_price: '', remarks: '1回目 ～12:00迄 最終 14:00迄'},
