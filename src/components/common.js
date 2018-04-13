@@ -2286,7 +2286,7 @@ export class CommonSearchConditionsFrom extends React.Component {
 		for (var i = 0, ii = form.length; i < ii; ++i) {
 
 			const name = form[i].name
-			const value = form[i].value
+			let  value = form[i].value
 			const type = form[i].type
 			if (type === 'radio' && !form[i].checked) {
 				 continue
@@ -2296,12 +2296,16 @@ export class CommonSearchConditionsFrom extends React.Component {
 			}
 
 			if (value || value !== '') {
+				if (type === 'text') {
+					value = encodeURIComponent(value)
+				}
 				conditions = conditions ? conditions + '&' : ''
-				conditions = conditions + name + '-rg-*' + value + '*'
+				conditions = conditions + name + '-rg-.*' + value + '.*'
 			}
 
 		}
 		this.setState({ open: !this.state.open })
+
 		this.props.doSearch(conditions)
 	}
 
@@ -2347,7 +2351,6 @@ export class CommonPagination extends React.Component {
 	 * @page 取得したいページ
 	 *****/
 	buildIndex(url, activePage) {
-
 		// ページング取得に必要な設定を行う
 		let param
 		let pageIndex =
@@ -2358,7 +2361,7 @@ export class CommonPagination extends React.Component {
 			} else {
 				param = pageIndex
 			}
-
+				
 		    // サーバにページネーションIndex作成リクエストを送信
 			axios({
 				url: url + '&_pagination=' + param,
@@ -2370,8 +2373,7 @@ export class CommonPagination extends React.Component {
 				this.pageIndex = pageIndex
 			}).catch(() => {
 				this.pageIndex = pageIndex
-			})
-        
+			})	
 		} 
 	}
 
@@ -2383,6 +2385,7 @@ export class CommonPagination extends React.Component {
 		this.props.onChange(eventKey, url)	// 再検索
 	}
 	
+
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -2938,6 +2941,7 @@ import { setTimeout } from 'timers'
 export function CommonGetList(_url, _activePage) {
 	return new Promise((resolve) => {
 		const get = () => {
+
 			axios({
 				url: _url + '&n=' + _activePage,
 				method: 'get',
