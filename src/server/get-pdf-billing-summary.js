@@ -210,59 +210,154 @@ const summaryPage = () => {
 			}
 		}
 
-		const summaryDataYH = getSummary(shipping_yearmonth, billto_code, 'YH', customer_code)
-		const summaryDataECO = getSummary(shipping_yearmonth, billto_code, 'ECO', customer_code)
+		const list = ['YH1_0', 'ECO1_0', 'ECO2_0', 'YH1_1', 'ECO1_1', 'ECO2_1']
+		let array = []
+		list.map((_key) => {
+			const keys = _key.split('_')
+			const shipment_service_code = keys[0]
+			const shipment_class = keys[1]
+			const table_data = getSummary(shipping_yearmonth, billto_code, shipment_service_code, customer_code, shipment_class)
+			if (table_data.feed.entry[0].billing_summary.record.length) {
+				array.push({
+					shipment_service_code: shipment_service_code,
+					shipment_class: shipment_class,
+					table_data: table_data
+				})
+			}
+		})
 
 		let obj = {}
-		if (summaryDataYH.feed.entry.length) {
-			summaryDataYH.feed.entry.map((_entry) => {
-				const table = summarys(_entry, '【 ヤマト運輸発払簡易明細 】')
-				if (table) {
-					obj[_entry.customer.customer_code] = {
-						table: [table],
+		let isClass0 = true
+		let isClass1 = true
+		const classNameTable = (_className) => {
+			let summary_table = JSON.parse(JSON.stringify(pdfstyles.summary_table))
+			summary_table.widths = '1,98,1'
+			return (
+				<table cols="3" style={summary_table}>
+					<tr>
+						<td></td>
+						<td style={pdfstyles.class_title}>
+							<div>{_className}</div>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="3" style={pdfstyles.class_title_blank}><div></div></td>
+					</tr>
+				</table>
+			)
+		}
+
+		let cashCount = {}
+		array.map((_data) => {
+
+			// 顧客の数だけループする
+			_data.table_data.feed.entry.map((_entry) => {
+
+				const customer_code = _entry.customer.customer_code
+				if (!cashCount[customer_code]) {
+					cashCount[customer_code] = {
+						yh_count: 0,
+						eco_count: 0
+					}
+				}
+
+				let table_name
+				if (_data.shipment_service_code === 'YH1') table_name = 'ヤマト運輸/宅急便発払'
+				if (_data.shipment_service_code === 'ECO1') table_name = 'エコ配ALLJP/エコプラス便'
+				if (_data.shipment_service_code === 'ECO2') table_name = 'エコ配ALLJP/コレクト便'
+				if (!obj[customer_code]) {
+					obj[customer_code] = {
+						table0: [],
+						table1: [],
 						customer_name: _entry.customer.customer_name
 					}
 				}
-			})
-		}
-		if (summaryDataECO.feed.entry.length) {
-			summaryDataECO.feed.entry.map((_entry) => {
-				const table = summarys(_entry, '【 エコ配JP簡易明細 】')
-				if (table) {
-					if (!obj[_entry.customer.customer_code]) {
-						obj[_entry.customer.customer_code] = {
-							table: [table],
-							customer_name: _entry.customer.customer_name
-						}
-					} else {
-						obj[_entry.customer.customer_code].table.push(table)
-					}
+
+				if (_data.shipment_service_code === 'YH1') cashCount[customer_code].yh_count++
+				if (_data.shipment_service_code.indexOf('ECO') !== -1) cashCount[customer_code].eco_count++
+
+				if (_data.shipment_class === '0' && isClass0) {
+					isClass0 = false
+					obj[customer_code].table0.push(classNameTable('【 発送 】'))
 				}
+				if (_data.shipment_class === '1' && isClass1) {
+					isClass1 = false
+					obj[customer_code].table1.push(classNameTable('【 集荷 】'))
+				}
+				obj[customer_code]['table' + _data.shipment_class].push(summarys(_entry, table_name))
 			})
-		}
+		})
 
 		const setTable = () => {
+			// 1ページに収まりきるか
+			const isOnePage = (_obj) => {
+				// NG
+				// yh1個 eco3個
+				// yh1個 eco4個
+				// yh2個 eco1個
+				// yh2個 eco2個
+				// yh2個 eco3個
+				// yh2個 eco4個
+				if (_obj.yh_count === 1) {
+					if (_obj.eco_count > 2) {
+						return false
+					}
+				} else if (_obj.yh_count === 2){
+					if (_obj.eco_count > 0) {
+						return false
+					}
+				}
+				return true
+			}
 			let array = []
 			Object.keys(obj).forEach((_key) => {
 				res.size++
-				const page = '_page-' + JSON.stringify(res.size)
-				array.push(
-					<div className="_page" id={page} style={pdfstyles._page}>
-						<table cols="3" style={pdfstyles.header_table}>
-							<tr>
-								<td></td>
-								<td style={pdfstyles.header_sub}><div>請求明細(簡易)： {obj[_key].customer_name} 御中</div></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td style={pdfstyles.header_blank}><div></div></td>
-								<td></td>
-							</tr>
-						</table>
-						{obj[_key].table}
-					</div>
-				)
+				if (isOnePage(cashCount[_key])) {
+					const page = '_page-' + JSON.stringify(res.size)
+					array.push(
+						<div className="_page" id={page} style={pdfstyles._page}>
+							<table cols="3" style={pdfstyles.header_table}>
+								<tr>
+									<td></td>
+									<td style={pdfstyles.header_sub}><div>請求明細(簡易)： {obj[_key].customer_name} 御中</div></td>
+									<td></td>
+								</tr>
+							</table>
+							{obj[_key].table0}
+							{obj[_key].table1}
+						</div>
+					)
+				} else {
+					let page = '_page-' + JSON.stringify(res.size)
+					array.push(
+						<div className="_page" id={page} style={pdfstyles._page}>
+							<table cols="3" style={pdfstyles.header_table}>
+								<tr>
+									<td></td>
+									<td style={pdfstyles.header_sub}><div>請求明細(簡易)： {obj[_key].customer_name} 御中 (1 / 2)</div></td>
+									<td></td>
+								</tr>
+							</table>
+							{obj[_key].table0}
+						</div>
+					)
+					res.size++
+
+					page = '_page-' + JSON.stringify(res.size)
+					array.push(
+						<div className="_page" id={page} style={pdfstyles._page}>
+							<table cols="3" style={pdfstyles.header_table}>
+								<tr>
+									<td></td>
+									<td style={pdfstyles.header_sub}><div>請求明細(簡易)： {obj[_key].customer_name} 御中 (2 / 2)</div></td>
+									<td></td>
+								</tr>
+							</table>
+							{obj[_key].table1}
+						</div>
+					)
+				}
 			})
 			return array
 		}
@@ -297,7 +392,7 @@ const element = () => {
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
-
+/*
 const file_name = () => {
 	const preview = vtecxapi.getQueryString('preview')
 	const getName = () => {
@@ -316,5 +411,5 @@ const file_name = () => {
 
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
-
-//vtecxapi.toPdf(pageData, html, null)
+*/
+vtecxapi.toPdf(pageData, html, null)

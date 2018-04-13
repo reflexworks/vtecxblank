@@ -18,13 +18,11 @@ try {
 
 export function getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth) {
     
-
 	const shipment_service = vtecxapi.getFeed('/shipment_service')
 	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
 
 	let result = []
 	const internal_work_all = getInternalworkdata(working_yearmonth,customer_code,quotation_code)
-
 	if (internal_work_all.feed.entry) {
 		// daily
 		result = getDaily(internal_work_all)
@@ -35,6 +33,7 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 		// period
 		result = result.concat(getPeriod(internal_work_all))
 	}
+
 	// shipping
 	shipment_service.feed.entry.map((entry) => {
 		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name + '/' + entry.shipment_service.service_name))    // 出荷
@@ -96,14 +95,14 @@ function getDaily(internal_work_all) {
 			}
 		}).filter((x, i, self) => {
 			return self.indexOf(x) === i
-		}).filter(Boolean)                      // nullを除去
+		})
 			.map((item_details_unit_name) => {
 				internal_work_daily.map((entry) => {
 					if ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name))
 						return entry.internal_work.item_details_unit
 				}).filter((x, i, self) => {
 					return self.indexOf(x) === i
-				}).filter(Boolean)              // nullを除去
+				})
 					.map((item_details_unit) => { 
 						result.push(getSumRecordDaily(internal_work_daily,item_details_name,item_details_unit_name,item_details_unit))
 					})
@@ -157,14 +156,14 @@ function getPeriod(internal_work_all) {
 			}
 		}).filter((x, i, self) => {
 			return self.indexOf(x) === i
-		}).filter(Boolean)                      // nullを除去
+		})
 			.map((item_details_unit_name) => {
 				internal_work_period.map((entry) => {
 					if ((entry.internal_work.item_details_name===item_details_name)&&(entry.internal_work.item_details_unit_name===item_details_unit_name))
 						return entry.internal_work.item_details_unit
 				}).filter((x, i, self) => {
 					return self.indexOf(x) === i
-				}).filter(Boolean)              // nullを除去
+				})
 					.map((item_details_unit) => { 
 						result.push(getRecordPeriod(internal_work_period, item_details_name, item_details_unit_name, item_details_unit, '1'))                        
 						result.push(getRecordPeriod(internal_work_period, item_details_name, item_details_unit_name, item_details_unit, '2'))                        
@@ -219,16 +218,16 @@ function getSumRecordPacking_item(internal_work_packing_item, packing_item_code)
 	}).reduce((prev,current) => {
 		return {
 			'internal_work': {
-				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity)),
-				'unit_price': current.internal_work.special_unit_price,
+				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity.replace(/[^0-9^\\.]/g,''))),
+				'unit_price': current.internal_work.special_unit_price.replace(/[^0-9^\\.]/g,''),
 				'item_name' : current.internal_work.packing_item_name, 
 				'remarks' : current.internal_work.packing_item_code
 			}
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
 
-	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
-	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+	const quantity = entry.internal_work ? entry.internal_work.quantity : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price : '0'
 
 	return {
 		'category': 'packing_item',
@@ -251,15 +250,15 @@ function getSumRecordDaily(internal_work_daily,item_details_name,item_details_un
 	}).reduce((prev,current) => {
 		return {
 			'internal_work': {
-				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity)),
-				'unit_price': current.internal_work.unit_price,                
+				'quantity': '' + (Number(prev.internal_work.quantity) + Number(current.internal_work.quantity.replace(/[^0-9^\\.]/g,''))),
+				'unit_price': current.internal_work.unit_price.replace(/[^0-9^\\.]/g,''),                
 				'remarks': current.internal_work.remarks                
 			}
 		}
 	}, { 'internal_work': { 'quantity': '0' } })
-    
-	const quantity = entry.internal_work ? entry.internal_work.quantity.replace(/[^0-9^\\.]/g,'') : '0'
-	const unit_price = entry.internal_work ? entry.internal_work.unit_price.replace(/[^0-9^\\.]/g,'') : '0'
+	
+	const quantity = entry.internal_work ? entry.internal_work.quantity : '0'
+	const unit_price = entry.internal_work ? entry.internal_work.unit_price : '0'
     
 	return {
 		'category': 'daily',
