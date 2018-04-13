@@ -59,7 +59,92 @@ export default class QuotationRegistration extends React.Component {
 		this.template = {
 			quotation: {},
 			packing_items: [],
-			basic_condition: []
+			basic_condition: [{
+				title: '委託される業務',
+				condition: [{
+					content: 'ロジスティクス業務'
+				}]
+			},{
+				title: '保管',
+				condition: [
+					{ content: '常温保管' },
+					{ content: '共益費、光熱費、バース使用料含む' },
+					{ content: '保証金不要' },
+				]
+			},{
+				title: '荷役',
+				condition: [
+					{ content: '入庫作業　数量検品、外観検品' },
+					{ content: '出荷作業　ピッキング、外観検品、梱包、出荷事務' },
+				]
+			},{
+				title: '配送',
+				condition: [
+					{ content: '宅配便、DM便等にて発送' },
+				]
+			},{
+				title: '保険',
+				condition: [
+					{ content: '発送：火災保険　　保管：盗難、火災保険' },
+				]
+			},{
+				title: '決済',
+				condition: [
+					{ content: '毎月末締切、翌月20日　銀行振込み(日本郵便ご利用の場合)' },
+					{ content: '毎月末締切、翌月末日　銀行振込み' },
+				]
+			},{
+				title: '取扱商品',
+				condition: [
+					{ content: '●●' },
+				]
+			},{
+				title: '出荷データ',
+				condition: [
+					{ content: '伝票発行の際、お客様データの加工などは致しません。' },
+					{ content: '弊社指定のC㻿㼂、E㼄CELデータが必須となります。' },
+				]
+			}],
+			item_details: [
+				{item_name: '保管料', unit_name: '月', unit: '1坪', unit_price: '4,700', remarks: '棚、ラックリース（新品：500円／中古品：300円）支給品利用可能'},
+				{item_name: '保管料', unit_name: '月', unit: '1パレット', unit_price: '2,250', remarks: 'サイズ1,100×1,100 パレットラック、ネステナーによる縦積み'},
+				{item_name: '入庫作業料', unit_name: '入庫料', unit: '1点', unit_price: '30', remarks: 'バラ、アソート入庫、外装検品、品番確認、数量検品、棚格納'},
+				{item_name: '入庫作業料', unit_name: '入庫料', unit: '1箱', unit_price: '50', remarks: '外装検品、品番確認、内容未見、箱積み'},
+				{item_name: '入庫作業料', unit_name: 'デバンニング', unit: '20F', unit_price: '18,000', remarks: 'ハイキューブ＋¥3,000'},
+				{item_name: '入庫作業料', unit_name: 'デバンニング', unit: '40F', unit_price: '33,000', remarks: 'ハイキューブ＋¥3,000'},
+				{item_name: '出荷作業料', unit_name: 'DM便･ﾈｺﾎﾟｽ･ゆうﾊﾟｹｯﾄ･ゆうﾒｰﾙ･定形外', unit: '1封緘', unit_price: '140', remarks: ''},
+				{item_name: '出荷作業料', unit_name: '宅配便', unit: '1梱包', unit_price: '180', remarks: ''},
+				{item_name: '出荷作業料', unit_name: 'ピッキング', unit: '1点', unit_price: '20', remarks: ''},
+				{item_name: '出荷作業料', unit_name: '同梱作業', unit: '1枚/冊', unit_price: '10', remarks: '納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物'},
+				{item_name: 'FBA出荷作業料', unit_name: 'ピッキング', unit: '1点', unit_price: '20', remarks: 'ピッキング、外装検品'},
+				{item_name: 'FBA出荷作業料', unit_name: '梱包作業', unit: '1箱', unit_price: '100', remarks: ''},
+				{item_name: 'FBA納品付帯作業料', unit_name: '開梱・閉梱', unit: '1箱', unit_price: '20', remarks: ''},
+				{item_name: 'FBA納品付帯作業料', unit_name: 'ﾀｸﾞ貼り', unit: '1点', unit_price: '15', remarks: ''},
+				{item_name: 'FBA納品付帯作業料', unit_name: 'ﾗﾍﾞﾙ発行', unit: '1ｼｰﾄ', unit_price: '100', remarks: 'ﾗﾍﾞﾙｼｰﾄ代・加工料込（ﾊﾞｰｺｰﾄﾞﾃﾞｰﾀ必須）'},
+				{item_name: '付帯作業料　※１', unit_name: 'ｴｱｷｬｯﾌﾟ巻き', unit: '1点', unit_price: '10', remarks: 'アクセサリー、小物（資材別）'},
+				{item_name: '付帯作業料　※１', unit_name: 'ｴｱｷｬｯﾌﾟ巻き', unit: '1箱', unit_price: '50', remarks: '（資材別）'},
+				{item_name: '付帯作業料　※１', unit_name: '簡易包装', unit: '1箱', unit_price: '60', remarks: 'ラッピング袋などへ詰め込みのみ(資材別)'},
+				{item_name: '付帯作業料　※１', unit_name: '完全包装', unit: '1箱', unit_price: '100', remarks: 'ラッピング、ギフト梱包(資材別)'},
+				{item_name: '付帯作業料　※１', unit_name: '商品品番ｼｰﾙ貼り', unit: '1点', unit_price: '5', remarks: 'シール印刷、貼り作業（ペーパー代別）'},
+				{item_name: '付帯作業料　※１', unit_name: 'バーコード作成', unit: '1SKU', unit_price: '200', remarks: 'JAN登録は行いません'},
+				{item_name: '付帯作業料　※１', unit_name: 'その他', unit: '', unit_price: '', remarks: 'ご相談'},
+				{item_name: '実地棚卸作業　※1', unit_name: '人工', unit: '1時間', unit_price: '2,800', remarks: '必要な場合'},
+				{item_name: 'イレギュラー処理費用', unit_name: '返品処理', unit: '1件', unit_price: '250', remarks: '住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告'},
+				{item_name: '運営管理費', unit_name: 'データ変換ソフト(月額) ', unit: '', unit_price: '5,000', remarks: 'ご希望に応じて　※２'},
+				{item_name: '運営管理費', unit_name: '月額', unit: '', unit_price: '18,000', remarks: '専属窓口1名、在庫報告、システム保守、㼃M㻿が必要な場合別途相談'},
+				{item_name: '梱包資材', unit_name: '', unit: '', unit_price: '', remarks: '支給品使用または別途相談'},
+				{item_name: '対応日', unit_name: '', unit: '', unit_price: '', remarks: '相談　※エコ配JPは土日祝日不可となります。'},
+				{item_name: '出荷データ', unit_name: '', unit: '', unit_price: '', remarks: '1回目 ～12:00迄 最終 14:00迄'},
+				{item_name: '納品受入時間', unit_name: '', unit: '', unit_price: '', remarks: '15:00迄'},
+			],
+			remarks: [
+				{content: '※　保管、作業場所は弊社倉庫のいずれかとなり、適宜移動する可能性がございます。'},
+				{content: '※　上記にない項目（倉庫移動、付帯作業）等はご相談にて料金算出させて頂きます。'},
+				{content: '※　上記御見積りは税抜きの金額になります。'},
+				{content: '※１　該当項目はご希望に応じて作業を行いますので必須ではございません。'},
+				{content: '※２　出荷指示データはご利用になられる運送会社の伝票発行システムに取り込めるように加工したデータとピッキングリストを納品して頂きますが、'},
+				{content: '　　　弊社で開発したデータ変換ソフトをご利用頂きましたら、日々のデータ加工作業とピッキングリスト作成作業が不要となります。'},
+			]
 		}
 
 		this.login_user = CommonLoginUser().get().staff_name
@@ -149,14 +234,14 @@ export default class QuotationRegistration extends React.Component {
 		if (_data) {
 			this.entry.billto = _data.data.billto
 			this.billto = _data.data
-			this.templateList = null
-			this.setTemplateData(this.entry.billto.billto_code)
+			//this.templateList = null
+			//this.setTemplateData(this.entry.billto.billto_code)
 		} else {
 			this.entry.billto = {}
 			this.billto = null
-			this.templateList = null
-			this.setDisabled()
+			//this.templateList = null
 		}
+		this.setDisabled()
 	}
 
 	/**
@@ -280,7 +365,7 @@ export default class QuotationRegistration extends React.Component {
 							</FormGroup>
 						}
 
-						{(this.templateList && this.templateList.length) &&
+						{/*(this.templateList && this.templateList.length) &&
 							<CommonFilterBox
 								controlLabel="コピー元の見積書"
 								name=""
@@ -289,7 +374,7 @@ export default class QuotationRegistration extends React.Component {
 								detail={() => this.setState({ showQuotationDetailModal: true })}
 								onChange={(data) => this.changeTemplate(data)}
 							/>
-						}
+						*/}
 						<div className="hide">
 							<CommonTable
 								name="basic_condition"
