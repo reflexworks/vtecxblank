@@ -1523,6 +1523,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('daily',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
@@ -1589,6 +1593,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('period',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
@@ -1654,6 +1662,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('packing_item',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
@@ -1719,6 +1731,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('shipping',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
@@ -1783,13 +1799,17 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount', title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('collecting',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('collecting',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks', title: '備考', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'remarks') }
 											}
 										}]}
-										add={this.isEdit ? () => this.addInvoiceList('collecting', { category: 'collecting', item_name: '', quantity: '', unit: '', unit_price: '', amount: '1', is_taxation: '0', remarks: '', }) : null}
+										add={this.isEdit ? () => this.addInvoiceList('collecting', { category: 'collecting', item_name: '', quantity: '', unit: '', unit_price: '', amount: '', is_taxation: '0', remarks: '', }) : null}
 										remove={this.isEdit ? (data, index) => this.removeInvoiceList('collecting', index) : null}
 										fixed
 									/>
@@ -1825,6 +1845,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('others',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
@@ -1867,6 +1891,10 @@ export default class InvoiceForm extends React.Component {
 											convert: this.convert_taxation
 										}, {
 											field: 'amount',title: '金額', width: '100px',
+											input: this.isEdit && {
+												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'amount')},
+												onForcus: (data, rowindex)=>{this.forcusUnitPrice('ems',data,rowindex,'amount')},
+											},
 										}, {
 											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
