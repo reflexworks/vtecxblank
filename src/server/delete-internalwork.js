@@ -28,7 +28,7 @@ const getOption = () => {
 	setValue(list)
 	return option
 }
-const option = '?' + getOption()
+const option = '?f&' + getOption()
 
 const doDelete = () => {
 	const urlList = [
@@ -39,9 +39,12 @@ const doDelete = () => {
 		let array = []
 		urlList.map((_url) => {
 			const deleteWorks = vtecxapi.getFeed(_url)
-			const _entry = deleteWorks.feed.entry[0]
-			vtecxapi.deleteFolder(_entry.link[0].___href)
-			array.push(_entry)
+			const isDeleteWorks = CommonGetFlag(deleteWorks)
+			if (isDeleteWorks) {
+				const _entry = deleteWorks.feed.entry[0]
+				vtecxapi.deleteFolder(_entry.link[0].___href)
+				array.push(_entry)
+			}
 		})
 		return array
 	}
