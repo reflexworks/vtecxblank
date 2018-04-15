@@ -147,142 +147,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000002</customer_code>
-      <customer_name>株式会社 フロムアイコーポレーション(削除)</customer_name>
-      <customer_name_kana>カ) フロムアイコーポレーション</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>森 奈津子</staff_name>
-        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>武政 夏実</staff_name>
-        <staff_email>n.takemasa@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/customer/0000002" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000002</billto_code>
-      <billto_name>ネスリーフ 株式会社</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000003</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>300</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
-        <shipment_service_code>YH2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>300</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>ネコポス</shipment_service_service_name>
-        <shipment_service_code>YH3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>300</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
-        <shipment_service_code>ECO1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359809848250</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>コレクト便</shipment_service_service_name>
-        <shipment_service_code>ECO2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359809848250</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
-        <shipment_service_code>ECO1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359809848251</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>コレクト便</shipment_service_service_name>
-        <shipment_service_code>ECO2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>359809848251</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>ネスリーフ 株式会社</customer_name>
-      <customer_name_kana>ネスリーフ (カ</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>森 奈津子</staff_name>
-        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>坂間 直緒</staff_name>
-        <staff_email>sakama@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>114-0015</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>北区中里</address1>
-      <address2>2-11-10</address2>
-    </contact_information>
-    <link href="/customer/0000003" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000003</billto_code>
       <billto_name>株式会社 CAN</billto_name>
     </billto>
@@ -1986,54 +1850,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000028</customer_code>
-      <customer_name>株式会社 ecoプラン(削除）</customer_name>
-      <customer_name_kana>カ) エコプラン</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>佐藤 昭彦</staff_name>
-        <staff_email>a.sato@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>森 雅史</staff_name>
-        <staff_email>m.mori@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>織田 一宏</staff_name>
-        <staff_email>k.oda@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>円谷 沙織</staff_name>
-        <staff_email>s.tsumuraya@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>308-0031</zip_code>
-      <prefecture>茨城県</prefecture>
-      <address1>筑西市丙</address1>
-      <address2>98-3</address2>
-    </contact_information>
-    <link href="/customer/0000028" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000027</billto_code>
       <billto_name>株式会社 ecoプラン</billto_name>
     </billto>
@@ -2128,54 +1944,6 @@
       <address2></address2>
     </contact_information>
     <link href="/customer/0000029" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000030</customer_code>
-      <customer_name>株式会社 クラシカルエルフ(削除)</customer_name>
-      <customer_name_kana>カ) クラシカルエルフ</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>森 奈津子</staff_name>
-        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>橋本 みずき</staff_name>
-        <staff_email>m.hashimoto@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>荒畑 敬吾</staff_name>
-        <staff_email>k.arahata@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>333-0844</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>川口市上青木</address1>
-      <address2>1-6-24</address2>
-    </contact_information>
-    <link href="/customer/0000030" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -5744,71 +5512,6 @@
       <address2>2-19-16　HT神宮前ビル4F</address2>
     </contact_information>
     <link href="/customer/0000077" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000062</billto_code>
-      <billto_name>株式会社 Lavoc</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000078</customer_code>
-      <customer_name>株式会社 Lavoc(削除)</customer_name>
-      <customer_name_kana>カ) ラボック</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>永瀬　雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>永瀬　雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>今井　亮介</staff_name>
-        <staff_email>imai@connect-logi.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>木幡 昭宏</staff_name>
-        <staff_email>kibata@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>長濱 康文</staff_name>
-        <staff_email>nagahama@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>山本 浩</staff_name>
-        <staff_email>h.yamamoto@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>大友 康子</staff_name>
-        <staff_email>ootomo@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>角 江里奈</staff_name>
-        <staff_email>kado@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>石井 香瑞紀</staff_name>
-        <staff_email>ishii@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000010</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>155-0033</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>世田谷区代田</address1>
-      <address2>3-14-13</address2>
-    </contact_information>
-    <link href="/customer/0000078" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -10319,71 +10022,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000099</billto_code>
-      <billto_name>関越リース</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000155</customer_code>
-      <customer_name>関越リース（削除）</customer_name>
-      <customer_name_kana>カンエツリース</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>永瀬　雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>永瀬　雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>今井　亮介</staff_name>
-        <staff_email>imai@connect-logi.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>木幡 昭宏</staff_name>
-        <staff_email>kibata@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>長濱 康文</staff_name>
-        <staff_email>nagahama@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>山本 浩</staff_name>
-        <staff_email>h.yamamoto@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>大友 康子</staff_name>
-        <staff_email>ootomo@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>角 江里奈</staff_name>
-        <staff_email>kado@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>石井 香瑞紀</staff_name>
-        <staff_email>ishii@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000010</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>179-0076</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>練馬区土支田</address1>
-      <address2>3-20-8-103</address2>
-    </contact_information>
-    <link href="/customer/0000155" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000100</billto_code>
       <billto_name>日生バイオ 株式会社</billto_name>
     </billto>
@@ -10661,42 +10299,6 @@
       <address2>2-25-5　久米ビル6Ｆ</address2>
     </contact_information>
     <link href="/customer/0000159" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000160</customer_code>
-      <customer_name>株式会社 GLOBAL M&amp;S(削除)</customer_name>
-      <customer_name_kana>カ) グローバル エムアンドエス</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>今井　亮介</staff_name>
-        <staff_email>imai@connect-logi.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>木幡 昭宏</staff_name>
-        <staff_email>kibata@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000010</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>730-0052</zip_code>
-      <prefecture>広島県</prefecture>
-      <address1>広島市中区千田町</address1>
-      <address2>3-1-10　コーポ千田3階D号</address2>
-    </contact_information>
-    <link href="/customer/0000160" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -11482,42 +11084,6 @@
       <address2>1-1-29</address2>
     </contact_information>
     <link href="/customer/0000171" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000172</customer_code>
-      <customer_name>TMS 株式会社( 削除)</customer_name>
-      <customer_name_kana>ティエムエス (カ</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>楠本 真也</staff_name>
-        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>335-0015</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>戸田市川岸</address1>
-      <address2>2-5-20-202</address2>
-    </contact_information>
-    <link href="/customer/0000172" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -14454,55 +14020,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000161</billto_code>
-      <billto_name>テスト</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000225</customer_code>
-      <shipper>
-        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
-        <shipment_service_code>YH1</shipment_service_code>
-        <shipper_info>
-          <shipper_code>100000010</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
-        <shipment_service_service_name>コレクト便</shipment_service_service_name>
-        <shipment_service_code>ECO2</shipment_service_code>
-        <shipper_info>
-          <shipper_code>200000010</shipper_code>
-          <shipment_class>1</shipment_class>
-        </shipper_info>
-      </shipper>
-      <customer_name>テスト株式会社(削除)</customer_name>
-      <customer_name_kana>テストカブシキガイシャ</customer_name_kana>
-      <sales_staff>
-        <staff_name>永瀬 雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>木幡 昭宏</staff_name>
-        <staff_email>kibata@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge>YYYYYY</person_in_charge>
-      <products>ZZZZZZ</products>
-      <warehouse_code>0000001</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel>01234567890</tel>
-      <fax>01234567891</fax>
-      <email>test@xxx.xxx</email>
-      <zip_code>1234567</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>XXX市XXX町</address1>
-      <address2>XXX-XXX</address2>
-    </contact_information>
-    <link href="/customer/0000225" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000167</billto_code>
       <billto_name>株式会社正洸堂</billto_name>
     </billto>
@@ -14946,70 +14463,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000240</customer_code>
-      <customer_name>株式会社しごとば（削除）</customer_name>
-      <customer_name_kana>株式会社しごとば</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>森 光正</staff_name>
-        <staff_email>mori@connect-logi.co.jp</staff_email>
-      </sales_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000004</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>332-0014</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>川口市金山町</address1>
-      <address2>12-1-1313</address2>
-    </contact_information>
-    <link href="/customer/0000240" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000030</billto_code>
-      <billto_name>日本ポステック 株式会社</billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000241</customer_code>
-      <customer_name>日本ポステック　株式会社（削除）</customer_name>
-      <customer_name_kana>ニホンポステック　カブシキカイシャ</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <sales_staff>
-        <staff_name>永瀬 雅久</staff_name>
-        <staff_email>nagase@connect-logi.jp</staff_email>
-      </sales_staff>
-      <url></url>
-      <person_in_charge>時政</person_in_charge>
-      <products></products>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>151-0053</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>渋谷区代々木</address1>
-      <address2>1-41-9　ＤＭＫ代々木ビル7Ｆ</address2>
-    </contact_information>
-    <link href="/customer/0000241" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000184</billto_code>
       <billto_name>株式会社日本芸能文化社</billto_name>
     </billto>
@@ -15080,62 +14533,6 @@
       <address2>10-20-博多古門戸アパートメント301</address2>
     </contact_information>
     <link href="/customer/0000244" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000245</customer_code>
-      <customer_name>日本快倉 株式会社（作業）-（削除）</customer_name>
-      <customer_name_kana>ニホンカイソウ (カ　（サギョウ）</customer_name_kana>
-      <sales_staff>
-        <staff_name>高野 潤一</staff_name>
-        <staff_email>takano@connect-logi.jp</staff_email>
-      </sales_staff>
-      <working_staff>
-        <staff_name>森 光正</staff_name>
-        <staff_email>mori@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>林 直人</staff_name>
-        <staff_email>hayashi@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>皆見 圭一郎</staff_name>
-        <staff_email>minami@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>風間 輝明</staff_name>
-        <staff_email>kazama@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>境 智成</staff_name>
-        <staff_email>sakai@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>飯島 真紀</staff_name>
-        <staff_email>iijima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <working_staff>
-        <staff_name>小島 忠</staff_name>
-        <staff_email>t.kojima@connect-logi.co.jp</staff_email>
-      </working_staff>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-      <warehouse_code>0000006</warehouse_code>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>175-0082</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>板橋区高島平</address1>
-      <address2>6-2-1</address2>
-    </contact_information>
-    <link href="/customer/0000245" rel="self"/>
   </entry>
   <entry>
     <billto>
