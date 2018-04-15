@@ -104,7 +104,7 @@
       <billfrom_code>0000005</billfrom_code>
       <billfrom_name>CONNECTロジスティクス株式会社</billfrom_name>
       <payee>
-        <bank_info>2</bank_info>
+        <bank_info>三菱UFJ銀行</bank_info>
         <account_type>0</account_type>
         <account_number>0401151</account_number>
         <branch_office>西川口支店</branch_office>
