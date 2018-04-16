@@ -184,7 +184,7 @@ export function getFullDate(datestr) {
 }
 
 
-export function getKey(customer_code,datestr, shipment_service_code,tracking_number) {
+export function getKey(customer_code,datestr, shipment_service_code,shipment_class,tracking_number) {
 
 	let matches = /^(\d+)月(\d+)日$/.exec(datestr)
 	if (matches && matches.length >= 2) {
@@ -196,13 +196,13 @@ export function getKey(customer_code,datestr, shipment_service_code,tracking_num
 		if (now.getMonth() + 1 < month) {
 			year = year - 1
 		}
-		return year + ('0' + month).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
+		return year + ('0' + month).slice(-2) + customer_code + '_' + shipment_service_code + '_' + shipment_class+'_'+tracking_number
 	} else {
 		matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
 		if (!matches) {
 			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
 		}	
-		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number			
+		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + shipment_class+'_'+tracking_number			
 	}	
 
 }

@@ -14,7 +14,6 @@ const result = { 'feed': { 'entry': [] } }
 
 billingcsv.feed.entry.map((entry) => {
 
-	
 	try {
 		let billing_data
 		if (entry.billing.delivery_class1 === '宅急便発払') {
@@ -70,7 +69,7 @@ function getBillingDataOfHatsu(entry,shipment_service_service_name) {
 			'unit_price': unit_price
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,tracking_number) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,delivery_charge_all.shipment_class,tracking_number) }
 		]
 	}
 	return billing_data
@@ -104,7 +103,7 @@ function getBillingDataOfMail(entry,shipment_service_service_name) {
 			'unit_price': unit_price
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,('00'+tracking_number).slice(-12)) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,delivery_charge_all.shipment_class,('00'+tracking_number).slice(-12)) }
 		]
 	}
 	return billing_data

@@ -14,13 +14,13 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 	}
 
 	let billing_closing_date = 0
-	if ((billto.feed.entry)&&billto.feed.entry[0].billto.billing_closing_date) {
+	if ((billto)&&(billto.feed.entry)&&billto.feed.entry[0].billto.billing_closing_date) {
 		billing_closing_date = billto.feed.entry[0].billto.billing_closing_date
 	}
 
 	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '*', true)
 
-	if (billing_data.feed.entry) {
+	if (billing_data) {
 		if (billing_closing_date === '1') {
 			const lastyearmonth = getLastMonth(shipping_yearmonth)
 			const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '*', true)

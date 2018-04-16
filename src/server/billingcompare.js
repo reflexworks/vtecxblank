@@ -24,20 +24,19 @@ try {
 function getCompare(shipping_yearmonth, customer_code) {
 
 	const result = { 'billing_compare': [] }
-
 	const shipment_service = vtecxapi.getFeed('/shipment_service/')
-	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
+	if (!shipment_service) throw '配送業者マスタが登録されていません'
 	shipment_service.feed.entry.map((entry) => {
 		const billing_data = getBillingdata(shipping_yearmonth, customer_code, entry.shipment_service.code)
-		if (billing_data.billing_data.feed.entry) {
+		if (billing_data.billing_data&&billing_data.billing_data.feed.entry) {
 			const internal_work_data = getInternalworkdata(shipping_yearmonth, customer_code, quotation_code)
 			const billing_compare = getBillingCompare(internal_work_data, billing_data, shipping_yearmonth, shipment_class, entry.shipment_service.code, entry.shipment_service.name)
 			result.billing_compare.push(billing_compare)
 		}	
 	})
-
 	return result
 }
+
 
 function getBillingCompare(internal_work_data,billing_data,shipping_yearmonth,shipment_class,shipment_service_code,shipment_service_service_name) {
 
@@ -127,3 +126,4 @@ function getQuantityOfBillingdata(billing_data, shipment_class,shipment_service_
 	return result
 
 }
+
