@@ -23,7 +23,7 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 
 	let result = []
 	const internal_work_all = getInternalworkdata(working_yearmonth,customer_code,quotation_code)
-	if (internal_work_all.feed.entry) {
+	if (internal_work_all) {
 		// daily
 		result = getDaily(internal_work_all)
 		// packing_item
@@ -45,7 +45,7 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 function getShipping(customer_code, working_yearmonth,shipment_service_code,shipment_class,shipment_service_name) {
 	const result = []
 	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code).billing_data
-	if (billing_data.feed.entry) {
+	if (billing_data) {
 		const summary = billing_data.feed.entry.filter((entry) => {
 			if (entry) return ((entry.billing_data.shipment_class === shipment_class) && (entry.billing_data.shipment_service_code === shipment_service_code))  
 			else return false 

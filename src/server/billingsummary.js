@@ -26,7 +26,7 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 	}
 
 	const shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code) // YH1 or ECO1
-	if (!shipment_service.feed.entry) throw '配送サービスが登録されていません。(配送サービスコード=' + shipment_service_code + ')'
+	if (!shipment_service) throw '配送サービスが登録されていません。(配送サービスコード=' + shipment_service_code + ')'
 	const sizes = shipment_service.feed.entry[0].shipment_service.sizes.map((sizes) => {
 		return sizes.size.match(/\d+/)[0]
 	})
@@ -50,11 +50,12 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 		}
 		const customer_code = _entry.customer.customer_code
 		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_*', true)
-		billing_data.feed.entry = billing_data.feed.entry ? billing_data.feed.entry.filter((entry) => {
-			return entry.billing_data.shipment_class === shipment_class
-		}) : billing_data.feed.entry
 
-		if (billing_data.feed.entry&&billing_data.feed.entry.length>0) {
+		if (billing_data&&billing_data.feed.entry&&billing_data.feed.entry.length>0) {
+			billing_data.feed.entry = billing_data.feed.entry ? billing_data.feed.entry.filter((entry) => {
+				return entry.billing_data.shipment_class === shipment_class
+			}) : billing_data.feed.entry
+
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
 				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '_*', true)
