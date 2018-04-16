@@ -2973,9 +2973,9 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 				if (error.response && error.response.data && error.response.data.feed) {
 					const title = error.response.data.feed.title
 					if (title === 'Please make a pagination index in advance.') {
-						if (retryCount > maxRetryCount) {
+						if (retryCount < maxRetryCount) {
+							retryCount++
 							setTimeout(() => {
-								retryCount++
 								get()
 							}, 500)
 						} else[
