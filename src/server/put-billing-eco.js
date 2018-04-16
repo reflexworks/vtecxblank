@@ -62,7 +62,7 @@ function getBillingData(entry) {
 			'unit_price': unit_price
 		},
 		'link': [
-			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,tracking_number) }
+			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,delivery_charge_all.shipment_class,tracking_number) }
 		]
 	}
 
