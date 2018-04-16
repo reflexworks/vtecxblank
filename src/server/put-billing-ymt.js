@@ -14,29 +14,30 @@ const result = { 'feed': { 'entry': [] } }
 
 billingcsv.feed.entry.map((entry) => {
 
+	
 	try {
 		let billing_data
 		if (entry.billing.delivery_class1 === '宅急便発払') {
 			billing_data = getBillingDataOfHatsu(entry,entry.billing.delivery_class1)			
 			result.feed.entry.push(billing_data)
-		} else if (entry.billing.delivery_class1 === 'クロネコＤＭ便'){
+		} else if (entry.billing.delivery_class1 === 'クロネコＤＭ便') {
 			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// DM便
 			result.feed.entry.push(billing_data)
 		} else if (entry.billing.delivery_class1 === 'ネコポス') {
 			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// ネコポス
 			result.feed.entry.push(billing_data)
 		}
+		// datastoreを更新
+		vtecxapi.put(result,true)
 
 	} catch (e) {
 		vtecxapi.sendMessage(400, e)
 	}
 
 })
-// datastoreを更新
-vtecxapi.put(result,true)
+
 
 function getBillingDataOfHatsu(entry,shipment_service_service_name) {
-
 	let delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code, shipment_service_service_name)
 	const shipment_service_code = getShipmentServiceCode(shipment_service_service_name)
 	delivery_charge_all.shipment_service_code = shipment_service_code
@@ -82,7 +83,6 @@ function getBillingDataOfMail(entry,shipment_service_service_name) {
 	if (!tracking_number||tracking_number.length===0) throw '正しい原票番号を入れてください'
 	const shipment_service_code = getShipmentServiceCode(shipment_service_service_name)
 	const unit_price = getChargeOfMail(delivery_charge_all,customer_all,entry.billing.shipper_code,shipment_service_code)	// YM1 is DM便
-
 	const billing_data = {
 		billing_data: {
 			'shipment_service_code': shipment_service_code,

@@ -117,18 +117,23 @@ export function getData(_type) {
 
 	if (customerFromUser) {
 
-		let queryString = vtecxapi.getQueryString().split('&')
+		let queryString = ''
+		if (vtecxapi.getQueryString()) {
 
-		// 検索オプションから「n」や「l」などを削除
-		// その他のパラメータは検索条件なので削除しない
-		queryString = queryString.map((_value) => {
-			const name = _value.split('=')[0]
-			if (name === 'n' || name === 'l' || name === '_pagination' || name === 'c') {
-				return ''
-			} else {
-				return '&' + _value
-			}
-		}).join('')
+			queryString = vtecxapi.getQueryString().split('&')
+
+			// 検索オプションから「n」や「l」などを削除
+			// その他のパラメータは検索条件なので削除しない
+			queryString = queryString.map((_value) => {
+				const name = _value.split('=')[0]
+				if (name === 'n' || name === 'l' || name === '_pagination' || name === 'c') {
+					return ''
+				} else {
+					return '&' + _value
+				}
+			}).join('')
+		}
+
 
 		let total_array = []
 		let cashBilltoCode = {}
