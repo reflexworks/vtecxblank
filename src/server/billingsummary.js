@@ -49,19 +49,22 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 			billing_summary: { record: [] }
 		}
 		const customer_code = _entry.customer.customer_code
-		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_*', true)
+		let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_'+shipment_class+'_*', true)
 
 		if (billing_data&&billing_data.feed.entry&&billing_data.feed.entry.length>0) {
+			/*
 			billing_data.feed.entry = billing_data.feed.entry ? billing_data.feed.entry.filter((entry) => {
 				return entry.billing_data.shipment_class === shipment_class
 			}) : billing_data.feed.entry
-
+			*/
 			if (billing_closing_date === '1') {
 				const lastyearmonth = getLastMonth(shipping_yearmonth)
-				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '_*', true)
+				const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code +'_'+shipment_class+ '_*', true)
+				/*
 				billing_data_prev.feed.entry = billing_data_prev.feed.entry.filter((entry) => {
 					return entry.billing_data.shipment_class === shipment_class
 				})
+				*/
 
 				const d0 = new Date(lastyearmonth.slice(0, 4), parseInt(lastyearmonth.slice(-2)) - 1, '21').getTime()
 				const d1 = new Date(shipping_yearmonth.slice(0, 4), parseInt(shipping_yearmonth.slice(-2)) - 1, '20').getTime()
