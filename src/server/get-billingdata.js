@@ -1,6 +1,6 @@
 import vtecxapi from 'vtecxapi' 
 
-export function getBillingdata(shipping_yearmonth,customer_code,shipment_service_code,billto_code) {
+export function getBillingdata(shipping_yearmonth,customer_code,shipment_service_code,billto_code,shipment_class) {
 
 	shipping_yearmonth = shipping_yearmonth.replace(/[^0-9^\\.]/g,'')
 
@@ -18,12 +18,12 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 		billing_closing_date = billto.feed.entry[0].billto.billing_closing_date
 	}
 
-	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '*', true)
+	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_'+shipment_class+'_*', true)
 
 	if (billing_data) {
 		if (billing_closing_date === '1') {
 			const lastyearmonth = getLastMonth(shipping_yearmonth)
-			const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code + '*', true)
+			const billing_data_prev = vtecxapi.getFeed('/billing_data/' + lastyearmonth + customer_code + '_' + shipment_service_code +'_'+shipment_class+ '_*', true)
 			const d0 = new Date(lastyearmonth.slice(0,4),parseInt(lastyearmonth.slice(-2))-1,'21').getTime()
 			const d1 = new Date(shipping_yearmonth.slice(0,4),parseInt(shipping_yearmonth.slice(-2))-1,'20').getTime()
 			billing_data.feed.entry = billing_data_prev.feed.entry ? billing_data_prev.feed.entry.concat(billing_data.feed.entry) : billing_data.feed.entry        

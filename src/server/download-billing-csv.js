@@ -15,9 +15,12 @@ const customer_code = customer.feed.entry.map((entry) => { return entry.customer
 
 customer_code.map((customer_code) => { 
 
-	let billing_data = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code)	
-	if (billing_data.billing_data.feed.entry) {
-		billing_data.billing_data.feed.entry.map((entry) => {
+	const billing_data1 = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code,'0')	
+	const billing_data2 = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code,'1')	
+	const billing_data = billing_data2.billing_data ? billing_data1.billing_data.concat(billing_data2.billing_data) : billing_data1.billing_data
+
+	if (billing_data) {
+		billing_data.feed.entry.map((entry) => {
 			if (entry) {	// 登録時に不具合によりnullで登録されることがある
 				const shipment_class = entry.billing_data.shipment_class === '0' ? '出荷' : '集荷'
 				const record = ['"' + entry.billing_data.customer_code + '"', entry.billing_data.shipment_service_service_name, shipment_class, entry.billing_data.shipping_date, entry.billing_data.tracking_number, entry.billing_data.size, entry.billing_data.zone_name, entry.billing_data.prefecture, entry.billing_data.quantity, entry.billing_data.unit_price, entry.billing_data.delivery_charge]
