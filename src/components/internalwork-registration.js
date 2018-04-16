@@ -68,7 +68,7 @@ export default class InternalWorkRegistration extends React.Component {
 
 	getQuotationList(_input) {
 		return axios({
-			url: `/s/get-quotation-code-list?quotation.quotation_code-rg-*${_input}*&quotation.status=1`,
+			url: `/s/get-quotation-code-list?quotation.quotation_code-rg-.*${_input}.*&quotation.status=1`,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
