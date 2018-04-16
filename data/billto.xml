@@ -714,9 +714,8 @@
   <entry>
     <billto>
       <billto_code>0000041</billto_code>
-      <billto_name>株式会社 健康食育研究所</billto_name>
+      <billto_name>株式会社 　プレシャス</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/16</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
@@ -1658,25 +1657,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000094</billto_code>
-      <billto_name>有限会社 リツコ</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>151-0051</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>渋谷区千駄ヶ谷</address1>
-      <address2>4-4-4フィールド北参道6Ｆ</address2>
-    </contact_information>
-    <link href="/billto/0000094" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000095</billto_code>
       <billto_name>株式会社 ジェイ･キュー･ウェイ</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -1751,25 +1731,6 @@
       <address2>5-1-3-5F</address2>
     </contact_information>
     <link href="/billto/0000098" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000099</billto_code>
-      <billto_name>関越リース</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/19</payment_date>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>179-0076</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>練馬区土支田</address1>
-      <address2>3-20-8-103</address2>
-    </contact_information>
-    <link href="/billto/0000099" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -1965,24 +1926,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000111</billto_code>
-      <billto_name>Reedo 合同会社</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>111-0032</zip_code>
-      <prefecture>東京都</prefecture>
-      <address1>台東区浅草</address1>
-      <address2>6-7-5-401</address2>
-    </contact_information>
-    <link href="/billto/0000111" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000112</billto_code>
       <billto_name>有限会社 スティックアウト</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -2005,16 +1948,15 @@
       <billto_code>0000113</billto_code>
       <billto_name>大河実業 株式会社</billto_name>
       <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
     </billto>
     <contact_information>
       <tel></tel>
       <fax></fax>
       <email></email>
-      <zip_code>101-0031</zip_code>
+      <zip_code>103-0022</zip_code>
       <prefecture>東京都</prefecture>
-      <address1>千代田区東神田</address1>
-      <address2>1-5-6 アプロンビル5F</address2>
+      <address1>中央区日本橋室町</address1>
+      <address2>4-4-3 喜助日本橋室町ビル２Ｆ</address2>
     </contact_information>
     <link href="/billto/0000113" rel="self"/>
   </entry>
@@ -2545,24 +2487,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000143</billto_code>
-      <billto_name>株式会社 ジュネッス</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/20</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>340-0003</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>草加市稲荷</address1>
-      <address2>6-6-40</address2>
-    </contact_information>
-    <link href="/billto/0000143" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000144</billto_code>
       <billto_name>株式会社 CONNECT コーポレーション（戸田）</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -2882,86 +2806,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000170</billto_code>
-      <billto_name>Onemake</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/13</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000170" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000171</billto_code>
-      <billto_name>髪mama</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/13</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000171" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000172</billto_code>
-      <billto_name>CORK</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/13</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000172" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000173</billto_code>
-      <billto_name>ソナーブリック</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/13</payment_date>
-      <post_has_sizeweight>0</post_has_sizeweight>
-      <yamato_has_details>0</yamato_has_details>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000173" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000175</billto_code>
       <billto_name>株式会社デコレーションズ</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -2996,60 +2840,6 @@
       <address2></address2>
     </contact_information>
     <link href="/billto/0000176" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000177</billto_code>
-      <billto_name>株式会社ドットジャパン(出荷分)</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/15</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000177" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000178</billto_code>
-      <billto_name>YIC JAPAN</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/31</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000178" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
-      <billto_code>0000179</billto_code>
-      <billto_name>株式会社ドットジャパン(集荷分)</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-      <payment_date>2018/03/15</payment_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/billto/0000179" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -3264,23 +3054,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_code>0000195</billto_code>
-      <billto_name>ＴＭＳ株式会社</billto_name>
-      <billing_closing_date>0</billing_closing_date>
-    </billto>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code>335-0015</zip_code>
-      <prefecture>埼玉県</prefecture>
-      <address1>戸田市川岸</address1>
-      <address2>2-5-20-202</address2>
-    </contact_information>
-    <link href="/billto/0000195" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000196</billto_code>
       <billto_name>株式会社 CONNECT コーポレーション（高島平）</billto_name>
       <billing_closing_date>0</billing_closing_date>
@@ -3462,5 +3235,22 @@
       <address2>1-8-20</address2>
     </contact_information>
     <link href="/billto/0000208" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000210</billto_code>
+      <billto_name>株式会社　プレシャス</billto_name>
+      <billing_closing_date>0</billing_closing_date>
+    </billto>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code></zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>豊島区池袋</address1>
+      <address2>1-36-7-204　アルテール池袋２Ｆ</address2>
+    </contact_information>
+    <link href="/billto/0000210" rel="self"/>
   </entry>
 </feed>

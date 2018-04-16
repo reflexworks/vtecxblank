@@ -3,7 +3,10 @@ import { CommonGetFlag } from './common'
 
 export function getUser() {
 	const uid = vtecxapi.uid()
-	const email = vtecxapi.getEntry('/' + uid).feed.entry[0].title
+	const contributors = vtecxapi.getEntry('/' + uid).feed.entry[0].contributor
+	const email = contributors.filter((contributor) => {
+		return contributor.email
+	})[0].email	
 	return vtecxapi.getFeed('/staff?staff.staff_email=' + email)
 }
 

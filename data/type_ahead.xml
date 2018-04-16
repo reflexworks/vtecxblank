@@ -54,6 +54,22 @@
       <type>0</type>
       <value>キャンセル事務手数料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>あああ</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>いいい</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>個</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-1-16" rel="self"/>
   </entry>
   <entry>
@@ -152,6 +168,10 @@
       <type>0</type>
       <value>キャンセル手数料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>1件</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-1-29" rel="self"/>
   </entry>
   <entry>
@@ -376,6 +396,14 @@
       <type>0</type>
       <value>キャンセル入庫料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>個</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-10-13" rel="self"/>
   </entry>
   <entry>
@@ -1349,6 +1377,26 @@
       <type>0</type>
       <value>ヤマト運輸代引き手数料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1万円未満</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>3万円未満</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>10万円未満</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>10万円以上</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-4-34" rel="self"/>
   </entry>
   <entry>
@@ -1377,6 +1425,18 @@
       <type>0</type>
       <value>実地棚卸作業　※1</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>人工</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1時間</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>必要な場合</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-4-38" rel="self"/>
   </entry>
   <entry>
@@ -1860,6 +1920,10 @@
       <type>0</type>
       <value>付帯作業費</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-6-805" rel="self"/>
   </entry>
   <entry>
@@ -2301,6 +2365,18 @@
       <type>0</type>
       <value>入荷分手数料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>（高島平経由）</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>個</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-8-21" rel="self"/>
   </entry>
   <entry>
@@ -2824,6 +2900,378 @@
   <entry>
     <type_ahead>
       <type>4</type>
+      <value>バラ、アソート梱包</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-1-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>外装検品、品番確認、内容未見</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-1-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ピッキング　ピース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-1-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>月（坪）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-1-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>１箱</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1474" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業料(チラシ等)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1475" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>tuki</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1476" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>入庫作業料（ケース）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1477" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>1ピース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1478" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>1ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1479" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品入庫作業料　ピース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-10-1480" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ネステナーレンタル：300円</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-2-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>納品書など（印刷代、ペーパー代込み）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-2-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>余り糸の裁断→折り畳み→ＯＰＰ袋詰め（資材費別）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-2-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>パレットラックによる縦積</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-2-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>領収書・請求書・延長保障書＝1ｾｯﾄ(格作成費ご相談)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-3-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>日</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-3-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>カートン</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-3-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（坪）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-3-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>商品　</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-3-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>ピース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-4-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ピース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-4-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>エアキャップ巻き</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-4-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>1パッカー</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-5-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷料　ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-5-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>ヤマト運輸代引手数料(1万円未満)</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-5-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ピッキング・1点外装検品・伝票貼り</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-6-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>SKU</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-6-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>月（パレット）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-6-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ギフト出荷</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>袋</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>入庫作業料（ピース）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品入庫作業料　ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>梱包作業　ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ケース組立</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>戻り品入庫作業料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>アクセサリー、小物、アパレル商品（資材別）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-7-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>運営管理費(データ変換ソフト)</value>
+    </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>月額</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>月</value>
+    </type_aheads>
+    <link href="/type_ahead/0-5-38-4-14-7-9" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>hako</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>シート</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>本体外装キズ確認、取説同梱確認（仕様書必須/分解→検品→組立）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>0</type>
+      <value>保管料（パレット）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ピッキング　ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ピッキング　パッカー</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-8-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>入出荷作業料・資材費・保管料・システム費用</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-1" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>2</type>
+      <value>枚/冊</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-2" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ネステナーによる縦積は１パレット単位</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-3" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>ケース</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-4" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ケース組立、梱包（資材別）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-5" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>同梱作業　枚</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-6" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>1</type>
+      <value>出荷料</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-7" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
+      <value>ハンディタイプの検針器でチェック（検針の仕様により金額が変動します）</value>
+    </type_ahead>
+    <link href="/type_ahead/0-5-38-4-14-9-8" rel="self"/>
+  </entry>
+  <entry>
+    <type_ahead>
+      <type>4</type>
       <value>1梱包：10円</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-1-1" rel="self"/>
@@ -2847,6 +3295,18 @@
       <type>0</type>
       <value>ヤマト運輸代引き手数料（三万円未満）</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-1-12" rel="self"/>
   </entry>
   <entry>
@@ -2882,6 +3342,22 @@
       <type>0</type>
       <value>イレギュラー処理費用</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>返品処理</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1件</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>件</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-1-17" rel="self"/>
   </entry>
   <entry>
@@ -3477,6 +3953,82 @@
       <type>0</type>
       <value>付帯作業料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>エアキャップ巻き</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>食品以外の小物(資材別)</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>簡易包装</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1箱</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>ラッピング袋などへ詰め込みのみ（資材別）</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>箱</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>完全包装</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>※１　ラッピング、ギフト梱包(資材別)</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>バーコードシール作成</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>シール作成/印刷(ペーパー代込)</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>バーコードシール貼り</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>上記貼り作業</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>商品セットアップ</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>開梱・商品組立・梱包</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>アクセサリー類袋詰め作業</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>個</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-10-24" rel="self"/>
   </entry>
   <entry>
@@ -3589,6 +4141,82 @@
       <type>0</type>
       <value>出荷作業料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>1個</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>定形外</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>DM便・ネコポス・ゆうパケット・ゆうメール・定形外</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1封緘</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>ピッキング・外装検品・1点封入</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>封緘</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>宅配便</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1梱包</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>ピッキング・外装検品・1点梱包</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>梱包</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>ピッキング</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>商品</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>同梱作業(チラシ等)</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1枚/冊</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>納品書、ステッカー、チラシ、カタログ、パンフレットなどの販促物</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>枚/冊</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>DM便･ﾈｺﾎﾟｽ･ゆうﾊﾟｹｯﾄ･ゆうﾒｰﾙ･定形外</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-10-4" rel="self"/>
   </entry>
   <entry>
@@ -3666,6 +4294,22 @@
       <type>0</type>
       <value>付帯作業料　※１</value>
     </type_ahead>
+    <type_aheads>
+      <type>4</type>
+      <value>ご相談</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>バーコード作成</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1SKU</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>JAN登録は行いません</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-10-5" rel="self"/>
   </entry>
   <entry>
@@ -3694,6 +4338,14 @@
       <type>0</type>
       <value>棚リース料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>月額</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>台</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-10-53" rel="self"/>
   </entry>
   <entry>
@@ -3846,7 +4498,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-10-73" rel="self"/>
   </entry>
@@ -3897,6 +4549,30 @@
       <type>0</type>
       <value>運営管理費</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>月額</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>月額</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>月</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>データ変換ソフト</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>御希望に応じて</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-2-11" rel="self"/>
   </entry>
   <entry>
@@ -4345,6 +5021,18 @@
       <type>0</type>
       <value>ヤマト運輸代引き手数料（十万円以上）</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-2-7" rel="self"/>
   </entry>
   <entry>
@@ -4618,6 +5306,46 @@
       <type>0</type>
       <value>入庫作業料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>入庫料（電子タバコ）</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>バラ、アソート入庫、外装検品、品番確認、数量検品、棚格納</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>入庫料（箱）</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1箱</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>外装検品、品番確認、内容未見、箱積み</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>箱</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>入庫料（アクセサリー）</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>入庫料</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-3-3" rel="self"/>
   </entry>
   <entry>
@@ -4919,12 +5647,52 @@
       <type>0</type>
       <value>保管料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>１坪</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>月額</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1パレット</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>パレット</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1坪</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>棚、ラックリース(新品：500円／中古品：300円)支給品利用可能</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>坪</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>月</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>棚、ラックリース（新品：500円／中古品：300円）支給品利用可能</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>サイズ1,100×1,100 パレットラック、ネステナーによる縦積み</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-3-69" rel="self"/>
   </entry>
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-3-70" rel="self"/>
   </entry>
@@ -5477,7 +6245,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-4-77" rel="self"/>
   </entry>
@@ -5498,7 +6266,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-4-80" rel="self"/>
   </entry>
@@ -6004,6 +6772,18 @@
       <type>0</type>
       <value>ヤマト運輸代引き手数料（一万円未満）</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-5-7" rel="self"/>
   </entry>
   <entry>
@@ -6030,7 +6810,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+5000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-5-73" rel="self"/>
   </entry>
@@ -6179,6 +6959,22 @@
       <type>0</type>
       <value>実地棚卸作業</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>人工</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1時間</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>必要な場合</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>時間</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-6-18" rel="self"/>
   </entry>
   <entry>
@@ -6375,6 +7171,26 @@
       <type>0</type>
       <value>FBA納品付帯作業料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>ﾀｸﾞ貼り</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>ﾗﾍﾞﾙ発行</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1ｼｰﾄ</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>ﾗﾍﾞﾙｼｰﾄ代・加工料込（ﾊﾞｰｺｰﾄﾞﾃﾞｰﾀ必須）</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-6-43" rel="self"/>
   </entry>
   <entry>
@@ -6688,7 +7504,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-6-84" rel="self"/>
   </entry>
@@ -7787,7 +8603,7 @@
   <entry>
     <type_ahead>
       <type>4</type>
-      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
+      <value>1パレット追加\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+4000</value>
     </type_ahead>
     <link href="/type_ahead/0-6-35-9-14-8-74" rel="self"/>
   </entry>
@@ -7824,6 +8640,18 @@
       <type>0</type>
       <value>ヤマト運輸代引き手数料(十万円未満）</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1点</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>点</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-8-8" rel="self"/>
   </entry>
   <entry>
@@ -8076,6 +8904,10 @@
       <type>0</type>
       <value>コンテナデバンニング料</value>
     </type_ahead>
+    <type_aheads>
+      <type>2</type>
+      <value>１本</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-9-40" rel="self"/>
   </entry>
   <entry>
@@ -8328,6 +9160,26 @@
       <type>0</type>
       <value>伝票発行料</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>ＤＭ便・ネコポス・ゆうパケット・ゆうメール・定型外</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>1枚</value>
+    </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>CSV・Excelデータ</value>
+    </type_aheads>
+    <type_aheads>
+      <type>2</type>
+      <value>枚</value>
+    </type_aheads>
+    <type_aheads>
+      <type>1</type>
+      <value>宅配便</value>
+    </type_aheads>
     <link href="/type_ahead/0-7-44-6-14-1-16" rel="self"/>
   </entry>
   <entry>
