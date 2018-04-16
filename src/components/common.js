@@ -2395,9 +2395,16 @@ export class CommonPagination extends React.Component {
 		const new_url = newProps.url
 		if (this.url !== new_url) {
 			// pageIndex作成処理呼び出し
+			this.pageIndex = 0
 			this.handleSelect(1, new_url)
 			this.url = new_url
 		}
+
+		let activePage = 1
+		if (newProps.activePage) {
+			activePage = newProps.activePage
+		}
+
 		// 件数取得
 		axios({
 			url: new_url + '&c',
@@ -2407,10 +2414,10 @@ export class CommonPagination extends React.Component {
 			}
 		}).then((response) => {
 			this.resultcount = Number(response.data.feed.title)
-			const items =  Math.ceil(this.resultcount / this.props.maxDisplayRows)
-			this.setState({ items: items })
+			const items = Math.ceil(this.resultcount / this.props.maxDisplayRows)
+			this.setState({ items: items, activePage: activePage })
 		}).catch(() => {
-			this.setState({ items: 0 })
+			this.setState({ items: 0, activePage: activePage })
 		})
 	}
 
@@ -2938,12 +2945,19 @@ export function CommonBackInternalWork(_befor_url) {
 }
 
 import { setTimeout } from 'timers'
-export function CommonGetList(_url, _activePage) {
+export function CommonGetList(_url, _activePage, _conditionsKey) {
 	return new Promise((resolve) => {
+		let retryCount = 0
+		const maxRetryCount = 10
 		const get = () => {
 
+			const url = _url + '&n=' + _activePage
+
+			// 今回の検索条件を保存する
+			CommonBeforConditions().set(_conditionsKey, url)
+
 			axios({
-				url: _url + '&n=' + _activePage,
+				url: url,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -2962,9 +2976,14 @@ export function CommonGetList(_url, _activePage) {
 				if (error.response && error.response.data && error.response.data.feed) {
 					const title = error.response.data.feed.title
 					if (title === 'Please make a pagination index in advance.') {
-						setTimeout(() => {
-							get()
-						}, 200)
+						if (retryCount < maxRetryCount) {
+							retryCount++
+							setTimeout(() => {
+								get()
+							}, 500)
+						} else[
+							alert('一覧のindex作成に取得に失敗しました。\n\n' + title)
+						]
 					}
 				} else {
 					resolve({ isDisabled: false, isError: error })
@@ -2973,4 +2992,19 @@ export function CommonGetList(_url, _activePage) {
 		}
 		get()
 	})
+}
+let _commonBeforConditions = {}
+export function CommonBeforConditions() {
+	return {
+		set: (_key, _conditions) => {
+			return _commonBeforConditions[_key] = _conditions
+		},
+		get: (_key, _url) => {
+			let res = null
+			if (_commonBeforConditions[_key]) {
+				res = _commonBeforConditions[_key].replace(_url, '')
+			}
+			return res
+		}
+	}
 }

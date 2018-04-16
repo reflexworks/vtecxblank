@@ -23,7 +23,7 @@ env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
-		mode: devtool ? "development" : "production",
+		mode: devtool ? 'development' : 'production',
 		output: {
 			filename: filename
 		},
@@ -223,10 +223,10 @@ gulp.task('upload:entry', function (done) {
 gulp.task('upload:data', function (done) {
 	if (argv.f) {
 		const file = 'data/' + argv.f
-		sendfile(file, '?_bulk')		
+		sendfile(file, '?_bulkserial')		
 	} else {
 		recursive('data', [], function (err, files) {
-			files.map((file) => sendfile(file, '?_bulk'))				
+			files.map((file) => sendfile(file, '?_bulkserial'))				
 			done()
 		})		
 	}
