@@ -10,7 +10,7 @@ export function getShipmentServiceCode(shipment_service_service_name) {
 	if (cache2[shipment_service_service_name]) return cache2[shipment_service_service_name]
 	if (!shipment_service_all) {
 		shipment_service_all = vtecxapi.getFeed('/shipment_service')
-		if (!shipment_service_all.feed.entry) throw '配送業者マスタが登録されていません'
+		if (!shipment_service_all) throw '配送業者マスタが登録されていません'
 	}
 	const shipment_service = shipment_service_all.feed.entry.filter((entry) => { 
 		return entry.shipment_service.service_name===shipment_service_service_name
@@ -18,7 +18,7 @@ export function getShipmentServiceCode(shipment_service_service_name) {
 	if (shipment_service.length === 0) {
 		return null
 	} else {
-		if (!shipment_service[0].shipment_service.code) throw 'null!!'+JSON.stringify(shipment_service[0])
+		if (!shipment_service[0].shipment_service.code) throw 'shipment_service.codeが空です。:'+JSON.stringify(shipment_service[0])
 		cache2[shipment_service_service_name] = shipment_service[0].shipment_service.code
 		return shipment_service[0].shipment_service.code			
 	}
@@ -27,12 +27,11 @@ export function getShipmentServiceCode(shipment_service_service_name) {
 export function getChargeByZone(delivery_charge_all,customer_all, size, prefecture, shipment_service_service_name, delivery_area) {
 
 	const shipment_service_code = delivery_charge_all.shipment_service_code
-
 	if (!shipment_service) {
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code)
-		if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません(サービスコード=' + shipment_service_code + ')'
+		if (!shipment_service) throw '配送業者マスタが登録されていません(サービスコード=' + shipment_service_code + ')'
 	} 
-	if (!delivery_charge_all.delivery_charge.feed.entry[0].delivery_charge) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +' サービスコード='+shipment_service_code+')'
+	if (!delivery_charge_all.delivery_charge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +' サービスコード='+shipment_service_code+')'
 	// shipment_service_codeからdelivery_chargeを取得
 	const delivery_charge = delivery_charge_all.delivery_charge.feed.entry[0].delivery_charge.filter((delivery_charge) => {
 		return delivery_charge.shipment_service_code === shipment_service_code
@@ -69,7 +68,6 @@ export function getChargeByZone(delivery_charge_all,customer_all, size, prefectu
 		if (delivery_charge_details.length === 0) 
 			throw size + ' サイズの配送料が登録されていません。(顧客コード:' + delivery_charge_all.customer_code + ')'		
 	}
-
 	// zone_nameからcharge_by_zoneを取得
 	const charge_by_zone = delivery_charge_details[0].charge_by_zone.filter((charge_by_zone) => {
 		return charge_by_zone.zone_name === zone[0].zone_name
@@ -81,7 +79,7 @@ export function getChargeByZone(delivery_charge_all,customer_all, size, prefectu
 export function getChargeBySizeAndZone(customer_code,shipment_service_code, size, zone_name, delivery_area) {
 
 	const delivery_charge_all = vtecxapi.getEntry('/customer/' + customer_code + '/deliverycharge')	
-	if (!delivery_charge_all.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +')'
+	if (!delivery_charge_all) throw '配送料マスタが登録されていません。(顧客コード=' + customer_code +')'
 
 	// shipment_service_codeからdelivery_chargeを取得
 	const delivery_charge = delivery_charge_all.feed.entry[0].delivery_charge.filter((delivery_charge) => {
@@ -133,7 +131,7 @@ export function getDeliverycharge(customer_all, shipper_code, shipment_service_s
 		const customer = getCustomerByShipper(customer_all,shipper_code,shipment_service_service_name)
 		if (!customer.customer_code) throw '顧客マスタが登録されていません。(荷主コード=' + shipper_code + ')'
 		const deliverycharge = vtecxapi.getEntry('/customer/' + customer.customer_code + '/deliverycharge')	
-		if (!deliverycharge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + customer.customer_code +')'
+		if (!deliverycharge) throw '配送料マスタが登録されていません。(顧客コード=' + customer.customer_code +')'
 
 		cache[shipper_code] = { 'customer_code': customer.customer_code, 'shipment_class': customer.shipment_class, 'delivery_charge': deliverycharge }
 		return cache[shipper_code]
@@ -177,10 +175,11 @@ export function getFullDate(datestr) {
 		return year+'-'+month+'-'+day		
 	} else {
     	matches = /^(\d+)\/(\d+)\/(\d+).*$/.exec(datestr)
-		if (!matches) {
-			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
+		if (matches&&matches.length > 2) {
+			return matches[1]+'-'+matches[2]+'-'+matches[3]		
+		} else {
+			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'			
 		}	
-		return matches[1]+'-'+matches[2]+'-'+matches[3]		
 	}
 }
 
@@ -203,8 +202,7 @@ export function getKey(customer_code,datestr, shipment_service_code,tracking_num
 		if (!matches) {
 			throw '日時のパースエラーです。正しい日時を入れてください。(入力値=' + datestr + ')'
 		}	
-		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number
-			
+		return matches[1] + ('0' + matches[2]).slice(-2) + customer_code + '_' + shipment_service_code + '_' + tracking_number			
 	}	
 
 }
