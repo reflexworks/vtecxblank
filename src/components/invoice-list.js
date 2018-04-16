@@ -100,12 +100,11 @@ export default class InvoiceList extends React.Component {
 	 */
 	onDelete(data) {
 		const _delete = () => {
-			if (confirm('請求番号:' + data.invoice.invoice_code + '\n' +
+			if (confirm('請求番号:' + data.invoice.invoice_code + '-' + data.invoice.invoice_code_sub + '\n' +
 				'この情報を削除します。よろしいですか？')) {
-				const id = data.invoice.invoice_code
 		
 				axios({
-					url: '/d/invoice/' + id,
+					url: '/d' + data.link[0].___href,
 					method: 'delete',
 					headers: {
 						'X-Requested-With': 'XMLHttpRequest'
@@ -134,7 +133,7 @@ export default class InvoiceList extends React.Component {
 	changeSearchYearmonth(_data) {
 		if (_data) {
 			this.setState({ searchYearMonth: _data.value })
-			this.doGetFeed('invoice.invoice_yearmonth-rg-*' + _data.value + '*')
+			this.doGetFeed('invoice.invoice_yearmonth-rg-.*' + _data.value + '.*')
 		} else {
 			this.setState({ searchYearMonth: '' })
 			this.doGetFeed()
