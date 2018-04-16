@@ -81,7 +81,7 @@ export default class InvoiceForm extends React.Component {
 		this.editEntry = this.editEntry || {}
 
 		this.convert_taxation = { '0': '税抜', '1': '税込' }
-
+		this.deliveryCSV = [{delivery:'エコ配JP',}, {delivery:'ヤマト運輸'}]
 		this.cashData = {}
 
 		this.isEdit = true
@@ -104,7 +104,6 @@ export default class InvoiceForm extends React.Component {
 			this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
 			if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
 			if (this.entry.invoice.customer_code) this.props.changeCustomerCode(this.entry.invoice.customer_code)
-
 			//口座情報に口座名義、支店名が無い時の処理
 			if(this.entry.billfrom.payee){
 				this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {
@@ -127,14 +126,12 @@ export default class InvoiceForm extends React.Component {
 			this.setInternalWorkYearMonthList()
 
 			if (this.entry.invoice.working_yearmonth && this.entry.invoice.customer_code) {
-
 				this.getService(this.entry.invoice.customer_code, this.entry.invoice.working_yearmonth)
-
+				this.getInvoiceData(this.entry.invoice.customer_code, this.entry.invoice.working_yearmonth, this.entry.invoice.quotation_code)
 				// 簡易明細表示
-				this.setBillingSummaryTable()
+				this.setBillingSummaryTable()		
 			}
 		}
-
 	}
 
 	getKey(_category, _item_name, _unit) {
@@ -357,7 +354,6 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	getInvoiceData(_customerCode,_workingYearmonth,_quotationCode) {
-		
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 			method: 'get',
@@ -369,7 +365,6 @@ export default class InvoiceForm extends React.Component {
 				this.setState({ isDisabled: false })
 			} else if (response.status !== 204) {
 				this.shippingData = response.data.feed.entry[0]
-
 				this.shippingData.billing_compare.map((billing_compare) => {
 					axios({
 						url:'/d/shipment_service?f&shipment_service.code='+billing_compare.shipment_service_code,
@@ -377,7 +372,7 @@ export default class InvoiceForm extends React.Component {
 						headers: {
 							'X-Requested-With': 'XMLHttpRequest'
 						}
-					}).then((response) => {
+					}).then((response) => {		
 						billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + response.data.feed.entry[0].shipment_service.service_name
 					})
 					let total_internal_work = 0
@@ -430,7 +425,6 @@ export default class InvoiceForm extends React.Component {
 			if (response.status === 204) {
 				this.setState({ isDisabled: false })
 			} else if (response.status !== 204) {
-
 				this.collectingData = response.data.feed.entry[0]
 				this.setBillingDataTable(this.collectingData)
 				this.collectingData.billing_compare.map((billing_compare) => {
@@ -1992,7 +1986,6 @@ export default class InvoiceForm extends React.Component {
 								}]}
 							/>
 						</Panel>
-
 					</Tab>
 					
 					<Tab eventKey={4} title="請求元"> 
@@ -2248,7 +2241,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 					
 					<Tab eventKey={5} title="請求データ(発送)">
-						{(this.shippingData && this.shippingData.billing_compare) === true &&
+						{(this.shippingData && this.shippingData.billing_compare) &&
 							this.shippingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">
@@ -2273,7 +2266,7 @@ export default class InvoiceForm extends React.Component {
 					</Tab>
 
 					<Tab eventKey={6} title="請求データ(集荷)">
-						{(this.collectingData && this.collectingData.billing_compare) === true && 
+						{(this.collectingData && this.collectingData.billing_compare) &&	
 							this.collectingData.billing_compare.map((billing_compare, idx) => {
 								return(
 									<Panel key={idx} collapsible header={billing_compare.shipment_service_service_name} eventKey={idx} bsStyle="info" defaultExpanded="true">
