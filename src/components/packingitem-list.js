@@ -333,7 +333,7 @@ export default class PackingItemList extends React.Component {
 							data={this.state.feed.entry}
 							edit={!this.props.selectTable ? (data) => this.moveEdit(data) : null }
 							select={this.props.selectTable ? (data) => this.onSelect(data) : null}
-							remove={(data) => this.onDelete(data)}
+							remove={!this.props.selectTable ? (data) => this.onDelete(data) : null}
 							header={[{
 								field: 'packing_item.item_code',title: '品番', width: '100px'
 							}, {
