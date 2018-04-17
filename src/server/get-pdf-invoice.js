@@ -1,4 +1,4 @@
-import vtecxapi from 'vtecxapi' 
+import vtecxapi from 'vtecxapi'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/invoicestyles.js'
@@ -19,21 +19,21 @@ let cashData = {}
 let pageNumber = customer_code ? 1 : 2
 
 /*
-	顧客ごとに表示ボタン
-	・タイトル
-	・明細
-	・明細金額合計
-	・備考
-	・口座
-	
-	請求先毎に表示ボタン
-	・請求先で絞った全ての顧客への請求金額
-	・口座
-    ・以下を顧客の数だけ表示
+    顧客ごとに表示ボタン
     ・タイトル
-	・明細
-	・明細金額合計
-	・備考
+    ・明細
+    ・明細金額合計
+    ・備考
+    ・口座
+    
+    請求先毎に表示ボタン
+    ・請求先で絞った全ての顧客への請求金額
+    ・口座
+・以下を顧客の数だけ表示
+・タイトル
+    ・明細
+    ・明細金額合計
+    ・備考
 */
 const getTdNode = (_col,_tdStyle,_value,_spanStyle) => {
 
@@ -50,7 +50,8 @@ const getTdNode = (_col,_tdStyle,_value,_spanStyle) => {
 
 //請求書本体（請求先、請求元）の情報を取得
 const getInvoice = () => {
-	const data = vtecxapi.getEntry('/invoice/' + invoiceKey )
+	const data = vtecxapi.getEntry('/invoice/' + invoiceKey)
+	vtecxapi.log('data1='+JSON.stringify(data))
 	let entry = data.feed.entry[0]
 	return entry
 }
@@ -58,12 +59,30 @@ const getInvoice = () => {
 //追加した請求明細などを取得
 const getInvoiceDetails = (_customerCode) => {
 	const data = vtecxapi.getFeed('/invoice_details/' + invoiceKey + '?customer.customer_code=' + _customerCode)
-	return data.feed.entry ? data.feed.entry[0]:''
+	vtecxapi.log('data2=' + JSON.stringify(data))
+	if (data) {
+		//カテゴリnoneを除外
+		let tempData = data.feed.entry[0]
+		let itemList = []
+
+		tempData.item_details.map((item) => {
+			if (item.category !== 'none') {
+				itemList.push(item)
+			}   
+		})
+		data.feed.entry[0].item_details = itemList
+		return data.feed.entry[0]
+	} else {
+		return''
+	}
 }
 
 //顧客と庫内作業と見積書コードを元に明細を取得（invoice-formのgetService()と同じ)
 const getServiceItem = (_invoiceEntry, _customerEntry) => {
+	vtecxapi.log('customer='+JSON.stringify(_customerEntry))
 	const serviceItem = getInvoiceItemDetails(_customerEntry.customer.customer_code, _invoiceEntry.invoice.quotation_code, working_yearmonth)
+	vtecxapi.log('service='+JSON.stringify(serviceItem))
+
 	if (serviceItem) {
 		for (let i = 0; i < serviceItem.length; ++i) {
 			const item_details = serviceItem[i]
@@ -79,8 +98,11 @@ const getServiceItem = (_invoiceEntry, _customerEntry) => {
 
 //編集された「サービス明細の備考」を取得して、サービス明細とマージする
 const getInvoiceRemarks = (_customerCode, serviceItem) => {
-	const data = vtecxapi.getFeed('/invoice_remarks/' + invoiceKey + '?f&customer.customer_code=' + _customerCode)
-	if (data.feed.entry) {
+	
+	const data = vtecxapi.getFeed('/invoice_remarks/' + invoiceKey + '?customer.customer_code=' + _customerCode)
+	vtecxapi.log('data=' + data)
+	
+	if (data) {
 		const invoice_remarks = data.feed.entry[0]
 		invoice_remarks.item_details.map((_item_details) => {
 			const category = _item_details.category
@@ -93,7 +115,7 @@ const getInvoiceRemarks = (_customerCode, serviceItem) => {
 				serviceItem[idx].remarks = _item_details.remarks
 			}
 		})
-	}	
+	}   
 	return serviceItem
 }
 
@@ -105,7 +127,7 @@ const getSubTotal = (_allItem) => {
 	//税抜が１つも無かった
 	if (!(noTaxList.length)) {
 		return ('0')
-	//税抜が１つだけ
+		//税抜が１つだけ
 	} else if (noTaxList.length === 1) {
 		noTaxList[0].amount = noTaxList[0].amount.replace(/,/g,'')
 		return(noTaxList[0].amount)
@@ -118,17 +140,17 @@ const getSubTotal = (_allItem) => {
 	}
 }
 
+
 //「税込」のデータの金額を合計して税込の合計金額を出す
 const getTaxTotal = (_allItem) => {
-	
+    
 	const TaxList = _allItem.filter((_item) => {
-		vtecxapi.log('taxitemtax='+JSON.stringify(_item.is_taxation))
 		if(_item.is_taxation) return _item.is_taxation === '1'
 	})
 	//税込が１つも無かった
 	if (!(TaxList.length)) {
 		return ('0')
-	//税込が１つだけ
+		//税込が１つだけ
 	} else if (TaxList.length === 1) {
 		TaxList[0].amount = TaxList[0].amount.replace(/,/g,'')
 		return(TaxList[0].amount)
@@ -149,16 +171,16 @@ const getBillingClosingDate = (shipping_yearmonth,billing_closing_date) => {
 	const endMonthDate = new Date(twentyMonthDate.getFullYear(), twentyMonthDate.getMonth() + 1, 0)
 	//0：月末 1：20日
 	if (billing_closing_date === '0') {
-		return(moment(endMonthDate).format('YYYY/MM/DD'))		
+		return(moment(endMonthDate).format('YYYY/MM/DD'))       
 	} else {
 		return(moment(twentyMonthDate).format('YYYY/MM/DD'))
 	}
 }
 
 const getBilltoAndBillfrom = (_invoiceEntry,_customerEntry) => {
-	
+    
 	const stamp = getStamp(_invoiceEntry.billfrom.billfrom_name)
-	
+    
 	const name = customer_code ? _invoiceEntry.billto.billto_name : _customerEntry.customer.customer_name
 	return(
 		<tr>
@@ -167,13 +189,14 @@ const getBilltoAndBillfrom = (_invoiceEntry,_customerEntry) => {
 
 			<td colspan="1">
 				<div style={pdfstyles.fontsize10UL}>{name}　御中</div>
+				{/*<div style={pdfstyles.fontsize10UL}>{_invoiceCustomer.customer.customer_name}御中</div>*/}
 				<div style={pdfstyles.fontsize9}>{_invoiceEntry.invoice.invoice_yearmonth.replace(/\//,'年',)}月度ご請求分</div>
 				<br/>
 			</td>
 
 			<td colspan="6" style={pdfstyles.fontsize10R}>
 				<div>{_invoiceEntry.billfrom.billfrom_name}</div>
-			
+            
 				<div>
 					<span>〒</span>
 					<span>{_invoiceEntry.contact_information.zip_code}</span>
@@ -184,11 +207,11 @@ const getBilltoAndBillfrom = (_invoiceEntry,_customerEntry) => {
 					<span>{_invoiceEntry.contact_information.tel}</span>
 					<div>
 						{stamp && <img src={stamp} width="65.0" height="65.0" />}
-						{!stamp  && <br/>}
+						{!stamp && <br/>}
 					</div>
-				</div>	
+				</div>  
 			</td>
-					
+                    
 			<td style={pdfstyles.spaceRight}>
 			</td>
 		</tr>
@@ -202,11 +225,11 @@ const getAllItemDetails = (_itemDetails) => {
 	}).filter((x, i, self) => {
 		return self.indexOf(x) === i
 	})
-	
-	let result = []	
+    
+	let result = [] 
 	categoryList.map((categoryList) => {
 
-		const item_details_ofcategory  = _itemDetails.filter((_itemDetails) => {
+		const item_details_ofcategory = _itemDetails.filter((_itemDetails) => {
 			return _itemDetails.category === categoryList
 		})
 
@@ -230,7 +253,7 @@ const getAllItemDetails = (_itemDetails) => {
 				case 'others': categoryName = 'その他'
 					break
 				case 'ems': categoryName = 'EMS・立替金など'
-					break		
+					break       
 				case 'none': categoryName = ''
 					break
 				}
@@ -256,14 +279,14 @@ const getAllItemDetails = (_itemDetails) => {
 						</tr>
 					)
 				}
-			}	
+			}   
 
 			if (categoryList !== 'none'){
 				if (categoryList === 'monthly' || categoryList === 'daily') {
 					result.push(
 						<tr key={idx}>
 							<td style={pdfstyles.spaceLeft}></td>
-							{getTdNode(1, 'tdLeft', _itemDetails.item_name + (_itemDetails.unit_name ? _itemDetails.unit_name : ''))}
+							{getTdNode(1, 'tdLeft', _itemDetails.item_name)}
 							{getTdNode(1, 'tdRight', addFigure(_itemDetails.quantity))}
 							{getTdNode(1, 'tdCenter', _itemDetails.unit)}
 							{getTdNode(1, 'tdRight', addFigure(String(_itemDetails.unit_price)))}
@@ -278,7 +301,7 @@ const getAllItemDetails = (_itemDetails) => {
 							<td style={pdfstyles.spaceLeft}></td>
 							{getTdNode(1, 'tdLeft', _itemDetails.item_name)}
 							{getTdNode(1, 'tdRight', addFigure(_itemDetails.quantity))}
-							{getTdNode(1, 'tdCenter', _itemDetails.unit + (_itemDetails.unit_name ? _itemDetails.unit_name : ''))}
+							{getTdNode(1, 'tdCenter', _itemDetails.unit)}
 							{getTdNode(1, 'tdRight', addFigure(String(_itemDetails.unit_price)))}
 							{getTdNode(2, 'tdRight', addFigure(_itemDetails.amount))}
 							{getTdNode(1, 'tdLeft', _itemDetails.remarks)}
@@ -300,10 +323,57 @@ const getAllItemDetails = (_itemDetails) => {
 	return (result)
 }
 
+
+const getAmount = ( _totalAmount,_subTotal,_taxation, _taxTotal) => {
+	let result = []
+	result.push(
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			<td colspan="5"></td>
+			{getTdNode(2,'tableTdCenter','小計金額')}
+			{getTdNode(1,'tdRight','¥'+ addFigure(_subTotal))}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
+	result.push(
+
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			<td colspan="5"></td>           
+			{getTdNode(2,'tableTdCenter','消費税')}
+			{getTdNode(1,'tdRight','¥'+ addFigure(_taxation))}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
+	result.push(	
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			<td colspan="5"></td>           
+			{getTdNode(2,'tableTdCenter','EMS・立替金など')}
+			{getTdNode(1,'tdRight','¥'+ addFigure(_taxTotal))}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
+	result.push(	
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>       
+			<td colspan="5"></td>
+			{getTdNode(2,'tableTdCenter','合計請求金額')}
+			{getTdNode(1,'tdRight','¥'+ addFigure(_totalAmount))}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
+	return result
+}	
+
 const getRemarks = (_remarks) => {
+	let result = []
+	if (!_remarks[0].content) {
+		return result
+	}
 	return (
 		_remarks.map((remarks, idx) => {
-			let result = []
+            
 			if (idx === 0) {
 				result.push(
 					<tr>
@@ -311,7 +381,7 @@ const getRemarks = (_remarks) => {
 						{getTdNode(8,'tableTdLeft','備考')}
 						<td style={pdfstyles.spaceRight}></td>
 					</tr>
-				)	
+				)   
 			}
 
 
@@ -321,7 +391,7 @@ const getRemarks = (_remarks) => {
 					{getTdNode(8,'tdLeft',remarks.content)}
 					<td style={pdfstyles.spaceRight}></td>
 				</tr>
-			)	
+			)   
 			return (result)
 		})
 	)
@@ -329,7 +399,7 @@ const getRemarks = (_remarks) => {
 
 const getPayee = (_payee) => {
 	const length = _payee.length
-	const half =  Math.floor(length / 2)
+	const half = Math.floor(length / 2)
 	return (
 		_payee.map((payee,idx) => {
 			convertPayee(payee)
@@ -361,7 +431,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
-					)	
+					)   
 				case length - 1:
 					return (
 						<tr key={idx}>
@@ -389,7 +459,7 @@ const getPayee = (_payee) => {
 						</tr>
 					)
 				}
-			
+            
 			} else if (length > 2 && !(length % 2)) {
 				switch (idx) {
 				case 0:
@@ -406,8 +476,8 @@ const getPayee = (_payee) => {
 							</td>
 						</tr>
 					)
-					
-					
+                    
+                    
 				case half:
 					return (
 						<tr key={idx}>
@@ -424,7 +494,7 @@ const getPayee = (_payee) => {
 				case length - 1:
 					return (
 						<tr key={idx}>
-							<td style={pdfstyles.spaceLeft}></td>	
+							<td style={pdfstyles.spaceLeft}></td>   
 							<td colspan="1" style={pdfstyles.tableTdNoTop}></td>
 							{getTdNode(1,'tdLeft',payee.bank_info)}
 							{getTdNode(2,'tdLeft',payee.branch_office)}
@@ -435,7 +505,7 @@ const getPayee = (_payee) => {
 						</tr>
 					)
 				default:
-					return (	
+					return (    
 						<tr key={idx}>
 							<td style={pdfstyles.spaceLeft}></td>
 							<td colspan="1" style={pdfstyles.tableTdNoTopBottom}></td>
@@ -447,7 +517,7 @@ const getPayee = (_payee) => {
 							{getTdNode(2,'tdLeft',payee.account_name)}
 							<td style={pdfstyles.spaceRight}></td>
 						</tr>
-					)	
+					)   
 				}
 
 			}else if (length === 2) {
@@ -465,8 +535,8 @@ const getPayee = (_payee) => {
 							<td style={pdfstyles.spaceRight}>
 							</td>
 						</tr>
-					)	
-					
+					)   
+                    
 				case length - 1:
 					return (
 						<tr key={idx}>
@@ -482,7 +552,7 @@ const getPayee = (_payee) => {
 					)
 				}
 			} else {
-				return (	
+				return (    
 					<tr key={idx}>
 						<td style={pdfstyles.spaceLeft}></td>
 						{getTdNode(1,'tableTd','振込先')}
@@ -493,28 +563,17 @@ const getPayee = (_payee) => {
 						{getTdNode(2,'tdLeft',payee.account_name)}
 						<td style={pdfstyles.spaceRight}></td>
 					</tr>
-				)	
-			}	
+				)   
+			}   
 		})
-	)	
+	)   
 }
+//顧客毎の最初のページ
+const invoiceTitle = (_customerEntry,_invoiceEntry,item,total_amount) => {
 
-const invoicePage = (_customerEntry,_invoiceEntry,item,remarks) => {
-
-	vtecxapi.log('start='+pageNumber)
 	const allItem = item
-
-	vtecxapi.log('allItem='+JSON.stringify(allItem))
-	//税抜合計値	
-	const subTotal = allItem ? getSubTotal(allItem):'0'
-	//税抜合計値に0.08かける
-	const taxation = subTotal ? Math.floor(subTotal * 0.08)	:'0'
-	//税込合計値
-	const taxTotal = allItem ? getTaxTotal(allItem): '0'
-	//全ての金額を合計した合計請求金額
-	const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
-
-	const invoice_1  = (
+    
+	const invoice_1 = (
 		<div className="_page" id={'page-'+pageNumber} style={pdfstyles._page}>
 			<table cols="9" style={pdfstyles.widths}>
 
@@ -522,7 +581,7 @@ const invoicePage = (_customerEntry,_invoiceEntry,item,remarks) => {
 				<tr>
 					{getTdNode(9,'borderTop','御請求書','title')}
 				</tr>
-				
+                
 				{/*請求書情報*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
@@ -537,12 +596,12 @@ const invoicePage = (_customerEntry,_invoiceEntry,item,remarks) => {
 
 				{/*請求先名 請求元*/}
 				{ _invoiceEntry.billto && _invoiceEntry.billfrom &&
-					getBilltoAndBillfrom(_invoiceEntry,_customerEntry)
+                    getBilltoAndBillfrom(_invoiceEntry,_customerEntry)
 				}
-				
+                
 				{/*合計請求金額*/}
 				<tr>
-					<td style={pdfstyles.spaceLeft}><br />	</td>
+					<td style={pdfstyles.spaceLeft}><br />  </td>
 
 					<td colspan='5' >
 						<span style={pdfstyles.fontsize8}>下記の通り、ご請求を申し上げます。</span>
@@ -558,99 +617,26 @@ const invoicePage = (_customerEntry,_invoiceEntry,item,remarks) => {
 						<span style={pdfstyles.fontsize10R}>　請求先コード:{_invoiceEntry.billto.billto_code}</span>
 						<span style={pdfstyles.fontsize10R}>顧客コード:{_customerEntry.customer.customer_code}</span>
 					</td>
-					
+                    
 					<td style={pdfstyles.spaceRight}><br/></td>
 				</tr>
-				
+                
 				<tr>
 					<td colspan='9'><br/></td>
 				</tr>
 
 				{/*項目一覧*/}
 				{ allItem &&
-					getAllItemDetails(allItem)					
+                    getAllItemDetails(allItem)                  
 				}
-
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="3"></td>
-					{getTdNode(3,'tableTdCenter','小計金額')}
-					{getTdNode(1,'tdRight','¥'+ addFigure(subTotal))}
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
-
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="3"></td>			
-					{getTdNode(3,'tableTdCenter','消費税')}
-					{getTdNode(1,'tdRight','¥'+ addFigure(taxation))}
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
-
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="3"></td>			
-					{getTdNode(3,'tableTdCenter','EMS・立替金など')}
-					{getTdNode(1,'tdRight','¥'+ addFigure(taxTotal))}
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
-				
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>		
-					<td colspan="3"></td>
-					{getTdNode(3,'tableTdCenter','合計請求金額')}
-					{getTdNode(1,'tdRight','¥'+ addFigure(total_amount))}
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
 
 			</table>
 		</div>
 	)
 	++pageNumber
-	vtecxapi.log('after1page='+pageNumber)
-	
+    
 	let tables = [invoice_1]
 
-	
-	const invoice_2 = (
-		<div className="_page" id={'page-' + pageNumber} style={pdfstyles._page}>
-			<table cols="10" style={pdfstyles.payeeWidths}>
-				
-				{/*備考*/}
-				<tr>
-					<td colspan="10"><br /></td>
-				</tr>
-
-				{remarks &&
-						getRemarks(remarks)
-				}
-
-				<tr>
-					<td colspan="10"><br /></td>
-				</tr>
-				
-				{_invoiceEntry.billfrom.payee && customer_code &&
-						getPayee(_invoiceEntry.billfrom.payee)
-				}
-				<tr>
-					<td colspan="10"><br /></td>
-				</tr>
-
-				{_invoiceEntry.billfrom.payee && customer_code &&
-						<tr>
-							<td style={pdfstyles.spaceLeft}></td>
-							<td colspan="6"></td>
-							{getTdNode(1, 'tableTdCenter', 'お支払い期限')}
-							{getTdNode(1, 'tdLeft', _invoiceEntry.invoice.payment_date)}
-							<td style={pdfstyles.spaceRight}></td>
-						</tr>
-				}
-			</table>
-		</div>
-	)
-	tables.push(invoice_2)
-	++pageNumber
-	
 	let res = {
 		html: tables,
 		size: tables.length,
@@ -661,14 +647,93 @@ const invoicePage = (_customerEntry,_invoiceEntry,item,remarks) => {
 	return res
 }
 
+const addInvoicePage = (_customerEntry,_invoiceEntry,item) => {
+
+	const allItem = item
+    
+	const invoice_1 = (
+		<div className="_page" id={'page-'+pageNumber} style={pdfstyles._page}>
+			<table cols="9" style={pdfstyles.widths}>
+
+				{/*項目一覧*/}
+				{ allItem &&
+                    getAllItemDetails(allItem)                  
+				}
+
+			</table>
+		</div>
+	)
+	++pageNumber
+    
+	let tables = [invoice_1]
+
+	let res = {
+		html: tables,
+		size: tables.length,
+	}
+	return res
+}
+
+//備考、口座、合計金額等
+const payeeAndRemarksPage =(_customerEntry,_invoiceEntry,total_amount,subTotal,taxation,taxTotal,remarks) => {
+	vtecxapi.log('total='+total_amount)
+	const invoice_1 = (
+		<div className="_page" id={'page-' + pageNumber} style={pdfstyles._page}>
+			<table cols="10" style={pdfstyles.payeeWidths}>
+                
+				{ 
+					getAmount(total_amount,subTotal,taxation,taxTotal)
+				}
+				<tr>
+					<td colspan="10"><br /></td>
+				</tr>
+
+				{remarks &&
+                    getRemarks(remarks)
+				}
+
+				<tr>
+					<td colspan="10"><br /></td>
+				</tr>
+                
+				{_invoiceEntry.billfrom.payee && customer_code &&
+                    getPayee(_invoiceEntry.billfrom.payee)
+				}
+				<tr>
+					<td colspan="10"><br /></td>
+				</tr>
+
+				{_invoiceEntry.billfrom.payee && customer_code &&
+                        <tr>
+                        	<td style={pdfstyles.spaceLeft}></td>
+                        	<td colspan="6"></td>
+                        	{getTdNode(1, 'tableTdCenter', 'お支払い期限','fontsize7')}
+                        	{getTdNode(1, 'tdLeft', _invoiceEntry.invoice.payment_date)}
+                        	<td style={pdfstyles.spaceRight}></td>
+                        </tr>
+				}
+
+			</table>
+		</div>
+	)
+	++pageNumber
+
+	let tables = [invoice_1]
+	let res = {
+		html: tables,
+		size: tables.length,
+	}
+	return res
+}
+
 let pageData = {
 	pageList: {
 		page:[]
 	}
 }
 
-
 const getAllCustomerTotalAmount = (_invoiceCustomer) => {
+	
 	let result = []
 
 	result.push(
@@ -681,28 +746,33 @@ const getAllCustomerTotalAmount = (_invoiceCustomer) => {
 		</tr>
 
 	)
+	vtecxapi.log('a='+_invoiceCustomer)
 	_invoiceCustomer.map((invoiceCustomer) => {
+		vtecxapi.log('aaaa'+JSON.stringify(invoiceCustomer))
 		result.push(
 			<tr>
 				<td style={pdfstyles.spaceLeft}></td>
-				{getTdNode(3, 'tdLeft', invoiceCustomer.resCustomerName) }
-				{ getTdNode(3, 'tdRight',invoiceCustomer.resCustomerCode) }
-				{ getTdNode(2, 'tdRight','¥' + addFigure(invoiceCustomer.resTotalAmount))}
+				{getTdNode(3, 'tdLeft', invoiceCustomer.customer_name) }
+				{ getTdNode(3, 'tdRight',invoiceCustomer.customer_code) }
+				{ getTdNode(2, 'tdRight','¥' + addFigure(invoiceCustomer.total_amount))}
 				<td style={pdfstyles.spaceRight}></td>
 			</tr>
 		)
 	})
-	
+    
 	return (result)
 }
 const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 
+	vtecxapi.log('a='+JSON.stringify(_invoiceEntry))
+	vtecxapi.log('b='+JSON.stringify(_invoiceCustomer))
 	const stamp = getStamp(_invoiceEntry.billfrom.billfrom_name)
 	let total_amount = 0
 	_invoiceCustomer.map((_invoiceCustomer) => {
-		total_amount = (Number(total_amount) + Number(_invoiceCustomer.resTotalAmount))	
+		total_amount = (Number(total_amount) + Number(_invoiceCustomer.total_amount)) 
 	})
-	const invoice_1  = (
+
+	const invoice_1 = (
 		<div className="_page" id='page-1' style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.totalAmountWidths}>
 
@@ -710,7 +780,7 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 				<tr>
 					{getTdNode(10,'borderTop','御請求書','title')}
 				</tr>
-				
+                
 				{/*請求書情報*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
@@ -723,19 +793,19 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
-
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
 
 					<td colspan="5">
 						<div style={pdfstyles.fontsize10UL}>{_invoiceEntry.billto.billto_name}　御中</div>
+						
 						<div style={pdfstyles.fontsize9}>{_invoiceEntry.invoice.invoice_yearmonth.replace(/\//,'年',)}月度ご請求分</div>
 						<br/>
 					</td>
 
 					<td colspan="3" style={pdfstyles.fontsize10R}>
 						<div>{_invoiceEntry.billfrom.billfrom_name}</div>
-					
+                    
 						<div>
 							<span>〒</span>
 							<span>{_invoiceEntry.contact_information.zip_code}</span>
@@ -746,23 +816,23 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 							<span>{_invoiceEntry.contact_information.tel}</span>
 							<div>
 								{stamp && <img src={stamp} width="65.0" height="65.0" />}
-								{!stamp  && <br/>}
+								{!stamp && <br/>}
 							</div>
-						</div>	
+						</div>  
 					</td>
-							
+                            
 					<td style={pdfstyles.spaceRight}>
 					</td>
 				</tr>
 				{/*請求先名 請求元*/}
 				{ /*_invoiceEntry.billto && _invoiceEntry.billfrom &&
-					getBilltoAndBillfrom(_invoiceEntry)
-				*/}
-				
+                    getBilltoAndBillfrom(_invoiceEntry)
+                */}
+                
 				{/*合計請求金額*/}
 				<tr>
-					<td style={pdfstyles.spaceLeft}><br />	</td>
-					
+					<td style={pdfstyles.spaceLeft}><br />  </td>
+                    
 					<td colspan='6' >
 						<span style={pdfstyles.fontsize8}>下記の通り、ご請求を申し上げます。</span>
 						<br/>
@@ -778,13 +848,13 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 					</td>
 					<td style={pdfstyles.spaceRight}><br/></td>
 				</tr>
-				
+                
 				<tr>
 					<td colspan='10'><br/><br/></td>
 				</tr>
 
 				{getAllCustomerTotalAmount(_invoiceCustomer)}
-				
+                
 				<tr>
 					<td colspan='10'><br/></td>
 				</tr>
@@ -804,15 +874,15 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 				<tr>
 					<td colspan='10'><br/></td>
 				</tr>
-				
+                
 				{_invoiceEntry.billfrom.payee &&
-					getPayee(_invoiceEntry.billfrom.payee)
+                    getPayee(_invoiceEntry.billfrom.payee)
 				}
 
 				<tr>
 					<td colspan="10"><br/></td>
 				</tr>
-			
+            
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
 					<td colspan="6"></td>
@@ -821,7 +891,7 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
-			</table>	
+			</table>    
 		</div>
 	)
 
@@ -831,7 +901,96 @@ const invoiceTotal = (_invoiceEntry, _invoiceCustomer) => {
 		size: tables.length
 	}
 	return res
-			
+            
+}
+
+const sortArray = (_array) => {
+	//明細の並び替え
+	let categoryList = _array.map((item_details) => {
+		return item_details.category
+	}).filter((x, i, self) => {
+		return self.indexOf(x) === i
+	})
+    
+	let result = []
+	categoryList.map((categoryList) => {
+		const item_details_ofName = _array.filter((_itemDetails) => {
+			return _itemDetails.category === categoryList
+		})
+		result = result.concat(item_details_ofName)
+	})
+
+	result.map((item_details) => {
+		item_details.category
+		if (categoryList === 'monthly' || categoryList === 'daily') {
+			item_details.item_name = item_details.unit_name ? item_details.item_name + item_details.unit_name : item_details.item_name
+		} else {
+			item_details.unit = item_details.unit_name ? item_details.unit_name : item_details.unit        
+		}
+	})
+	return result
+}
+
+const checkItemLimit = (_itemDetails, _lmax) => {
+	if (_itemDetails.item_name.length > _lmax * 30) {
+		_itemDetails.item_name = _itemDetails.item_name.slice(0, _lmax * 21)
+	}
+	if (_itemDetails.quantity.length > _lmax * 30) {
+		_itemDetails.quantity = _itemDetails.quantity.slice(0, _lmax * 21)
+	}
+	if (_itemDetails.unit.length > _lmax * 30) {
+		_itemDetails.unit = _itemDetails.unit.slice(0, _lmax * 8)
+	}
+	if (_itemDetails.unit_price.length > _lmax * 30) {
+		_itemDetails.unit_price = _itemDetails.unit_price.slice(0, _lmax * 12)
+	}
+	if (_itemDetails.amount.length > _lmax * 30) {
+		_itemDetails.amount = _itemDetails.amount.slice(0, _lmax * 12)
+	}
+	if (_itemDetails.remarks.length > _lmax * 30) {
+		_itemDetails.remarks = _itemDetails.remarks.slice(0, _lmax * 34)
+	}
+
+	return(_itemDetails)
+}
+
+//データ内で必要な行数チェック
+const getItemLine = (_itemDetails) => {
+    
+	let length = []
+	length[0] = _itemDetails.item_name ? Math.ceil(_itemDetails.item_name.length / 15) : 1
+	length[1] = _itemDetails.quantity ? Math.ceil(_itemDetails.quantity.length / 15) : 1
+	length[2] = _itemDetails.unit ? Math.ceil(_itemDetails.unit.length / 20) : 1
+	length[3] = _itemDetails.unit_price ? Math.ceil(_itemDetails.unit_price.length / 12) : 1
+	length[4] = _itemDetails.amount ? Math.ceil(_itemDetails.amount.length / 34) : 1
+	length[5] = _itemDetails.remarks ? Math.ceil(_itemDetails.remarks.length / 34) : 1
+	//最大値を返す
+	let result = Math.max.apply(null, length)
+	return result
+}
+
+const getRecordLimit = (_array, _startIndex, _lmax) => {
+
+	let length = 0
+	let result = 0
+	let lastIndex = _startIndex + _lmax
+	for (let i = _startIndex; i < lastIndex; ++i) {
+		if (_array.length <= i) {
+			//添字が配列の数と同じ、もしくは上回ったら終了
+			result = i
+			break
+		} else {
+			_array[i] = checkItemLimit(_array[i],_lmax)
+			const resultLength = getItemLine(_array[i],_lmax)
+			length += resultLength
+			if (length > _lmax) {
+				result = i
+				break
+			}
+		}
+	}
+	if (!result) result = lastIndex
+	return result
 }
 
 //customer_codeの有無で処理を分ける。有るときはそれを使ってinvoicePageを行う
@@ -840,20 +999,25 @@ const element = () => {
 	let invoice_entry = getInvoice()
 	//締日用
 	const billto_data = vtecxapi.getEntry('/billto/' + invoice_entry.billto.billto_code)
+	vtecxapi.log('billtodata')
 	invoice_entry.billto = billto_data.feed.entry[0].billto
-	
-	//const titleRecordLimit = 20
+	vtecxapi.log('billtodata2')
+	const titleRecordLimit = 15
 
+	const addRecordLimit = 35
 	let customer_entry
 	if (customer_code) {
 		customer_entry = vtecxapi.getEntry('/customer/' + customer_code)
+		vtecxapi.log('TRUE')
 	} else {
-		const billto_code  = invoice_entry.billto.billto_code 
+		const billto_code = invoice_entry.billto.billto_code
 		customer_entry = vtecxapi.getFeed('/customer?billto.billto_code=' + billto_code, true)
+		
+		vtecxapi.log('customerEntry='+JSON.stringify(customer_entry))
 	}
-
-	let invoice = []
 	
+	let invoice = []
+	/*
 	customer_entry.feed.entry.map((customer_entry) => {
 		cashData = {}
 		//サービス明細取得
@@ -864,19 +1028,117 @@ const element = () => {
 		const invoice_details = getInvoiceDetails(customer_entry.customer.customer_code)
 		let item = []
 		if (invoice_details.item_details) {
-			item = serviceItem.concat(invoice_details.item_details)	
+			item = serviceItem.concat(invoice_details.item_details) 
+		} else if(serviceItem){
+			item = serviceItem
+		} else {
+			item = []
+		}
+		item = sortArray(item)
+		let remarks = invoice_details.remarks ? invoice_details.remarks : ''
+
+		//税抜合計値 
+		const subTotal = item ? getSubTotal(item):'0'
+		//税抜合計値に0.08かける
+		const taxation = subTotal ? Math.floor(subTotal * 0.08) :'0'
+		//税込合計値
+		const taxTotal = item ? getTaxTotal(item): '0'
+		//全ての金額を合計した合計請求金額
+		const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+
+		invoice.push(invoicePage(customer_entry,invoice_entry,item,remarks,subTotal,taxation,taxTotal,total_amount))
+	})
+    */
+	
+	let totalBillto = []
+	
+	customer_entry.feed.entry.map((customer_entry) => {
+		vtecxapi.log('mapStart')
+		cashData = {}
+		//サービス明細取得
+		let serviceItem = getServiceItem(invoice_entry, customer_entry)
+		vtecxapi.log('getServiceItem')
+		//サービス明細と編集した備考をマージする
+		serviceItem = getInvoiceRemarks(customer_entry.customer.customer_code, serviceItem)
+		
+		vtecxapi.log('getInvoiceRemarks')
+		//追加した明細を取得、サービス明細と追加明細をマージする
+		const invoice_details = getInvoiceDetails(customer_entry.customer.customer_code)
+		//vtecxapi.log('getinvoiceDetails')
+		let item = []
+		if (invoice_details.item_details) {
+			item = serviceItem.concat(invoice_details.item_details) 
 		} else if(serviceItem){
 			item = serviceItem
 		} else {
 			item = []
 		}
 		let remarks = invoice_details.remarks ? invoice_details.remarks : ''
-		invoice.push(invoicePage(customer_entry,invoice_entry,item,remarks))
+
+		item = sortArray(item)
+		//税抜合計値 
+		const subTotal = item ? getSubTotal(item):'0'
+		//税抜合計値に0.08かける
+		const taxation = subTotal ? Math.floor(subTotal * 0.08) :'0'
+		//税込合計値
+		const taxTotal = item ? getTaxTotal(item): '0'
+		//全ての金額を合計した合計請求金額
+		const total_amount = (Number(subTotal) + Number(taxTotal) + Number(taxation))
+		
+		const total_customer = {
+			total_amount: total_amount,
+			customer_code: customer_entry.customer.customer_code,
+			customer_name: customer_entry.customer.customer_name,
+		}
+		
+		totalBillto.push(total_customer)
+		const titleItemIndex = getRecordLimit(item, 0, titleRecordLimit)
+		const title_item = titleItemIndex ? item.slice(0, titleItemIndex) : ''
+		if (titleItemIndex < item.length) {
+			invoice.push(invoiceTitle(customer_entry,invoice_entry,title_item,total_amount))
+	
+			const addItemStart = pageNumber //2
+			let addItemLast = pageNumber
+			let addItemList = []
+			let startIndex = titleItemIndex
+			for (let i=addItemStart; ;i++) {
+				const endIndex = getRecordLimit(item, startIndex, addRecordLimit)
+				addItemList[i] = item.slice(startIndex, endIndex)
+				if (endIndex >= item.length) {
+					addItemLast = i
+					break
+				}
+				startIndex = endIndex
+			}//for	
+			if (addItemStart === addItemLast) {
+				//追加は１枚で済む
+				invoice.push(addInvoicePage(customer_entry, invoice_entry,addItemList[addItemStart]))
+			} else {
+				for (let i = addItemStart; i < (addItemLast + 1); ++i) {
+					if (i === addItemLast) {
+						//追加明細ラストページ
+						invoice.push(addInvoicePage(customer_entry, invoice_entry, addItemList[i]))
+					} else {
+						invoice.push(addInvoicePage(customer_entry, invoice_entry, addItemList[i]))
+					}	
+				}
+			}           
+		} else {
+			//最初のページで明細がすべて収まる
+			invoice.push(invoiceTitle(customer_entry, invoice_entry,title_item,total_amount))
+		}//if
+		vtecxapi.log('total=' + total_amount)
+		vtecxapi.log('sub=' + subTotal)
+		vtecxapi.log('taxation=' + taxation)
+		vtecxapi.log('taxTotal='+taxTotal)
+		invoice.push(payeeAndRemarksPage(customer_entry,invoice_entry,total_amount,subTotal,taxation,taxTotal,remarks))
+
 	})
+	vtecxapi.log('totalBillto='+JSON.stringify(totalBillto))
 	
 	//請求先毎だったら合計を出す
 	if (!customer_code) {
-		invoice.push(invoiceTotal(invoice_entry, invoice))
+		invoice.push(invoiceTotal(invoice_entry,totalBillto))
 	}
 
 	let invoice_size = 0
@@ -887,7 +1149,7 @@ const element = () => {
 	for (let i = 0, ii = total_size; i < ii; ++i) {
 		pageData.pageList.page.push({word: ''})
 	}
-	
+    
 	return (
 		<html>
 			<body>
@@ -918,9 +1180,9 @@ vtecxapi.toPdf(pageData, html, file_name())
 
 /*
 function divln(str,n) {
-	const r=new RegExp('.{1,'+n+'}','g')
-	return str.match(r).map((token,i)=>{
-	 return(<div key={i.toString()}>{token}</div>)
-	})
+    const r=new RegExp('.{1,'+n+'}','g')
+    return str.match(r).map((token,i)=>{
+     return(<div key={i.toString()}>{token}</div>)
+    })
 }
 */
