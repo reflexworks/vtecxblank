@@ -19,7 +19,8 @@ import {
 	CommonFilterBox,
 	CommonSearchConditionsFrom,
 	CommonPagination,
-	CommonGetList
+	CommonGetList,
+	CommonBeforConditions
 } from './common'
 
 type State = {
@@ -42,7 +43,7 @@ export default class ShipmentServiceList extends React.Component {
     		isError: {},
     		urlToPagenation: '' // ページネーション用に渡すURL
     	}
-    	this.activePage = 1
+    	this.conditionsKey = 'ShipmentServiceList'
     }
 
     /**
@@ -54,26 +55,27 @@ export default class ShipmentServiceList extends React.Component {
 
     	this.setState({
     		isDisabled: true,
-    		isError: {}
+    		isError: null,
+    		activePage: activePage
     	})
 
-    	this.activePage = activePage
-
-    	CommonGetList(url, activePage).then((_state) => {
+    	CommonGetList(url, activePage, this.conditionsKey).then((_state) => {
     		this.setState(_state)
     	})
 
     }
-	
+
 	/**
 	 * 一覧取得設定
 	 * @param {*} conditions 
 	 */
-    doGetFeed(conditions) {
+    doGetFeed(_conditions, _activePage) {
 
-    	const url = this.url + (conditions ? '&' + conditions : '')
+    	const url = this.url + (_conditions ? '&' + _conditions : '')
     	this.setState({
-    		urlToPagenation: url
+    		urlToPagenation: url,
+    		isError: null,
+    		activePage: _activePage
     	})
     }
 
@@ -92,7 +94,8 @@ export default class ShipmentServiceList extends React.Component {
      * 描画後の処理
      */
     componentDidMount() {
-    	this.doGetFeed()
+    	const befor_conditions = CommonBeforConditions().get(this.conditionsKey, this.url)
+    	this.doGetFeed(befor_conditions.conditions, befor_conditions.activePage)
     }
 
     render() {
@@ -110,7 +113,7 @@ export default class ShipmentServiceList extends React.Component {
 
     					<PageHeader>配送業者一覧</PageHeader>
 
-    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions)}>
+    					<CommonSearchConditionsFrom doSearch={(conditions)=>this.doGetFeed(conditions, 1)}>
 
     						<CommonInputText
     							controlLabel="配送業者コード"   
@@ -155,6 +158,7 @@ export default class ShipmentServiceList extends React.Component {
 
     					<CommonPagination
     						url={this.state.urlToPagenation}
+    						activePage={this.state.activePage}
     						onChange={(activePage, url)=>this.getFeed(activePage, url)}
     						maxDisplayRows={this.maxDisplayRows}
     						maxButtons={4}
