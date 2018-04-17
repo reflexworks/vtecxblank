@@ -15,7 +15,7 @@ if (codes.length > 2) {
 	const customer_code = codes[2]
 	const internal_work_all = getInternalworkdata(working_yearmonth, customer_code, quotation_code)
 	
-	const internal_work = internal_work_all.feed.entry.filter((entry) => {
+	const internal_work = internal_work_all ? internal_work_all.feed.entry.filter((entry) => {
 		return entry.internal_work.work_type === '4'
 	}).concat(
 		internal_work_all.feed.entry.filter((entry) => {
@@ -67,7 +67,8 @@ if (codes.length > 2) {
 				else return -1
 			}
 		})
-	)
+	) : []
+
 	internal_work.map((entry) => {
 		let unit_price = entry.internal_work.unit_price || ''
 		if (entry.internal_work.work_type === '3') {
@@ -78,7 +79,6 @@ if (codes.length > 2) {
 	}
 	)
 	vtecxapi.doResponseCsv(body, 'internalwork_' + quotation_code + '_' + working_yearmonth + '_' + customer_code + '.csv')
-
 }
 
 function getItem1(internal_work) {
