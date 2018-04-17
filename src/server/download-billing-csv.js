@@ -15,10 +15,61 @@ const customer_code = customer.feed.entry.map((entry) => { return entry.customer
 
 customer_code.map((customer_code) => { 
 
-	const billing_data1 = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code,'0')	
-	const billing_data2 = getBillingdata(shipping_yearmonth, customer_code, delivery_company, billto_code,'1')	
-	const billing_data = billing_data2.billing_data ? billing_data1.billing_data.concat(billing_data2.billing_data) : billing_data1.billing_data
-
+	let billing_data = null
+	if (delivery_company === 'YH') {		
+		billing_data = getBillingdata(shipping_yearmonth, customer_code, 'YH1', '0', billto_code).billing_data	
+		let billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'YH1', '1', billto_code).billing_data			
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry) 	
+			} else {
+				billing_data = billing_data1			
+			}
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'YH2', '0', billto_code).billing_data
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'YH2', '1', billto_code).billing_data
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'YH3', '0', billto_code).billing_data
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'YH3', '1', billto_code).billing_data
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+	}
+	if (delivery_company === 'ECO') {
+		billing_data = getBillingdata(shipping_yearmonth, customer_code, 'ECO1', '0', billto_code).billing_data	
+		const billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'ECO2', '0',billto_code).billing_data	
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+	}
 	if (billing_data) {
 		billing_data.feed.entry.map((entry) => {
 			if (entry) {	// 登録時に不具合によりnullで登録されることがある
