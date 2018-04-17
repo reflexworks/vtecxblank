@@ -178,7 +178,7 @@ export default class InternalWorkForm extends React.Component {
 		this.setState({ isDisabled: true })
 
 		axios({
-			url: '/d/quotation/'+ this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub,
+			url: '/d/quotation/'+ this.entry.quotation.quotation_code + '-' + this.entry.quotation.quotation_code_sub + '?e',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
