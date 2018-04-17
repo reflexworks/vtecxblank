@@ -26,14 +26,14 @@ billingcsv.feed.entry.map((entry) => {
 			billing_data = getBillingDataOfMail(entry,entry.billing.delivery_class1)	// ネコポス
 			result.feed.entry.push(billing_data)
 		}
-		// datastoreを更新
-		vtecxapi.put(result,true)
 
 	} catch (e) {
 		vtecxapi.sendMessage(400, e)
 	}
 
 })
+// datastoreを更新
+vtecxapi.put(result,true)
 
 
 function getBillingDataOfHatsu(entry,shipment_service_service_name) {
