@@ -27,7 +27,10 @@ const element = () => {
 	const deliverycharge = DeliveryCharge(1, entry)
 	const deliverycharge_size = deliverycharge.size
 	const packingitems = PackingItems(getStartPage(deliverycharge_size), entry)
-	const packingitem_size = packingitems.size
+	let packingitem_size = 0
+	if (packingitems) {
+		packingitem_size = packingitems.size
+	}	
 
 	const total_size = deliverycharge_size + packingitem_size
 	for (let i = 0, ii = total_size; i < ii; ++i) {
@@ -38,13 +41,14 @@ const element = () => {
 		<html>
 			<body>
 				{deliverycharge.html}
-				{packingitems.html}
+				{packingitems && packingitems.html}
 			</body>
 		</html>
 	)	
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
+
 const file_name = () => {
 	const preview = vtecxapi.getQueryString('preview')
 	if (preview === '') {
@@ -56,4 +60,5 @@ const file_name = () => {
 
 // PDF出力
 vtecxapi.toPdf(pageData, html, file_name())
+
 //vtecxapi.toPdf(pageData, html, null)

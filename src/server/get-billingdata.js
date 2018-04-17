@@ -1,6 +1,6 @@
 import vtecxapi from 'vtecxapi' 
 
-export function getBillingdata(shipping_yearmonth,customer_code,shipment_service_code,billto_code,shipment_class) {
+export function getBillingdata(shipping_yearmonth,customer_code,shipment_service_code,shipment_class,billto_code) {
 
 	shipping_yearmonth = shipping_yearmonth.replace(/[^0-9^\\.]/g,'')
 
@@ -17,7 +17,6 @@ export function getBillingdata(shipping_yearmonth,customer_code,shipment_service
 	if ((billto)&&(billto.feed.entry)&&billto.feed.entry[0].billto.billing_closing_date) {
 		billing_closing_date = billto.feed.entry[0].billto.billing_closing_date
 	}
-
 	let billing_data = vtecxapi.getFeed('/billing_data/' + shipping_yearmonth + customer_code + '_' + shipment_service_code + '_'+shipment_class+'_*', true)
 
 	if (billing_data) {
