@@ -2,6 +2,9 @@
 import React from 'react'
 //import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/packingitemstyles.js'
+import {
+	getStamp
+} from './common'
 
 const getPackingItems = (entry) =>{
 	return (
@@ -113,6 +116,8 @@ export const pageTitle = (_title) => {
 
 const header = (_quotationData) => {
 
+	const stamp = getStamp(_quotationData.billfrom.billfrom_name)
+
 	return  (
 		<table cols="5" style={pdfstyles.header_table}>
 			<tr>
@@ -132,6 +137,7 @@ const header = (_quotationData) => {
 					</div>
 					<div>電話：{_quotationData.contact_information.tel}</div>
 					<div>担当者：{_quotationData.creator}</div>
+					{stamp && <div><img src={stamp} width="65.0" height="65.0" /></div>}
 				</td>
 				<td rowspan="2"></td>
 			</tr>
@@ -150,6 +156,11 @@ const header = (_quotationData) => {
 }
 
 export const PackingItems = (_start_page, _quotationData) => {
+
+	if (!_quotationData.packing_items || _quotationData.packing_items.length === 0) {
+		return null
+	}
+
 	const page = '_page-' + _start_page
 	const tables = (
 		<div className="_page" id={page} style={pdfstyles._page}>
@@ -300,10 +311,7 @@ export const PackingItems = (_start_page, _quotationData) => {
 					</td>
 				</tr>
 
-				{_quotationData.packing_items &&
-					getPackingItems(_quotationData)
-				
-				}
+				{getPackingItems(_quotationData)}
 
 			
 			</table>

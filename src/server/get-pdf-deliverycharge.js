@@ -2,7 +2,10 @@ import vtecxapi from 'vtecxapi'
 import React from 'react'
 //import ReactDOMServer from 'react-dom/server'
 import * as pdfstyles from '../pdf/deliverychargestyles.js'
-import { CommonGetFlag } from './common'
+import {
+	CommonGetFlag,
+	getStamp
+} from './common'
 
 export const pageTitle = (_title) => {
 	return (
@@ -27,7 +30,9 @@ const getCustomerFromBillto = (_billto_code) => {
 
 const header = (_customer, _quotationData) => {
 
-	return  (
+	const stamp = getStamp(_quotationData.billfrom.billfrom_name)
+
+	return (
 		<table cols="5" style={pdfstyles.header_table}>
 			<tr>
 				<td rowspan="2"></td>
@@ -46,6 +51,7 @@ const header = (_customer, _quotationData) => {
 					</div>
 					<div>電話：{_quotationData.contact_information.tel}</div>
 					<div>担当者：{_quotationData.creator}</div>
+					{stamp && <div><img src={stamp} width="65.0" height="65.0" /></div>}
 				</td>
 				<td rowspan="2"></td>
 			</tr>
@@ -171,6 +177,7 @@ const deliverychargeTable = (_data) => {
 			}
 			let array = []
 
+			vtecxapi.log('charge_by_zone: '+JSON.stringify(charge_by_zone))
 			if (charge_by_zone) {
 
 				array.push(getTd('地域帯', 2))
@@ -187,9 +194,11 @@ const deliverychargeTable = (_data) => {
 					array.push(getTd(_charge_by_zone.zone_name))
 
 					let zoneArray = []
-					zones[_charge_by_zone.zone_code].map((_obj) => {
-						zoneArray.push(<div>{_obj.pref_code}</div>)
-					})
+					if (zones && zones[_charge_by_zone.zone_code]) {
+						zones[_charge_by_zone.zone_code].map((_obj) => {
+							zoneArray.push(<div>{_obj.pref_code}</div>)
+						})
+					}
 					array2.push(getTd(zoneArray, null, 2))
 				})
 
@@ -395,7 +404,6 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 				</div>
 			)
 			res.size++
-			//pageData.pageList.page.push({word: ''})
 			index++
 		}
 		const setContentPage = (_customer, _pageIndex, _maxPage, _table, _remark_table) => {
