@@ -11,7 +11,7 @@ import type {
 	InputEvent
 } from 'demo.types'
 import {
-	CommonBackInternalWork
+	CommonBackInternalWork, CommonBeforConditions
 } from './common'
 
 export default class SideMenu extends React.Component {
@@ -250,6 +250,7 @@ export default class SideMenu extends React.Component {
 
 	onClick(e, _data) {
 		e.preventDefault()
+		CommonBeforConditions().init()
 		if (location.hash.indexOf('InternalWorkUpdate') !== -1) {
 			CommonBackInternalWork('#/' + _data)
 		} else {

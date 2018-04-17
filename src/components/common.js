@@ -2361,8 +2361,8 @@ export class CommonPagination extends React.Component {
 			} else {
 				param = pageIndex
 			}
-				
-		    // サーバにページネーションIndex作成リクエストを送信
+
+			// サーバにページネーションIndex作成リクエストを送信
 			axios({
 				url: url + '&_pagination=' + param,
 				method: 'get',
@@ -2381,11 +2381,10 @@ export class CommonPagination extends React.Component {
 		let url = _url
 		if (!url) url = this.props.url
 		this.buildIndex(url, eventKey)
-		this.setState( {activePage: eventKey} )
+		this.setState({ activePage: eventKey })
 		this.props.onChange(eventKey, url)	// 再検索
 	}
 	
-
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -2393,32 +2392,32 @@ export class CommonPagination extends React.Component {
 	componentWillReceiveProps(newProps) {
 
 		const new_url = newProps.url
-		if (this.url !== new_url) {
-			// pageIndex作成処理呼び出し
-			this.pageIndex = 0
-			this.handleSelect(1, new_url)
-			this.url = new_url
-		}
-
-		let activePage = 1
+		let activePage = this.state.activePage
 		if (newProps.activePage) {
 			activePage = newProps.activePage
 		}
 
-		// 件数取得
-		axios({
-			url: new_url + '&c',
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-			this.resultcount = Number(response.data.feed.title)
-			const items = Math.ceil(this.resultcount / this.props.maxDisplayRows)
-			this.setState({ items: items, activePage: activePage })
-		}).catch(() => {
-			this.setState({ items: 0, activePage: activePage })
-		})
+		if (this.url !== new_url) {
+			// pageIndex作成処理呼び出し
+			this.pageIndex = 0
+			this.handleSelect(activePage, new_url)
+			this.url = new_url
+
+			// 件数取得
+			axios({
+				url: new_url + '&c',
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+				this.resultcount = Number(response.data.feed.title)
+				const items = Math.ceil(this.resultcount / this.props.maxDisplayRows)
+				this.setState({ items: items, activePage: activePage })
+			}).catch(() => {
+				this.setState({ items: 0, activePage: activePage })
+			})
+		}
 	}
 
 	render() {
@@ -2954,7 +2953,7 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 			const url = _url + '&n=' + _activePage
 
 			// 今回の検索条件を保存する
-			CommonBeforConditions().set(_conditionsKey, url)
+			CommonBeforConditions().set(_conditionsKey, _activePage, url)
 
 			axios({
 				url: url,
@@ -2965,11 +2964,11 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 			}).then( (response) => {
 
 				if (response.status === 204) {
-					resolve({ isDisabled: false, isError: response })
+					resolve({ isDisabled: false, isError: response, feed: {entry:[]} })
 				} else {
 					// 「response.data.feed」に１ページ分のデータ(1~50件目)が格納されている
 					// activePageが「2」だったら51件目から100件目が格納されている
-					resolve({ isDisabled: false, feed: response.data.feed})
+					resolve({ isDisabled: false, isError: null, feed: response.data.feed})
 				}
 
 			}).catch((error) => {
@@ -2986,7 +2985,7 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 						]
 					}
 				} else {
-					resolve({ isDisabled: false, isError: error })
+					resolve({ isDisabled: false, isError: error, feed: {entry:[]} })
 				}
 			})
 		}
@@ -2996,13 +2995,32 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 let _commonBeforConditions = {}
 export function CommonBeforConditions() {
 	return {
-		set: (_key, _conditions) => {
-			return _commonBeforConditions[_key] = _conditions
+		init: () => {
+			_commonBeforConditions = {}
+		},
+		set: (_key, _activePage, _conditions) => {
+			let activePage = _activePage
+			let array = []
+			_conditions.split('&').map((_value) => {
+				if (_value.indexOf('n=') !== -1) {
+					activePage = parseInt(_value.split('=')[1])
+				} else {
+					array.push(_value)
+				}
+			})
+			return _commonBeforConditions[_key] = {
+				conditions: array.join('&'),
+				activePage: activePage
+			}
 		},
 		get: (_key, _url) => {
-			let res = null
+			let res = {
+				conditions: null,
+				activePage: 1
+			}
 			if (_commonBeforConditions[_key]) {
-				res = _commonBeforConditions[_key].replace(_url, '')
+				res = JSON.parse(JSON.stringify(_commonBeforConditions[_key]))
+				res.conditions = res.conditions.replace(_url, '')
 			}
 			return res
 		}
