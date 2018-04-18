@@ -47,6 +47,10 @@ export default class QuotationUpdate extends React.Component {
 		this.isBillfrom = false
 	}
  
+	doDisabledFalse() {
+		this.setState({ isDisabled: false })
+	}
+
 	/**
 	 * 画面描画の前処理
 	 */
@@ -65,7 +69,7 @@ export default class QuotationUpdate extends React.Component {
 				}
 			}).then((response) => {
 		
-				this.setState({ isDisabled: false })
+				//this.setState({ isDisabled: false })
 
 				if (response.status === 204) {
 					this.setState({ isError: response })
@@ -108,7 +112,7 @@ export default class QuotationUpdate extends React.Component {
 				}
 			}).then((response) => {
 		
-				this.setState({ isDisabled: false })
+				//this.setState({ isDisabled: false })
 
 				if (response.status === 204) {
 					getQuotation()
@@ -418,7 +422,7 @@ export default class QuotationUpdate extends React.Component {
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<QuotationForm name="mainForm" entry={this.entry} befor={this.befor} />
+						<QuotationForm name="mainForm" entry={this.entry} befor={this.befor} doDisabledFalse={()=>this.doDisabledFalse()} />
 					</Col>
 				</Row>
 				<Row>
