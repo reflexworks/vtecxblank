@@ -1,8 +1,9 @@
 import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
 import { getShipmentService } from './get-shipment-service'
+import { getSortShipmentServiceBody } from './get-shipment-service-sort'
 
-const shipment_service = vtecxapi.getFeed('/shipment_service')
+const shipment_service = getSortShipmentServiceBody()
 const isShipment = CommonGetFlag(shipment_service)
 
 if (isShipment) {
