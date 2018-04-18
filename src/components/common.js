@@ -174,7 +174,7 @@ class LogicCommonTable {
 
 		const getValue = (_element) => {
 
-			const isArray = _element.className.indexOf('array') !== -1 ? true : false
+			const isArray = _element.className && _element.className.indexOf('array') !== -1 ? true : false
 			let value
 			if (isArray) {
 				const arrayEle = _element.getElementsByTagName('div')
@@ -232,7 +232,10 @@ class LogicCommonTable {
 						const name = td[i].getAttribute('name')
 						if (name && name !== '__tableFilter' && name !== '__tableInput' && name !== 'is_error') {
 							cellData = cellData ? cellData : {}
-							const value = getValue(td[i].getElementsByTagName('div')[0])
+							let value = ''
+							if (td[i].getElementsByTagName('div')[0]) {
+								value = getValue(td[i].getElementsByTagName('div')[0])
+							}
 
 							const names = name.split('.')
 							if (names.length > 1) {

@@ -58,7 +58,7 @@ export default class QuotationUpdate extends React.Component {
 
 		const getQuotation = () => {
 			axios({
-				url: this.url + '/' + this.entrykey + '?e',
+				url: '/s/get-quotation-body?quotation=' + this.entrykey,
 				method: 'get',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
@@ -87,6 +87,7 @@ export default class QuotationUpdate extends React.Component {
 					if (this.entry.quotation.status === '1') {
 						this.befor = null
 					}
+
 					CommonEntry().init(this.entry)
 					this.setButton()
 					this.forceUpdate()
