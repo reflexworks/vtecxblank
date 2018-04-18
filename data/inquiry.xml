@@ -14,7 +14,13 @@
 上記、発生分につきましては、こちらの特記事項にご記入ください。</content>
       <content_type>4</content_type>
     </inquiry>
+    <author>
+      <uri>urn:vte.cx:created:88</uri>
+    </author>
+    <id>/inquiry/0-5-38-4-16-4-3,1</id>
     <link href="/inquiry/0-5-38-4-16-4-3" rel="self"/>
+    <published>2018-04-17T16:55:15.853+09:00</published>
+    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -28,7 +34,13 @@
 </content>
       <content_type>1</content_type>
     </inquiry>
+    <author>
+      <uri>urn:vte.cx:created:88</uri>
+    </author>
+    <id>/inquiry/0-5-38-4-16-5-1,1</id>
     <link href="/inquiry/0-5-38-4-16-5-1" rel="self"/>
+    <published>2018-04-17T16:55:15.853+09:00</published>
+    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -43,7 +55,13 @@
 請求金額は田口さんに確認。</content>
       <content_type>1</content_type>
     </inquiry>
+    <author>
+      <uri>urn:vte.cx:created:88</uri>
+    </author>
+    <id>/inquiry/0-5-38-4-16-9-1,1</id>
     <link href="/inquiry/0-5-38-4-16-9-1" rel="self"/>
+    <published>2018-04-17T16:55:15.853+09:00</published>
+    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -58,7 +76,13 @@
 </content>
       <content_type>1</content_type>
     </inquiry>
+    <author>
+      <uri>urn:vte.cx:created:88</uri>
+    </author>
+    <id>/inquiry/0-5-38-4-16-9-2,1</id>
     <link href="/inquiry/0-5-38-4-16-9-2" rel="self"/>
+    <published>2018-04-17T16:55:15.853+09:00</published>
+    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -75,6 +99,12 @@
 ロジからの請求であれば、見積もりにはいっていないと思いますので、確認をよろしくお願い致します</content>
       <content_type>1</content_type>
     </inquiry>
+    <author>
+      <uri>urn:vte.cx:created:88</uri>
+    </author>
+    <id>/inquiry/0-5-38-4-16-9-3,1</id>
     <link href="/inquiry/0-5-38-4-16-9-3" rel="self"/>
+    <published>2018-04-17T16:55:15.853+09:00</published>
+    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
 </feed>

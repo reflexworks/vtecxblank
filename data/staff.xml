@@ -286,6 +286,16 @@
   </entry>
   <entry>
     <staff>
+      <staff_name>井手上 誠</staff_name>
+      <role>1</role>
+      <staff_email>ideue@connect-logi.co.jp</staff_email>
+      <uid>162</uid>
+      <password>ZaKPTy5mPoOe0SJf480DgRrPZSl3y2ImhPEttVtQ7Wc=</password>
+    </staff>
+    <link href="/staff/ideue@connect-logi.co.jp" rel="self"/>
+  </entry>
+  <entry>
+    <staff>
       <staff_name>石澤 隼平</staff_name>
       <role>4</role>
       <staff_email>ishizawa@connect-logi.co.jp</staff_email>
@@ -487,8 +497,8 @@
       <staff_name>堤 新哉</staff_name>
       <role>4</role>
       <staff_email>tsutsumi@connect-corporation.co.jp</staff_email>
-      <uid>0000005</uid>
-      <password>logioffice2017!</password>
+      <uid>161</uid>
+      <password>omHmRgaptkPrDruaqLeBqtXmYMDuo6FyTt35ViH6CWE=</password>
     </staff>
     <link href="/staff/tsutsumi@connect-corporation.co.jp" rel="self"/>
   </entry>
@@ -528,7 +538,7 @@
       <staff_name>八木 千尋</staff_name>
       <role>5</role>
       <staff_email>yagi@connect-logi.jp</staff_email>
-      <uid>990</uid>
+      <uid>160</uid>
       <password>omHmRgaptkPrDruaqLeBqtXmYMDuo6FyTt35ViH6CWE=</password>
     </staff>
     <link href="/staff/yagi@connect-logi.jp" rel="self"/>
