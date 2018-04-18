@@ -1916,46 +1916,4 @@
     </type_ahead>
     <link href="/type_ahead/0-8-50-3-14-7-8" rel="self"/>
   </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>FBA納品付帯作業料</value>
-    </type_ahead>
-    <link href="/type_ahead/5137355874762752" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>出荷作業料</value>
-    </type_ahead>
-    <link href="/type_ahead/5199687929823232" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>入庫作業料</value>
-    </type_ahead>
-    <link href="/type_ahead/5636318331666432" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>入庫保管料</value>
-    </type_ahead>
-    <link href="/type_ahead/5742796208078848" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>保管料</value>
-    </type_ahead>
-    <link href="/type_ahead/5915947546181632" rel="self"/>
-  </entry>
-  <entry>
-    <type_ahead>
-      <type>0</type>
-      <value>FBA出荷作業料</value>
-    </type_ahead>
-    <link href="/type_ahead/6288057741344768" rel="self"/>
-  </entry>
 </feed>
