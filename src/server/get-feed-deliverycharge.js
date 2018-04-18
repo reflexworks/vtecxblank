@@ -6,7 +6,7 @@ let result = { feed : { entry : []}}
 temp.feed.entry.map(entry => {
 	const key = entry.id.split(',')[0]
 	const deliverycharge = vtecxapi.getEntry(key + '/deliverycharge')
-	if (deliverycharge.feed.entry) {
+	if (deliverycharge) {
 		deliverycharge.feed.entry[0].id = null
 		deliverycharge.feed.entry[0].author = null
 		deliverycharge.feed.entry[0].published = null
@@ -17,5 +17,6 @@ temp.feed.entry.map(entry => {
 })
 
 vtecxapi.doResponse(result) 
+
 
 
