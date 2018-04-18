@@ -17,10 +17,7 @@
     <author>
       <uri>urn:vte.cx:created:88</uri>
     </author>
-    <id>/inquiry/0-5-38-4-16-4-3,1</id>
     <link href="/inquiry/0-5-38-4-16-4-3" rel="self"/>
-    <published>2018-04-17T16:55:15.853+09:00</published>
-    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -37,10 +34,7 @@
     <author>
       <uri>urn:vte.cx:created:88</uri>
     </author>
-    <id>/inquiry/0-5-38-4-16-5-1,1</id>
     <link href="/inquiry/0-5-38-4-16-5-1" rel="self"/>
-    <published>2018-04-17T16:55:15.853+09:00</published>
-    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -58,10 +52,7 @@
     <author>
       <uri>urn:vte.cx:created:88</uri>
     </author>
-    <id>/inquiry/0-5-38-4-16-9-1,1</id>
     <link href="/inquiry/0-5-38-4-16-9-1" rel="self"/>
-    <published>2018-04-17T16:55:15.853+09:00</published>
-    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -79,10 +70,7 @@
     <author>
       <uri>urn:vte.cx:created:88</uri>
     </author>
-    <id>/inquiry/0-5-38-4-16-9-2,1</id>
     <link href="/inquiry/0-5-38-4-16-9-2" rel="self"/>
-    <published>2018-04-17T16:55:15.853+09:00</published>
-    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
   <entry>
     <customer>
@@ -102,9 +90,6 @@
     <author>
       <uri>urn:vte.cx:created:88</uri>
     </author>
-    <id>/inquiry/0-5-38-4-16-9-3,1</id>
     <link href="/inquiry/0-5-38-4-16-9-3" rel="self"/>
-    <published>2018-04-17T16:55:15.853+09:00</published>
-    <updated>2018-04-17T16:55:15.853+09:00</updated>
   </entry>
 </feed>
