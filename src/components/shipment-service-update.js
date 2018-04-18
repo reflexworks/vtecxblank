@@ -55,7 +55,7 @@ export default class ShipmentServiceUpdate extends React.Component {
 		this.entrykey = location.hash.substring(location.hash.indexOf('?') + 1)
 		
 		axios({
-			url: this.url + '/' + this.entrykey+'?e',
+			url: '/s/get-shipment-service-sort?shipment_service_code=' + this.entrykey,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'

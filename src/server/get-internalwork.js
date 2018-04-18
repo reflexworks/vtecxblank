@@ -1,5 +1,6 @@
 import vtecxapi from 'vtecxapi' 
 import { CommonGetFlag } from './common'
+import { getSortQuotationBody } from './get-quotation-body'
 
 const uri = vtecxapi.getQueryString('code')
 let list = vtecxapi.getFeed(uri + '/list')
@@ -29,7 +30,7 @@ if (isList) {
 	const isData = CommonGetFlag(data)
 
 	const quotation_code = vtecxapi.getQueryString('quotation_code')
-	const quotation = vtecxapi.getEntry('/quotation/' + quotation_code).feed.entry[0]
+	const quotation = getSortQuotationBody(quotation_code).feed.entry[0]
 
 	// 月次と旬次データセット
 	if (isMonthly) {
@@ -111,11 +112,25 @@ if (isList) {
 			}
 		})
 
+		const getSortIndex = (_obj, _key) => {
+			let size = '0000000'
+			if (_obj.internal_work[_key]) {
+				const num = parseInt(_obj.internal_work[_key].replace(/[^0-9]/g,''))
+				size = ('000000' + num).slice(-7)
+			}
+			return size.toString().toLowerCase()
+		}
 		array_other.sort((a, b) => {
 			if (a.internal_work && b.internal_work && a.internal_work.shipment_service_code && b.internal_work.shipment_service_code) {
-				const a_index = a.internal_work.shipment_service_code.toString().toLowerCase()
-				const b_index = b.internal_work.shipment_service_code.toString().toLowerCase()
-				if( a_index < b_index ) return -1
+				let a_index = a.internal_work.shipment_service_code.toString().toLowerCase()
+				a_index = a_index + getSortIndex(a, 'shipment_service_size')
+				a_index = a_index + getSortIndex(a, 'shipment_service_weight')
+
+				let b_index = b.internal_work.shipment_service_code.toString().toLowerCase()
+				b_index = b_index + getSortIndex(b, 'shipment_service_size')
+				b_index = b_index + getSortIndex(b, 'shipment_service_weight')
+
+				if (a_index < b_index) return -1
 				if( a_index > b_index ) return 1
 			}
 			return 0
