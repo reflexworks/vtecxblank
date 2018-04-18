@@ -2947,7 +2947,7 @@ import { setTimeout } from 'timers'
 export function CommonGetList(_url, _activePage, _conditionsKey) {
 	return new Promise((resolve) => {
 		let retryCount = 0
-		const maxRetryCount = 10
+		const maxRetryCount = 30
 		const get = () => {
 
 			const url = _url + '&n=' + _activePage
@@ -2979,7 +2979,7 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 							retryCount++
 							setTimeout(() => {
 								get()
-							}, 500)
+							}, 1000)
 						} else[
 							alert('一覧のindex作成に取得に失敗しました。\n\n' + title)
 						]
