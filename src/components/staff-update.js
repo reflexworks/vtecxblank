@@ -71,6 +71,7 @@ export default class StaffUpdate extends React.Component {
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})   
+
 	}
 
 	/**
@@ -84,8 +85,27 @@ export default class StaffUpdate extends React.Component {
 	 * 削除完了後の処理
 	 */
 	callbackDeleteButton() {
-		alert('削除が完了しました。')
-		location.reload()
+		this.setState({ isDisabled: true })
+		// アカウント自体を削除
+		axios({
+			url: '/d?_deleteuser=' + this.entry.staff.staff_email,
+			method: 'delete',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then(() => {
+			alert('削除が完了しました。')
+			this.setState({ isDisabled: false })
+			this.props.history.push('/StaffList')
+		}).catch((error) => {
+			if (this.props.error) {
+				this.setState({ isDisabled: false })
+				this.props.error(error)
+			} else {
+				this.setState({ isDisabled: false, isError: error })
+			}
+		})
+
 	}
 
 	render() {

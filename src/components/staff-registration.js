@@ -19,7 +19,9 @@ import jsSHA from 'jssha'
 import StaffForm from './staff-form'
 import {
 	CommonClearBtn,
-	CommonGeneralBtn
+	CommonGeneralBtn,
+	CommonIndicator,
+	CommonNetworkMessage
 } from './common'
 
 export default class StaffRegistration extends React.Component {
@@ -39,7 +41,9 @@ export default class StaffRegistration extends React.Component {
 	}
  
 	doPost() {
-		const staff_data = this.entry.staff
+
+		const staff_entry = JSON.parse(JSON.stringify(this.entry))
+		const staff_data = staff_entry.staff
 		let isPost = true
 		let errorTitle = []
 		if (!staff_data.staff_name || staff_data.staff_name === '') {
@@ -59,32 +63,55 @@ export default class StaffRegistration extends React.Component {
 			errorTitle.push('　　・パスワード')
 		}
 		if (!isPost) {
-			alert('以下の項目が入力されていません。または不正な値です。\n\n' + errorTitle.join('\n'))
+			alert('以下の項目が入力されていません。\n\n' + errorTitle.join('\n'))
 			return false
 		}
 
 		const shaObj = new jsSHA('SHA-256', 'TEXT')
 		shaObj.update(staff_data.password)
 		const hashpass = shaObj.getHash('B64')
-		this.entry.staff.password = hashpass
+		staff_entry.staff.password = hashpass
 
-		this.entry.link = [{
+		staff_entry.link = [{
 			___href: '/staff/' + staff_data.staff_email,
 			___rel: 'self'
 		}]
 		const postStaff = (_uid) => {
-			this.entry.staff.uid = _uid
+
+			staff_entry.staff.uid = _uid
+
+			const req = {
+				feed: {
+					entry: [staff_entry]
+				}
+			}
+			if (staff_entry.staff.role === '1'
+				|| staff_entry.staff.role === '4'
+				|| staff_entry.staff.role === '5') {
+				req.feed.entry.push({
+					id: '/_group/$useradmin/' + _uid,
+					link: [{
+						___href: '/_group/$useradmin/' + _uid,
+						___rel: 'self'
+					},{
+						___href: '/'+ _uid +'/group/$useradmin',
+						___rel: 'alternate'
+					}]
+				})
+			}
 			axios({
 				url: '/d/',
 				method: 'post',
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
 				},
-				data : {feed:{entry:[this.entry]}}
+				data : req
 			}).then(() => {
 				alert('登録が完了しました。')
+				this.setState({ isDisabled: false })
 				location.href = '#/StaffList'
 			}).catch((error) => {
+				this.setState({ isDisabled: false })
 				if (error.response) {
 					alert('担当者のマスターデータ登録に失敗しました。\n\n'+JSON.stringify(error.response))						
 				} else {
@@ -97,7 +124,7 @@ export default class StaffRegistration extends React.Component {
 				feed: {
 					entry: [{
 						contributor: [{
-							uri: 'urn:vte.cx:auth:' + this.entry.staff.staff_email + ',' + this.entry.staff.password,
+							uri: 'urn:vte.cx:auth:' + staff_entry.staff.staff_email + ',' + staff_entry.staff.password,
 							name: 'nickname'
 						}]
 					}]
@@ -115,34 +142,56 @@ export default class StaffRegistration extends React.Component {
 				const uid = result.data.feed.title
 				postStaff(uid)
 
-			}).catch((error) => {
+			}).catch((_error) => {
+				const error = JSON.parse(JSON.stringify(_error))
 				if (error.response) {
-					if (error.response.data.feed.title.indexOf('User is already registered. UID') >= 0) {
-						const uid = error.response.data.feed.title.match(/\d+/)
-						postStaff(uid[0])		
+					// 既に登録してあるユーザの場合
+					// システム管理者(プロジェクト管理者)のみ再登録を実施できる
+					if (error.response.status === 409) {
+						axios({
+							url: '/d/?_userstatus=' + staff_entry.staff.staff_email,
+							method: 'get',
+							headers: {
+								'X-Requested-With': 'XMLHttpRequest'
+							}
+						}).then((_userstatus) => {
+							const href = _userstatus.data.feed.entry[0].link[0].___href
+							const uid = href.match(/\d+/)
+							postStaff(uid[0])
+						})
 					} else {
-						alert('担当者の本登録に失敗しました。\n\n'+JSON.stringify(error.response))						
+						this.setState({ isDisabled: false })
+						alert('担当者の本登録に失敗しました。\n\n' + JSON.stringify(error.response))						
 					}
 				} else {
+					this.setState({ isDisabled: false })
 					alert('担当者の本登録に失敗しました。\n\n' + JSON.stringify(error))
 				}
 			})
 		}
 
+		this.setState({ isDisabled: true })
+
 		// 担当者存在チェック
 		axios({
-			url: '/d/staff?f&staff.staff_email=' + this.entry.staff.staff_email,
+			url: '/d/staff?f&staff.staff_email=' + staff_entry.staff.staff_email,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
 			if (response.status === 204) {
-				postAdduserByAdmin()
+				if (confirm(staff_entry.staff.staff_name + 'を新規登録します。よろしいでしょうか？')) {
+					postAdduserByAdmin()
+				} else {
+					this.setState({ isDisabled: false })
+				}
 			} else {
+				this.setState({ isDisabled: false })
 				alert('すでに同じ担当者が存在します。')
 			}
 		}).catch((error) => {
+			this.setState({ isDisabled: false })
 			if (error.response) {
 				alert('担当者存在チェックに失敗しました。\n\n'+JSON.stringify(error.response))						
 			} else {
@@ -165,6 +214,12 @@ export default class StaffRegistration extends React.Component {
 			<Grid>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
+						{/* 通信中インジケータ */}
+						<CommonIndicator visible={this.state.isDisabled} />
+
+						{/* 通信メッセージ */}
+						<CommonNetworkMessage isError={this.state.isError}/>
+
 						<PageHeader>担当者情報の登録</PageHeader>
 					</Col>
 				</Row>

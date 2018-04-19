@@ -98,6 +98,9 @@ export default class StaffList extends React.Component {
 					'この情報を削除します。よろしいですか？')) {
 			const id = data.link[0].___href.slice(7)
 		
+			this.setState({ isDisabled: true })
+
+			// /d/staff配下を削除
 			axios({
 				url: '/d/staff/' + id,
 				method: 'delete',
@@ -105,8 +108,25 @@ export default class StaffList extends React.Component {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(this.activePage, this.state.urlToPagenation)
+
+				// アカウント自体を削除
+				axios({
+					url: '/d?_deleteuser=' + data.staff.staff_email,
+					method: 'delete',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+					this.getFeed(1, this.state.urlToPagenation)
+				}).catch((error) => {
+					if (this.props.error) {
+						this.setState({ isDisabled: false, isError: error })
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				})
 			}).catch((error) => {
 				if (this.props.error) {
 					this.setState({ isDisabled: false })
