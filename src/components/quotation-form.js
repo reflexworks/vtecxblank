@@ -114,6 +114,7 @@ export default class QuotationForm extends React.Component {
 	 * 画面描画の前処理
 	 */
 	componentWillMount() {
+		this.setState({ isDisabled: true })
 		this.setTypeaheadMasterData()
 		this.setPackingItemTemplateData()
 	}
@@ -157,7 +158,6 @@ export default class QuotationForm extends React.Component {
 	 *  請求元リストを作成する
 	 */
 	setBillfromMasterData(_billfrom) {
-		this.setState({ isDisabled: true })
 
 		axios({
 			url: '/d/billfrom?f',
@@ -212,7 +212,7 @@ export default class QuotationForm extends React.Component {
 			}
 
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})   
 	}
 	/**
@@ -244,8 +244,6 @@ export default class QuotationForm extends React.Component {
 	 */
 	setPackingItemTemplateData() {
 
-		this.setState({ isDisabled: true })
-
 		axios({
 			url: '/d/packing_item_template?f',
 			method: 'get',
@@ -269,7 +267,7 @@ export default class QuotationForm extends React.Component {
 			}
 
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})   
 	}
 
@@ -278,12 +276,10 @@ export default class QuotationForm extends React.Component {
 	 */
 	setTypeaheadMasterData() {
 
-		this.setState({ isDisabled: true })
-
 		this.cashTypeAhead = {}
 
 		axios({
-			url: '/d/type_ahead?f',
+			url: '/s/get-type-ahead',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -311,11 +307,12 @@ export default class QuotationForm extends React.Component {
 					return obj
 				})
 
+				this.props.doDisabledFalse()
 				this.forceUpdate()
 			}
 
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})
 
 	}
@@ -470,6 +467,7 @@ export default class QuotationForm extends React.Component {
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
 
+		console.log('_data',_data)
 		let itemName
 		if (_celIndex === 0) itemName = 'item_name'
 		if (_celIndex === 1) itemName = 'unit_name'
@@ -589,10 +587,15 @@ export default class QuotationForm extends React.Component {
 						})
 						return  flg
 					}
-					if (check()) {
+					// 二重チェック処理
+					if (_data && this.entry.item_details[_rowindex][itemName] === _data.value) {
 						this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
 					} else {
-						this.entry.item_details[_rowindex][itemName] = null
+						if (check()) {
+							this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null
+						} else {
+							this.entry.item_details[_rowindex][itemName] = null
+						}
 					}
 				} else {
 					this.entry.item_details[_rowindex][itemName] = _data ? _data.value : null

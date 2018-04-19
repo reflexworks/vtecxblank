@@ -755,9 +755,10 @@ export class CommonDeleteBtn extends React.Component {
 
 				const id = this.entry.id
 				const url = '/d' + id.split(',')[0]
+				const revision = id.split(',')[1]
 
 				axios({
-					url: url + '?r=' + id,
+					url: url + '?r=' + revision,
 					method: 'delete',
 					headers: {
 						'X-Requested-With': 'XMLHttpRequest'
@@ -2298,6 +2299,9 @@ export class CommonSearchConditionsFrom extends React.Component {
 				 continue
 			}
 
+			if (name === 'published' || name === 'updated') {
+				value = value.replace(/\//g, '.*').replace(/ /g, '.*')
+			}
 			if (value || value !== '') {
 				if (type === 'text') {
 					value = encodeURIComponent(value)

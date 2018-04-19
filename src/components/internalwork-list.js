@@ -107,6 +107,7 @@ export default class InternalWorkList extends React.Component {
 
     	if (confirm('この情報を削除します。よろしいですか？')) {
 
+    		this.setState({ isDisabled: true })
     		axios({
     			url: '/d' + data.link[0].___href + '?_rf',
     			method: 'delete',
@@ -115,7 +116,7 @@ export default class InternalWorkList extends React.Component {
     			}
     		}).then(() => {
     			this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-    			this.getFeed(this.activePage, this.state.urlToPagenation)
+    			this.getFeed(1, this.state.urlToPagenation)
     		}).catch((error) => {
     			if (this.props.error) {
     				this.setState({ isDisabled: false })

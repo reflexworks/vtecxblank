@@ -15,4 +15,6 @@ curl -H "Authorization: Token "$1 "$2/s/get-feed-noid?q=type_ahead&x" -o data/ty
 curl -H "Authorization: Token "$1 "$2/s/get-feed-internalwork-list?x" -o data/internal_work.xml
 curl -H "Authorization: Token "$1 "$2/s/get-feed-noid?q=inquiry&x" -o data/inquiry.xml
 
+#curl -H "Authorization: Token "$1 "$2/d/type_ahead?type_ahead.type=0&f&x&_nometa&l=*" -o data/type_ahead.xml
+
 #internal_work
