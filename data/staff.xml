@@ -371,11 +371,11 @@
     <staff>
       <staff_name>システム管理者</staff_name>
       <role>1</role>
-      <staff_email>logioffice.test@gmail.com</staff_email>
+      <staff_email>logioffice@connect-logi.co.jp</staff_email>
       <uid>930</uid>
-      <password>logioffice2017!</password>
+      <password>logioffice2018!</password>
     </staff>
-    <link href="/staff/logioffice.test@gmail.com" rel="self"/>
+    <link href="/staff/logioffice@connect-logi.co.jp" rel="self"/>
   </entry>
   <entry>
     <staff>
