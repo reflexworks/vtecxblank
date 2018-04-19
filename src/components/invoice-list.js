@@ -113,7 +113,7 @@ export default class InvoiceList extends React.Component {
 					}
 				}).then(() => {
 					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-					this.getFeed(this.activePage, this.state.urlToPagenation)
+					this.getFeed(1, this.state.urlToPagenation)
 				}).catch((error) => {
 					if (this.props.error) {
 						this.setState({ isDisabled: false })

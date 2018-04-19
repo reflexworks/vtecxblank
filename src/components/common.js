@@ -2299,6 +2299,9 @@ export class CommonSearchConditionsFrom extends React.Component {
 				 continue
 			}
 
+			if (name === 'published' || name === 'updated') {
+				value = value.replace(/\//g, '.*').replace(/ /g, '.*')
+			}
 			if (value || value !== '') {
 				if (type === 'text') {
 					value = encodeURIComponent(value)

@@ -120,35 +120,35 @@ export default class InquiryList extends React.Component {
 								controlLabel="顧客名"
 								name="customer.customer_name"
 								type="text"
-								placeholder="顧客名"
+								placeholder="株式会社 ○○"
 							/>
 
 							<CommonInputText
 								controlLabel="顧客コード"
 								name="customer.customer_code"
 								type="text"
-								placeholder="顧客コード"
+								placeholder="0000001"
 							/>
 
 							<CommonInputText
 								controlLabel="登録日時"
 								name="published"
 								type="text"
-								placeholder="登録日時"
+								placeholder="yyyy/mm/dd hh:mm:ss"
 							/>
 
 							<CommonInputText
 								controlLabel="更新日時"
 								name="updated"
 								type="text"
-								placeholder="更新日時"
+								placeholder="yyyy/mm/dd hh:mm:ss"
 							/>
 							
 							<CommonInputText
 								controlLabel="担当者"
 								name="inquiry.staff_name"
 								type="text"
-								placeholder="担当者"
+								placeholder="担当者名"
 							/>
 
 							<CommonFilterBox
@@ -195,7 +195,7 @@ export default class InquiryList extends React.Component {
 							<CommonTextArea
 								controlLabel="内容"
 								name="inquiry.content"
-								placeholder="内容"
+								placeholder="お問い合わせ内容"
 								size='lg'
 								style={{'height':'100px'}}
 							/>
