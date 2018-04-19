@@ -14,9 +14,6 @@
 上記、発生分につきましては、こちらの特記事項にご記入ください。</content>
       <content_type>4</content_type>
     </inquiry>
-    <author>
-      <uri>urn:vte.cx:created:88</uri>
-    </author>
     <link href="/inquiry/0-5-38-4-16-4-3" rel="self"/>
   </entry>
   <entry>
@@ -31,9 +28,6 @@
 </content>
       <content_type>1</content_type>
     </inquiry>
-    <author>
-      <uri>urn:vte.cx:created:88</uri>
-    </author>
     <link href="/inquiry/0-5-38-4-16-5-1" rel="self"/>
   </entry>
   <entry>
@@ -49,9 +43,6 @@
 請求金額は田口さんに確認。</content>
       <content_type>1</content_type>
     </inquiry>
-    <author>
-      <uri>urn:vte.cx:created:88</uri>
-    </author>
     <link href="/inquiry/0-5-38-4-16-9-1" rel="self"/>
   </entry>
   <entry>
@@ -67,9 +58,6 @@
 </content>
       <content_type>1</content_type>
     </inquiry>
-    <author>
-      <uri>urn:vte.cx:created:88</uri>
-    </author>
     <link href="/inquiry/0-5-38-4-16-9-2" rel="self"/>
   </entry>
   <entry>
@@ -87,9 +75,6 @@
 ロジからの請求であれば、見積もりにはいっていないと思いますので、確認をよろしくお願い致します</content>
       <content_type>1</content_type>
     </inquiry>
-    <author>
-      <uri>urn:vte.cx:created:88</uri>
-    </author>
     <link href="/inquiry/0-5-38-4-16-9-3" rel="self"/>
   </entry>
 </feed>

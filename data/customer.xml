@@ -15537,29 +15537,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000265</customer_code>
-      <customer_name>test</customer_name>
-      <customer_name_kana></customer_name_kana>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/customer/0000265" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000187</billto_code>
       <billto_name>株式会社 CONNECT・ EC</billto_name>
     </billto>
