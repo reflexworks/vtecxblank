@@ -38,6 +38,13 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	/**
+	 * 画面描画の前処理
+	 */
+	componentWillMount() {
+		this.setMasterShipmentServiceList()
+	}
+
+	/**
      * 親コンポーネントがpropsの値を更新した時に呼び出される
      * @param {*} newProps
      */
@@ -48,7 +55,6 @@ export class CustomerShipperModal extends React.Component {
 			isShow: newProps.isShow,
 			type: newProps.type
 		})
-		this.setMasterShipmentServiceList()
 		this.forceUpdate()
 	}
 
@@ -150,7 +156,6 @@ export class CustomerShipperModal extends React.Component {
 	}
 	
 	changeDeliveryCompany(_data) {
-		console.log(_data)
 		this.shipper.shipment_service_code = _data ? _data.value : ''
 		this.shipper.shipment_service_service_name = _data ? _data.data.shipment_service.service_name : ''
 		this.forceUpdate()
