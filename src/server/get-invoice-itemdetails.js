@@ -36,32 +36,32 @@ export function getInvoiceItemDetails(customer_code, quotation_code, working_yea
 
 	// shipping
 	shipment_service.feed.entry.map((entry) => {
-		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name + '/' + entry.shipment_service.service_name))    // 出荷
-		result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷
+		if (entry.shipment_service.code === 'YH1' || entry.shipment_service.code === 'YH2' || entry.shipment_service.code === 'YH3' || entry.shipment_service.code === 'ECO1' || entry.shipment_service.code === 'ECO2') {
+			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '0', entry.shipment_service.name + '/' + entry.shipment_service.service_name))    // 出荷
+			result = result.concat(getShipping(customer_code, working_yearmonth, entry.shipment_service.code, '1', entry.shipment_service.name+'/'+entry.shipment_service.service_name))    // 集荷			
+		}
 	})
 	return result
 }
-
 
 function getShipping(customer_code, working_yearmonth,shipment_service_code,shipment_class,shipment_service_name) {
 	const result = []
 	const billing_data = getBillingdata(working_yearmonth.replace('/', ''), customer_code, shipment_service_code, shipment_class).billing_data
 	if (billing_data) {
-		const summary = billing_data.feed.entry.filter((entry) => {
-			if (entry) return ((entry.billing_data.shipment_class === shipment_class) && (entry.billing_data.shipment_service_code === shipment_service_code))  
-			else return false 
-		}).reduce((prev, current) => { 
-			const entry = {
-				'billing_data': {
-					'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
-					'quantity': '' + (Number(prev.billing_data.quantity) + Number(current.billing_data.quantity)),
-					'unit_price': current.billing_data.unit_price
+		const summary = billing_data.feed.entry
+			.reduce((prev, current) => { 
+				if (prev&&prev.billing_data&&current&&current.billing_data) {
+					return {
+						'billing_data': {
+							'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
+							'quantity': '' + (Number(prev.billing_data.quantity) + Number(current.billing_data.quantity)),
+							'unit_price': current.billing_data.unit_price
+						}
+					}
 				}
-			}
-			return entry       
-		}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0', 'unit_price': '0' } })
+			}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0', 'unit_price': '0' } })
 
-		if (Number(summary.billing_data.delivery_charge) > 0) {			
+		if (summary&&summary.billing_data&&(Number(summary.billing_data.delivery_charge) > 0)) {			
 			const record = {
 				'category': shipment_class==='0' ? 'shipping':'collecting',
 				'item_name': shipment_service_name,
@@ -296,3 +296,4 @@ function getSumRecordDaily(internal_work_daily,item_details_name,item_details_un
 		}
 	}else return null
 }
+

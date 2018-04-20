@@ -19,7 +19,9 @@ import {
 	CommonInputText,
 	CommonTable,
 	CommonFormGroup,
-	CommonLoginUser
+	CommonLoginUser,
+	CommonIndicator,
+	CommonNetworkMessage
 } from './common'
 
 export default class InternalWorkRegistration extends React.Component {
@@ -128,7 +130,7 @@ export default class InternalWorkRegistration extends React.Component {
 			} else[
 				alert('顧客情報が存在しません。')
 			]
-			this.forceUpdate()
+			this.setState({ isDisabled: false })
 
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
@@ -187,6 +189,7 @@ export default class InternalWorkRegistration extends React.Component {
      */
 	doPost() {
 
+		this.setState({ isDisabled: true })
 		axios({
 			url: '/d/',
 			method: 'post',
@@ -205,9 +208,16 @@ export default class InternalWorkRegistration extends React.Component {
 			}).then(() => {
 				alert('登録が完了しました。')
 				location.href = '#/InternalWorkList'
-			}).then(() => {
+			}).catch((_error) => {
+				this.setState({ isDisabled: false, isError: _error })
 			})
-		}).then(() => {
+		}).catch((_error) => {
+			if (_error) {
+				this.setState({ isDisabled: false, isError: _error })
+			} else {
+				alert('サーバーエラーが発生しました。')
+				this.setState({ isDisabled: false })
+			}
 		})
 
 	}
@@ -218,6 +228,12 @@ export default class InternalWorkRegistration extends React.Component {
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
 						<PageHeader>庫内作業登録</PageHeader>
+
+						{/* 通信中インジケータ */}
+						<CommonIndicator visible={this.state.isDisabled} />
+
+						{/* 通信メッセージ */}
+						<CommonNetworkMessage isError={this.state.isError}/>
 					</Col>
 				</Row>
 				<Row>

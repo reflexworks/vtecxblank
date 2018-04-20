@@ -279,7 +279,7 @@ export default class QuotationForm extends React.Component {
 		this.cashTypeAhead = {}
 
 		axios({
-			url: '/s/get-type-ahead',
+			url: '/d/type_ahead?f&l=*',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
@@ -467,7 +467,6 @@ export default class QuotationForm extends React.Component {
 
 	changeTypeahead(_data, _celIndex, _rowindex) {
 
-		console.log('_data',_data)
 		let itemName
 		if (_celIndex === 0) itemName = 'item_name'
 		if (_celIndex === 1) itemName = 'unit_name'
