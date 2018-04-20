@@ -35,7 +35,7 @@ export default class BillfromForm extends React.Component {
 			label: 'みずほ銀行',
 			value: '1',
 		}, {
-			label: '三菱東京UFJ銀行',
+			label: '三菱UFJ銀行',
 			value: '2',
 		}, {
 			label: '三井住友銀行',
