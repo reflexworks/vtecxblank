@@ -150,3 +150,8 @@ export const deliverycharge_table_td_note = {
 	top:'true',
 	bottom:'true'
 }
+
+export const stamp = {
+	absolutex: 700,
+	absolutey: 450
+}
