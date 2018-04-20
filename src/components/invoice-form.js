@@ -143,7 +143,6 @@ export default class InvoiceForm extends React.Component {
 	 */
 	getService(customer_code,working_yearmonth) {
 		this.setState({ isDisabled: true })
-
 		this.monthly = []
 		this.daily = []
 		this.period = []
@@ -161,7 +160,6 @@ export default class InvoiceForm extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-
 			if (response.status !== 204) {
 			
 				const serviceData = response.data.feed.entry[0]
@@ -193,6 +191,9 @@ export default class InvoiceForm extends React.Component {
 				this.setItemDetailsTable()
 			}
 		}).catch((error) => {
+			alert('庫内作業年月:' + working_yearmonth + '\n' +
+				  '顧客名:' + this.customer.customer.customer_name + '\n' + '\n' + 
+				  '該当する庫内作業データはありません。')
 			// 明細表示
 			this.setItemDetailsTable()
 			this.setState({ isDisabled: false, isError: error })
