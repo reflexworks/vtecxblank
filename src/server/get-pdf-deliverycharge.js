@@ -30,8 +30,6 @@ const getCustomerFromBillto = (_billto_code) => {
 
 const header = (_customer, _quotationData) => {
 
-	const stamp = getStamp(_quotationData.billfrom.billfrom_name)
-
 	return (
 		<table cols="5" style={pdfstyles.header_table}>
 			<tr>
@@ -51,7 +49,6 @@ const header = (_customer, _quotationData) => {
 					</div>
 					<div>電話：{_quotationData.contact_information.tel}</div>
 					<div>担当者：{_quotationData.creator}</div>
-					{stamp && <div><img src={stamp} width="65.0" height="65.0" /></div>}
 				</td>
 				<td rowspan="2"></td>
 			</tr>
@@ -177,7 +174,6 @@ const deliverychargeTable = (_data) => {
 			}
 			let array = []
 
-			vtecxapi.log('charge_by_zone: '+JSON.stringify(charge_by_zone))
 			if (charge_by_zone) {
 
 				array.push(getTd('地域帯', 2))
@@ -363,6 +359,7 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 
 	const quotationData = _quotationData
 	const customerData = getCustomerFromBillto(quotationData.billto.billto_code)
+	const stamp = getStamp(quotationData.billfrom.billfrom_name)
 
 	let res = {
 		html: [''],
@@ -394,6 +391,12 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 		)
 	}
 
+	const pageStamp = () => {
+		return (
+			<img style={pdfstyles.stamp} src={stamp} width="65.0" height="65.0" />
+		)
+	}
+
 	if (customerData) {
 
 		const setPage = (_content) => {
@@ -410,13 +413,20 @@ export const DeliveryCharge = (_start_page, _quotationData) => {
 			let page = []
 			if (index === 1) {
 				page.push(pageHeader(_customer))
+
 			}
 			page.push(pageHeaderSub(_customer, _pageIndex, _maxPage))
 			page.push(_table)
+
 			if (_remark_table) {
 				page.push(_remark_table)
 			}
+
+			if (index === 1 && stamp) {
+				page.push(pageStamp())
+			}
 			setPage(page)
+
 		}
 		const setRemarkPage = (_customer, _pageIndex, _maxPage, _remark_table) => {
 			setPage([pageHeaderSub(_customer, _pageIndex, _maxPage), _remark_table.table])
