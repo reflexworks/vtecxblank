@@ -24,6 +24,7 @@ const isbefor = CommonGetFlag(beforData)
 const postItemDetails = () => {
 	const quotation = getQuotationLast(reqData.feed.entry[0].quotation.quotation_code)
 
+	let self_count = 0
 	if (quotation.feed.entry[0].item_details && quotation.feed.entry[0].item_details.length) {
 		let postData = []
 		quotation.feed.entry[0].item_details.map((_item_details) => {
@@ -36,9 +37,14 @@ const postItemDetails = () => {
 						remarks: _item_details.remarks,
 						unit_price: _item_details.unit_price,
 						work_type: '0'
-					}
+					},
+					link: [{
+						___href: reqData.feed.entry[0].link[0].___href + '/list/quotation_' + self_count,
+						___rel: 'self'
+					}]
 				}
 				postData.push(internal_work)
+				self_count++
 			}
 		})
 		if (quotation.feed.entry[0].packing_items && quotation.feed.entry[0].packing_items.length) {
@@ -49,13 +55,18 @@ const postItemDetails = () => {
 						packing_item_name: _packing_item.item_name,
 						special_unit_price: _packing_item.special_unit_price,
 						work_type: '3'
-					}
+					},
+					link: [{
+						___href: reqData.feed.entry[0].link[0].___href + '/list/quotation_' + self_count,
+						___rel: 'self'
+					}]
 				}
 				postData.push(internal_work)
+				self_count++
 			})
 		}
 		if (postData.length) {
-			vtecxapi.post({feed:{entry:postData}}, reqData.feed.entry[0].link[0].___href + '/list')
+			vtecxapi.put({ feed: { entry: postData } }, true)
 		} else[
 			vtecxapi.sendMessage(204, null)
 		]
@@ -72,12 +83,18 @@ if (isbefor) {
 	if (isbeforList) {
 
 		let postData = []
+		let self_count = 0
 		beforList.feed.entry.map((_list_data) => {
 			postData.push({
 				internal_work: _list_data.internal_work,
+				link: [{
+					___href: reqData.feed.entry[0].link[0].___href + '/list/befor_' + self_count,
+					___rel: 'self'
+				}]
 			})
+			self_count++
 		})
-		vtecxapi.post({feed:{entry:postData}}, reqData.feed.entry[0].link[0].___href + '/list')
+		vtecxapi.put({feed:{entry:postData}}, true)
 	} else {
 		postItemDetails()
 	}

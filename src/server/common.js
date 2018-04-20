@@ -78,7 +78,7 @@ export function convertPayee (payee){
 		payee.bank_info = 'みずほ銀行'	
 		break
 	case '2':
-		payee.bank_info = '三菱東京UFJ銀行'	
+		payee.bank_info = '三菱UFJ銀行'	
 		break
 	case '3':
 		payee.bank_info = '三井住友銀行'	

@@ -48,6 +48,24 @@ export const header_comment = {
 	space: 1
 }
 
+
+export const header_table_sub = {
+	width: '100%',
+	widths: '5,90,5',
+	bordercolor: '#000000',
+	'border-spacing': '1px'
+}
+
+export const header_title_sub = {
+	size: 7,
+	left: 'false',
+	right: 'false',
+	top: 'false',
+	bottom: 'true',
+	offsety: 5,
+	height: 45
+}
+
 export const billfrom_info = {
 	size: 6,
 	leading: 10,
@@ -59,7 +77,8 @@ export const widths = {
 	width: '100%',
 }
 export const packingitems_table_blank = {
-	height: 20,
+	height: 10,
+	leading: 10,
 	left: 'false',
 	right: 'false',
 	top: 'false',
@@ -376,4 +395,8 @@ export const tdRemarks3Line = {
 	height:'15',
 	offsetx:5,
 	offsety:-15,
+}
+export const stamp = {
+	absolutex: 700,
+	absolutey: 450
 }
