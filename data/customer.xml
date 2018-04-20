@@ -48,14 +48,6 @@
         </shipper_info>
       </shipper>
       <shipper>
-        <shipment_service_service_name>エコ配便併用</shipment_service_service_name>
-        <shipment_service_code>ECO3</shipment_service_code>
-        <shipper_info>
-          <shipper_code>484345580250</shipper_code>
-          <shipment_class>0</shipment_class>
-        </shipper_info>
-      </shipper>
-      <shipper>
         <shipment_service_service_name>宅急便発払</shipment_service_service_name>
         <shipment_service_code>YH1</shipment_service_code>
         <shipper_info>
@@ -144,6 +136,103 @@
       <address2>4-4-6</address2>
     </contact_information>
     <link href="/customer/0000001" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000002</billto_code>
+      <billto_name>ネスリーフ 株式会社</billto_name>
+    </billto>
+    <customer>
+      <customer_code>0000003</customer_code>
+      <shipper>
+        <shipment_service_service_name>宅急便発払</shipment_service_service_name>
+        <shipment_service_code>YH1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>300</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>クロネコＤＭ便</shipment_service_service_name>
+        <shipment_service_code>YH2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>300</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>ネコポス</shipment_service_service_name>
+        <shipment_service_code>YH3</shipment_service_code>
+        <shipper_info>
+          <shipper_code>300</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359809848250</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>コレクト便</shipment_service_service_name>
+        <shipment_service_code>ECO2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359809848250</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359809848251</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <shipper>
+        <shipment_service_service_name>コレクト便</shipment_service_service_name>
+        <shipment_service_code>ECO2</shipment_service_code>
+        <shipper_info>
+          <shipper_code>359809848251</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>ネスリーフ 株式会社</customer_name>
+      <customer_name_kana>ネスリーフ (カ</customer_name_kana>
+      <sales_staff>
+        <staff_name>高野 潤一</staff_name>
+        <staff_email>takano@connect-logi.jp</staff_email>
+      </sales_staff>
+      <sales_staff>
+        <staff_name>楠本 真也</staff_name>
+        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
+      </sales_staff>
+      <working_staff>
+        <staff_name>森 奈津子</staff_name>
+        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <working_staff>
+        <staff_name>坂間 直緒</staff_name>
+        <staff_email>sakama@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <url></url>
+      <person_in_charge></person_in_charge>
+      <products></products>
+      <warehouse_code>0000001</warehouse_code>
+    </customer>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>114-0015</zip_code>
+      <prefecture>東京都</prefecture>
+      <address1>北区中里</address1>
+      <address2>2-11-10</address2>
+    </contact_information>
+    <link href="/customer/0000003" rel="self"/>
   </entry>
   <entry>
     <billto>
@@ -15448,29 +15537,6 @@
   </entry>
   <entry>
     <billto>
-      <billto_name></billto_name>
-    </billto>
-    <customer>
-      <customer_code>0000265</customer_code>
-      <customer_name>test</customer_name>
-      <customer_name_kana></customer_name_kana>
-      <url></url>
-      <person_in_charge></person_in_charge>
-      <products></products>
-    </customer>
-    <contact_information>
-      <tel></tel>
-      <fax></fax>
-      <email></email>
-      <zip_code></zip_code>
-      <prefecture></prefecture>
-      <address1></address1>
-      <address2></address2>
-    </contact_information>
-    <link href="/customer/0000265" rel="self"/>
-  </entry>
-  <entry>
-    <billto>
       <billto_code>0000187</billto_code>
       <billto_name>株式会社 CONNECT・ EC</billto_name>
     </billto>
@@ -15552,5 +15618,54 @@
       <address2>1-2-17</address2>
     </contact_information>
     <link href="/customer/0000269" rel="self"/>
+  </entry>
+  <entry>
+    <billto>
+      <billto_code>0000001</billto_code>
+      <billto_name>株式会社 フロムアイコーポレーション</billto_name>
+    </billto>
+    <customer>
+      <customer_code>0000271</customer_code>
+      <shipper>
+        <shipment_service_service_name>エコプラス便</shipment_service_service_name>
+        <shipment_service_code>ECO1</shipment_service_code>
+        <shipper_info>
+          <shipper_code>484345580250</shipper_code>
+          <shipment_class>0</shipment_class>
+        </shipper_info>
+      </shipper>
+      <customer_name>株式会社 フロムアイコーポレーション（エコ配）</customer_name>
+      <customer_name_kana>カ) フロムアイコーポレーション（エコ</customer_name_kana>
+      <sales_staff>
+        <staff_name>高野 潤一</staff_name>
+        <staff_email>takano@connect-logi.jp</staff_email>
+      </sales_staff>
+      <sales_staff>
+        <staff_name>楠本 真也</staff_name>
+        <staff_email>kusumoto@connect-logi.co.jp</staff_email>
+      </sales_staff>
+      <working_staff>
+        <staff_name>森 奈津子</staff_name>
+        <staff_email>n.kawashima@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <working_staff>
+        <staff_name>武田 夏琳</staff_name>
+        <staff_email>k.takeda@connect-logi.co.jp</staff_email>
+      </working_staff>
+      <url></url>
+      <person_in_charge></person_in_charge>
+      <products></products>
+      <warehouse_code>0000001</warehouse_code>
+    </customer>
+    <contact_information>
+      <tel></tel>
+      <fax></fax>
+      <email></email>
+      <zip_code>335-0023</zip_code>
+      <prefecture>埼玉県</prefecture>
+      <address1>戸田市本町</address1>
+      <address2>4-4-6</address2>
+    </contact_information>
+    <link href="/customer/0000271" rel="self"/>
   </entry>
 </feed>
