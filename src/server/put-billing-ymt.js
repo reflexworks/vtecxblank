@@ -32,8 +32,12 @@ billingcsv.feed.entry.map((entry) => {
 	}
 
 })
-// datastoreを更新
-vtecxapi.put(result,true)
+if (result.feed.entry.size > 0) {
+	// datastoreを更新
+	vtecxapi.put(result,true)	
+} else {
+	vtecxapi.sendMessage(400, '更新データはありませんでした')	
+}
 
 
 function getBillingDataOfHatsu(entry,shipment_service_service_name) {

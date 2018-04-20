@@ -11,7 +11,6 @@ const encoding = 'SJIS'
 const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 const customer_all = vtecxapi.getFeed('/customer',true)
 
-//vtecxapi.log('size='+size)
 const result = { 'feed': { 'entry': [] } }
 
 billingcsv.feed.entry.map((entry) => {
@@ -24,8 +23,12 @@ billingcsv.feed.entry.map((entry) => {
 		vtecxapi.sendMessage(400, e)
 	}
 })
-// datastoreを更新
-vtecxapi.put(result,true)
+if (result.feed.entry.size > 0) {
+	// datastoreを更新
+	vtecxapi.put(result,true)	
+} else {
+	vtecxapi.sendMessage(400, '更新データはありませんでした')	
+}
 
 function getBillingData(entry) {
 
