@@ -46,6 +46,10 @@
       <type>0</type>
       <value>保管料（パレット使用料）</value>
     </type_ahead>
+    <type_aheads>
+      <type>1</type>
+      <value>1パレット</value>
+    </type_aheads>
     <link href="/type_ahead/0-4-43-6-15-1-37" rel="self"/>
   </entry>
   <entry>
@@ -551,6 +555,10 @@
       <type>0</type>
       <value>対応日</value>
     </type_ahead>
+    <type_aheads>
+      <type>4</type>
+      <value>相談　※エコ配JPは土日祝日不可となります。</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-1-18" rel="self"/>
   </entry>
   <entry>
@@ -926,6 +934,10 @@
       <type>4</type>
       <value>御希望に応じて</value>
     </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>ご希望に応じて　※２</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-2-11" rel="self"/>
   </entry>
   <entry>
@@ -1179,6 +1191,10 @@
       <type>4</type>
       <value>サイズ1,100×1,100 パレットラック、ネステナーによる縦積み</value>
     </type_aheads>
+    <type_aheads>
+      <type>4</type>
+      <value>テスト</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-3-69" rel="self"/>
   </entry>
   <entry>
@@ -1221,6 +1237,10 @@
       <type>0</type>
       <value>出荷データ</value>
     </type_ahead>
+    <type_aheads>
+      <type>4</type>
+      <value>1回目 ～12:00迄 最終 14:00迄</value>
+    </type_aheads>
     <link href="/type_ahead/0-6-35-9-14-5-12" rel="self"/>
   </entry>
   <entry>
