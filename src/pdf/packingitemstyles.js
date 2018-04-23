@@ -28,7 +28,7 @@ export const page_title_blank = {
 
 export const header_table = {
 	width: '100%',
-	widths: '10,40,20,20,10',
+	widths: '10,40,25,15,10',
 	bordercolor: '#000000',
 	'border-spacing': '1px'
 }
