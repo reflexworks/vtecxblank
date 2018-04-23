@@ -77,6 +77,9 @@ export default class DeliveryChargeRegistration extends React.Component {
 				if (response.status === 204) {
 					alert('配送業者が1件も登録されていません。')
 				} else {
+					if (!response.data.feed.entry[0].delivery_charge) {
+						response.data.feed.entry[0].delivery_charge = []
+					}
 					if (!response.data.feed.entry[0].remarks) {
 						response.data.feed.entry[0].remarks = this.remarks
 					}
