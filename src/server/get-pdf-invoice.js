@@ -78,7 +78,7 @@ const getInvoiceDetails = (_customerCode) => {
 //顧客と庫内作業と見積書コードを元に明細を取得（invoice-formのgetService()と同じ)
 const getServiceItem = (_invoiceEntry, _customerEntry) => {
 	const serviceItem = getInvoiceItemDetails(_customerEntry.customer.customer_code, _invoiceEntry.invoice.quotation_code, working_yearmonth)
-
+	
 	if (serviceItem) {
 		for (let i = 0; i < serviceItem.length; ++i) {
 			const item_details = serviceItem[i]
@@ -121,12 +121,13 @@ const getSubTotal = (_allItem) => {
 	//税抜が１つも無かった
 	if (!(noTaxList.length)) {
 		return ('0')
-		//税抜が１つだけ
+	//税抜が１つだけ
 	} else if (noTaxList.length === 1) {
 		noTaxList[0].amount = noTaxList[0].amount.replace(/,/g,'')
 		return(noTaxList[0].amount)
 	}else{
 		const noTaxTotal = noTaxList.reduce((prev, current) => {
+			prev.amount = prev.amount.replace(/,/g,'')
 			current.amount = current.amount.replace(/,/g,'')
 			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
 		})
@@ -143,13 +144,14 @@ const getTaxTotal = (_allItem) => {
 	//税込が１つも無かった
 	if (!(TaxList.length)) {
 		return ('0')
-		//税込が１つだけ
+	//税込が１つだけ
 	} else if (TaxList.length === 1) {
 		TaxList[0].amount = TaxList[0].amount.replace(/,/g,'')
 		return(TaxList[0].amount)
 	}else{
 		const TaxTotal = TaxList.reduce((prev, current) => {
-			current.amount = current.amount.replace(/,/g,'')
+			prev.amount = prev.amount.replace(/,/g, '')
+			current.amount = current.amount.replace(/,/g, '')
 			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
 		})
 		return(TaxTotal.amount)
