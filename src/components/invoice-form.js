@@ -143,7 +143,6 @@ export default class InvoiceForm extends React.Component {
 	 */
 	getService(customer_code,working_yearmonth) {
 		this.setState({ isDisabled: true })
-
 		this.monthly = []
 		this.daily = []
 		this.period = []
@@ -161,7 +160,6 @@ export default class InvoiceForm extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-
 			if (response.status !== 204) {
 			
 				const serviceData = response.data.feed.entry[0]
@@ -193,6 +191,9 @@ export default class InvoiceForm extends React.Component {
 				this.setItemDetailsTable()
 			}
 		}).catch((error) => {
+			alert('庫内作業年月:' + working_yearmonth + '\n' +
+				  '顧客名:' + this.customer.customer.customer_name + '\n' + '\n' + 
+				  '該当する庫内作業データはありません。')
 			// 明細表示
 			this.setItemDetailsTable()
 			this.setState({ isDisabled: false, isError: error })
@@ -2071,7 +2072,7 @@ export default class InvoiceForm extends React.Component {
 									header={[{
 										field: 'bank_info', title: '銀行名', width: '30px',
 										convert: {
-											1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+											1: 'みずほ銀行', 2: '三菱UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 											6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 										}
 									}, {
@@ -2220,7 +2221,7 @@ export default class InvoiceForm extends React.Component {
 										header={[{
 											field: 'bank_info', title: '銀行名', width: '30px',
 											convert: {
-												1: 'みずほ銀行', 2: '三菱東京UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
+												1: 'みずほ銀行', 2: '三菱UFJ銀行', 3: '三井住友銀行', 4: 'りそな銀行', 5: '埼玉りそな銀行',
 												6: '楽天銀行',7:'ジャパンネット銀行',8:'巣鴨信用金庫',9:'川口信用金庫',10:'東京都民銀行',11:'群馬銀行',
 											}
 										}, {
