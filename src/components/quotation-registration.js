@@ -102,7 +102,7 @@ export default class QuotationRegistration extends React.Component {
 				title: '出荷データ',
 				condition: [
 					{ content: '伝票発行の際、お客様データの加工などは致しません。' },
-					{ content: '弊社指定のC㻿㼂、E㼄CELデータが必須となります。' },
+					{ content: '弊社指定のCSV、EXCELデータが必須となります。' },
 				]
 			}],
 			item_details: [
@@ -131,7 +131,7 @@ export default class QuotationRegistration extends React.Component {
 				{item_name: '実地棚卸作業　※1', unit_name: '人工', unit: '1時間', unit_price: '2,800', remarks: '必要な場合'},
 				{item_name: 'イレギュラー処理費用', unit_name: '返品処理', unit: '1件', unit_price: '250', remarks: '住所不明・長期不在等で返品になった商品の在庫戻し、貴社報告'},
 				{item_name: '運営管理費', unit_name: 'データ変換ソフト(月額) ', unit: '', unit_price: '5,000', remarks: 'ご希望に応じて　※２'},
-				{item_name: '運営管理費', unit_name: '月額', unit: '', unit_price: '18,000', remarks: '専属窓口1名、在庫報告、システム保守、㼃M㻿が必要な場合別途相談'},
+				{item_name: '運営管理費', unit_name: '月額', unit: '', unit_price: '18,000', remarks: '専属窓口1名、在庫報告、システム保守、WMSが必要な場合別途相談'},
 				{item_name: '梱包資材', unit_name: '', unit: '', unit_price: '', remarks: '支給品使用または別途相談'},
 				{item_name: '対応日', unit_name: '', unit: '', unit_price: '', remarks: '相談　※エコ配JPは土日祝日不可となります。'},
 				{item_name: '出荷データ', unit_name: '', unit: '', unit_price: '', remarks: '1回目 ～12:00迄 最終 14:00迄'},
