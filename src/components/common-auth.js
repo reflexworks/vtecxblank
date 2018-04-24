@@ -181,6 +181,12 @@ export function getAuthList(_role) {
 				InvoiceRegistration: true,
 				InvoiceList: true,
 				InvoiceUpdate: true,
+
+				BillingDataUpload: true,
+
+				BillfromRegistration: true,
+				BillfromList: true,
+				BillfromUpdate: true,
 			}
 
 		}
