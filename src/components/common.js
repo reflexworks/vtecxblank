@@ -2987,9 +2987,12 @@ export function CommonGetList(_url, _activePage, _conditionsKey) {
 							setTimeout(() => {
 								get()
 							}, 1000)
-						} else[
+						} else {
 							alert('一覧のindex作成に取得に失敗しました。\n\n' + title)
-						]
+							resolve({ isDisabled: false, isError: null, feed: {entry:[]} })
+						}
+					} else {
+						resolve({ isDisabled: false, isError: error, feed: {entry:[]} })
 					}
 				} else {
 					resolve({ isDisabled: false, isError: error, feed: {entry:[]} })
