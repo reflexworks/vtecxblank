@@ -1,17 +1,22 @@
 machine:
-  ruby:
-    version: 2.0.0-p247
   node:
-    version: 0.12.5
+    version: 6.9.5
   timezone: Asia/Tokyo
 
 dependencies:
-  override:
+  pre:
+    - npm install -g gulp
     - npm install
+    - npm link gulp
 
 deployment:
   production:
-    branch: master
+    branch: release
     commands:
-          - ./rxcp.sh ${accesstoken} dist https://blank2.1.vte.cx content
-          - ./rxcp.sh ${accesstoken} setup https://blank2.1.vte.cx/d
+          - gulp deploy -h https://logioffice.vte.cx -k ${accesstoken}
+          - gulp upload -h https://logioffice2.vte.cx -k ${accesstoken2}
+
+general:
+  branches:
+    only:
+      - release
