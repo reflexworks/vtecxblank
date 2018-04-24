@@ -5,8 +5,9 @@ machine:
 
 dependencies:
   override:
-    - sudo npm install
-    - sudo npm link gulp
+    - npm unlink gulp
+    - npm install
+    - npm link gulp
 
 deployment:
   production:
