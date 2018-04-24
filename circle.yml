@@ -1,8 +1,6 @@
 machine:
-  ruby:
-    version: 2.0.0-p247
   node:
-    version: 0.12.5
+    version: 6.9.5
   timezone: Asia/Tokyo
 
 dependencies:
