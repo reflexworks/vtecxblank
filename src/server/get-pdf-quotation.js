@@ -7,6 +7,8 @@ import {
 	addFigure,
 } from './common'
 
+const quotation_code = vtecxapi.getQueryString('quotation_code')
+const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
 const getTdNode = (_col,_tdStyle,_value,_spanStyle) => {
 
 	const td_style = _tdStyle ? _tdStyle : 'tdLeft'
@@ -20,8 +22,6 @@ const getTdNode = (_col,_tdStyle,_value,_spanStyle) => {
 	)
 }
 
-const quotation_code = vtecxapi.getQueryString('quotation_code')
-const quotation_code_sub = vtecxapi.getQueryString('quotation_code_sub')
 const getQuotation = () => {
 	const data = vtecxapi.getEntry('/quotation/' + quotation_code + '-' + quotation_code_sub)
 	const entry = data.feed.entry[0]
@@ -71,138 +71,155 @@ const getBilltoAndBillfrom = () => {
 }
 
 const getBasicCondition = (_basicCondition) => {
-	return(
-		_basicCondition.map((basic_condition) => {
-			if (basic_condition.condition) {
-				return (
-					basic_condition.condition.map((condition, idx) => {
-						
-						const length = basic_condition.condition.length
-						const half = Math.floor(length / 2)
-
-						//length > 1 && (length % 2) conditionの数が３つ以上で奇数
-						//length > 1 && !(length % 2) conditionの数が３つ以上で偶数
-						//length===2 conditionが２つ
-						//else conditionが１つだけ
-						
-						if (length > 2 && (length % 2)) {
-							switch (idx) {
-							case 0:
-								return (
-									<tr key={idx}>
-										<td style={pdfstyles.spaceLeft}></td>				
-										{getTdNode(2, 'tdLeftNoBottom','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-
-							case half:
-								return (	
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>				
-										{getTdNode(2, 'tdLeftNoTopBottom',basic_condition.title)}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							case length - 1:
-								return (			
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoTop','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							default:
-								return (			
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoTopBottom','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							}
-						} else if (length > 2 && !(length % 2)) {
-							switch (idx) {
-							case 0:
-								return (		
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoBottom', '')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							case half:
-								return (
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftTwoLineNoTopBottom',basic_condition.title)}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							case length - 1:
-								return (		
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoTop','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							default:
-								return (			
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoTopBottom','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							}
-						} else if (length === 2) {
-							switch (idx) {
-							case 0:
-								return (
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftTwoLineNoBottom',basic_condition.title)}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-													
-							case length - 1:
-								return (
-													
-									<tr key={idx} >
-										<td style={pdfstyles.spaceLeft}></td>
-										{getTdNode(2, 'tdLeftNoTop','')}
-										{getTdNode(6, 'tdLeft',condition.content)}
-										<td style={pdfstyles.spaceRight}></td>
-									</tr>
-								)
-							}
-						} else {
-							return (
-								<tr key={idx} >
-									<td style={pdfstyles.spaceLeft}></td>
-									{getTdNode(2, 'tdLeft',basic_condition.title)}
-									{getTdNode(6, 'tdLeft',condition.content)}
-									<td style={pdfstyles.spaceRight}></td>
-								</tr>
-							)
-						}
-									
-					})
-				)
-			}
-		})
+	let result = []
+	result.push(
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			{getTdNode(8,'tableTd','基本条件')}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
 	)
+	_basicCondition.map((basic_condition) => {
+		if (basic_condition.condition) {
+			basic_condition.condition.map((condition, idx) => {
+						
+				const length = basic_condition.condition.length
+				const half = Math.floor(length / 2)
+
+				//length > 1 && (length % 2) conditionの数が３つ以上で奇数
+				//length > 1 && !(length % 2) conditionの数が３つ以上で偶数
+				//length===2 conditionが２つ
+				//else conditionが１つだけ
+						
+				if (length > 2 && (length % 2)) {
+					switch (idx) {
+					case 0:
+						result.push(
+							<tr key={idx}>
+								<td style={pdfstyles.spaceLeft}></td>				
+								{getTdNode(2, 'tdLeftNoBottom','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break
+					case half:
+						result.push(	
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>				
+								{getTdNode(2, 'tdLeftNoTopBottom',basic_condition.title)}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					case length - 1:
+						result.push(			
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoTop','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					default:
+						result.push(			
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoTopBottom','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					}
+				} else if (length > 2 && !(length % 2)) {
+					switch (idx) {
+					case 0:
+						result.push(
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoBottom', '')}
+								{getTdNode(6, 'tdLeft', condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break
+					case half:
+						result.push(
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftTwoLineNoTopBottom',basic_condition.title)}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					case length - 1:
+						result.push(		
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoTop','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					default:
+						result.push(			
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoTopBottom','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					}
+				} else if (length === 2) {
+					switch (idx) {
+					case 0:
+						result.push(
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftTwoLineNoBottom',basic_condition.title)}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break							
+					case length - 1:
+						result.push(
+													
+							<tr key={idx} >
+								<td style={pdfstyles.spaceLeft}></td>
+								{getTdNode(2, 'tdLeftNoTop','')}
+								{getTdNode(6, 'tdLeft',condition.content)}
+								<td style={pdfstyles.spaceRight}></td>
+							</tr>
+						)
+						break	
+					}
+				} else {
+					result.push(
+						<tr key={idx} >
+							<td style={pdfstyles.spaceLeft}></td>
+							{getTdNode(2, 'tdLeft',basic_condition.title)}
+							{getTdNode(6, 'tdLeft',condition.content)}
+							<td style={pdfstyles.spaceRight}></td>
+						</tr>
+					)
+				}
+									
+			})
+		}
+	})
+
+	return result
+
+
+	
 }
 
 const searchSameValue = (item_details,searchName) => {
@@ -215,6 +232,23 @@ const searchSameValue = (item_details,searchName) => {
 const getItemDetails = (item_details) => {
 
 	let result = []
+	result.push(
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			{getTdNode('8', 'tableTd', '見積明細', 'fontsize6')}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
+	result.push(	
+		<tr>
+			<td style={pdfstyles.spaceLeft}></td>
+			{getTdNode('2', 'tableTd', '項目', 'fontsize6')}
+			{getTdNode('2', 'tableTd', '単位', 'fontsize6')}
+			{getTdNode('1', 'tableTd', '単価', 'fontsize6')}
+			{getTdNode('3', 'tableTd', '備考', 'fontsize6')}
+			<td style={pdfstyles.spaceRight}></td>
+		</tr>
+	)
 	for (let i = 0; i < item_details.length; ++i) {
 		const sameValue = searchSameValue(item_details, item_details[i].item_name)
 		const half = Math.floor(sameValue / 2)
@@ -409,21 +443,21 @@ const getRemarks = () => {
 	})	
 	return result
 }
- 
-const quotationTitlePage = (_pageNumber,_basicCondition) => {
+
+const quotationTitlePage = (_data) => {
+	const basic = _data.basic_condition ? _data.basic_condition : ''
+	const item = _data.item ? _data.item : ''
+	const remarks = _data.remarks ? _data.remarks : ''
 	let quotation_title = (
-		<div className="_page" id={'_page-' + _pageNumber} style={pdfstyles._page}>
+		<div className="_page" id={'_page-' + '1'} style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.widths}>
 				
-
-				{/*タイトル*/}					
 				<tr>
 					<td colspan="10" style={pdfstyles.borderTop}>
 						<span style={pdfstyles.title}>御見積書</span>
 					</td>
 				</tr>
-				
-				{/*見積書情報*/}
+
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
 
@@ -436,39 +470,46 @@ const quotationTitlePage = (_pageNumber,_basicCondition) => {
 					<td style={pdfstyles.spaceRight}></td>
 				</tr>
 
-				{/*請求先名 請求元*/}
 				{ 
 					getBilltoAndBillfrom() 
 				}
 				
-
-				{/*御見積申し上げます*/}
 				<tr>
 					<td style={pdfstyles.spaceLeft}></td>
 					<td colspan="6">
-						<br />
 						<div style={pdfstyles.fontsize10}>御社、物流業務を下記の通りに御見積り申し上げます。</div>
 						<br />
 					</td>
-
 					<td colspan="3"style={pdfstyles.spaceRight}></td>
 				</tr>
+		
+				{ basic &&
+					getBasicCondition(basic) 
+				}
+				{ basic && 
+					<tr>
+						<td colspan="10">
+							<br />
+						</td>	
+					</tr>	
+				}
 
-				{/*基本条件(ヘッダ)*/}
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="8" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize8}>基本条件</span>
-					</td>
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
+				{ item &&
+					getItemDetails(item)
+				}
 
-				{/*基本条件(セル)*/}										
-				{_basicCondition &&
-					getBasicCondition(_basicCondition) 
+				{ item &&
+					<tr>
+						<td colspan="10">
+							<br/>
+						</td>
+					</tr>	
+				}
+
+				{ remarks && 
+					getRemarks(remarks)
 				}
 			
-				<tr><td colspan="10"></td></tr>
 			</table>
 		</div>		
 	)
@@ -481,116 +522,49 @@ const quotationTitlePage = (_pageNumber,_basicCondition) => {
 	return res
 }
 
-const addBasicPage = (_pageNumber,_totalPage, _basicCondition) => {
+const addPage = (_data, _pageNumber, _totalPage) => {
+	const basic = _data.basic_condition ? _data.basic_condition : ''
+	const item = _data.item ? _data.item : ''
+	const remarks = _data.remarks ? _data.remarks : ''
 	const header = entry.billto.billto_name + '(' + _pageNumber + '/'+ _totalPage +  ')'
-	const quotation_add_basic = (
+	const quotation_add = (
 		<div className="_page" id={'_page-' + _pageNumber} style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.widths}>
 				<tr>
 					{getTdNode('10','header_title',header,'fontsize6')}
 				</tr>
-				{/*基本条件(ヘッダ)*/}
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="8" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize8}>基本条件</span>
-					</td>
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
 
-				{/*基本条件(セル)*/}										
-				{_basicCondition &&
-					getBasicCondition(_basicCondition) 
+				{ basic &&
+					getBasicCondition(basic) 
+				}
+				{ basic &&
+					<tr>
+						<td colspan="10">
+							<br />
+						</td>	
+					</tr>	
+				}
+
+				{ item &&
+					getItemDetails(item)
+				}
+
+				{ item &&
+					<tr>
+						<td colspan="10">
+							<br/>
+						</td>
+					</tr>	
+				}
+
+				{ remarks && 
+					getRemarks(remarks)
 				}
 			</table>
 		</div>
 	)
 
-	const tables = [quotation_add_basic]
-	let res = {
-		html: tables,
-		size: tables.length
-	}
-	return res
-}
-
-const quotationItemPage = (_pageNumber,_totalPage,_itemDetails,) => {
-	const header = entry.billto.billto_name + '(' + _pageNumber + '/'+ _totalPage +  ')'
-	const quotation_details = (
-		<div className="_page" id={'_page-' + _pageNumber} style={pdfstyles._page}>
-			<table cols="10" style={pdfstyles.widths}>
-				<tr>
-					{getTdNode('10','header_title',header,'fontsize6')}
-				</tr>
-				{/*テーブルヘッダ*/}
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="8" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize6}>見積明細</span>
-					</td>
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
-				
-				{/*項目一覧*/}
-				<tr>
-					<td style={pdfstyles.spaceLeft}></td>
-					<td colspan="2" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize6}>項目</span>
-					</td>
-
-					<td colspan="2" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize6}>単位</span>
-					</td>
-					
-					<td colspan="1" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize6}>単価</span>
-					</td>
-
-					<td colspan="3" style={pdfstyles.tableTd}>
-						<span style={pdfstyles.fontsize6}>備考</span>
-					</td>
-					
-					<td style={pdfstyles.spaceRight}></td>
-				</tr>
-				
-				{/*項目*/}
-				{
-					getItemDetails(_itemDetails)
-				}
-				<tr>
-					<td colspan='10'>
-						
-					</td>
-				</tr>
-			</table>
-		</div>
-	)
-
-	const tables = [quotation_details]
-	let res = {
-		html: tables,
-		size: tables.length
-	}
-	return res
-}
-
-const quotationRemarksPage = (_pageNumber) => {
-	const header = entry.billto.billto_name + '(' + _pageNumber + '/'+ _pageNumber +  ')'
-	const quotation_details = (
-		<div className="_page" id={'_page-' + _pageNumber} style={pdfstyles._page}>
-			<table cols="10" style={pdfstyles.widths}>
-				<tr>
-					{getTdNode('10','header_title',header,'fontsize6')}
-				</tr>
-				{/*備考*/}
-				{ entry.remarks && 
-					getRemarks()
-				}				
-			</table>
-		</div>
-	)
-
-	const tables = [quotation_details]
+	const tables = [quotation_add]
 	let res = {
 		html: tables,
 		size: tables.length
@@ -626,28 +600,39 @@ const getBasicLine = (_basicCondition) => {
 	return (titleLength > conditionLength ? titleLength: conditionLength)
 }
 
-const getBasicLimit = (_array, _startIndex, _lmax) => {
-	
+const getBasicLimit = (basic_condition) => {
+	let result = []
+	let startIndex = 0
+	let endIndex = 0
 	let length = 0
-	let lastIndex = _startIndex + _lmax
-	let result 
-	for (let i = _startIndex; i < lastIndex; ++i){
-		if (_array.length <= i) {
-			result = i 
-			break
-		} else {
-			_array[i] = checkBasicLimit(_array[i], _lmax)
-			const resultLength = getBasicLine(_array[i])
-			length += resultLength
-			if (length > _lmax) {
-				result = i
-				break
-			}
+	for (let i = 0; ; i++){
+		let MAX = 40
+		if (i !== 0) {
+			MAX = 45
 		}
+		for (let i = startIndex; i < MAX; ++i){
+			if (basic_condition.length <= i) {
+				endIndex = i 
+				break
+			} else {
+				basic_condition[i] = checkBasicLimit(basic_condition[i],MAX)
+				const resultLength = getBasicLine(basic_condition[i])
+				length += resultLength
+				if (length > MAX) {
+					endIndex = i
+					break
+				}
+			}
+			endIndex = i
+		}			
+		result[i] = basic_condition.slice(startIndex,endIndex)
+		if (endIndex >= basic_condition.length) {
+			break
+		}
+		startIndex = endIndex
 	}
+	return result
 
-	if (!result) result = lastIndex
-	return  result
 }
 
 const checkItemLimit = (_itemDetails,_lmax) =>{
@@ -685,29 +670,94 @@ const getItemLine = (_itemDetails) => {
 	return result
 }
 
-//データをひとつずつ見て、１ページ内に収まりきるところを調べる
-const getRecordLimit = (_array, _startIndex, _lmax) => {
-
+const getItemLimit = (_item,_remainderLine) => {
+	let result = []
+	let startIndex = 0
+	let endIndex = 0
 	let length = 0
-	let result = 0
-	let lastIndex = _startIndex + _lmax
-	for (let i = _startIndex; i < lastIndex; ++i){
-		if (_array.length <= i) {
-			//添字が配列の数と同じ、もしくは上回ったら終了
-			result = i
-			break
-		} else {
-			_array[i] = checkItemLimit(_array[i],_lmax)
-			const resultLength = getItemLine(_array[i],_lmax)
-			length += resultLength
-			if (length > _lmax) {
-				result = i
-				break
-			}
+
+	for (let i = 0; ; i++){
+		let MAX = 55
+		if (i === 0) {
+			MAX = _remainderLine
 		}
+		for (let j = startIndex; j < MAX; ++j){
+			if (_item.length <= j) {
+				//添字が配列の数と同じ、もしくは上回ったら終了
+				endIndex= j
+				break
+			} else {
+				_item[j] = checkItemLimit(_item[j],MAX)
+				const resultLength = getItemLine(_item[j],MAX)
+				length += resultLength
+				if (length > MAX) {
+					endIndex = j
+					break
+				}
+			}
+			endIndex = j
+		}
+
+		let slice = _item.slice(startIndex, endIndex)
+		result.push(slice)
+		if (endIndex >= _item.length) {
+			break
+		}
+		startIndex = endIndex
 	}
-	if (!result) result = lastIndex
-	return  result
+	return result
+}
+
+const checkRemarksLimit = (_remarks, _lmax) => {
+	if (_remarks.content.length > _lmax * 30) {
+		_remarks.content = _remarks.content.slice(0,_lmax*30)
+	}
+	return _remarks
+}
+
+//データ内で必要な行数チェック
+const getRemarksLine = (_remarks) => {
+	const result = _remarks.content.length
+	return result
+}
+
+const getRemarksLimit = (_remarks,_remainderLine) => {
+	let result = []
+	let startIndex = 0
+	let endIndex = 0
+	let length = 0
+
+	for (let i = 0; ; i++){
+		let MAX = 45
+		if (i === 0) {
+			MAX = _remainderLine
+		}
+		for (let j = startIndex; j < MAX; j++){
+			if (_remarks.length <= j) {
+				//添字が配列の数と同じ、もしくは上回ったら終了
+				endIndex = j
+				break
+			} else {
+				_remarks[j] = checkRemarksLimit(_remarks[j],MAX)
+				const resultLength = getRemarksLine(_remarks[j], MAX)
+				length += resultLength
+				if (length > MAX) {
+					endIndex = j
+					break
+				}
+			}
+			endIndex = j
+		}
+		endIndex++
+		let slice = _remarks.slice(startIndex, endIndex)
+		result.push(slice)
+		if (endIndex >= _remarks.length) {
+			break
+		}
+		startIndex = endIndex
+	}
+	return result
+
 }
 
 const sortArray = (_array) => {
@@ -733,120 +783,133 @@ let pageData = {
 	}
 }
 
+//今回はページ合計数が決まってから描画するので、今何ページ目を描画するのかという情報とページ合計数で分けなければならない。
+
 const element = () => {
 
-	//1ページ目の基本条件行数制限
-	const titleBasicMax = 30
-	//１ページ内に表示できる明細の行数
-	const pageItemMax = 45
 	//明細の並び替え、同じ項目同士で固める
 	const sortItem = entry.item_details ? sortArray(entry.item_details) : ''
 	let quotation = []
-	//最初のページ用の基本条件
-	let pageNumber = 1
+	let dataList = []
+	let page = -1
+	//1P内の基本条件を決める
 
 	if (entry.basic_condition) {
-		//タイトル用基本条件切り取り
-		const titleBasicIndex = getBasicLimit(entry.basic_condition, 0, titleBasicMax)
-		const title_basic = titleBasicIndex ? entry.basic_condition.slice(0, titleBasicIndex) : ''
-		quotation.push(quotationTitlePage(1, title_basic))
-		pageNumber++
-
-		const addBasicMax = 45
-		let addBasicStart = pageNumber //2
-		let addBasicLast
-		let addBasicDataList = [] //追加ページ用基本条件
-		//まだ基本条件を全て表示しきれてないならページ追加して表示する
-		if (titleBasicIndex < entry.basic_condition.length) {
-			let startIndex = titleBasicIndex
-			for (; ; pageNumber++) {
-				const endIndex = getBasicLimit(entry.basic_condition, startIndex, addBasicMax)
-				addBasicDataList[pageNumber] = entry.basic_condition.slice(startIndex, endIndex)
-				if (endIndex >= entry.basic_condition.length) {
-					addBasicLast = pageNumber
-					pageNumber++
-					break
+		const basic_array = getBasicLimit(entry.basic_condition)
+		//basic_arrayの数だけ行う
+		if (basic_array.length) {
+			basic_array.map((_basic) => {
+				page++
+				if (!dataList[page]) {
+					dataList[page] = {
+						basic_condition: null
+					}
 				}
-				startIndex = endIndex
-			}//for
-		}//if
-
-		let itemPageStart = pageNumber
-		let itemPageLast
-		let itemList = []
-		let startIndex = 0 //item用
-		for (; ; pageNumber++) {
-			const endIndex = getRecordLimit(sortItem, startIndex, pageItemMax)
-			itemList[pageNumber] = sortItem.slice(startIndex, endIndex)
-			if (endIndex >= sortItem.length) {
-				itemPageLast = pageNumber
-				pageNumber++
-				break
-			}
-			startIndex = endIndex
-		}
-		
-		if (entry.remarks) {
-			quotation.push(quotationRemarksPage(pageNumber))
-			pageNumber++
-		}
-
-		if (addBasicStart === addBasicLast) {
-			//１枚で済む
-			quotation.push(addBasicPage(addBasicStart, pageNumber-1, addBasicDataList[addBasicStart]))
-		} else {
-			for (let i = addBasicStart; i < (addBasicLast + 1); ++i) {
-				quotation.push(addBasicPage(i, pageNumber - 1, addBasicDataList[i]))
-			}
-		}
-		if (itemPageStart === itemPageLast) {
-			//１枚で済む
-			quotation.push(quotationItemPage(itemPageStart, pageNumber-1, itemList[itemPageStart]))
-		} else {
-			for (let i = itemPageStart; i < itemPageLast + 1; ++i) {
-				quotation.push(quotationItemPage(i, pageNumber-1, itemList[i]))
-			}
-		}
-	} else {
-		quotation.push(quotationTitlePage(1))
-		pageNumber++
-		if (entry.item_details) {
-			let itemPageStart = pageNumber
-			let itemPageLast
-			let itemList = []
-			let startIndex = 0 //item用
-			for (; ; pageNumber++) {
-				const endIndex = getRecordLimit(sortItem, startIndex, pageItemMax)
-				itemList[pageNumber] = sortItem.slice(startIndex, endIndex)
-				if (endIndex >= sortItem.length) {
-					itemPageLast = pageNumber
-					pageNumber++
-					break
-				}
-				startIndex = endIndex
-			}
-			if (entry.remarks) {
-				quotation.push(quotationRemarksPage(pageNumber))
-				pageNumber++
-			}
-			if (itemPageStart === itemPageLast) {
-				//１枚で済む
-				quotation.push(quotationItemPage(itemPageStart, pageNumber - 1, itemList[itemPageStart]))
-			} else {
-				for (let i = itemPageStart; i < itemPageLast + 1; ++i) {
-					quotation.push(quotationItemPage(i, pageNumber - 1, itemList[i]))
-				}
-			}
+				dataList[page].basic_condition = _basic
+			})
 		}
 	}
+	if (sortItem) {
+		let item_max_size = 50
 
+		if (dataList[page].basic_condition) {
+			let basicLength = 0
+			for (let i = 0; i < dataList[page].basic_condition.length; i++) {
+				const resultLength = getBasicLine(dataList[page].basic_condition[i])
+				basicLength += resultLength
+			}
+			item_max_size = item_max_size - basicLength
+		}
+
+		const item_array = getItemLimit(sortItem, item_max_size)
+	
+		//今のページを見て、ページの行数が超えそうなら次ページへ。
+		if (item_array.length) {
+			item_array.map((_item) => {
+				if (dataList[page].basic_condition) {
+					let basicLength = 0
+					for (let i = 0; i < dataList[page].basic_condition.length; i++) {
+						const resultLength = getBasicLine(dataList[page].basic_condition[i])
+						basicLength += resultLength
+					}
+					const pageSize = basicLength + _item.length
+
+					if (pageSize > 45) {
+						page++
+					}
+				} else if (dataList[page].item) {
+					page++
+				}
+				if (!dataList[page]) {
+					dataList[page] = {
+						item: null
+					}
+				}
+				dataList[page].item = _item
+			})
+		}
+	}
+	if (entry.remarks) {
+		let remarks_max_size = 45
+		if (dataList[page].item) {
+			let itemLength = 0
+			if (dataList[page].item) {
+				for (let i = 0; i < dataList[page].item.length; i++) {
+					const resultLength = getItemLine(dataList[page].item[i])
+					itemLength += resultLength
+				}
+			}
+			remarks_max_size = remarks_max_size - itemLength
+		}
+		const remarks_array = getRemarksLimit(entry.remarks, remarks_max_size)
+		if (remarks_array.length) {
+			remarks_array.map((_remarks) => {
+				if (dataList[page]) {
+					//行数を足して行数オーバーしてるなら次ページに
+					let basicLength = 0
+					let itemLength = 0
+					if (dataList[page].basic_condition) {
+						for (let i = 0; i < dataList[page].basic_condition.length; i++) {
+							const resultLength = getBasicLine(dataList[page].basic_condition[i])
+							basicLength += resultLength
+						}
+					}
+					if (dataList[page].item) {
+						for (let i = 0; i < dataList[page].item.length; i++) {
+							const resultLength = getItemLine(dataList[page].item[i])
+							itemLength += resultLength
+						}
+					}
+					const pageSize = basicLength + itemLength + _remarks.length
+					if (pageSize > 45) {
+						page++
+					}
+				}
+				if (!dataList[page]) {
+					dataList[page] = {
+						remarks: null
+					}
+				}
+				dataList[page].remarks = _remarks
+			})
+		}
+	}	
+	if (dataList) {
+		quotation.push(quotationTitlePage(dataList[0]))
+		for (let i = 1; i < (page + 1); i++) {
+			quotation.push(addPage(dataList[i], i + 1, page + 1))
+		}
+	} else {
+		quotation.push(quotationTitlePage())
+	}	
+		
 	let quotation_size = 0
 	quotation.map((_quotation) => {
 		quotation_size = (Number(quotation_size) + Number(_quotation.size))
 	})
 	const total_size = quotation_size
 	for (let i = 0, ii = total_size; i < ii; ++i) {
-		pageData.pageList.page.push({word: ''})
+		pageData.pageList.page.push({ word: '' })
 	}
 	return (
 		<html>
@@ -857,7 +920,7 @@ const element = () => {
 				}
 			</body>
 		</html>
-	)	
+	)
 }
 
 let html = ReactDOMServer.renderToStaticMarkup(element())
