@@ -4,8 +4,8 @@ machine:
   timezone: Asia/Tokyo
 
 dependencies:
-  override:
-    - npm unlink gulp
+  pre:
+    - npm install -g gulp
     - npm install
     - npm link gulp
 
