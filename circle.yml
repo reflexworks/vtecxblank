@@ -6,6 +6,7 @@ machine:
 dependencies:
   override:
     - npm install
+    - npm link gulp
 
 deployment:
   production:
