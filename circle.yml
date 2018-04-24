@@ -12,3 +12,4 @@ deployment:
     branch: master
     commands:
           - gulp deploy -h https://logioffice.vte.cx -k ${accesstoken}
+          - gulp upload -h https://logioffice.vte.cx -k ${accesstoken2}
