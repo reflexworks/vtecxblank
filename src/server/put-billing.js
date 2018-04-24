@@ -31,7 +31,7 @@ export function getChargeByZone(delivery_charge_all,customer_all, size, prefectu
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + shipment_service_code)
 		if (!shipment_service) throw '配送業者マスタが登録されていません(サービスコード=' + shipment_service_code + ')'
 	} 
-	if (!delivery_charge_all.delivery_charge.feed.entry) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +' サービスコード='+shipment_service_code+')'
+	if (!delivery_charge_all.delivery_charge.feed.entry||!delivery_charge_all.delivery_charge.feed.entry[0].delivery_charge) throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code +' サービスコード='+shipment_service_code+')'
 	// shipment_service_codeからdelivery_chargeを取得
 	const delivery_charge = delivery_charge_all.delivery_charge.feed.entry[0].delivery_charge.filter((delivery_charge) => {
 		return delivery_charge.shipment_service_code === shipment_service_code

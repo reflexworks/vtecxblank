@@ -5,7 +5,7 @@ const items = ['tensyo_code', 'customer_code', 'shipper_code', 'shipping_date', 
 const header = ['店所コード','お客様コード','分類コード','受付日','原票No.','商品区分1','商品区分2','サイズ','個数','扱店都道府県','扱店市区町村','運賃合計','運賃','立替金','保険料','消費税']
 const parent = 'billing'
 const skip = 0
-const encoding = 'SJIS'
+const encoding = 'Windows-31J'
 // CSV取得
 const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 //vtecxapi.log(JSON.stringify(result))
@@ -32,7 +32,7 @@ billingcsv.feed.entry.map((entry) => {
 	}
 
 })
-if (result.feed.entry.size > 0) {
+if (result.feed.entry.length > 0) {
 	// datastoreを更新
 	vtecxapi.put(result,true)	
 } else {

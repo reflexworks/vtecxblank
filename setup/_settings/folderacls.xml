@@ -209,4 +209,24 @@
         </contributor>
         <link rel="self" href="/invoice_details" />
     </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- ログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/invoice_itemdetails" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- ログイン済みユーザのみアクセスできるようにするACL設定(+)  -->
+            <uri>urn:vte.cx:acl:+,CRUD</uri>
+        </contributor>
+        <link rel="self" href="/invoice_summary" />
+    </entry>
 </feed>

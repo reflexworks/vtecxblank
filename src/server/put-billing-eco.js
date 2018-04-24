@@ -5,7 +5,7 @@ const items = ['billing_yearmonth', 'integrated_shipper_code', 'shipper_code', '
 const header = ['請求年月','統合荷主コード','荷主コード','受注番号','問合せ番号','対象日付','貨物ステータス','請求項目','配送エリア','注文セット数','注文部数','代引き金額','請求金額','代引き手数料','印紙税','税込み区分','印刷日','印刷者ID','ご依頼主会社名','ご依頼主郵便番号','ご依頼主住所1','ご依頼主住所2','ご依頼主建物名','ご依頼主部署名','ご依頼主担当者名','ご依頼主電話番号','お届先会社名','お届先郵便番号','お届先住所1','お届先住所2','お届先建物名','お届先部署名','お届先担当者名','お届先電話番号','お届先備考1','お届先備考2','お届先備考3','お届先備考4','下段記事1','下段記事2','下段記事3','下段記事4']
 const parent = 'billing'
 const skip = 0
-const encoding = 'SJIS'
+const encoding = 'Windows-31J'
 
 // CSV取得
 const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
@@ -23,7 +23,7 @@ billingcsv.feed.entry.map((entry) => {
 		vtecxapi.sendMessage(400, e)
 	}
 })
-if (result.feed.entry.size > 0) {
+if (result.feed.entry.length > 0) {
 	// datastoreを更新
 	vtecxapi.put(result,true)	
 } else {
@@ -67,6 +67,7 @@ function getBillingData(entry) {
 		'link': [
 			{ '___rel': 'self' , '___href': '/billing_data/' + getKey(delivery_charge_all.customer_code,entry.billing.shipping_date, shipment_service_code,delivery_charge_all.shipment_class,tracking_number) }
 		]
+
 	}
 
 	return billing_data

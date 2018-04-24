@@ -60,7 +60,13 @@ if (isShipment) {
 			return _res_entry
 		}
 		let res = { feed: { entry: [] } }
+
+		if (!_entry.delivery_charge) {
+			_entry.delivery_charge = []
+		}
+
 		res.feed.entry.push(_entry)
+
 		_entry.delivery_charge.map((_value) => {
 			const shipment_service_code = _value.shipment_service_code
 			const tempalte_data = vtecxapi.getFeed('/deliverycharge_template?shipment_service.code=' + shipment_service_code)
@@ -70,6 +76,7 @@ if (isShipment) {
 		})
 		return res
 	}
+	vtecxapi.log('margeTemplateData start')
 	const res = margeTemplateData(obj.feed.entry[0])
 	vtecxapi.doResponse(res)
 
