@@ -13,5 +13,4 @@ deployment:
   production:
     branch: master
     commands:
-          - ./rxcp.sh ${accesstoken} dist https://blank2.1.vte.cx content
-          - ./rxcp.sh ${accesstoken} setup https://blank2.1.vte.cx/d
+          - gulp deploy -h https://logioffice.vte.cx -k ${accesstoken}
