@@ -291,7 +291,8 @@ function sendfile(file,iscontent,done,isdirectory) {
 	if (isdirectory) {
 		options.headers['Content-Length'] = '0'
 	}
- 
+	let retrycount = 5
+
 	function callback(error, response, body) {
 		var dir =''
 		if (isdirectory) {
@@ -313,12 +314,16 @@ function sendfile(file,iscontent,done,isdirectory) {
 						})
 					}
 				} else {
-					console.log('can\'t PUT content. Retry it may work.')
+					console.log('can\'t PUT content. ')
 				}
 			} else {
-				console.log('can\'t PUT content.then retry.')
-				fsasync.createReadStream(file).pipe(request.put(options,callback))	
+				console.log('can\'t PUT content.')
 			}	
+			retrycount--
+			if (retrycount > 0) {
+				console.log('then retry :'+retrycount)
+				fsasync.createReadStream(file).pipe(request.put(options,callback))				
+			}
 		}
 		if (done) {
 			done()		
