@@ -145,7 +145,11 @@ export default class InvoiceForm extends React.Component {
 	 * サービスで受け取ったitem_detailsを取得後、カテゴリ毎に振り分ける
 	 */
 	getService(customer_code,working_yearmonth) {
+<<<<<<< HEAD
 		this.setState({isDisabled:true})
+=======
+		
+>>>>>>> 900f34527038d815bdafe117394836dbd7a27be1
 		this.monthly = []
 		this.daily = []
 		this.period = []
@@ -164,6 +168,10 @@ export default class InvoiceForm extends React.Component {
 			}
 		}).then((response) => {
 			if (response.status !== 204) {
+<<<<<<< HEAD
+=======
+				this.setState({ isDisabled: false })
+>>>>>>> 900f34527038d815bdafe117394836dbd7a27be1
 				const serviceData = response.data.feed.entry[0]
 				if (serviceData.item_details) {
 					for (let i = 0; i < serviceData.item_details.length; ++i) {
