@@ -16,12 +16,13 @@ import {
 import type {
 	Props
 } from 'demo3.types'
-
 import {
 	BillfromAddModal,
 	BillfromEditModal,
 } from './billfrom-modal'
 import {
+	CommonIndicator,
+	CommonNetworkMessage,
 	CommonInputText,
 	CommonTable,
 	CommonRadioBtn,
@@ -42,7 +43,9 @@ export default class InvoiceForm extends React.Component {
 		this.state = {
 			showBillfromAddModal: false,
 			showBillfromEditModal: false,
-			selectCustomer: ''
+			selectCustomer: '',
+			isDisabled: false,
+			isError: {},
 		}
 		
 		//消費税と合計請求金額
@@ -142,7 +145,7 @@ export default class InvoiceForm extends React.Component {
 	 * サービスで受け取ったitem_detailsを取得後、カテゴリ毎に振り分ける
 	 */
 	getService(customer_code,working_yearmonth) {
-		this.setState({ isDisabled: true })
+		
 		this.monthly = []
 		this.daily = []
 		this.period = []
@@ -161,7 +164,7 @@ export default class InvoiceForm extends React.Component {
 			}
 		}).then((response) => {
 			if (response.status !== 204) {
-			
+				this.setState({ isDisabled: false })
 				const serviceData = response.data.feed.entry[0]
 				if (serviceData.item_details) {
 
@@ -354,7 +357,8 @@ export default class InvoiceForm extends React.Component {
 		this.setBillingSummaryTable()
 	}
 
-	getInvoiceData(_customerCode,_workingYearmonth,_quotationCode) {
+	getInvoiceData(_customerCode, _workingYearmonth, _quotationCode) {
+		this.setState({ isDisabled: true })
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 			method: 'get',
@@ -415,6 +419,7 @@ export default class InvoiceForm extends React.Component {
 			this.setState({ isDisabled: false, isError: error })
 		})
 		
+		this.setState({ isDisabled: true })
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 1,
 			method: 'get',
@@ -498,6 +503,7 @@ export default class InvoiceForm extends React.Component {
 					this.setState({ isDisabled: false })
 					alert('庫内作業データがありません')
 				} else if (response.status !== 204) {
+					this.setState({ isDisabled: false })
 					this.master.internalWorkYearMonthList = response.data.feed.entry
 				
 					//重複したものを削除する
@@ -1246,7 +1252,13 @@ export default class InvoiceForm extends React.Component {
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
-												
+
+				{/* 通信中インジケータ */}
+				<CommonIndicator visible={this.state.isDisabled} />
+
+				{/* 通信メッセージ */}
+				<CommonNetworkMessage isError={this.state.isError} />
+				
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
 					<FormGroup className="hide">
