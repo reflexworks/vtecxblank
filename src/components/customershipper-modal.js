@@ -67,22 +67,42 @@ export class CustomerShipperModal extends React.Component {
 		this.props.close()
 	}
 
+	check() {
+		let isOK = true
+		if (this.shipper.shipper_info) {
+			let cash = {}
+			let duplicated = []
+			this.shipper.shipper_info.map((_value) => {
+				const key = _value.shipper_code + _value.shipment_class
+				if (cash[key]) {
+					duplicated.push('　・荷主コード: ' + _value.shipper_code + ' / 集荷出荷区分: ' + (_value.shipment_class === '0' ? '出荷' : '集荷'))
+				} else {
+					cash[key] = true
+				}
+			})
+			if (duplicated.length) {
+				isOK = false
+				this.errorMessage = '以下の荷主情報が重複しています。\n\n' + duplicated.join('\n')
+			}
+		}
+		return isOK
+	}
+
 	add(_obj) {
 
-		if (this.errorMessage) {
-			alert(this.errorMessage)	
-		} else {
+		if (this.check()) {
 			this.props.add(_obj)
-
+		} else {
+			alert(this.errorMessage)	
 		}	
 	}
 	
 	edit(_obj) {
-		if (this.errorMessage) {
-			alert(this.errorMessage)	
-		} else {
+		if (this.check()) {
 			this.props.edit(_obj)
-		}	
+		} else {
+			alert(this.errorMessage)
+		}
 	}
 
 	addList(_data) {
@@ -100,36 +120,11 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	changeShipperCode(_data, _rowindex) {
-		
 		this.shipper.shipper_info[_rowindex].shipper_code = _data
-		this.forceUpdate()
-		if (_data && this.shipper.shipper_info[_rowindex].shipper_code) {			
-			axios({
-				url: '/s/check-duplicated-shippercode?shipper_code=' + _data,
-				method: 'get',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then((response) => {
-				console.log(response.data.feed.title)
-				if (response.data.feed.title) {
-					this.errorMessage = '荷主コード:' + _data + 'は既に使用されています。\n'
-				} else {
-					this.errorMessage = ''
-				}
-				console.log(this.errorMessage)
-				this.forceUpdate()
-			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
-			})
-		} else {
-			this.errorMessage = ''
-		}		
 	}
 
 	changeShipmentClass(_data, _rowindex) {
 		this.shipper.shipper_info[_rowindex].shipment_class = _data ? _data.value : ''
-		this.forceUpdate()
 	}
 
 	setMasterShipmentServiceList() {
@@ -188,7 +183,7 @@ export class CustomerShipperModal extends React.Component {
 						/>
 					}	
 					
-					{this.errorMessage &&
+					{/*this.errorMessage &&
 						<div style={{
 							'padding-left': '100px',
 							'text-decoration': 'underline',
@@ -198,7 +193,7 @@ export class CustomerShipperModal extends React.Component {
 								<td >{this.errorMessage}</td>
 							</tr>
 						</div>
-					}
+					*/}
 					<CommonTable
 						controlLabel="荷主情報"
 						name="shipper_info"
