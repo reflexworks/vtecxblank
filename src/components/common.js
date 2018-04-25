@@ -1,6 +1,6 @@
 /* @flow */
 import axios from 'axios'
-import React from 'react'
+import React, { Children } from 'react'
 import {
 	FormGroup,
 	Radio,
@@ -1472,6 +1472,11 @@ export class CommonInputText extends React.Component {
 		}
 	}
 
+	onKeyDown(e) {
+		if (this.props.onKeyDown) {
+			this.props.onKeyDown(e)
+		}
+	}
 	render() {
 
 		const TextNode = () => {
@@ -1489,6 +1494,7 @@ export class CommonInputText extends React.Component {
 						onChange={(e) => this.changed(e)}
 						onFocus={(e) => this.focused(e)}
 						onBlur={(e) => this.blured(e)}
+						onKeyDown={(e) => this.onKeyDown(e)}
 						data-validate={this.props.validate}
 						data-required={this.props.required}
 						bsSize="small"
@@ -2316,6 +2322,13 @@ export class CommonSearchConditionsFrom extends React.Component {
 		this.props.doSearch(conditions)
 	}
 
+	onKeyDown(_e) {
+		const enter = 13
+		if (_e.keyCode === enter) {
+			this.doSearch()
+		}
+	}
+
 	render() {
 
 		const icon = this.state.open === true ? 'menu-up' : 'menu-down'
@@ -2323,11 +2336,30 @@ export class CommonSearchConditionsFrom extends React.Component {
 			<div onClick={() => this.setState({ open: !this.state.open })}>検索条件 <Glyphicon glyph={icon} style={{ float: 'right' }} /></div>
 		)
 
+		const newProps = { onKeyDown: (_e)=>this.onKeyDown(_e) }
+
+		const childrenWithProps = Children.map(
+			this.props.children,
+			(child) => {
+
+				switch (typeof child) {
+				case 'string':
+					return child
+
+				case 'object':
+					return React.cloneElement(child, newProps)
+
+				default:
+					return null
+				}
+			}
+		)
+
 		return (
 			<PanelGroup defaultActiveKey="1">
 				<Panel collapsible header={header} eventKey="1" bsStyle="success" expanded={this.state.open}>
 					<Form horizontal name="CommonSearchConditionsFrom">
-						{this.props.children}
+						{childrenWithProps}
 						<CommonFormGroup controlLabel=" ">
 							<Button bsStyle="primary" onClick={() => { this.doSearch() }}>検索</Button>
 						</CommonFormGroup>
