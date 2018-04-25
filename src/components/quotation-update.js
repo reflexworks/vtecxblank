@@ -381,7 +381,12 @@ export default class QuotationUpdate extends React.Component {
 				this.props.history.push('/QuotationUpdate?' + entry.quotation.quotation_code + '-' + sub_code)
 				location.reload()
 			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
+				if (error.response.status === 409) {
+					error.response.data.feed.title = '既にこの見積書から追加発行されています'
+					this.setState({ isDisabled: false, isError: error })
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
 			})
 		}
 		if (confirm('' +
