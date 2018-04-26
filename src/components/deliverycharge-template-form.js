@@ -23,7 +23,7 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 		this.state = {}
 
 		this.entry = this.props.entry || {}
-		this.entry.title = ''
+		this.entry.title = this.entry.title || ''
 
 		this.isCreate = true
 
@@ -45,11 +45,18 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	 */
 	componentWillReceiveProps(newProps) {
 		this.entry = newProps.entry || {}
-		if (newProps.entry) {
+		if (newProps.entry.title === 'clear') {
+			this.entry.title = ''
+			this.shipment_service_name = null
+			this.selectShipmentService = null
+			this.shipmentServiceListType1 = []
+			this.shipmentServiceListType2 = []
+		}else if (newProps.entry) {
 			this.entry.title = this.entry.title || ''
 			this.isCreate = false
 			this.setTable()
 		}
+		
 	}
 
 	/**
@@ -104,9 +111,17 @@ export default class DeliveryChargeTemplateForm extends React.Component {
 	}
 
 	changeShipmentServiceList(_data) {
-		this.shipment_service_name = _data.value
-		this.selectShipmentService = _data.data.shipment_service
-		this.getDeliveryChargeTemplate()
+		if (_data) {
+			this.shipment_service_name = _data.value
+			this.selectShipmentService = _data.data.shipment_service
+			this.getDeliveryChargeTemplate()
+		} else {
+			this.shipment_service_name = null
+			this.selectShipmentService = null
+			this.shipmentServiceListType1 = []
+			this.shipmentServiceListType2 = []
+		}
+		this.forceUpdate()
 	}
 
 	/**
