@@ -176,6 +176,16 @@ export default class InvoiceRegistration extends React.Component {
 		})
 	}
 
+	clear() {
+		this.entry.invoice.working_yearmonth = ''
+		this.entry.invoice.invoice_yearmonth = moment().format('YYYY/MM')
+		this.entry.invoice.deposit_status = ''
+		this.entry.invoice.customer_code = ''
+		this.entry.invoice.payment_date = moment()
+		this.entry.billfrom = {}
+		this.entry.contact_information = {}
+		this.forceUpdate()
+	}
 	render() {
 		return (
 			<Grid>
@@ -190,7 +200,7 @@ export default class InvoiceRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={(_res_data)=>this.callbackRegistrationButton(_res_data)} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -207,7 +217,7 @@ export default class InvoiceRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={(_res_data)=>this.callbackRegistrationButton(_res_data)} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

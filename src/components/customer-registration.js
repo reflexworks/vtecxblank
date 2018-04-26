@@ -42,7 +42,24 @@ export default class CustomerRegistration extends React.Component {
 	}
 
 	clear() {
-		console.log('clear')
+		this.entry.customer.customer_name = ''
+		this.entry.customer.customer_name_kana = ''
+		this.entry.customer.shipper = []
+		this.entry.customer.sales_staff = []
+		this.entry.customer.url = ''
+		this.entry.customer.person_in_charge = ''
+		this.entry.customer.products = ''
+		this.entry.customer.warehouse_code = ''
+		this.entry.customer.working_staff = []
+		this.entry.contact_information.tel = ''
+		this.entry.contact_information.fax = ''
+		this.entry.contact_information.email = ''
+		this.entry.contact_information.zip_code = ''
+		this.entry.contact_information.prefecture = ''
+		this.entry.contact_information.address1 = ''
+		this.entry.contact_information.address2 = ''
+		this.entry.billto = {}
+		this.forceUpdate()
 	}
 
 	render() {
@@ -76,7 +93,7 @@ export default class CustomerRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={() => this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
