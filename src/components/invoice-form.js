@@ -164,7 +164,6 @@ export default class InvoiceForm extends React.Component {
 			}
 		}).then((response) => {
 			if (response.status !== 204) {
-				this.setState({ isDisabled: false })
 				const serviceData = response.data.feed.entry[0]
 				if (serviceData.item_details) {
 					for (let i = 0; i < serviceData.item_details.length; ++i) {
@@ -186,11 +185,13 @@ export default class InvoiceForm extends React.Component {
 					this.serviceItem = serviceData.item_details
 					
 					// 明細表示
+					this.setState({isDisabled:true})
 					this.setItemDetailsTable()
 					this.setState({isDisabled:false})
 				}
 			} else {
 				// 明細表示
+				this.setState({isDisabled:true})
 				this.setItemDetailsTable()
 				this.setState({isDisabled:false})
 			}
@@ -415,6 +416,7 @@ export default class InvoiceForm extends React.Component {
 					}
 					billing_compare.record.push(totalArray)	
 				})
+				this.forceUpdate()
 			}
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
@@ -478,6 +480,7 @@ export default class InvoiceForm extends React.Component {
 					}
 					billing_compare.record.push(totalArray)	
 				})
+				this.forceUpdate()
 			}
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
@@ -501,10 +504,8 @@ export default class InvoiceForm extends React.Component {
 				}
 			}).then((response) => {
 				if (response.status === 204) {
-					this.setState({ isDisabled: false })
 					alert('庫内作業データがありません')
 				} else if (response.status !== 204) {
-					this.setState({ isDisabled: false })
 					this.master.internalWorkYearMonthList = response.data.feed.entry
 				
 					//重複したものを削除する
@@ -555,7 +556,6 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	setItemDetailsTable() {
-		this.setState({isDisabled:true})
 		const customer_code = this.entry.invoice.customer_code
 		const selectInternalWorkYearMonth = this.entry.invoice.working_yearmonth
 
