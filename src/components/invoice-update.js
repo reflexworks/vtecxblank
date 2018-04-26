@@ -310,24 +310,24 @@ export default class InvoiceUpdate extends React.Component {
 				issue_entry.creator = CommonLoginUser().get().staff_name
 
 				let array = [issue_entry]
+				array.push({
+					link: [{
+						___href: '/invoice_details/' + invoice_code + '-' + add_invoice_code_sub,
+						___rel: 'self'
+					}]
+				})
+				array.push({
+					link: [{
+						___href: '/invoice_remarks/' + invoice_code + '-' + add_invoice_code_sub,
+						___rel: 'self'
+					}]
+				})
 				if (this.item_details) {
 					const data = setData(this.item_details, 'invoice_details')
-					array.push({
-						link: [{
-							___href: '/invoice_details/' + invoice_code + '-' + add_invoice_code_sub,
-							___rel: 'self'
-						}]
-					})
 					array = array.concat(data)
 				}
 				if (this.edit) {
 					const data = setData(this.edit, 'invoice_remarks')
-					array.push({
-						link: [{
-							___href: '/invoice_remarks/' + invoice_code + '-' + add_invoice_code_sub,
-							___rel: 'self'
-						}]
-					})
 					array = array.concat(data)
 				}
 				const create = (_data) => {
@@ -342,7 +342,12 @@ export default class InvoiceUpdate extends React.Component {
 						this.props.history.push('/InvoiceUpdate?' + invoice_code + '-' + add_invoice_code_sub)
 						location.reload()
 					}).catch((error) => {
-						this.setState({ isDisabled: false, isError: error })
+						if (error.response.status === 409) {
+							error.response.data.feed.title = '既にこの請求書から追加発行されています'
+							this.setState({ isDisabled: false, isError: error })
+						} else {
+							this.setState({ isDisabled: false, isError: error })
+						}
 					})
 				}
 				if (confirm('' +

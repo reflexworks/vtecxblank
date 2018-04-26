@@ -190,6 +190,17 @@ export default class ShipmentServiceRegistration extends React.Component {
 		this.forceUpdate()
 	}
 
+	clear() {
+		this.entry.shipment_service.code = ''
+		this.entry.shipment_service.size = ''
+		this.entry.shipment_service.name = ''
+		this.entry.shipment_service.type = ''
+		this.entry.shipment_service.service_name = ''
+		this.entry.shipment_sizes = []
+		console.log(this.entry)
+		this.forceUpdate()
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -204,7 +215,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -221,7 +232,7 @@ export default class ShipmentServiceRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn disabled={this.disabled} NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

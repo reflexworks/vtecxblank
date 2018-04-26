@@ -51,7 +51,8 @@ export default class CustomerList extends React.Component {
 		this.loginUser = CommonLoginUser().get()
 
 		// 編集権限の有無
-		this.isEdit = this.loginUser.role !== '5'
+		//this.isEdit = this.loginUser.role !== '5'
+		this.isEdit = true
 
 		this.btn1 = this.isEdit ? {
 			field: 'btn1', title: '配送料', width: '30px',

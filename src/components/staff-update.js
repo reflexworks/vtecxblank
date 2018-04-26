@@ -7,7 +7,8 @@ import {
 	Col,
 	PageHeader,
 	Navbar,
-	Nav
+	Nav,
+	Glyphicon
 } from 'react-bootstrap'
 import type {
 	Props
@@ -18,7 +19,7 @@ import {
 	CommonIndicator,
 	CommonNetworkMessage,
 	CommonUpdateBtn,
-	CommonDeleteBtn,
+	CommonGeneralBtn,
 	CommonBackBtn
 } from './common'
 
@@ -85,26 +86,61 @@ export default class StaffUpdate extends React.Component {
 	 * 削除完了後の処理
 	 */
 	callbackDeleteButton() {
-		this.setState({ isDisabled: true })
-		// アカウント自体を削除
-		axios({
-			url: '/d?_deleteuser=' + this.entry.staff.staff_email,
-			method: 'delete',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then(() => {
-			alert('削除が完了しました。')
-			this.setState({ isDisabled: false })
-			this.props.history.push('/StaffList')
-		}).catch((error) => {
-			if (this.props.error) {
+
+		const doDeleteStaff = () => {
+			// /d/staff配下を削除
+			const id = this.entry.link[0].___href.slice(7)
+			axios({
+				url: '/d/staff/' + id,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+
+				alert('削除が完了しました。')
+
 				this.setState({ isDisabled: false })
-				this.props.error(error)
-			} else {
-				this.setState({ isDisabled: false, isError: error })
-			}
-		})
+				this.props.history.push('/StaffList')
+
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false, isError: error })
+					this.props.error(error)
+				} else {
+					this.setState({ isDisabled: false, isError: error })
+				}
+			})
+		}
+
+		if (confirm('この担当者を削除します。よろしいでしょうか？')) {
+	
+			this.setState({ isDisabled: true })
+	
+			// アカウント自体を削除
+			axios({
+				url: '/d?_deleteuser=' + this.entry.staff.staff_email,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+
+				doDeleteStaff()
+
+			}).catch((error) => {
+				if (this.props.error) {
+					this.setState({ isDisabled: false })
+					this.props.error(error)
+				} else {
+					if (error && error.response && error.response.data && error.response.data.feed.title.indexOf('The user does not exist.') !== -1) {
+						doDeleteStaff()
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				}
+			})
+		}
 
 	}
 
@@ -133,7 +169,7 @@ export default class StaffUpdate extends React.Component {
 								<Nav>
 									<CommonBackBtn NavItem href={this.backUrl} />
 									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
+									<CommonGeneralBtn NavItem label={<span><Glyphicon glyph="trash" /> 削除</span>} navStyle="delete" onClick={() => this.callbackDeleteButton()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -151,7 +187,7 @@ export default class StaffUpdate extends React.Component {
 								<Nav>
 									<CommonBackBtn NavItem href={this.backUrl} />
 									<CommonUpdateBtn NavItem url={this.url} callback={this.callbackButton} entry={this.entry} />
-									<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />
+									<CommonGeneralBtn NavItem label={<span><Glyphicon glyph="trash" /> 削除</span>} navStyle="delete" onClick={() => this.callbackDeleteButton()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

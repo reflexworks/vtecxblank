@@ -591,10 +591,8 @@ const getBasicLine = (_basicCondition) => {
 		_basicCondition.condition.map((_condition) => {
 			const content = _condition.content ? String(_condition.content) : null
 			conditionLength += content ? Math.ceil(content.length / 102) : 1
-			
 		})
 	}
-
 	const title = _basicCondition.title ? String(_basicCondition.title) : null
 	const titleLength = title ? Math.ceil(_basicCondition.title.length / 21) : 1
 	return (titleLength > conditionLength ? titleLength: conditionLength)
@@ -606,24 +604,24 @@ const getBasicLimit = (basic_condition) => {
 	let endIndex = 0
 	let length = 0
 	for (let i = 0; ; i++){
-		let MAX = 40
+		let MAX = 35
 		if (i !== 0) {
 			MAX = 45
 		}
-		for (let i = startIndex; i < MAX; ++i){
-			if (basic_condition.length <= i) {
-				endIndex = i 
+		for (let j = startIndex; j< MAX; ++j){
+			if (basic_condition.length <= j) {
+				endIndex = j
 				break
 			} else {
-				basic_condition[i] = checkBasicLimit(basic_condition[i],MAX)
-				const resultLength = getBasicLine(basic_condition[i])
+				basic_condition[j] = checkBasicLimit(basic_condition[j],MAX)
+				const resultLength = getBasicLine(basic_condition[j])
 				length += resultLength
 				if (length > MAX) {
-					endIndex = i
+					endIndex = j
 					break
 				}
 			}
-			endIndex = i
+			endIndex = j
 		}			
 		result[i] = basic_condition.slice(startIndex,endIndex)
 		if (endIndex >= basic_condition.length) {
@@ -660,10 +658,10 @@ const getItemLine = (_itemDetails) => {
 	
 	let length = []
 	length[0] = _itemDetails.item_name ? Math.ceil(_itemDetails.item_name.length / 15) : 1
-	length[1] = _itemDetails.unit_name ? Math.ceil(_itemDetails.unit_name.length / 15) : 1
+	length[1] = _itemDetails.unit_name ? Math.ceil(_itemDetails.unit_name.length / 12) : 1
 	length[2] = _itemDetails.unit  ? Math.ceil(_itemDetails.unit.length / 8) : 1
 	length[3] = _itemDetails.unit_price ? Math.ceil(_itemDetails.unit_price.length / 12) : 1
-	length[4] = _itemDetails.remarks ? Math.ceil(_itemDetails.remarks.length / 34) : 1
+	length[4] = _itemDetails.remarks ? Math.ceil(_itemDetails.remarks.length / 20) : 1
 
 	//最大値を返す
 	let result = Math.max.apply(null, length)
@@ -717,7 +715,7 @@ const checkRemarksLimit = (_remarks, _lmax) => {
 
 //データ内で必要な行数チェック
 const getRemarksLine = (_remarks) => {
-	const result = _remarks.content.length
+	const result = Math.ceil(_remarks.content.length /50)
 	return result
 }
 
@@ -726,7 +724,6 @@ const getRemarksLimit = (_remarks,_remainderLine) => {
 	let startIndex = 0
 	let endIndex = 0
 	let length = 0
-
 	for (let i = 0; ; i++){
 		let MAX = 45
 		if (i === 0) {
@@ -783,8 +780,6 @@ let pageData = {
 	}
 }
 
-//今回はページ合計数が決まってから描画するので、今何ページ目を描画するのかという情報とページ合計数で分けなければならない。
-
 const element = () => {
 
 	//明細の並び替え、同じ項目同士で固める
@@ -792,7 +787,6 @@ const element = () => {
 	let quotation = []
 	let dataList = []
 	let page = -1
-	//1P内の基本条件を決める
 
 	if (entry.basic_condition) {
 		const basic_array = getBasicLimit(entry.basic_condition)
@@ -809,49 +803,44 @@ const element = () => {
 			})
 		}
 	}
+
 	if (sortItem) {
 		let item_max_size = 50
-
+		if (page === 0) {
+			item_max_size = 32
+		}
+		//今のページに基本条件がある？
 		if (dataList[page].basic_condition) {
 			let basicLength = 0
 			for (let i = 0; i < dataList[page].basic_condition.length; i++) {
 				const resultLength = getBasicLine(dataList[page].basic_condition[i])
 				basicLength += resultLength
 			}
+			//基本条件の行数分、使える行数が減る
 			item_max_size = item_max_size - basicLength
 		}
 
 		const item_array = getItemLimit(sortItem, item_max_size)
-	
 		//今のページを見て、ページの行数が超えそうなら次ページへ。
 		if (item_array.length) {
 			item_array.map((_item) => {
-				if (dataList[page].basic_condition) {
-					let basicLength = 0
-					for (let i = 0; i < dataList[page].basic_condition.length; i++) {
-						const resultLength = getBasicLine(dataList[page].basic_condition[i])
-						basicLength += resultLength
-					}
-					const pageSize = basicLength + _item.length
-
-					if (pageSize > 45) {
-						page++
-					}
-				} else if (dataList[page].item) {
-					page++
-				}
 				if (!dataList[page]) {
 					dataList[page] = {
 						item: null
 					}
 				}
 				dataList[page].item = _item
+				page++
 			})
 		}
+		page--
 	}
 	if (entry.remarks) {
-		let remarks_max_size = 45
-		if (dataList[page].item) {
+		let remarks_max_size = 50
+		if (page === 0) {
+			remarks_max_size = 29
+		}
+		if (dataList[page]) {
 			let itemLength = 0
 			if (dataList[page].item) {
 				for (let i = 0; i < dataList[page].item.length; i++) {
@@ -864,40 +853,20 @@ const element = () => {
 		const remarks_array = getRemarksLimit(entry.remarks, remarks_max_size)
 		if (remarks_array.length) {
 			remarks_array.map((_remarks) => {
-				if (dataList[page]) {
-					//行数を足して行数オーバーしてるなら次ページに
-					let basicLength = 0
-					let itemLength = 0
-					if (dataList[page].basic_condition) {
-						for (let i = 0; i < dataList[page].basic_condition.length; i++) {
-							const resultLength = getBasicLine(dataList[page].basic_condition[i])
-							basicLength += resultLength
-						}
-					}
-					if (dataList[page].item) {
-						for (let i = 0; i < dataList[page].item.length; i++) {
-							const resultLength = getItemLine(dataList[page].item[i])
-							itemLength += resultLength
-						}
-					}
-					const pageSize = basicLength + itemLength + _remarks.length
-					if (pageSize > 45) {
-						page++
-					}
-				}
 				if (!dataList[page]) {
 					dataList[page] = {
 						remarks: null
 					}
 				}
 				dataList[page].remarks = _remarks
+				page++
 			})
 		}
-	}	
+	}
 	if (dataList) {
 		quotation.push(quotationTitlePage(dataList[0]))
-		for (let i = 1; i < (page + 1); i++) {
-			quotation.push(addPage(dataList[i], i + 1, page + 1))
+		for (let i = 1; i < page; i++) {
+			quotation.push(addPage(dataList[i], i + 1, page))
 		}
 	} else {
 		quotation.push(quotationTitlePage())

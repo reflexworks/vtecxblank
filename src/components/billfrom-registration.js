@@ -43,6 +43,19 @@ export default class BillfromRegistration extends React.Component {
 		location.href = '#/BillfromList'
 	}
 
+	clear() {
+		this.entry.billfrom.billfrom_name = ''
+		this.entry.billfrom.payee = []
+		this.entry.contact_information.tel = ''
+		this.entry.contact_information.fax = ''
+		this.entry.contact_information.email = ''
+		this.entry.contact_information.zip_code = ''
+		this.entry.contact_information.prefecture = ''
+		this.entry.contact_information.address1 = ''
+		this.entry.contact_information.address2 = ''
+		this.forceUpdate()
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -57,7 +70,7 @@ export default class BillfromRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -74,7 +87,7 @@ export default class BillfromRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

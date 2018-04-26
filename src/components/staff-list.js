@@ -96,27 +96,20 @@ export default class StaffList extends React.Component {
 
 		if (confirm('担当者名:' + data.staff.staff_name + '\n' +
 					'この情報を削除します。よろしいですか？')) {
-			const id = data.link[0].___href.slice(7)
 		
 			this.setState({ isDisabled: true })
 
-			// /d/staff配下を削除
-			axios({
-				url: '/d/staff/' + id,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-
-				// アカウント自体を削除
+			const doDeleteStaff = () => {
+				const id = data.link[0].___href.slice(7)
+				// /d/staff配下を削除
 				axios({
-					url: '/d?_deleteuser=' + data.staff.staff_email,
+					url: '/d/staff/' + id,
 					method: 'delete',
 					headers: {
 						'X-Requested-With': 'XMLHttpRequest'
 					}
 				}).then(() => {
+
 					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
 					this.getFeed(1, this.state.urlToPagenation)
 				}).catch((error) => {
@@ -127,12 +120,26 @@ export default class StaffList extends React.Component {
 						this.setState({ isDisabled: false, isError: error })
 					}
 				})
+			}
+			// アカウント自体を削除
+			axios({
+				url: '/d?_deleteuser=' + data.staff.staff_email,
+				method: 'delete',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then(() => {
+				doDeleteStaff()
 			}).catch((error) => {
 				if (this.props.error) {
 					this.setState({ isDisabled: false })
 					this.props.error(error)
 				} else {
-					this.setState({ isDisabled: false, isError: error })
+					if (error && error.response && error.response.data && error.response.data.feed.title.indexOf('The user does not exist.') !== -1) {
+						doDeleteStaff()
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
 				}
 			})
 			this.forceUpdate()
