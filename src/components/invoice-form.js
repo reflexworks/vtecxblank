@@ -135,6 +135,9 @@ export default class InvoiceForm extends React.Component {
 				this.setBillingSummaryTable()		
 			}
 		}
+		if (!(this.entry.invoice.working_yearmonth && this.entry.invoice.customer_code)) {
+			this.setState({ isDisabled: false })
+		}	
 	}
 
 	getKey(_category, _item_name, _unit) {
@@ -203,7 +206,6 @@ export default class InvoiceForm extends React.Component {
 			this.setItemDetailsTable()
 			this.setState({ isDisabled: false, isError: error })
 		})
-
 	}
 
 	/**
