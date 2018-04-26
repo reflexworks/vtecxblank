@@ -142,7 +142,9 @@ export function getAuthList(_role) {
 
 			authList = {
 				CustomerRegistration: true,
+				CustomerUpdate: true,
 				CustomerList: true,
+				DeliveryChargeRegistration: true,
 
 				BilltoRegistration: true,
 				BilltoList: true,
