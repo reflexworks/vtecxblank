@@ -43,6 +43,15 @@ export default class InquiryRegistration extends React.Component {
 		location.href = '#/InquiryList'
 	}
 
+	clear() {
+		this.entry.customer = {}
+		this.entry.inquiry.staff_name = ''
+		this.entry.inquiry.inquiry_status = ''
+		this.entry.inquiry.content = ''
+		this.entry.inquiry.content_type = ''
+		this.forceUpdate()
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -57,7 +66,7 @@ export default class InquiryRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -74,7 +83,7 @@ export default class InquiryRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
