@@ -29,7 +29,10 @@ export default class PackingItemTemplateRegistration extends React.Component {
 
 		// 初期値の設定
 		this.entry = {
+			title:'',
 			packing_item: {},
+			packing_items: [],
+			quotation: {},
 		}
 	}
  
@@ -41,6 +44,13 @@ export default class PackingItemTemplateRegistration extends React.Component {
 		location.href = '#/PackingItemTemplateList'
 	}
 
+	clear() {
+
+		this.entry.title = ''
+		this.entry.packing_item = {}
+		this.entry.packing_items = []	
+		this.forceUpdate()
+	}
 	render() {
 		return (
 			<Grid>
@@ -55,7 +65,7 @@ export default class PackingItemTemplateRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -72,7 +82,7 @@ export default class PackingItemTemplateRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

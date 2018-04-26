@@ -30,6 +30,10 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 		this.url = '/d/deliverycharge_template'
 
 		// 備考
+		this.entry = {
+			title:''
+		}
+
 		this.remarks = [
 			{ content:'エコ配JPは、土日祝日は対応不可となります。'},
 			{ content:'離島の別途料金につきましては、ヤマト宅急便はかかりません。'},
@@ -46,6 +50,13 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 		location.href = '/#/DeliveryChargeTemplateList'
 	}
 
+	clear() {
+		console.log(this.entry)
+		this.entry.title = 'clear'
+		this.forceUpdate()
+		console.log(this.entry)
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -60,7 +71,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -68,7 +79,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 				</Row>
 				<Row>
 					<Col xs={12} sm={12} md={12} lg={12} xl={12} >
-						<DeliveryChargeTemplateForm name="mainForm" />
+						<DeliveryChargeTemplateForm name="mainForm" entry={this.entry} />
 					</Col>
 				</Row>
 				<Row>
@@ -77,7 +88,7 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
