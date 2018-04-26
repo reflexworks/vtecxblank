@@ -1240,3 +1240,7 @@ h3.title {
 .comment {
   color: #999;
 }
+
+.invoice-panel .panel {
+  min-width: 950px;
+}
