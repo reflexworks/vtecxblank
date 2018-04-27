@@ -1244,3 +1244,10 @@ h3.title {
 .invoice-panel .panel {
   min-width: 950px;
 }
+.formgroup_sm {
+}
+.formgroup_md {
+  min-width: 390px
+}
+.formgroup_lg {
+}

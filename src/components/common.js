@@ -991,7 +991,8 @@ export class CommonFormGroup extends React.Component {
 		this.state = {
 			validationState: this.props.validationState,
 			labelSize: this.labelSize(this.props.size),
-			inputSize: this.inputSize(this.props.size)
+			inputSize: this.inputSize(this.props.size),
+			style: this.inputStyle(this.props.size)
 		}
 	}
 
@@ -1008,6 +1009,11 @@ export class CommonFormGroup extends React.Component {
 		return size
 	}
 
+	inputStyle(_option) {
+		if (!_option) _option = 'md'
+		return 'formgroup_' + _option
+	}
+
 	/**
 	 * 親コンポーネントがpropsの値を更新した時に呼び出される
 	 * @param {*} newProps 
@@ -1016,7 +1022,8 @@ export class CommonFormGroup extends React.Component {
 		this.setState({
 			validationState: newProps.validationState,
 			labelSize: this.labelSize(newProps.size),
-			inputSize: this.inputSize(newProps.size)
+			inputSize: this.inputSize(newProps.size),
+			style: this.inputStyle(newProps.size),
 		})
 	}
 
@@ -1030,7 +1037,9 @@ export class CommonFormGroup extends React.Component {
 				}
 				{this.props.controlLabel && 
 					<Col sm={this.state.inputSize}>
-						{this.props.children}
+						<div className={this.state.style}>
+							{this.props.children}
+						</div>
 					</Col>
 				}
 				{!this.props.controlLabel && 
