@@ -23,7 +23,7 @@ import {
 import type {
 	Props,
 	InputEvent
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import DatePicker from 'react-datepicker'
 import moment from 'moment'

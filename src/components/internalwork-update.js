@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap'
 import type {
 	Props
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import InternalWorkForm from './internalwork-form'
 import {
