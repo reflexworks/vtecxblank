@@ -380,111 +380,108 @@ export default class InvoiceForm extends React.Component {
 				const key = shipment_service.shipment_service.code
 				cashData[key] = shipment_service.shipment_service.service_name			
 			})
-
-		})
-		
-		axios({
-			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
-			if (response.status !== 204) {
-				this.shippingData = response.data.feed.entry[0]
-				this.shippingData.billing_compare.map((billing_compare) => {
-					billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
-					let total_internal_work = 0
-					let total_billing = 0
-					let total_amount = 0
-					billing_compare.record = billing_compare.record.map((record) => {
+			axios({
+				url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+				if (response.status !== 204) {
+					this.shippingData = response.data.feed.entry[0]
+					this.shippingData.billing_compare.map((billing_compare) => {
+						billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
+						let total_internal_work = 0
+						let total_billing = 0
+						let total_amount = 0
+						billing_compare.record = billing_compare.record.map((record) => {
 						//合計用
-						total_internal_work = (Number(total_internal_work) + Number(record.internal_work_quantity))
-						total_billing = (Number(total_billing) + Number(record.billing_quantity)) 
-						total_amount = (Number(total_amount) + Number(record.billing_amount))
-						//カンマ差し込み
-						record.internal_work_quantity = addFigure(String(record.internal_work_quantity))
-						record.billing_quantity = addFigure(String(record.billing_quantity))
-						record.billing_amount = '¥' + addFigure(String(record.billing_amount))
-						if (record.internal_work_quantity === record.billing_quantity) {
-							return(record)
-						} else {
+							total_internal_work = (Number(total_internal_work) + Number(record.internal_work_quantity))
+							total_billing = (Number(total_billing) + Number(record.billing_quantity)) 
+							total_amount = (Number(total_amount) + Number(record.billing_amount))
+							//カンマ差し込み
+							record.internal_work_quantity = addFigure(String(record.internal_work_quantity))
+							record.billing_quantity = addFigure(String(record.billing_quantity))
+							record.billing_amount = '¥' + addFigure(String(record.billing_amount))
+							if (record.internal_work_quantity === record.billing_quantity) {
+								return(record)
+							} else {
 							//エラー（赤色）にして返す
-							const newArray = {
-								'shipping_date': record.shipping_date,
-								'internal_work_quantity': record.internal_work_quantity,
-								'billing_quantity': record.billing_quantity,
-								'billing_amount':record.billing_amount,
-								'is_error':true,
+								const newArray = {
+									'shipping_date': record.shipping_date,
+									'internal_work_quantity': record.internal_work_quantity,
+									'billing_quantity': record.billing_quantity,
+									'billing_amount':record.billing_amount,
+									'is_error':true,
+								}
+								return(newArray)
 							}
-							return(newArray)
+						})
+						const totalArray = {
+							'shipping_date': '合計',
+							'internal_work_quantity': addFigure(String(total_internal_work)),
+							'billing_quantity': addFigure(String(total_billing)),
+							'billing_amount': '¥' + addFigure(String(total_amount)),
+							'is_total':true,
 						}
+						billing_compare.record.push(totalArray)	
 					})
-					const totalArray = {
-						'shipping_date': '合計',
-						'internal_work_quantity': addFigure(String(total_internal_work)),
-						'billing_quantity': addFigure(String(total_billing)),
-						'billing_amount': '¥' + addFigure(String(total_amount)),
-						'is_total':true,
-					}
-					billing_compare.record.push(totalArray)	
-				})
-				this.forceUpdate()
-			}
-		}).catch((error) => {
-			this.setState({ isError: error })
-		})
-		
-		axios({
-			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 1,
-			method: 'get',
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		}).then((response) => {
+					this.forceUpdate()
+				}
+			}).catch((error) => {
+				this.setState({ isError: error })
+			})
+			axios({
+				url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 1,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
 
-			if (response.status !== 204) {
-				this.collectingData = response.data.feed.entry[0]
-				this.collectingData.billing_compare.map((billing_compare) => {
-					billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
-					let total_internal_work = 0
-					let total_billing = 0
-					let total_amount = 0
-					billing_compare.record = billing_compare.record.map((record) => {
+				if (response.status !== 204) {
+					this.collectingData = response.data.feed.entry[0]
+					this.collectingData.billing_compare.map((billing_compare) => {
+						billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
+						let total_internal_work = 0
+						let total_billing = 0
+						let total_amount = 0
+						billing_compare.record = billing_compare.record.map((record) => {
 						//合計用
-						total_internal_work = (Number(total_internal_work) + Number(record.internal_work_quantity))
-						total_billing = (Number(total_billing) + Number(record.billing_quantity)) 
-						total_amount = (Number(total_amount) + Number(record.billing_amount))
-						//カンマ差し込み
-						record.internal_work_quantity = addFigure(String(record.internal_work_quantity))
-						record.billing_quantity = addFigure(String(record.billing_quantity))
-						record.billing_amount = '¥' + addFigure(String(record.billing_amount))
-						if (record.internal_work_quantity === record.billing_quantity) {
-							return(record)
-						} else {
-							const newArray = {
-								'shipping_date': record.shipping_date,
-								'internal_work_quantity': record.internal_work_quantity,
-								'billing_quantity': record.billing_quantity,
-								'billing_amount':record.billing_amount,
-								'is_error':true,
+							total_internal_work = (Number(total_internal_work) + Number(record.internal_work_quantity))
+							total_billing = (Number(total_billing) + Number(record.billing_quantity)) 
+							total_amount = (Number(total_amount) + Number(record.billing_amount))
+							//カンマ差し込み
+							record.internal_work_quantity = addFigure(String(record.internal_work_quantity))
+							record.billing_quantity = addFigure(String(record.billing_quantity))
+							record.billing_amount = '¥' + addFigure(String(record.billing_amount))
+							if (record.internal_work_quantity === record.billing_quantity) {
+								return(record)
+							} else {
+								const newArray = {
+									'shipping_date': record.shipping_date,
+									'internal_work_quantity': record.internal_work_quantity,
+									'billing_quantity': record.billing_quantity,
+									'billing_amount':record.billing_amount,
+									'is_error':true,
+								}
+								return(newArray)
 							}
-							return(newArray)
+						})
+						const totalArray = {
+							'shipping_date': '合計',
+							'internal_work_quantity': addFigure(String(total_internal_work)),
+							'billing_quantity': addFigure(String(total_billing)),
+							'billing_amount': '¥' + addFigure(String(total_amount)),
+							'is_total':true,
 						}
+						billing_compare.record.push(totalArray)	
 					})
-					const totalArray = {
-						'shipping_date': '合計',
-						'internal_work_quantity': addFigure(String(total_internal_work)),
-						'billing_quantity': addFigure(String(total_billing)),
-						'billing_amount': '¥' + addFigure(String(total_amount)),
-						'is_total':true,
-					}
-					billing_compare.record.push(totalArray)	
-				})
-				this.forceUpdate()
-			}
-		}).catch((error) => {
-			this.setState({ isError: error })
+					this.forceUpdate()
+				}
+			}).catch((error) => {
+				this.setState({ isError: error })
+			})	
 		})
 	}
 
