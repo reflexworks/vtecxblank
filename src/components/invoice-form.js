@@ -16,12 +16,13 @@ import {
 import type {
 	Props
 } from 'demo3.types'
-
 import {
 	BillfromAddModal,
 	BillfromEditModal,
 } from './billfrom-modal'
 import {
+	CommonIndicator,
+	CommonNetworkMessage,
 	CommonInputText,
 	CommonTable,
 	CommonRadioBtn,
@@ -42,7 +43,9 @@ export default class InvoiceForm extends React.Component {
 		this.state = {
 			showBillfromAddModal: false,
 			showBillfromEditModal: false,
-			selectCustomer: ''
+			selectCustomer: '',
+			isDisabled: false,
+			isError: {},
 		}
 		
 		//消費税と合計請求金額
@@ -151,6 +154,9 @@ export default class InvoiceForm extends React.Component {
 				this.setBillingSummaryTable()		
 			}
 		}
+		if (!(this.entry.invoice.working_yearmonth && this.entry.invoice.customer_code)) {
+			this.setState({ isDisabled: false })
+		}	
 	}
 
 	getKey(_category, _item_name, _unit) {
@@ -161,7 +167,7 @@ export default class InvoiceForm extends React.Component {
 	 * サービスで受け取ったitem_detailsを取得後、カテゴリ毎に振り分ける
 	 */
 	getService(customer_code,working_yearmonth) {
-		this.setState({ isDisabled: true })
+		this.setState({isDisabled:true})
 		this.monthly = []
 		this.daily = []
 		this.period = []
@@ -180,12 +186,10 @@ export default class InvoiceForm extends React.Component {
 			}
 		}).then((response) => {
 			if (response.status !== 204) {
-			
 				const serviceData = response.data.feed.entry[0]
 				if (serviceData.item_details) {
-
 					for (let i = 0; i < serviceData.item_details.length; ++i) {
-
+						
 						let item_details = serviceData.item_details[i]
 						const category = item_details.category
 						const item_name = item_details.item_name
@@ -201,13 +205,17 @@ export default class InvoiceForm extends React.Component {
 						this.cashData[key] = this[category].length - 1
 					}
 					this.serviceItem = serviceData.item_details
-
+					
 					// 明細表示
+					this.setState({isDisabled:true})
 					this.setItemDetailsTable()
+					this.setState({isDisabled:false})
 				}
 			} else {
 				// 明細表示
+				this.setState({isDisabled:true})
 				this.setItemDetailsTable()
+				this.setState({isDisabled:false})
 			}
 		}).catch((error) => {
 			alert('庫内作業年月:' + working_yearmonth + '\n' +
@@ -217,7 +225,6 @@ export default class InvoiceForm extends React.Component {
 			this.setItemDetailsTable()
 			this.setState({ isDisabled: false, isError: error })
 		})
-
 	}
 
 	/**
@@ -373,7 +380,8 @@ export default class InvoiceForm extends React.Component {
 		this.setBillingSummaryTable()
 	}
 
-	getInvoiceData(_customerCode,_workingYearmonth,_quotationCode) {
+	getInvoiceData(_customerCode, _workingYearmonth, _quotationCode) {
+		this.setState({ isDisabled: true })
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 			method: 'get',
@@ -429,11 +437,13 @@ export default class InvoiceForm extends React.Component {
 					}
 					billing_compare.record.push(totalArray)	
 				})
+				this.forceUpdate()
 			}
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
 		})
 		
+		this.setState({ isDisabled: true })
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 1,
 			method: 'get',
@@ -491,6 +501,7 @@ export default class InvoiceForm extends React.Component {
 					}
 					billing_compare.record.push(totalArray)	
 				})
+				this.forceUpdate()
 			}
 		}).catch((error) => {
 			this.setState({ isDisabled: false, isError: error })
@@ -514,7 +525,6 @@ export default class InvoiceForm extends React.Component {
 				}
 			}).then((response) => {
 				if (response.status === 204) {
-					this.setState({ isDisabled: false })
 					alert('庫内作業データがありません')
 				} else if (response.status !== 204) {
 					this.master.internalWorkYearMonthList = response.data.feed.entry
@@ -567,7 +577,6 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	setItemDetailsTable() {
-
 		const customer_code = this.entry.invoice.customer_code
 		const selectInternalWorkYearMonth = this.entry.invoice.working_yearmonth
 
@@ -597,7 +606,7 @@ export default class InvoiceForm extends React.Component {
 			if (count === 2) {
 				this.isItemDetailsTable = true
 				this.changeTotalAmount()
-				this.setState({ isDisabled: false })
+
 			}
 		}
 		const setAddEntry = () => {
@@ -632,7 +641,7 @@ export default class InvoiceForm extends React.Component {
 			})
 		}
 		if (this.entry.invoice.invoice_code) {
-
+			this.setState({isDisabled:true})
 			const invoice_code = this.entry.invoice.invoice_code
 			const invoice_code_sub = this.entry.invoice.invoice_code_sub
 			const key = invoice_code + '-' + invoice_code_sub
@@ -642,6 +651,7 @@ export default class InvoiceForm extends React.Component {
 				___rel: 'self'
 			}]
 			const get = (_url) => {
+				
 				axios({
 					url: '/d' + _url,
 					method: 'get',
@@ -649,7 +659,7 @@ export default class InvoiceForm extends React.Component {
 						'X-Requested-With': 'XMLHttpRequest'
 					}
 				}).then((response) => {
-
+					
 					count++
 
 					if (_url.indexOf('invoice_details') != -1) this.item_details = {}
@@ -671,13 +681,12 @@ export default class InvoiceForm extends React.Component {
 				}).catch((error) => {
 					count++
 					this.item_details = {}
-					this.setState({ isDisabled: false, isError: error })
+					this.setState({ isError: error })
 					complate()
 				})
 			}
 			get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
 			get('/invoice_remarks/' + key + '?f&customer.customer_code=' + customer_code + '&invoice.working_yearmonth=' + selectInternalWorkYearMonth)
-
 		} else {
 
 			// 前月の発行済みの請求書情報を取得
@@ -741,7 +750,7 @@ export default class InvoiceForm extends React.Component {
 								complate()
 
 							}).catch((error) => {
-								this.setState({ isDisabled: false, isError: error })
+								this.setState({ isError: error })
 								count = 2
 								complate()
 							})
@@ -752,7 +761,7 @@ export default class InvoiceForm extends React.Component {
 				}).catch((error) => {
 					count = 2
 					complate()
-					this.setState({ isDisabled: false, isError: error })
+					this.setState({isError: error })
 				})
 			}
 			getBeforInvoice()
@@ -1234,7 +1243,7 @@ export default class InvoiceForm extends React.Component {
 				}
 
 			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
+				this.setState({isError: error})
 			})
 		}
 
@@ -1265,7 +1274,13 @@ export default class InvoiceForm extends React.Component {
 		return (
 
 			<Form name={this.props.name} horizontal data-submit-form>
-												
+
+				{/* 通信中インジケータ */}
+				<CommonIndicator visible={this.state.isDisabled} />
+
+				{/* 通信メッセージ */}
+				<CommonNetworkMessage isError={this.state.isError} />
+				
 				{/* 登録の場合 */}
 				{!this.entry.invoice.invoice_code &&
 					<FormGroup className="hide">
