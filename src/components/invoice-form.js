@@ -205,18 +205,10 @@ export default class InvoiceForm extends React.Component {
 						this.cashData[key] = this[category].length - 1
 					}
 					this.serviceItem = serviceData.item_details
-					
-					// 明細表示
-					this.setState({isDisabled:true})
-					this.setItemDetailsTable()
-					this.setState({isDisabled:false})
 				}
-			} else {
-				// 明細表示
-				this.setState({isDisabled:true})
-				this.setItemDetailsTable()
-				this.setState({isDisabled:false})
 			}
+			// 明細表示
+			this.setItemDetailsTable()
 		}).catch((error) => {
 			alert('庫内作業年月:' + working_yearmonth + '\n' +
 				  '顧客名:' + this.customer.customer.customer_name + '\n' + '\n' + 
@@ -577,6 +569,9 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	setItemDetailsTable() {
+
+		this.setState({ isDisabled: true })
+
 		const customer_code = this.entry.invoice.customer_code
 		const selectInternalWorkYearMonth = this.entry.invoice.working_yearmonth
 
@@ -602,11 +597,11 @@ export default class InvoiceForm extends React.Component {
 		this.isItemDetailsTable = false
 
 		let count = 0
-		const complate = () => {
+		const complate = (_error) => {
 			if (count === 2) {
 				this.isItemDetailsTable = true
 				this.changeTotalAmount()
-
+				this.setState({isDisabled:false, isError: _error})
 			}
 		}
 		const setAddEntry = () => {
@@ -641,7 +636,7 @@ export default class InvoiceForm extends React.Component {
 			})
 		}
 		if (this.entry.invoice.invoice_code) {
-			this.setState({isDisabled:true})
+
 			const invoice_code = this.entry.invoice.invoice_code
 			const invoice_code_sub = this.entry.invoice.invoice_code_sub
 			const key = invoice_code + '-' + invoice_code_sub
@@ -681,8 +676,7 @@ export default class InvoiceForm extends React.Component {
 				}).catch((error) => {
 					count++
 					this.item_details = {}
-					this.setState({ isError: error })
-					complate()
+					complate(error)
 				})
 			}
 			get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
@@ -750,9 +744,8 @@ export default class InvoiceForm extends React.Component {
 								complate()
 
 							}).catch((error) => {
-								this.setState({ isError: error })
 								count = 2
-								complate()
+								complate(error)
 							})
 						}
 						get('/invoice_details/' + key + '?f&customer.customer_code=' + customer_code)
@@ -760,8 +753,7 @@ export default class InvoiceForm extends React.Component {
 
 				}).catch((error) => {
 					count = 2
-					complate()
-					this.setState({isError: error })
+					complate(error)
 				})
 			}
 			getBeforInvoice()
