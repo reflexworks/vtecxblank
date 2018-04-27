@@ -485,9 +485,6 @@ export default class InvoiceForm extends React.Component {
 		})
 	}
 
-	setBillingDataTable() {
-		
-	}
 	/**
 	 * 庫内作業年月リスト作成
 	 */
