@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap'
 import type {
 	Props
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import BasicConditionForm from './basiccondition-form'
 import {

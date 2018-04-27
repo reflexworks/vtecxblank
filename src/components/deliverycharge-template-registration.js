@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap'
 import type {
 	Props
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import DeliveryChargeTemplateForm from './deliverycharge-template-form'
 import {
@@ -51,10 +51,8 @@ export default class DeliveryChargeTemplateRegistration extends React.Component 
 	}
 
 	clear() {
-		console.log(this.entry)
 		this.entry.title = 'clear'
 		this.forceUpdate()
-		console.log(this.entry)
 	}
 
 	render() {
