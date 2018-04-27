@@ -1428,7 +1428,7 @@ export default class InvoiceForm extends React.Component {
 					<Tab eventKey={1} title="請求内容">
 						{ this.isItemDetailsTable &&
 
-							<PanelGroup defaultActiveKey="1">
+							<PanelGroup defaultActiveKey="1" className="invoice-panel">
 								
 								<Button bsSize="sm" style={{width:'130px'}} >
 									<Glyphicon glyph="download" />CSVダウンロード
@@ -1440,17 +1440,17 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.monthly}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
-											field: 'quantity', title: '数量', width: '50px',
+											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '50px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
-											field: 'unit_price', title: '単価', width: '100px',
+											field: 'unit_price', title: '単価', width: '100px',
 										}, {
-											field: 'amount', title: '金額', width: '100px',
+											field: 'amount', title: '金額', width: '100px',
 										}, {
-											field: 'remarks',title: '備考', width: '30px',
+											field: 'remarks',title: '備考', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'remarks',true)}
 											}
@@ -1463,7 +1463,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.monthly}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'item_name')}
 											}
@@ -1474,7 +1474,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('monthly',data,rowindex,'unit')}
 											}
@@ -1509,11 +1509,11 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.daily}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
 											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
 											field: 'unit_price', title: '単価', width: '100px',
 										}, {
@@ -1532,7 +1532,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.daily}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'item_name')}
 											}
@@ -1543,7 +1543,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('daily',data,rowindex,'unit')}
 											}
@@ -1578,11 +1578,11 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.period}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
 											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
 											field: 'unit_price', title: '単価', width: '100px',
 										}, {
@@ -1602,7 +1602,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.period}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'item_name')}
 											}
@@ -1613,7 +1613,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('period',data,rowindex,'unit')}
 											}
@@ -1648,11 +1648,11 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.packing_item}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
 											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
 											field: 'unit_price', title: '単価', width: '100px',
 										}, {
@@ -1671,7 +1671,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.packing_item}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'item_name')}
 											}
@@ -1682,7 +1682,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('packing_item',data,rowindex,'unit')}
 											}
@@ -1717,11 +1717,11 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.shipping}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
 											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
 											field: 'unit_price', title: '単価', width: '100px',
 										}, {
@@ -1740,7 +1740,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.shipping}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'item_name')}
 											}
@@ -1751,7 +1751,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('shipping',data,rowindex,'unit')}
 											}
@@ -1786,11 +1786,11 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.collecting}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)/単位名称', width: '200px',
 										}, {
 											field: 'quantity', title: '数量', width: '50px',
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 										}, {
 											field: 'unit_price', title: '単価', width: '100px',
 										}, {
@@ -1808,7 +1808,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.collecting}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'item_name') }
 											}
@@ -1819,7 +1819,7 @@ export default class InvoiceForm extends React.Component {
 												price: true,
 											}
 										}, {
-											field: 'unit', title: '単位', width: '100px',
+											field: 'unit', title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex) => { this.changeInvoiceList('collecting', data, rowindex, 'unit') }
 											}
@@ -1854,7 +1854,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.others}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'item_name')}
 											}
@@ -1865,7 +1865,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('others',data,rowindex,'unit')}
 											}
@@ -1900,7 +1900,7 @@ export default class InvoiceForm extends React.Component {
 									<CommonTable
 										data={this.item_details.ems}
 										header={[{
-											field: 'item_name', title: 'ご請求内容(作業内容)', width: '300px',
+											field: 'item_name', title: 'ご請求内容(作業内容)', width: '200px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'item_name')}
 											}
@@ -1911,7 +1911,7 @@ export default class InvoiceForm extends React.Component {
 												price:true,
 											}
 										}, {
-											field: 'unit',title: '単位', width: '100px',
+											field: 'unit',title: '単位', width: '50px',
 											input: this.isEdit && {
 												onBlur: (data, rowindex)=>{this.changeInvoiceList('ems',data,rowindex,'unit')}
 											}
