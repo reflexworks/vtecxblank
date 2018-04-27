@@ -105,27 +105,51 @@ export default class InternalWorkList extends React.Component {
 	 */
     onDelete(data) {
 
-    	if (confirm('この情報を削除します。よろしいですか？')) {
+    	const doInternalWorkDelete = () => {
+    		if (confirm('この情報を削除します。よろしいですか？')) {
 
-    		this.setState({ isDisabled: true })
-    		axios({
-    			url: '/d' + data.link[0].___href + '?_rf',
-    			method: 'delete',
-    			headers: {
-    				'X-Requested-With': 'XMLHttpRequest'
-    			}
-    		}).then(() => {
-    			this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-    			this.getFeed(1, this.state.urlToPagenation)
-    		}).catch((error) => {
-    			if (this.props.error) {
-    				this.setState({ isDisabled: false })
-    				this.props.error(error)
-    			} else {
-    				this.setState({ isDisabled: false, isError: error })
-    			}
-    		})
+    			this.setState({ isDisabled: true })
+    			axios({
+    				url: '/d' + data.link[0].___href + '?_rf',
+    				method: 'delete',
+    				headers: {
+    					'X-Requested-With': 'XMLHttpRequest'
+    				}
+    			}).then(() => {
+    				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+    				this.getFeed(1, this.state.urlToPagenation)
+    			}).catch((error) => {
+    				if (this.props.error) {
+    					this.setState({ isDisabled: false })
+    					this.props.error(error)
+    				} else {
+    					this.setState({ isDisabled: false, isError: error })
+    				}
+    			})
+    		}
     	}
+    	this.setState({ isDisabled: true })
+    	axios({
+    		url: '/d/invoice?f&invoice.quotation_code='+data.quotation.quotation_code+'&invoice.working_yearmonth='+data.internal_work.working_yearmonth+'&invoice.issue_status=1',
+    		method: 'get',
+    		headers: {
+    			'X-Requested-With': 'XMLHttpRequest'
+    		}
+    	}).then((response) => {
+    		this.setState({ isDisabled: false })
+    		if (response.status === 204) {
+    			doInternalWorkDelete()
+    		} else {
+    			alert('この庫内作業の請求書が発行済になっているため削除できません。')
+    		}
+    	}).catch((error) => {
+    		if (this.props.error) {
+    			this.setState({ isDisabled: false })
+    			this.props.error(error)
+    		} else {
+    			this.setState({ isDisabled: false, isError: error })
+    		}
+    	})
     }
 
     render() {
