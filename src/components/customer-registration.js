@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap'
 import type {
 	Props
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import CustomerForm from './customer-form'
 import {

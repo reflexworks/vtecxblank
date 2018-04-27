@@ -2,7 +2,7 @@
 import React from 'react'
 import type {
 	Props,
-} from 'demo3.types'
+} from 'logioffice.types'
 
 import {
 	Form,
