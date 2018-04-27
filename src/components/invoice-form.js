@@ -223,8 +223,6 @@ export default class InvoiceForm extends React.Component {
 	 *  請求元リストを作成する
 	 */
 	setBillfromMasterData(_billfrom) {
-		this.setState({ isDisabled: true })
-
 		axios({
 			url: '/d/billfrom?f',
 			method: 'get',
@@ -278,7 +276,7 @@ export default class InvoiceForm extends React.Component {
 			}
 
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({isError: error })
 		})   
 	}
 
@@ -312,9 +310,6 @@ export default class InvoiceForm extends React.Component {
 	 * 顧客リストを作成する
 	 */
 	setCustomerMasterData() {
-
-		this.setState({ isDisabled: true })
-
 		axios({
 			url: '/d/customer?f&billto.billto_code=' + this.entry.billto.billto_code,
 			method: 'get',
@@ -335,7 +330,7 @@ export default class InvoiceForm extends React.Component {
 				this.forceUpdate()
 			}
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})   
 	}
 	
@@ -373,7 +368,21 @@ export default class InvoiceForm extends React.Component {
 	}
 
 	getInvoiceData(_customerCode, _workingYearmonth, _quotationCode) {
-		this.setState({ isDisabled: true })
+		let cashData = []
+		axios({
+			url:'/d/shipment_service?f',
+			method: 'get',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		}).then((response) => {	
+			response.data.feed.entry.map((shipment_service) => {
+				const key = shipment_service.shipment_service.code
+				cashData[key] = shipment_service.shipment_service.service_name			
+			})
+
+		})
+		
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 			method: 'get',
@@ -381,20 +390,10 @@ export default class InvoiceForm extends React.Component {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((response) => {
-			if (response.status === 204) {
-				this.setState({ isDisabled: false })
-			} else if (response.status !== 204) {
+			if (response.status !== 204) {
 				this.shippingData = response.data.feed.entry[0]
 				this.shippingData.billing_compare.map((billing_compare) => {
-					axios({
-						url:'/d/shipment_service?f&shipment_service.code='+billing_compare.shipment_service_code,
-						method: 'get',
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						}
-					}).then((response) => {		
-						billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + response.data.feed.entry[0].shipment_service.service_name
-					})
+					billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
 					let total_internal_work = 0
 					let total_billing = 0
 					let total_amount = 0
@@ -410,6 +409,7 @@ export default class InvoiceForm extends React.Component {
 						if (record.internal_work_quantity === record.billing_quantity) {
 							return(record)
 						} else {
+							//エラー（赤色）にして返す
 							const newArray = {
 								'shipping_date': record.shipping_date,
 								'internal_work_quantity': record.internal_work_quantity,
@@ -432,10 +432,9 @@ export default class InvoiceForm extends React.Component {
 				this.forceUpdate()
 			}
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})
 		
-		this.setState({ isDisabled: true })
 		axios({
 			url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 1,
 			method: 'get',
@@ -444,21 +443,10 @@ export default class InvoiceForm extends React.Component {
 			}
 		}).then((response) => {
 
-			if (response.status === 204) {
-				this.setState({ isDisabled: false })
-			} else if (response.status !== 204) {
+			if (response.status !== 204) {
 				this.collectingData = response.data.feed.entry[0]
-				this.setBillingDataTable(this.collectingData)
 				this.collectingData.billing_compare.map((billing_compare) => {
-					axios({
-						url:'/d/shipment_service?f&shipment_service.code='+billing_compare.shipment_service_code,
-						method: 'get',
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						}
-					}).then((response) => {
-						billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + response.data.feed.entry[0].shipment_service.service_name
-					})
+					billing_compare.shipment_service_service_name = billing_compare.shipment_service_service_name + '/' + cashData[billing_compare.shipment_service_code]
 					let total_internal_work = 0
 					let total_billing = 0
 					let total_amount = 0
@@ -496,7 +484,7 @@ export default class InvoiceForm extends React.Component {
 				this.forceUpdate()
 			}
 		}).catch((error) => {
-			this.setState({ isDisabled: false, isError: error })
+			this.setState({ isError: error })
 		})
 	}
 
@@ -507,7 +495,6 @@ export default class InvoiceForm extends React.Component {
 	 * 庫内作業年月リスト作成
 	 */
 	setInternalWorkYearMonthList() {
-		this.setState({ isDisabled: true })
 		if (this.entry.invoice.quotation_code) {
 			axios({
 				url: '/d/internal_work?f&quotation.quotation_code=' + this.entry.invoice.quotation_code,
@@ -536,7 +523,7 @@ export default class InvoiceForm extends React.Component {
 
 				}
 			}).catch((error) => {
-				this.setState({ isDisabled: false, isError: error })
+				this.setState({ isError: error })
 			})
 		}	
 	}
@@ -601,9 +588,10 @@ export default class InvoiceForm extends React.Component {
 			if (count === 2) {
 				this.isItemDetailsTable = true
 				this.changeTotalAmount()
-				this.setState({isDisabled:false, isError: _error})
+				this.setState({ isDisabled:false,isError: _error})
 			}
 		}
+
 		const setAddEntry = () => {
 			this.item_details = {}
 			if (!this.addEntry.item_details) this.addEntry.item_details = []
