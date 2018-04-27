@@ -81,7 +81,7 @@ function getDates(internal_work_data, billing_data,shipment_class,shipment_servi
 		}
 	})
 	const dates2 = billing_data.feed.entry.map((entry) => {
-		if ((entry.billing_data.shipment_service_code === shipment_service_code) && (entry.billing_data.shipment_class === shipment_class)) {
+		if (entry.billing_data&&(entry.billing_data.shipment_service_code === shipment_service_code) && (entry.billing_data.shipment_class === shipment_class)) {
 			return ''+ new Date(entry.billing_data.shipping_date).getDate()            
 		}
 	})
@@ -111,8 +111,10 @@ function getQuantityOfInternalwork(internal_work_data,shipment_class,shipment_se
 function getQuantityOfBillingdata(billing_data, shipment_class,shipment_service_code, working_day) {
     
 	const result = billing_data.feed.entry.filter((entry) => {
-		const shipping_day = new Date(entry.billing_data.shipping_date).getDate()     
-		return ((entry.billing_data.shipment_class === shipment_class) && (entry.billing_data.shipment_service_code === shipment_service_code) && (shipping_day === Number(working_day)))
+		if (entry.billing_data) {
+			const shipping_day = new Date(entry.billing_data.shipping_date).getDate()     
+			return ((entry.billing_data.shipment_class === shipment_class) && entry.billing_data && (entry.billing_data.shipment_service_code === shipment_service_code) && (shipping_day === Number(working_day)))
+		}else return false
 	}).reduce((prev, current) => { 
 		const entry = {
 			'billing_data': {

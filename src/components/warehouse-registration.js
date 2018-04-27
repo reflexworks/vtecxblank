@@ -31,8 +31,6 @@ export default class WarehouseRegistration extends React.Component {
 		this.entry = {
 			warehouse: {},
 		}
-
-
 	}
  
 	/**
@@ -41,6 +39,15 @@ export default class WarehouseRegistration extends React.Component {
 	callbackRegistrationButton() {
 		alert('登録が完了しました。')
 		location.href = '#/WarehouseList'
+	}
+
+	clear() {
+		this.entry.warehouse.warehouse_name = ''
+		this.entry.warehouse.zip_code = ''
+		this.entry.warehouse.prefecture = ''
+		this.entry.warehouse.address1 = ''
+		this.entry.warehouse.address2 = ''
+		this.forceUpdate()
 	}
 
 	render() {
@@ -57,7 +64,7 @@ export default class WarehouseRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -74,7 +81,7 @@ export default class WarehouseRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

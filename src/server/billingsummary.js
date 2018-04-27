@@ -80,9 +80,9 @@ export function getSummary(shipping_yearmonth, billto_code, shipment_service_cod
 				zones.map((zone) => { 
 					const entry = billing_data.feed.entry.filter((entry) => { 
 						if (shipment_service_code.indexOf('ECO') >= 0) {
-							return entry && (entry.billing_data.zone_name === zone)
+							return entry && entry.billing_data &&(entry.billing_data.zone_name === zone)
 						} else {
-							return entry && (entry.billing_data.zone_name === zone) && (entry.billing_data.size === size)							
+							return entry && entry.billing_data && (entry.billing_data.zone_name === zone) && (entry.billing_data.size === size)							
 						}
 					})
 					if (entry.length > 0) {

@@ -42,6 +42,12 @@ export default class TypeAheadRegistration extends React.Component {
 		location.href = '#/TypeAheadList'
 	}
 
+	clear() {
+		this.entry.type_ahead.type = ''
+		this.entry.type_ahead.value = ''
+		this.forceUpdate()
+	}
+	
 	render() {
 		return (
 			<Grid>
@@ -56,7 +62,7 @@ export default class TypeAheadRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -73,7 +79,7 @@ export default class TypeAheadRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()} />
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

@@ -209,6 +209,17 @@ export default class StaffRegistration extends React.Component {
 		location.href = '#/StaffList'
 	}
 
+	clear() {
+		this.entry.staff.staff_name = ''
+		this.entry.staff.role = ''
+		this.entry.staff.superior_email = ''
+		this.entry.staff.staff_email = ''
+		this.entry.staff.uid = ''
+		this.entry.staff.password = ''
+		this.entry.staff.superior_name = ''
+		this.forceUpdate()
+	}
+
 	render() {
 		return (
 			<Grid>
@@ -229,7 +240,7 @@ export default class StaffRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonGeneralBtn NavItem navStyle="create" onClick={()=>this.doPost()} label={<span><Glyphicon glyph="plus" /> 新規登録</span>} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>
@@ -246,7 +257,7 @@ export default class StaffRegistration extends React.Component {
 							<Navbar.Collapse>
 								<Nav>
 									<CommonGeneralBtn NavItem navStyle="create" onClick={()=>this.doPost()} label={<span><Glyphicon glyph="plus" /> 新規登録</span>} />
-									<CommonClearBtn NavItem />
+									<CommonClearBtn NavItem callback={()=>this.clear()}/>
 								</Nav>
 							</Navbar.Collapse>
 						</Navbar>

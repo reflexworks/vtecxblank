@@ -81,7 +81,7 @@ export default class InvoiceForm extends React.Component {
 		this.editEntry = this.editEntry || {}
 
 		this.convert_taxation = { '0': '税抜', '1': '税込' }
-		this.deliveryCSV = [{delivery:'エコ配JP',}, {delivery:'ヤマト運輸'}]
+		this.deliveryCSV = [{delivery:'エコ配JP'}, {delivery:'ヤマト運輸'}]
 		this.cashData = {}
 
 		this.isEdit = true
@@ -102,8 +102,27 @@ export default class InvoiceForm extends React.Component {
 			this.isEdit = this.entry.invoice.issue_status === '1' ? false : true
 
 			this.entry.invoice.payment_date = this.entry.invoice.payment_date ? moment(Date.parse(this.entry.invoice.payment_date)) : moment()
-			if(this.entry.invoice.working_yearmonth) this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
-			if (this.entry.invoice.customer_code) this.props.changeCustomerCode(this.entry.invoice.customer_code)
+			if (this.entry.invoice.working_yearmonth) {
+				if (this.props.changeYearmonth) {
+					this.props.changeYearmonth(this.entry.invoice.working_yearmonth)
+				}
+			} else {
+				this.isItemDetailsTable = false
+				this.billingSummaryTable = null
+				this.shippingData = ''
+				this.collectingData = ''
+			}
+			if (this.entry.invoice.customer_code) {
+				if (this.props.changeCustomerCode) {
+					this.props.changeCustomerCode(this.entry.invoice.customer_code)
+				}	
+			} else {
+				this.isItemDetailsTable = false
+				this.billingSummaryTable = null
+				this.shippingData = ''
+				this.collectingData = ''
+			}
+			
 			//口座情報に口座名義、支店名が無い時の処理
 			if(this.entry.billfrom.payee){
 				this.entry.billfrom.payee = this.entry.billfrom.payee.map((oldPayee) => {

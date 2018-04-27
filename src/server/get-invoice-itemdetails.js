@@ -50,13 +50,15 @@ function getShipping(customer_code, working_yearmonth,shipment_service_code,ship
 	if (billing_data) {
 		const summary = billing_data.feed.entry
 			.reduce((prev, current) => { 
-				if (prev&&prev.billing_data&&current&&current.billing_data) {
-					return {
-						'billing_data': {
-							'delivery_charge': ''+(Number(prev.billing_data.delivery_charge)+Number(current.billing_data.delivery_charge)),
-							'quantity': '' + (Number(prev.billing_data.quantity) + Number(current.billing_data.quantity)),
-							'unit_price': current.billing_data.unit_price
-						}
+				const prev_quantity = prev&&prev.billing_data ? Number(prev.billing_data.quantity) : 0			
+				const prev_delivery_charge = prev&&prev.billing_data ? Number(prev.billing_data.delivery_charge) : 0			
+				const current_quantity = current&&current.billing_data ? Number(current.billing_data.quantity) : 0			
+				const current_delivery_charge = current&&current.billing_data ? Number(current.billing_data.delivery_charge) : 0			
+				return {
+					'billing_data': {
+						'delivery_charge': ''+(prev_delivery_charge+current_delivery_charge),
+						'quantity': '' + (prev_quantity + current_quantity),
+						'unit_price': current&&current.billing_data ? current.billing_data.unit_price : '0'
 					}
 				}
 			}, { 'billing_data': { 'delivery_charge': '0', 'quantity': '0', 'unit_price': '0' } })

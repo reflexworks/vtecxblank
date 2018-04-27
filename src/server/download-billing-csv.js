@@ -61,7 +61,23 @@ customer_code.map((customer_code) => {
 	}
 	if (delivery_company === 'ECO') {
 		billing_data = getBillingdata(shipping_yearmonth, customer_code, 'ECO1', '0', billto_code).billing_data	
-		const billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'ECO2', '0',billto_code).billing_data	
+		let billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'ECO2', '0',billto_code).billing_data	
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'ECO1', '1',billto_code).billing_data	
+		if (billing_data1) {
+			if (billing_data) {
+				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
+			} else {
+				billing_data = billing_data1
+			}	
+		}
+		billing_data1 = getBillingdata(shipping_yearmonth, customer_code, 'ECO2', '1',billto_code).billing_data	
 		if (billing_data1) {
 			if (billing_data) {
 				billing_data.feed.entry = billing_data.feed.entry.concat(billing_data1.feed.entry)
@@ -72,13 +88,13 @@ customer_code.map((customer_code) => {
 	}
 	if (billing_data) {
 		billing_data.feed.entry.map((entry) => {
-			if (entry) {	// 登録時に不具合によりnullで登録されることがある
+			if (entry && entry.billing_data&&entry.billing_data.shipment_class) {	// 登録時に不具合によりnullで登録されることがある
 				const shipment_class = entry.billing_data.shipment_class === '0' ? '出荷' : '集荷'
 				const record = ['"' + entry.billing_data.customer_code + '"', entry.billing_data.shipment_service_service_name, shipment_class, entry.billing_data.shipping_date, entry.billing_data.tracking_number, entry.billing_data.size, entry.billing_data.zone_name, entry.billing_data.prefecture, entry.billing_data.quantity, entry.billing_data.unit_price, entry.billing_data.delivery_charge]
 				body.push(record)
 			}	
 		}
-		)
+		)		
 	}
 })
 
