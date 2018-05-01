@@ -80,7 +80,7 @@ const getBasicCondition = (_basicCondition) => {
 		</tr>
 	)
 	_basicCondition.map((basic_condition) => {
-		if (basic_condition.condition) {
+		if (basic_condition&&basic_condition.condition) {
 			basic_condition.condition.map((condition, idx) => {
 						
 				const length = basic_condition.condition.length
@@ -445,9 +445,9 @@ const getRemarks = () => {
 }
 
 const quotationTitlePage = (_data) => {
-	const basic = _data.basic_condition ? _data.basic_condition : ''
-	const item = _data.item ? _data.item : ''
-	const remarks = _data.remarks ? _data.remarks : ''
+	const basic = _data&&_data.basic_condition ? _data.basic_condition : ''
+	const item = _data&&_data.item ? _data.item : ''
+	const remarks = _data&&_data.remarks ? _data.remarks : ''
 	let quotation_title = (
 		<div className="_page" id={'_page-' + '1'} style={pdfstyles._page}>
 			<table cols="10" style={pdfstyles.widths}>
@@ -634,19 +634,19 @@ const getBasicLimit = (basic_condition) => {
 }
 
 const checkItemLimit = (_itemDetails,_lmax) =>{
-	if (_itemDetails.item_name.length > _lmax * 21) {
+	if (_itemDetails.item_name&&(_itemDetails.item_name.length > _lmax * 21)) {
 		_itemDetails.item_name = _itemDetails.item_name.slice(0,_lmax*21)
 	}
-	if (_itemDetails.unit_name.length > _lmax * 21) {
+	if (_itemDetails.unit_name&&(_itemDetails.unit_name.length > _lmax * 21)) {
 		_itemDetails.unit_name = _itemDetails.unit_name.slice(0,_lmax * 21)
 	}
-	if (_itemDetails.unit.length > _lmax * 8) {
+	if (_itemDetails.unit&&(_itemDetails.unit.length > _lmax * 8)) {
 		_itemDetails.unit = _itemDetails.unit.slice(0,_lmax * 8)
 	}
-	if (_itemDetails.unit_price.length > _lmax * 12) {
+	if (_itemDetails.unit_price&&(_itemDetails.unit_price.length > _lmax * 12)) {
 		_itemDetails.unit_price= _itemDetails.unit_price.slice(0,_lmax * 12)
 	}
-	if (_itemDetails.remarks.length > _lmax * 34) {
+	if (_itemDetails.remarks&&(_itemDetails.remarks.length > _lmax * 34)) {
 		_itemDetails.remarks = _itemDetails.remarks.slice(0,_lmax * 34)
 	}
 
@@ -788,7 +788,7 @@ const element = () => {
 	let dataList = []
 	let page = -1
 
-	if (entry.basic_condition) {
+	if (entry&&entry.basic_condition) {
 		const basic_array = getBasicLimit(entry.basic_condition)
 		//basic_arrayの数だけ行う
 		if (basic_array.length) {
@@ -802,6 +802,7 @@ const element = () => {
 				dataList[page].basic_condition = _basic
 			})
 		}
+		
 	}
 
 	if (sortItem) {
@@ -810,7 +811,7 @@ const element = () => {
 			item_max_size = 32
 		}
 		//今のページに基本条件がある？
-		if (dataList[page].basic_condition) {
+		if (dataList[page]&&dataList[page].basic_condition) {
 			let basicLength = 0
 			for (let i = 0; i < dataList[page].basic_condition.length; i++) {
 				const resultLength = getBasicLine(dataList[page].basic_condition[i])
@@ -862,6 +863,7 @@ const element = () => {
 				page++
 			})
 		}
+		
 	}
 	if (dataList) {
 		quotation.push(quotationTitlePage(dataList[0]))
