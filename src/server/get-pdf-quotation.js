@@ -802,7 +802,10 @@ const element = () => {
 				dataList[page].basic_condition = _basic
 			})
 		}
-		
+	}
+
+	if (page < 0) {
+		page++
 	}
 
 	if (sortItem) {
@@ -830,12 +833,14 @@ const element = () => {
 						item: null
 					}
 				}
+
 				dataList[page].item = _item
 				page++
 			})
 		}
 		page--
 	}
+
 	if (entry.remarks) {
 		let remarks_max_size = 50
 		if (page === 0) {
