@@ -127,8 +127,10 @@ const getSubTotal = (_allItem) => {
 		return(noTaxList[0].amount)
 	}else{
 		const noTaxTotal = noTaxList.reduce((prev, current) => {
-			prev.amount = prev.amount.replace(/,/g,'')
-			current.amount = current.amount.replace(/,/g,'')
+			prev.amount = prev.amount.replace(/,/g, '')
+			prev.amount = Math.round(prev.amount)
+			current.amount = current.amount.replace(/,/g, '')
+			current.amount = Math.round(current.amount)
 			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
 		})
 		return(noTaxTotal.amount)
@@ -151,7 +153,9 @@ const getTaxTotal = (_allItem) => {
 	}else{
 		const TaxTotal = TaxList.reduce((prev, current) => {
 			prev.amount = prev.amount.replace(/,/g, '')
+			prev.amount = Math.round(prev.amount)
 			current.amount = current.amount.replace(/,/g, '')
+			current.amount = Math.round(current.amount)
 			return { 'amount': '' + (Number(prev.amount) + Number(current.amount)) }
 		})
 		return(TaxTotal.amount)
