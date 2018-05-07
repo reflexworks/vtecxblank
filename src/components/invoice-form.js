@@ -194,7 +194,8 @@ export default class InvoiceForm extends React.Component {
 						const category = item_details.category
 						const item_name = item_details.item_name
 						const unit = item_details.unit
-
+						//四捨五入
+						item_details.amount = Math.round(item_details.amount)
 						// カンマ差し込み処理
 						item_details.quantity = addFigure(item_details.quantity)
 						item_details.unit_price = addFigure(item_details.unit_price)
@@ -822,9 +823,7 @@ export default class InvoiceForm extends React.Component {
 
 			//数量,単価を変更したら金額を変えて、小計,合計請求金額,消費税も変える
 			if (_celindex === 'quantity' || _celindex === 'unit_price') {
-				
-				const isNumber = parseInt(this.item_details[list][_rowindex].unit_price) ? true : false
-
+				const isNumber = parseFloat(this.item_details[list][_rowindex].unit_price) ? true : false
 				if (isNumber) {
 					let unit_price
 					let isMinus = false
@@ -838,11 +837,11 @@ export default class InvoiceForm extends React.Component {
 					}
 
 					unit_price = isMinus ? unit_price.replace('-', '') : unit_price
-					unit_price = parseInt(delFigure(unit_price))
+					unit_price = parseFloat(delFigure(unit_price))
 
 					const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
-
-					const amount = quantity * unit_price
+					const amount = Math.round(quantity * unit_price)
+					
 					this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
 					
 					//税込なら消費税を足す
@@ -1404,12 +1403,6 @@ export default class InvoiceForm extends React.Component {
 
 							<PanelGroup defaultActiveKey="1" className="invoice-panel">
 								
-								<Button bsSize="sm" style={{width:'130px'}} >
-									<Glyphicon glyph="download" />CSVダウンロード
-								</Button>
-
-								<br />
-								<br />
 								<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 									<CommonTable
 										data={this.monthly}
