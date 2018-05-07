@@ -77,12 +77,6 @@ class LoginForm extends React.Component {
 							</Col>
 						</FormGroup>
 
-						<FormGroup>
-							<Col sm={12}>
-								<a href="forgot_password.html">パスワードを忘れた場合</a>
-							</Col>
-						</FormGroup>
-
 						{ this.state.requiredCaptcha &&
 								<FormGroup>
 									<Col sm={12}>
@@ -94,7 +88,7 @@ class LoginForm extends React.Component {
 									</Col>
 								</FormGroup>
 						}
-
+						
 						<FormGroup>
 							<Col sm={12}>
 								<Button type="submit" className="btn btn-lg login_form__btn--submit">
@@ -113,11 +107,6 @@ class LoginForm extends React.Component {
 								</FormGroup>
 						}
 
-						<FormGroup>
-							<Col sm={12}>
-								<div>初めて利用される方は<a href="signup.html">新規登録</a>から</div>
-							</Col>
-						</FormGroup>
 					</Form>
 				</div>
 			</div>
