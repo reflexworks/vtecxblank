@@ -765,12 +765,19 @@ const sortArray = (_array) => {
 		return self.indexOf(x) === i
 	})
 	let result = []
+
 	item_nameList.map((item_nameList) => {
-		const item_details_ofName = _array.filter((_itemDetails) => {
+		let item_details_ofName = _array.filter((_itemDetails) => {
 			return _itemDetails.item_name === item_nameList
 		})
+
+		item_details_ofName = item_details_ofName.sort(function (a, b) {
+			return (a.unit_name >= b.unit_name) ? 1 : -1
+		})
+
 		result = result.concat(item_details_ofName)
 	})
+
 	return result
 }
 
@@ -808,6 +815,7 @@ const element = () => {
 		page++
 	}
 
+ 
 	if (sortItem) {
 		let item_max_size = 50
 		if (page === 0) {
