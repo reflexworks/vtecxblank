@@ -181,6 +181,7 @@ internal_work
  remarks
  special_unit_price
  comment
+ working_yearmonth_desc(desc)
 shipment_service
  code 
  name  
@@ -251,9 +252,9 @@ staff.staff_email:/staff
 billto.billto_name:/billto
 customer.customer_name:/customer
 warehouse.warehouse_name:/warehouse
-internal_work.working_yearmonth:/internal_work
 invoice.invoice_yearmonth:/invoice
 quotation.quotation_code_desc:/quotation
+internal_work.working_yearmonth_desc:/internal_work
 </rights>
 </entry>
 </feed>
