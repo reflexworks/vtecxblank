@@ -1272,6 +1272,7 @@ export default class InvoiceForm extends React.Component {
 						placeholder="請求番号"
 						value={this.entry.invoice.invoice_code + ' - ' + this.entry.invoice.invoice_code_sub}
 						readonly
+						size='sm'
 					/>
 				}
 				{this.entry.invoice.invoice_code &&
@@ -1281,6 +1282,7 @@ export default class InvoiceForm extends React.Component {
 						placeholder="請求番号"
 						value={this.entry.invoice.issue_status === '0' ? '未発行' : '発行済'}
 						readonly
+						size='sm'
 					/>
 				}
 				{this.entry.invoice.invoice_code &&
@@ -1932,6 +1934,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.sub_total}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br/>
 								<br/>
@@ -1941,6 +1944,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.consumption_tax}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br />
 								<br />		
@@ -1950,6 +1954,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.ems_total}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br/>
 								<br/>
@@ -1959,10 +1964,11 @@ export default class InvoiceForm extends React.Component {
 									value={this.total_amount}
 									readonly='true'
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br />
 								<br />
-
+							
 							</PanelGroup>
 						}
 
