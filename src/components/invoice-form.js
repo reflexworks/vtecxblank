@@ -381,6 +381,7 @@ export default class InvoiceForm extends React.Component {
 				const key = shipment_service.shipment_service.code
 				cashData[key] = shipment_service.shipment_service.service_name			
 			})
+
 			axios({
 				url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 				method: 'get',
@@ -439,7 +440,6 @@ export default class InvoiceForm extends React.Component {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			}).then((response) => {
-
 				if (response.status !== 204) {
 					this.collectingData = response.data.feed.entry[0]
 					this.collectingData.billing_compare.map((billing_compare) => {
@@ -892,20 +892,12 @@ export default class InvoiceForm extends React.Component {
 
 			allItem.map((_obj) => {
 				const amount = _obj.amount
-				if (amount) {
-					const isMinus = String(amount)[0] === '-'
-					const calculation = (_value, _total) => {
-						if (isMinus) {
-							return parseInt(_value) - _total
-						} else {
-							return parseInt(_value) + _total
-						}
-					}
+				if (amount) {				
 					const value = delFigure(_obj.amount)
 					if (_obj.category === 'ems') {
-						ems_total = calculation(value, ems_total)
+						ems_total = (Number(value) + Number(ems_total))
 					} else {
-						sub_total = calculation(value, sub_total)
+						sub_total = (Number(value) + Number(sub_total))
 					}
 				}
 			})
@@ -918,9 +910,12 @@ export default class InvoiceForm extends React.Component {
 		this.consumption_tax = addFigure(consumption_tax)
 		// EMS・立替金など
 		this.ems_total = addFigure(ems_total)
+		if (Number(ems_total)<0) {
+			this.ems_total = String('-' + this.ems_total)
+		}
 		// 合計請求金額
 		this.total_amount = addFigure(sub_total + consumption_tax + ems_total)
-
+		
 		this.forceUpdate()
 
 	}
