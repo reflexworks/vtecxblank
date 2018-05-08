@@ -1217,7 +1217,7 @@ h3.title {
 }
 .invoice-total_amount{
   float: right;
-  width: 350px;
+  width: 330px;
 }
 .invoice-total_amount > .form-group{
   width: 100%;

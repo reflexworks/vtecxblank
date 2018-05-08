@@ -380,6 +380,7 @@ export default class CustomerForm extends React.Component {
 	 */
 	changeStaff(_data, _key) {
 		this.sales_staff = null
+		this.working_staff = null
 		
 		let isDuplicate = false
 		if (!this.entry.customer[_key]) this.entry.customer[_key] = []
@@ -395,7 +396,6 @@ export default class CustomerForm extends React.Component {
 				staff_email: _data.data.staff.staff_email
 			})
 		}
-
 		this.forceUpdate()
 	}
 
@@ -660,7 +660,8 @@ export default class CustomerForm extends React.Component {
 							name=""
 							value={this.working_staff}
 							options={this.staffList}
-							add={() => this.setState({ showStaffAddModal: true })}
+							//add={() => this.setState({ showStaffAddModal: true })}
+							add={() => this.addStaff('working_staff')}
 							onChange={(data) => this.changeStaff(data, 'working_staff')}
 						/>
 						{ (this.entry.customer.working_staff && this.entry.customer.working_staff.length > 0) && 
