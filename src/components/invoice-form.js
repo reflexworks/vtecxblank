@@ -892,12 +892,21 @@ export default class InvoiceForm extends React.Component {
 
 			allItem.map((_obj) => {
 				const amount = _obj.amount
-				if (amount) {				
+				if (amount) {
+					const isMinus = String(amount)[0] === '-'
+					const calculation = (_value, _total) => {
+
+						if (isMinus) {
+							return _total - parseInt(_value) 
+						} else {
+							return parseInt(_value) + _total
+						}
+					}
 					const value = delFigure(_obj.amount)
 					if (_obj.category === 'ems') {
-						ems_total = (Number(value) + Number(ems_total))
+						ems_total = calculation(value, ems_total)
 					} else {
-						sub_total = (Number(value) + Number(sub_total))
+						sub_total = calculation(value, sub_total)
 					}
 				}
 			})
@@ -914,7 +923,9 @@ export default class InvoiceForm extends React.Component {
 			this.ems_total = String('-' + this.ems_total)
 		}
 		// 合計請求金額
+
 		this.total_amount = addFigure(sub_total + consumption_tax + ems_total)
+
 		
 		this.forceUpdate()
 
