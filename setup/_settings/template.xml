@@ -130,6 +130,7 @@ quotation
  quotation_code_sub
  quotation_date
  status
+ quotation_code_desc(desc)
 invoice
  invoice_code
  quotation_code
@@ -250,6 +251,9 @@ staff.staff_email:/staff
 billto.billto_name:/billto
 customer.customer_name:/customer
 warehouse.warehouse_name:/warehouse
+internal_work.working_yearmonth:/internal_work
+invoice.invoice_yearmonth:/invoice
+quotation.quotation_code_desc:/quotation
 </rights>
 </entry>
 </feed>
