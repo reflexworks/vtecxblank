@@ -1045,7 +1045,7 @@ const element = () => {
 	//締日用
 	const billto_data = vtecxapi.getEntry('/billto/' + invoice_entry.billto.billto_code)
 	invoice_entry.billto = billto_data.feed.entry[0].billto
-	const titleRecordLimit = 28
+	const titleRecordLimit = 25
 	const addRecordLimit = 40
 	const customerLimit = 20
 	let customerCount = 0
