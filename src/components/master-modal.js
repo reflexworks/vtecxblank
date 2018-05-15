@@ -157,6 +157,11 @@ export class StaffAddModal extends React.Component {
 		this.setState({isShow: newProps.isShow})
 	}
 
+	addStaff(_data) {
+		//モーダルのフォームをリセットしてから登録。
+		this.entry.staff = {}
+		this.props.add(_data)	
+	}
 	close() {
 		this.props.close()
 	}
@@ -168,7 +173,7 @@ export class StaffAddModal extends React.Component {
 				closeBtn={() => this.close()} size="lg"
 				addAxiosBtn={{
 					url: this.url,
-					callback: (data) => this.props.add(data)
+					callback: (data) => this.addStaff(data)
 				}}
 				fromName={this.formName}
 				height="410px"

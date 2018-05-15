@@ -194,7 +194,8 @@ export default class InvoiceForm extends React.Component {
 						const category = item_details.category
 						const item_name = item_details.item_name
 						const unit = item_details.unit
-
+						//四捨五入
+						item_details.amount = Math.round(item_details.amount)
 						// カンマ差し込み処理
 						item_details.quantity = addFigure(item_details.quantity)
 						item_details.unit_price = addFigure(item_details.unit_price)
@@ -380,6 +381,7 @@ export default class InvoiceForm extends React.Component {
 				const key = shipment_service.shipment_service.code
 				cashData[key] = shipment_service.shipment_service.service_name			
 			})
+
 			axios({
 				url:'/s/billingcompare?shipping_yearmonth=' + _workingYearmonth + '&customer_code=' + _customerCode + '&quotation_code=' + _quotationCode + '&shipment_class=' + 0,
 				method: 'get',
@@ -438,7 +440,6 @@ export default class InvoiceForm extends React.Component {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
 			}).then((response) => {
-
 				if (response.status !== 204) {
 					this.collectingData = response.data.feed.entry[0]
 					this.collectingData.billing_compare.map((billing_compare) => {
@@ -822,9 +823,7 @@ export default class InvoiceForm extends React.Component {
 
 			//数量,単価を変更したら金額を変えて、小計,合計請求金額,消費税も変える
 			if (_celindex === 'quantity' || _celindex === 'unit_price') {
-				
-				const isNumber = parseInt(this.item_details[list][_rowindex].unit_price) ? true : false
-
+				const isNumber = parseFloat(this.item_details[list][_rowindex].unit_price) ? true : false
 				if (isNumber) {
 					let unit_price
 					let isMinus = false
@@ -838,11 +837,11 @@ export default class InvoiceForm extends React.Component {
 					}
 
 					unit_price = isMinus ? unit_price.replace('-', '') : unit_price
-					unit_price = parseInt(delFigure(unit_price))
+					unit_price = parseFloat(delFigure(unit_price))
 
 					const quantity = parseInt(delFigure(this.item_details[list][_rowindex].quantity))
-
-					const amount = quantity * unit_price
+					const amount = Math.round(quantity * unit_price)
+					
 					this.item_details[list][_rowindex].amount = amount || amount === 0 ? amount : ''
 					
 					//税込なら消費税を足す
@@ -896,8 +895,9 @@ export default class InvoiceForm extends React.Component {
 				if (amount) {
 					const isMinus = String(amount)[0] === '-'
 					const calculation = (_value, _total) => {
+
 						if (isMinus) {
-							return parseInt(_value) - _total
+							return _total - parseInt(_value) 
 						} else {
 							return parseInt(_value) + _total
 						}
@@ -919,9 +919,14 @@ export default class InvoiceForm extends React.Component {
 		this.consumption_tax = addFigure(consumption_tax)
 		// EMS・立替金など
 		this.ems_total = addFigure(ems_total)
+		if (Number(ems_total)<0) {
+			this.ems_total = String('-' + this.ems_total)
+		}
 		// 合計請求金額
+
 		this.total_amount = addFigure(sub_total + consumption_tax + ems_total)
 
+		
 		this.forceUpdate()
 
 	}
@@ -1273,6 +1278,7 @@ export default class InvoiceForm extends React.Component {
 						placeholder="請求番号"
 						value={this.entry.invoice.invoice_code + ' - ' + this.entry.invoice.invoice_code_sub}
 						readonly
+						size='sm'
 					/>
 				}
 				{this.entry.invoice.invoice_code &&
@@ -1282,6 +1288,7 @@ export default class InvoiceForm extends React.Component {
 						placeholder="請求番号"
 						value={this.entry.invoice.issue_status === '0' ? '未発行' : '発行済'}
 						readonly
+						size='sm'
 					/>
 				}
 				{this.entry.invoice.invoice_code &&
@@ -1404,12 +1411,6 @@ export default class InvoiceForm extends React.Component {
 
 							<PanelGroup defaultActiveKey="1" className="invoice-panel">
 								
-								<Button bsSize="sm" style={{width:'130px'}} >
-									<Glyphicon glyph="download" />CSVダウンロード
-								</Button>
-
-								<br />
-								<br />
 								<Panel collapsible header="月次情報" eventKey="1" bsStyle="info" defaultExpanded="true">
 									<CommonTable
 										data={this.monthly}
@@ -1939,6 +1940,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.sub_total}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br/>
 								<br/>
@@ -1948,6 +1950,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.consumption_tax}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br />
 								<br />		
@@ -1957,6 +1960,7 @@ export default class InvoiceForm extends React.Component {
 									value={this.ems_total}
 									readonly
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br/>
 								<br/>
@@ -1966,10 +1970,11 @@ export default class InvoiceForm extends React.Component {
 									value={this.total_amount}
 									readonly='true'
 									className="invoice-total_amount"
+									size='sm'
 								/>
 								<br />
 								<br />
-
+							
 							</PanelGroup>
 						}
 
