@@ -85,13 +85,14 @@ export default class DeliveryChargeRegistration extends React.Component {
 					}
 					const obj = CommonEntry().init(Object.assign(this.entry, response.data.feed.entry[0]))
 					this.entry = obj.feed.entry[0]
+					const postUrl = '/d/customer/' + customer_code + '/deliverycharge'
 					this.button = []
 					this.button.push(<CommonBackBtn NavItem href={this.backUrl} />)
 					if (this.entry.id) {
 						this.button.push(<CommonUpdateBtn NavItem url={this.url} entry={this.entry} callback={this.callbackUpdateButton} type="entitiy" />)
 						this.button.push(<CommonDeleteBtn NavItem entry={this.entry} callback={this.callbackDeleteButton.bind(this)} />)
 					} else {
-						this.button.push(<CommonRegistrationBtn NavItem url={this.url} callback={this.callbackRegistrationButton} type="entitiy" />)
+						this.button.push(<CommonRegistrationBtn NavItem url={postUrl} callback={this.callbackRegistrationButton} type="entitiy" />)
 					}
 					this.tempalteList = response.data.feed.entry
 
