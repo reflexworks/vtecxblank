@@ -51,13 +51,14 @@ export class CustomerShipperModal extends React.Component {
      */
 	componentWillReceiveProps(newProps) {
 		this.customer_code = newProps.customerEntry.customer_code ? newProps.customerEntry.customer_code : ''
-		this.shipper = newProps.data || {}
-		this.shipper.shipper_info = newProps.data.shipper_info || []
+		const data = JSON.parse(JSON.stringify(newProps.data))
+	
+		this.shipper = data
+		this.shipper.shipper_info = this.shipper.shipper_info || []
 		this.setState({
 			isShow: newProps.isShow,
 			type: newProps.type
 		})
-		this.forceUpdate()
 	}
 
 	getTitle() {
