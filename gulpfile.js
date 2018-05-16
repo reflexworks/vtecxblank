@@ -369,6 +369,10 @@ function gettype(file) {
 			return 'image/jpeg'
 		case 'jpg':
 			return 'image/jpeg'
+		case 'svg':
+			return 'image/svg+xml'
+		case 'svgz':
+			return 'image/svg+xml'
 		default:
 			return 'application/octet-stream'
 		}
