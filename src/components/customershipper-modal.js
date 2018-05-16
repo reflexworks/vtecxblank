@@ -28,13 +28,14 @@ export class CustomerShipperModal extends React.Component {
 			label: '集荷',
 			value: '1'
 		}]
-		this.errorMessage = ''
 		this.master = {
 			shipmentServiceList: [],
 		}
 
+		this.customer_code = ''
 		this.shipper = this.props.data || {}
 		this.shipper.shipper_info = this.shipper.shipper_info || []
+		this.errorMessage = []
 	}
 
 	/**
@@ -49,6 +50,7 @@ export class CustomerShipperModal extends React.Component {
      * @param {*} newProps
      */
 	componentWillReceiveProps(newProps) {
+		this.customer_code = newProps.customerEntry.customer_code ? newProps.customerEntry.customer_code : ''
 		this.shipper = newProps.data || {}
 		this.shipper.shipper_info = newProps.data.shipper_info || []
 		this.setState({
@@ -63,11 +65,12 @@ export class CustomerShipperModal extends React.Component {
 	}
 
 	close() {
-		this.errorMessage = ''
+		this.errorMessage = []
 		this.props.close()
 	}
 
 	check() {
+		this.errorMessage = []
 		let isOK = true
 		if (this.shipper.shipper_info) {
 			let cash = {}
@@ -75,34 +78,91 @@ export class CustomerShipperModal extends React.Component {
 			this.shipper.shipper_info.map((_value) => {
 				const key = _value.shipper_code + _value.shipment_class
 				if (cash[key]) {
-					duplicated.push('　・荷主コード: ' + _value.shipper_code + ' / 集荷出荷区分: ' + (_value.shipment_class === '0' ? '出荷' : '集荷'))
+					duplicated.push('荷主コード: ' + _value.shipper_code + ' / 集荷出荷区分: ' + (_value.shipment_class === '0' ? '出荷' : '集荷'))
 				} else {
 					cash[key] = true
 				}
 			})
 			if (duplicated.length) {
 				isOK = false
-				this.errorMessage = '以下の荷主情報が重複しています。\n\n' + duplicated.join('\n')
+				let message = []
+
+				message.push('以下の荷主情報が重複しています')
+				message.push(<br/>)
+				duplicated.map((duplicated) => {
+					message.push(duplicated)
+					message.push(<br/>)
+				})
+				this.errorMessage = message
+
 			}
 		}
-		return isOK
-	}
+		
 
-	add(_obj) {
-
-		if (this.check()) {
-			this.props.add(_obj)
-		} else {
-			alert(this.errorMessage)	
-		}	
-	}
-	
-	edit(_obj) {
-		if (this.check()) {
-			this.props.edit(_obj)
-		} else {
-			alert(this.errorMessage)
+		//１件内で荷主＆出荷集荷区分が被っているので終了
+		if (!isOK) {
+			this.forceUpdate()
+			return false
 		}
+	
+		//荷主コードの重複削除
+		const shipperCodeList = this.shipper.shipper_info.map((shipper_info) => {
+			return shipper_info.shipper_code
+		}).filter((x, i, self) => {
+			return self.indexOf(x) === i
+		})
+		const allCount = shipperCodeList.length
+		let count = 0
+		let duplicated_codes = []
+
+		const complate = (_response,_data) => {
+			count++
+			// _responseを元に荷主コードが他の顧客で使われているか判断
+			// 使用されていたらduplicated_codesに荷主コードと被っている顧客コードをpush
+			if (_response.data.feed.title) {
+				if (this.customer_code !== _response.data.feed.title) {
+					//他の顧客コードで使用されてるのでNG
+					duplicated_codes.push({ customer_code: _response.data.feed.title, shipper_code: _data })
+				}
+			}
+			if (count === allCount) {
+				// 取得完了処理
+				// duplicated_codesのlengthが1以上の場合、エラー表示
+				
+				if (duplicated_codes.length > 0) {
+					//重複してる。エラー表示の際にduplicated_codesの内容を表示する。
+					
+					let message = []
+					
+					message.push('以下の荷主コードが重複しています')
+					message.push(<br/>)
+					duplicated_codes.map((duplicated) => {
+						message.push('荷主コード:' + duplicated.shipper_code + '  顧客コード:' + duplicated.customer_code + 'で使用済み')
+						message.push(<br/>)
+					})
+
+					this.errorMessage = message
+					this.forceUpdate()
+				} else {
+					//重複してない
+					this.state.type === 'add' ? this.props.add(this.shipper) : this.props.edit(this.shipper)
+				}	
+			}
+		}
+
+		shipperCodeList.map((_data) => {
+			axios({
+				url: '/s/check-duplicated-shippercode?shipper_code=' + _data,
+				method: 'get',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			}).then((response) => {
+				complate(response, _data)
+			}).catch((error) => {
+				this.setState({ isDisabled: false, isError: error })
+			})
+		})
 	}
 
 	addList(_data) {
@@ -160,9 +220,9 @@ export class CustomerShipperModal extends React.Component {
 
 		return (
 			<CommonModal isShow={this.state.isShow} title={this.getTitle()} closeBtn={() => this.close()}
-				addBtn={this.state.type === 'add' ? (obj) => this.add(obj) : false}
-				editBtn={this.state.type === 'edit' ? (obj) => this.edit(obj) : false}
-				height="400px"
+						 addBtn={this.state.type === 'add' ? () => this.check() : false}
+					 	 editBtn={this.state.type === 'edit' ? () => this.check() : false}
+						 height="400px"
 			>
 				<Form name="CustomerShipperModal" horizontal>
 					<CommonFilterBox
@@ -183,17 +243,18 @@ export class CustomerShipperModal extends React.Component {
 						/>
 					}	
 					
-					{/*this.errorMessage &&
-						<div style={{
-							'padding-left': '100px',
-							'text-decoration': 'underline',
-							'color':'#FF0000'
-						}}>
-							<tr>
-								<td >{this.errorMessage}</td>
-							</tr>
-						</div>
-					*/}
+					{this.errorMessage &&
+							<div style={{
+								'padding-left': '100px',
+								'text-decoration': 'underline',
+								'color':'#FF0000'
+							}}>
+								<tr>
+									<td >{this.errorMessage}</td>
+								</tr>
+							</div>
+					}
+
 					<CommonTable
 						controlLabel="荷主情報"
 						name="shipper_info"

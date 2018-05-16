@@ -682,15 +682,6 @@ export default class CustomerForm extends React.Component {
 					
 					<Panel collapsible header="配送業者別荷主コード" eventKey="4" bsStyle="info" defaultExpanded={true}>
 							
-						<CustomerShipperModal
-							isShow={this.modal.customer.shipper.visible}
-							close={() => this.closeModal()}
-							add={(obj) => this.addList(obj)}
-							edit={(obj) => this.updateList(obj)}
-							data={this.modal.customer.shipper.data}
-							type={this.modal.customer.shipper.type}
-						/>
-						
 						<CommonTable
 							name="customer.shipper"
 							data={this.entry.customer.shipper}
@@ -738,6 +729,7 @@ export default class CustomerForm extends React.Component {
 				<BilltoEditModal customer={this.entry.customer} contact_information={this.entry.contact_information} isShow={this.state.showBilltoEditModal} close={() => this.setState({ showBilltoEditModal: false })} edit={(data) => this.setBilltoData(data, 'edit')} data={this.billto} />
 				<StaffAddModal isShow={this.state.showStaffAddModal} close={() => this.setState({ showStaffAddModal: false })} add={(data) => this.setStaffData(data, 'add')} />
 				<StaffEditModal isShow={this.state.showStaffEditModal} close={() => this.setState({ showStaffEditModal: false })} edit={(data) => this.setStaffData(data, 'edit')} data={this.staff} />
+				<CustomerShipperModal customerEntry={this.entry.customer} isShow={this.modal.customer.shipper.visible} close={() => this.closeModal()} add={(obj) => this.addList(obj)} edit={(obj) => this.updateList(obj)} data={this.modal.customer.shipper.data} type={this.modal.customer.shipper.type}/>
 				<WarehouseAddModal isShow={this.state.showWarehouseAddModal} close={() => this.setState({ showWarehouseAddModal: false })} add={(data) => this.setWarehouseData(data, 'add')} />
 				<WarehouseEditModal isShow={this.state.showWarehouseEditModal} close={() => this.setState({ showWarehouseEditModal: false })} edit={(data) => this.setWarehouseData(data, 'edit')} data={this.warehouse} />
 
