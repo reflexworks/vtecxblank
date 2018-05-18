@@ -1040,15 +1040,15 @@ export default class InternalWorkForm extends React.Component {
 				|| obj.internal_work.work_type === '4'
 				|| obj.internal_work.work_type === '5') {
 				const cashData = this.quotationCash[getKey(obj.internal_work)]
-				if (!obj.internal_work.unit_price && cashData.unit_price) {
+				if (!obj.internal_work.unit_price && cashData && cashData.unit_price) {
 					obj.internal_work.unit_price = cashData.unit_price
 				}
-				if (!obj.internal_work.remarks && cashData.remarks) {
+				if (!obj.internal_work.remarks && cashData && cashData.remarks) {
 					obj.internal_work.remarks = cashData.remarks
 				}
 			} else if (obj.internal_work.work_type === '3') {
 				const cashData = this.packingCash[obj.internal_work.packing_item_code]
-				if (!obj.internal_work.special_unit_price && cashData.special_unit_price) {
+				if (!obj.internal_work.special_unit_price && cashData && cashData.special_unit_price) {
 					obj.internal_work.special_unit_price = cashData.special_unit_price
 				}
 			}
@@ -1078,15 +1078,15 @@ export default class InternalWorkForm extends React.Component {
 				|| entry.internal_work.work_type === '5') {
 				const cashData = this.quotationCash[getKey(entry.internal_work)]
 
-				if (!entry.internal_work.unit_price && cashData.unit_price) {
+				if (!entry.internal_work.unit_price && cashData && cashData.unit_price) {
 					entry.internal_work.unit_price = cashData.unit_price
 				}
-				if (!entry.internal_work.remarks && cashData.remarks) {
+				if (!entry.internal_work.remarks && cashData && cashData.remarks) {
 					entry.internal_work.remarks = cashData.remarks
 				}
 			} else if (entry.internal_work.work_type === '3') {
 				const cashData = this.packingCash[entry.internal_work.packing_item_code]
-				if (!entry.internal_work.special_unit_price && cashData.special_unit_price) {
+				if (!entry.internal_work.special_unit_price && cashData && cashData.special_unit_price) {
 					entry.internal_work.special_unit_price = cashData.special_unit_price
 				}
 			}
