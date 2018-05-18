@@ -21,7 +21,8 @@ import {
 	CommonFormGroup,
 	CommonLoginUser,
 	CommonIndicator,
-	CommonNetworkMessage
+	CommonNetworkMessage,
+	CommonRadioBtn
 } from './common'
 
 export default class InternalWorkRegistration extends React.Component {
@@ -52,6 +53,8 @@ export default class InternalWorkRegistration extends React.Component {
 			customerList: []
 		}
 		this.monthly = null
+
+		this.selectType = 'quotation'
 		this.isPost = false
 
 	}
@@ -184,42 +187,40 @@ export default class InternalWorkRegistration extends React.Component {
 		}
 	}
 
+	changeType(_data) {
+		this.selectType = _data
+	}
+
 	/**
      * 登録処理
      */
 	doPost() {
 
 		this.setState({ isDisabled: true })
+
 		axios({
-			url: '/d/',
+			url: '/s/post-internalwork?type=' + this.selectType,
 			method: 'post',
 			data: this.postData,
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then(() => {
-			axios({
-				url: '/s/post-befor-internalwork-list',
-				method: 'post',
-				data: this.postData,
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				alert('登録が完了しました。')
-				location.href = '#/InternalWorkList'
-			}).catch((_error) => {
-				this.setState({ isDisabled: false, isError: _error })
-			})
+			alert('登録が完了しました。')
+			location.href = '#/InternalWorkList'
+			this.setState({ isDisabled: false })
 		}).catch((_error) => {
-			if (_error) {
-				this.setState({ isDisabled: false, isError: _error })
+			if (this.selectType === 'befor' && _error.response && _error.response.status === 400) {
+				if (confirm('前月の庫内作業が存在しません。\n見積書の項目を庫内作業として登録します。\nよろしいでしょうか？')) {
+					this.selectType = 'quotation'
+					this.doPost()
+				} else {
+					this.setState({ isDisabled: false })
+				}
 			} else {
-				alert('サーバーエラーが発生しました。')
-				this.setState({ isDisabled: false })
+				this.setState({ isDisabled: false, isError: _error })
 			}
 		})
-
 	}
 
 	render() {
@@ -319,6 +320,18 @@ export default class InternalWorkRegistration extends React.Component {
 										}, {
 											field: 'title', title: '庫内作業作成済み', width: '200px', convert: { 'create': '作成済み', 'none': '未作成'}
 										}]}
+									/>
+									<CommonRadioBtn
+										controlLabel="引き継ぎデータ選択"
+										checked={this.selectType}
+										data={[{
+											label: '見積書',
+											value: 'quotation',
+										}, {
+											label: '前月の庫内作業',
+											value: 'befor',
+										}]}
+										onChange={(data) => this.changeType(data)}
 									/>
 								</div>
 							}
