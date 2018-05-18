@@ -74,6 +74,9 @@ export default class BillingDataUpload extends React.Component {
 		const formData = new FormData(e.currentTarget)
 
 		if (confirm('アップロードを実行します。よろしいですか？')) {
+			this.setState({
+				isDisabled: true
+			})
 			axios({
 				url: '/s/put-billing-eco',
 				method: 'post',
@@ -83,8 +86,14 @@ export default class BillingDataUpload extends React.Component {
 				data: formData
 
 			}).then(() => {
+				this.setState({
+					isDisabled: false
+				})
 				alert('アップロードに成功しました')
 			}).catch((error) => {
+				this.setState({
+					isDisabled: false
+				})
 				if (error.response) {
 					if (error.response.data.feed.title.indexOf('undefined') >= 0) {
 						alert('CSVデータが正しくありません。:' + error.response.data.feed.title)
