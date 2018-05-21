@@ -653,7 +653,7 @@ const invoiceTitle = (_customerEntry,_invoiceEntry,item,_total_amount,_subTotal,
 				{ _subTotal &&
 					getAmount(_total_amount,_subTotal,_taxation,_taxTotal)
 				}
-                
+
 				{_payee && customer_code &&
                     getPayee(_payee)
 				}
@@ -733,7 +733,7 @@ const addInvoicePage = (_customerEntry,_invoiceEntry,item,_total_amount,_subTota
 }
 
 //備考、口座、合計金額等
-const payeeAndRemarksPage =(remarks,payment_date,payee,total_amount,subTotal,taxation,taxTotal,) => {
+const payeeAndRemarksPage =(remarks,payment_date,payee,total_amount,subTotal,taxation,taxTotal) => {
 	const invoice_1 = (
 		<div className="_page" id={'page-' + pageNumber} style={pdfstyles._page}>
 			<table cols="11" style={pdfstyles.widths}>
@@ -928,13 +928,6 @@ const invoiceTotal = (_invoiceCustomer,_invoiceEntry,total_amount) => {
 }
 
 const sortArray = (_array) => {
-	//明細の並び替え
-	/*let categoryList = _array.map((item_details) => {
-		return item_details.category
-	}).filter((x, i, self) => {
-		return self.indexOf(x) === i
-	})
-	*/
 	let categoryList = ['monthly','daily','period','packing_item','shipping','collecting','ems','others']
 	let result = []
 	categoryList.map((categoryList) => {
@@ -980,14 +973,16 @@ const checkItemLimit = (_itemDetails, _lmax) => {
 
 //データ内で必要な行数チェック
 const getItemLine = (_itemDetails) => {
-    
+	
 	let length = []
-	length[0] = _itemDetails.item_name ? Math.ceil(_itemDetails.item_name.length / 15) : 1
-	length[1] = _itemDetails.quantity ? Math.ceil(_itemDetails.quantity.length / 15) : 1
-	length[2] = _itemDetails.unit ? Math.ceil(_itemDetails.unit.length / 20) : 1
-	length[3] = _itemDetails.unit_price ? Math.ceil(_itemDetails.unit_price.length / 12) : 1
-	length[4] = _itemDetails.amount ? Math.ceil(_itemDetails.amount.length / 34) : 1
-	length[5] = _itemDetails.remarks ? Math.ceil(_itemDetails.remarks.length / 34) : 1
+	length[0] = _itemDetails.item_name ? Math.ceil(_itemDetails.item_name.length / 26) : 1
+	
+	length[1] = _itemDetails.quantity ? Math.ceil(_itemDetails.quantity.length / 10) : 1
+	length[2] = _itemDetails.unit ? Math.ceil(_itemDetails.unit.length / 12) : 1
+	length[3] = _itemDetails.unit_price ? Math.ceil(_itemDetails.unit_price.length / 10) : 1
+	length[4] = _itemDetails.amount ? Math.ceil(String(_itemDetails.amount).length / 18) : 1
+	length[5] = _itemDetails.remarks ? Math.ceil(_itemDetails.remarks.length / 26) : 1
+	
 	//最大値を返す
 	let result = Math.max.apply(null, length)
 	return result
@@ -1006,7 +1001,8 @@ const getRecordLimit = (_array, _startIndex, _lmax) => {
 		} else {
 			if (i > 0) {
 				if (_array[i].category !== _array[i - 1].category) {
-					length += 2
+					length += 4
+					//空白行、カテゴリ、ヘッダ
 					//新しいカテゴリに入って限界数を超えてしまう場合は１つ前で打ち切る
 					if (length > _lmax) {
 						result = i - 1
@@ -1028,6 +1024,44 @@ const getRecordLimit = (_array, _startIndex, _lmax) => {
 	return result
 }
 
+
+const getPayeeLine = (_payeeList) => {
+
+	let payeeLength = 0
+	_payeeList.map((_payee) => {
+		let length = []
+		//銀行名、店舗名、口座種類、口座番号、口座名
+		length[0] = _payee.bank_info ? Math.ceil(_payee.bank_info.length / 18) : 1
+		length[1] = _payee.branch_office ? Math.ceil(_payee.branch_office.length / 18) : 1
+		length[2] = _payee.account_type ? Math.ceil(_payee.account_type.length / 6) : 1
+		length[3] = _payee.account_number ? Math.ceil(_payee.account_number.length / 16) : 1
+		length[4] = _payee.account_name ? Math.ceil(_payee.account_name.length / 40) : 1
+		const result = Math.max.apply(null, length)
+		payeeLength += result
+	})
+	return payeeLength
+}
+
+const getRemarksLine = (_remarksList) => {
+
+	let remarksLength = 0
+	_remarksList.map((_remarks) => {
+		const result = _remarks.content ? Math.ceil(_remarks.content.length / 50) : 1
+		remarksLength += result
+	})
+	return remarksLength
+}
+
+const checkCategoryCount = (_item) => {
+	//明細の並び替え
+	let categoryList = _item.map((item_details) => {
+		return item_details.category
+	}).filter((x, i, self) => {
+		return self.indexOf(x) === i
+	})
+	return categoryList.length
+}
+
 let pageData = {
 	pageList: {
 		page:[]
@@ -1039,14 +1073,15 @@ let pageData = {
 const element = () => {
 	let invoice_entry = getInvoice()
 	const payee = invoice_entry.billfrom.payee
-	const payeeLine = payee.length
-	
+	const payeeLine = getPayeeLine(payee)
 	const payment_date = invoice_entry.invoice.payment_date
+
 	//締日用
 	const billto_data = vtecxapi.getEntry('/billto/' + invoice_entry.billto.billto_code)
 	invoice_entry.billto = billto_data.feed.entry[0].billto
-	const titleRecordLimit = 25
-	const addRecordLimit = 40
+	const titleRecordLimit = 30
+	const addRecordLimit = 45
+	//１ページ内に表示する顧客数
 	const customerLimit = 20
 	let customerCount = 0
 	let customer_entry
@@ -1062,7 +1097,6 @@ const element = () => {
 	
 	let invoice = []
 	let totalBillto = []
-	
 	customer_entry.feed.entry.map((customer_entry) => {
 		cashData = {}
 		//サービス明細取得
@@ -1080,7 +1114,8 @@ const element = () => {
 			item = []
 		}
 		let remarks = invoice_details.remarks ? invoice_details.remarks : ''
-		const remarksLine = (remarks.length + 1)
+		const remarksLine = remarks ? getRemarksLine(remarks) + 1 : 0
+		const payee_remarksLine = payeeLine + remarksLine
 		item = sortArray(item)
 		//税抜合計値 
 		const subTotal = item ? getSubTotal(item):'0'
@@ -1099,7 +1134,7 @@ const element = () => {
 		totalBillto.push(total_customer)
 		const titleItemIndex = getRecordLimit(item, 0, titleRecordLimit)
 		const title_item = titleItemIndex ? item.slice(0, titleItemIndex) : ''
-		
+
 		if (titleItemIndex < item.length) {
 			//追加ページが必要
 			invoice.push(invoiceTitle(customer_entry, invoice_entry, title_item, total_amount))
@@ -1118,11 +1153,15 @@ const element = () => {
 				startIndex = endIndex
 			}//for
 			
+
+			//明細＋小計＋口座＋支払い日＋備考
+			//明細＋小計＆口座＋支払い日＋備考
+			//明細＆小計＋口座＋支払い日＋備考
 			if (addItemStart === addItemLast) {
 				//追加は１枚で済む
 				let addItem = addItemList[addItemStart]
-				const payee_remarksLine = payeeLine + remarksLine
-				const remainingLine = addRecordLimit - addItem.length
+				const addItem_length = addItem.length + ((checkCategoryCount(addItem)) * 3)
+				const remainingLine = addRecordLimit - addItem_length
 				if (customer_code) {
 					if ((payee_remarksLine + 9) <= remainingLine) {
 						//小計も口座も備考も全て入る
@@ -1172,27 +1211,15 @@ const element = () => {
 				//複数枚追加する必要がある
 				for (let i = addItemStart; i < (addItemLast + 1); ++i) {
 					if (i === addItemLast) {
-						//追加明細ラストページ
 						const addItem = addItemList[i]
-						const payee_remarksLine = payeeLine + remarksLine
-						const remainingLine = addRecordLimit - addItem.length
+						const addItem_length = addItem.length + ((checkCategoryCount(addItem)) * 3)
+						const remainingLine = addRecordLimit - addItem_length
+						//追加明細ラストページ
+						
 						if (customer_code) {
 							if ((payee_remarksLine + 9) <= remainingLine) {
 								//小計も口座も備考も全て入る
 								invoice.push(addInvoicePage(customer_entry, invoice_entry, addItem, total_amount, subTotal, taxation, taxTotal, payee, payment_date, remarks))
-							} else if ((8 + payeeLine) <= remainingLine) {
-								//6 + payeeLen+1 + 1	
-								//小計金額と口座と支払日を入れる(備考だけ次ページ) 備考が無ければtitleで終了
-								invoice.push(addInvoicePage(customer_entry, invoice_entry, addItem, total_amount, subTotal, taxation, taxTotal, payee, payment_date))
-								if (remarks) {
-									if (remarks[0].content) {
-										invoice.push(payeeAndRemarksPage(remarks))
-									}
-								}	
-							} else if ((6 + payeeLine) <= remainingLine) {
-								//小計金額と口座情報を入れる(支払日と備考は次ページ)
-								invoice.push(addInvoicePage(customer_entry, invoice_entry, addItem, total_amount, subTotal, taxation, taxTotal, payee))
-								invoice.push(payeeAndRemarksPage(remarks, payment_date))
 							} else if (5 <= remainingLine) {
 								//小計金額だけ入れる(口座と支払日と備考は次ページ)
 								invoice.push(addInvoicePage(customer_entry, invoice_entry, addItem, total_amount, subTotal, taxation, taxTotal))
@@ -1227,24 +1254,14 @@ const element = () => {
 				}
 			}
 		} else {
+
 			//最初のページで明細がすべて収まる場合はここに来る
-			const payee_remarksLine = payeeLine + remarksLine
-			const remainingLine = titleRecordLimit - title_item.length
+			const title_item_length = title_item.length + ((checkCategoryCount(title_item)) * 3)
+			const remainingLine = titleRecordLimit - title_item_length
 			if (customer_code) {
 				if ((payee_remarksLine + 9) <= remainingLine) {
 					//小計も口座も備考も全て入る
 					invoice.push(invoiceTitle(customer_entry, invoice_entry, title_item, total_amount, subTotal, taxation, taxTotal, payee, payment_date, remarks))
-				} else if ((8 + payeeLine) <= remainingLine) {
-					//6 + payeeLen+1 + 1	
-					//小計金額と口座と支払日を入れる(備考だけ次ページ) 備考が無ければtitleで終了
-					invoice.push(invoiceTitle(customer_entry, invoice_entry, title_item, total_amount, subTotal, taxation, taxTotal, payee, payment_date))
-					if (remarks) {
-						invoice.push(payeeAndRemarksPage(remarks))
-					}
-				} else if ((6 + payeeLine) <= remainingLine) {
-					//小計金額と口座情報を入れる(支払日と備考は次ページ)
-					invoice.push(invoiceTitle(customer_entry, invoice_entry, title_item, total_amount, subTotal, taxation, taxTotal, payee))
-					invoice.push(payeeAndRemarksPage(remarks, payment_date))
 				} else if (5 <= remainingLine) {
 					//小計金額だけ入れる(口座と支払日と備考は次ページ)
 					invoice.push(invoiceTitle(customer_entry, invoice_entry, title_item, total_amount, subTotal, taxation, taxTotal))

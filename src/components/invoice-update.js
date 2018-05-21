@@ -47,7 +47,8 @@ export default class InvoiceUpdate extends React.Component {
 
 		// 初期値の設定
 		this.entry = {}
-
+		// 請求元があるかどうかでプレビューまたはダウンロード実行の判定を行う
+		this.isBillfrom = false
 	}
 
 	/**
@@ -71,6 +72,9 @@ export default class InvoiceUpdate extends React.Component {
 				this.setState({ isDisabled: false ,isError: response })
 			} else {
 				this.entry = response.data.feed.entry[0]
+				if (this.entry.billfrom.billfrom_code) {
+					this.isBillfrom = true
+				}
 				this.issue = this.entry.invoice.issue_status
 				this.setState({ isDisabled: false })
 			}
@@ -197,7 +201,11 @@ export default class InvoiceUpdate extends React.Component {
 			}
 			if (_isPreview) {
 				if (confirm('プレビューの内容は一時保存されたデータを元に作成されます。\n（一時保存しないとデータが反映されません。）\nよろしいでしょうか？')) {
-					print()
+					if (this.isBillfrom) {
+						print()
+					} else {
+						alert('請求元が選択されていません。\nもしくは請求元を選択してから一時保存がされていません。\n\n請求元を選択後に一時保存してもう一度実行してください。')
+					}
 				}
 			} else {
 				print()
