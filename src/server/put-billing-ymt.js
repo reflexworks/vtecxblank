@@ -11,11 +11,13 @@ const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 //vtecxapi.log(JSON.stringify(result))
 const customer_all = vtecxapi.getFeed('/customer',true)
 const result = { 'feed': { 'entry': [] } }
+const error = []
 
-billingcsv.feed.entry.map((entry) => {
+for (let j = 0; j < billingcsv.feed.entry.length; j++) {
 
 	try {
 		let billing_data
+		const entry = billingcsv.feed.entry[j]
 		if (entry.billing.delivery_class1 === '宅急便発払') {
 			billing_data = getBillingDataOfHatsu(entry,entry.billing.delivery_class1)			
 			result.feed.entry.push(billing_data)
@@ -28,15 +30,21 @@ billingcsv.feed.entry.map((entry) => {
 		}
 
 	} catch (e) {
-		vtecxapi.sendMessage(400, e)
+		error.push(e)
+		if (error.length>19) break
 	}
 
-})
-if (result.feed.entry.length > 0) {
-	// datastoreを更新
-	vtecxapi.put(result,true)	
+}
+
+if (error.length > 0) {
+	vtecxapi.sendMessage(400, error.join('\n'))
 } else {
-	vtecxapi.sendMessage(400, '更新データはありませんでした')	
+	if (result.feed.entry.length > 0) {
+		// datastoreを更新
+		vtecxapi.put(result,true)	
+	} else {
+		vtecxapi.sendMessage(400, '更新データはありませんでした')	
+	}	
 }
 
 

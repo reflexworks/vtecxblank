@@ -19,21 +19,22 @@ for (let j = 0; j < billingcsv.feed.entry.length; j++) {
 		const billing_data = getBillingData(billingcsv.feed.entry[j])
 		result.feed.entry.push(billing_data)				
 	} catch (e) {
-		error.push[e]
-		break
+		error.push(e)
+		if (error.length>19) break
 	}
 }
 
 if (error.length > 0) {
-	vtecxapi.sendMessage(400, error.join())
+	vtecxapi.sendMessage(400, error.join('\n'))
+} else {
+	if (result.feed.entry.length > 0) {
+		// datastoreを更新
+		vtecxapi.put(result,true)	
+	} else {
+		vtecxapi.sendMessage(400, '更新データはありませんでした')	
+	}	
 }
 
-if (result.feed.entry.length > 0) {
-	// datastoreを更新
-	vtecxapi.put(result,true)	
-} else {
-	vtecxapi.sendMessage(400, '更新データはありませんでした')	
-}
 
 function getBillingData(entry) {
 
