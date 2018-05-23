@@ -41,7 +41,7 @@ result.feed.entry.map( csventry => {
 		}
 	}	
 })
-vtecxapi.put(reqdata)
+vtecxapi.put(reqdata,true,true)
 
 
 function getBillto_code(csventry) {
@@ -68,7 +68,7 @@ function getBillto_code(csventry) {
 		reqdata.feed.entry.push(entry)
 		//		vtecxapi.log('billto='+JSON.stringify(reqdata)) 
         
-		vtecxapi.put(reqdata)
+		vtecxapi.put(reqdata,true,true)
 		return billto_code
 	}
 }

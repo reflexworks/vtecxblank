@@ -29,7 +29,7 @@ if (error.length > 0) {
 } else {
 	if (result.feed.entry.length > 0) {
 		// datastoreを更新
-		vtecxapi.put(result,true)	
+		vtecxapi.put(result,true,true,true)	
 	} else {
 		vtecxapi.sendMessage(400, '更新データはありませんでした')	
 	}	
