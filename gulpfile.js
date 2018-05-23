@@ -193,6 +193,19 @@ gulp.task('upload:content', function(done){
 	}	
 })
 
+gulp.task('upload:directory', function (done) {
+	if (argv.f) {
+		const file = 'dist/' + argv.f
+		senddirectory(file)
+		done()
+	} else {
+		recursive('dist', [createfolder], function (err, files) {
+			files.map((file) => sendcontent(file))
+			done()
+		})
+	}	
+})
+
 gulp.task('upload:images', function(done){
 	recursive('dist/img', [createfolder], function (err, files) {
 		files.map( (file) => sendcontent(file) )		
@@ -280,6 +293,10 @@ gulp.task('test', function () {
 
 function sendcontent(file) {
 	sendfile(file,'?_content',false,false)
+}
+
+function senddirectory(file) {
+	sendfile(file,'?_content',false,true)
 }
 
 function sendfile(file,iscontent,done,isdirectory) {
