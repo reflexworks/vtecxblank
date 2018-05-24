@@ -75,24 +75,25 @@ if (type === 'befor') {
 	let isbeforList = false
 	if (isbefor) {
 		const beforLink = beforData.feed.entry[0].link[0].___href
-		beforList = vtecxapi.getFeed(beforLink + '/list')
+		beforList = vtecxapi.getFeed(beforLink + '/list', true)
 		isbeforList = CommonGetFlag(beforList)
 	}
 
 	if (isbefor && isbeforList) {
 
 		let self_count = 0
+		let beforReqData = JSON.parse(JSON.stringify(reqData))
 		beforList.feed.entry.map((_list_data) => {
-			reqData.feed.entry.push({
+			beforReqData.feed.entry.push({
 				internal_work: _list_data.internal_work,
 				link: [{
-					___href: reqData.feed.entry[0].link[0].___href + '/list/befor_' + self_count,
+					___href: beforReqData.feed.entry[0].link[0].___href + '/list/befor_' + self_count,
 					___rel: 'self'
 				}]
 			})
 			self_count++
 		})
-		vtecxapi.put(reqData, true)
+		vtecxapi.put(beforReqData, true)
 	} else {
 		vtecxapi.sendError(400, 'befor no entry')
 	}
