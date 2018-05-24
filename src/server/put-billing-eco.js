@@ -7,33 +7,40 @@ const parent = 'billing'
 const skip = 0
 const encoding = 'Windows-31J'
 
-// CSV取得
-const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
 const customer_all = vtecxapi.getFeed('/customer',true)
 
 const result = { 'feed': { 'entry': [] } }
+const error = []
 
-billingcsv.feed.entry.map((entry) => {
-
+// CSV取得
+const billingcsv = vtecxapi.getCsv(header, items, parent, skip, encoding)
+for (let j = 0; j < billingcsv.feed.entry.length; j++) {
 	try {
-		const billing_data = getBillingData(entry)
-		result.feed.entry.push(billing_data)
-
+		const billing_data = getBillingData(billingcsv.feed.entry[j])
+		result.feed.entry.push(billing_data)				
 	} catch (e) {
-		vtecxapi.sendMessage(400, e)
+		error.push(e)
+		if (error.length>19) break
 	}
-})
-if (result.feed.entry.length > 0) {
-	// datastoreを更新
-	vtecxapi.put(result,true)	
-} else {
-	vtecxapi.sendMessage(400, '更新データはありませんでした')	
 }
+
+if (error.length > 0) {
+	vtecxapi.sendMessage(400, error.join('\n'))
+} else {
+	if (result.feed.entry.length > 0) {
+		// datastoreを更新
+		vtecxapi.put(result,true,true,true)	
+	} else {
+		vtecxapi.sendMessage(400, '更新データはありませんでした')	
+	}	
+}
+
 
 function getBillingData(entry) {
 
+	if (!entry.billing.shipping_address1) throw 'お届先住所1がありません'
 	const prefecture = getPrefecture(entry.billing.shipping_address1)
-	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code, entry.billing.billing_item)
+	const delivery_charge_all = getDeliverycharge(customer_all, entry.billing.shipper_code, entry.billing.billing_item,true)
 	const shipment_service_code = getShipmentServiceCode(entry.billing.billing_item)
 	delivery_charge_all.shipment_service_code = shipment_service_code
 	const charge_by_zone = getChargeByZone( delivery_charge_all,customer_all,'',prefecture,entry.billing.billing_item,entry.billing.delivery_area)
@@ -43,7 +50,6 @@ function getBillingData(entry) {
 	if (!unit_price||unit_price.length === 0) {
 		throw '配送料マスタが登録されていません。(顧客コード=' + delivery_charge_all.customer_code + ',サービスコード=' + shipment_service_code + ')'
 	}
-
 	const billing_data = {
 		billing_data: {
 			'shipment_service_code': shipment_service_code,
