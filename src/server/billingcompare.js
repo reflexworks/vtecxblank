@@ -30,8 +30,10 @@ function getCompare(shipping_yearmonth, customer_code) {
 		const billing_data = getBillingdata(shipping_yearmonth, customer_code, entry.shipment_service.code,shipment_class)
 		if (billing_data.billing_data&&billing_data.billing_data.feed.entry) {
 			const internal_work_data = getInternalworkdata(shipping_yearmonth, customer_code, quotation_code)
-			const billing_compare = getBillingCompare(internal_work_data, billing_data, shipping_yearmonth, shipment_class, entry.shipment_service.code, entry.shipment_service.name)
-			result.billing_compare.push(billing_compare)
+			if (internal_work_data) {
+				const billing_compare = getBillingCompare(internal_work_data, billing_data, shipping_yearmonth, shipment_class, entry.shipment_service.code, entry.shipment_service.name)
+				result.billing_compare.push(billing_compare)
+			}
 		}	
 	})
 	return result
