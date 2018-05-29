@@ -24,7 +24,7 @@ try {
 function getCompare(shipping_yearmonth, customer_code) {
 
 	const result = { 'billing_compare': [] }
-	const shipment_service = vtecxapi.getFeed('/shipment_service/')
+	const shipment_service = vtecxapi.getFeed('/shipment_service/',true)
 	if (!shipment_service) throw '配送業者マスタが登録されていません'
 	shipment_service.feed.entry.map((entry) => {
 		const billing_data = getBillingdata(shipping_yearmonth, customer_code, entry.shipment_service.code,shipment_class)

@@ -6,7 +6,7 @@ export function getSortShipmentServiceBody(_shipment_service_code) {
 	if (_shipment_service_code) {
 		shipment_service = vtecxapi.getEntry('/shipment_service/' + _shipment_service_code)
 	} else {
-		shipment_service = vtecxapi.getFeed('/shipment_service')
+		shipment_service = vtecxapi.getFeed('/shipment_service',true)
 	}
 
 	if (shipment_service) {

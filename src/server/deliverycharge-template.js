@@ -8,7 +8,7 @@ const service_name = vtecxapi.getQueryString('service_name')
 if (service_name) {
 	option = option + '&shipment_service.service_name=' + service_name
 }
-const shipment_service = vtecxapi.getFeed('/shipment_service' + option)
+const shipment_service = vtecxapi.getFeed('/shipment_service' + option,true)
 const isShipment = CommonGetFlag(shipment_service)
 
 if (isShipment) {

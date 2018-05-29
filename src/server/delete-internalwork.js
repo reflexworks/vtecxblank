@@ -38,7 +38,7 @@ const doDelete = () => {
 	const getEntry = () => {
 		let array = []
 		urlList.map((_url) => {
-			const deleteWorks = vtecxapi.getFeed(_url)
+			const deleteWorks = vtecxapi.getFeed(_url,true)
 			const isDeleteWorks = CommonGetFlag(deleteWorks)
 			if (isDeleteWorks) {
 				const _entry = deleteWorks.feed.entry[0]
@@ -53,7 +53,7 @@ const doDelete = () => {
 }
 
 const url = internal_work_code + '/data'
-const targetWorks = vtecxapi.getFeed(url + option)
+const targetWorks = vtecxapi.getFeed(url + option,true)
 const isTargetWorks = CommonGetFlag(targetWorks)
 if (isTargetWorks) {
 	let isDelete = true

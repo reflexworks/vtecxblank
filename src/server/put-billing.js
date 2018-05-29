@@ -9,7 +9,7 @@ let cache2 = {}
 export function getShipmentServiceCode(shipment_service_service_name) {
 	if (cache2[shipment_service_service_name]) return cache2[shipment_service_service_name]
 	if (!shipment_service_all) {
-		shipment_service_all = vtecxapi.getFeed('/shipment_service')
+		shipment_service_all = vtecxapi.getFeed('/shipment_service',true)
 		if (!shipment_service_all) throw '配送業者マスタが登録されていません'
 	}
 	const shipment_service = shipment_service_all.feed.entry.filter((entry) => { 

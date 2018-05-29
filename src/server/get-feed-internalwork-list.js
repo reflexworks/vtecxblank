@@ -29,7 +29,7 @@ temp.feed.entry.map(entry => {
 		result.feed.entry.push(data.feed.entry[0])		
 	}
 
-	const internal_work_list = vtecxapi.getFeed(key + '/list')
+	const internal_work_list = vtecxapi.getFeed(key + '/list',true)
 	if (internal_work_list) {
 		internal_work_list.feed.entry.map((entry) => {
 			entry.id = null
@@ -39,7 +39,7 @@ temp.feed.entry.map(entry => {
 			result.feed.entry.push(entry)			
 		})
 	}
-	const internal_work_data = vtecxapi.getFeed(key + '/data')
+	const internal_work_data = vtecxapi.getFeed(key + '/data',true)
 	if (internal_work_data) {
 		internal_work_data.feed.entry.map((entry) => {
 			entry.id = null

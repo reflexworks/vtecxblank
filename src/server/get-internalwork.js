@@ -3,13 +3,13 @@ import { CommonGetFlag } from './common'
 import { getSortQuotationBody } from './get-quotation-body'
 
 const uri = vtecxapi.getQueryString('code')
-let list = vtecxapi.getFeed(uri + '/list')
+let list = vtecxapi.getFeed(uri + '/list',true)
 const isList = CommonGetFlag(list)
 
-let monthly_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=4')
+let monthly_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=4',true)
 let isMonthly = CommonGetFlag(monthly_data)
 
-const period_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=5')
+const period_data = vtecxapi.getFeed(uri + '/data?internal_work.work_type=5',true)
 const isPeriod = CommonGetFlag(period_data)
 
 // 月次があり、旬次がある場合
@@ -26,7 +26,7 @@ if (isMonthly && isPeriod) {
 if (isList) {
 
 	const day = vtecxapi.getQueryString('day')
-	const data = vtecxapi.getFeed(uri + '/data?internal_work.working_day=' + day)
+	const data = (uri + '/data?internal_work.working_day=' + day,true)
 	const isData = CommonGetFlag(data)
 
 	const quotation_code = vtecxapi.getQueryString('quotation_code')

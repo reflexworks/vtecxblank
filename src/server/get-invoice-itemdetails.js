@@ -18,7 +18,7 @@ try {
 
 export function getInvoiceItemDetails(customer_code, quotation_code, working_yearmonth) {
     
-	const shipment_service = vtecxapi.getFeed('/shipment_service')
+	const shipment_service = vtecxapi.getFeed('/shipment_service',true)
 	if (!shipment_service.feed.entry) throw '配送業者マスタが登録されていません'
 
 	let result = []

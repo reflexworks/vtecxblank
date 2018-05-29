@@ -7,7 +7,7 @@ export function getInternalworkdata(working_yearmonth,customer_code,quotation_co
 	if (internal_work) {
 		const id = internal_work.feed.entry[0].id.split(',')[0]
 		//		if (internal_work.feed.entry[0].internal_work.is_completed==='0') throw '完了がなされていません'
-		const internal_work_all = vtecxapi.getFeed(id + '/data')
+		const internal_work_all = vtecxapi.getFeed(id + '/data',true)
 		return internal_work_all
 			
 	} else {
