@@ -26,7 +26,7 @@ if (isMonthly && isPeriod) {
 if (isList) {
 
 	const day = vtecxapi.getQueryString('day')
-	const data = (uri + '/data?internal_work.working_day=' + day,true)
+	const data = vtecxapi.getFeed(uri + '/data?internal_work.working_day=' + day,true)
 	const isData = CommonGetFlag(data)
 
 	const quotation_code = vtecxapi.getQueryString('quotation_code')
