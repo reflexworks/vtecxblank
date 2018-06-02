@@ -1,6 +1,6 @@
 {
-  "name": "logioffice",
-  "version": "0.0.1",
+  "name": "vtecxblank",
+  "version": "1.0.0",
   "dependencies": {
     "eslint": "^4.14.0",
     "gulp": "^3.9.1",

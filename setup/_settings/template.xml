@@ -8,253 +8,29 @@
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
 <content type="text/html">
-billto
- billto_code
- billto_name
- billing_closing_date
- payment_date
- post_has_sizeweight
- yamato_has_details
-customer
- customer_code
- shipper{}
-  shipment_service_service_name
-  shipment_service_code
-  shipper_info{}
-   shipper_code
-   shipment_class
- customer_name
- customer_name_kana
- sales_staff{}
-  staff_name
-  staff_email
- working_staff{}
-  staff_name
-  staff_email
- url
- person_in_charge
- products
- warehouse_code
-billfrom
- billfrom_code
- billfrom_name
- payee{}
-  bank_info
-  account_type
-  account_number
-  branch_office
-  account_name
-contact_information
+userinfo
+ id(int)
+ email
+ name
+favorite
+ food!=^.{3}$
+ music=^.{5}$
+hobby{}
+ type
+ name
+ updated(date)
+account
+ firstname
+ lastname
  tel
- fax 
- email 
- zip_code
- prefecture
+ prefecture_code
  address1
  address2
-staff
- staff_name
- role
- superior_email 
- staff_email
- uid
- password
- superior_name
-warehouse
- warehouse_code
- warehouse_name
- zip_code
- prefecture
- address1
- address2
-packing_item
- item_code
- item_name
- material
- category
- size1
- size2
- notices
- thickness
- inside_width
- inside_depth
- inside_height
- outer_width
- outer_depth
- outer_height
- outer_total
- purchase_price
- regular_price
- regular_unit_price
- special_price
- special_unit_price
-packing_items{}
- item_code
- item_name
- material
- category
- size1
- size2
- notices
- thickness
- inside_width
- inside_depth
- inside_height
- outer_width
- outer_depth
- outer_height
- outer_total
- purchase_price
- regular_price
- regular_unit_price
- special_price
- special_unit_price
-remarks{}
- content
-basic_condition{}
- title
- condition{}
-  content
-item_details{}
- category
- item_name
- unit_name
- unit
- quantity
- unit_price
- remarks
- is_taxation
- amount
-quotation
- quotation_code
- quotation_code_sub
- quotation_date
- status
- quotation_code_desc(desc)
-invoice
- invoice_code
- quotation_code
- working_yearmonth
- invoice_yearmonth
- total_amount
- consumption_tax
- issue_status
- deposit_status
- payment_date
- customer_code
- invoice_code_sub
-delivery_charge{}
- shipment_service_name
- shipment_service_code
- shipment_service_type
- shipment_service_service_name
- delivery_charge_details{}
-  size
-  weight
-  price
-  note
-  charge_by_zone{}
-   zone_code
-   zone_name
-   price
-internal_work
- staff_name
- working_yearmonth
- working_day
- approval_status
- work_type
- quantity
- item_details_name
- item_details_unit
- packing_item_code
- packing_item_name
- shipment_service_code
- shipment_service_name
- shipment_service_type
- shipment_service_service_name
- shipment_service_size
- shipment_service_weight
- period
- is_completed
- item_details_unit_name
- unit_price
- remarks
- special_unit_price
- comment
- working_yearmonth_desc(desc)
-shipment_service
- code 
- name  
- type   
- service_name  
- sizes{}
-  size  
-  weight  
-zone{}
- zone_name
- zone_code
- pref_codes{}
-  pref_code
- invoice_zones{}
-  invoice_zone
-type_ahead
- type
- value
-inquiry
- staff_name
- inquiry_status
- content
- content_type
-billing_data
- shipment_service_code
- shipment_service_type
- customer_code
- shipment_class
- shipper_code
- shipping_date
- tracking_number
- shipment_service_service_name
- delivery_class
- size
- zone_name
- prefecture
- city
- delivery_charge
- delivery_charge_org_total
- quantity
- unit_price
-billing_summary
- record{}
-  size
-  zone_name
-  quantity
-  delivery_charge
-  subtotal  
-creator
-billing_compare{}
- shipment_service_code
- shipment_service_service_name
- shipment_class
- record{}
-  shipping_date
-  internal_work_quantity
-  billing_quantity
-  billing_amount
-type_aheads{}
- type
- value
+ email
+ postcode
 </content>
-<rights>
-billto.billto_code:/quotation|/customer
-shipment_service.service_name:/shipment_service
-shipment_service.code:/deliverycharge_template
-staff.staff_email:/staff
-billto.billto_name:/billto
-customer.customer_name:/customer
-warehouse.warehouse_name:/warehouse
-invoice.invoice_yearmonth:/invoice
-quotation.quotation_code_desc:/quotation
-internal_work.working_yearmonth_desc:/internal_work
+<rights> 
+userinfo.id:/.+/registration
 </rights>
 </entry>
 </feed>

@@ -13,8 +13,7 @@ deployment:
   production:
     branch: release
     commands:
-          - gulp deploy -h https://logioffice.vte.cx -k ${accesstoken}
-          - gulp upload -h https://logioffice2.vte.cx -k ${accesstoken2}
+          - gulp deploy -h https://vtecxblank.vte.cx -k ${accesstoken}
 
 general:
   branches:

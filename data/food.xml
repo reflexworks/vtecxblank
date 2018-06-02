@@ -1,0 +1,49 @@
+<feed>
+<entry>
+ <contributor>
+  <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+ </contributor>
+<contributor>
+  <uri>urn:vte.cx:acl:+,CRUD</uri>
+</contributor>
+<link rel="self" href="/registration" />
+</entry>
+ <entry>
+<userinfo>
+  <id>1</id>
+  <email>foo@bar.com</email>
+</userinfo>
+<favorite>
+ <food>牛たん</food>
+ <music>J−ポップ</music>
+</favorite>
+<hobby>
+ <type>屋外</type>
+ <name>テニス</name>
+</hobby> 
+<hobby>
+ <type>屋内</type>
+ <name>卓球</name>
+</hobby> 
+<link rel="self" href="/registration/1" />
+</entry>
+ <entry>
+<userinfo>
+  <id>2</id>
+  <email>hoge@baz.com</email>
+</userinfo>
+<favorite>
+ <food>りんご</food>
+ <music>ロックだね</music>
+</favorite>
+<hobby>
+ <type>屋外</type>
+ <name>野球</name>
+</hobby> 
+<hobby>
+ <type>屋外</type>
+ <name>サッカー</name>
+</hobby> 
+<link rel="self" href="/registration/2" />
+</entry>
+</feed>
