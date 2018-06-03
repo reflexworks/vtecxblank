@@ -15,11 +15,12 @@
         },
         "sourceType": "module"
     },
-    "parser": "babel-eslint",
+    "parser": "typescript-eslint-parser",
     "plugins": [
-        "flowtype"
+        "typescript"
     ],
     "rules": {
+        "no-undef": 0,
         "indent": [
             "error",
             "tab"

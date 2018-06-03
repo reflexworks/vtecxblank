@@ -13,11 +13,12 @@ const eventStream = require('event-stream')
 const fs = require('fs-sync')
 const fsasync = require('fs')
 const tap = require('gulp-tap')
-const BabiliPlugin = require('babili-webpack-plugin')
 const recursive = require('recursive-readdir')
 const request = require('request')
 const mocha = require('gulp-mocha')
 const env = require('node-env-file')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 
 env('.env')
 
@@ -25,7 +26,7 @@ function webpackconfig(filename,externals,devtool) {
 	return {
 		mode: devtool ? 'development' : 'production',
 		output: {
-			filename: filename
+			filename: filename.replace(/(.tsx)|(.ts)/g,'.js')
 		},
 		module: {
 			rules: [
@@ -47,12 +48,17 @@ function webpackconfig(filename,externals,devtool) {
 					use: { loader: 'file-loader', options: { name : '[name].[ext]'}}
 				},
 				{
-					test: /\.(js)$/,
-					use: { loader: 'babel-loader'},
+					test: /\.tsx?$/,
+					use: { loader: 'awesome-typescript-loader'}
+				},
+				{
+					enforce: 'pre',
+					test: /\.js$/,
+					use: { loader: 'source-map-loader'},
 					exclude: /node_modules/
 				},
 				{
-					test: /\.js$/,
+					test: /\.(js|ts|tsx)$/,
 					exclude: /(node_modules)/,
 					use: { loader: 'eslint-loader', options: { emitWarning: true,fix:true,failOnError: true } }
 				}                      
@@ -69,15 +75,16 @@ function webpackconfig(filename,externals,devtool) {
 		plugins: devtool ? [
 			new webpack.LoaderOptionsPlugin({ options: {} })			
 		] : [
-			new BabiliPlugin(),
-			new webpack.LoaderOptionsPlugin({ options: {} })
+			new webpack.LoaderOptionsPlugin({ options: {} }),
+			 /* UglifyJsPluginの実行 */
+			new UglifyJsPlugin()	
 		]
 		,devtool: devtool ? 'source-map' : ''
 	}
 }
 
 gulp.task('watch:components', function(){
-	gulp.watch('./src/components/*.js')
+	gulp.watch('./src/components/*')
 		.on('change', function(changedFile) {
 			let srcfile = changedFile.path
 			if (argv.f) {
@@ -404,7 +411,7 @@ function gettype(file) {
 }
 
 gulp.task('watch:server',['watch:settings'], function(){
-	gulp.watch('./src/server/*.js')
+	gulp.watch('./src/server/*')
 		.on('change', function(changedFile) {
 			let srcfile = changedFile.path
 			if (argv.f) {
