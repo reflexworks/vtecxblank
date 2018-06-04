@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/application.sass'
 import axios from 'axios'
 import React from 'react'
@@ -13,22 +12,17 @@ import {
 	FormControl
 } from 'react-bootstrap'
 
-type InputEvent = {
-		target: any,
-	preventDefault: Function
-}
-
 class ForgotPassword extends React.Component {
 	constructor() {
 		super()
 		this.state = { isError : false,  captchaValue:'',isLoading: false }
 	}
 
-	capchaOnChange(value:string) {
+	capchaOnChange(value) {
 		this.setState({captchaValue: value})
 	}
 
-	handleSubmit(e:InputEvent){
+	handleSubmit(e){
 		e.preventDefault()
 		const reqData = {'feed': {'entry':[{'contributor': [{'uri': 'urn:vte.cx:auth:'+ e.target.account.value}]}]}}
   	const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue

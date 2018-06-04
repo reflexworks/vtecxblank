@@ -41,7 +41,6 @@
     "minimist": "^1.2.0",
     "mocha": "^4.1.0",
     "moment": "^2.20.1",
-    "node-env-file": "^0.1.8",
     "node-sass": "^4.7.2",
     "react-dom": "^16.0.0",
     "recursive-readdir": "^2.2.1",

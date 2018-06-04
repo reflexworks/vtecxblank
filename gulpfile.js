@@ -16,11 +16,7 @@ const tap = require('gulp-tap')
 const recursive = require('recursive-readdir')
 const request = require('request')
 const mocha = require('gulp-mocha')
-const env = require('node-env-file')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-
-
-env('.env')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {

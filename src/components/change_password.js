@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/application.sass'
 import axios from 'axios'
 import jsSHA from 'jssha'
@@ -17,18 +16,13 @@ import {
 	FormControl
 } from 'react-bootstrap'
 
-type InputEvent = {
-	target: any,
-	preventDefault: Function
-}
-
 class ChangePassword extends React.Component {
 	constructor() {
 		super()
 		this.state = { isError : false,isForbidden : false, isAlreadyRegistered: false, isIllegalPassword: false,isUnmatchReinput: false, captchaValue:'',passLength: 0 }
 	}
 
-	capchaOnChange(value:string) {
+	capchaOnChange(value) {
 		this.setState({captchaValue: value})
 	}
 
@@ -36,7 +30,7 @@ class ChangePassword extends React.Component {
 		this.setState({ passLength: state.password.length })
 	}
 
-	handleSubmit(e:InputEvent){
+	handleSubmit(e){
 		e.preventDefault()
 		const password = e.target.password.value
 

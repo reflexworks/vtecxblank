@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/application.sass'
 import axios from 'axios'
 import getAuthToken from './getAuthToken.js'
@@ -14,22 +13,17 @@ import {
 	FormControl
 } from 'react-bootstrap'
 
-type InputEvent = {
-		target: any,
-	preventDefault: Function
-}
-
 class LoginForm extends React.Component {
 	constructor() {
 		super()
 		this.state = { isLoginFailed : false, requiredCaptcha: false, captchaValue:'' }
 	}
 
-	capchaOnChange(value:string) {
+	capchaOnChange(value) {
 		this.setState({captchaValue: value})
 	}
 
-	handleSubmit(e:InputEvent){
+	handleSubmit(e){
 		e.preventDefault()
 		const authToken = getAuthToken(e.target.account.value,e.target.password.value)
 		const captchaOpt = this.state.requiredCaptcha ? '&g-recaptcha-response=' + this.state.captchaValue : ''

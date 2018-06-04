@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/application.sass'
 import axios from 'axios'
 import jsSHA from 'jssha'
@@ -18,11 +17,6 @@ import {
 } from 'react-bootstrap'
 
 
-type InputEvent = {
-		target: any,
-	preventDefault: Function
-}
-
 class Signup extends React.Component {
 	constructor() {
 		super()
@@ -33,18 +27,18 @@ class Signup extends React.Component {
 		this.setState({ passLength: state.password.length })
 	}
 
-	capchaOnChange(value:string) {
+	capchaOnChange(value) {
 		this.setState({captchaValue: value})
 	}
 
 	//ハッシュ化したパスワードを取得する
-	getHashPass(password:string){
+	getHashPass(password){
 		var shaObj = new jsSHA('SHA-256', 'TEXT')
 		shaObj.update(password)
 		return shaObj.getHash('B64')
 	}
 
-	handleSubmit(e: InputEvent) {
+	handleSubmit(e) {
 		this.setState({isLoading:true})
 		e.preventDefault()
 		const password = e.target.password.value
@@ -95,7 +89,7 @@ class Signup extends React.Component {
 						<h2 className="login_form__title">仮登録完了</h2>
 						<div className="login_form__block text-center">
 							<p>ご登録いだいたメールアドレスに
-							<br />確認メールをお送りしてます。</p>
+								<br />確認メールをお送りしてます。</p>
 							<p>ご確認ください。</p>
 							<a className="btn btn-lg login_form__btn--submit" href="index.html">TOPページに戻る</a>
 						</div>
