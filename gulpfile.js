@@ -152,8 +152,8 @@ gulp.task('watch:settings', function(){
 
 function webpack_files(src,dest,externals,done) {
 	let filenames = []
-	let streams = tap(function(file){
-		const filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
+	let streams = tap(function (file) {
+		const filename = file.path.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.tsx'
 		if (fs.exists(src+'/'+filename)) {
 			filenames.push(filename)
 		}
@@ -431,7 +431,7 @@ gulp.task('watch:server',['watch:settings'], function(){
 })
 
 gulp.task('build:server_dist', function(done){
-	gulp.src('./src/server/*.js')
+	gulp.src('./src/server/*')
 		.pipe(webpack_files('./src/server','./dist/server',false,done))      
 })
 
