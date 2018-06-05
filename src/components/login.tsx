@@ -1,5 +1,6 @@
 /* @flow */
 import '../styles/application.sass'
+import * as vtecxauth from 'vtecxauth'
 import axios from 'axios'
 //import getAuthToken from './getAuthToken.js'
 import * as React from 'react'
@@ -34,8 +35,7 @@ export default class LoginForm extends React.Component<ComponentProps> {
 
 		e.preventDefault()
 
-		//const authToken = getAuthToken(e.target.email.value, e.target.password.value)
-		const authToken = 'aaaa'
+		const authToken = vtecxauth.getAuthToken(e.target.email.value, e.target.password.value)
 		const captchaOpt = this.requiredCaptcha ? '&g-recaptcha-response=' + this.captchaValue : ''
 
 		axios({

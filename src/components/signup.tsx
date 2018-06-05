@@ -2,7 +2,7 @@
 import '../styles/index.css'
 import '../styles/application.sass'
 import axios from 'axios'
-import * as jsSHA from 'jssha'
+import * as vtecxauth from 'vtecxauth'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -58,13 +58,6 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 		this.setState({ captchaValue: value })
 	}
 
-	//ハッシュ化したパスワードを取得する
-	getHashPass(password: string) {
-		var shaObj = new jsSHA('SHA-256', 'TEXT')
-		shaObj.update(password)
-		return shaObj.getHash('B64')
-	}
-
 	handleSubmit(e: any) {
 		this.setState({ isLoading: true })
 		e.preventDefault()
@@ -77,7 +70,7 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 
 			if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-				const reqData = { 'feed': { 'entry': [{ 'contributor': [{ 'uri': 'urn:vte.cx:auth:' + e.target.account.value + ',' + this.getHashPass(password) + '' }] }] } }
+				const reqData = { 'feed': { 'entry': [{ 'contributor': [{ 'uri': 'urn:vte.cx:auth:' + e.target.account.value + ',' + vtecxauth.getHashpass(password) + '' }] }] } }
 				const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
 
 				axios({
