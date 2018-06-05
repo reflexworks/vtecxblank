@@ -2,8 +2,11 @@
   "name": "vtecxblank",
   "version": "1.0.0",
   "dependencies": {
+    "@types/jssha": "0.0.29",
     "@types/react": "^16.3.16",
+    "@types/react-bootstrap": "^0.32.9",
     "@types/react-dom": "^16.0.5",
+    "@types/react-google-recaptcha": "^0.9.1",
     "eslint": "^4.19.1",
     "gulp": "^3.9.1",
     "react": "^16.4.0",
