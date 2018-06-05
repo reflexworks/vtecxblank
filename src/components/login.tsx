@@ -81,7 +81,7 @@ export default class LoginForm extends React.Component<ComponentProps> {
 				{this.requiredCaptcha &&
 					<ReCAPTCHA
 						sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-						onChange={(value) => this.capchaOnChange(value)}
+						onChange={(value: string) => this.capchaOnChange(value)}
 					//className="login_form__recaptcha"
 					/>
 				}

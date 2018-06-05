@@ -116,11 +116,11 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 								</FormGroup>
 							</Form>
 						) : (
-								<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
-									<FormGroup controlId="password">
-										<Col sm={12}>
-											<ControlLabel>パスワード</ControlLabel>
-											{/**
+							<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+								<FormGroup controlId="password">
+									<Col sm={12}>
+										<ControlLabel>パスワード</ControlLabel>
+										{/**
 											<ReactPasswordStrength
 												className="customClass"
 												minLength={8}
@@ -131,67 +131,67 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 												inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
 											/>
 											 */}
-											<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
-										</Col>
-									</FormGroup>
+										<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
+									</Col>
+								</FormGroup>
 
-									<FormGroup controlId="re_password">
-										<Col sm={12}>
-											<ControlLabel>パスワード確認</ControlLabel>
-											<FormControl type="password" placeholder="" />
-										</Col>
-									</FormGroup>
+								<FormGroup controlId="re_password">
+									<Col sm={12}>
+										<ControlLabel>パスワード確認</ControlLabel>
+										<FormControl type="password" placeholder="" />
+									</Col>
+								</FormGroup>
 
-									<FormGroup>
-										<Col sm={12}>
-											<ReCAPTCHA
-												sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-												onChange={(value) => this.capchaOnChange(value)}
+								<FormGroup>
+									<Col sm={12}>
+										<ReCAPTCHA
+											sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+											onChange={(value: string) => this.capchaOnChange(value)}
 											//className="login_form__recaptcha"
-											/>
-										</Col>
-									</FormGroup>
+										/>
+									</Col>
+								</FormGroup>
 
-									{this.state.isIllegalPassword &&
+								{this.state.isIllegalPassword &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。</div>
 											</Col>
 										</FormGroup>
-									}
+								}
 
-									{this.state.isUnmatchReinput &&
+								{this.state.isUnmatchReinput &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">入力されたパスワードが不正です。確認用パスワードと一致していない可能性があります。</div>
 											</Col>
 										</FormGroup>
-									}
+								}
 
-									{this.state.isForbidden &&
+								{this.state.isForbidden &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">
 													<a href="index.html">ログイン</a>を行ってから実行してください。
-											</div>
+												</div>
 											</Col>
 										</FormGroup>
-									}
+								}
 
-									{this.state.isError &&
+								{this.state.isError &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">パスワード変更に失敗しました。</div>
 											</Col>
 										</FormGroup>
-									}
-									<FormGroup>
-										<Col sm={12}>
-											<Button type="submit" className="btn btn-lg login_form__btn--submit">パスワード変更実行</Button>
-										</Col>
-									</FormGroup>
-								</Form>
-							)}
+								}
+								<FormGroup>
+									<Col sm={12}>
+										<Button type="submit" className="btn btn-lg login_form__btn--submit">パスワード変更実行</Button>
+									</Col>
+								</FormGroup>
+							</Form>
+						)}
 					</div>
 				</div>
 			</div>

@@ -87,60 +87,60 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState>  {
 								</FormGroup>
 							</Form>
 						) : (
-								<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+							<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
 
-									<FormGroup controlId="account">
-										<Col sm={12}>
-											<ControlLabel>メールアドレス</ControlLabel>
-											<FormControl type="email" placeholder="" />
-										</Col>
-									</FormGroup>
+								<FormGroup controlId="account">
+									<Col sm={12}>
+										<ControlLabel>メールアドレス</ControlLabel>
+										<FormControl type="email" placeholder="" />
+									</Col>
+								</FormGroup>
 
-									<FormGroup>
-										<Col sm={12}>
-											<ReCAPTCHA
-												sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-												onChange={(value) => this.capchaOnChange(value)}
+								<FormGroup>
+									<Col sm={12}>
+										<ReCAPTCHA
+											sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+											onChange={(value: string) => this.capchaOnChange(value)}
 											//className="login_form__recaptcha"
-											/>
-										</Col>
-									</FormGroup>
+										/>
+									</Col>
+								</FormGroup>
 
-									{this.state.isForbidden &&
+								{this.state.isForbidden &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">
 													<a href="login.html">ログイン</a>を行ってから実行してください。
-											</div>
+												</div>
 											</Col>
 										</FormGroup>
-									}
+								}
 
-									{this.state.isError &&
+								{this.state.isError &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">パスワード変更メール送信に失敗しました。アカウントが使用できない可能性があります。</div>
 											</Col>
 										</FormGroup>
-									}
-									<FormGroup>
-										<Col sm={12}>
-											<Button type="submit" className="btn btn-lg login_form__btn--submit" disabled={this.state.isLoading}>
-												{this.state.isLoading ? <span><span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>　送信中</span> : 'メールを送信する'}
-											</Button>
-										</Col>
-									</FormGroup>
+								}
+								<FormGroup>
+									<Col sm={12}>
+										<Button type="submit" className="btn btn-lg login_form__btn--submit" disabled={this.state.isLoading}>
+											{this.state.isLoading ? <span><span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>　送信中</span> : 'メールを送信する'}
+										</Button>
+									</Col>
+								</FormGroup>
 
-									<FormGroup>
-										<Col sm={12}>
-											<div className="text-center">
-												<a className="btn" href="index.html">トップページへ戻る</a>
-											</div>
-										</Col>
-									</FormGroup>
+								<FormGroup>
+									<Col sm={12}>
+										<div className="text-center">
+											<a className="btn" href="index.html">トップページへ戻る</a>
+										</div>
+									</Col>
+								</FormGroup>
 
-								</Form>
-							)}
+							</Form>
+						)}
 					</div>
 				</div>
 			</div>

@@ -77,8 +77,5 @@ const Output: React.StatelessComponent<OutputProps> = (props) => {
 	)
 }
 
-ReactDOM.render(
-	<Index hello="Hello" />,
-	document.querySelector('.content')
-)
+ReactDOM.render(<Index hello="Hello" />, document.getElementById('container'))
 
