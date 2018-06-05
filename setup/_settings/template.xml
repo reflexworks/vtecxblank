@@ -7,30 +7,7 @@
     <contributor>
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
-<content type="text/html">
-userinfo
- id(int)
- email
- name
-favorite
- food!=^.{3}$
- music=^.{5}$
-hobby{}
- type
- name
- updated(date)
-account
- firstname
- lastname
- tel
- prefecture_code
- address1
- address2
- email
- postcode
-</content>
-<rights> 
-userinfo.id:/.+/registration
-</rights>
+<content type="text/html"></content>
+<rights></rights>
 </entry>
 </feed>
