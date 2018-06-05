@@ -1,8 +1,8 @@
 /* @flow */
+import '../styles/index.css'
 import '../styles/application.sass'
 import * as vtecxauth from 'vtecxauth'
 import axios from 'axios'
-//import getAuthToken from './getAuthToken.js'
 import * as React from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 

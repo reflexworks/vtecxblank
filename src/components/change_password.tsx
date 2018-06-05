@@ -1,9 +1,10 @@
+import '../styles/index.css'
 import '../styles/application.sass'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
-import * as vtecxauth from 'vtecxauth'
+//import * as vtecxauth from 'vtecxauth'
 //import * as ReactPasswordStrength from 'react-password-strength'
 import 'react-password-strength/dist/style.css'
 import {
@@ -67,7 +68,8 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 
 			if (password && e.target.re_password.value && password === e.target.re_password.value) {
 
-				const hashpass = vtecxauth.getHashpass(password)
+				//const hashpass = vtecxauth.getHashpass(password)
+				const hashpass = 'aaa'
 				const reqData = { 'feed': { 'entry': [{ 'contributor': [{ 'uri': 'urn:vte.cx:auth:,' + hashpass + '' }] }] } }
 
 				const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
