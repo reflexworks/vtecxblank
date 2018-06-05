@@ -3,6 +3,11 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "module": "commonjs",
         "target": "es5",
         "jsx": "react"
