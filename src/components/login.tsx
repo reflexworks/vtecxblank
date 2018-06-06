@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/index.css'
 import '../styles/application.sass'
 import * as vtecxauth from 'vtecxauth'
@@ -6,13 +5,14 @@ import axios from 'axios'
 import * as React from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-/* コンポーネントのProps */
+/* コンポーネントのPropsの型宣言 */
 interface ComponentProps {
 	//hello: string
 }
 
 export default class LoginForm extends React.Component<ComponentProps> {
 
+	/* コンポーネントの変数の型宣言 */
 	isLoginFailed: boolean
 	requiredCaptcha: boolean
 	captchaValue: string

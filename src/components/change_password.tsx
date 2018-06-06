@@ -17,11 +17,12 @@ import {
 	FormControl
 } from 'react-bootstrap'
 
-/* コンポーネントのProps */
+/* コンポーネントのPropsの型宣言 */
 interface ComponentProps {
 	//hello: string
 }
 
+/* コンポーネントのStateの型宣言 */
 interface ComponentState {
 	isError: any,
 	isForbidden: boolean,

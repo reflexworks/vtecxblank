@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/index.css'
 import '../styles/application.sass'
 import axios from 'axios'
@@ -19,6 +18,7 @@ interface ComponentProps {
 	//hello: string
 }
 
+/* コンポーネントのStateの型宣言 */
 interface ComponentState {
 	isError: any,
 	isForbidden: boolean,

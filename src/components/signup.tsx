@@ -1,4 +1,3 @@
-/* @flow */
 import '../styles/index.css'
 import '../styles/application.sass'
 import axios from 'axios'
@@ -36,6 +35,7 @@ interface ComponentState {
 }
 
 class Signup extends React.Component<ComponentProps, ComponentState>  {
+
 	constructor(props: ComponentProps) {
 		super(props)
 		this.state = {

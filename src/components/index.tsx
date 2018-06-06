@@ -1,19 +1,19 @@
-/* reactとreact-domの読み込み */
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-/* アプリ本体となる「Indexコンポーネント」 */
-interface IndexProps {
+/* コンポーネントのPropsの型宣言 */
+interface ComponentProps {
 	hello: string
 }
 
-interface IndexState {
+/* コンポーネントのStateの型宣言 */
+interface ComponentState {
 	inputValue: string
 	outputValue: string
 }
 
-class Index extends React.Component<IndexProps, IndexState> {
-	constructor(props: IndexProps) {
+class Index extends React.Component<ComponentProps, ComponentState> {
+	constructor(props: ComponentProps) {
 		super(props)
 		this.state = {
 			inputValue: '',
