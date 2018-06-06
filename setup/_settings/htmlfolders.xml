@@ -67,26 +67,6 @@
             <!-- login.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
-        <link rel="self" href="/_html/login.html" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
-            <!-- login.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R.</uri>
-        </contributor>
-        <link rel="self" href="/_html/components/login.js" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
-            <!-- login.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R.</uri>
-        </contributor>
         <link rel="self" href="/_html/forgot_password.html" />
     </entry>
     <entry>
@@ -124,9 +104,69 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
+            <!-- user_terms.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/user_terms.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- user_terms.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/user_terms.js" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
             <!-- xlsをログインユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:+,R./</uri>
         </contributor>
         <link rel="self" href="/_html/xls" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- index.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/index.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- index.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/index.js" />
+    </entry>
+   <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- login.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/login.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- login.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/login.js" />
     </entry>
 </feed>
