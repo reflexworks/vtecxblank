@@ -5,8 +5,7 @@ import * as vtecxauth from 'vtecxauth'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
-//import ReactPasswordStrength from 'react-password-strength/dist/universal'
-import 'react-password-strength/dist/style.css'
+import PasswordStrength from './password_strength'
 import {
 	Form,
 	Col,
@@ -143,17 +142,15 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 								<FormGroup controlId="password">
 									<Col md={12}>
 										<ControlLabel>パスワード</ControlLabel>
-										{/*
-											<ReactPasswordStrength
-												className="customClass"
-												minLength={8}
-												minScore={3}
-												scoreWords={['弱', '弱', '中', '強', '最強']}
-												tooShortWord='短い'
-												changeCallback={(e) => this.passwordOnChange(e)}
-												inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
-											/>
-											*/}
+										<PasswordStrength
+											className="customClass"
+											minLength={8}
+											minScore={3}
+											scoreWords={['弱', '弱', '中', '強', '最強']}
+											tooShortWord='短い'
+											changeCallback={(e: any) => this.passwordOnChange(e)}
+											inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
+										/>
 										<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
 									</Col>
 
