@@ -50,15 +50,15 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 		}
 	}
 
-	passwordOnChange(state: any) {
+	passwordOnChange(state: any): void {
 		this.setState({ passLength: state.password.length })
 	}
 
-	capchaOnChange(value: string) {
+	capchaOnChange(value: string): void {
 		this.setState({ captchaValue: value })
 	}
 
-	handleSubmit(e: any) {
+	handleSubmit(e: any): any {
 
 		e.preventDefault()
 
@@ -90,7 +90,7 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 
 				}).then(() => {
 					this.setState({ isCompleted: true, isLoading: false })
-				}).catch((error) => {
+				}).catch((error: any) => {
 					this.setState({ isLoading: false })
 					if (error.response) {
 						if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {

@@ -26,12 +26,12 @@ export default class LoginForm extends React.Component<ComponentProps> {
 		this.values = {}
 	}
 
-	capchaOnChange(value: string) {
+	capchaOnChange(value: string): void {
 		this.captchaValue = value
 		this.forceUpdate()
 	}
 
-	handleSubmit(e: any) {
+	handleSubmit(e: any): void {
 
 		e.preventDefault()
 
@@ -47,7 +47,7 @@ export default class LoginForm extends React.Component<ComponentProps> {
 			}
 		}).then(() => {
 			location.href = 'index.html'
-		}, (error) => {
+		}, (error: any) => {
 			if (error.response) {
 				if (error.response.data.feed.title === 'Captcha required at next login.') {
 					this.isLoginFailed = true
@@ -62,21 +62,21 @@ export default class LoginForm extends React.Component<ComponentProps> {
 		})
 	}
 
-	onChange(_e: any) {
+	onChange(_e: any): void {
 		this.values[_e.target.name] = _e.target.value
 		this.forceUpdate()
 	}
 
 	render() {
 		return (
-			<form onSubmit={(e) => this.handleSubmit(e)}>
+			<form onSubmit={(e: any) => this.handleSubmit(e)}>
 
 				{this.isLoginFailed &&
 					<div className="login_error">ログインに失敗しました。<br />アカウントまたはパスワードが間違っている可能性があります。</div>
 				}
 
-				<input type="email" name="email" onChange={(e) => this.onChange(e)} value={this.values.email} />
-				<input type="password" name="password" onChange={(e) => this.onChange(e)} value={this.values.password} />
+				<input type="email" name="email" onChange={(e: any) => this.onChange(e)} value={this.values.email} />
+				<input type="password" name="password" onChange={(e: any) => this.onChange(e)} value={this.values.password} />
 
 				{this.requiredCaptcha &&
 					<ReCAPTCHA

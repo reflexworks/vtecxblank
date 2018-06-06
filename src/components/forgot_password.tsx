@@ -59,7 +59,7 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState>  {
 
 		}).then(() => {
 			this.setState({ isCompleted: true, isLoading: false })
-		}).catch((error) => {
+		}).catch((error: any) => {
 			if (error.response && error.response.status === 401) {
 				this.setState({ isForbidden: true, isLoading: false })
 			} else {
@@ -87,7 +87,7 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState>  {
 								</FormGroup>
 							</Form>
 						) : (
-							<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+							<Form horizontal onSubmit={(e: any) => this.handleSubmit(e)}>
 
 								<FormGroup controlId="account">
 									<Col sm={12}>

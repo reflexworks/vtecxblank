@@ -49,15 +49,15 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 		}
 	}
 
-	capchaOnChange(value: string) {
+	capchaOnChange(value: string): void {
 		this.setState({ captchaValue: value })
 	}
 
-	passwordOnChange(state: any) {
+	passwordOnChange(state: any): void {
 		this.setState({ passLength: state.password.length })
 	}
 
-	handleSubmit(e: any) {
+	handleSubmit(e: any): void {
 		e.preventDefault()
 		const password = e.target.password.value
 
@@ -84,7 +84,7 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 
 				}).then(() => {
 					this.setState({ isCompleted: true })
-				}).catch((error) => {
+				}).catch((error: any) => {
 					if (error.response && error.response.status === 403) {
 						this.setState({ isForbidden: true })
 					} else {
@@ -118,7 +118,7 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 								</FormGroup>
 							</Form>
 						) : (
-							<Form horizontal onSubmit={(e) => this.handleSubmit(e)}>
+							<Form horizontal onSubmit={(e: any) => this.handleSubmit(e)}>
 								<FormGroup controlId="password">
 									<Col sm={12}>
 										<ControlLabel>パスワード</ControlLabel>
