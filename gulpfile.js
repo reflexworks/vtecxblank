@@ -60,6 +60,11 @@ function webpackconfig(filename,externals,devtool) {
 				}                      
 			]
 		},
+		resolve: {
+			extensions: [
+				'.ts', '.tsx', '.js'
+			]
+		},		
 		externals: externals ? {
 			'react': 'React',
 			'react-dom': 'ReactDOM',
