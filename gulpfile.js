@@ -335,14 +335,25 @@ function sendfile(file,iscontent,done,isdirectory) {
 		} else {
 			if (response) {
 				if (response.statusCode) {
-					console.log('can\'t PUT content. status=' + response.statusCode)
-					console.log(response.body)
 					if (response.statusCode == 302) {
+						let status
+						let errmsg
 						response.headers['set-cookie'].map((msg) => {
-							if (msg.indexOf('ERROR_') >= 0) {
-								console.log(msg)
+							if (msg.indexOf('ERROR_STATUS') >= 0) {
+								status = msg.split(';')[0]
+							}else
+							if (msg.indexOf('ERROR_MESSAGE') >= 0) {
+								errmsg = msg.split(';')[0]
 							}
 						})
+						if (errmsg.indexOf('ERROR_MESSAGE=Entry+is+required.') >= 0) {
+							console.log('No updates.')
+							retrycount=0
+						} else {
+							console.log(response.body)
+							console.log(status)
+							console.log(errmsg)							
+						}
 					}
 				} else {
 					console.log('can\'t PUT content. ')
