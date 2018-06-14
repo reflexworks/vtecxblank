@@ -3,6 +3,7 @@ import '../styles/application.sass'
 import * as vtecxauth from 'vtecxauth'
 import axios from 'axios'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 /* コンポーネントのPropsの型宣言 */
@@ -10,7 +11,7 @@ interface ComponentProps {
 	//hello: string
 }
 
-export default class LoginForm extends React.Component<ComponentProps> {
+export default class Login extends React.Component<ComponentProps> {
 
 	/* コンポーネントの変数の型宣言 */
 	isLoginFailed: boolean
@@ -68,7 +69,7 @@ export default class LoginForm extends React.Component<ComponentProps> {
 	}
 
 	render() {
-		return (
+		const App = (
 			<form onSubmit={(e: any) => this.handleSubmit(e)}>
 
 				{this.isLoginFailed &&
@@ -98,5 +99,31 @@ export default class LoginForm extends React.Component<ComponentProps> {
 
 			</form>
 		)
+		return (
+			<div>
+				<header>
+					<div className="contents_in">
+						<a href="http://reflexworks.jp/contact.html#company"><img src="../img/logo_vt.svg" alt="有限会社バーチャルテクノロジー" /></a>
+					</div>
+				</header>
+				<div id="wrapper">
+					<div className="vtecx-from">
+						<div className="vtecx-from-container">
+							<div className="vtecx-from-content">
+								<h2>
+									<img src="../img/logo.svg" alt="有限会社バーチャルテクノロジー" height="24px" />
+									<span>ログイン</span>
+								</h2>
+								{App}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="footer">
+					<p className="copyright">Copyrights&copy;2018 Virtual Technology,Ltd. ALL Rights Reserved.</p>
+				</div>
+			</div>
+		)
 	}
 }
+ReactDOM.render(<Login />, document.getElementById('container'))
