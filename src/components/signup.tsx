@@ -25,6 +25,7 @@ interface ComponentProps {
 interface ComponentState {
 	isError: any,
 	isAlreadyRegistered: boolean,
+	isMailSettingRequired: boolean,
 	isIllegalPassword: boolean,
 	isUnmatchReinput: boolean,
 	captchaValue: string,
@@ -40,6 +41,7 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 		this.state = {
 			isError: false,
 			isAlreadyRegistered: false,
+			isMailSettingRequired: false,
 			isIllegalPassword: false,
 			captchaValue: '',
 			isLoading: false,
@@ -94,6 +96,8 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 					if (error.response) {
 						if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
 							this.setState({ isAlreadyRegistered: true })
+						} else if (error.response.data.feed.title.indexOf('Mail setting is required') !== -1) {
+							this.setState({ isMailSettingRequired: true })
 						} else {
 							this.setState({ isError: true })
 						}
@@ -164,12 +168,12 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 								</FormGroup>
 
 								<FormGroup>
-									<ReCAPTCHA
-										sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-										onChange={(value: string) => this.capchaOnChange(value)}
-										//className="login_form__recaptcha"
-
-									/>
+									<div className="login_form__recaptcha">
+										<ReCAPTCHA
+											sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+											onChange={(value: string) => this.capchaOnChange(value)}
+										/>
+									</div>
 								</FormGroup>
 
 								{this.state.isIllegalPassword &&
@@ -196,6 +200,13 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 										</FormGroup>
 								}
 
+								{this.state.isMailSettingRequired &&
+										<FormGroup>
+											<Col sm={12}>
+												<div className="alert alert-danger">ユーザ登録を実行するには事前にメール設定をする必要があります。</div>
+											</Col>
+										</FormGroup>
+								}
 								{this.state.isError &&
 										<FormGroup>
 											<Col sm={12}>

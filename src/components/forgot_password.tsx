@@ -97,13 +97,12 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState>  {
 								</FormGroup>
 
 								<FormGroup>
-									<Col sm={12}>
+									<div className="login_form__recaptcha">
 										<ReCAPTCHA
 											sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
 											onChange={(value: string) => this.capchaOnChange(value)}
-											//className="login_form__recaptcha"
 										/>
-									</Col>
+									</div>
 								</FormGroup>
 
 								{this.state.isForbidden &&
