@@ -358,6 +358,14 @@ function sendfile(file,iscontent,done,isdirectory) {
 							console.log(status)
 							console.log(errmsg)							
 						}
+					} else {
+						if ((response.statusCode == 400) && (response.body.indexOf('Entry is required.') > 0)) {
+							console.log('No updates.')
+							retrycount=0							
+						} else {
+							console.log('response code='+response.statusCode)
+							console.log(response.body)							
+						}
 					}
 				} else {
 					console.log('can\'t PUT content. ')
