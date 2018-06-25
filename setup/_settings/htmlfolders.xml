@@ -149,7 +149,7 @@
         </contributor>
         <link rel="self" href="/_html/components/index.js" />
     </entry>
-   <entry>
+    <entry>
         <contributor>
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
@@ -168,5 +168,25 @@
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/components/login.js" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- index.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/demo.html" />
+    </entry>
+    <entry>
+        <contributor>
+            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
+        </contributor>
+        <contributor>
+            <!-- index.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <uri>urn:vte.cx:acl:*,R.</uri>
+        </contributor>
+        <link rel="self" href="/_html/components/demo.js" />
     </entry>
 </feed>

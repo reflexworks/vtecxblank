@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+.vtecx-demo-container {
+  width: 100%;
+  height: auto;
+  margin: 0px auto;
+  margin-top: 50px;
+  padding-bottom: 20px;
+}
+.vtecx-demo-container:nth-child(odd) {
+  background: #f7f7f7;
+}
+.vtecx-demo-content {
+  width: 800px;
+  margin: 0px auto;
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+.vtecx-demo-content h2 {
+  font-size: 28px;
+  font-weight: normal;
+  text-align: left;
+  padding-top: 0px;
+  margin-bottom: 20px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  border-bottom: solid 1px #cdcdcd;
+}
+
+/* block
+------------------------*/
+.block{
+  padding: 30px 0px;
+}
+.block p{
+  padding: 0px;
+  margin:  0px;
+  font-size: 12px;
+}
+.block .comment {
+  color: #999;
+}
+.block .link{
+  padding: 20px 30px;
+}
+.block ul{
+  list-style-type: none;
+  padding-top: 40px;
+}
+.block ul li{
+  padding-bottom: 40px;
+}
+.block img{
+  width: 100%;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+.block li img:last-child{
+  margin-bottom: 0px;
+}
+.block code {
+  display: block;
+  padding: 30px 50px;
+}
+.block .supplement{
+  margin-top: 30px;
+  margin-left: 100px;
+  padding: 20px 30px;
+  background: rgb(247, 246, 246);
+  font-size: 12px;
+  border: 1px solid #eee;
+  color: #555;
+}
+.block .supplement > div{
+  padding-left: 20px;
+}
+.vtecx-demo-container:nth-child(odd) .block .supplement{
+  background: #fff;
+}
+.functionlist {
+  font-size: 12px;
+}
+.functionlist ul{
+  padding-top: 10px;
+  padding-left: 100px;
+}
+.functionlist ul li{
+  padding-bottom: 5px;
+}
