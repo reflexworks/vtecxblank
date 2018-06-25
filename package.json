@@ -21,6 +21,7 @@
     "react-select": "^1.1.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "awesome-typescript-loader": "^5.0.0",
     "axios": "^0.17.1",
     "css-loader": "^0.28.7",

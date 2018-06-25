@@ -2,7 +2,7 @@ import '../styles/index.css'
 import '../styles/demo.css'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import axios from 'axios'
+import axios, { AxiosResponse, AxiosError } from 'axios'
 import {
 	Form,
 	//Col,
@@ -19,6 +19,25 @@ interface ComponentProps {
 	//hello: string
 }
 
+interface Request {
+	feed: Feed
+}
+
+interface Feed {
+	entry: Entry[]
+}
+
+interface Entry {
+	id?: string
+	link?: Link[]
+	sample: string
+}
+
+interface Link {
+	___rel: string
+	___href: string
+}
+
 class CompletedForm extends React.Component<ComponentProps> {
 
 	origin: string
@@ -29,19 +48,19 @@ class CompletedForm extends React.Component<ComponentProps> {
 
 	isPostData1: string
 	isPostData1Messeage: any
-	postData1Obj: any
+	postData1Obj: Request
 
 	isPostData2: string
 	isPostData2Messeage: any
-	postData2Obj: any
+	postData2Obj: Request
 
 	isPostData3: string
 	isPostData3Messeage: any
-	postData3Obj: any
+	postData3Obj: Request
 
 	isPostData4: string
 	isPostData4Messeage: any
-	postData4Obj: any
+	postData4Obj: Request
 
 	isGetData1: string
 	isGetData1Messeage: any
@@ -114,20 +133,20 @@ class CompletedForm extends React.Component<ComponentProps> {
 		this.getUid()
 	}
 
-	getUid(): any {
+	getUid(): void {
 		axios({
 			url: '/d/?_uid',
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.uid = _response.data.feed.title
 				this.authError = 'UID取得：' + this.uid
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				if (error.response.status === 403 || error.response.status === 401) {
@@ -138,12 +157,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 		})
 	}
 
-	changePostData1Value(_e: any): any {
-		this.postData1Obj.feed.entry[0].sample = _e.target.value
+	changePostData1Value(_e: React.FormEvent<HTMLInputElement>): void {
+		this.postData1Obj.feed.entry[0].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	postData1(): any {
+	postData1(): void {
 
 		axios({
 			url: '/d/_user/' + this.uid,
@@ -152,14 +171,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPostData1 = 'success'
 				const url: string = this.origin + '/d' + _response.data.feed.title + '?e&x'
 				this.isPostData1Messeage = <span>既にエントリ項目が設定されているため登録が成功しました。<br />登録先：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPostData1 = 'danger'
@@ -174,12 +193,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 	}
 
 
-	changePostData2Value(_e: any): any {
-		this.postData2Obj.feed.entry[0].sample = _e.target.value
+	changePostData2Value(_e: React.FormEvent<HTMLInputElement>): void {
+		this.postData2Obj.feed.entry[0].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	postData2(): any {
+	postData2(): void {
 
 		axios({
 			url: '/d/_user/' + this.uid,
@@ -188,14 +207,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPostData2 = 'success'
 				const url: string = this.origin + '/d' + _response.data.feed.title + '?e&x'
 				this.isPostData2Messeage = <span>登録に成功しました。<br />登録先：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPostData2 = 'danger'
@@ -210,12 +229,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 	}
 
 
-	changePostData3Value(_e: any): any {
-		this.postData3Obj.feed.entry[0].sample = _e.target.value
+	changePostData3Value(_e: React.FormEvent<HTMLInputElement>): void {
+		this.postData3Obj.feed.entry[0].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	postData3(): any {
+	postData3(): void {
 
 		axios({
 			url: '/d/sample_list',
@@ -224,14 +243,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPostData3 = 'success'
 				const url: string = this.origin + '/d' + _response.data.feed.title + '?e&x'
 				this.isPostData3Messeage = <span>既にエンドポイントが作成されているため登録に成功しました。<br />登録先：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPostData3 = 'danger'
@@ -245,12 +264,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 		})
 	}
 
-	changePostData4Value(_e: any): any {
-		this.postData4Obj.feed.entry[0].sample = _e.target.value
+	changePostData4Value(_e: React.FormEvent<HTMLInputElement>): void {
+		this.postData4Obj.feed.entry[0].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	postData4(): any {
+	postData4(): void {
 
 		axios({
 			url: '/d/sample_list',
@@ -259,14 +278,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPostData4 = 'success'
 				const url: string = this.origin + '/d' + _response.data.feed.title + '?e&x'
 				this.isPostData4Messeage = <span>登録に成功しました。<br />登録先：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPostData4 = 'danger'
@@ -280,7 +299,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 		})
 	}
 
-	getList1(): any {
+	getList1(): void {
 
 		axios({
 			url: '/d/sample_list?f',
@@ -288,14 +307,15 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data && _response.status !== 201) {
 				this.isGetData1 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
 				this.isGetData1Messeage = <span>取得に成功しました。取得元：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 
 				let tdList: any = []
-				_response.data.feed.entry.map((_entry: any, _index: number) => {
+				_response.data.feed.entry.map((_entry: Entry, _index: number) => {
+					_entry.link = _entry.link || []
 					tdList.push(
 						<tr>
 							<td>{_index + 1}</td>
@@ -322,7 +342,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 				this.isGetData1Messeage = '/d/sample_listにデータが登録されていません。'
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isGetData1 = 'danger'
@@ -337,7 +357,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 	}
 
 
-	getList2(): any {
+	getList2(): void {
 
 		axios({
 			url: '/d/sample_list?f',
@@ -345,7 +365,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data && _response.status !== 201) {
 				this.isGetData2 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
@@ -357,7 +377,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 				this.isGetData2Messeage = '/d/sample_listにデータが登録されていません。'
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isGetData2 = 'danger'
@@ -373,7 +393,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 
 	getList2Tabel(): any {
 		let tdList: any = []
-		this.tdList2.map((_entry: any, _index: number) => {
+		this.tdList2.map((_entry: Entry, _index: number) => {
 			tdList.push(
 				<tr>
 					<td>{_index + 1}</td>
@@ -400,12 +420,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 		)
 	}
 
-	changeTdList2(_e: any, _index: number): any {
-		this.tdList2[_index].sample = _e.target.value
+	changeTdList2(_e: React.FormEvent<HTMLInputElement>, _index: number): void {
+		this.tdList2[_index].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	putData1(_index: number): any {
+	putData1(_index: number): void {
 
 		const data = {
 			feed: {
@@ -420,7 +440,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPutData1 = 'success'
 				const url: string = this.origin + '/d' + data.feed.entry[0].link[0].___href + '?e&x'
@@ -428,7 +448,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 				this.getPutData1('/d' + data.feed.entry[0].link[0].___href + '?e', false)
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPutData1 = 'danger'
@@ -453,14 +473,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_isError) {
 				this.isGetPutData1Messeage = <div>↓<br />更新対象データのidは<b>{_response.data.feed.entry[0].id}</b>です。<br />リビジョン番号が一致していないため競合エラーとなり更新できませんでした。</div>
 			} else {
 				this.isGetPutData1Messeage = <div>↓<br />更新後の対象データのid：<b>{_response.data.feed.entry[0].id}</b></div>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			this.isGetPutData1Messeage = ''
 
@@ -477,7 +497,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 	}
 
 
-	getList3(): any {
+	getList3(): void {
 
 		axios({
 			url: '/d/sample_list?f',
@@ -485,7 +505,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data && _response.status !== 201) {
 				this.isGetData3 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
@@ -497,7 +517,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 				this.isGetData3Messeage = '/d/sample_listにデータが登録されていません。'
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isGetData3 = 'danger'
@@ -513,12 +533,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 
 	getList3Tabel(): any {
 		let tdList: any = []
-		this.tdList3.map((_entry: any, _index: number) => {
+		this.tdList3.map((_entry: Entry, _index: number) => {
 			tdList.push(
 				<tr>
 					<td>{_index + 1}</td>
 					<td>{_entry.id}</td>
-					<td><input type="text" className="form-control" value={_entry.sample} onChange={(_e: any) => this.changeTdList3(_e, _index)} /></td>
+					<td><input type="text" className="form-control" value={_entry.sample} onChange={(_e: React.FormEvent<HTMLInputElement>) => this.changeTdList3(_e, _index)} /></td>
 					<td><Button bsStyle="success" onClick={() => this.putData2(_index)}>更新</Button></td>
 					<td><Button bsStyle="danger" onClick={() => this.deleteData1(_index)}>削除</Button></td>
 				</tr>
@@ -542,12 +562,12 @@ class CompletedForm extends React.Component<ComponentProps> {
 		)
 	}
 
-	changeTdList3(_e: any, _index: number): any {
-		this.tdList3[_index].sample = _e.target.value
+	changeTdList3(_e: React.FormEvent<HTMLInputElement>, _index: number): void {
+		this.tdList3[_index].sample = _e.currentTarget.value
 		this.forceUpdate()
 	}
 
-	putData2(_index: number): any {
+	putData2(_index: number): void {
 
 		const data = {
 			feed: {
@@ -564,7 +584,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isPutData2 = 'success'
 				const url: string = this.origin + '/d' + data.feed.entry[0].link[0].___href + '?e&x'
@@ -572,7 +592,7 @@ class CompletedForm extends React.Component<ComponentProps> {
 				this.getPutData2('/d' + data.feed.entry[0].link[0].___href + '?e', false)
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPutData2 = 'danger'
@@ -600,14 +620,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_isError) {
 				this.isGetPutData2Messeage = <div>↓<br />更新対象データのidは<b>{_response.data.feed.entry[0].id}</b>です。<br />リビジョン番号が一致していないため競合エラーとなり更新できませんでした。</div>
 			} else {
 				this.isGetPutData2Messeage = <div>↓<br />更新後の対象データのid：<b>{_response.data.feed.entry[0].id}</b></div>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isPutData2 = 'danger'
@@ -631,14 +651,14 @@ class CompletedForm extends React.Component<ComponentProps> {
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
-		}).then((_response: any) => {
+		}).then((_response: AxiosResponse) => {
 			if (_response.data) {
 				this.isDeleteData1 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
 				this.isDeleteData1Messeage = <span>削除に成功しました。<br />削除確認先：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 			}
 			this.forceUpdate()
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 
 			if (error.response) {
 				this.isDeleteData1 = 'danger'
