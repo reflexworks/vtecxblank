@@ -699,6 +699,12 @@ class TutorialForm extends React.Component<ComponentProps> {
 						</div>
 						<div className="vtecx-demo-container">
 							<div className="vtecx-demo-content">
+								<h1>チュートリアル：基礎編</h1>
+								<p>ここではvte.cxのアプリケーション作成に必要な基礎的な知識をチュートリアル形式で説明いたします。実際にデータを入力し登録・更新・削除を行い、どのように動作しているのかを手順を確認します。</p>
+							</div>
+						</div>
+						<div className="vtecx-demo-container">
+							<div className="vtecx-demo-content">
 								<h2>認証を行う</h2>
 								<Alert bsStyle="info" className="functionlist">
 									この章では/src/components/demo.tsxの以下の関数を使用しています。
