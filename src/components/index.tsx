@@ -8,73 +8,32 @@ interface ComponentProps {
 
 /* コンポーネントのStateの型宣言 */
 interface ComponentState {
-	inputValue: string
-	outputValue: string
+	value: string
 }
 
 class Index extends React.Component<ComponentProps, ComponentState> {
+
+	title: string
 	constructor(props: ComponentProps) {
 		super(props)
 		this.state = {
-			inputValue: '',
-			outputValue: '',
+			value: 'Hello',
 		}
-		this.handleChange = this.handleChange.bind(this)
-		this.handleClick = this.handleClick.bind(this)
+		this.title = 'world!'
 	}
-	handleChange(e: any): void {
-		this.setState({
-			inputValue: e.target.value,
-		})
-	}
-	handleClick(): void {
-		this.setState({
-			inputValue: '',
-			outputValue: this.state.inputValue,
-		})
-	}
+
 	render() {
 		return (
-			<div>
-				<Input value={this.state.inputValue} handleChange={this.handleChange} />
-				<Button handleClick={this.handleClick} />
-				< Output hello="Hello" value={this.state.outputValue} />
+			<div style={{ padding: '50px' }}>
+				<h1>{this.state.value} {this.title}</h1>
+				<h3>リンク集</h3>
+				<ul>
+					<li>チュートリアル（基礎編）：<a href="tutorial_1.html">こちら</a></li>
+					<li>チュートリアル（応用編）：<a href="tutorial_2.html">準備中</a></li>
+				</ul>
 			</div>
 		)
 	}
-}
-
-/* 入力フォームを出力する「Inputコンポーネント」 */
-interface InputProps {
-	value: string
-	handleChange(e: any): void
-}
-const Input: React.StatelessComponent<InputProps> = (props) => {
-	return (
-		<input type="text" placeholder="Input Name" value={props.value} onChange={props.handleChange} />
-	)
-}
-
-/* ボタンを出力する「Buttonコンポーネント」 */
-interface ButtonProps {
-	handleClick(): void
-}
-const Button: React.StatelessComponent<ButtonProps> = (props) => {
-	return (
-		<button onClick={props.handleClick} > Send </button>
-	)
-}
-
-/* テキストを出力する「Outputコンポーネント」 */
-interface OutputProps {
-	hello: string;
-	value: string;
-}
-const Output: React.StatelessComponent<OutputProps> = (props) => {
-	const value = (props.value !== '') ? <h1>{props.hello} {props.value} !</h1> : ''
-	return (
-		<div>{value} </div>
-	)
 }
 
 ReactDOM.render(<Index hello="Hello" />, document.getElementById('container'))
