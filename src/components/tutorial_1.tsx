@@ -1,5 +1,5 @@
 import '../styles/index.css'
-import '../styles/demo.css'
+import '../styles/tutorial.css'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import axios, { AxiosResponse, AxiosError } from 'axios'
@@ -38,7 +38,7 @@ interface Link {
 	___href: string
 }
 
-class CompletedForm extends React.Component<ComponentProps> {
+class TutorialForm extends React.Component<ComponentProps> {
 
 	origin: string
 	adminUrl: string
@@ -1205,4 +1205,4 @@ class CompletedForm extends React.Component<ComponentProps> {
 	}
 }
 
-ReactDOM.render(<CompletedForm />, document.getElementById('container'))
+ReactDOM.render(<TutorialForm />, document.getElementById('container'))
