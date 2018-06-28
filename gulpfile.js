@@ -268,7 +268,7 @@ gulp.task('upload:properties', function (done) {
 })
 
 gulp.task('upload:template', function (done) {
-	sendfile('setup/_settings/template.xml','',done)
+	sendfile('setup/_settings/template.xml','?_bulk',done)
 })
 
 gulp.task('upload:folderacls', function (done) {
