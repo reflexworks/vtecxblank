@@ -87,3 +87,30 @@
 .functionlist ul li{
   padding-bottom: 5px;
 }
+
+/* VtecxPaginationMenu
+------------------------*/
+.VtecxPaginationMenu {
+  width: 100%;
+  padding-bottom: 5px;
+  font-size: 11px;
+}
+.VtecxPaginationMenu .left_area {
+  float: left;
+}
+.VtecxPaginationMenu .count_area {
+  padding-left: 15px;
+}
+.VtecxPaginationMenu .right_area {
+  float: right;
+}
+
+/* Pagination
+------------------------*/
+.pagination_area .pagination {
+  margin: 0px;
+  padding-top: 0px;
+}
+.pagination_area .clear {
+  clear: both;
+}
