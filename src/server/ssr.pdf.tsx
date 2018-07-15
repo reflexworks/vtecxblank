@@ -17,11 +17,12 @@ const user: User = {
 	lastName: 'Perez'
 }
 
+
 const element = (
 	<html>
 		<body>
 			<div className="_page" style={pdfstyles._page}>
-				<table>
+				<table style={pdfstyles._table}>
 					<tr>
 						<td>
 							<p> Hello, {formatName(user)}! </p>
