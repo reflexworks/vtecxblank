@@ -9,6 +9,7 @@
     </contributor>
     <link href="/_settings/properties" rel="self"/>
     <rights>_errorpage.1.login.html=^/_html/.*$
+_errorpage.2.login.html=^/@/.*$
 console.log=true
 console.warn=false
 console.error=true</rights>
