@@ -1,12 +1,11 @@
 # vtecxblank
-blank project for vte.cx
+a blank project for vte.cx
 
 ## Setup
 
-Install gulp&flow
+Install gulp
 ```
 npm install -g gulp 
-npm install -g flow-bin
 ```
 checkout vtecxblank master branch
 
@@ -24,17 +23,17 @@ gulp
 
 gulp serve is to use a local dev environment.
 ```
-gulp serve -h https://{service name}.1.vte.cx
+gulp serve -h https://{service name}.vte.cx
 ```
 
 with accesstoken, the updated file will be sent to the server at the same time. (The accesstoken can be obtained by admin console.)
 ```
-gulp serve -h https://{service name}.1.vte.cx -k {accesstoken}
+gulp serve -h https://{service name}.vte.cx -k {accesstoken}
 ```
 
 deploy 
 ```
-gulp deploy -h https://{service name}.1.vte.cx -k {accesstoken}
+gulp deploy -h https://{service name}.vte.cx -k {accesstoken}
 ```
 
 ## License
