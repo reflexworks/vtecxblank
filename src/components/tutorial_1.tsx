@@ -308,7 +308,7 @@ class TutorialForm extends React.Component<ComponentProps> {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((_response: AxiosResponse) => {
-			if (_response.data && _response.status !== 201) {
+			if (_response.data && _response.status !== 204) {
 				this.isGetData1 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
 				this.isGetData1Messeage = <span>取得に成功しました。取得元：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
@@ -366,7 +366,7 @@ class TutorialForm extends React.Component<ComponentProps> {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((_response: AxiosResponse) => {
-			if (_response.data && _response.status !== 201) {
+			if (_response.data && _response.status !== 204) {
 				this.isGetData2 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
 				this.isGetData2Messeage = <span>取得に成功しました。取得元：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
@@ -506,7 +506,7 @@ class TutorialForm extends React.Component<ComponentProps> {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((_response: AxiosResponse) => {
-			if (_response.data && _response.status !== 201) {
+			if (_response.data && _response.status !== 204) {
 				this.isGetData3 = 'success'
 				const url: string = this.origin + '/d/sample_list?f&x'
 				this.isGetData3Messeage = <span>取得に成功しました。取得元：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>

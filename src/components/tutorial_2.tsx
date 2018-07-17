@@ -4,12 +4,12 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import {
-	//Form,
+	Form,
 	//Col,
-	//FormGroup,
-	//ControlLabel,
-	//FormControl,
-	//Button,
+	FormGroup,
+	ControlLabel,
+	FormControl,
+	Button,
 	Alert,
 	Table
 } from 'react-bootstrap'
@@ -43,6 +43,7 @@ class TutorialForm extends React.Component<ComponentProps> {
 	isGetData1: string
 	isGetData1Messeage: any
 	getList1Tabel: any
+	conditionsValue: string
 
 	constructor(props: ComponentProps) {
 		super(props)
@@ -82,16 +83,20 @@ class TutorialForm extends React.Component<ComponentProps> {
 
 	getList1(): void {
 
+		let get_url = '/d/sample_list?f'
+		if (this.conditionsValue) {
+			get_url = get_url + '&sample=' + this.conditionsValue
+		}
 		axios({
-			url: '/d/sample_list?f&l=50&n=1',
+			url: get_url,
 			method: 'get',
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then((_response: AxiosResponse) => {
-			if (_response.data && _response.status !== 201) {
+			if (_response.data && _response.status !== 204) {
 				this.isGetData1 = 'success'
-				const url: string = this.origin + '/d/sample_list?f&x'
+				const url: string = this.origin + get_url + '&x'
 				this.isGetData1Messeage = <span>取得に成功しました。取得元：<a href={url} target="_blank" rel="noreferrer noopener">{url}</a></span>
 
 				let tdList: any = []
@@ -120,7 +125,8 @@ class TutorialForm extends React.Component<ComponentProps> {
 					</Table>
 				)
 			} else {
-				this.isGetData1Messeage = '/d/sample_listにデータが登録されていません。'
+				this.isGetData1 = 'danger'
+				this.isGetData1Messeage = '指定した条件のにデータが見つかりませんでした。'
 			}
 			this.forceUpdate()
 		}, (error: AxiosError) => {
@@ -282,6 +288,163 @@ class TutorialForm extends React.Component<ComponentProps> {
 
 							</div>
 						</div>
+
+						<div className="vtecx-demo-container">
+							<div className="vtecx-demo-content">
+								<h2>条件検索を行う</h2>
+								<div className="block">
+									条件検索はAND検索となります。通信メソッドは「GET」を使用します。<br />
+									<br />
+									検索を行うには以下のようにURLパラメータに指定します。
+									<br />
+									?fに続いて&で「 <b>項目名=検索内容</b> 」を繋いで行きます。
+									<br />
+									<br />
+									<code>
+										/d/sample_list?f&sample=テスト
+									</code>
+									<br />
+
+									<hr />
+									上記検索を下記フォームで行います。検索内容は自由入力です。
+									<br />
+									入力した値を「 <b>完全一致で検索</b> 」します。（何も入力しないと全件検索を行います。）
+									<br />
+									<br />
+									<br />
+
+									<Form inline>
+										<FormGroup>
+											<ControlLabel>取得先：/sample_list</ControlLabel>{' '}
+										</FormGroup>
+										<FormGroup>
+											<ControlLabel>　　検索条件：sample項目</ControlLabel>{' '}
+											<FormControl onChange={(_e: any) => { this.conditionsValue = _e.target.value}} />
+										</FormGroup>
+										<Button onClick={() => this.getList1()}>検索実行</Button>
+									</Form>
+									<br />
+									{(this.isGetData1) &&
+										<Alert bsStyle={this.isGetData1}>
+											{this.isGetData1Messeage}
+										</Alert>
+									}
+									{this.getList1Tabel}
+
+									<br />
+									<br />
+
+									<hr />
+									<br />
+									また、以下のような検索を行うことができます。
+									<br />
+									<br />
+									<br />
+									<h4>検索項目が2つ以上の検索</h4>
+									検索項目が2つ以上になる場合は以下のように指定します。
+									<code>
+										/d/sample_list?f&sample=テスト&sample2=テスト2
+									</code>
+									<br />
+
+									<hr />
+									<h4>親項目+子項目の検索</h4>
+									<code>
+										/d/sample_list?f&sample.test=テスト
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'='} (等しい)」の検索</h4>
+									「=」の代わりに「-eq-」を使用することもできます。「 <b>項目名-eq-値</b> 」という形式になります。
+									<code>
+										/d/sample_list?f&sample-eq-テスト
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'<'} (未満)」の検索</h4>
+									「-lt-」を使用します。「 <b>項目名-lt-値</b> 」という形式になります。値は「数値」である必要があります。
+									<code>
+										/d/sample_list?f&sample-lt-10
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'<='} (以下)」の検索</h4>
+									「-le-」を使用します。「 <b>項目名-le-値</b> 」という形式になります。値は「数値」である必要があります。
+									<code>
+										/d/sample_list?f&sample-le-10
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'>'} (より大きい)」の検索</h4>
+									「-gt-」を使用します。「 <b>項目名-gt-値</b> 」という形式になります。値は「数値」である必要があります。
+									<code>
+										/d/sample_list?f&sample-gt-10
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'>='} (以上)」の検索</h4>
+									「-ge-」を使用します。「 <b>項目名-ge-値</b> 」という形式になります。値は「数値」である必要があります。
+									<code>
+										/d/sample_list?f&sample-ge-10
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'!='} (等しくない)」の検索</h4>
+									「-ne-」を使用します。「 <b>項目名-ne-値</b> 」という形式になります。値は「数値」である必要があります。
+									<code>
+										/d/sample_list?f&sample-ne-10
+									</code>
+									<br />
+
+									<hr />
+									<h4>「{'regex'} (正規表現に合致する)」の検索</h4>
+									「-rg-」を使用します。「 <b>項目名-rg-正規表現</b> 」という形式になります。
+									<code>
+										/d/sample_list?f&sample-rg-[A-Z]
+									</code>
+									<br />
+
+									<hr />
+									<h4>あいまい検索</h4>
+									上記正規表現による検索を使用し、あいまい検索を行うことができます。
+									<br />
+									指定した値が含まれる検索を行う場合は以下のように指定します。「 <b>項目名-rg-.*値.*</b> 」という形式になります。
+									<code>
+										/d/sample_list?f&sample-rg-.*テスト.*
+									</code>
+									<br />
+
+									<hr />
+									<h4>前方一致の検索</h4>
+									「-fm-」を使用します。「 <b>項目名-fm-値</b> 」という形式になります。
+									<br />
+									例えば「テスト」と「テトラポット」を前方一致で検索したい場合は、以下のように指定します。
+									<code>
+										/d/sample_list?f&sample-fm-テ
+									</code>
+									<br />
+
+									<hr />
+									<h4>後方一致の検索</h4>
+									「-bm-」を使用します。「 <b>項目名-bm-値</b> 」という形式になります。
+									<br />
+									例えば「テスト」と「テトラポット」を後方一致で検索したい場合は、以下のように指定します。
+									<code>
+										/d/sample_list?f&sample-bm-ト
+									</code>
+									<br />
+
+								</div>
+
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<div id="footer">
