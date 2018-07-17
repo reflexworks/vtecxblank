@@ -156,13 +156,13 @@ class TutorialForm extends React.Component<ComponentProps> {
 								<a href="https://admin.vte.cx/tutorial.html" target="_blank" rel="noreferrer noopener">チュートリアル</a>に従いサービス作成と、ダウンロードしたvtecxblankプロジェクトのデプロイを実行してください。
 								<br />
 								<br />
-								また、この画面は上記チュートリアルで「手順：8」によりローカル起動(localhost:8000)されている、もしくはサービス自身のURLのdemo.htmlから閲覧していることが前提です。
+								また、この画面は上記チュートリアルで「手順：8」によりローカル起動(localhost:8000)されている、もしくはサービス自身のURLのtutorial_2.htmlから閲覧していることが前提です。
 							</div>
 						</div>
 						<div className="vtecx-demo-container">
 							<div className="vtecx-demo-content">
 								<h1>チュートリアル：応用編</h1>
-								<p>ここではvte.cxでより機能的なアプリケーションを作成する上で必要な機能を紹介していきます。</p>
+								<p>ここではvte.cxでより高度なアプリケーションを作成する上で必要な機能を紹介していきます。</p>
 							</div>
 						</div>
 						<div className="vtecx-demo-container">
@@ -224,7 +224,7 @@ class TutorialForm extends React.Component<ComponentProps> {
 									<code>
 										/d/sample_list?f&l=50&_pagination=51,100
 									</code>
-									今度は100ページまでカーソル作成リクエストを行います。このように50区切りでカーソル作成リクエストを実行することで負荷分散を行っています。
+									今度は100ページまでカーソル作成リクエストを行います。このように50区切りでカーソル作成リクエストを複数回実行することで１回に負荷が集中しないようにしています。
 									<br />
 									<br />
 

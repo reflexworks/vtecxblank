@@ -78,7 +78,7 @@ export default class TutorialPagination extends React.Component<ComponentProps> 
 						)
 					})
 				} else {
-					this.authError = '一覧の登録件数が0件です。'
+					this.authError = <span><br /><br />/sample_list一覧の登録件数が0件です。<br /><a href="tutorial_1.html">チュートリアルの基礎編</a>で/sample_listへのデータ登録が行えるので登録をお願いします。</span>
 				}
 				this.forceUpdate()
 			}, (_error: AxiosError) => {
