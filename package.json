@@ -61,7 +61,7 @@
     "url-loader": "^0.6.2",
     "vinyl-fs": "^3.0.0",
     "vtecxapi": "0.9.36",
-    "vtecxauth": "0.0.3",
+    "vtecxauth": "1.0.0",
     "webpack": "^4.2.0",
     "webpack-async-await": "^1.1.0",
     "webpack-stream": "^4.0.2",
