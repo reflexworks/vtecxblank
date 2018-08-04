@@ -8,6 +8,12 @@
         "eslint:recommended",
         "plugin:react/recommended"
     ],
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "16.0.0"
+        }
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
