@@ -250,10 +250,10 @@ gulp.task('upload:entry', function (done) {
 gulp.task('upload:data', function (done) {
 	if (argv.f) {
 		const file = 'data/' + argv.f
-		sendfile(file, '?_bulkserial')		
+		sendfile(file, '?_bulkserial&_async')		
 	} else {
 		recursive('data', [], function (err, files) {
-			files.map((file) => sendfile(file, '?_bulkserial'))				
+			files.map((file) => sendfile(file, '?_bulkserial&_async'))				
 			done()
 		})		
 	}
@@ -427,6 +427,8 @@ function gettype(file) {
 			return 'image/svg+xml'
 		case 'svgz':
 			return 'image/svg+xml'
+		case 'mpk':
+			return 'application/x-msgpack'
 		default:
 			return 'application/octet-stream'
 		}
