@@ -45,7 +45,7 @@
         </contributor>
         <contributor>
             <!-- serverをログイン済みユーザのみ閲覧できるようにするACL設定(+)  -->
-            <uri>urn:vte.cx:acl:+,R./</uri>
+            <uri>urn:vte.cx:acl:+,RE./</uri>
         </contributor>
         <link rel="self" href="/_html/server" />
     </entry>
