@@ -150,8 +150,12 @@ gulp.task('watch:html', function(){
 gulp.task('watch:settings', function(){
 	gulp.watch('./setup/_settings/*')
 		.on('change', function(changedFile) {
-			const file = './setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
-			sendfile(file, '',false,false)
+			const file = 'setup/_settings/'+changedFile.path.replace(/^.*[\\\/]/, '')
+			if (file.indexOf('bigquery.json')>= 0) {
+				sendfile(file,'?_content',false,false,'/d')
+			}else {
+				sendfile(file, '',false,false)				
+			}
 		})
 })
 
@@ -238,7 +242,10 @@ gulp.task('upload:components', function(done){
 gulp.task('upload:entry', function (done) {
 	recursive('setup', [], function (err, files) {
 		files.map((file) => {
-			if ((file.indexOf('template.xml')< 0) &&
+			if (file.indexOf('bigquery.json')>= 0) {
+				sendfile(file,'?_content',false,false,'/d')
+			}
+			else if ((file.indexOf('template.xml')< 0) &&
 				(file.indexOf('folderacls.xml') < 0)) {
 				sendfile(file, '')	
 			}
@@ -273,6 +280,10 @@ gulp.task('upload:template', function (done) {
 
 gulp.task('upload:folderacls', function (done) {
 	sendfile('setup/_settings/folderacls.xml', '?_bulk',done)
+})
+
+gulp.task('upload:bigquery.json', function () {
+	sendfile('setup/_settings/bigquery.json','?_content',false,false,'/d')
 })
 
 gulp.task('upload:counts', function (done) {
@@ -311,9 +322,10 @@ function senddirectory(file) {
 	sendfile(file,'?_content',false,true)
 }
 
-function sendfile(file,iscontent,done,isdirectory) {
+function sendfile(file,iscontent,done,isdirectory,isd) {
 	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
-	let url = path + file.substring(file.indexOf('/'))
+	isd = isd || ''
+	let url = path + isd +file.substring(file.indexOf('/'))
 	
 	var options = {
 		url: url+iscontent,
