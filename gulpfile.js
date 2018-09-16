@@ -448,27 +448,32 @@ function gettype(file) {
 	return 'application/octet-stream'
 }
 
-gulp.task('watch:server',['watch:settings'], function(){
-	gulp.watch('./src/server/*')
+gulp.task('watch:server', function(){
+	let lock = {}
+	gulp.watch('./src/server/*.tsx')
 		.on('change', function(changedFile) {
 			let srcfile = changedFile.path
 			if (argv.f) {
 				srcfile = './src/server/'+ argv.f
 			}
-			gulp.src(srcfile)
-				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
-					,webpack))
-				.on('error', gutil.log)      
-				.pipe(gulp.dest('./test/server'))
-				.on('end',function(){
-					if (argv.k) {
-						const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/)
-						if (p&&p[2]!=='map') {
-							const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
-							sendcontent(filename)
-						}        
-					}
-				})
+			if (!lock[srcfile]) {
+				lock[srcfile] = true				
+				gulp.src(srcfile)
+					.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
+						,webpack))
+					.on('error', gutil.log)      
+					.pipe(gulp.dest('./test/server'))
+					.on('end',function(){
+						if (argv.k) {
+							const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/)
+							if (p&&p[2]!=='map') {
+								const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
+								sendcontent(filename)
+							}        
+						}
+						lock[srcfile] = false
+					})
+			}
 		})
 })
 
@@ -515,7 +520,7 @@ gulp.task('symlink', function () {
 		.pipe(vfs.symlink('test'))
 })
 
-gulp.task('serve', ['watch','watch:server'],function() {
+gulp.task('serve', ['watch'],function() {
 	return serve('dist')
 })
 
@@ -584,7 +589,7 @@ gulp.task('upload', function ( callback ) {
 	runSequence('upload:htmlfolders','upload:template','upload:folderacls','copy:images',['upload:images','upload:content','upload:components','upload:entry','upload:server'],callback)
 }) 
 
-gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass'])
+gulp.task('watch', ['watch:components','watch:html','watch:settings','watch:sass','watch:server'])
 
 gulp.task('default', function ( callback ) {
 	runSequence('build',callback)
