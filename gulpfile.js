@@ -449,31 +449,26 @@ function gettype(file) {
 }
 
 gulp.task('watch:server', function(){
-	let lock = {}
 	gulp.watch('./src/server/*.tsx')
 		.on('change', function(changedFile) {
 			let srcfile = changedFile.path
 			if (argv.f) {
 				srcfile = './src/server/'+ argv.f
 			}
-			if (!lock[srcfile]) {
-				lock[srcfile] = true				
-				gulp.src(srcfile)
-					.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
-						,webpack))
-					.on('error', gutil.log)      
-					.pipe(gulp.dest('./test/server'))
-					.on('end',function(){
-						if (argv.k) {
-							const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/)
-							if (p&&p[2]!=='map') {
-								const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
-								sendcontent(filename)
-							}        
-						}
-						lock[srcfile] = false
-					})
-			}
+			gulp.src(srcfile)
+				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
+					,webpack))
+				.on('error', gutil.log)      
+				.pipe(gulp.dest('./test/server'))
+				.on('end',function(){
+					if (argv.k) {
+						const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/)
+						if (p&&p[2]!=='map') {
+							const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
+							sendcontent(filename)
+						}        
+					}
+				})
 		})
 })
 
