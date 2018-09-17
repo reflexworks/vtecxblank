@@ -449,7 +449,7 @@ function gettype(file) {
 }
 
 gulp.task('watch:server', function(){
-	gulp.watch('./src/server/*.tsx')
+	gulp.watch('./src/server/*')
 		.on('change', function(changedFile) {
 			let srcfile = changedFile.path
 			if (argv.f) {
@@ -459,12 +459,12 @@ gulp.task('watch:server', function(){
 				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),false,false)
 					,webpack))
 				.on('error', gutil.log)      
-				.pipe(gulp.dest('./test/server'))
+				.pipe(gulp.dest('./dist/server'))
 				.on('end',function(){
 					if (argv.k) {
 						const p = changedFile.path.match(/(.*)(?:\.([^.]+$))/)
 						if (p&&p[2]!=='map') {
-							const filename = 'test/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
+							const filename = 'dist/server/'+srcfile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.js'
 							sendcontent(filename)
 						}        
 					}
