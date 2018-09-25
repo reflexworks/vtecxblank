@@ -287,7 +287,7 @@ gulp.task('upload:bigquery.json', function () {
 })
 
 gulp.task('upload:counts', function (done) {
-	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	const path = argv.t.substr(argv.t.length - 1) === '/' ? argv.t.substr(0, argv.t.length - 1) : argv.t
 	var options = {
 		method: 'GET',
 		url: path+'/s/adjustallocids',
@@ -323,7 +323,7 @@ function senddirectory(file) {
 }
 
 function sendfile(file,iscontent,done,isdirectory,isd) {
-	const path = argv.h.substr(argv.h.length - 1) === '/' ? argv.h.substr(0, argv.h.length - 1) : argv.h
+	const path = argv.t.substr(argv.t.length - 1) === '/' ? argv.t.substr(0, argv.t.length - 1) : argv.t
 	isd = isd || ''
 	let url = path + isd +file.substring(file.indexOf('/'))
 	
@@ -524,7 +524,7 @@ gulp.task('serve:test', ['symlink','watch:server'],function() {
 })
 
 function serve(tgt) {
-	let target = argv.h 
+	let target = argv.t 
 	if (target) {
 		if (target.match(/https/)) {
 			target = target.replace(/https/,'http')
