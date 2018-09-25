@@ -23,17 +23,17 @@ gulp
 
 gulp serve is to use a local dev environment.
 ```
-gulp serve -h https://{service name}.vte.cx
+gulp serve -t https://{service name}.vte.cx
 ```
 
 with accesstoken, the updated file will be sent to the server at the same time. (The accesstoken can be obtained by admin console.)
 ```
-gulp serve -h https://{service name}.vte.cx -k {accesstoken}
+gulp serve -t https://{service name}.vte.cx -k {accesstoken}
 ```
 
 deploy 
 ```
-gulp deploy -h https://{service name}.vte.cx -k {accesstoken}
+gulp deploy -t https://{service name}.vte.cx -k {accesstoken}
 ```
 
 ## License
