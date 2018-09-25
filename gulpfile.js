@@ -1,7 +1,6 @@
 const gulp = require('gulp')
 const minifyHtml = require('gulp-minify-html')
 const webserver  = require('gulp-webserver')
-const imagemin  = require('gulp-imagemin')
 const vfs = require('vinyl-fs') 
 const clean = require('gulp-clean')
 const argv = require('minimist')(process.argv.slice(2))
@@ -188,8 +187,7 @@ gulp.task( 'copy:images', function() {
 	return gulp.src(
 		[ 'src/img/**' ],
 		{ base: 'src' }
-	).pipe( imagemin() ) 
-		.pipe( gulp.dest( 'dist' ) )
+	).pipe( gulp.dest( 'dist' ) )
 } )
 
 gulp.task( 'copy:pdf', function() {
