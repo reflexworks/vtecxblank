@@ -13,7 +13,7 @@ deployment:
   production:
     branch: release
     commands:
-          - gulp deploy -h https://vtecxblank.vte.cx -k ${accesstoken}
+          - gulp deploy -t https://vtecxblank.vte.cx -k ${accesstoken}
 
 general:
   branches:
