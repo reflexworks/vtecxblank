@@ -1,6 +1,5 @@
 const gulp = require('gulp')
 const minifyHtml = require('gulp-minify-html')
-const webserver  = require('gulp-webserver')
 const vfs = require('vinyl-fs') 
 const clean = require('gulp-clean')
 const argv = require('minimist')(process.argv.slice(2))
@@ -15,6 +14,9 @@ const recursive = require('recursive-readdir')
 const request = require('request')
 const mocha = require('gulp-mocha')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const connect = require('gulp-connect')
+const opn = require('opn')
+const proxy = require('http-proxy-middleware')
 
 function webpackconfig(filename,externals,devtool) { 
 	return {
@@ -93,6 +95,7 @@ gulp.task('watch:components', function(){
 				.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true,true),webpack))
 				.on('error', gutil.log)
 				.pipe(gulp.dest('./dist/components'))
+				.pipe(connect.reload())
 				.on('end',function(){
 					if (argv.k) {
 						const p = changedFile.match(/(.*)(?:\.([^.]+$))/)
@@ -115,6 +118,7 @@ gulp.task('watch:sass', function(){
 					.pipe(webpackStream(webpackconfig(srcfile.replace(/^.*[\\\/]/, ''),true,true),webpack))
 					.on('error', gutil.log)
 					.pipe(gulp.dest('./dist/components'))
+					.pipe(connect.reload())
 					.on('end',function(){
 						if (argv.k) {
 							const p = changedFile.match(/(.*)(?:\.([^.]+$))/)
@@ -128,7 +132,6 @@ gulp.task('watch:sass', function(){
 		})
 })
 
-
 gulp.task('watch:html', function(){
 	gulp.watch('./src/*.html')
 		.on('change', function(changedFile) {
@@ -136,6 +139,7 @@ gulp.task('watch:html', function(){
 			gulp.src(changedFile)
 				.pipe(minifyHtml({ empty: true }))
 				.pipe(gulp.dest('./dist'))
+				.pipe(connect.reload())
 				.on('end',function(){
 					if (argv.k) {
 						const filename = 'dist/'+changedFile.replace(/^.*[\\\/]/, '').match(/(.*)(?:\.([^.]+$))/)[1]+'.html'
@@ -438,7 +442,6 @@ function createfolder(file, stats) {
 	return false
 }
 
-
 function gettype(file) {
 	const ext = file.match(/(.*)(?:\.([^.]+$))/)
 	if (ext&&ext[2]) {
@@ -527,25 +530,28 @@ function serve(tgt) {
 		}
 		target = target.substr( target.length-1 ) === '/' ? target.substr(0,target.length-1) : target
 	}
-	return gulp.src(tgt)
-		.pipe(webserver({
-			livereload: true,
-			open: true,
-			proxies: [
-				{
-					source: '/d',
-					target: target+'/d'
-				},
-				{
-					source: '/s',
-					target: target+'/s'
-				},
-				{
-					source: '/xls',
-					target: target+'/xls'
-				}
-			]      
-		}))
+	opn('http://localhost:8000')
+	connect.server({
+		root      : tgt,
+		port	  : 8000,
+		livereload: true,
+		middleware: function(connect, opt) {
+			return [
+				proxy('/d', {
+					target: target+'/d',
+					changeOrigin:true
+				}),
+				proxy('/s', {
+					target: target+'/s',
+					changeOrigin:true
+				}),
+				proxy('/xls', {
+					target: target+'/xls',
+					changeOrigin:true
+				})
+			]
+		}		
+	})
 }
 
 // distフォルダ内を一度全て削除する
