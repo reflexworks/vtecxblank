@@ -582,6 +582,4 @@ gulp.task('deploy', gulp.series('clean-dist','build:html_components','build:serv
 gulp.task('deploy:server', gulp.series('clean-dist-server','build:server_dist','upload:server'))
 gulp.task('build:server', gulp.series('clean-dist-server',gulp.parallel('build:server_dist','build:server_test')))
 
-gulp.task('default', function ( callback ) {
-	runSequence('build',callback)
-}) 
+gulp.task('default', gulp.series('build')) 
