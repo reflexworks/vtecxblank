@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<feed>
+ <entry>
+   <link href="/_settings/end_point" rel="self"/>
+ </entry>
+ <entry>
+   <content></content>
+   <link href="/user_info" rel="self"/>
+   <summary></summary>
+   <title>ユーザ情報</title>
+ </entry>
+</feed>
