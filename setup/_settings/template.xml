@@ -1,13 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <feed>
   <entry>
-    <link href="/_settings/template" rel="self"/>
+    <content type="text/html">userinfo
+ id
+ email
+ name
+favorite
+ food
+ music
+hobby{}
+ type
+ name
+ updated
+account
+ firstname
+ lastname
+ tel
+ prefecture_code
+ address1
+ address2
+ email
+ postcode</content>
     <contributor>
       <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
     </contributor>
     <contributor>
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
-<content type="text/html"></content>
-<rights></rights>
-</entry>
+    <link href="/_settings/template" rel="self"/>
+    <rights> 
+userinfo.id:/.+/registration</rights>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property" rel="self"/>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/userinfo" rel="self"/>
+    <title>ユーザ情報</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/userinfo.id" rel="self"/>
+    <title>　id</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/userinfo.email" rel="self"/>
+    <title>　メールアドレス</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/userinfo.name" rel="self"/>
+    <title>　ユーザ名</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/favorite" rel="self"/>
+    <title>お気に入り</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/favorite.food" rel="self"/>
+    <title>　好きな食べ物</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/favorite.music" rel="self"/>
+    <title>　好きな音楽</title>
+  </entry>
+  <entry>
+    <link href="/_settings/template_property/hobby" rel="self"/>
+    <title>趣味</title>
+  </entry>
 </feed>

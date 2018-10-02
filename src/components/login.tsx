@@ -47,7 +47,7 @@ export default class Login extends React.Component<ComponentProps> {
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		}).then(() => {
-			location.href = 'index.html'
+			location.href = '/'
 		}, (error: any) => {
 			if (error.response) {
 				if (error.response.data.feed.title === 'Captcha required at next login.') {
