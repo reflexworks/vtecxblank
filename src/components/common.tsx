@@ -87,7 +87,7 @@ export class CommonNetworkMessage extends React.Component<NetworkMessageProps, N
 	/**
 	 * 成功時の表示
 	 */
-	showSuccess = (_messeage: any) => {
+	showSuccess = (_messeage: Object) => {
 		this.msg.success(_messeage, {
 			time: 2500,
 			icon: <Glyphicon glyph="ok"></Glyphicon>
@@ -97,7 +97,7 @@ export class CommonNetworkMessage extends React.Component<NetworkMessageProps, N
 	/**
 	 * 失敗時の表示
 	 */
-	showAlert = (_messeage: any) => {
+	showAlert = (_messeage: Object) => {
 		this.msg.error(_messeage, {
 			time: 10000,
 			icon: <Glyphicon glyph="exclamation-sign"></Glyphicon>
@@ -107,7 +107,7 @@ export class CommonNetworkMessage extends React.Component<NetworkMessageProps, N
 	/**
 	 * 失敗時の表示（消えない）
 	 */
-	showFixAlert = (_messeage: any) => {
+	showFixAlert = (_messeage: Object) => {
 		this.msg.error(_messeage, {
 			time: 0,
 			icon: <Glyphicon glyph="exclamation-sign"></Glyphicon>
@@ -293,10 +293,10 @@ class LogicCommonTable {
  */
 interface RegistrationProps {
 	disabled?: any
-	label?: any
+	label?: string
 	targetFrom?: any
 	NavItem?: any
-	controlLabel?: any
+	controlLabel?: string
 	fromName?: string
 	url: string
 	callback?: any
@@ -307,7 +307,7 @@ interface RegistrationProps {
 interface RegistrationState {
 	isCompleted: any
 	isError: any,
-	isDisabled: any,
+	isDisabled: boolean,
 	disabled: boolean
 }
 
@@ -597,11 +597,11 @@ export function CommonSetUpdateData(_target_form: any) {
  */
 interface UpdateBtnProps {
 	disabled?: boolean
-	entry?: any
-	label?: any
+	entry?: VtecxApp.Entry
+	label?: string
 	targetFrom?: any
 	NavItem?: any
-	type?: any
+	type?: string
 	callback?: any
 	error?: any
 	url: string
@@ -760,17 +760,17 @@ export class CommonUpdateBtn extends React.Component<UpdateBtnProps, UpdateBtnSt
 }
 
 interface DeleteBtnProps {
-	entry?: any
+	entry?: VtecxApp.Entry
 	NavItem?: any
 	error?: any
 	callback?: any
-	controlLabel?: any
+	controlLabel?: string
 }
 
 interface DeleteBtnState {
 	isCompleted: any
 	isError: any
-	isDisabled: any
+	isDisabled: boolean
 }
 
 /**
@@ -881,7 +881,7 @@ interface GeneralProps {
 	navStyle?: any
 	NavItem?: any
 	onClick?: any
-	controlLabel?: any
+	controlLabel?: string
 }
 
 interface GeneralState {
@@ -956,13 +956,13 @@ export class CommonGeneralBtn extends React.Component<GeneralProps, GeneralState
  */
 
 interface BackBtnProps {
-	href?: any
+	href: string
 	NavItem?: any
-	controlLabel?: any
+	controlLabel?: string
 }
 
 interface BackBtnState {
-	href: any
+	href: string
 }
 export class CommonBackBtn extends React.Component<BackBtnProps, BackBtnState> {
 
@@ -1016,7 +1016,7 @@ export class CommonBackBtn extends React.Component<BackBtnProps, BackBtnState> {
  */
 
 interface ClearBtnProps {
-	entry?: any
+	entry?: VtecxApp.Entry
 	callback?: any
 	NavItem?: any
 	controlLabel?: any
@@ -1080,7 +1080,7 @@ export class CommonClearBtn extends React.Component<ClearBtnProps, ClearBtnState
 interface FormGroupProps {
 	validationState?: any
 	size?: any
-	controlLabel?: any
+	controlLabel?: string
 }
 
 interface FormGroupState {
@@ -1166,7 +1166,7 @@ interface SelectBoxProps {
 	options?: any
 	size: string
 	onChange?: any
-	placeholder?: any
+	placeholder?: string
 	name: string
 	bsSize?: any
 	style?: any
@@ -1180,6 +1180,7 @@ interface SelectBoxState {
 	options: any
 	size: string
 }
+
 export class CommonSelectBox extends React.Component<SelectBoxProps, SelectBoxState> {
 
 	constructor(props: SelectBoxProps) {
@@ -1320,14 +1321,14 @@ interface InputTextProps {
 	comparison?: any
 	size: string
 	entitiykey?: any
-	isPrice?: any
+	isPrice?: boolean
 	onChange?: any
 	onForcus?: any
 	onBlur?: any
 	validate?: any
 	required?: boolean
 	onKeyDown?: any
-	style?: any
+	style?: Object
 	className?: any
 	table?: any
 	customIcon?: any
@@ -2357,7 +2358,7 @@ interface FilterBoxProps {
 	options?: any
 	size: string
 	detail?: any
-	style?: any
+	style?: Object
 	add?: any
 	edit?: any
 	select?: any
@@ -2367,14 +2368,14 @@ interface FilterBoxProps {
 	async?: any
 	name: string
 	placeholder?: string
-	table?: any
+	table?: Object
 	controlLabel: string
 	validationState?: any
 	entitiykey?: any
 }
 
 interface FilterBoxState {
-	value: any
+	value: string
 	options: any
 	size: string
 	actionBtn: any
@@ -2383,7 +2384,7 @@ interface FilterBoxState {
 export class CommonFilterBox extends React.Component<FilterBoxProps, FilterBoxState> {
 
 	private classFilterName: string
-	private style: any
+	private style: Object
 	private addBtn: any
 	private editBtn: any
 	private detailBtn: any

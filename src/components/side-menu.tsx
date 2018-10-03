@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap'
 
 import {
-	CommonBackInternalWork,
 	CommonBeforConditions
 } from './common'
 
@@ -38,7 +37,7 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 		this.state = {
 			// 各メニューの初期表示設定(true:する, false:しない)
 			isVisible: {
-				company: false,				//企業情報
+				user: false,		//ユーザ管理
 			}
 		}
 
@@ -46,9 +45,7 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 		this.isChange = false
 
 		this.list = {
-			user: [],			//企業情報
-			quotation: [],			//見積書、入力補完
-			internal_work: [],		//庫内作業
+			user: [],				//ユーザ管理
 		}
 
 		this.master = {
@@ -62,9 +59,7 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 				title: 'ユーザ一覧',
 				type: 'user'
 			},
-
 		}
-
 	}
 
 	/**
@@ -112,7 +107,7 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 		}
 	}
 
-	sideMenuListTitle(title: string, key: any) {
+	sideMenuListTitle(title: string, key: string) {
 		const list = this.list[key]
 		if (list && list.length) {
 			return (
@@ -128,18 +123,15 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 		}
 	}
 
-	onClick(e: any, _data: any) {
+	onClick(e: any, _data: string) {
 		e.preventDefault()
 		CommonBeforConditions().init()
-		if (location.hash.indexOf('InternalWorkUpdate') !== -1) {
-			CommonBackInternalWork('#/' + _data)
-		} else {
-			location.hash = '#/' + _data
-		}
+		location.hash = '#/' + _data
+
 	}
 
 
-	sideMenuList(key: any) {
+	sideMenuList(key: string) {
 		const list = this.list[key]
 		if (list && list.length) {
 			const itemlist = list.map((obj: any, i: string) => {
@@ -166,7 +158,6 @@ export default class SideMenu extends React.Component<SideMenuProps, SideMenuSta
 				<ul>
 					{this.sideMenuListTitle('ユーザ管理', 'user')}
 					{this.sideMenuList('user')}
-
 				</ul>
 			</div>
 		)

@@ -1,6 +1,6 @@
 import '../styles/index.css'
 import '../styles/application.sass'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import * as vtecxauth from 'vtecxauth'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -91,7 +91,7 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 
 				}).then(() => {
 					this.setState({ isCompleted: true, isLoading: false })
-				}).catch((error: any) => {
+				}).catch((error: AxiosError) => {
 					this.setState({ isLoading: false })
 					if (error.response) {
 						if (error.response.data.feed.title.indexOf('User is already registered') !== -1) {
@@ -121,8 +121,8 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 							{this.state.isCompleted ? (
 								<span>仮登録完了</span>
 							) : (
-								<span>アカウント新規登録(無料)</span>
-							)}
+									<span>アカウント新規登録(無料)</span>
+								)}
 						</h2>
 						{this.state.isCompleted ? (
 							<div className="login_form__block text-center">
@@ -134,104 +134,104 @@ class Signup extends React.Component<ComponentProps, ComponentState>  {
 								</div>
 							</div>
 						) : (
-							<Form horizontal onSubmit={(e: any) => this.handleSubmit(e)}>
+								<Form horizontal onSubmit={(e: any) => this.handleSubmit(e)}>
 
-								<FormGroup controlId="account">
-									<Col md={12}>
-										<ControlLabel>メールアドレス</ControlLabel>
-										<FormControl type="email" placeholder="email" />
-									</Col>
-								</FormGroup>
+									<FormGroup controlId="account">
+										<Col md={12}>
+											<ControlLabel>メールアドレス</ControlLabel>
+											<FormControl type="email" placeholder="email" />
+										</Col>
+									</FormGroup>
 
-								<FormGroup controlId="password">
-									<Col md={12}>
-										<ControlLabel>パスワード</ControlLabel>
-										<PasswordStrength
-											className="customClass"
-											minLength={8}
-											minScore={3}
-											scoreWords={['弱', '弱', '中', '強', '最強']}
-											tooShortWord='短い'
-											changeCallback={(e: any) => this.passwordOnChange(e)}
-											inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
-										/>
-										<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
-									</Col>
+									<FormGroup controlId="password">
+										<Col md={12}>
+											<ControlLabel>パスワード</ControlLabel>
+											<PasswordStrength
+												className="customClass"
+												minLength={8}
+												minScore={3}
+												scoreWords={['弱', '弱', '中', '強', '最強']}
+												tooShortWord='短い'
+												changeCallback={(e: any) => this.passwordOnChange(e)}
+												inputProps={{ name: 'password', autoComplete: 'off', className: 'form-control' }}
+											/>
+											<HelpBlock>（8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）</HelpBlock>
+										</Col>
 
-								</FormGroup>
+									</FormGroup>
 
-								<FormGroup controlId="re_password">
-									<Col sm={12}>
-										<ControlLabel>パスワード確認</ControlLabel>
-										<FormControl type="password" placeholder="" />
-									</Col>
-								</FormGroup>
+									<FormGroup controlId="re_password">
+										<Col sm={12}>
+											<ControlLabel>パスワード確認</ControlLabel>
+											<FormControl type="password" placeholder="" />
+										</Col>
+									</FormGroup>
 
-								<FormGroup>
-									<div className="login_form__recaptcha">
-										<ReCAPTCHA
-											sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-											onChange={(value: string) => this.capchaOnChange(value)}
-										/>
-									</div>
-								</FormGroup>
+									<FormGroup>
+										<div className="login_form__recaptcha">
+											<ReCAPTCHA
+												sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
+												onChange={(value: string) => this.capchaOnChange(value)}
+											/>
+										</div>
+									</FormGroup>
 
-								{this.state.isIllegalPassword &&
+									{this.state.isIllegalPassword &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。</div>
 											</Col>
 										</FormGroup>
-								}
+									}
 
-								{this.state.isUnmatchReinput &&
+									{this.state.isUnmatchReinput &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">入力されたパスワードが一致していません。</div>
 											</Col>
 										</FormGroup>
-								}
+									}
 
-								{this.state.isAlreadyRegistered &&
+									{this.state.isAlreadyRegistered &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">そのアカウントは既に登録済みです。</div>
 											</Col>
 										</FormGroup>
-								}
+									}
 
-								{this.state.isMailSettingRequired &&
+									{this.state.isMailSettingRequired &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">ユーザ登録を実行するには事前にメール設定をする必要があります。</div>
 											</Col>
 										</FormGroup>
-								}
-								{this.state.isError &&
+									}
+									{this.state.isError &&
 										<FormGroup>
 											<Col sm={12}>
 												<div className="alert alert-danger">新規登録に失敗しました。アカウントまたはパスワードが使用できない可能性があります。</div>
 											</Col>
 										</FormGroup>
-								}
-								<FormGroup>
-									<Col md={12}>
-										<div className="text-center">
-											<span className="login_form__text--small">
-												<a href="user_terms.html">利用規約</a>に同意のうえ、「利用規約に同意して新規登録」ボタンを押してください。
+									}
+									<FormGroup>
+										<Col md={12}>
+											<div className="text-center">
+												<span className="login_form__text--small">
+													<a href="user_terms.html">利用規約</a>に同意のうえ、「利用規約に同意して新規登録」ボタンを押してください。
 											</span>
-										</div>
-										<Button type="submit" className="btn btn-lg login_form__btn--submit" disabled={this.state.isLoading}>
-											{this.state.isLoading ? <span><span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>　送信中</span> : '利用規約に同意して新規登録'}
-										</Button>
-										<div className="text-center">
-											<a className="btn" href="index.html">トップページへ戻る</a>
-										</div>
-									</Col>
-								</FormGroup>
+											</div>
+											<Button type="submit" className="btn btn-lg login_form__btn--submit" disabled={this.state.isLoading}>
+												{this.state.isLoading ? <span><span className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>　送信中</span> : '利用規約に同意して新規登録'}
+											</Button>
+											<div className="text-center">
+												<a className="btn" href="index.html">トップページへ戻る</a>
+											</div>
+										</Col>
+									</FormGroup>
 
-							</Form>
-						)}
+								</Form>
+							)}
 					</div>
 				</div>
 			</div>

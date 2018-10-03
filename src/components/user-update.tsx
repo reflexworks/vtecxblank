@@ -22,7 +22,6 @@ import {
 
 interface UserUpdateProps {
 	history: any
-	error: any
 }
 
 interface UserUpdateState {
@@ -31,7 +30,7 @@ interface UserUpdateState {
 }
 export default class UserUpdate extends React.Component<UserUpdateProps, UserUpdateState> {
 
-	private entry: any
+	private entry: VtecxApp.Entry
 	private backUrl: string
 	private entrykey: string
 	constructor(props: UserUpdateProps) {
@@ -85,8 +84,8 @@ export default class UserUpdate extends React.Component<UserUpdateProps, UserUpd
 	Update() {
 		if (confirm('この情報を更新します。よろしいですか？')) {
 			if (this.entry.userinfo) {
-				const req: any = { feed: { entry: [] } }
-				const user_info_entry: any = {
+				const req: VtecxApp.Request = { feed: { entry: [] } }
+				const user_info_entry: VtecxApp.Entry = {
 					userinfo: this.entry.userinfo,
 					favorite: this.entry.favorite,
 					hobby: this.entry.hobby,

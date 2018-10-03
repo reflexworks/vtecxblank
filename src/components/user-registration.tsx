@@ -64,8 +64,8 @@ export default class UserRegistration extends React.Component<UserRegistrationPr
 	Registration() {
 		if (confirm('この情報を登録します。よろしいですか？')) {
 			if (this.entry.userinfo) {
-				const req: any = { feed: { entry: [] } }
-				let user_info_entry: any = {
+				const req: VtecxApp.Request = { feed: { entry: [] } }
+				let user_info_entry: VtecxApp.Entry = {
 					userinfo: this.entry.userinfo,
 					favorite: this.entry.favorite,
 					hobby: this.entry.hobby,

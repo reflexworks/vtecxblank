@@ -25,7 +25,7 @@ interface UserListProps {
 }
 
 interface UserListState {
-	feed: any
+	feed: VtecxApp.Feed
 	isDisabled: boolean
 	isError: any
 	urlToPagenation: string
@@ -33,7 +33,6 @@ interface UserListState {
 	isCompleted: any
 }
 export default class UserList extends React.Component<UserListProps, UserListState> {
-
 
 	private maxDisplayRows: number
 	private url: string
@@ -91,36 +90,40 @@ export default class UserList extends React.Component<UserListProps, UserListSta
 	 * @param {*} index 
 	 */
 
-	onEdit(_data: any) {
+	onEdit(_data: VtecxApp.Entry) {
 		// 入力画面に遷移
-		const user_code = _data.link[0].___href
-		this.props.history.push('/UserUpdate?' + user_code)
+		if (_data.link && _data.link[0]) {
+			const user_code = _data.link[0].___href
+			this.props.history.push('/UserUpdate?' + user_code)
+		}
 	}
 
 	/**
 	 * リスト上で削除処理
 	 * @param {*} data 
 	 */
-	onDelete(_data: any) {
-		if (confirm(_data.link[0].___href + '\n' + 'この情報を削除します。よろしいですか？')) {
-			axios({
-				url: '/d' + _data.link[0].___href,
-				method: 'delete',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			}).then(() => {
-				this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
-				this.getFeed(1, this.state.urlToPagenation)
-			}).catch((error: AxiosError) => {
-				if (this.props.error) {
-					this.setState({ isDisabled: false })
-					this.props.error(error)
-				} else {
-					this.setState({ isDisabled: false, isError: error })
-				}
-			})
-			this.forceUpdate()
+	onDelete(_data: VtecxApp.Entry) {
+		if (_data.link && _data.link[0]) {
+			if (confirm(_data.link[0].___href + '\n' + 'この情報を削除します。よろしいですか？')) {
+				axios({
+					url: '/d' + _data.link[0].___href,
+					method: 'delete',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(() => {
+					this.setState({ isDisabled: false, isCompleted: 'delete', isError: false })
+					const befor_conditions = CommonBeforConditions().get(this.conditionsKey, this.url)
+					this.doGetFeed(befor_conditions.conditions, befor_conditions.activePage)
+				}).catch((error: AxiosError) => {
+					if (this.props.error) {
+						this.setState({ isDisabled: false })
+						this.props.error(error)
+					} else {
+						this.setState({ isDisabled: false, isError: error })
+					}
+				})
+			}
 		}
 	}
 
@@ -148,6 +151,15 @@ export default class UserList extends React.Component<UserListProps, UserListSta
 						<PageHeader>ユーザ一覧</PageHeader>
 
 						<CommonSearchConditionsFrom doSearch={(conditions: string) => this.doGetFeed(conditions, 1)}>
+
+							<CommonInputText
+								controlLabel="ID"
+								name="userinfo.id"
+								size=''
+								type="text"
+								placeholder="ID"
+							/>
+
 							<CommonInputText
 								controlLabel="ユーザ名"
 								name="userinfo.name"
@@ -189,27 +201,3 @@ export default class UserList extends React.Component<UserListProps, UserListSta
 		)
 	}
 }
-
-{/*
-	"feed" :{
-		"entry" :[{
-			"userinfo":
-				{ "id": "abc", "email": "b", "name": "a" },
-			"favorite": { "food": "c", "music": "d" },
-			"hobby": [], "author": [{ "uri": "urn:vte.cx:created:541" }],
-			"id": "/user_info/5664902681198592,1",
-			"link": [{ "___href": "/user_info/5664902681198592", "___rel": "self" }],
-			"published": "2018-10-02T13:21:53.759+09:00",
-			"updated": "2018-10-02T13:21:53.759+09:00"
-		}, {
-				"userinfo":
-					{ "id": "a", "email": "c", "name": "b" },
-				"favorite": { "food": "d", "music": "e" },
-				[], "author": [{ "uri": "urn:vte.cx:created:541" }],
-				"id": "/user_info/5705241014042624,1",
-				"link": [{ "___href": "/user_info/5705241014042624", "___rel": "self" }],
-				"published": "2018-10-02T13:05:33.415+09:00",
-				"updated": "2018-10-02T13:05:33.415+09:00"
-			}]
-	}
-*/}

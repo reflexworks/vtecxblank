@@ -1,7 +1,7 @@
 import '../styles/index.css'
 import '../styles/application.sass'
 import * as vtecxauth from 'vtecxauth'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -48,7 +48,7 @@ export default class Login extends React.Component<ComponentProps> {
 			}
 		}).then(() => {
 			location.href = '/'
-		}, (error: any) => {
+		}, (error: AxiosError) => {
 			if (error.response) {
 				if (error.response.data.feed.title === 'Captcha required at next login.') {
 					this.isLoginFailed = true

@@ -12,7 +12,7 @@ import {
 } from './common'
 
 interface UserFormProps {
-	entry: any
+	entry: VtecxApp.Entry
 	name: string
 	registration: boolean
 }
@@ -22,7 +22,7 @@ interface UserFormState {
 
 export default class UserForm extends React.Component<UserFormProps, UserFormState> {
 
-	private entry: any
+	private entry: VtecxApp.Entry
 	private registration: boolean
 
 	constructor(props: UserFormProps) {
@@ -33,6 +33,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 		this.entry.userinfo = this.entry.userinfo || {}
 		this.entry.favorite = this.entry.favorite || {}
 		this.entry.hobby = []
+		this.registration = this.props.registration
 	}
 
 	/**
@@ -82,7 +83,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 		}
 	}
 
-	changeHobby(_data: any, _row: number, _key: any) {
+	changeHobby(_data: any, _row: number, _key: string) {
 
 		if (this.entry.hobby) {
 			switch (_key) {
@@ -99,6 +100,9 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 	}
 
 	addArray() {
+		if (!this.entry.hobby) {
+			this.entry.hobby = []
+		}
 		this.entry.hobby.push({
 			type: '0',
 			name: '',
@@ -139,9 +143,9 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									type="text"
 									placeholder="ID"
 									value={this.entry.userinfo.id}
-									onChange={(data: any) => this.changeUser(data, 'id')}
+									onChange={(data: string) => this.changeUser(data, 'id')}
 									required
-									readonly={this.registration}
+									readonly={!this.registration}
 								/>
 
 								<CommonInputText
@@ -151,7 +155,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									type="text"
 									placeholder="ユーザ名"
 									value={this.entry.userinfo.name}
-									onChange={(data: any) => this.changeUser(data, 'name')}
+									onChange={(data: string) => this.changeUser(data, 'name')}
 									required
 								/>
 								<CommonInputText
@@ -161,7 +165,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									type="email"
 									placeholder="vtecxblank@gmail.com"
 									value={this.entry.userinfo.email}
-									onChange={(data: any) => this.changeUser(data, 'email')}
+									onChange={(data: string) => this.changeUser(data, 'email')}
 									required
 								/>
 
@@ -182,7 +186,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									type="text"
 									placeholder="好きな食べ物"
 									value={this.entry.favorite.food}
-									onChange={(data: any) => this.changeFavorite(data, 'food')}
+									onChange={(data: string) => this.changeFavorite(data, 'food')}
 									required
 								/>
 
@@ -193,7 +197,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									type="text"
 									placeholder="好きな音楽"
 									value={this.entry.favorite.music}
-									onChange={(data: any) => this.changeFavorite(data, 'music')}
+									onChange={(data: string) => this.changeFavorite(data, 'music')}
 									required
 								/>
 
@@ -226,7 +230,7 @@ export default class UserForm extends React.Component<UserFormProps, UserFormSta
 									}, {
 										field: 'name', title: '名前', width: '50px',
 										input: {
-											onBlur: (data: any, rowindex: number) => { this.changeHobby(data, rowindex, 'name') }
+											onChange: (data: string, rowindex: number) => { this.changeHobby(data, rowindex, 'name') },
 										},
 										placeholder: 'hobby',
 									}]}
