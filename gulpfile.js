@@ -538,15 +538,15 @@ function serve(tgt) {
 		middleware: function(connect, opt) {
 			return [
 				proxy('/d', {
-					target: target+'/d',
+					target: target,
 					changeOrigin:true
 				}),
 				proxy('/s', {
-					target: target+'/s',
+					target: target,
 					changeOrigin:true
 				}),
 				proxy('/xls', {
-					target: target+'/xls',
+					target: target,
 					changeOrigin:true
 				})
 			]
