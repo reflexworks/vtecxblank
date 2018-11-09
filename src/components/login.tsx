@@ -4,7 +4,7 @@ import * as vtecxauth from 'vtecxauth'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
+import ReCaptcha from './ReCaptcha'
 
 /* コンポーネントのPropsの型宣言 */
 interface ComponentProps {
@@ -37,7 +37,7 @@ export default class Login extends React.Component<ComponentProps> {
 		e.preventDefault()
 
 		const authToken = vtecxauth.getAuthToken(e.target.email.value, e.target.password.value)
-		const captchaOpt = this.requiredCaptcha ? '&g-recaptcha-response=' + this.captchaValue : ''
+		const captchaOpt = this.requiredCaptcha ? '&g-recaptcha-token=' + this.captchaValue : ''
 
 		axios({
 			url: '/d/?_login' + captchaOpt,
@@ -68,6 +68,14 @@ export default class Login extends React.Component<ComponentProps> {
 		this.forceUpdate()
 	}
 
+
+	componentDidMount() {
+		const script = document.createElement('script')
+		script.src = 'https://www.google.com/recaptcha/api.js?render=6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+		document.body.appendChild(script)
+	}
+
+
 	render() {
 		const App = (
 			<form onSubmit={(e: any) => this.handleSubmit(e)}>
@@ -81,9 +89,11 @@ export default class Login extends React.Component<ComponentProps> {
 
 				{this.requiredCaptcha &&
 					<div className="login_form__recaptcha">
-						<ReCAPTCHA
-							sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-							onChange={(value: string) => this.capchaOnChange(value)}
+						<ReCaptcha
+							sitekey="6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR"
+							verifyCallback={(value: string) => this.capchaOnChange(value)}
+							action='login'
+
 						/>
 					</div>
 				}
@@ -127,3 +137,4 @@ export default class Login extends React.Component<ComponentProps> {
 	}
 }
 ReactDOM.render(<Login />, document.getElementById('container'))
+
