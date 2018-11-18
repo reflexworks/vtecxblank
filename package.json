@@ -59,7 +59,7 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^0.6.2",
     "vinyl-fs": "^3.0.0",
-    "vtecxapi": "1.0.2",
+    "vtecxapi": "1.0.3",
     "vtecxauth": "1.0.0",
     "webpack": "^4.17.2",
     "webpack-async-await": "^1.1.0",
