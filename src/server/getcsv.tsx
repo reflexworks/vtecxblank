@@ -9,4 +9,4 @@ const encoding = 'UTF-8'
 
 // CSV取得
 const result = vtecxapi.getCsv(header, items, parent, skip, encoding)
-vtecxapi.log(JSON.stringify(result)) // {"feed":{"entry":[{"order":{"item1":"2017/7/5","item2":3,"item3":3}},{"order":{"item1":"2017/7/6","item2":5,"item3":8}},{"order":{"item1":"2017/7/7","item2":2,"item3":10}}]}}
+vtecxapi.log(JSON.stringify(result)) // [{"order":{"item1":"2017/7/5","item2":3,"item3":3}},{"order":{"item1":"2017/7/6","item2":5,"item3":8}},{"order":{"item1":"2017/7/7","item2":2,"item3":10}}]
