@@ -18,6 +18,7 @@ export default class Login extends React.Component<ComponentProps> {
 	requiredCaptcha: boolean
 	captchaValue: string
 	values: any
+	sitekey: string
 
 	constructor(props: ComponentProps) {
 		super(props)
@@ -25,6 +26,7 @@ export default class Login extends React.Component<ComponentProps> {
 		this.requiredCaptcha = false
 		this.captchaValue = ''
 		this.values = {}
+		this.sitekey = ''
 	}
 
 	capchaOnChange(value: string): void {
@@ -70,8 +72,13 @@ export default class Login extends React.Component<ComponentProps> {
 
 
 	componentDidMount() {
+		if (location.href.indexOf('localhost') >= 0) {
+			this.sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+		} else {
+			this.sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+		}
 		const script = document.createElement('script')
-		script.src = 'https://www.google.com/recaptcha/api.js?render=6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+		script.src = 'https://www.google.com/recaptcha/api.js?render=' + this.sitekey
 		document.body.appendChild(script)
 	}
 
@@ -90,13 +97,13 @@ export default class Login extends React.Component<ComponentProps> {
 				{this.requiredCaptcha &&
 					<div className="login_form__recaptcha">
 						<ReCaptcha
-							sitekey="6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR"
+							sitekey={this.sitekey}
 							verifyCallback={(value: string) => this.capchaOnChange(value)}
-							action='login'
-
+							action="login"
 						/>
 					</div>
 				}
+
 
 				<div className="button-area">
 					<button type="submit" className="button-left">ログイン</button>

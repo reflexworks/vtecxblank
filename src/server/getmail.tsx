@@ -17,6 +17,3 @@ settings['password'] = 'xxxxx'
 
 const result = vtecxapi.getMail(settings)
 vtecxapi.log(JSON.stringify(result))
-
-
-

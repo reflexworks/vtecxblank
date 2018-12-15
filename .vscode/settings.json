@@ -1,11 +1,15 @@
 // 既定の設定とユーザー設定を上書きするには、このファイル内に設定を挿入します
 {
-    "flow.pathToFlow": "./node_modules/.bin/flow",
-    "javascript.validate.enable": false,
-    "javascript.format.enable": false,
-    "editor.formatOnType": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "eslint.enable": true,
-    "eslint.autoFixOnSave": true
+  "javascript.validate.enable": false,
+  "javascript.format.enable": false,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
+  "eslint.autoFixOnSave": true,
+  "editor.formatOnSave": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {"language": "typescript", "autoFix": true },
+    {"language": "typescriptreact", "autoFix": true }
+  ]
 }
