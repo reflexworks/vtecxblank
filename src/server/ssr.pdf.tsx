@@ -14,7 +14,7 @@ function formatName(user: User) {
 
 const user: User = {
   firstName: 'Harper',
-  lastName: 'Perez',
+  lastName: 'Perez'
 }
 
 const element = (
