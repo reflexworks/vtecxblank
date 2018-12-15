@@ -7,7 +7,7 @@ interface Param {
 
 const param: Param = {
   picture1: vtecxapi.getQueryString('key1'),
-  picture2: vtecxapi.getQueryString('key2'),
+  picture2: vtecxapi.getQueryString('key2')
 }
 
 vtecxapi.saveFiles(param)
