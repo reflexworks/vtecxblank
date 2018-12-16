@@ -23,7 +23,7 @@
   "rules": {
     "no-undef": 0,
     "no-unused-vars": 0,
-    "indent": ["error", 2],
+    "indent": ["off", 2,{"SwitchCase": 1,"flatTernaryExpressions": true}],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
@@ -31,6 +31,7 @@
     "react/no-unknown-property": 0,
     "no-mixed-spaces-and-tabs": 0,
     "no-console": 0,
+    "no-irregular-whitespace": 0,    
     "prettier/prettier": [
       "error",
       {
@@ -49,7 +50,7 @@
         "tabWidth": 2,
         "trailingComma": "none",
         "useTabs": false,
-        "doc": false      
+        "doc": false  
       }
     ]
   }
