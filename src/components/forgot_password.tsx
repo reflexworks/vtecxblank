@@ -3,13 +3,11 @@ import '../styles/application.sass'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
+import ReCaptcha from './ReCaptcha'
 import { Form, Col, FormGroup, Button, ControlLabel, FormControl } from 'react-bootstrap'
 
 /* コンポーネントのProps */
-interface ComponentProps {
-  //hello: string
-}
+interface ComponentProps {}
 
 /* コンポーネントのStateの型宣言 */
 interface ComponentState {
@@ -21,6 +19,8 @@ interface ComponentState {
 }
 
 class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
+  sitekey: string
+
   constructor(props: ComponentProps) {
     super(props)
     this.state = {
@@ -30,6 +30,7 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
       isCompleted: false,
       isForbidden: false
     }
+    this.sitekey = ''
   }
 
   capchaOnChange(value: string) {
@@ -64,6 +65,17 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
       })
   }
 
+  componentDidMount() {
+    if (location.href.indexOf('localhost') >= 0) {
+      this.sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+    } else {
+      this.sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    }
+    const script = document.createElement('script')
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + this.sitekey
+    document.body.appendChild(script)
+  }
+
   render() {
     const App = (
       <div className="vtecx-from">
@@ -95,9 +107,10 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
 
                 <FormGroup>
                   <div className="login_form__recaptcha">
-                    <ReCAPTCHA
-                      sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-                      onChange={(value: string) => this.capchaOnChange(value)}
+                    <ReCaptcha
+                      sitekey={this.sitekey}
+                      verifyCallback={(value: string) => this.capchaOnChange(value)}
+                      action="login"
                     />
                   </div>
                 </FormGroup>

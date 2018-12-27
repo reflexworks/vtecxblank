@@ -1,6 +1,6 @@
 export const _page: any = {
   pagesize: 'A4',
-  orientation: 'portrait',
+  orientation: 'portrait'
 }
 
 export const _table: any = {
@@ -9,5 +9,5 @@ export const _table: any = {
   cellspacing: '3',
   cellpadding: '3',
   width: '90%',
-  align: 'left',
+  align: 'left'
 }

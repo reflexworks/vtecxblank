@@ -3,7 +3,7 @@ import '../styles/application.sass'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
+import ReCaptcha from './ReCaptcha'
 import * as vtecxauth from 'vtecxauth'
 import PasswordStrength from './password_strength'
 import { Form, Col, FormGroup, Button, HelpBlock, ControlLabel, FormControl } from 'react-bootstrap'
@@ -26,6 +26,8 @@ interface ComponentState {
 }
 
 class ChangePassword extends React.Component<ComponentProps, ComponentState> {
+  sitekey: string
+
   constructor(props: ComponentProps) {
     super(props)
     this.state = {
@@ -38,6 +40,7 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
       passLength: 0,
       isCompleted: false
     }
+    this.sitekey = ''
   }
 
   capchaOnChange(value: string): void {
@@ -86,6 +89,17 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
         this.setState({ isUnmatchReinput: true })
       }
     }
+  }
+
+  componentDidMount() {
+    if (location.href.indexOf('localhost') >= 0) {
+      this.sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+    } else {
+      this.sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    }
+    const script = document.createElement('script')
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + this.sitekey
+    document.body.appendChild(script)
   }
 
   render() {
@@ -143,9 +157,10 @@ class ChangePassword extends React.Component<ComponentProps, ComponentState> {
 
                 <FormGroup>
                   <div className="login_form__recaptcha">
-                    <ReCAPTCHA
-                      sitekey="6LfBHw4TAAAAAMEuU6A9BilyPTM8cadWST45cV19"
-                      onChange={(value: string) => this.capchaOnChange(value)}
+                    <ReCaptcha
+                      sitekey={this.sitekey}
+                      verifyCallback={(value: string) => this.capchaOnChange(value)}
+                      action="login"
                     />
                   </div>
                 </FormGroup>
