@@ -1,6 +1,7 @@
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const vtecxutil = require('vtecxutil')
+const writeFilePlugin = require('write-file-webpack-plugin')
 
 class VtecxutilPlugin {
   constructor(entry) {
@@ -14,6 +15,14 @@ class VtecxutilPlugin {
 }
 
 module.exports = env => {
+  let target = env.target
+  if (target) {
+    if (target.match(/https/)) {
+      target = target.replace(/https/, 'http')
+      console.log('using HTTP instead of HTTPS.:' + target)
+    }
+    target = target.substr(target.length - 1) === '/' ? target.substr(0, target.length - 1) : target
+  }
   return {
     mode: env.mode ? 'development' : 'production',
     entry: './src' + env.entry,
@@ -53,6 +62,11 @@ module.exports = env => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },
+    devServer: {
+      host: 'localhost',
+      port: 8000,
+      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }]
+    },
     externals:
       env.externals === 'true'
         ? {
@@ -66,7 +80,7 @@ module.exports = env => {
     plugins:
       env.mode === 'production'
         ? [new UglifyJsPlugin(), new VtecxutilPlugin(env.entry)]
-        : [new VtecxutilPlugin(env.entry)],
+        : [new writeFilePlugin(), new VtecxutilPlugin(env.entry)],
     devtool: env.mode === 'production' ? '' : 'source-map'
   }
 }

@@ -88,7 +88,9 @@
     "webpack": "^4.29.6",
     "webpack-async-await": "^1.1.0",
     "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1",
     "webpack-stream": "^4.0.2",
+    "write-file-webpack-plugin": "^4.5.0",
     "zxcvbn": "^4.4.2"
   },
   "engines": {
@@ -103,17 +105,14 @@
     "upload:data": "vtecxutil upload:data",
     "upload:template": "vtecxutil upload:template",
     "upload:htmlfolders": "vtecxutil upload:htmlfolders",
-    "serve": "parcel --open",
-    "serve:index": "npx webpack --env.entry=/components/index.tsx --env.mode=production --watch",
-    "build:index": "parcel build src/components/index.tsx -d dist/components",
-    "serve:server": "NODE_ENV=production parcel src/server/*.tsx -d dist/server --no-source-maps",
-    "build:server": "parcel build src/server/*.tsx -d dist/server --no-source-maps",
-    "build": "parcel build src/components/index.tsx -d dist/components && parcel build src/server/*.tsx -d dist/server --no-source-maps",
-    "deploy": "vtecxutil upload && parcel build src/components/index.tsx -d dist/components && parcel build src/server/*.tsx -d dist/server --no-source-maps"
+    "watch": "npx webpack --env.mode=production --env.externals=true --watch",
+    "watch:index": "npx webpack --env.entry=/components/index.tsx --env.mode=production --env.externals=true --watch",
+    "deploy:index": "npx webpack --env.entry=/components/index.tsx --env.mode=production --env.externals=true",
+    "serve:index": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page index.html --env.mode=development --env.entry=/components/index.tsx --env.externals=true"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reflexworks/logioffice.git"
+    "url": "git+https://github.com/reflexworks/vtecxblank.git"
   }
 }

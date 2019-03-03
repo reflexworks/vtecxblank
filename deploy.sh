@@ -1,4 +1,5 @@
 #!/bin/sh
+npx webpack --env.entry=/components/index.tsx --env.mode=production --env.externals=true
 npx webpack --env.entry=/components/login.tsx --env.mode=production --env.externals=true
 npx webpack --env.entry=/components/change_password.tsx --env.mode=production --env.externals=true
 npx webpack --env.entry=/components/complete_registration.tsx --env.mode=production --env.externals=true
