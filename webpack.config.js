@@ -2,20 +2,20 @@ const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const vtecxutil = require('vtecxutil')
 const writeFilePlugin = require('write-file-webpack-plugin')
-
-class VtecxutilPlugin {
-  constructor(entry) {
-    this.entry = 'dist' + entry.replace(/(\.tsx)|(\.ts)/g, '.js')
-  }
-  apply(compiler) {
-    compiler.hooks.afterEmit.tap({ name: 'vtecxutil' }, compilation => {
-      vtecxutil.sendfile(this.entry, '?_content&_bulk&_async')
-    })
-  }
-}
+const confy = require('confy')
 
 module.exports = env => {
-  let target = env.target
+  let target
+  confy.get('$default', function(err, result) {
+    if (result) {
+      confy.get(result.service, function(err, result2) {
+        target = result2.path
+      })
+    } else {
+      console.log('Please login.')
+    }
+  })
+
   if (target) {
     if (target.match(/https/)) {
       target = target.replace(/https/, 'http')
@@ -79,8 +79,8 @@ module.exports = env => {
         : {},
     plugins:
       env.mode === 'production'
-        ? [new UglifyJsPlugin(), new VtecxutilPlugin(env.entry)]
-        : [new writeFilePlugin(), new VtecxutilPlugin(env.entry)],
+        ? [new UglifyJsPlugin(), new vtecxutil.uploaderPlugin(env.entry)]
+        : [new writeFilePlugin(), new vtecxutil.uploaderPlugin(env.entry)],
     devtool: env.mode === 'production' ? '' : 'source-map'
   }
 }
