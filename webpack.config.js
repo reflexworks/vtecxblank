@@ -1,5 +1,4 @@
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const vtecxutil = require('vtecxutil')
 const writeFilePlugin = require('write-file-webpack-plugin')
 const confy = require('confy')
@@ -79,7 +78,7 @@ module.exports = env => {
         : {},
     plugins:
       env.mode === 'production'
-        ? [new UglifyJsPlugin(), new vtecxutil.uploaderPlugin(env.entry)]
+        ? [new vtecxutil.uploaderPlugin(env.entry)]
         : [new writeFilePlugin(), new vtecxutil.uploaderPlugin(env.entry)],
     devtool: env.mode === 'production' ? '' : 'source-map'
   }
