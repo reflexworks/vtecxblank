@@ -3,7 +3,7 @@ const vtecxutil = require('vtecxutil')
 const writeFilePlugin = require('write-file-webpack-plugin')
 const confy = require('confy')
 
-module.exports = env => {
+module.exports = (env, argv) => {
   let target
   confy.get('$default', function(err, result) {
     if (result) {
@@ -23,7 +23,7 @@ module.exports = env => {
     target = target.substr(target.length - 1) === '/' ? target.substr(0, target.length - 1) : target
   }
   return {
-    mode: env.mode ? 'development' : 'production',
+    mode: argv.mode ? 'development' : 'production',
     entry: './src' + env.entry,
     output: {
       filename: '.' + env.entry.replace(/(\.tsx)|(\.ts)/g, '.js')
@@ -77,9 +77,9 @@ module.exports = env => {
           }
         : {},
     plugins:
-      env.mode === 'production'
+      argv.mode === 'production'
         ? [new vtecxutil.uploaderPlugin(env.entry)]
         : [new writeFilePlugin(), new vtecxutil.uploaderPlugin(env.entry)],
-    devtool: env.mode === 'production' ? '' : 'source-map'
+    devtool: argv.mode === 'production' ? '' : 'source-map'
   }
 }
