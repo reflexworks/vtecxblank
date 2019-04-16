@@ -4,13 +4,14 @@
 import * as vtecxapi from 'vtecxapi'
 
 const mailentry = {
-	'entry': {
-		'title': 'sendmail テスト',
-		'summary': 'hello text mail',
-		'content': {
-			'______text': '<html><body>hello html mail <img src="CID:/_html/img/ajax-loader.gif"></body></html>'
-		}
-	}
+  entry: {
+    title: 'sendmail テスト',
+    summary: 'hello text mail',
+    content: {
+      ______text:
+        '<html><body>hello html mail <img src="CID:/_html/img/ajax-loader.gif"></body></html>'
+    }
+  }
 }
 
 const to = ['xxxx@xxx']
