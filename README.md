@@ -3,10 +3,6 @@ a blank project for vte.cx
 
 ## Setup
 
-Install gulp
-```
-npm install -g gulp 
-```
 checkout vtecxblank master branch
 
 npm install
@@ -14,31 +10,21 @@ npm install
 npm install 
 ```
 
-gulp to build and make a symbolic link. It is executed only once.
-```
-gulp
-```
-
 ## Usage
 
-gulp serve is to use a local dev environment.
+login 
 ```
-gulp serve -t http://{servicename}.vte.cx
-```
-
-With accesstoken, the updated file will be sent to the server at the same time. (The accesstoken can be obtained by admin console.)
-```
-gulp serve -t http://{servicename}.vte.cx -k {accesstoken}
+login
 ```
 
--F option is to fix the target file.
+serve
 ```
-gulp serve -F index.tsx -t http://{servicename}.vte.cx -k {accesstoken}
+npm run serve
 ```
 
 deploy 
 ```
-gulp deploy -t http://{servicename}.vte.cx -k {accesstoken}
+npm run deploy:index
 ```
 
 ## License
