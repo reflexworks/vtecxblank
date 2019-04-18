@@ -33,6 +33,11 @@ webpack-dev-server(index.tsx)
 npm run serve:index
 ```
 
+webpack-dev-server(login.tsx)
+```
+npm run serve:login
+```
+
 watch & deploy
 ```
 npm run watch -- --env.entry=/components/login.tsx
