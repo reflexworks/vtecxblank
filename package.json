@@ -14,6 +14,7 @@
     "@types/react-router-dom": "^4.3.2",
     "@types/react-select": "^2.0.17",
     "@types/zxcvbn": "^4.4.0",
+    "@use-hooks/axios": "^1.2.0",
     "eslint": "^5.16.0",
     "npm": "^6.9.0",
     "react-alert": "^5.4.0",
@@ -83,7 +84,8 @@
     "watch:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true --watch",
     "deploy:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true",
     "serve": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --mode=development --env.externals=true",
-    "serve:index": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page index.html --mode=development --env.entry=/components/index.tsx --env.externals=true"
+    "serve:index": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page index.html --mode=development --env.entry=/components/index.tsx --env.externals=true",
+    "serve:login": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page login.html --mode=development --env.entry=/components/login.tsx --env.externals=true"
   },
   "license": "MIT",
   "repository": {
