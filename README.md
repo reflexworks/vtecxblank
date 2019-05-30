@@ -58,7 +58,12 @@ deploy(services)
 ./deploy.sh
 ```
 
-download schema
+download(template,schema,properties,bigquery.json)
+```
+npm run download
+```
+
+download schema template
 ```
 npm run download:template
 ```
@@ -66,6 +71,16 @@ npm run download:template
 download index.d.ts(TypeScript Interface)
 ```
 npm run download:typings
+```
+
+download properties
+```
+npm run download:properties
+```
+
+download bigquery.json
+```
+npm run download:bigquery.json
 ```
 
 upload
