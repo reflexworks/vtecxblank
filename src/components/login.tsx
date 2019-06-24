@@ -1,162 +1,150 @@
 import '../styles/index.css'
-import '../styles/application.sass'
 import * as vtecxauth from 'vtecxauth'
-import axios from 'axios'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCaptcha from './ReCaptcha'
 
-/* コンポーネントのPropsの型宣言 */
-interface ComponentProps {
-  //hello: string
-}
+import { useEffect, useContext, useState } from 'react'
+import {
+  CommonProvider,
+  CommonGrid,
+  CommonPaper,
+  CommonForm,
+  CommonInputText,
+  CommonButton,
+  CommonText,
+  ReducerContext,
+  CommonLink
+} from './common-dom'
+import { commonAxios, commonSessionStorage } from './common'
 
-export default class Login extends React.Component<ComponentProps> {
-  /* コンポーネントの変数の型宣言 */
-  isLoginFailed: boolean
-  requiredCaptcha: boolean
-  captchaValue: string
-  values: any
-  sitekey: string
+export const Login = (_props: any) => {
+  const { state, dispatch }: any = useContext(ReducerContext)
+  const states = { state, dispatch }
 
-  constructor(props: ComponentProps) {
-    super(props)
-    this.isLoginFailed = false
-    this.requiredCaptcha = false
-    this.captchaValue = ''
-    this.values = {}
-    this.sitekey = ''
+  const [requiredCaptcha, setRequiredCaptcha]: any = useState(false)
+  const [isError, setIsError]: any = useState(false)
+
+  const [captchaValue, setCaptchaValue]: any = useState('')
+  const [sitekey, setSitekey]: any = useState('')
+
+  const capchaOnChange = (value: string): void => {
+    setCaptchaValue(value)
   }
 
-  capchaOnChange(value: string): void {
-    this.captchaValue = value
-    this.forceUpdate()
-  }
+  async function handleSubmit(_e: any, _data: any) {
+    _e.preventDefault()
 
-  handleSubmit(e: any): void {
-    e.preventDefault()
+    const authToken = vtecxauth.getAuthToken(_data['user.email'], _data['user.password'])
+    const captchaOpt = requiredCaptcha === true ? '&g-recaptcha-token=' + captchaValue : ''
 
-    const authToken = vtecxauth.getAuthToken(e.target.email.value, e.target.password.value)
-    const captchaOpt = this.requiredCaptcha ? '&g-recaptcha-token=' + this.captchaValue : ''
-
-    axios({
-      url: '/d/?_login' + captchaOpt,
-      method: 'get',
-      headers: {
-        'X-WSSE': authToken,
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    }).then(
-      () => {
+    try {
+      await commonAxios(states, '/d/?_login' + captchaOpt, 'get', null, {
+        'X-WSSE': authToken
+      })
+      const befor_location = commonSessionStorage.get('befor_location')
+      if (befor_location) {
+        location.href = befor_location.href
+      } else {
         location.href = 'index.html'
-      },
-      (error: any) => {
-        if (error.response) {
-          if (error.response.data.feed.title === 'Captcha required at next login.') {
-            this.isLoginFailed = true
-            this.requiredCaptcha = true
-          } else {
-            this.isLoginFailed = true
-          }
-        } else {
-          this.isLoginFailed = true
-        }
-        this.forceUpdate()
       }
-    )
-  }
-
-  onChange(_e: any): void {
-    this.values[_e.target.name] = _e.target.value
-    this.forceUpdate()
-  }
-
-  componentDidMount() {
-    if (location.href.indexOf('localhost') >= 0) {
-      this.sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
-    } else {
-      this.sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    } catch (_error) {
+      if (_error.response) {
+        dispatch({
+          type: '_show_error',
+          message: 'ログインに失敗しました。メールアドレスまたはパスワードに誤りがあります。'
+        })
+        setIsError(true)
+        if (_error.response.data.feed.title === 'Captcha required at next login.') {
+          setRequiredCaptcha(true)
+        }
+      }
     }
+  }
+
+  useEffect(() => {
+    let _sitekey: string = ''
+    if (location.href.indexOf('localhost') >= 0) {
+      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+    } else {
+      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    }
+    setSitekey(_sitekey)
     const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + this.sitekey
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
     document.body.appendChild(script)
-  }
+  }, [])
 
-  render() {
-    const App = (
-      <form onSubmit={(e: any) => this.handleSubmit(e)}>
-        {this.isLoginFailed && (
-          <div className="login_error">
-            ログインに失敗しました。
-            <br />
-            アカウントまたはパスワードが間違っている可能性があります。
-          </div>
-        )}
-
-        <input
-          type="email"
-          name="email"
-          onChange={(e: any) => this.onChange(e)}
-          value={this.values.email}
-        />
-        <input
-          type="password"
-          name="password"
-          onChange={(e: any) => this.onChange(e)}
-          value={this.values.password}
-        />
-
-        {this.requiredCaptcha && (
-          <div className="login_form__recaptcha">
-            <ReCaptcha
-              sitekey={this.sitekey}
-              verifyCallback={(value: string) => this.capchaOnChange(value)}
-              action="login"
+  return (
+    <CommonGrid>
+      <CommonGrid item>
+        <CommonPaper title="ログイン" style={{ backgroundColor: '#F7F7F7' }}>
+          <CommonForm onSubmit={(_e: any, _data: any) => handleSubmit(_e, _data)}>
+            <CommonInputText
+              type="email"
+              label="メールアドレス"
+              placeholder="メールアドレス"
+              name="user.email"
+              icon="person"
+              style={{ marginTop: 10 }}
+              variant="outlined"
+              error={isError}
+              transparent
             />
-          </div>
-        )}
+            <CommonInputText
+              type="password"
+              label="パスワード"
+              placeholder="パスワード"
+              name="user.password"
+              icon="vpn_key"
+              style={{ marginTop: 10 }}
+              variant="outlined"
+              transparent
+            />
+            <CommonText style={{ marginTop: 10, marginBottom: 20 }} align="right">
+              <CommonLink href="forgot_password.html">パスワードをお忘れですか？</CommonLink>
+            </CommonText>
+            {requiredCaptcha && (
+              <ReCaptcha
+                sitekey={sitekey}
+                verifyCallback={(value: string) => capchaOnChange(value)}
+                action="login"
+              />
+            )}
+            <CommonButton type="submit" color="primary" size="large">
+              ログインする
+            </CommonButton>
+          </CommonForm>
+        </CommonPaper>
+      </CommonGrid>
 
-        <div className="button-area">
-          <button type="submit" className="button-left">
-            ログイン
-          </button>
-          <div className="button-right">
-            <a href="forgot_password.html">パスワードをお忘れですか？</a>
-            <a href="signup.html">はじめてご利用の方（新規会員登録）</a>
-          </div>
-          <div className="clear" />
-        </div>
-      </form>
-    )
-    return (
-      <div>
-        <header>
-          <div className="contents_in">
-            <a href="http://reflexworks.jp/contact.html#company">
-              <img src="../img/logo_vt.svg" alt="有限会社バーチャルテクノロジー" />
-            </a>
-          </div>
-        </header>
-        <div id="wrapper">
-          <div className="vtecx-from">
-            <div className="vtecx-from-container">
-              <div className="vtecx-from-content">
-                <h2>
-                  <img src="../img/logo.svg" alt="有限会社バーチャルテクノロジー" height="24px" />
-                  <span>ログイン</span>
-                </h2>
-                {App}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="footer">
-          <p className="copyright">
-            Copyrights&copy;2018 Virtual Technology,Ltd. ALL Rights Reserved.
-          </p>
-        </div>
-      </div>
-    )
-  }
+      <CommonGrid item>
+        <CommonGrid>
+          <CommonGrid item justify="center">
+            <CommonText style={{ marginTop: 10 }} align="center">
+              まだvte.cxのアカウントをお持ちでない方は
+              <br />
+              アカウント登録をお済ませください。
+            </CommonText>
+            <CommonButton
+              color="primary"
+              href="signup.html"
+              style={{ width: '90%', height: '50px', marginTop: 20 }}
+              disabled={false}
+            >
+              まずは会員登録をする
+            </CommonButton>
+          </CommonGrid>
+        </CommonGrid>
+      </CommonGrid>
+    </CommonGrid>
+  )
 }
-ReactDOM.render(<Login />, document.getElementById('container'))
+const App: any = () => {
+  return (
+    <CommonProvider>
+      <Login />
+    </CommonProvider>
+  )
+}
+ReactDOM.render(<App />, document.getElementById('container'))
