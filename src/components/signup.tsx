@@ -16,7 +16,8 @@ import {
   CommonLink,
   CommonText,
   CommonCheckbox,
-  CommonForm
+  CommonForm,
+  CommonBox
 } from './common-dom'
 import { commonAxios, commonValidation } from './common'
 
@@ -121,7 +122,7 @@ export const Signup = (_props: any) => {
       <CommonText title>アカウント登録</CommonText>
       <CommonStepper
         activeStep={active_step}
-        steps={['仮登録', '仮登録完了', '本登録完了と会員情報入力']}
+        steps={['仮登録', '仮登録完了', '本登録完了']}
       />
       {!is_completed && (
         <CommonForm>
@@ -237,17 +238,17 @@ export const Signup = (_props: any) => {
         </CommonForm>
       )}
       {is_completed && (
-        <CommonGrid>
-          <CommonText align="center" style={{ marginTop: 10, marginBottom: 20, width: '100%' }}>
-            仮登録が完了しました。
-          </CommonText>
-          <CommonText align="center" style={{ marginBottom: 20, width: '100%' }}>
-            入力したメールアドレスに本登録用のメールを送信しました。
-          </CommonText>
-          <CommonText align="center" style={{ marginBottom: 20, width: '100%' }}>
-            メール本文のリンクをクリックし、本登録に移行してください。
-          </CommonText>
-        </CommonGrid>
+        <CommonBox>
+          <CommonBox top={2} bottom={4} align="center">
+            <CommonText>仮登録が完了しました。</CommonText>
+          </CommonBox>
+          <CommonBox bottom={4} align="center">
+            <CommonText>入力したメールアドレスに本登録用のメールを送信しました。</CommonText>
+          </CommonBox>
+          <CommonBox bottom={4} align="center">
+            <CommonText>メール本文のリンクをクリックし、本登録に移行してください。</CommonText>
+          </CommonBox>
+        </CommonBox>
       )}
     </CommonGrid>
   )
