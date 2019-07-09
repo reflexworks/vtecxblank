@@ -35,10 +35,6 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader']
         },
         {
-          test: /\.sass$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
-        },
-        {
           test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
           use: { loader: 'url-loader', options: { limit: 100000 } }
         },
