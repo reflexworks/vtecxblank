@@ -1,238 +1,199 @@
 import '../styles/index.css'
-import '../styles/application.sass'
-import axios from 'axios'
+import * as vtecxauth from 'vtecxauth'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCaptcha from './ReCaptcha'
-import * as vtecxauth from 'vtecxauth'
-import PasswordStrength from './password_strength'
-import { Form, Col, FormGroup, Button, HelpBlock, ControlLabel, FormControl } from 'react-bootstrap'
 
-/* コンポーネントのPropsの型宣言 */
-interface ComponentProps {
-  //hello: string
-}
+import { useEffect, useContext, useState /*, useRef*/ } from 'react'
+import {
+  ReducerContext,
+  CommonProvider,
+  CommonGrid,
+  CommonStepper,
+  CommonStep,
+  CommonInputText,
+  CommonButton,
+  CommonText,
+  CommonForm,
+  CommonBox,
+  CommonLink
+} from './common-dom'
+import { commonAxios, commonValidation } from './common'
 
-/* コンポーネントのStateの型宣言 */
-interface ComponentState {
-  isError: any
-  isForbidden: boolean
-  isAlreadyRegistered: boolean
-  isIllegalPassword: boolean
-  isUnmatchReinput: boolean
-  captchaValue: string
-  passLength: number
-  isCompleted: boolean
-}
+export const Signup = (_props: any) => {
+  const { state, dispatch }: any = useContext(ReducerContext)
+  const states = { state, dispatch }
 
-class ChangePassword extends React.Component<ComponentProps, ComponentState> {
-  sitekey: string
-
-  constructor(props: ComponentProps) {
-    super(props)
-    this.state = {
-      isError: null,
-      isForbidden: false,
-      isAlreadyRegistered: false,
-      isIllegalPassword: false,
-      isUnmatchReinput: false,
-      captchaValue: '',
-      passLength: 0,
-      isCompleted: false
-    }
-    this.sitekey = ''
+  // キャプチャ関連
+  const [required_captcha, setRequiredCaptcha]: any = useState(false)
+  const [captcha_value, setCaptchaValue]: any = useState('')
+  const [sitekey, setSitekey]: any = useState('')
+  const capchaOnChange = (value: string): void => {
+    setCaptchaValue(value)
   }
 
-  capchaOnChange(value: string): void {
-    this.setState({ captchaValue: value })
-  }
+  // パスワード変更ボタン判定
+  const [is_regist_btn, setIsRegistBtn]: any = useState(true)
+  const isRegistBtn = () => {
+    const password = state.data.password
+    const password_re = state.data.password_re
+    const is_password_error = password ? commonValidation('password', password).error : true
+    const is_password_re_error = password !== password_re
 
-  passwordOnChange(state: any): void {
-    this.setState({ passLength: state.password.length })
-  }
-
-  handleSubmit(e: any): void {
-    e.preventDefault()
-    const password = e.target.password.value
-
-    //パスワードのバリデーションチェックを行う
-    if (!password.match('^(?=.*?[0-9])(?=.*?[a-zA-Z])(?=.*?[!-/@_])[A-Za-z!-9@_]{8,}$')) {
-      this.setState({ isIllegalPassword: true })
+    if (!is_password_error && !is_password_re_error) {
+      setIsRegistBtn(false)
     } else {
-      if (password && e.target.re_password.value && password === e.target.re_password.value) {
-        const hashpass = vtecxauth.getHashpass(password)
-        const reqData = {
-          feed: { entry: [{ contributor: [{ uri: 'urn:vte.cx:auth:,' + hashpass + '' }] }] }
-        }
+      setIsRegistBtn(true)
+    }
+  }
 
-        const captchaOpt = '&g-recaptcha-response=' + this.state.captchaValue
+  // パスワード変更ボタン押下処理
+  const [is_completed, setIsCompleted]: any = useState(false)
+  const [active_step, setActiveStep]: any = useState(2)
+  const handleSubmit = async (_e: any) => {
+    _e.preventDefault()
 
-        axios({
-          url: '/d/?_changephash' + captchaOpt,
-          method: 'put',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          },
-          data: reqData
-        })
-          .then(() => {
-            this.setState({ isCompleted: true })
-          })
-          .catch((error: any) => {
-            if (error.response && error.response.status === 403) {
-              this.setState({ isForbidden: true })
-            } else {
-              this.setState({ isError: true })
-            }
-          })
-      } else {
-        this.setState({ isUnmatchReinput: true })
+    const req = [
+      {
+        contributor: [
+          {
+            uri: 'urn:vte.cx:auth:' + ',' + vtecxauth.getHashpass(state.data.password) + ''
+          }
+        ]
       }
+    ]
+    const captchaOpt = '&g-recaptcha-token=' + captcha_value
+
+    setRequiredCaptcha(false)
+
+    try {
+      await commonAxios(states, '/d/?_changephash' + captchaOpt, 'put', req)
+      setIsCompleted(true)
+      setActiveStep(3)
+    } catch (_error) {
+      setRequiredCaptcha(true)
+      dispatch({
+        type: '_show_error',
+        message: 'パスワード変更に失敗しました。もう一度画面をリロードして実行してください。'
+      })
     }
   }
 
-  componentDidMount() {
+  useEffect(() => {
+    let _sitekey: string = ''
     if (location.href.indexOf('localhost') >= 0) {
-      this.sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
     } else {
-      this.sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
     }
+    setSitekey(_sitekey)
+    setRequiredCaptcha(true)
     const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + this.sitekey
+    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
     document.body.appendChild(script)
-  }
+  }, [])
 
-  render() {
-    const App = (
-      <div className="vtecx-from">
-        <div className="vtecx-from-container">
-          <div className="vtecx-from-content">
-            <h2>
-              <img src="../img/logo.svg" alt="有限会社バーチャルテクノロジー" height="24px" />
-              <span>パスワード変更</span>
-            </h2>
-            {this.state.isCompleted ? (
-              <Form>
-                <h5 className="text-center">パスワード変更を完了しました</h5>
-                <FormGroup>
-                  <Col sm={12}>
-                    <div className="text-center">
-                      <a href="index.html">トップページへ戻る</a>
-                    </div>
-                  </Col>
-                </FormGroup>
-              </Form>
-            ) : (
-              <Form horizontal onSubmit={(e: any) => this.handleSubmit(e)}>
-                <FormGroup controlId="password">
-                  <Col sm={12}>
-                    <ControlLabel>パスワード</ControlLabel>
-
-                    <PasswordStrength
-                      className="customClass"
-                      minLength={8}
-                      minScore={3}
-                      scoreWords={['弱', '弱', '中', '強', '最強']}
-                      tooShortWord="短い"
-                      changeCallback={(e: any) => this.passwordOnChange(e)}
-                      inputProps={{
-                        name: 'password',
-                        autoComplete: 'off',
-                        className: 'form-control'
-                      }}
-                    />
-
-                    <HelpBlock>
-                      （8文字以上で、かつ数字・英字・記号を最低1文字含む必要があります。パスワード強度は「強」以上がお薦めです）
-                    </HelpBlock>
-                  </Col>
-                </FormGroup>
-
-                <FormGroup controlId="re_password">
-                  <Col sm={12}>
-                    <ControlLabel>パスワード確認</ControlLabel>
-                    <FormControl type="password" placeholder="" />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup>
-                  <div className="login_form__recaptcha">
-                    <ReCaptcha
-                      sitekey={this.sitekey}
-                      verifyCallback={(value: string) => this.capchaOnChange(value)}
-                      action="login"
-                    />
-                  </div>
-                </FormGroup>
-
-                {this.state.isIllegalPassword && (
-                  <FormGroup>
-                    <Col sm={12}>
-                      <div className="alert alert-danger">
-                        パスワードは8文字以上、かつ数字・英字・記号を最低1文字含む必要があります。
-                      </div>
-                    </Col>
-                  </FormGroup>
-                )}
-
-                {this.state.isUnmatchReinput && (
-                  <FormGroup>
-                    <Col sm={12}>
-                      <div className="alert alert-danger">
-                        入力されたパスワードが不正です。確認用パスワードと一致していない可能性があります。
-                      </div>
-                    </Col>
-                  </FormGroup>
-                )}
-
-                {this.state.isForbidden && (
-                  <FormGroup>
-                    <Col sm={12}>
-                      <div className="alert alert-danger">
-                        <a href="index.html">ログイン</a>を行ってから実行してください。
-                      </div>
-                    </Col>
-                  </FormGroup>
-                )}
-
-                {this.state.isError && (
-                  <FormGroup>
-                    <Col sm={12}>
-                      <div className="alert alert-danger">パスワード変更に失敗しました。</div>
-                    </Col>
-                  </FormGroup>
-                )}
-                <FormGroup>
-                  <Col sm={12}>
-                    <Button type="submit" className="btn btn-lg login_form__btn--submit">
-                      パスワード変更実行
-                    </Button>
-                  </Col>
-                </FormGroup>
-              </Form>
-            )}
-          </div>
-        </div>
-      </div>
-    )
-    return (
-      <div>
-        <header>
-          <div className="contents_in">
-            <a href="http://reflexworks.jp/contact.html#company">
-              <img src="../img/logo_vt.svg" alt="有限会社バーチャルテクノロジー" />
-            </a>
-          </div>
-        </header>
-        <div id="wrapper">{App}</div>
-        <div id="footer">
-          <p className="copyright">
-            Copyrights&copy;2018 Virtual Technology,Ltd. ALL Rights Reserved.
-          </p>
-        </div>
-      </div>
-    )
-  }
+  return (
+    <CommonGrid>
+      <CommonText title>パスワード変更</CommonText>
+      <CommonStepper
+        activeStep={active_step}
+        steps={['本人確認用メール送信', 'メール送信完了', 'パスワード変更', 'パスワード変更完了']}
+      />
+      {!is_completed && (
+        <CommonForm>
+          <CommonStep number={1} title="新しいパスワードを入力してください。">
+            <CommonText>
+              ご使用するパスワードは
+              <b>8文字以上で、かつ数字・英字・記号を最低1文字含む</b>必要があります。
+            </CommonText>
+            <CommonInputText
+              type="password"
+              label="パスワード入力"
+              placeholder="パスワード"
+              name="password"
+              style={{ marginTop: 10 }}
+              variant="outlined"
+              value=""
+              validation={(_value: string) => {
+                return commonValidation('password', _value)
+              }}
+              onChange={() => {
+                state.data.password_re = ''
+                isRegistBtn()
+              }}
+              transparent
+            />
+            <CommonText>確認のためにもう一度入力してください。</CommonText>
+            <CommonInputText
+              type="password"
+              label="パスワード入力（確認用）"
+              placeholder="パスワード"
+              name="password_re"
+              transparent
+              style={{ marginTop: 10 }}
+              variant="outlined"
+              value={state.data.password_re}
+              validation={(_value: string) => {
+                if (state.data.password === _value) {
+                  return {
+                    error: false,
+                    message: ''
+                  }
+                } else {
+                  return {
+                    error: true,
+                    message: 'パスワードと一致させてください'
+                  }
+                }
+              }}
+              onChange={() => {
+                isRegistBtn()
+              }}
+            />
+          </CommonStep>
+          <CommonGrid>
+            <CommonGrid item justify="center">
+              <CommonButton
+                color="primary"
+                size="large"
+                disabled={is_regist_btn}
+                onClick={(_e: any) => handleSubmit(_e)}
+              >
+                パスワードを変更する
+              </CommonButton>
+            </CommonGrid>
+          </CommonGrid>
+          {required_captcha && (
+            <ReCaptcha
+              sitekey={sitekey}
+              verifyCallback={(value: string) => capchaOnChange(value)}
+              action="login"
+            />
+          )}
+        </CommonForm>
+      )}
+      {is_completed && (
+        <CommonBox>
+          <CommonBox top={2} bottom={4} align="center">
+            <CommonText>新しいパスワードへの変更が完了しました。</CommonText>
+          </CommonBox>
+          <CommonBox bottom={4} align="center">
+            <CommonText>ログイン画面からログインしてください。</CommonText>
+          </CommonBox>
+          <CommonBox bottom={4} align="center">
+            <CommonLink href="login.html">ログイン画面へ戻る</CommonLink>
+          </CommonBox>
+        </CommonBox>
+      )}
+    </CommonGrid>
+  )
 }
-
-ReactDOM.render(<ChangePassword />, document.getElementById('container'))
+const App: any = () => {
+  return (
+    <CommonProvider>
+      <Signup />
+    </CommonProvider>
+  )
+}
+ReactDOM.render(<App />, document.getElementById('container'))

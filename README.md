@@ -3,10 +3,6 @@ a blank project for vte.cx
 
 ## Setup
 
-Install gulp
-```
-npm install -g gulp 
-```
 checkout vtecxblank master branch
 
 npm install
@@ -14,31 +10,107 @@ npm install
 npm install 
 ```
 
-gulp to build and make a symbolic link. It is executed only once.
-```
-gulp
-```
-
 ## Usage
 
-gulp serve is to use a local dev environment.
+login 
 ```
-gulp serve -t http://{servicename}.vte.cx
+npm run login
+
+service:fooservice
+is production?:n
+login:foo@bar.com
+password:*********
+Logged in.
 ```
 
-With accesstoken, the updated file will be sent to the server at the same time. (The accesstoken can be obtained by admin console.)
+webpack-dev-server
 ```
-gulp serve -t http://{servicename}.vte.cx -k {accesstoken}
-```
-
--F option is to fix the target file.
-```
-gulp serve -F index.tsx -t http://{servicename}.vte.cx -k {accesstoken}
+npm run serve -- --env.entry=/components/login.tsx
 ```
 
-deploy 
+webpack-dev-server(index.tsx)
 ```
-gulp deploy -t http://{servicename}.vte.cx -k {accesstoken}
+npm run serve:index
+```
+
+webpack-dev-server(login.tsx)
+```
+npm run serve:login
+```
+
+watch & deploy
+```
+npm run watch -- --env.entry=/components/login.tsx
+```
+
+watch & deploy(index.tsx)
+```
+npm run watch:index
+```
+
+deploy(index.tsx)
+```
+npm run deploy:index
+```
+
+deploy(services)
+```
+./deploy.sh
+```
+
+download(template,schema,properties,bigquery.json)
+```
+npm run download
+```
+
+download schema template
+```
+npm run download:template
+```
+
+download index.d.ts(TypeScript Interface)
+```
+npm run download:typings
+```
+
+download properties
+```
+npm run download:properties
+```
+
+download bigquery.json
+```
+npm run download:bigquery.json
+```
+
+upload
+```
+npm run upload
+```
+
+upload schema
+```
+npm run upload:template
+```
+
+upload contents
+```
+npm run upload:htmlfolders
+```
+
+upload data
+```
+npm run upload:data
+```
+
+clean
+```
+npm run clean
+```
+
+clean(server)
+```
+npm run clean:server
 ```
 
 ## License

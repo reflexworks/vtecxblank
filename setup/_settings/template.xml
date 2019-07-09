@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <entry>
-  <author>
-    <uri>urn:vte.cx:created:0</uri>
-  </author>
-  <author>
-    <uri>urn:vte.cx:updated:699</uri>
-  </author>
-  <content type="text/html">
-foo
- bar
+<content type="text/html">
 </content>
   <contributor>
     <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
@@ -16,11 +8,7 @@ foo
   <contributor>
     <uri>urn:vte.cx:acl:+,R</uri>
   </contributor>
-  <id>/_settings/template,3</id>
   <link href="/_settings/template" rel="self"/>
-  <published>2019-03-03T15:06:42.703+09:00</published>
   <rights>
-foo.bar:/test
 </rights>
-  <updated>2019-03-10T16:14:56.597+09:00</updated>
 </entry>
