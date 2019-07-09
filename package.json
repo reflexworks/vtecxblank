@@ -9,8 +9,7 @@
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "eslint": "^6.0.1",
-    "npm": "^6.10.0",
-    "react-async-script": "^1.0.1"
+    "npm": "^6.10.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
