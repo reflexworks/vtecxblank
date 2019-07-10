@@ -80,7 +80,7 @@ const CommonProviderSheet = (_props: CommonProviderProps) => {
 
   //pathname
   if (location.pathname !== '/login.html') {
-    commonSessionStorage.set('befor_location', location)
+    commonSessionStorage.set('prev_location', location)
   }
 
   return (

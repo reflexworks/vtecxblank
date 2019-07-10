@@ -42,9 +42,9 @@ export const Login = (_props: any) => {
       await commonAxios(states, '/d/?_login' + captchaOpt, 'get', null, {
         'X-WSSE': authToken
       })
-      const befor_location = commonSessionStorage.get('befor_location')
-      if (befor_location) {
-        location.href = befor_location.href
+      const prev_location = commonSessionStorage.get('prev_location')
+      if (prev_location) {
+        location.href = prev_location.href
       } else {
         location.href = 'index.html'
       }
