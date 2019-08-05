@@ -59,6 +59,7 @@
     "download:template": "npx vtecxutil download:template",
     "download:typings": "npx vtecxutil download:typings",
     "watch": "npx webpack --mode=production --env.externals=true --watch",
+    "watch:server": "npx webpack --mode=production --env.externals=false --watch",
     "watch:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true --watch",
     "deploy:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true",
     "serve": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --mode=development --env.externals=true",
