@@ -50,7 +50,7 @@ npm run watch:index
 
 watch & deploy(server)
 ```
-npm run watch:server
+npm run watch:server -- --env.entry=/server/foo.tsx
 ```
 
 deploy(index.tsx)
