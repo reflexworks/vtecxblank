@@ -7,12 +7,12 @@ checkout vtecxblank master branch
 
 npm install
 ```
-npm install 
+npm install
 ```
 
 ## Usage
 
-login 
+login
 ```
 npm run login
 
@@ -48,22 +48,27 @@ watch & deploy(index.tsx)
 npm run watch:index
 ```
 
+watch & deploy(server)
+```
+npm run watch:server
+```
+
 deploy(index.tsx)
 ```
 npm run deploy:index
 ```
 
-deploy(services)
+deploy(all)
 ```
 ./deploy.sh
 ```
 
-download(template,schema,properties,bigquery.json)
+download(template,schema,properties,bigquery.json,folderacls)
 ```
 npm run download
 ```
 
-download schema template
+download schema
 ```
 npm run download:template
 ```
@@ -83,7 +88,12 @@ download bigquery.json
 npm run download:bigquery.json
 ```
 
-upload
+download folderacls
+```
+npm run download:folderacls
+```
+
+upload(all)
 ```
 npm run upload
 ```
@@ -96,6 +106,11 @@ npm run upload:template
 upload contents
 ```
 npm run upload:htmlfolders
+```
+
+upload folderacls
+```
+npm run upload:folderacls
 ```
 
 upload data
