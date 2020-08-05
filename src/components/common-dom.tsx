@@ -9,7 +9,7 @@ import {
   commonValidation,
   commonSessionStorage,
   commonIsMobile,
-  commonIconList,
+  commonIconList
 } from './common'
 
 import lightBlue from '@material-ui/core/colors/lightBlue'
@@ -107,8 +107,7 @@ const CommonProviderSheet = (_props: CommonProviderProps) => {
             </a>
           </div>
         </Grid>
-        <Grid item xs={12} className={props.classes.header}>
-        </Grid>
+        <Grid item xs={12} className={props.classes.header}></Grid>
         <Grid item xs={12} className={props.classes.body}>
           <Grid item xs={12} style={{ ...body_style, marginBottom: 80 }}>
             {props.children}
