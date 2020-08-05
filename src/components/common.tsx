@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import * as React from 'react'
 import axios from 'axios'
 
@@ -176,6 +177,7 @@ export const commonValidation = (_type: string, _value: string) => {
   if (!_value) return res
 
   if (_type === 'email') {
+    // eslint-disable-next-line no-useless-escape
     const regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     res.error = !regexp.test(_value)
     if (res.error) {
