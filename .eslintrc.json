@@ -22,6 +22,9 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "no-dupe-else-if": "off",
+    "no-import-assign": "off",
+    "no-setter-return": "off",
     "no-undef": 0,
     "no-unused-vars": 0,
     "indent": ["off", 2,{"SwitchCase": 1,"flatTernaryExpressions": true}],

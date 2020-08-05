@@ -120,10 +120,7 @@ export const Signup = (_props: any) => {
   return (
     <CommonGrid>
       <CommonText title>アカウント登録</CommonText>
-      <CommonStepper
-        activeStep={active_step}
-        steps={['仮登録', '仮登録完了', '本登録完了']}
-      />
+      <CommonStepper activeStep={active_step} steps={['仮登録', '仮登録完了', '本登録完了']} />
       {!is_completed && (
         <CommonForm>
           <CommonText style={{ marginBottom: -30 }}>
