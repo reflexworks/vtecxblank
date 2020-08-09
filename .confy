@@ -7,7 +7,7 @@
       "$default": {
         "service": "xxxx.vte.cx"
       },
-      "app.greenable.jp": {
+      "xxxx": {
         "accesstoken": "xxxx",
         "path": "http://xxxx.vte.cx"
       }
