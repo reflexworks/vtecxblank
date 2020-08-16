@@ -1,0 +1,16 @@
+{
+  "setting": {
+    "profile": "default"
+  },
+  "profiles": {
+    "default": {
+      "$default": {
+        "service": "xxxx.vte.cx"
+      },
+      "xxxx": {
+        "accesstoken": "xxxx",
+        "path": "http://xxxx.vte.cx"
+      }
+    }
+  }
+}
