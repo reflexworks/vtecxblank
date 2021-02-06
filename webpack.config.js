@@ -61,7 +61,7 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },
-    target: env.entry.indexOf('/server')>=0 ? ['web','es5'] : 'web',
+    target: env.entry.indexOf('/server')>=0||argv.mode === 'production' ? ['web','es5'] : 'web',
     devServer: {
       host: 'localhost',
       port: 8000,
