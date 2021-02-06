@@ -1,6 +1,5 @@
 const path = require('path')
 const vtecxutil = require('vtecxutil')
-const writeFilePlugin = require('write-file-webpack-plugin')
 const confy = require('confy')
 
 module.exports = (env, argv) => {
@@ -25,22 +24,27 @@ module.exports = (env, argv) => {
   return {
     mode: argv.mode ? 'development' : 'production',
     entry: './src' + env.entry,
-    output: {
+    output:{
       filename: '.' + env.entry.replace(/(\.tsx)|(\.ts)/g, '.js')
     },
     module: {
       rules: [
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: [
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                url: false
+              }
+            }
+          ]
         },
         {
-          test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
-          use: { loader: 'url-loader', options: { limit: 100000 } }
-        },
-        {
-          test: /\.(jpg)$/,
-          use: { loader: 'file-loader', options: { name: '[name].[ext]' } }
+          test: /\.(gif|png|jpg|eot|wof|woff|ttf|svg)$/,
+          // 画像をBase64として取り込む
+          type: "asset/inline"
         },
         {
           test: /\.tsx?$/,
@@ -57,10 +61,15 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },
+    target: env.entry.indexOf('/server')>=0 ? ['web','es5'] : 'web',
     devServer: {
       host: 'localhost',
       port: 8000,
-      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }]
+      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }],
+      contentBase: 'src/',
+      open: true,
+      writeToDisk: true,
+      hot: true
     },
     externals:
       env.externals === 'true'
@@ -72,10 +81,7 @@ module.exports = (env, argv) => {
             axios: 'axios'
           }
         : {},
-    plugins:
-      argv.mode === 'production'
-        ? [new vtecxutil.uploaderPlugin(env.entry)]
-        : [new writeFilePlugin(), new vtecxutil.uploaderPlugin(env.entry)],
-    devtool: argv.mode === 'production' ? '' : 'source-map'
+    plugins: [new vtecxutil.uploaderPlugin(env.entry)],
+    devtool: argv.mode === 'production' ? undefined : 'source-map'
   }
 }
