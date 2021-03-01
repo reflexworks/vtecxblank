@@ -57,6 +57,7 @@
     "upload:template": "npx vtecxutil upload:template",
     "upload:htmlfolders": "npx vtecxutil upload:htmlfolders",
     "upload:folderacls": "npx vtecxutil upload:folderacls",
+    "upload:properties": "npx vtecxutil upload:properties",
     "upload:bigquery.json": "npx vtecxutil upload:bigquery.json",
     "download": "npx vtecxutil download",
     "download:data": "npx vtecxutil download:data",
