@@ -4,7 +4,9 @@
     "commonjs": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"],
   "settings": {
     "react": {
       "pragma": "React",
@@ -36,6 +38,7 @@
     "no-mixed-spaces-and-tabs": 0,
     "no-console": 0,
     "no-irregular-whitespace": 0,
+    "no-var-requires": false,
     "prettier/prettier": [
       "error",
       {
