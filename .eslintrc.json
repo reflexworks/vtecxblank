@@ -37,28 +37,8 @@
     "react/no-unknown-property": 0,
     "no-mixed-spaces-and-tabs": 0,
     "no-console": 0,
-    "no-irregular-whitespace": 0,
-    "no-var-requires": false,
-    "prettier/prettier": [
-      "error",
-      {
-        "arrowParens": "avoid",
-        "bracketSpacing": true,
-        "htmlWhitespaceSensitivity": "css",
-        "insertPragma": false,
-        "jsxBracketSameLine": false,
-        "jsxSingleQuote": false,
-        "parser": "typescript",
-        "printWidth": 100,
-        "proseWrap": "preserve",
-        "requirePragma": false,
-        "semi": false,
-        "singleQuote": true,
-        "tabWidth": 2,
-        "trailingComma": "none",
-        "useTabs": false,
-        "doc": false
-      }
-    ]
+    "no-var-requires": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "no-irregular-whitespace": 0
   }
 }
