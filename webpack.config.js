@@ -76,8 +76,6 @@ module.exports = (env, argv) => {
         ? {
             react: 'React',
             'react-dom': 'ReactDOM',
-            'react-bootstrap': 'ReactBootstrap',
-            'react-router-dom': 'ReactRouterDOM',
             axios: 'axios'
           }
         : {},
