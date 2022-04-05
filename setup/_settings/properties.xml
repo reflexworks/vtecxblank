@@ -8,7 +8,15 @@
       <uri>urn:vte.cx:acl:+,R</uri>
     </contributor>
     <link href="/_settings/properties" rel="self"/>
-    <rights>_errorpage.1.login.html=^/_html/.*$
+    <rights>_mail.user=apikey
+_mail.password=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
+_mail.from=admin@vte.cx
+_mail.from.personal=vte.cx
+_mail.transport.protocol=smtps
+_mail.smtp.host=smtp.sendgrid.net
+_mail.smtp.port=587
+_mail.smtp.auth=true
+_errorpage.1.login.html=^/_html/.*$
 _errorpage.2.login.html=^/@/.*$
 console.log=true
 console.warn=false
@@ -72,7 +80,7 @@ vte.cx
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 以下のURLをクリックしてパスワード変更を行ってください。
 
-${RXID=/change_password.html}
+${URL}/change_password.html#/?${PASSRESET_TOKEN}
 
 設定が完了いたしますと、新しいパスワードでサービスがご利用できるようになります。
 
