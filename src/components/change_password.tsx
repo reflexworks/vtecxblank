@@ -32,6 +32,8 @@ export const Signup = (_props: any) => {
     setCaptchaValue(value)
   }
 
+  const [passresetToken, setPassresetToken]: any = useState()
+
   // パスワード変更ボタン判定
   const [is_regist_btn, setIsRegistBtn]: any = useState(true)
   const isRegistBtn = () => {
@@ -58,6 +60,8 @@ export const Signup = (_props: any) => {
         contributor: [
           {
             uri: 'urn:vte.cx:auth:' + ',' + vtecxauth.getHashpass(state.data.password) + ''
+          }, {
+            uri: 'urn:vte.cx:passreset_token:' + passresetToken
           }
         ]
       }
@@ -79,8 +83,38 @@ export const Signup = (_props: any) => {
     }
   }
 
+  const authentication = () => {
+    const hash_value = location.hash.replace('#/?', '')
+    const options = hash_value.split('&')
+    if (options.length) {
+      const auth_info: any = {}
+      options.map((_data) => {
+        const key = _data.split('=')[0]
+        const value = _data.split('=')[1]
+        auth_info[key] = value
+      })
+      if (auth_info._RXID) {
+        commonAxios(null, '/d/?_uid&_RXID=' + auth_info._RXID, 'get').then(() => {
+          setPassresetToken(auth_info._passreset_token)
+        }).catch((_error) => {
+          if (_error.response && _error.response.status === 401
+            || _error.response && _error.response.status === 403) {
+            if (_error.response.data && _error.response.data.feed && _error.response.data.feed.title && _error.response.data.feed.title.indexOf('RXID has been used more than once.') !== -1) {
+              setPassresetToken(auth_info._passreset_token)
+            } else {
+              location.href = 'index.html'
+            }
+          } else {
+            location.href = 'index.html'
+          }
+          //this.props.dispatch(Action.showError(_error))
+        })
+      }
+    }
+  }
+
   useEffect(() => {
-    let _sitekey: string = ''
+    let _sitekey = ''
     if (location.href.indexOf('localhost') >= 0) {
       _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
     } else {
@@ -91,9 +125,10 @@ export const Signup = (_props: any) => {
     const script = document.createElement('script')
     script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
     document.body.appendChild(script)
+    authentication()
   }, [])
 
-  return (
+  return passresetToken ? (
     <CommonGrid>
       <CommonText title>パスワード変更</CommonText>
       <CommonStepper
@@ -187,7 +222,7 @@ export const Signup = (_props: any) => {
         </CommonBox>
       )}
     </CommonGrid>
-  )
+  ) : null
 }
 const App: any = () => {
   return (
