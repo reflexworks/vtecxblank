@@ -72,7 +72,7 @@ vte.cx
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 以下のURLをクリックしてパスワード変更を行ってください。
 
-${RXID=/change_password.html}
+${URL}/change_password.html#/?${PASSRESET_TOKEN}
 
 設定が完了いたしますと、新しいパスワードでサービスがご利用できるようになります。
 
