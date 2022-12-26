@@ -63,7 +63,7 @@ export const Login = (_props: any) => {
   }
 
   useEffect(() => {
-    let _sitekey: string = ''
+    let _sitekey = ''
     if (location.href.indexOf('localhost') >= 0) {
       _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
     } else {
