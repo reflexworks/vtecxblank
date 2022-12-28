@@ -1,5 +1,5 @@
 import '../styles/index.css'
-import * as vtecxauth from 'vtecxauth'
+import * as vtecxauth from '@vtecx/vtecxauth'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import ReCaptcha from './ReCaptcha'
