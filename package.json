@@ -66,8 +66,8 @@
     "watch:index": "npx webpack --env entry=/components/index.tsx --mode=production --env externals=true --watch",
     "deploy:index": "npx webpack --env entry=/components/index.tsx --mode=production --env externals=true",
     "serve": "npx webpack serve --mode=development --env externals=true",
-    "serve:index": "npx webpack serve --open-page index.html --mode=development --env entry=/components/index.tsx --env externals=true",
-    "serve:login": "npx webpack serve --open-page login.html --mode=development --env entry=/components/login.tsx --env externals=true",
+    "serve:index": "npx webpack serve --open index.html --mode=development --env entry=/components/index.tsx --env externals=true",
+    "serve:login": "npx webpack serve --open login.html --mode=development --env entry=/components/login.tsx --env externals=true",
     "test": "jest"
   },
   "license": "MIT",
