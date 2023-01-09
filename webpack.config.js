@@ -66,9 +66,14 @@ module.exports = (env, argv) => {
       host: 'localhost',
       port: 8000,
       proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }],
-      contentBase: 'src/',
-      open: true,
-      writeToDisk: true,
+      static: {
+        directory: path.join(__dirname, "src/"),
+      },
+      open: {
+        app: {
+          name: 'google-chrome',
+        },
+      },
       hot: true
     },
     externals:
