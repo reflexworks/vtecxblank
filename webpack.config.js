@@ -1,6 +1,5 @@
 const path = require('path')
 const vtecxutil = require('vtecxutil')
-const writeFilePlugin = require('write-file-webpack-plugin')
 const confy = require('confy')
 
 module.exports = (env, argv) => {
@@ -32,23 +31,28 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                url: false
+              }
+            }
+          ]
         },
         {
-          test: /\.sass$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
-        },
-        {
-          test: /\.(png|gif|svg|ttf|woff|woff2|eot)$/,
-          use: { loader: 'url-loader', options: { limit: 100000 } }
-        },
-        {
-          test: /\.(jpg)$/,
-          use: { loader: 'file-loader', options: { name: '[name].[ext]' } }
+          test: /\.(gif|png|jpg|eot|wof|woff|ttf|svg)$/,
+          // 画像をBase64として取り込む
+          type: 'asset/inline'
         },
         {
           test: /\.tsx?$/,
           use: { loader: 'ts-loader' }
+        },
+        {
+          test: /\.sass$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
           enforce: 'pre',
@@ -61,10 +65,21 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },
+    target:
+      env.entry.indexOf('/server') >= 0 || argv.mode === 'production' ? ['web', 'es5'] : 'web',
     devServer: {
       host: 'localhost',
       port: 8000,
-      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }]
+      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }],
+      static: {
+        directory: path.join(__dirname, "src/"),
+      },
+      open: {
+        app: {
+          name: 'google-chrome',
+        },
+      },
+      hot: true
     },
     externals:
       env.externals === 'true'
@@ -72,14 +87,10 @@ module.exports = (env, argv) => {
             react: 'React',
             'react-dom': 'ReactDOM',
             'react-bootstrap': 'ReactBootstrap',
-            'react-router-dom': 'ReactRouterDOM',
             axios: 'axios'
           }
         : {},
-    plugins:
-      argv.mode === 'production'
-        ? [new vtecxutil.uploaderPlugin(env.entry)]
-        : [new writeFilePlugin(), new vtecxutil.uploaderPlugin(env.entry)],
-    devtool: argv.mode === 'production' ? '' : 'source-map'
+    plugins: [new vtecxutil.uploaderPlugin(env.entry)],
+    devtool: argv.mode === 'production' ? undefined : 'source-map'
   }
 }
