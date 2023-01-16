@@ -84,12 +84,12 @@
     "download:typings": "npx vtecxutil download:typings",
     "download:properties": "npx vtecxutil download:properties",
     "download:bigquery.json": "npx vtecxutil download:bigquery.json",
-    "watch": "npx webpack --mode=production --env.externals=true --watch",
-    "watch:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true --watch",
-    "deploy:index": "npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true",
-    "serve": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --mode=development --env.externals=true",
-    "serve:index": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page index.html --mode=development --env.entry=/components/index.tsx --env.externals=true",
-    "serve:login": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page login.html --mode=development --env.entry=/components/login.tsx --env.externals=true"
+    "watch": "npx webpack --mode=production --env externals=true --watch",
+    "watch:index": "npx webpack --env entry=/components/index.tsx --mode=production --env externals=true --watch",
+    "deploy:index": "npx webpack --env entry=/components/index.tsx --mode=production --env externals=true",
+    "serve": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --mode=development --env externals=true",
+    "serve:index": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page index.html --mode=development --env entry=/components/index.tsx --env externals=true",
+    "serve:login": "npx webpack-dev-server --hot --inline --watch-content-base --content-base src/ --open-page login.html --mode=development --env entry=/components/login.tsx --env externals=true"
   },
   "license": "MIT",
   "repository": {
