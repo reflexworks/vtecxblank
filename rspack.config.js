@@ -1,12 +1,12 @@
 const path = require('path')
-const vtecxutil = require('vtecxutil')
+const vtecxutil = require('@vtecx/vtecxutil')
 const confy = require('confy')
 
 module.exports = (env, argv) => {
   let target
-  confy.get('$default', function(err, result) {
+  confy.get('$default', function (err, result) {
     if (result) {
-      confy.get(result.service, function(err, result2) {
+      confy.get(result.service, function (err, result2) {
         target = result2.path
       })
     } else {
@@ -24,66 +24,46 @@ module.exports = (env, argv) => {
   return {
     mode: argv.mode ? 'development' : 'production',
     entry: './src' + env.entry,
-    output:{
+    output: {
       filename: '.' + env.entry.replace(/(\.tsx)|(\.ts)/g, '.js')
     },
     module: {
       rules: [
         {
-          test: /\.css$/,
-          use: [
-            "style-loader",
-            {
-              loader: "css-loader",
-              options: {
-                url: false
-              }
-            }
-          ]
-        },
-        {
-          test: /\.(gif|png|jpg|eot|wof|woff|ttf|svg)$/,
-          // 画像をBase64として取り込む
-          type: "asset/inline"
-        },
-        {
           test: /\.tsx?$/,
-          use: { loader: 'ts-loader' }
+          use: {
+            loader: 'ts-loader',
+            options: {
+              configFile: 'rspack.tsconfig.json'
+            }
+          }
         },
         {
-          enforce: 'pre',
-          test: /\.js$/,
-          use: { loader: 'source-map-loader' },
-          exclude: /node_modules/
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader']
         }
       ]
     },
     resolve: {
+      alias: {
+        react: path.resolve(__dirname, 'node_modules/react'),
+        'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
+      },
+      mainFields: ['module', 'browser', 'main'],
       extensions: ['.ts', '.tsx', '.js']
     },
-    target: env.entry.indexOf('/server')>=0||argv.mode === 'production' ? ['web','es5'] : 'web',
+    target:
+      env.entry.indexOf('/server') >= 0 || argv.mode === 'production' ? ['web', 'es5'] : 'web',
     devServer: {
       host: 'localhost',
       port: 8000,
       proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }],
       static: {
-        directory: path.join(__dirname, "src/"),
+        directory: path.join(__dirname, 'src/')
       },
-      open: {
-        app: {
-          name: 'google-chrome',
-        },
-      },
+      open: true,
       hot: true
     },
-    externals:
-      env.externals === 'true'
-        ? {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-            axios: 'axios'
-          }
-        : {},
     plugins: [new vtecxutil.uploaderPlugin(env.entry)],
     devtool: argv.mode === 'production' ? undefined : 'source-map'
   }

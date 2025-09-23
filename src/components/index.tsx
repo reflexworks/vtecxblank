@@ -1,4 +1,7 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 
-ReactDOM.render(<div>Hello vte.cx!</div>, document.getElementById('container'))
+function App() {
+  return <h1>Hello vte.cx!!</h1>
+}
+createRoot(document.getElementById('content')!).render(<App />)

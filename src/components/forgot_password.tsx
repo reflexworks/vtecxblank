@@ -1,9 +1,8 @@
 import '../styles/index.css'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import ReCaptcha from './ReCaptcha'
+import React, { useEffect, useContext, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import { ReCaptchaProvider, useReCaptcha } from 'react-enterprise-recaptcha'
 
-import { useEffect, useContext, useState } from 'react'
 import {
   ReducerContext,
   CommonProvider,
@@ -16,54 +15,47 @@ import {
   CommonForm,
   CommonBox
 } from './common-dom'
-import { commonAxios, commonValidation } from './common'
+import { commonFetch, commonValidation } from './common'
 
-export const Signup = (_props: any) => {
+export const ForgotPassword = (_props: any) => {
   const { state, dispatch }: any = useContext(ReducerContext)
   const states = { state, dispatch }
 
-  // キャプチャ関連
-  const [required_captcha, setRequiredCaptcha]: any = useState(false)
-  const [captcha_value, setCaptchaValue]: any = useState('')
-  const [sitekey, setSitekey]: any = useState('')
-  const capchaOnChange = (value: string): void => {
-    setCaptchaValue(value)
-  }
+  const [required_captcha, setRequiredCaptcha] = useState<boolean>(true)
+  const { executeRecaptcha } = useReCaptcha()
 
-  // メール送信ボタン判定
-  const [is_regist_btn, setIsRegistBtn]: any = useState(true)
+  const [is_regist_btn, setIsRegistBtn] = useState<boolean>(true)
   const isRegistBtn = () => {
-    const email = state.data.email
+    const email = state?.data?.email
     const is_email_error = email ? commonValidation('email', email).error : true
-
-    if (!is_email_error) {
-      setIsRegistBtn(false)
-    } else {
-      setIsRegistBtn(true)
-    }
+    setIsRegistBtn(!!is_email_error)
   }
 
-  // メール送信ボタン押下処理
-  const [is_completed, setIsCompleted]: any = useState(false)
-  const [active_step, setActiveStep]: any = useState(0)
+  const [is_completed, setIsCompleted] = useState<boolean>(false)
+  const [active_step, setActiveStep] = useState<number>(0)
+
   const handleSubmit = async (_e: any) => {
     _e.preventDefault()
 
-    const req = [
-      {
-        contributor: [
-          {
-            uri: 'urn:vte.cx:auth:' + state.data.email
-          }
-        ]
+    const req = [{ contributor: [{ uri: 'urn:vte.cx:auth:' + state.data.email }] }]
+
+    let captchaOpt = ''
+    try {
+      if (required_captcha) {
+        const token = await executeRecaptcha('passreset')
+        captchaOpt = '&g-recaptcha-token=' + encodeURIComponent(token)
       }
-    ]
-    const captchaOpt = '&g-recaptcha-token=' + captcha_value
+    } catch {
+      dispatch({
+        type: '_show_error',
+        message: 'Security check failed. Please try again.'
+      })
+      return
+    }
 
     setRequiredCaptcha(false)
-
     try {
-      await commonAxios(states, '/d/?_passreset' + captchaOpt, 'post', req)
+      await commonFetch(states, '/d/?_passreset' + captchaOpt, 'post', req)
       setIsCompleted(true)
       setActiveStep(1)
     } catch (_error) {
@@ -74,20 +66,6 @@ export const Signup = (_props: any) => {
       })
     }
   }
-
-  useEffect(() => {
-    let _sitekey: string = ''
-    if (location.href.indexOf('localhost') >= 0) {
-      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
-    } else {
-      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
-    }
-    setSitekey(_sitekey)
-    setRequiredCaptcha(true)
-    const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
-    document.body.appendChild(script)
-  }, [])
 
   return (
     <CommonGrid>
@@ -109,6 +87,7 @@ export const Signup = (_props: any) => {
               アクセスされたページにて新しいパスワードを入力して登録が完了です。
             </CommonText>
           </CommonBox>
+
           <CommonStep number={1} title="メールアドレスを入力してください。">
             <CommonInputText
               label="メールアドレス"
@@ -118,10 +97,7 @@ export const Signup = (_props: any) => {
               autoComplete="email"
               variant="outlined"
               value=""
-              //error={isError}
-              validation={(_value: string) => {
-                return commonValidation('email', _value)
-              }}
+              validation={(v: string) => commonValidation('email', v)}
               onChange={() => isRegistBtn()}
               transparent
             />
@@ -133,21 +109,15 @@ export const Signup = (_props: any) => {
                 color="primary"
                 size="large"
                 disabled={is_regist_btn}
-                onClick={(_e: any) => handleSubmit(_e)}
+                onClick={(e: any) => handleSubmit(e)}
               >
                 メールを送信する
               </CommonButton>
             </CommonGrid>
           </CommonGrid>
-          {required_captcha && (
-            <ReCaptcha
-              sitekey={sitekey}
-              verifyCallback={(value: string) => capchaOnChange(value)}
-              action="login"
-            />
-          )}
         </CommonForm>
       )}
+
       {is_completed && (
         <CommonBox>
           <CommonBox top={2} bottom={4} align="center">
@@ -164,11 +134,27 @@ export const Signup = (_props: any) => {
     </CommonGrid>
   )
 }
-const App: any = () => {
+
+const App: React.FC = () => {
+  const [siteKey, setSiteKey] = useState<string>()
+
+  useEffect(() => {
+    const key =
+      typeof location !== 'undefined' && location.hostname.includes('localhost')
+        ? '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+        : '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    setSiteKey(key)
+  }, [])
+
+  if (!siteKey) return null
+
   return (
-    <CommonProvider>
-      <Signup />
-    </CommonProvider>
+    <ReCaptchaProvider reCaptchaKey={siteKey} language="ja" defaultAction="passreset">
+      <CommonProvider>
+        <ForgotPassword />
+      </CommonProvider>
+    </ReCaptchaProvider>
   )
 }
-ReactDOM.render(<App />, document.getElementById('container'))
+
+createRoot(document.getElementById('content')!).render(<App />)

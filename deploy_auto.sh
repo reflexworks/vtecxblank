@@ -9,7 +9,7 @@ do
   break
  fi
  if [[ $LINE == *server* ]]; then
-  npx webpack --env.entry=/server/${LINE##*/} --mode=production --env.externals=false
+  npx rspack --env.entry=/server/${LINE##*/} --mode=production
  echo $LINE
  else
   if [[ $LINE == *components* ]]; then
@@ -20,7 +20,7 @@ do
  fi
 done
 if [[ $COMPONENTS == "1" ]]; then
-  npx webpack --env.entry=/components/index.tsx --mode=production --env.externals=true
+  npx rspack --env.entry=/components/index.tsx --mode=production
 fi
 if [[ $OTHER == "1" ]]; then
   npx vtecxutil upload

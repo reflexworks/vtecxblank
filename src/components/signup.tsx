@@ -1,10 +1,10 @@
+// signup.tsx
 import '../styles/index.css'
 import * as vtecxauth from '@vtecx/vtecxauth'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import ReCaptcha from './ReCaptcha'
+import React, { useEffect, useContext, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import { ReCaptchaProvider, useReCaptcha } from 'react-enterprise-recaptcha'
 
-import { useEffect, useContext, useState } from 'react'
 import {
   ReducerContext,
   CommonProvider,
@@ -19,22 +19,16 @@ import {
   CommonForm,
   CommonBox
 } from './common-dom'
-import { commonAxios, commonValidation } from './common'
+import { commonFetch, commonValidation } from './common'
 
 export const Signup = (_props: any) => {
   const { state, dispatch }: any = useContext(ReducerContext)
   const states = { state, dispatch }
 
-  // キャプチャ関連
-  const [required_captcha, setRequiredCaptcha]: any = useState(false)
-  const [captcha_value, setCaptchaValue]: any = useState('')
-  const [sitekey, setSitekey]: any = useState('')
-  const capchaOnChange = (value: string): void => {
-    setCaptchaValue(value)
-  }
+  const [required_captcha, setRequiredCaptcha] = useState<boolean>(true)
+  const { executeRecaptcha } = useReCaptcha()
 
-  // 仮登録ボタン判定
-  const [is_regist_btn, setIsRegistBtn]: any = useState(true)
+  const [is_regist_btn, setIsRegistBtn] = useState<boolean>(true)
   const isRegistBtn = () => {
     const email = state.data.email
     const password = state.data.password
@@ -43,17 +37,12 @@ export const Signup = (_props: any) => {
     const is_email_error = email ? commonValidation('email', email).error : true
     const is_password_error = password ? commonValidation('password', password).error : true
     const is_password_re_error = password !== password_re
-
-    if (!is_email_error && !is_password_error && !is_password_re_error && terms1) {
-      setIsRegistBtn(false)
-    } else {
-      setIsRegistBtn(true)
-    }
+    setIsRegistBtn(!(!is_email_error && !is_password_error && !is_password_re_error && terms1))
   }
 
-  // 仮登録ボタン押下処理
-  const [is_completed, setIsCompleted]: any = useState(false)
-  const [active_step, setActiveStep]: any = useState(0)
+  const [is_completed, setIsCompleted] = useState<boolean>(false)
+  const [active_step, setActiveStep] = useState<number>(0)
+
   const handleSubmit = async (_e: any) => {
     _e.preventDefault()
 
@@ -65,28 +54,37 @@ export const Signup = (_props: any) => {
               'urn:vte.cx:auth:' +
               state.data.email +
               ',' +
-              vtecxauth.getHashpass(state.data.password) +
-              ''
+              vtecxauth.getHashpass(state.data.password)
           }
         ]
       }
     ]
-    const captchaOpt = '&g-recaptcha-token=' + captcha_value
+
+    let captchaOpt = ''
+    try {
+      if (required_captcha) {
+        // 👇 action: adduser
+        const token = await executeRecaptcha('adduser')
+        captchaOpt = '&g-recaptcha-token=' + encodeURIComponent(token)
+      }
+    } catch {
+      dispatch({
+        type: '_show_error',
+        message: 'Security check failed. Please try again.'
+      })
+      return
+    }
 
     setRequiredCaptcha(false)
-
     try {
-      await commonAxios(states, '/d/?_adduser' + captchaOpt, 'post', req)
+      await commonFetch(states, '/d/?_adduser' + captchaOpt, 'post', req)
       setIsCompleted(true)
       setActiveStep(1)
-    } catch (_error) {
+    } catch (_error: any) {
       setRequiredCaptcha(true)
-      if (_error.response) {
+      if (_error?.response) {
         if (_error.response.data.feed.title.indexOf('Duplicated key. account = ') !== -1) {
-          dispatch({
-            type: '_show_error',
-            message: 'そのアカウントは既に登録済みです。'
-          })
+          dispatch({ type: '_show_error', message: 'そのアカウントは既に登録済みです。' })
         } else if (_error.response.data.feed.title.indexOf('Mail setting is required') !== -1) {
           dispatch({
             type: '_show_error',
@@ -103,20 +101,6 @@ export const Signup = (_props: any) => {
     }
   }
 
-  useEffect(() => {
-    let _sitekey = ''
-    if (location.href.indexOf('localhost') >= 0) {
-      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
-    } else {
-      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
-    }
-    setSitekey(_sitekey)
-    setRequiredCaptcha(true)
-    const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
-    document.body.appendChild(script)
-  }, [])
-
   return (
     <CommonGrid>
       <CommonText title>アカウント登録</CommonText>
@@ -126,6 +110,7 @@ export const Signup = (_props: any) => {
           <CommonText style={{ marginBottom: -30 }}>
             まずは仮登録を行います。以下の入力フォームで必要な項目を入力してください。
           </CommonText>
+
           <CommonStep number={1} title="メールアドレスを入力してください。">
             <CommonInputText
               label="メールアドレス"
@@ -135,10 +120,7 @@ export const Signup = (_props: any) => {
               autoComplete="email"
               variant="outlined"
               value=""
-              //error={isError}
-              validation={(_value: string) => {
-                return commonValidation('email', _value)
-              }}
+              validation={(v: string) => commonValidation('email', v)}
               onChange={() => isRegistBtn()}
               transparent
             />
@@ -146,10 +128,11 @@ export const Signup = (_props: any) => {
               ここで入力するメールアドレスは、ログインIDとして使用します。
             </CommonText>
           </CommonStep>
+
           <CommonStep number={2} title="パスワードを入力してください。">
             <CommonText>
-              ご使用するパスワードは
-              <b>8文字以上で、かつ数字・英字・記号を最低1文字含む</b>必要があります。
+              ご使用するパスワードは<b>8文字以上で、かつ数字・英字・記号を最低1文字含む</b>
+              必要があります。
             </CommonText>
             <CommonInputText
               type="password"
@@ -159,9 +142,7 @@ export const Signup = (_props: any) => {
               style={{ marginTop: 10 }}
               variant="outlined"
               value=""
-              validation={(_value: string) => {
-                return commonValidation('password', _value)
-              }}
+              validation={(v: string) => commonValidation('password', v)}
               onChange={() => {
                 state.data.password_re = ''
                 isRegistBtn()
@@ -178,62 +159,44 @@ export const Signup = (_props: any) => {
               style={{ marginTop: 10 }}
               variant="outlined"
               value={state.data.password_re}
-              validation={(_value: string) => {
-                if (state.data.password === _value) {
-                  return {
-                    error: false,
-                    message: ''
-                  }
-                } else {
-                  return {
-                    error: true,
-                    message: 'パスワードと一致させてください'
-                  }
-                }
-              }}
-              onChange={() => {
-                isRegistBtn()
-              }}
+              validation={(v: string) =>
+                state.data.password === v
+                  ? { error: false, message: '' }
+                  : { error: true, message: 'パスワードと一致させてください' }
+              }
+              onChange={() => isRegistBtn()}
             />
             <CommonText caption color="secondary">
               ご入力頂いたパスワードは本登録後、当サービスをご利用いただくために必要になります。
             </CommonText>
             <CommonText caption>メモを取るなどし、忘れないようにご注意ください。</CommonText>
           </CommonStep>
+
           <CommonStep number={3} title="利用規約に同意の上、仮登録ボタンを押下してください。">
-            <CommonCheckbox
-              name="terms1"
-              onChange={() => {
-                isRegistBtn()
-              }}
-            >
+            <CommonCheckbox name="terms1" onChange={() => isRegistBtn()}>
               <CommonText>
                 「<CommonLink href="user_terms.html">利用規約</CommonLink>」に同意します。
               </CommonText>
             </CommonCheckbox>
+
             <CommonText style={{ marginTop: 20 }}>
               上記メールアドレスに本登録用のメールを送信します。メールが届きましたら、
               <b>本文のリンクをクリックして本登録を完了</b>してください。
             </CommonText>
+
             <CommonButton
               color="primary"
               size="large"
               style={{ width: '100%', height: '50px' }}
               disabled={is_regist_btn}
-              onClick={(_e: any) => handleSubmit(_e)}
+              onClick={(e: any) => handleSubmit(e)}
             >
               アカウントの仮登録をする
             </CommonButton>
-            {required_captcha && (
-              <ReCaptcha
-                sitekey={sitekey}
-                verifyCallback={(value: string) => capchaOnChange(value)}
-                action="login"
-              />
-            )}
           </CommonStep>
         </CommonForm>
       )}
+
       {is_completed && (
         <CommonBox>
           <CommonBox top={2} bottom={4} align="center">
@@ -250,11 +213,26 @@ export const Signup = (_props: any) => {
     </CommonGrid>
   )
 }
-const App: any = () => {
+
+const App: React.FC = () => {
+  const [siteKey, setSiteKey] = useState<string>()
+  useEffect(() => {
+    const key =
+      typeof location !== 'undefined' && location.hostname.includes('localhost')
+        ? '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+        : '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    setSiteKey(key)
+  }, [])
+
+  if (!siteKey) return null
+
   return (
-    <CommonProvider>
-      <Signup />
-    </CommonProvider>
+    <ReCaptchaProvider reCaptchaKey={siteKey} language="ja" defaultAction="adduser">
+      <CommonProvider>
+        <Signup />
+      </CommonProvider>
+    </ReCaptchaProvider>
   )
 }
-ReactDOM.render(<App />, document.getElementById('container'))
+
+createRoot(document.getElementById('content')!).render(<App />)

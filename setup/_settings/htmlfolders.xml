@@ -124,16 +124,6 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- xlsをログインユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:+,R./</uri>
-        </contributor>
-        <link rel="self" href="/_html/xls" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
             <!-- index.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
@@ -174,7 +164,7 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- admin.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- change_password.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/change_password.html" />
@@ -184,30 +174,10 @@
             <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
         </contributor>
         <contributor>
-            <!-- admin.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
+            <!-- change_password.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
             <uri>urn:vte.cx:acl:*,R.</uri>
         </contributor>
         <link rel="self" href="/_html/components/change_password.js" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
-            <!-- demo.htmlを全ユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R.</uri>
-        </contributor>
-        <link rel="self" href="/_html/demo.html" />
-    </entry>
-    <entry>
-        <contributor>
-            <uri>urn:vte.cx:acl:/_group/$admin,CRUD</uri>
-        </contributor>
-        <contributor>
-            <!-- demo.jsを全ユーザに閲覧できるようにするACL設定(*)  -->
-            <uri>urn:vte.cx:acl:*,R.</uri>
-        </contributor>
-        <link rel="self" href="/_html/components/demo.js" />
     </entry>
     <entry>
         <contributor>

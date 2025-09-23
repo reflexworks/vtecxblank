@@ -1,10 +1,11 @@
+// login.tsx
 import '../styles/index.css'
 import * as vtecxauth from '@vtecx/vtecxauth'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import ReCaptcha from './ReCaptcha'
+import React, { useEffect, useContext, useState } from 'react'
+import { createRoot } from 'react-dom/client'
 
-import { useEffect, useContext, useState } from 'react'
+import { ReCaptchaProvider, useReCaptcha } from 'react-enterprise-recaptcha'
+
 import {
   CommonProvider,
   CommonGrid,
@@ -16,8 +17,11 @@ import {
   ReducerContext,
   CommonLink
 } from './common-dom'
-import { commonAxios, commonSessionStorage } from './common'
+import { commonFetch, commonSessionStorage } from './common'
 
+// =====================
+// Login コンポーネント
+// =====================
 export const Login = (_props: any) => {
   const { state, dispatch }: any = useContext(ReducerContext)
   const states = { state, dispatch }
@@ -25,21 +29,32 @@ export const Login = (_props: any) => {
   const [requiredCaptcha, setRequiredCaptcha]: any = useState(false)
   const [isError, setIsError]: any = useState(false)
 
-  const [captchaValue, setCaptchaValue]: any = useState('')
-  const [sitekey, setSitekey]: any = useState('')
-
-  const capchaOnChange = (value: string): void => {
-    setCaptchaValue(value)
-  }
+  // 送信時にトークンを取得
+  const { executeRecaptcha } = useReCaptcha()
 
   async function handleSubmit(_e: any, _data: any) {
     _e.preventDefault()
 
     const authToken = vtecxauth.getAuthToken(_data['user.email'], _data['user.password'])
-    const captchaOpt = requiredCaptcha === true ? '&g-recaptcha-token=' + captchaValue : ''
+
+    // requiredCaptcha が true のときだけトークンを付与
+    let captchaOpt = ''
+    try {
+      if (requiredCaptcha) {
+        const token = await executeRecaptcha('login') // ← 指定の action=login
+        captchaOpt = '&g-recaptcha-token=' + encodeURIComponent(token)
+      }
+    } catch (err) {
+      // reCAPTCHA が取得できない場合はサーバーに行かずリトライさせる
+      dispatch({
+        type: '_show_error',
+        message: 'セキュリティ確認に失敗しました。しばらくしてから再度お試しください。'
+      })
+      return
+    }
 
     try {
-      await commonAxios(states, '/d/?_login' + captchaOpt, 'get', null, {
+      await commonFetch(states, '/d/?_login' + captchaOpt, 'get', null, {
         'X-WSSE': authToken
       })
       const prev_location = commonSessionStorage.get('prev_location')
@@ -48,32 +63,20 @@ export const Login = (_props: any) => {
       } else {
         location.href = 'index.html'
       }
-    } catch (_error) {
-      if (_error.response) {
+    } catch (_error: any) {
+      if (_error?.response) {
         dispatch({
           type: '_show_error',
           message: 'ログインに失敗しました。メールアドレスまたはパスワードに誤りがあります。'
         })
         setIsError(true)
-        if (_error.response.data.feed.title === 'Captcha required at next login.') {
+        // サーバーが「次回はCaptcha必須」と返した場合にフラグを立てる
+        if (_error.response.data?.feed?.title === 'Captcha required at next login.') {
           setRequiredCaptcha(true)
         }
       }
     }
   }
-
-  useEffect(() => {
-    let _sitekey = ''
-    if (location.href.indexOf('localhost') >= 0) {
-      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
-    } else {
-      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
-    }
-    setSitekey(_sitekey)
-    const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
-    document.body.appendChild(script)
-  }, [])
 
   return (
     <CommonGrid>
@@ -104,13 +107,7 @@ export const Login = (_props: any) => {
             <CommonText style={{ marginTop: 10, marginBottom: 20 }} align="right">
               <CommonLink href="forgot_password.html">パスワードをお忘れですか？</CommonLink>
             </CommonText>
-            {requiredCaptcha && (
-              <ReCaptcha
-                sitekey={sitekey}
-                verifyCallback={(value: string) => capchaOnChange(value)}
-                action="login"
-              />
-            )}
+
             <CommonButton type="submit" color="primary" size="large">
               ログインする
             </CommonButton>
@@ -140,11 +137,33 @@ export const Login = (_props: any) => {
     </CommonGrid>
   )
 }
-const App: any = () => {
+
+// =====================
+// App ルート: Provider で包む
+// =====================
+const App: React.FC = () => {
+  // 旧コードの sitekey 切り替えロジックを Provider に転用
+  const [siteKey, setSiteKey] = useState<string>()
+
+  useEffect(() => {
+    const key =
+      typeof location !== 'undefined' && location.hostname.includes('localhost')
+        ? '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
+        : '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    setSiteKey(key)
+  }, [])
+
+  if (!siteKey) return null // 初期化待ち
+
   return (
-    <CommonProvider>
-      <Login />
-    </CommonProvider>
+    // Enterprise ライブラリの Provider
+    //    defaultAction に「login」を設定（RECAPTCHA_ACTION 相当）
+    <ReCaptchaProvider reCaptchaKey={siteKey} language="ja" defaultAction="login">
+      <CommonProvider>
+        <Login />
+      </CommonProvider>
+    </ReCaptchaProvider>
   )
 }
-ReactDOM.render(<App />, document.getElementById('container'))
+
+createRoot(document.getElementById('content')!).render(<App />)

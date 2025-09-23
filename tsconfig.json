@@ -8,12 +8,16 @@
         "noImplicitReturns": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "module": "commonjs",
-        "target": "es5",
+//        "module": "commonjs",
+        "module": "esnext",
+        "target": "es2020",
+        "moduleResolution": "bundler",
         "lib": [
+            "es2020",
             "es5",
             "es6",
-            "dom"
+            "dom",
+            "DOM.Iterable"
         ],
         "jsx": "react"
     },
