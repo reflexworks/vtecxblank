@@ -12,7 +12,9 @@
 _errorpage.2.login.html=^/@/.*$
 console.log=true
 console.warn=false
-console.error=true</rights>
+console.error=true
+_recaptcha.sitekey=6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR
+</rights>
   </entry>
   <entry>
     <content type="text/html">&lt;html&gt;
@@ -105,7 +107,7 @@ ${RXID=/change_password.html}
 ログインページ
 ${URL}/login
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vte.cx 
+vte.cx
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</summary>
     <title>パスワード変更</title>
     <subtitle>text</subtitle>

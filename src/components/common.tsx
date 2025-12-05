@@ -1,7 +1,3 @@
-/* eslint-disable no-useless-catch */
-import * as React from 'react'
-import axios from 'axios'
-
 export const MAX_BROWSER_SIZE = '1050px'
 export const MIN_BROWSER_SIZE = '650px'
 
@@ -73,28 +69,57 @@ export const commonReducer = (state: any, action: any) => {
 /**
  * 共通：通信処理
  */
-export function commonAxios(
+export function commonFetch(
   _states: any,
   _url: string,
   _method: string,
   _data?: any,
-  _headers?: any,
+  _headers?: Record<string, string>,
   _is_file?: boolean
 ) {
-  return new Promise((resolve, reject) => {
-    const headers = _headers ? _headers : {}
-    headers['X-Requested-With'] = 'XMLHttpRequest'
+  type AxiosLikeResponse<T = any> = {
+    data: T
+    status: number
+    headers: Record<string, string>
+    ok: boolean
+    url: string
+  }
 
-    let param: any = {
-      url: _url,
-      method: _method,
-      headers: headers
-    }
-    if (_data) param.data = _data
-    if (_is_file) {
-      param.dataType = 'json'
-      param.processData = false
-      param.contentType = false
+  return new Promise<AxiosLikeResponse>((resolve, reject) => {
+    // --- headers組み立て（X-Requested-Withは必ず付与）
+    const headers = new Headers(_headers || {})
+    headers.set('X-Requested-With', 'XMLHttpRequest')
+
+    const upperMethod = (_method || 'GET').toUpperCase()
+
+    // --- bodyとContent-Typeの扱い
+    let body: BodyInit | undefined
+    const isForm = _is_file || (typeof FormData !== 'undefined' && _data instanceof FormData)
+
+    if (upperMethod !== 'GET' && upperMethod !== 'HEAD') {
+      if (isForm) {
+        // FormDataのときはContent-Typeを明示設定しない（ブラウザに任せる）
+        body = _data as FormData
+      } else if (
+        typeof _data === 'string' ||
+        (typeof URLSearchParams !== 'undefined' && _data instanceof URLSearchParams)
+      ) {
+        // 文字列やURLSearchParamsはそのまま送る
+        if (
+          !_headers?.['Content-Type'] &&
+          !_headers?.['content-type'] &&
+          !(typeof _data !== 'string' && _data instanceof URLSearchParams)
+        ) {
+          headers.set('Content-Type', 'text/plain;charset=UTF-8')
+        }
+        if (_data instanceof URLSearchParams) {
+          headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8')
+        }
+        body = _data as any
+      } else if (typeof _data !== 'undefined') {
+        headers.set('Content-Type', 'application/json')
+        body = JSON.stringify(_data)
+      }
     }
 
     let retryCount = 0
@@ -104,53 +129,91 @@ export function commonAxios(
       _states.dispatch({ type: '_indicator', value: true })
     }
 
-    const get = () => {
-      axios(param).then(
-        _response => {
-          if (_states) {
-            _states.dispatch({ type: '_indicator', value: false })
-          }
-          resolve(_response)
-        },
-        _error => {
-          console.error(_error)
-          if (_states) {
-            _states.dispatch({ type: '_indicator', value: false })
-          }
-          if (
-            (_error.response && _error.response.status === 401) ||
-            (_error.response && _error.response.status === 403)
-          ) {
-            console.log('認証エラー')
-            reject(_error)
+    const parseResponse = async (res: Response): Promise<AxiosLikeResponse> => {
+      const ct = res.headers.get('content-type') || ''
+      let data: any = undefined
+      try {
+        if (res.status !== 204) {
+          if (ct.includes('application/json')) {
+            data = await res.json()
+          } else if (ct.startsWith('text/')) {
+            data = await res.text()
           } else {
-            if (_error.response && _error.response.data && _error.response.data.feed) {
-              const title = _error.response.data.feed.title
-              if (title === 'Please make a pagination index in advance.') {
-                if (retryCount < maxRetryCount) {
-                  retryCount++
-                  setTimeout(() => {
-                    get()
-                  }, 1000)
-                  return false
-                } else {
-                  //this.showFixAlert(<span>一覧のindex作成に取得に失敗しました。<br /><br />{title}</span>)
-                  alert(
-                    <span>
-                      一覧のindex作成に取得に失敗しました。
-                      <br />
-                      <br />
-                      {title}
-                    </span>
-                  )
-                }
-              }
-            }
-            reject(_error)
+            // バイナリ等は必要に応じて blob に
+            data = await res.blob()
           }
+        }
+      } catch {
+        // 解析失敗時はdata=undefinedのまま
+      }
+      return {
+        data,
+        status: res.status,
+        headers: headersToObject(res.headers),
+        ok: res.ok,
+        url: res.url || _url
+      }
+    }
+    // ヘッダをオブジェクトへ
+    const headersToObject = (h: Headers): Record<string, string> => {
+      const obj: Record<string, string> = {}
+      h.forEach((value, key) => {
+        obj[key.toLowerCase()] = value
+      })
+      return obj
+    }
+
+    const requestOnce = async (): Promise<AxiosLikeResponse> => {
+      const res = await fetch(_url, {
+        method: upperMethod,
+        headers,
+        body,
+        // same-originのCookieは送信（axiosのデフォルト相当）
+        credentials: 'same-origin'
+      })
+      const axRes = await parseResponse(res)
+
+      if (!res.ok) {
+        // axios風のエラーオブジェクトを投げる
+        const err: any = new Error(`HTTP ${res.status}`)
+        err.response = { status: axRes.status, data: axRes.data }
+        throw err
+      }
+      return axRes
+    }
+
+    const get = () => {
+      requestOnce().then(
+        response => {
+          if (_states) _states.dispatch({ type: '_indicator', value: false })
+          resolve(response)
+        },
+        error => {
+          console.error(error)
+          if (_states) _states.dispatch({ type: '_indicator', value: false })
+
+          const status = error?.response?.status
+          if (status === 401 || status === 403) {
+            console.log('認証エラー')
+            reject(error)
+            return
+          }
+
+          const title = error?.response?.data?.feed?.title
+          if (title === 'Please make a pagination index in advance.') {
+            if (retryCount < maxRetryCount) {
+              retryCount++
+              setTimeout(() => get(), 1000)
+              return
+            } else {
+              alert(`一覧のindex作成に取得に失敗しました。\n\n${title}`)
+            }
+          }
+          reject(error)
         }
       )
     }
+
     get()
   })
 }
@@ -235,7 +298,7 @@ export const commonFileUpload = async (_states: any, _name: string, _url: string
     })
     const form_data = new FormData(froms)
     try {
-      const res = await commonAxios(
+      const res = await commonFetch(
         _states,
         '/s/post-file?url=' +
           _url +
@@ -246,7 +309,7 @@ export const commonFileUpload = async (_states: any, _name: string, _url: string
           _name,
         'post',
         form_data,
-        null,
+        undefined,
         true
       )
       return res

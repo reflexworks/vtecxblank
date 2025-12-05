@@ -1,10 +1,8 @@
 import '../styles/index.css'
 import * as vtecxauth from '@vtecx/vtecxauth'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import ReCaptcha from './ReCaptcha'
+import React, { useEffect, useContext, useState } from 'react'
+import { createRoot } from 'react-dom/client'
 
-import { useEffect, useContext, useState /*, useRef*/ } from 'react'
 import {
   ReducerContext,
   CommonProvider,
@@ -18,64 +16,45 @@ import {
   CommonBox,
   CommonLink
 } from './common-dom'
-import { commonAxios, commonValidation } from './common'
+import { commonFetch, commonValidation } from './common'
 
-export const Signup = (_props: any) => {
+type AuthStatus = 'checking' | 'ok' | 'invalid'
+
+export const ChangePassword = (_props: any) => {
   const { state, dispatch }: any = useContext(ReducerContext)
   const states = { state, dispatch }
 
-  // キャプチャ関連
-  const [required_captcha, setRequiredCaptcha]: any = useState(false)
-  const [captcha_value, setCaptchaValue]: any = useState('')
-  const [sitekey, setSitekey]: any = useState('')
-  const capchaOnChange = (value: string): void => {
-    setCaptchaValue(value)
-  }
-
-  const [passresetToken, setPassresetToken]: any = useState()
+  const [authStatus, setAuthStatus] = useState<AuthStatus>('checking')
+  const [passresetToken, setPassresetToken] = useState<string | undefined>(undefined)
 
   // パスワード変更ボタン判定
-  const [is_regist_btn, setIsRegistBtn]: any = useState(true)
+  const [is_regist_btn, setIsRegistBtn] = useState(true)
   const isRegistBtn = () => {
     const password = state.data.password
     const password_re = state.data.password_re
     const is_password_error = password ? commonValidation('password', password).error : true
     const is_password_re_error = password !== password_re
-
-    if (!is_password_error && !is_password_re_error) {
-      setIsRegistBtn(false)
-    } else {
-      setIsRegistBtn(true)
-    }
+    setIsRegistBtn(!(!is_password_error && !is_password_re_error))
   }
 
-  // パスワード変更ボタン押下処理
-  const [is_completed, setIsCompleted]: any = useState(false)
-  const [active_step, setActiveStep]: any = useState(2)
+  // 送信
+  const [is_completed, setIsCompleted] = useState(false)
+  const [active_step, setActiveStep] = useState(2)
   const handleSubmit = async (_e: any) => {
     _e.preventDefault()
-
     const req = [
       {
         contributor: [
-          {
-            uri: 'urn:vte.cx:auth:' + ',' + vtecxauth.getHashpass(state.data.password) + ''
-          }, {
-            uri: 'urn:vte.cx:passreset_token:' + passresetToken
-          }
+          { uri: 'urn:vte.cx:auth:' + ',' + vtecxauth.getHashpass(state.data.password) },
+          { uri: 'urn:vte.cx:passreset_token:' + passresetToken }
         ]
       }
     ]
-    const captchaOpt = '&g-recaptcha-token=' + captcha_value
-
-    setRequiredCaptcha(false)
-
     try {
-      await commonAxios(states, '/d/?_changephash' + captchaOpt, 'put', req)
+      await commonFetch(states, '/d/?_changephash', 'put', req)
       setIsCompleted(true)
       setActiveStep(3)
     } catch (_error) {
-      setRequiredCaptcha(true)
       dispatch({
         type: '_show_error',
         message: 'パスワード変更に失敗しました。もう一度画面をリロードして実行してください。'
@@ -83,52 +62,68 @@ export const Signup = (_props: any) => {
     }
   }
 
-  const authentication = () => {
-    const hash_value = location.hash.replace('#/?', '')
-    const options = hash_value.split('&')
-    if (options.length) {
-      const auth_info: any = {}
-      options.map((_data) => {
-        const key = _data.split('=')[0]
-        const value = _data.split('=')[1]
-        auth_info[key] = value
-      })
-      if (auth_info._RXID) {
-        commonAxios(null, '/d/?_uid&_RXID=' + auth_info._RXID, 'get').then(() => {
-          setPassresetToken(auth_info._passreset_token)
-        }).catch((_error) => {
-          if (_error.response && _error.response.status === 401
-            || _error.response && _error.response.status === 403) {
-            if (_error.response.data && _error.response.data.feed && _error.response.data.feed.title && _error.response.data.feed.title.indexOf('RXID has been used more than once.') !== -1) {
-              setPassresetToken(auth_info._passreset_token)
-            } else {
-              location.href = 'index.html'
-            }
-          } else {
-            location.href = 'index.html'
-          }
-          //this.props.dispatch(Action.showError(_error))
-        })
-      }
-    }
-  }
-
+  // 認証リンク検証（hash と query の両方をサポート）
   useEffect(() => {
-    let _sitekey = ''
-    if (location.href.indexOf('localhost') >= 0) {
-      _sitekey = '6LfCvngUAAAAAJssdYdZkL5_N8blyXKjjnhW4Dsn'
-    } else {
-      _sitekey = '6LdUGHgUAAAAAOU28hR61Qceg2WP_Ms3kcuMHmmR'
+    const url = new URL(window.location.href)
+    const hash = url.hash.startsWith('#/?') ? url.hash.slice(3) : ''
+    const params = new URLSearchParams(hash || url.search.slice(1))
+
+    const rxid = params.get('_RXID') || ''
+    const token = params.get('_passreset_token') || ''
+
+    if (!rxid || !token) {
+      setAuthStatus('invalid')
+      return
     }
-    setSitekey(_sitekey)
-    setRequiredCaptcha(true)
-    const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js?render=' + _sitekey
-    document.body.appendChild(script)
-    authentication()
+
+    commonFetch(null, '/d/?_uid&_RXID=' + encodeURIComponent(rxid), 'get')
+      .then(() => {
+        setPassresetToken(token)
+        setAuthStatus('ok')
+      })
+      .catch((err: any) => {
+        const title = err?.response?.data?.feed?.title || ''
+        const status = err?.response?.status
+        // ワンタイムIDを既に使用済みでも token があれば続行可
+        if (
+          (status === 401 || status === 403) &&
+          title.includes('RXID has been used more than once.')
+        ) {
+          setPassresetToken(token)
+          setAuthStatus('ok')
+        } else {
+          setAuthStatus('invalid')
+        }
+      })
   }, [])
 
-  return passresetToken ? (
+  // --- 表示分岐 ---
+  if (authStatus === 'checking') {
+    return (
+      <CommonGrid>
+        <CommonText title>パスワード変更</CommonText>
+        <CommonText>リンクを検証しています…</CommonText>
+      </CommonGrid>
+    )
+  }
+
+  if (authStatus === 'invalid') {
+    return (
+      <CommonGrid>
+        <CommonText title>パスワード変更</CommonText>
+        <CommonBox top={2} bottom={4}>
+          <CommonText color="red">このリンクは無効か、有効期限が切れています。</CommonText>
+          <CommonText>
+            お手数ですが、<CommonLink href="forgot_password.html">パスワード再発行</CommonLink>から
+            新しいメールを受け取ってください。
+          </CommonText>
+        </CommonBox>
+      </CommonGrid>
+    )
+  }
+
+  // authStatus === 'ok'
+  return (
     <CommonGrid>
       <CommonText title>パスワード変更</CommonText>
       <CommonStepper
@@ -139,8 +134,8 @@ export const Signup = (_props: any) => {
         <CommonForm>
           <CommonStep number={1} title="新しいパスワードを入力してください。">
             <CommonText>
-              ご使用するパスワードは
-              <b>8文字以上で、かつ数字・英字・記号を最低1文字含む</b>必要があります。
+              ご使用するパスワードは<b>8文字以上で、かつ数字・英字・記号を最低1文字含む</b>
+              必要があります。
             </CommonText>
             <CommonInputText
               type="password"
@@ -150,9 +145,7 @@ export const Signup = (_props: any) => {
               style={{ marginTop: 10 }}
               variant="outlined"
               value=""
-              validation={(_value: string) => {
-                return commonValidation('password', _value)
-              }}
+              validation={(v: string) => commonValidation('password', v)}
               onChange={() => {
                 state.data.password_re = ''
                 isRegistBtn()
@@ -169,45 +162,30 @@ export const Signup = (_props: any) => {
               style={{ marginTop: 10 }}
               variant="outlined"
               value={state.data.password_re}
-              validation={(_value: string) => {
-                if (state.data.password === _value) {
-                  return {
-                    error: false,
-                    message: ''
-                  }
-                } else {
-                  return {
-                    error: true,
-                    message: 'パスワードと一致させてください'
-                  }
-                }
-              }}
-              onChange={() => {
-                isRegistBtn()
-              }}
+              validation={(v: string) =>
+                state.data.password === v
+                  ? { error: false, message: '' }
+                  : { error: true, message: 'パスワードと一致させてください' }
+              }
+              onChange={() => isRegistBtn()}
             />
           </CommonStep>
+
           <CommonGrid>
             <CommonGrid item justify="center">
               <CommonButton
                 color="primary"
                 size="large"
                 disabled={is_regist_btn}
-                onClick={(_e: any) => handleSubmit(_e)}
+                onClick={handleSubmit}
               >
                 パスワードを変更する
               </CommonButton>
             </CommonGrid>
           </CommonGrid>
-          {required_captcha && (
-            <ReCaptcha
-              sitekey={sitekey}
-              verifyCallback={(value: string) => capchaOnChange(value)}
-              action="login"
-            />
-          )}
         </CommonForm>
       )}
+
       {is_completed && (
         <CommonBox>
           <CommonBox top={2} bottom={4} align="center">
@@ -222,13 +200,13 @@ export const Signup = (_props: any) => {
         </CommonBox>
       )}
     </CommonGrid>
-  ) : null
-}
-const App: any = () => {
-  return (
-    <CommonProvider>
-      <Signup />
-    </CommonProvider>
   )
 }
-ReactDOM.render(<App />, document.getElementById('container'))
+
+const App: React.FC = () => (
+  <CommonProvider>
+    <ChangePassword />
+  </CommonProvider>
+)
+
+createRoot(document.getElementById('content')!).render(<App />)
