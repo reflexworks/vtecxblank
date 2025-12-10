@@ -15,7 +15,7 @@
     "@rspack/core": "^1.6.6",
     "@vtecx/vtecxapi": "^2.2.6",
     "@vtecx/vtecxauth": "^1.0.3",
-    "@vtecx/vtecxutil": "^1.2.17",
+    "@vtecx/vtecxutil": "^1.3.1",
     "css-loader": "^7.1.2",
     "prettier": "^3.7.4",
     "react": "^19.2.1",
