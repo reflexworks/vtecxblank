@@ -33,7 +33,12 @@ module.exports = (env) => {
           exclude: /node_modules/,
           loader: 'builtin:swc-loader',
           options: {
-            detectSyntax: 'auto'
+            jsc: {
+              parser: {
+                syntax: 'typescript'
+              },
+              target: 'es2022'
+            }         
           }
         }
       ]
