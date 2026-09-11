@@ -37,7 +37,7 @@ module.exports = (env) => {
               parser: {
                 syntax: 'typescript'
               },
-              target: 'es2022'
+              target: 'es5'
             }         
           }
         }
@@ -46,7 +46,7 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js']
     },
-    target: 'es2022',
+    target: 'es5',
     plugins: [new vtecxutil.uploaderPlugin(env.entry)]
   }
 }
