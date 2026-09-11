@@ -1,8 +1,7 @@
-const path = require('path')
 const vtecxutil = require('@vtecx/vtecxutil')
 const confy = require('confy')
 
-module.exports = (env, argv) => {
+module.exports = (env) => {
   let target
   confy.get('$default', function (err, result) {
     if (result) {
@@ -17,12 +16,12 @@ module.exports = (env, argv) => {
   if (target) {
     if (target.match(/https/)) {
       target = target.replace(/https/, 'http')
-      console.log('using HTTP instead of HTTPS.:' + target)
+      console.log('target:' + target)
     }
     target = target.substr(target.length - 1) === '/' ? target.substr(0, target.length - 1) : target
   }
   return {
-    mode: argv.mode ? 'development' : 'production',
+    mode: 'production',
     entry: './src' + env.entry,
     output: {
       filename: '.' + env.entry.replace(/(\.tsx)|(\.ts)/g, '.js')
@@ -31,40 +30,18 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: {
-            loader: 'ts-loader',
-            options: {
-              configFile: 'rspack.tsconfig.json'
-            }
+          exclude: /node_modules/,
+          loader: 'builtin:swc-loader',
+          options: {
+            detectSyntax: 'auto'
           }
-        },
-        {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader']
         }
       ]
     },
     resolve: {
-      alias: {
-        react: path.resolve(__dirname, 'node_modules/react'),
-        'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
-      },
-      mainFields: ['module', 'browser', 'main'],
       extensions: ['.ts', '.tsx', '.js']
     },
-    target:
-      env.entry.indexOf('/server') >= 0 || argv.mode === 'production' ? ['web', 'es5'] : 'web',
-    devServer: {
-      host: 'localhost',
-      port: 8000,
-      proxy: [{ context: ['/d', '/s', '/xls'], target: target, changeOrigin: true }],
-      static: {
-        directory: path.join(__dirname, 'src/')
-      },
-      open: true,
-      hot: true
-    },
-    plugins: [new vtecxutil.uploaderPlugin(env.entry)],
-    devtool: argv.mode === 'production' ? undefined : 'source-map'
+    target: 'node',
+    plugins: [new vtecxutil.uploaderPlugin(env.entry)]
   }
 }
